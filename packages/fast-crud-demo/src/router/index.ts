@@ -1,8 +1,7 @@
-import { createRouter, createWebHashHistory } from 'vue-router'
+import { createRouter, createWebHashHistory, RouteRecordRaw } from 'vue-router'
 import Layout from '../layout/layout.vue'
-import Home from '../views/home'
-
-const routes = [
+import Home from '../views/home/index.vue'
+const routes: Array<RouteRecordRaw> = [
   {
     path: '/',
     name: 'layout',

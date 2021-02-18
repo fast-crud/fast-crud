@@ -1,6 +1,10 @@
+// eslint-disable-next-line @typescript-eslint/no-empty-function
 let debug = () => {}
+// eslint-disable-next-line @typescript-eslint/no-empty-function
 let info = () => {}
+// eslint-disable-next-line @typescript-eslint/no-empty-function
 let error = () => {}
+// eslint-disable-next-line @typescript-eslint/no-empty-function
 let warn = () => {}
 function getCallerInfo () {
   const e = new Error()

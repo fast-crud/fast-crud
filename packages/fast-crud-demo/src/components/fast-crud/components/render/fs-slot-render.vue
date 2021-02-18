@@ -10,7 +10,7 @@ export default {
       type: Object
     }
   },
-  setup (props, context) {
+  setup (props) {
     // console.log('props.slots', props.slots, props.scope)
     return () => h(props.slots, props.scope)
   }

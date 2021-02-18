@@ -1,5 +1,4 @@
-import { notification } from 'ant-design-vue'
-
+import { ElNotification } from 'element-plus'
 /**
  * @description 安全地解析 json 字符串
  * @param {String} jsonString 需要解析的 json 字符串
@@ -53,11 +52,9 @@ export function responseError (data = {}, msg = '请求失败', code = 500) {
  */
 export function errorLog (error) {
   // 打印到控制台
-  console.log(error)
+  console.error(error)
   // 显示提示
-  notification.error({
-    message: error.message
-  })
+  ElNotification.error(error.message)
 }
 
 /**

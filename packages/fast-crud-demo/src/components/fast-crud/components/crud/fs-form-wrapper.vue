@@ -1,54 +1,99 @@
-<template>
-  <component class="fs-form-wrapper" v-if="formWrapper" :is="formWrapper.is || 'el-dialog'" :title="formWrapper?.title" v-model="formWrapperOpen" v-bind="formWrapper">
-     <fs-form  v-if="formProps" ref="formRef" v-bind="formProps"></fs-form>
-
-     <div class="fs-form-footer-btns">
-       <fs-button @click="submit"  text="确定"></fs-button>
-     </div>
-  </component>
-</template>
-
 <script>
-import { ref } from 'vue'
+import { ref, resolveComponent } from 'vue'
 import FsButton from '../basic/fs-button'
 export default {
   name: 'fs-form-wrapper',
+  inheritAttrs: false,
+  // eslint-disable-next-line vue/no-unused-components
   components: { FsButton },
   emits: ['reset', 'submit', 'validationError'],
   props: {
+    slots: {}
+  },
+  render () {
+    if (!this.formWrapper) {
+      return null
+    }
+    const is = this.formWrapper.is || 'el-dialog'
+    const comp = resolveComponent(is)
+    let children = {}
+    const _slots = { ...this.$slots, ...this.slots }
+    console.log('slots', _slots)
+    const slotsRender = (key, scope, slots = _slots) => {
+      if (!slots[key]) {
+        return null
+      }
+      return slots[key](scope)
+    }
+    if (this.formProps) {
+      children = {
+        default: () => {
+          return <div>
+            {slotsRender('form-body-before', this.formProps)}
+            <fs-form ref="formRef" {...this.formProps}/>
+            {slotsRender('form-body-after', this.formProps)}
+            <div className="fs-form-footer-btns">
+              {slotsRender('form-footer-prefix', this.formProps)}
+              <fs-button text="确定" onClick={this.submit} loading={this.loading}/>
+              {slotsRender('form-footer-append', this.formProps)}
+            </div>
+          </div>
+        }
+      }
+    }
+
+    return <comp custom-class="fs-form-wrapper"
+      v-model={this.formWrapperOpen}
+      {...this.formWrapper}
+      onClosed={this.closed} v-slots={children}>
+    </comp>
   },
   setup (props, ctx) {
+    console.log('props,ctx', props, ctx)
     const formWrapperOpen = ref(false)
     const formProps = ref()
     const formWrapper = ref()
+    const loading = ref(false)
     const open = (opts) => {
-      formWrapperOpen.value = true
+      formWrapper.value = opts.wrapper
       formProps.value = {
         ...opts
       }
       delete formProps.value.wrapper
-      formWrapper.value = opts.wrapper
 
-      console.log('formProps', formProps.value)
+      formWrapperOpen.value = true
     }
     const close = () => {
       formWrapperOpen.value = false
+    }
+    const closed = () => {
       formProps.value = null
     }
 
     const formRef = ref()
 
     async function submit () {
-      await formRef.value.submit()
+      loading.value = true
+      try {
+        await formRef.value.submit()
+        close()
+      } catch (e) {
+        console.warn('submit error', e)
+      } finally {
+        loading.value = false
+      }
     }
+
     return {
       close,
+      closed,
       open,
       formProps,
       formWrapperOpen,
       formWrapper,
       formRef,
-      submit
+      submit,
+      loading
     }
   }
 }

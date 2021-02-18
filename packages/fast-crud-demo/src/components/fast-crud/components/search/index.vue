@@ -5,7 +5,7 @@
           :inline="true"
           :model="form"
           ref="searchFormRef"
-          v-bind="formOptions" class="search-form">
+          v-bind="options" class="search-form">
         <slot name="prefix" :form="form"></slot>
         <el-form-item
             v-for="(item,key) in computedColumns"
@@ -51,12 +51,14 @@ import FsComponentRender from '@/components/fast-crud/components/render/fs-compo
 export default {
   name: 'fs-search',
   components: { FsComponentRender, fsButton },
+  emits: ['search', 'reset'],
   props: {
-    /* 默认查询条件，点击重置，会重置成该条件 */
-    default: {
+    /* 初始查询条件，点击重置，会重置成该条件 */
+    initial: {
       type: Object
     },
-    formOptions: {
+    // 表单options
+    options: {
       type: Object
     },
     // 查询字段配置
@@ -87,6 +89,10 @@ export default {
     }
   },
   setup (props, ctx) {
+    let autoSearch = null
+    const form = ref(_.cloneDeep(props.initial))
+    const searchFormRef = ref()
+
     const computedText = computed(() => {
       const def = {
         search: '查询',
@@ -94,6 +100,43 @@ export default {
       }
       return _.merge(def, this.text)
     })
+
+    function handleFormSubmit () {
+      if (autoSearch) {
+        // 防抖查询取消
+        autoSearch.cancel()
+      }
+      searchFormRef.value.validate((valid) => {
+        if (valid) {
+          ctx.$emit('search', { form: form.value })
+        } else {
+          ElNotification.error({
+            title: '错误',
+            message: '表单校验失败'
+          })
+          return false
+        }
+      })
+    }
+
+    function doSearch () {
+      handleFormSubmit()
+    }
+
+    function handleFormReset () {
+      searchFormRef.value.resetFields()
+
+      if (props.reset) {
+        props.reset({ form: form.value })
+      }
+      // 表单重置事件
+      this.$emit('reset')
+      if (props.searchAfterReset) {
+        nextTick(() => {
+          doSearch()
+        })
+      }
+    }
 
     const computedButtons = computed(() => {
       const btns = []
@@ -136,11 +179,6 @@ export default {
       return props.columns
     })
 
-    const form = ref()
-
-    const searchFormRef = ref()
-
-    let autoSearch = null
     function initAutoSearch () {
       // 构建防抖查询函数
       if (props.debounce !== false) {
@@ -156,42 +194,6 @@ export default {
     }
 
     initAutoSearch()
-
-    function handleFormSubmit () {
-      if (autoSearch) {
-        // 防抖查询取消
-        autoSearch.cancel()
-      }
-      searchFormRef.value.validate((valid) => {
-        if (valid) {
-          ctx.$emit('submit', _.cloneDeep(this.form))
-        } else {
-          ElNotification.error({
-            title: '错误',
-            message: '表单校验失败'
-          })
-          return false
-        }
-      })
-    }
-    function handleFormReset () {
-      searchFormRef.value.resetFields()
-
-      if (props.reset) {
-        props.reset({ form: form.value })
-      }
-      // 表单重置事件
-      this.$emit('reset')
-      if (props.searchAfterReset) {
-        nextTick(() => {
-          doSearch()
-        })
-      }
-    }
-
-    function doSearch () {
-      handleFormSubmit()
-    }
 
     function getForm () {
       return form.value

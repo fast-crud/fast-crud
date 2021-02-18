@@ -67,8 +67,8 @@ export default {
         }
       }
       return <el-table-column
-              {...computedColumn.value}
-              prop={prop} v-slots={slots} />
+        {...computedColumn.value}
+        prop={prop} v-slots={slots} />
     }
   }
 }

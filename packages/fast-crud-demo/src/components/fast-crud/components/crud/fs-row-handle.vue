@@ -37,8 +37,12 @@ export default {
     scope: {}
   },
   setup (props, ctx) {
-    const doClick = (item, index) => {
-      ctx.emit('handle', { key: item.key, btn: item, ...props.scope })
+    const doClick = (item) => {
+      const e = { key: item.key, btn: item, ...props.scope }
+      if (item?.click) {
+        return item.click(e)
+      }
+      ctx.emit('handle', e)
     }
     const computedHandleBtns = computed(() => {
       const defBtns = {
@@ -73,11 +77,7 @@ export default {
       if (props.custom && props.custom.length > 0) {
         for (const item of props.custom) {
           btns.push({
-            doClick: (item, index) => {
-              if (item?.click) {
-                item.click({ btn: item, scope: props.scope })
-              }
-            },
+            doClick,
             order: 4,
             ...item
           })

@@ -12,7 +12,7 @@ export default {
             'is-thin': !this.text && !this.$slots.default
           }
         }
-        >
+      >
         { this.$slots.default ? this.$slots.default : this.text}
       </el-button>
     return button

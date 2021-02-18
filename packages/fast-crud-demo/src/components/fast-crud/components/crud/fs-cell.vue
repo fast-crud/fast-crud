@@ -16,7 +16,7 @@ export default defineComponent({
     column: {},
     scope: {}
   },
-  setup (props, ctx) {
+  setup (props) {
     const getColumns = inject('get:columns')
     const computeContext = {
       ...props.scope,

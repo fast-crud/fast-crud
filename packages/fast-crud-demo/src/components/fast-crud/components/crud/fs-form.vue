@@ -1,26 +1,27 @@
 <template>
-  <el-form class="fs-form-grid" ref="formRef" :model="model" v-bind="options">
-    <template  v-for="(item,key) in computedColumns" :key="key" >
-      <el-form-item :key="key" v-if="item.show!==false" v-bind="item">
-        {{item}}
-        <fs-slot-render v-if="slots && slots['form-' + key]" :slots="slots['form-' + key]" :scope="{key,...scope}"/>
-        <template v-else>
-          <fs-component-render v-if="item.component?.show!==false"
-                               :ref="el => { if (el) componentRefs[key] = el }"
-                               :modelValue="get(model,key)"
-                               @update:modelValue="set(model,key,$event)"
-                               v-bind="item.component"  :scope="{key,...scope}"/>
-        </template>
+  <div class="fs-form">
+    <el-form class="fs-form-grid" ref="formRef" :model="model" v-bind="options">
+      <template  v-for="(item,key) in computedColumns" :key="key" >
+        <el-form-item :key="key" v-if="item.show!==false" v-bind="item">
+          <fs-slot-render v-if="slots && slots['form-' + key]" :slots="slots['form-' + key]" :scope="{key,...scope}"/>
+          <template v-else>
+            <fs-component-render v-if="item.component?.show!==false"
+                                 :ref="el => { if (el) componentRefs[key] = el }"
+                                 :modelValue="get(model,key)"
+                                 @update:modelValue="set(model,key,$event)"
+                                 v-bind="item.component"  :scope="{key,...scope}"/>
+          </template>
+        </el-form-item>
+      </template>
+    </el-form>
+  </div>
 
-      </el-form-item>
-    </template>
-  </el-form>
 </template>
 
 <script>
 import { computed, ref, reactive } from 'vue'
 import _ from 'lodash-es'
-import { ComputeValue } from '@/components/fast-crud/core/compute-value'
+import { ComputeValue } from '../../core/compute-value'
 export default {
   name: 'fs-form',
   components: { },
@@ -43,7 +44,7 @@ export default {
     groups: {
 
     },
-    onSubmit: {
+    doSubmit: {
       type: Function
     },
     slots: {
@@ -52,6 +53,31 @@ export default {
   },
   setup (props, ctx) {
     const formRef = ref()
+
+    const model = reactive({})
+    // 初始数据赋值
+    _.each(props.columns, (item, key) => {
+      model[key] = props.formData[key]
+    })
+
+    const componentRefs = ref({})
+    function getFormComponentRef (key) {
+      return componentRefs.value[key]
+    }
+
+    const scope = ref({
+      row: props.formData,
+      form: model,
+      ...ctx.attrs,
+      getFormComponentRef
+    })
+
+    function getContextFn () {
+      return {
+        ...scope.value
+      }
+    }
+
     const computedColumns = computed(() => {
       return ComputeValue.buildBindProps(props.columns, getContextFn)
     })
@@ -64,26 +90,6 @@ export default {
       ctx.emit('reset')
     }
 
-    const model = reactive({})
-    // 初始数据赋值
-    _.each(props.columns, (item, key) => {
-      model[key] = props.formData[key]
-    })
-    console.log('model', model)
-
-    const scope = ref({
-      row: props.formData,
-      form: model,
-      ...ctx.attrs,
-      getFormComponentRef
-    })
-
-    function getContextFn (key, value) {
-      return {
-        ...scope.value
-      }
-    }
-
     async function submit () {
       const valid = await formRef.value.validate()
       const ret = {
@@ -91,8 +97,9 @@ export default {
       }
       console.log('valid', valid, ret)
       if (valid) {
-        if (props.onSubmit) {
-          await props.onSubmit(ret)
+        if (props.doSubmit) {
+          await props.doSubmit(ret)
+          console.log('submit success')
         }
         ctx.emit('submit', ret)
       } else {
@@ -102,10 +109,6 @@ export default {
       return valid
     }
 
-    const componentRefs = ref({})
-    function getFormComponentRef (key) {
-      return componentRefs.value[key]
-    }
     return {
       get: _.get,
       set: _.set,
