@@ -131,20 +131,6 @@ function useTable (props, ctx, { searchFormData }) {
     return _.merge(def, props.table)
   })
 
-  const doRefresh = async () => {
-    let page
-    if (props.pagination) {
-      page = { currentPage: props.pagination.currentPage, pageSize: props.pagination.pageSize }
-    }
-    const query = { page, form: searchFormData.value }
-    let result = await props.request.pageRequest(query)
-    if (props.request.transform) {
-      result = props.request.transform(result)
-    }
-    const { currentPage, pageSize, total, records } = result
-    ctx.emit()
-  }
-
   const computedToolbar = computed(() => {
     const def = {
       impact: true
