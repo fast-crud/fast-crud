@@ -5,7 +5,7 @@ export function GetList (query) {
   return request({
     url: apiPrefix + '/page',
     method: 'get',
-    params: query
+    data: query
   })
 }
 

@@ -5,31 +5,28 @@
           :inline="true"
           :model="form"
           ref="searchFormRef"
-          v-bind="options" class="search-form">
+          v-bind="options" class="search-form" @compositionstart="changeInputEventDisabled(true)" @compositionend="changeInputEventDisabled(false)">
         <slot name="prefix" :form="form"></slot>
-        <el-form-item
-            v-for="(item,key) in computedColumns"
-            v-bind="item" :key="key"  :prop="key"
-        >
-          <template v-if="item.slot === true">
-            <slot :name="key+'SearchSlot'" :form="form"/>
-          </template>
+        <template v-for="(item,key) in computedColumns"
+                  :key="key">
+          <el-form-item v-bind="item" :prop="key">
+            <template v-if="slots['search-' + key]">
+              <fs-slot-render :slots="slots['search-' + key]" :scope="{form,key}"/>
+            </template>
+            <template v-else>
+              <fs-component-render v-if="item?.show!==false"
+                                   :modelValue="get(form,key)"
+                                   @update:modelValue="set(form,key,$event)"
+                                   v-bind="item" @input="onInput" :scope="{form}"/>
+            </template>
 
-          <fs-component-render
-              v-else
-              :value="valueGet(form,key)"
-              @input="valueSet(form,key,$event)"
-              :ref="'form_item_'+key"
-              v-bind="item.component || {}"
-              v-on="item.on || {}"
-          >
-          </fs-component-render>
-        </el-form-item>
+          </el-form-item>
+        </template>
+
         <slot :form="form"></slot>
         <el-form-item class="search-btns">
-          <template v-for="(item, index) in computedButtons">
-            <fs-button :key="index"
-                       v-if="item.show"
+          <template v-for="(item, index) in computedButtons" :key="index">
+            <fs-button v-if="item.show"
                        @click="item.doClick()"
                        v-bind="item"
             />
@@ -48,8 +45,10 @@ import fsButton from '../basic/fs-button'
 import log from '../../utils/util.log'
 import { ElNotification } from 'element-plus'
 import FsComponentRender from '@/components/fast-crud/components/render/fs-component-render'
+import { ComputeValue } from '@/components/fast-crud'
 export default {
   name: 'fs-search',
+  inheritAttrs: false,
   components: { FsComponentRender, fsButton },
   emits: ['search', 'reset'],
   props: {
@@ -83,54 +82,47 @@ export default {
     debounce: {
       type: Object
     },
-    // 重置时的操作
-    reset: {
-      type: Function
+    slots: {
+      default () {
+        return {}
+      }
     }
   },
   setup (props, ctx) {
-    let autoSearch = null
-    const form = ref(_.cloneDeep(props.initial))
+    let autoSearch = ref(null)
+    const form = ref(_.cloneDeep(props.initial || {}))
     const searchFormRef = ref()
 
-    const computedText = computed(() => {
-      const def = {
-        search: '查询',
-        reset: '重置'
-      }
-      return _.merge(def, this.text)
-    })
+    function getContextFn () {
+      return { form: form.value }
+    }
 
-    function handleFormSubmit () {
-      if (autoSearch) {
+    async function doSearch () {
+      if (autoSearch.value) {
         // 防抖查询取消
-        autoSearch.cancel()
+        autoSearch.value.cancel()
       }
-      searchFormRef.value.validate((valid) => {
-        if (valid) {
-          ctx.$emit('search', { form: form.value })
-        } else {
-          ElNotification.error({
-            title: '错误',
-            message: '表单校验失败'
-          })
-          return false
-        }
-      })
+      const valid = await searchFormRef.value.validate()
+      console.log('valid', valid)
+      if (valid) {
+        ctx.emit('search', { form: form.value })
+      } else {
+        ElNotification.error({
+          title: '错误',
+          message: '表单校验失败'
+        })
+        return false
+      }
     }
 
-    function doSearch () {
-      handleFormSubmit()
-    }
-
-    function handleFormReset () {
+    function doReset () {
       searchFormRef.value.resetFields()
 
       if (props.reset) {
         props.reset({ form: form.value })
       }
       // 表单重置事件
-      this.$emit('reset')
+      ctx.emit('reset', getContextFn())
       if (props.searchAfterReset) {
         nextTick(() => {
           doSearch()
@@ -148,7 +140,7 @@ export default {
           type: 'primary',
           disabled: false,
           doClick: () => {
-            handleFormSubmit()
+            doSearch()
           },
           order: 1,
           icon: 'el-icon-search',
@@ -161,7 +153,7 @@ export default {
           show: true,
           disabled: false,
           doClick: () => {
-            handleFormReset()
+            doReset()
           },
           icon: 'el-icon-refresh',
           text: '重置',
@@ -175,9 +167,7 @@ export default {
       return btns
     })
 
-    const computedColumns = computed(() => {
-      return props.columns
-    })
+    const computedColumns = ComputeValue.computed(props.columns, getContextFn)
 
     function initAutoSearch () {
       // 构建防抖查询函数
@@ -189,7 +179,7 @@ export default {
         if (wait == null) {
           wait = 500
         }
-        autoSearch = _.debounce(handleFormSubmit, wait, props.debounce)
+        autoSearch = _.debounce(doSearch, wait, props.debounce)
       }
     }
 
@@ -201,23 +191,42 @@ export default {
 
     /**
      * 设置form值
-     * @param form form对象
-     * @param isMerge 是否与原有form值合并
      */
-    function setForm (form, isMerge = false) {
-      const baseForm = {}
-      if (isMerge) {
-        _.merge(baseForm, form.value, form)
-      } else {
-        _.merge(baseForm, form)
+    function setForm (form) {
+      form.value = form
+    }
+    const inputEventDisabled = ref(false)
+
+    const doAutoSearch = () => {
+      if (inputEventDisabled.value !== true && autoSearch) {
+        // 防抖查询
+        autoSearch()
       }
-      form.value = baseForm
     }
 
-    const valueSet = _.set
-    const valueGet = _.get
+    const onInput = () => {
+      doAutoSearch()
+    }
+    const changeInputEventDisabled = (disabled) => {
+      console.log('changeInputEventDisabled', disabled)
+      inputEventDisabled.value = disabled
+      doAutoSearch()
+    }
+
     return {
-      computedText, computedButtons, handleFormSubmit, handleFormReset, computedColumns, form, doSearch, getForm, valueSet, valueGet, setForm, searchFormRef
+      get: _.get,
+      set: _.set,
+      computedButtons,
+      doSearch,
+      doReset,
+      computedColumns,
+      form,
+      getForm,
+      setForm,
+      searchFormRef,
+      onInput,
+      inputEventDisabled,
+      changeInputEventDisabled
     }
   },
 

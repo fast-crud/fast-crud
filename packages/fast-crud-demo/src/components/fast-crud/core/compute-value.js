@@ -1,4 +1,5 @@
 import _ from 'lodash-es'
+import { computed, toRaw } from 'vue'
 import getEachDeep from 'deepdash-es/getEachDeep'
 const eachDeep = getEachDeep(_)
 export class ComputeValue {
@@ -10,11 +11,19 @@ export class ComputeValue {
     return new ComputeValue(computeFn)
   }
 
-  static findComputeValues (target) {
+  static findComputeValues (target, excludes) {
     const foundMap = {}
     eachDeep(target, (value, key, parent, context) => {
       if (value instanceof ComputeValue) {
-        foundMap[context.path] = value
+        const path = context.path
+        if (excludes) {
+          for (const exclude of excludes) {
+            if (path.startsWith(exclude)) {
+              return false
+            }
+          }
+        }
+        foundMap[path] = value
         return false
       }
       return true
@@ -30,16 +39,32 @@ export class ComputeValue {
         target = _.cloneDeep(target)
       }
       _.forEach(dependValues, (value, key) => {
-        console.log('change by depend value', key, value)
-        _.set(target, key, value.computeFn(getContextFn(key, value)))
+        const context = getContextFn ? getContextFn(key, value) : {}
+        _.set(target, key, value.computeFn(context))
       })
     }
     return target
   }
 
-  static computed (computed, target, getContextFn, clone = true) {
+  static computed (target, getContextFn, clone = true, excludes) {
+    const dependValues = ComputeValue.findComputeValues(toRaw(target), excludes)
+    if (Object.keys(dependValues).length <= 0) {
+      // 不需要重新计算
+      return computed(() => {
+        return target
+      })
+    }
+
     return computed(() => {
-      return ComputeValue.buildBindProps(target, getContextFn, clone)
+      if (clone) {
+        target = _.cloneDeep(target)
+      }
+      // console.log('function recomputed', target)
+      _.forEach(dependValues, (value, key) => {
+        const context = getContextFn ? getContextFn(key, value) : {}
+        _.set(target, key, value.computeFn(context))
+      })
+      return target
     })
   }
 }

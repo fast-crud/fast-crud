@@ -48,8 +48,7 @@ export default {
       onClosed={this.closed} v-slots={children}>
     </comp>
   },
-  setup (props, ctx) {
-    console.log('props,ctx', props, ctx)
+  setup () {
     const formWrapperOpen = ref(false)
     const formProps = ref()
     const formWrapper = ref()

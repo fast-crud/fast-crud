@@ -4,11 +4,7 @@
     <slot name="header-before"></slot>
     <div class="fs-crud-header">
       <div class="fs-crud-search">
-        <slot name="search-prefix"></slot>
-        <fs-search ref="searchRef" v-bind="search" v-model="searchFormData" @search="onSearchSubmit" @reset="onSearchReset">
-          <slot name="search"></slot>
-        </fs-search>
-        <slot name="search-append"></slot>
+        <fs-search ref="searchRef" v-bind="search"  @search="onSearchSubmit" @reset="onSearchReset" :slots="computedSearchSlots"/>
       </div>
       <div class="fs-crud-action">
         <div class="fs-crud-actionbar" v-if="actionbar?.show!==false">
@@ -27,7 +23,7 @@
     <slot name="header-after"></slot>
   </template>
   <slot :scope="{data}"></slot>
-  <el-table v-if="table?.show!==false" class="fs-crud-table" v-bind="computedTable"  :data="data" >
+  <el-table v-if="computedTable?.show!==false" class="fs-crud-table" v-bind="computedTable"  :data="data"  v-loading="computedTable.loading">
     <fs-column v-for="(item,key) of columns"  :column="item" :key="key" :prop="key" :slots="computedCellSlots"></fs-column>
 
     <el-table-column
@@ -62,13 +58,14 @@
 </fs-container>
 </template>
 <script>
-import { defineComponent, computed, provide, ref, onMounted } from 'vue'
+import { defineComponent, computed, provide, ref } from 'vue'
 import _ from 'lodash-es'
 import FsContainer from './container/fs-container'
 import FsColumn from './crud/fs-column'
 import FsRowHandle from './crud/fs-row-handle'
 import FsFormWrapper from './crud/fs-form-wrapper'
 import FsActionbar from './crud/fs-actionbar'
+import { ComputeValue } from '@/components/fast-crud'
 
 function useProviders (props, ctx) {
   provide('get:columns', () => {
@@ -83,6 +80,7 @@ function useSearch (props, ctx) {
   const searchRef = ref()
   const searchFormData = ref(_.cloneDeep(props.search.initial || {}))
   const onSearchSubmit = async (e) => {
+    searchFormData.value = e.form
     if (props.search.doSearch) {
       props.search.doSearch(e)
       return
@@ -98,11 +96,41 @@ function useSearch (props, ctx) {
     ctx.emit('search-reset', e)
   }
 
+  const getSearchRef = () => {
+    return searchRef.value
+  }
+
+  const getSearchFormData = () => {
+    return searchFormData.value
+  }
+  /**
+   * 设置form值
+   * @param form form对象
+   * @param opts = {
+   *    isMerge:false 是否与原有form值合并,
+   * }
+   */
+  function setSearchFormData ({ form, mergeForm = false }) {
+    const baseForm = {}
+    if (mergeForm) {
+      _.merge(baseForm, searchFormData.value, form)
+    } else {
+      _.merge(baseForm, form)
+    }
+    searchFormData.value = baseForm
+    if (searchRef.value) {
+      searchRef.value.setForm(form)
+    }
+  }
+
   return {
     searchRef,
     searchFormData,
     onSearchSubmit,
-    onSearchReset
+    onSearchReset,
+    getSearchRef,
+    getSearchFormData,
+    setSearchFormData
   }
 }
 
@@ -111,7 +139,7 @@ function slotFilter (ctxSlots, keyPrefix) {
     return {}
   }
   const slots = {}
-  _.each(slots, (value, key) => {
+  _.forEach(ctxSlots, (value, key) => {
     if (key.startsWith(keyPrefix)) {
       slots[key] = value
     }
@@ -119,23 +147,23 @@ function slotFilter (ctxSlots, keyPrefix) {
   return slots
 }
 
-function useTable (props, ctx, { searchFormData }) {
+function useTable (props, ctx) {
   const computedTable = computed(() => {
     const def = {
       height: '100%',
       rowKey: 'id',
       stripe: true,
-      border: true,
-      ...ctx.attrs
+      border: true
     }
-    return _.merge(def, props.table)
+
+    return _.merge(def, ComputeValue.buildBindProps(props.table), ctx.attrs)
   })
 
   const computedToolbar = computed(() => {
     const def = {
       impact: true
     }
-    return _.merge(def, props.toolbar)
+    return _.merge(def, ComputeValue.buildBindProps(props.toolbar))
   })
 
   const computedCellSlots = computed(() => {
@@ -145,20 +173,25 @@ function useTable (props, ctx, { searchFormData }) {
   const computedFormSlots = computed(() => {
     return slotFilter(ctx.slots, 'form-')
   })
+  const computedSearchSlots = computed(() => {
+    return slotFilter(ctx.slots, 'search-')
+  })
   const formWrapperRef = ref()
 
-  const onRowHandle = ({ key, row, $index }) => {
+  const onRowHandle = ({ key, row, $index, index }) => {
+    index = index || $index
+    const e = { mode: key, formData: row, slots: ctx.slots, index }
     console.log('handle', key, row, $index)
     if (key === 'edit') {
-      formWrapperRef.value.open({ ...props.editForm, mode: key, formData: row, index: $index, slots: ctx.slots })
+      formWrapperRef.value.open({ ...props.editForm, ...e })
     } else if (key === 'view') {
-      formWrapperRef.value.open({ ...props.viewForm, mode: key, formData: row, index: $index, slots: ctx.slots })
+      formWrapperRef.value.open({ ...props.viewForm, ...e })
     }
   }
 
   const onActionHandle = (e) => {
     if (e.key === 'add') {
-      formWrapperRef.value.open({ ...props.addForm, mode: 'add', slots: ctx.slots })
+      formWrapperRef.value.open({ ...props.addForm, mode: 'add', formData: e.formData, slots: ctx.slots })
     }
   }
 
@@ -169,7 +202,8 @@ function useTable (props, ctx, { searchFormData }) {
     onRowHandle,
     onActionHandle,
     formWrapperRef,
-    computedFormSlots
+    computedFormSlots,
+    computedSearchSlots
   }
 }
 
@@ -205,7 +239,6 @@ export default defineComponent({
     return {
       ...search,
       ...table
-
     }
   }
 })

@@ -10,6 +10,9 @@ const messages = {
     // 定义您自己的字典，但是请不要和 `el` 重复，这样会导致 ElementPlus 内部组件的翻译失效.
     message: {
       hello: 'hello world'
+    },
+    fs: {
+
     }
   },
   [zhLocale.name]: {
@@ -17,6 +20,9 @@ const messages = {
     // 定义您自己的字典，但是请不要和 `el` 重复，这样会导致 ElementPlus 内部组件的翻译失效.
     message: {
       hello: '你好，世界'
+    },
+    fs: {
+
     }
   },
   testLocale: {

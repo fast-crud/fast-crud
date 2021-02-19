@@ -69,11 +69,10 @@ export default {
       })
       return children
     }
-    const children = childrenRender()
 
     const comp = resolveComponent(props.name)
     return () => {
-      return h(comp, attrs, children)
+      return h(comp, attrs, childrenRender())
     }
   }
 }

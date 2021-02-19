@@ -2,11 +2,11 @@
     <fs-component-render v-if="computedComponent?.show!==false"
                          :modelValue="get(scope.row,prop)"
                          @update:modelValue="set(scope.row,prop,$event)"
-                         v-bind="computedComponent"  :scope="computeContext"/>
+                         v-bind="computedComponent"  :scope="getContextFn()"/>
 </template>
 <script>
 import _ from 'lodash-es'
-import { defineComponent, computed, inject } from 'vue'
+import { defineComponent, inject } from 'vue'
 import { ComputeValue } from '@/components/fast-crud/core/compute-value'
 export default defineComponent({
   name: 'fs-cell',
@@ -18,29 +18,24 @@ export default defineComponent({
   },
   setup (props) {
     const getColumns = inject('get:columns')
-    const computeContext = {
-      ...props.scope,
-      column: props.column,
-      getColumns,
-      getColumn (key) {
-        return getColumns(key)
+
+    function getContextFn () {
+      return {
+        ...props.scope,
+        column: props.column,
+        getColumns,
+        getColumn (key) {
+          return getColumns(key)
+        }
       }
     }
-    function getContextFn () {
-      return computeContext
-    }
 
-    const computedComponent = computed(() => {
-      const target = props.column.component
-      console.log('recomputed')
-      return ComputeValue.buildBindProps(target, getContextFn)
-    })
-
+    const computedComponent = ComputeValue.computed(props.column.component, getContextFn)
     return {
       get: _.get,
       set: _.set,
       computedComponent,
-      computeContext
+      getContextFn
     }
   }
 })

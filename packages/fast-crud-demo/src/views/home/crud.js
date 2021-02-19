@@ -1,9 +1,38 @@
 import { compute } from '@/components/fast-crud/core/compute-value'
-import { ElMessageBox, ElNotification } from 'element-plus'
-export default function ({ addRequest, editRequest, delRequest }) {
+import * as api from '@/views/home/api'
+
+const pageRequest = async (query) => {
+  return await api.GetList(query)
+}
+const editRequest = async ({ form, row }) => {
+  form.id = row.id
+  return await api.UpdateObj(form)
+}
+const delRequest = async (id) => {
+  return await api.DelObj(id)
+}
+
+const addRequest = async ({ form }) => {
+  return await api.AddObj(form)
+}
+
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
+export default function ({ crudRef }) {
   return {
     options: {
 
+    },
+    request: {
+      pageRequest,
+      addRequest,
+      editRequest,
+      delRequest,
+      transformQuery: ({ page, form }) => {
+        return { current: page.currentPage, size: page.pageSize, ...form }
+      },
+      transformRes: ({ res }) => {
+        return { currentPage: res.current, pageSize: res.size, ...res }
+      }
     },
     search: {
       buttons: {
@@ -32,18 +61,22 @@ export default function ({ addRequest, editRequest, delRequest }) {
       show: true
     },
     table: {
+      'element-loading-text': '加载中,请稍候',
       onCellClick () {
         // console.log('cell click')
       }
     },
     pagination: {
       background: true,
-      layout: 'prev, pager, next',
-      total: 1000
+      pageSize: 20,
+      pageSizes: [5, 10, 20, 50],
+      layout: 'total, sizes, prev, pager, next, jumper',
+      total: 0
     },
     columns: {
       date: {
-        label: '日期'
+        label: '日期',
+        sortable: true
       },
       name: {
         label: '姓名',
@@ -70,13 +103,11 @@ export default function ({ addRequest, editRequest, delRequest }) {
       avatar: {
         label: '头像',
         align: 'center',
-        show: compute((context) => {
-          console.log('show,context', context)
+        show: compute(() => {
           return true
         }),
         component: {
           show: compute((context) => {
-            console.log('show,context', context)
             return context.row.show === false
           }),
           name: 'el-image',
@@ -145,7 +176,6 @@ export default function ({ addRequest, editRequest, delRequest }) {
       zip: {
         label: '邮编',
         formatter (row, column, value) {
-          console.log('formatter', row, column, value)
           return value
         }
       }
@@ -157,21 +187,6 @@ export default function ({ addRequest, editRequest, delRequest }) {
         icon: 'el-icon-edit',
         text: null
       },
-      remove: {
-        async click (context) {
-          console.log('remove', context)
-          await ElMessageBox.confirm('确定要删除此记录吗?', '提示', {
-            confirmButtonText: '确定',
-            cancelButtonText: '取消',
-            type: 'warning'
-          })
-          await delRequest(context.row.id)
-          ElNotification.success({
-            type: 'success',
-            message: '删除成功!'
-          })
-        }
-      },
       custom: [
         {
           text: 'custom',
@@ -181,15 +196,7 @@ export default function ({ addRequest, editRequest, delRequest }) {
         }
       ]
     },
-    data: [{
-      date: '2016-05-03',
-      name: '王小虎',
-      province: '上海',
-      avatar: 'https://www.baidu.com/img/dong_8f1d47bcb77d74a1e029d8cbb3b33854.gif',
-      city: '普陀区',
-      address: '上海市普陀区金沙江路 1518 弄',
-      zip: 200333
-    }],
+    data: [],
     editForm: {
       wrapper: {
         // is: 'el-drawer',
@@ -202,11 +209,6 @@ export default function ({ addRequest, editRequest, delRequest }) {
         style: {
           //  'grid-template-columns': '47% 47%' // grid布局，默认两列
         }
-      },
-      async doSubmit (ctx) {
-        console.log('submit ctx', ctx)
-        // eslint-disable-next-line @typescript-eslint/no-use-before-define
-        await editRequest(ctx)
       },
       columns: {
         date: {
@@ -269,11 +271,6 @@ export default function ({ addRequest, editRequest, delRequest }) {
           //  'grid-template-columns': '47% 47%' // grid布局，默认两列
         }
       },
-      async doSubmit (ctx) {
-        console.log('submit ctx', ctx)
-        // eslint-disable-next-line @typescript-eslint/no-use-before-define
-        await addRequest(ctx)
-      },
       columns: {
         date: {
           label: '日期'
@@ -335,11 +332,6 @@ export default function ({ addRequest, editRequest, delRequest }) {
         style: {
           //  'grid-template-columns': '47% 47%' // grid布局，默认两列
         }
-      },
-      async doSubmit (ctx) {
-        console.log('submit ctx', ctx)
-        // eslint-disable-next-line @typescript-eslint/no-use-before-define
-        // await editRequest(ctx)
       },
       columns: {
         date: {

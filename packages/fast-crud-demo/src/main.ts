@@ -16,5 +16,8 @@ const app = createApp(App)
 app.use(ElementPlus, { size: 'small', zIndex: 3000, i18n: i18n.global.t })
 app.use(router)
 app.use(i18n)
-app.use(FastCrud)
+app.use(FastCrud, {
+  i18n: i18n.global.t,
+  commonOption () { return {} }
+})
 app.mount('#app')

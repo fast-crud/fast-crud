@@ -16,16 +16,15 @@ apiList.forEach(apiFile => {
         console.log('request:', config)
         const data = config.data ? JSON.parse(config.data) : {}
         const query = config.url.indexOf('?') >= 0 ? config.url.substring(config.url.indexOf('?') + 1) : undefined
-        let params = {}
+        const params = config.params || {}
         if (query) {
           const arr = query.split('&')
           for (const item of arr) {
             const kv = item.split('=')
             params[kv[0]] = kv[1]
           }
-        } else {
-          params = data
         }
+
         const req = {
           body: data,
           params: params

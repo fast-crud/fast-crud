@@ -18,18 +18,19 @@ export default {
       type: Object
     }
   },
-  setup (props, ctx) {
-    console.log('ctx', ctx)
+  setup (props) {
     const dependContext = {}
     function getContextFn () {
       return dependContext
     }
+
     const computedColumn = computed(() => {
-      const target = _.cloneDeep(props.column)
-      delete target.children
+      const target = { ...props.column }
+      delete target.children // 这里必须删除掉children
       delete target.component
       return ComputeValue.buildBindProps(target, getContextFn)
     })
+    // const computedColumn = ComputeValue.computed( props.column, getContextFn, true, ['children', 'component'])
 
     const computedChildren = computed(() => {
       return props.column.children

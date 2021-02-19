@@ -9,7 +9,7 @@ import FsRowHandle from './crud/fs-row-handle'
 
 import FsSearch from './search'
 
-export default {
+export {
   FsContainer,
   FsComponentRender,
   FsSlotRender,

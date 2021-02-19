@@ -1,5 +1,5 @@
 <template>
-  <fs-crud ref="crudRef" v-bind="crud">
+  <fs-crud ref="crudRef" v-bind="crudOptions">
     <template #cell-date="scope">
       <el-button @click="dateClick('date',scope)" >cell- date,{{scope.row.date}}</el-button>
     </template>
@@ -30,35 +30,21 @@
 </template>
 
 <script >
-import { defineComponent, ref } from 'vue'
+import { defineComponent, ref, onMounted } from 'vue'
 import { ElNotification } from 'element-plus'
-import * as api from './api'
-import useCrud from './crud'
+import { useCrud } from '@/components/fast-crud/index.js'
+import createCrudOptions from './crud'
 export default defineComponent({
   setup () {
     const crudRef = ref()
-    const pageRequest = async ({ query }) => {
-      await api.GetList(query)
-    }
-    const editRequest = async ({ form, row }) => {
-      form.id = row.id
-      await api.UpdateObj(form)
-    }
-    const delRequest = async (id) => {
-      await api.DelObj(id)
-    }
+    const crud = useCrud({
+      crudRef,
+      options: createCrudOptions({ crudRef })
+    })
 
-    const addRequest = async ({ form }) => {
-      await api.AddObj(form)
-    }
-
-    const crud = ref(useCrud({
-      pageRequest,
-      addRequest,
-      editRequest,
-      delRequest,
-      crudRef
-    }))
+    onMounted(() => {
+      crud.doRefresh()
+    })
 
     const formBodyClick = (scope) => {
       console.log('scope', scope)
@@ -71,7 +57,7 @@ export default defineComponent({
     }
 
     return {
-      crud,
+      ...crud,
       dateClick,
       crudRef,
       formBodyClick

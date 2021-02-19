@@ -7,7 +7,7 @@
     "build": "vue-cli-service build --report --target lib ./src/index.js",
     "lint": "vue-cli-service lint"
   },
-  "dependencies": {
+  "peerDependencies": {
     "lodash-es": "^4.17.20",
     "vue": "^3.0.4"
   },
