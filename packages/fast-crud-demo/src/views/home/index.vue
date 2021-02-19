@@ -1,5 +1,5 @@
 <template>
-  <fs-crud ref="crudRef" v-bind="crudOptions">
+  <fs-crud class="home-page" ref="crudRef" v-bind="crudOptions">
     <template #cell-date="scope">
       <el-button @click="dateClick('date',scope)" >cell- date,{{scope.row.date}}</el-button>
     </template>
@@ -65,3 +65,9 @@ export default defineComponent({
   }
 })
 </script>
+<style lang="less">
+.search-form{
+
+}
+
+</style>

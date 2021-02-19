@@ -2,8 +2,10 @@ import defaultCrudOptions from './default-crud-options'
 import _ from 'lodash-es'
 import { ref } from 'vue'
 import logger from '../utils/util.log'
+import typesUtil from '../utils/util.types'
 import { ElMessageBox, ElNotification } from 'element-plus'
-export default function ({ crudRef, options }) {
+export default function (ctx) {
+  const { crudRef, options } = ctx
   const crudOptions = ref()
 
   const doRefresh = async () => {
@@ -86,14 +88,14 @@ export default function ({ crudRef, options }) {
   function useFormSubmit () {
     return {
       editForm: {
-        async doSubmit (ctx) {
-          await crudOptions.value.request.editRequest(ctx)
+        async doSubmit (context) {
+          await crudOptions.value.request.editRequest(context)
           doRefresh()
         }
       },
       addForm: {
-        async doSubmit (ctx) {
-          await crudOptions.value.request.addRequest(ctx)
+        async doSubmit (context) {
+          await crudOptions.value.request.addRequest(context)
           doRefresh()
         }
       }
@@ -133,15 +135,70 @@ export default function ({ crudRef, options }) {
       }
     }
   }
-  const setCrudOptions = (options) => {
+  const setCrudOptions = (pageOptions) => {
+    const userOptions = _.merge(
+      _.cloneDeep(defaultCrudOptions.commonOptions(ctx)),
+      pageOptions
+    )
+
+    // 分散 合并到不同的维度
+    const cellColumns = {}
+    const formColumns = {}
+    const addFormColumns = {}
+    const editFormColumns = {}
+    const viewFormColumns = {}
+    const searchColumns = {}
+
+    function mergeFromForm (targetColumns, item, key, mergeSrc) {
+      const formColumn = _.cloneDeep(item[mergeSrc]) || {}
+      formColumn.label = item.label
+      formColumn.key = key
+      targetColumns[key] = formColumn
+    }
+    function eachColumns (columns, cellParentColumns = cellColumns) {
+      _.forEach(columns, (item, key) => {
+        // types merge
+        const type = item.type
+        const typeOptions = typesUtil.getType(type)
+        if (typeOptions) {
+          _.merge(item, typeOptions)
+        }
+        const cellColumn = item.cell || {}
+        cellColumn.label = item.label
+        cellColumn.key = key
+        cellParentColumns[key] = cellColumn
+        if (item.children) {
+          eachColumns(item.children, cellColumn.children = {})
+          return
+        }
+        mergeFromForm(formColumns, item, key, 'form')
+        mergeFromForm(addFormColumns, item, key, 'addForm')
+        mergeFromForm(editFormColumns, item, key, 'editForm')
+        mergeFromForm(viewFormColumns, item, key, 'viewForm')
+        mergeFromForm(searchColumns, item, key, 'search')
+      })
+    }
+
+    eachColumns(userOptions.columns)
+
+    // 分置合并
+    userOptions.form = _.merge(_.cloneDeep(userOptions.form), { columns: formColumns })
+    userOptions.editForm = _.merge(_.cloneDeep(userOptions.form), { columns: editFormColumns }, userOptions.editForm)
+    userOptions.addForm = _.merge(_.cloneDeep(userOptions.form), { columns: addFormColumns }, userOptions.addForm)
+    userOptions.viewForm = _.merge(_.cloneDeep(userOptions.form), { columns: viewFormColumns }, userOptions.viewForm)
+    userOptions.search = _.merge({ columns: userOptions.form.columns }, { columns: searchColumns }, userOptions.search)
+    userOptions.columns = cellColumns
+    // 与默认配置合并
     crudOptions.value = _.merge(
+      defaultCrudOptions.defaultOptions,
       usePagination(),
       useFormSubmit(),
       useRemove(),
       useSearch(),
-      _.cloneDeep(defaultCrudOptions),
-      options
+      userOptions
     )
+
+    logger.info('fast-crud inited:', crudOptions.value)
   }
   setCrudOptions(options)
 

@@ -25,7 +25,9 @@
   <slot :scope="{data}"></slot>
   <el-table v-if="computedTable?.show!==false" class="fs-crud-table" v-bind="computedTable"  :data="data"  v-loading="computedTable.loading">
     <fs-column v-for="(item,key) of columns"  :column="item" :key="key" :prop="key" :slots="computedCellSlots"></fs-column>
-
+<!--    <el-table-column-->
+<!--      v-for="(item,key) of columns"  :column="item" :key="key" :prop="key"-->
+<!--    ></el-table-column>-->
     <el-table-column
         v-if="rowHandle"
         v-bind="rowHandle"
@@ -209,8 +211,8 @@ function useTable (props, ctx) {
 
 export default defineComponent({
   name: 'fs-crud',
-  inheritAttrs: false,
   emits: ['search-submit', 'search-reset'],
+  // eslint-disable-next-line vue/no-unused-components
   components: { FsRowHandle, FsContainer, FsColumn, FsFormWrapper, FsActionbar },
   props: {
     table: {

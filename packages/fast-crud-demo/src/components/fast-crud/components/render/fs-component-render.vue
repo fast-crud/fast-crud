@@ -22,23 +22,29 @@ export default {
     },
     valueBinding: {
       type: String, Object
+    },
+    dict: {
     }
   },
   setup (props, context) {
-    const attrs = {
+    const baseAttrs = {
       scope: props.scope,
-      ...context.attrs
+      ...context.attrs,
+      dict: props.dict
     }
 
+    const attrs = {
+      ...baseAttrs
+    }
     if (props.valueBinding) {
       if (typeof props.valueBinding === 'string') {
-        _.set(attrs, props.valueBinding, attrs.modelValue)
+        _.set(attrs, props.valueBinding, baseAttrs.modelValue)
       } else {
         // eslint-disable-next-line vue/no-setup-props-destructure
         const prop = props.valueBinding.prop
         // eslint-disable-next-line vue/no-setup-props-destructure
         const handle = props.valueBinding.handle
-        _.set(attrs, prop, handle({ value: attrs.modelValue }))
+        _.set(attrs, prop, handle({ value: baseAttrs.modelValue }))
       }
     }
 
@@ -50,16 +56,25 @@ export default {
         handler = eval(value)
       }
       attrs[key] = ($event) => {
-        return handler({ ...props.scope, $event, props: context.attrs })
+        return handler({ ...props.scope, $event, ...baseAttrs })
       }
     })
+
+    if (props.dict?.options) {
+      // eslint-disable-next-line vue/no-setup-props-destructure
+      const dictOpts = props.dict.options
+      if (dictOpts?.url || dictOpts?.getData) {
+        console.log('dict', props.dict)
+        props.dict.getDictData(props.scope)
+      }
+    }
 
     const childrenRender = () => {
       const children = {}
       _.forEach(props.children, (item, key) => {
         if (item instanceof Function) {
           children[key] = () => {
-            return item(props.scope)
+            return item({ ...props.scope, ...baseAttrs })
           }
         } else {
           children[key] = () => {

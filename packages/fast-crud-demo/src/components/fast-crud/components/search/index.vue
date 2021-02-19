@@ -9,15 +9,16 @@
         <slot name="prefix" :form="form"></slot>
         <template v-for="(item,key) in computedColumns"
                   :key="key">
-          <el-form-item v-bind="item" :prop="key">
+          <el-form-item v-if="item.show===true" v-bind="item" :prop="key">
             <template v-if="slots['search-' + key]">
               <fs-slot-render :slots="slots['search-' + key]" :scope="{form,key}"/>
             </template>
             <template v-else>
-              <fs-component-render v-if="item?.show!==false"
+              <fs-component-render v-if="item.component?.show!==false"
                                    :modelValue="get(form,key)"
                                    @update:modelValue="set(form,key,$event)"
-                                   v-bind="item" @input="onInput" :scope="{form}"/>
+                                   @input="onInput(item)" @change="onChange(item)"
+                                   v-bind="item.component"  :scope="{form}"/>
             </template>
 
           </el-form-item>
@@ -204,7 +205,16 @@ export default {
       }
     }
 
-    const onInput = () => {
+    const onInput = (item) => {
+      if (item.autoSearchTrigger == null || item.autoSearchTrigger === 'input') {
+        doAutoSearch()
+      }
+    }
+    const onChange = (item) => {
+      console.log('onChange')
+      if (item.autoSearchTrigger === 'change') {
+        doAutoSearch()
+      }
       doAutoSearch()
     }
     const changeInputEventDisabled = (disabled) => {
@@ -226,45 +236,12 @@ export default {
       searchFormRef,
       onInput,
       inputEventDisabled,
-      changeInputEventDisabled
+      changeInputEventDisabled,
+      onChange
     }
   },
 
   methods: {
-    handleSearchDataChange ({ value, component }, column) {
-      column.value = value
-      column.component = component
-      column.getColumn = this.getColumnTemplate
-
-      if (this.options.valueChange) {
-        const target = this.getColumnTemplate(column.key)
-        if (target && target.valueChange) {
-          target.valueChange(column.key, value, this.form, {
-            getColumn: this.getColumnTemplate,
-            mode: 'search',
-            component: component,
-            refs: this.$refs,
-            getComponent: this.getComponentRef
-          })
-        }
-      }
-      log.debug('search value change:', column.key)
-      this.$emit('search-data-change', column)
-
-      if (this.searchDebounce) {
-        // 防抖查询
-        this.searchDebounce()
-      }
-    },
-    handleSearchComponentReady ({ value, component }, column) {
-      column.event = value
-      column.component = component
-      this.$emit('search-component-ready', column)
-    },
-    handleSearchComponentCustomEvent (value, column) {
-      column.event = value
-      this.$emit('search-component-custom-event', column)
-    },
     getColumnTemplate (key) {
       log.debug('getColumn', this.currentColumns)
       for (const item of this.currentColumns) {

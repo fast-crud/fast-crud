@@ -1,6 +1,7 @@
-import { compute } from '@/components/fast-crud/core/compute-value'
+import { compute, dict } from '@/components/fast-crud'
 import * as api from '@/views/home/api'
-
+import _ from 'lodash-es'
+import { toRaw } from 'vue'
 const pageRequest = async (query) => {
   return await api.GetList(query)
 }
@@ -34,19 +35,6 @@ export default function ({ crudRef }) {
         return { currentPage: res.current, pageSize: res.size, ...res }
       }
     },
-    search: {
-      buttons: {
-        search: {
-        },
-        reset: {
-        }
-      },
-      columns: {
-        test: {
-          label: 'test'
-        }
-      }
-    },
     toolbar: {
       impact: true,
       search: true
@@ -60,19 +48,6 @@ export default function ({ crudRef }) {
       },
       show: true
     },
-    table: {
-      'element-loading-text': '加载中,请稍候',
-      onCellClick () {
-        // console.log('cell click')
-      }
-    },
-    pagination: {
-      background: true,
-      pageSize: 20,
-      pageSizes: [5, 10, 20, 50],
-      layout: 'total, sizes, prev, pager, next, jumper',
-      total: 0
-    },
     columns: {
       date: {
         label: '日期',
@@ -80,57 +55,94 @@ export default function ({ crudRef }) {
       },
       name: {
         label: '姓名',
-        component: {
-          name: 'el-button',
-          children: {
-            default: (scope) => <div>{scope.row.name}</div>
-          },
-          style: 'width:100px',
-          events: {
-            onClick: (context) => {
-              console.log('clicked', context)
-              context.row.name = context.row.name === '李四' ? '王小虎' : '李四'
+        search: { show: true },
+        cell: {
+          component: {
+            name: 'el-button',
+            children: {
+              default: (scope) => <div>{scope.row.name}</div>
             },
-            onChange (context) {
-              console.log('on change', context)
-            },
-            onInput (context) {
-              console.log('on input', context)
+            style: 'width:100px',
+            events: {
+              onClick: (context) => {
+                console.log('clicked', context)
+                context.row.name = context.row.name === '李四' ? '王小虎' : '李四'
+              },
+              onChange (context) {
+                console.log('on change', context)
+              },
+              onInput (context) {
+                console.log('on input', context)
+              }
             }
+          }
+        },
+        form: {
+          component: {
+            name: 'el-input'
           }
         }
       },
       avatar: {
         label: '头像',
-        align: 'center',
-        show: compute(() => {
-          return true
-        }),
-        component: {
-          show: compute((context) => {
-            return context.row.show === false
+        search: { show: true },
+        cell: {
+          align: 'center',
+          show: compute(() => {
+            return true
           }),
-          name: 'el-image',
-          valueBinding: 'src',
-          style: { height: '30px' },
-          fit: 'contain',
-          children: {
-            error: () => {
-              return <div class="image-slot">
-                <i class="el-icon-picture-outline" />
-              </div>
+          component: {
+            show: compute((context) => {
+              return context.row.show === false
+            }),
+            name: 'el-image',
+            valueBinding: 'src',
+            style: { height: '30px' },
+            fit: 'contain',
+            children: {
+              error: () => {
+                return <div class="image-slot">
+                  <i class="el-icon-picture-outline" />
+                </div>
+              }
             }
           }
+        },
+        form: {
+          component: {
+            name: 'el-image',
+            valueBinding: 'src',
+            style: 'width:70px'
+          },
+          style: {
+            'grid-column': 'span 2' // 跨2列
+          },
+          show: compute((context) => {
+            return context.form.show
+          })
         }
       },
       show: {
         label: '显隐',
-        component: {
-          name: 'el-switch',
-          events: {
-            onChange (context) {
-              console.log('switch context', context)
+        cell: {
+          component: {
+            name: 'el-switch',
+            events: {
+              onChange (context) {
+                console.log('switch context', context)
+              }
             }
+          }
+        },
+        form: {
+          label: compute((context) => {
+            return context.form.show ? '隐藏头像' : '显示头像'
+          }),
+          component: {
+            name: 'el-switch'
+          },
+          style: {
+            'grid-column': 'span 2' // 跨2列
           }
         }
       },
@@ -139,45 +151,45 @@ export default function ({ crudRef }) {
         children: {
           province: {
             label: '省份',
-            width: '200px',
-            component: {
-              name: 'el-input',
-              maxlength: 5,
-              'show-word-limit': true,
-              children: {
-                append () {
-                  return <div class="aaa">append</div>
+            cell: {
+              width: '200px',
+              component: {
+                name: 'el-input',
+                maxlength: 5,
+                'show-word-limit': true
+              }
+            },
+            form: {
+              component: {
+                name: 'el-select',
+                dict: dict({ data: [{ value: 'sz', label: '深圳' }, { value: 'sh', label: '上海' }] }),
+                children: {
+                  default (scope) {
+                    const arr = []
+                    const dictData = toRaw(scope.dict.data)
+                    _.forEach(dictData, (item) => {
+                      arr.push(<el-option value={item.value} label={item.label}/>)
+                    })
+                    return arr
+                  }
                 }
               }
             }
           },
           city: {
             label: '城市',
-            component: {
-              name: 'el-select',
-              children: {
-                default () {
-                  return [
-                    <el-option value="普陀区">普陀区</el-option>,
-                    <el-option value="bbbb">bbbb</el-option>
-                  ]
-                }
-              }
-            }
+            type: 'select',
+            dict: dict({ data: [{ value: 'sz', label: '深圳' }, { value: 'sh', label: '上海' }] })
           },
           address: {
             label: '地址',
-            component: {
-              clearable: true
-            }
+            search: { show: true },
+            type: 'text-area'
           }
         }
       },
       zip: {
-        label: '邮编',
-        formatter (row, column, value) {
-          return value
-        }
+        label: '邮编'
       }
     },
     rowHandle: {
@@ -197,68 +209,7 @@ export default function ({ crudRef }) {
       ]
     },
     data: [],
-    editForm: {
-      wrapper: {
-        // is: 'el-drawer',
-        title: '编辑',
-        width: '60%'
-      },
-      options: {
-        labelPosition: 'right',
-        labelWidth: '100px',
-        style: {
-          //  'grid-template-columns': '47% 47%' // grid布局，默认两列
-        }
-      },
-      columns: {
-        date: {
-          label: '日期'
-        },
-        name: {
-          label: '姓名',
-          component: {
-            name: 'el-input'
-          }
-        },
-        show: {
-          label: compute((context) => {
-            return context.form.show ? '隐藏头像' : '显示头像'
-          }),
-          component: {
-            name: 'el-switch'
-          },
-          style: {
-            'grid-column': 'span 2' // 跨2列
-          }
-        },
-        avatar: {
-          label: '头像',
-          component: {
-            name: 'el-image',
-            valueBinding: 'src',
-            style: 'width:70px'
-          },
-          style: {
-            'grid-column': 'span 2' // 跨2列
-          },
-          show: compute((context) => {
-            return context.form.show
-          })
-        },
-        address: {
-          label: '地址',
-          style: {
-            'grid-row': '2', // 在第二行显示
-            'grid-column': 'span 2' // 第一列显示，并且跨2列
-          },
-          span: 2
-        },
-        province: {
-          label: '省份'
-        }
-      }
-    },
-    addForm: {
+    form: {
       wrapper: {
         // is: 'el-drawer',
         title: '添加',
@@ -269,115 +220,6 @@ export default function ({ crudRef }) {
         labelWidth: '100px',
         style: {
           //  'grid-template-columns': '47% 47%' // grid布局，默认两列
-        }
-      },
-      columns: {
-        date: {
-          label: '日期'
-        },
-        name: {
-          label: '姓名',
-          component: {
-            name: 'el-input'
-          }
-        },
-        show: {
-          label: compute((context) => {
-            return context.form.show ? '隐藏头像' : '显示头像'
-          }),
-          component: {
-            name: 'el-switch'
-          },
-          style: {
-            'grid-column': 'span 2' // 跨2列
-          }
-        },
-        avatar: {
-          label: '头像',
-          component: {
-            name: 'el-image',
-            valueBinding: 'src',
-            style: 'width:70px'
-          },
-          style: {
-            'grid-column': 'span 2' // 跨2列
-          },
-          show: compute((context) => {
-            return context.form.show
-          })
-        },
-        address: {
-          label: '地址',
-          style: {
-            'grid-row': '2', // 在第二行显示
-            'grid-column': 'span 2' // 第一列显示，并且跨2列
-          },
-          span: 2
-        },
-        province: {
-          label: '省份'
-        }
-      }
-    },
-    viewForm: {
-      wrapper: {
-        // is: 'el-drawer',
-        title: '查看',
-        width: '60%'
-        // size: '50%',
-      },
-      options: {
-        labelPosition: 'right',
-        labelWidth: '100px',
-        style: {
-          //  'grid-template-columns': '47% 47%' // grid布局，默认两列
-        }
-      },
-      columns: {
-        date: {
-          label: '日期'
-        },
-        name: {
-          label: '姓名',
-          component: {
-            name: 'el-input'
-          }
-        },
-        show: {
-          label: compute((context) => {
-            return context.form.show ? '隐藏头像' : '显示头像'
-          }),
-          component: {
-            name: 'el-switch'
-          },
-          style: {
-            'grid-column': 'span 2' // 跨2列
-          }
-        },
-        avatar: {
-          label: '头像',
-          component: {
-            name: 'el-image',
-            valueBinding: 'src',
-            style: 'width:70px'
-          },
-          style: {
-            'grid-column': 'span 2' // 跨2列
-          },
-          show: compute((context) => {
-            return context.form.show
-          })
-        },
-        address: {
-          label: '地址',
-          style: {
-            'grid-row': '2', // 在第二行显示
-            'grid-column': 'span 2' // 第一列显示，并且跨2列
-          },
-          span: 2
-        },
-        province: {
-          label: '省份'
         }
       }
     }
