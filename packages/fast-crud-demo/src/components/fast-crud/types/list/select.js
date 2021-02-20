@@ -1,47 +1,22 @@
-import _ from 'lodash-es'
 export default {
   select: {
-    search: {
-      autoSearchTrigger: 'change'
-    },
-    cell: {
-      component: {
-        name: 'fs-values-format'
-      }
-    },
-    form: {
-      component: {
-        name: 'el-select',
-        clearable: true,
-        children: {
-          default (scope) {
-            const arr = []
-            console.log('scope', scope)
-            if (scope?.dict?.data) {
-              const dictData = scope.dict.data
-              _.forEach(dictData, (item) => {
-                console.log('render options', item)
-                arr.push(<el-option value={item.value} label={item.label}/>)
-              })
-            }
-            return arr
-          }
-        }
-      }
-    }
+    search: { autoSearchTrigger: 'change' },
+    column: { component: { name: 'fs-values-format' } },
+    form: { component: { name: 'fs-dict-select', clearable: true } }
   },
   radio: {
-    form: { component: { name: 'dict-radio', props: { elProps: { disabled: false, readonly: false } } } },
-    component: { name: 'values-format' }
+    search: { component: { name: 'fs-dict-select', clearable: true }, autoSearchTrigger: 'change' },
+    form: { component: { name: 'fs-dict-radio' } },
+    column: { component: { name: 'fs-values-format' } }
   },
   checkbox: {
-    search: { disabled: true, component: { name: 'dict-select', props: { clearable: true, multiple: true } } },
-    form: { component: { name: 'dict-checkbox', props: { elProps: { disabled: false, readonly: false } } } },
-    component: { name: 'values-format', props: {} }
+    search: { component: { name: 'fs-dict-select', clearable: true, multiple: true }, autoSearchTrigger: 'change' },
+    form: { component: { name: 'fs-dict-checkbox' } },
+    column: { component: { name: 'fs-values-format' } }
   },
   'dict-switch': {
-    search: { disabled: true, component: { name: 'dict-switch', props: { clearable: true, multiple: true } } },
-    form: { component: { name: 'dict-switch', props: { elProps: { disabled: false, readonly: false } } } },
-    component: { name: 'values-format', props: { elProps: { disabled: false, readonly: true } } }
+    search: { component: { name: 'fs-dict-switch', clearable: true, multiple: true }, autoSearchTrigger: 'change' },
+    form: { component: { name: 'fs-dict-switch' } },
+    column: { component: { name: 'fs-values-format' } }
   }
 }

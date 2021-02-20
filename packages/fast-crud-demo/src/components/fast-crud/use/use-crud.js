@@ -137,6 +137,11 @@ export default function (ctx) {
   }
   const setCrudOptions = (pageOptions) => {
     const userOptions = _.merge(
+      defaultCrudOptions.defaultOptions,
+      usePagination(),
+      useFormSubmit(),
+      useRemove(),
+      useSearch(),
       _.cloneDeep(defaultCrudOptions.commonOptions(ctx)),
       pageOptions
     )
@@ -155,19 +160,31 @@ export default function (ctx) {
       formColumn.key = key
       targetColumns[key] = formColumn
     }
-    function eachColumns (columns, cellParentColumns = cellColumns) {
+    function eachColumns (columns, columnParentColumns = cellColumns) {
       _.forEach(columns, (item, key) => {
         // types merge
-        const type = item.type
-        const typeOptions = typesUtil.getType(type)
-        if (typeOptions) {
-          item = _.merge({}, typeOptions, item)
+        if (item.type) {
+          const typeOptions = typesUtil.getType(item.type)
+          if (typeOptions) {
+            item = _.merge({}, typeOptions, item)
+          }
+        }
+        // copy dict
+
+        if (item.dict) {
+          if (item.column?.component) {
+            item.column.component.dict = _.cloneDeep(item.dict)
+          }
+          if (item.form?.component) {
+            item.form.component.dict = _.cloneDeep(item.dict)
+          }
+          console.log('item.dict', item)
         }
 
-        const cellColumn = item.cell || {}
+        const cellColumn = item.column || {}
         cellColumn.label = item.label
         cellColumn.key = key
-        cellParentColumns[key] = cellColumn
+        columnParentColumns[key] = cellColumn
         if (item.children) {
           eachColumns(item.children, cellColumn.children = {})
           return
@@ -189,15 +206,16 @@ export default function (ctx) {
     userOptions.viewForm = _.merge(_.cloneDeep(userOptions.form), { columns: viewFormColumns }, userOptions.viewForm)
     userOptions.search = _.merge({ columns: userOptions.form.columns }, { columns: searchColumns }, userOptions.search)
     userOptions.columns = cellColumns
+
+    // 单独处理viewForm的component
+    _.forEach(userOptions.viewForm.columns, (value) => {
+      if (!value.component) {
+        value.component = {}
+      }
+      value.component.disabled = true
+    })
     // 与默认配置合并
-    crudOptions.value = _.merge(
-      defaultCrudOptions.defaultOptions,
-      usePagination(),
-      useFormSubmit(),
-      useRemove(),
-      useSearch(),
-      userOptions
-    )
+    crudOptions.value = userOptions
 
     logger.info('fast-crud inited:', crudOptions.value)
   }

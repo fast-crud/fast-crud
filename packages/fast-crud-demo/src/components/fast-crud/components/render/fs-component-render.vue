@@ -99,12 +99,6 @@ export default {
       comp = resolveComponent(props.name)
     }
 
-    const onChange = ($event) => {
-      console.log('changed', $event)
-      ctx.emit('change', $event)
-    }
-    allAttrs.onChange = onChange
-
     return () => {
       return h(comp, allAttrs, childrenRender())
     }

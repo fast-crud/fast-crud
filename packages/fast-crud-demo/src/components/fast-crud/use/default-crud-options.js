@@ -3,6 +3,15 @@ export default {
   commonOptions (ctx) {
   },
   defaultOptions: {
+    form: {
+      options: {
+        labelPosition: 'right',
+        labelWidth: '80px',
+        style: {
+          //  'grid-template-columns': '47% 47%' // grid布局，默认两列
+        }
+      }
+    },
     addForm: {
       wrapper: {
         title: '添加'
@@ -11,6 +20,11 @@ export default {
     editForm: {
       wrapper: {
         title: '编辑'
+      }
+    },
+    viewForm: {
+      wrapper: {
+        title: '查看'
       }
     },
     rowHandle: {

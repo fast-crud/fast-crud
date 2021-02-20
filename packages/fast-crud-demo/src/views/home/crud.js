@@ -49,12 +49,15 @@ export default function ({ crudRef }) {
     columns: {
       date: {
         label: '日期',
-        sortable: true
+        column: {
+          sortable: true
+        }
       },
       name: {
         label: '姓名',
+        type: 'text',
         search: { show: true },
-        cell: {
+        column: {
           component: {
             name: 'el-button',
             children: {
@@ -74,17 +77,12 @@ export default function ({ crudRef }) {
               }
             }
           }
-        },
-        form: {
-          component: {
-            name: 'el-input'
-          }
         }
       },
       avatar: {
         label: '头像',
         search: { show: true },
-        cell: {
+        column: {
           align: 'center',
           show: compute(() => {
             return true
@@ -123,7 +121,7 @@ export default function ({ crudRef }) {
       },
       show: {
         label: '显隐',
-        cell: {
+        column: {
           component: {
             name: 'el-switch',
             events: {
@@ -151,19 +149,17 @@ export default function ({ crudRef }) {
           province: {
             label: '省份',
             type: 'select',
-            cell: {
-            },
-            editForm: {
-              component: {
-                dict: dict({
-                  url: '/dicts/OpenStatusEnum'
-                })
-              }
-            }
+            search: { show: true },
+            dict: dict({
+              url: '/dicts/OpenStatusEnum'
+            })
           },
           city: {
             label: '城市',
-            type: 'select'
+            type: 'select',
+            dict: dict({
+              url: '/dicts/OpenStatusEnum'
+            })
           },
           address: {
             label: '地址',
@@ -194,20 +190,6 @@ export default function ({ crudRef }) {
         }
       ]
     },
-    data: [],
-    form: {
-      wrapper: {
-        // is: 'el-drawer',
-        title: '添加',
-        width: '60%'
-      },
-      options: {
-        labelPosition: 'right',
-        labelWidth: '100px',
-        style: {
-          //  'grid-template-columns': '47% 47%' // grid布局，默认两列
-        }
-      }
-    }
+    data: []
   }
 }

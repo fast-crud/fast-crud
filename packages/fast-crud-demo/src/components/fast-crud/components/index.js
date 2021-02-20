@@ -9,6 +9,10 @@ import FsRowHandle from './crud/fs-row-handle'
 
 import FsSearch from './search'
 
+import FsDictRadio from './extends/fs-dict-radio'
+import FsDictSelect from './extends/fs-dict-select'
+import FsValuesFormat from './extends/fs-values-format'
+
 export {
   FsContainer,
   FsComponentRender,
@@ -16,5 +20,8 @@ export {
   FsForm,
   FsCrud,
   FsRowHandle,
-  FsSearch
+  FsSearch,
+  FsDictRadio,
+  FsDictSelect,
+  FsValuesFormat
 }

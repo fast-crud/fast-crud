@@ -4,13 +4,12 @@
       <span v-for="(item) in _items" :key="item[dict.value]">{{item[dict.label]}}</span>
     </template>
     <template v-else >
-      <el-tag class='tag-item' v-for="(item) in _items"
+      <el-tag class='tag-item' v-for="(item) in _items" v-bind="$attrs"
               :key="item[dict.value]"
               size="small"
               :type="item[dict.color]"
               @click="onClick(item)"
               :effect="item.effect"
-              v-bind="_elProps"
       >
         {{item[dict.label]}}
       </el-tag>
@@ -19,13 +18,15 @@
 </template>
 
 <script>
-import _ from 'lodash-es'
+import { watch, toRefs } from 'vue'
+import { useDict } from '@/components/fast-crud/core/dict'
 const COLOR_LIST = ['primary', 'success', 'warning', 'danger']
 const EFFECT_LIST = ['plain', 'light']
 
 // value格式化展示组件
 export default {
   name: 'fs-values-format',
+  emits: ['click'],
   props: {
     // 值
     modelValue: {
@@ -63,10 +64,6 @@ export default {
     autoEffects: {
       type: Array
     },
-    // el-tag的参数
-    elProps: {
-      type: Object
-    },
     // 展示类型【text, tag】
     type: {
       default: 'tag' // 可选【text,tag】
@@ -75,22 +72,30 @@ export default {
     changeReload: {
       default: undefined
     }
-
   },
   data () {
     return {}
   },
+  setup (props, ctx) {
+    const dict = useDict(props, ctx)
+    const { modelValue } = toRefs(props)
+    watch(modelValue, () => {
+      console.log('reload dict')
+      dict.reloadDict()
+    })
+    return {
+      ...dict
+    }
+  },
   computed: {
-    _elProps () {
-      const defaultElProps = { }
-      _.merge(defaultElProps, this.elProps)
-      return defaultElProps
-    },
     _items () {
       if (this.modelValue == null || this.modelValue === '') {
         return []
       }
-      const dictDataMap = this.dict.map
+      if (this.dictLoading === true) {
+        return []
+      }
+      const dictDataMap = this.dictMap
       const valueArr = this.getValueArr()
       const options = []
       const dict = this.dict

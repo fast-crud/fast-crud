@@ -1,5 +1,6 @@
 export default {
   text: {
+    search: { component: { clearable: true } },
     form: { component: { name: 'el-input', clearable: true } }
   },
   'text-area': {
