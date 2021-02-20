@@ -1,7 +1,5 @@
 import { compute, dict } from '@/components/fast-crud'
 import * as api from '@/views/home/api'
-import _ from 'lodash-es'
-import { toRaw } from 'vue'
 const pageRequest = async (query) => {
   return await api.GetList(query)
 }
@@ -118,6 +116,7 @@ export default function ({ crudRef }) {
             'grid-column': 'span 2' // 跨2列
           },
           show: compute((context) => {
+            console.log('show context', context)
             return context.form.show
           })
         }
@@ -151,39 +150,26 @@ export default function ({ crudRef }) {
         children: {
           province: {
             label: '省份',
+            type: 'select',
             cell: {
-              width: '200px',
-              component: {
-                name: 'el-input',
-                maxlength: 5,
-                'show-word-limit': true
-              }
             },
-            form: {
+            editForm: {
               component: {
-                name: 'el-select',
-                dict: dict({ data: [{ value: 'sz', label: '深圳' }, { value: 'sh', label: '上海' }] }),
-                children: {
-                  default (scope) {
-                    const arr = []
-                    const dictData = toRaw(scope.dict.data)
-                    _.forEach(dictData, (item) => {
-                      arr.push(<el-option value={item.value} label={item.label}/>)
-                    })
-                    return arr
-                  }
-                }
+                dict: dict({
+                  url: '/dicts/OpenStatusEnum'
+                })
               }
             }
           },
           city: {
             label: '城市',
-            type: 'select',
-            dict: dict({ data: [{ value: 'sz', label: '深圳' }, { value: 'sh', label: '上海' }] })
+            type: 'select'
           },
           address: {
             label: '地址',
-            search: { show: true },
+            search: {
+              show: true
+            },
             type: 'text-area'
           }
         }

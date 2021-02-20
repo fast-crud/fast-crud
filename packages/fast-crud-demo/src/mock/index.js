@@ -2,12 +2,19 @@ import { mock } from '@/api/service'
 import * as tools from '@/api/tools'
 
 const req = context => context.keys().map(context)
+
+// 模拟数据
+const commonList = req(require.context('./common/', true, /mock.*\.js$/))
+  .filter(e => e.default)
+  .map(e => e.default)
+
 // 模拟数据
 const apiList = req(require.context('../views/', true, /mock\.js$/))
   .filter(e => e.default)
   .map(e => e.default)
 
-apiList.forEach(apiFile => {
+const list = [...commonList, ...apiList]
+list.forEach(apiFile => {
   for (const item of apiFile) {
     mock
       .onAny(new RegExp(process.env.VUE_APP_API + item.path))

@@ -18,24 +18,24 @@ export default {
     const comp = resolveComponent(is)
     let children = {}
     const _slots = { ...this.$slots, ...this.slots }
-    console.log('slots', _slots)
     const slotsRender = (key, scope, slots = _slots) => {
       if (!slots[key]) {
         return null
       }
       return slots[key](scope)
     }
+    const scope = { _self: this, ...this.formProps }
     if (this.formProps) {
       children = {
         default: () => {
           return <div>
-            {slotsRender('form-body-before', this.formProps)}
+            {slotsRender('form-body-before', scope)}
             <fs-form ref="formRef" {...this.formProps}/>
-            {slotsRender('form-body-after', this.formProps)}
+            {slotsRender('form-body-after', scope)}
             <div className="fs-form-footer-btns">
-              {slotsRender('form-footer-prefix', this.formProps)}
+              {slotsRender('form-footer-prefix', scope)}
               <fs-button text="确定" onClick={this.submit} loading={this.loading}/>
-              {slotsRender('form-footer-append', this.formProps)}
+              {slotsRender('form-footer-append', scope)}
             </div>
           </div>
         }
@@ -83,6 +83,13 @@ export default {
       }
     }
 
+    function getFormData () {
+      return formRef.value.getFormData()
+    }
+    function setFormData (form) {
+      formRef.value = form
+    }
+
     return {
       close,
       closed,
@@ -92,7 +99,9 @@ export default {
       formWrapper,
       formRef,
       submit,
-      loading
+      loading,
+      getFormData,
+      setFormData
     }
   }
 }

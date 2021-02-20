@@ -3,9 +3,10 @@ import { computed } from 'vue'
 import FsCell from './fs-cell'
 import _ from 'lodash-es'
 import { ComputeValue } from '@/components/fast-crud/core/compute-value'
+import FsRender from '../render/fs-render'
 export default {
   name: 'fs-column',
-  components: { FsCell },
+  components: { FsCell, FsRender },
   props: {
     column: {
       type: Object

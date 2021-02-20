@@ -1,16 +1,23 @@
 <template>
-    <fs-component-render v-if="computedComponent?.show!==false"
-                         :modelValue="get(scope.row,prop)"
-                         @update:modelValue="set(scope.row,prop,$event)"
-                         v-bind="computedComponent"  :scope="getContextFn()"/>
+    <template  v-if="computedComponent?.show!==false">
+      <fs-render v-if="computedComponent.render"
+                           v-bind="computedComponent" :renderFunc="computedComponent.render"  :scope="getContextFn()"/>
+      <fs-component-render v-else
+                           :modelValue="get(scope.row,prop)"
+                           @update:modelValue="set(scope.row,prop,$event)"
+                           v-bind="computedComponent"  :scope="getContextFn()"/>
+    </template>
+
 </template>
 <script>
 import _ from 'lodash-es'
 import { defineComponent, inject } from 'vue'
 import { ComputeValue } from '@/components/fast-crud/core/compute-value'
+import FsRender from '../render/fs-render'
+import FsComponentRender from '../render/fs-component-render'
 export default defineComponent({
   name: 'fs-cell',
-  components: { },
+  components: { FsRender, FsComponentRender },
   props: {
     prop: {},
     column: {},
@@ -21,11 +28,10 @@ export default defineComponent({
 
     function getContextFn () {
       return {
-        ...props.scope,
-        column: props.column,
+        ...props.scope, // 展开el-table-column的scope
         getColumns,
         getColumn (key) {
-          return getColumns(key)
+          return getColumns()[key]
         }
       }
     }

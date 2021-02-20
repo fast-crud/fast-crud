@@ -180,10 +180,11 @@ function useTable (props, ctx) {
   })
   const formWrapperRef = ref()
 
-  const onRowHandle = ({ key, row, $index, index }) => {
-    index = index || $index
-    const e = { mode: key, formData: row, slots: ctx.slots, index }
-    console.log('handle', key, row, $index)
+  const onRowHandle = (scope) => {
+    let { key, row, $index, index } = scope
+    index = $index ?? index
+    const e = { mode: key, initial: row, slots: ctx.slots, index }
+    console.log('handle', scope)
     if (key === 'edit') {
       formWrapperRef.value.open({ ...props.editForm, ...e })
     } else if (key === 'view') {
@@ -193,7 +194,7 @@ function useTable (props, ctx) {
 
   const onActionHandle = (e) => {
     if (e.key === 'add') {
-      formWrapperRef.value.open({ ...props.addForm, mode: 'add', formData: e.formData, slots: ctx.slots })
+      formWrapperRef.value.open({ ...props.addForm, mode: 'add', initial: e.initial, slots: ctx.slots })
     }
   }
 

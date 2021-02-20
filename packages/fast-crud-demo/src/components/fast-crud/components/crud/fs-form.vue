@@ -1,15 +1,16 @@
 <template>
   <div class="fs-form">
-    <el-form class="fs-form-grid" ref="formRef" :model="model" v-bind="options">
+    <el-form class="fs-form-grid" ref="formRef" :model="form" v-bind="options">
       <template  v-for="(item,key) in computedColumns" :key="key" >
         <el-form-item :key="key" v-if="item.show!==false" v-bind="item">
           <fs-slot-render v-if="slots && slots['form-' + key]" :slots="slots['form-' + key]" :scope="{key,...scope}"/>
           <template v-else>
             <fs-component-render v-if="item.component?.show!==false"
                                  :ref="el => { if (el) componentRefs[key] = el }"
-                                 :modelValue="get(model,key)"
-                                 @update:modelValue="set(model,key,$event)"
-                                 v-bind="item.component"  :scope="{key,...scope}"/>
+                                 v-bind="item.component"
+                                 :modelValue="get(form,key)"
+                                 @update:modelValue="set(form,key,$event)"
+                                  :scope="{key,...scope}"/>
           </template>
         </el-form-item>
       </template>
@@ -31,7 +32,7 @@ export default {
 
     },
     // 初始数据
-    formData: {
+    initial: {
       default () {
         return {}
       }
@@ -54,28 +55,28 @@ export default {
   setup (props, ctx) {
     const formRef = ref()
 
-    const model = reactive({})
+    const form = reactive({})
     // 初始数据赋值
     _.each(props.columns, (item, key) => {
-      model[key] = props.formData[key]
+      form[key] = props.initial[key]
     })
 
     const componentRefs = ref({})
-    function getFormComponentRef (key) {
+    function getComponentRef (key) {
       return componentRefs.value[key]
     }
 
     const scope = ref({
-      row: props.formData,
-      form: model,
-      ...ctx.attrs,
-      getFormComponentRef
+      row: props.initial,
+      form,
+      index: ctx.attrs.index,
+      mode: ctx.attrs.mode,
+      attrs: ctx.attrs,
+      getComponentRef
     })
 
     function getContextFn () {
-      return {
-        ...scope.value
-      }
+      return scope.value
     }
 
     const computedColumns = computed(() => {
@@ -87,19 +88,19 @@ export default {
     }
     async function reset () {
       formRef.value.resetFields()
+      if (props.doReset) {
+        const ret = scope.value
+        await props.doReset(ret)
+      }
       ctx.emit('reset')
     }
 
     async function submit () {
       const valid = await formRef.value.validate()
-      const ret = {
-        ...scope.value
-      }
-      console.log('valid', valid, ret)
+      const ret = scope.value
       if (valid) {
         if (props.doSubmit) {
           await props.doSubmit(ret)
-          console.log('submit success')
         }
         ctx.emit('submit', ret)
       } else {
@@ -107,6 +108,13 @@ export default {
       }
 
       return valid
+    }
+
+    function getFormData () {
+      return form.value
+    }
+    function setFormData (form) {
+      form.value = form
     }
 
     return {
@@ -118,8 +126,11 @@ export default {
       reset,
       getFormRef,
       scope,
-      model,
-      componentRefs
+      form,
+      componentRefs,
+      getFormData,
+      setFormData,
+      getComponentRef
     }
   }
 }

@@ -4,6 +4,11 @@ export default {
     search: {
       autoSearchTrigger: 'change'
     },
+    cell: {
+      component: {
+        name: 'fs-values-format'
+      }
+    },
     form: {
       component: {
         name: 'el-select',
@@ -11,9 +16,11 @@ export default {
         children: {
           default (scope) {
             const arr = []
+            console.log('scope', scope)
             if (scope?.dict?.data) {
               const dictData = scope.dict.data
               _.forEach(dictData, (item) => {
+                console.log('render options', item)
                 arr.push(<el-option value={item.value} label={item.label}/>)
               })
             }

@@ -161,8 +161,9 @@ export default function (ctx) {
         const type = item.type
         const typeOptions = typesUtil.getType(type)
         if (typeOptions) {
-          _.merge(item, typeOptions)
+          item = _.merge({}, typeOptions, item)
         }
+
         const cellColumn = item.cell || {}
         cellColumn.label = item.label
         cellColumn.key = key

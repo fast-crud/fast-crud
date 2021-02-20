@@ -1,8 +1,10 @@
 <script>
 import { h, resolveComponent } from 'vue'
 import _ from 'lodash-es'
+import traceUtil from '../../utils/util.trace'
 export default {
   name: 'fs-component-render',
+  emits: ['update:dict'],
   props: {
     name: {
       type: String,
@@ -26,25 +28,33 @@ export default {
     dict: {
     }
   },
-  setup (props, context) {
+  setup (props, ctx) {
+    traceUtil.trace()
+
+    const newScope = {
+      ...ctx.attrs,
+      ...props.scope,
+      dict: props.dict
+    }
     const baseAttrs = {
+      ...ctx.attrs,
       scope: props.scope,
-      ...context.attrs,
       dict: props.dict
     }
 
-    const attrs = {
+    // 带事件的attrs
+    const allAttrs = {
       ...baseAttrs
     }
     if (props.valueBinding) {
       if (typeof props.valueBinding === 'string') {
-        _.set(attrs, props.valueBinding, baseAttrs.modelValue)
+        _.set(allAttrs, props.valueBinding, baseAttrs.modelValue)
       } else {
         // eslint-disable-next-line vue/no-setup-props-destructure
         const prop = props.valueBinding.prop
         // eslint-disable-next-line vue/no-setup-props-destructure
         const handle = props.valueBinding.handle
-        _.set(attrs, prop, handle({ value: baseAttrs.modelValue }))
+        _.set(allAttrs, prop, handle({ value: baseAttrs.modelValue }))
       }
     }
 
@@ -55,26 +65,24 @@ export default {
         // eslint-disable-next-line no-eval
         handler = eval(value)
       }
-      attrs[key] = ($event) => {
-        return handler({ ...props.scope, $event, ...baseAttrs })
+      allAttrs[key] = ($event) => {
+        return handler({ ...newScope, $event })
       }
     })
 
-    if (props.dict?.options) {
-      // eslint-disable-next-line vue/no-setup-props-destructure
-      const dictOpts = props.dict.options
-      if (dictOpts?.url || dictOpts?.getData) {
-        console.log('dict', props.dict)
-        props.dict.getDictData(props.scope)
-      }
-    }
+    // if (props.dict && !props.dict.loaded) {
+    //   props.dict.getRemoteDictData(props.scope).then(data => {
+    //     console.log('update dict', data)
+    //     ctx.emit('update:dict', data)
+    //   })
+    // }
 
     const childrenRender = () => {
       const children = {}
       _.forEach(props.children, (item, key) => {
         if (item instanceof Function) {
           children[key] = () => {
-            return item({ ...props.scope, ...baseAttrs })
+            return item(newScope)
           }
         } else {
           children[key] = () => {
@@ -85,9 +93,20 @@ export default {
       return children
     }
 
-    const comp = resolveComponent(props.name)
+    // eslint-disable-next-line vue/no-setup-props-destructure
+    let comp = props.name
+    if (props.name !== 'div') {
+      comp = resolveComponent(props.name)
+    }
+
+    const onChange = ($event) => {
+      console.log('changed', $event)
+      ctx.emit('change', $event)
+    }
+    allAttrs.onChange = onChange
+
     return () => {
-      return h(comp, attrs, childrenRender())
+      return h(comp, allAttrs, childrenRender())
     }
   }
 }

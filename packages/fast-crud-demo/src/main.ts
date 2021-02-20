@@ -2,6 +2,7 @@ import { createApp } from 'vue'
 import App from './App.vue'
 import router from './router'
 import FastCrud from './components/fast-crud'
+import FastCrudExtends from './components/fast-extends'
 
 import ElementPlus from 'element-plus'
 import 'element-plus/lib/theme-chalk/index.css'
@@ -18,10 +19,12 @@ app.use(router)
 app.use(i18n)
 app.use(FastCrud, {
   i18n: i18n.global.t,
-  dictRequest ({ url }) {
-    const res = requestForMock({ url })
-    return res.data
+  async dictRequest ({ dict }) {
+    const res = await requestForMock({ url: dict.url })
+    console.log('get dict', res)
+    return res
   },
   commonOptions () { return {} }
 })
+app.use(FastCrudExtends)
 app.mount('#app')

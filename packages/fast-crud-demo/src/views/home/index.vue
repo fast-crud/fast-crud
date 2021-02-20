@@ -13,7 +13,7 @@
     </template>
 
     <template #form-footer-prefix="scope">
-      <el-button @click="formBodyClick(scope)">form-footer-prefix</el-button>
+      <el-button @click="closeDialog(scope)">取消</el-button>
     </template>
 
     <template #form-footer-append="scope">
@@ -30,9 +30,9 @@
 </template>
 
 <script >
-import { defineComponent, ref, onMounted } from 'vue'
+import { defineComponent, ref, onMounted, isReactive } from 'vue'
 import { ElNotification } from 'element-plus'
-import { useCrud } from '@/components/fast-crud/index.js'
+import { useCrud, dict } from '@/components/fast-crud/index.js'
 import createCrudOptions from './crud'
 export default defineComponent({
   setup () {
@@ -46,6 +46,9 @@ export default defineComponent({
       crud.doRefresh()
     })
 
+    const res = dict({})
+    console.log('isReactive:', res, isReactive(res))
+
     const formBodyClick = (scope) => {
       console.log('scope', scope)
       ElNotification.success('mode:' + scope.mode)
@@ -56,11 +59,22 @@ export default defineComponent({
       ElNotification.success(scope.row[key])
     }
 
+    function closeDialog (scope) {
+      scope._self.close()
+    }
+
+    // onRenderTracked((event) => {
+    //   console.log('状态跟踪组件----------->', event.key, event)
+    // })
+    // onRenderTriggered((event) => {
+    //   console.log('状态触发组件--------------->', event.key, event)
+    // })
     return {
       ...crud,
       dateClick,
       crudRef,
-      formBodyClick
+      formBodyClick,
+      closeDialog
     }
   }
 })

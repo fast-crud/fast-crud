@@ -8,19 +8,19 @@ const list = [
     name: 'aa',
     date: '2016-05-02',
     status: '0',
-    province: 'sz'
+    province: '1'
   },
   {
     name: 'bb',
     date: '2016-05-04',
     status: '1',
-    province: 'sh,sz'
+    province: '2'
   },
   {
     name: 'cc',
     date: 2232433534511,
     status: '1',
-    province: 'gz'
+    province: '0'
   },
   {
     name: 'dd',

@@ -10,28 +10,55 @@ let def = {
 }
 export class Dict {
   constructor (opts) {
-    this.options = _.merge(def, opts)
-    this.data = this.options.data || []
-    this.loading = false
+    const options = _.merge(def, opts)
+    const { url, getData, value, label, children } = options
+    this.value = value
+    this.label = label
+    this.children = children
+    this.data = options.data || []
+    this.loaded = false
+    this.url = url
+    this._CustomGetDataFunc = getData
+    // this.init()
   }
 
-  async getDictData (scope) {
-    if (this.loading === true) {
+  async init () {
+    this.toMap()
+    if (this._CustomGetDataFunc) {
       return
     }
-    this.loading = true
-    try {
-      const dictData = await dictRequest({ ...this.options, ...scope })
-      if (dictData) {
-        this.data = dictData
-      }
-    } finally {
-      this.loading = false
+    if (this.url) {
+      await this.getRemoteDictData()
     }
+  }
+
+  toMap () {
+    this.map = {}
+    if (this.data) {
+      _.forEach(this.data, (item) => {
+        this.map[item[this.value]] = item
+      })
+    }
+  }
+
+  async getRemoteDictData (scope) {
+    let dictData
+    if (this._CustomGetDataFunc) {
+      dictData = await this._CustomGetDataFunc({ dict: this, ...scope })
+    } else {
+      dictData = await dictRequest({ dict: this })
+    }
+    this.loaded = true
+    return dictData
+  }
+
+  getData () {
+    return this.data
   }
 
   setData (data) {
     this.data = data
+    this.toMap()
   }
 
   static create (opts) {
@@ -48,5 +75,15 @@ export function setDictDefaultOptions (defaultOpts) {
 }
 
 export function dict (opts) {
-  return Dict.create(opts)
+  const dictInstance = Dict.create(opts)
+  return () => {
+    return {
+      dict: dictInstance,
+      updateDict: (dictData) => {
+        dictInstance.data = dictData
+        dictInstance.setData(dictData)
+        console.log('onupdate dict-----', dictInstance)
+      }
+    }
+  }
 }
