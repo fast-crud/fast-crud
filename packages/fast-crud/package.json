@@ -4,46 +4,50 @@
   "private": true,
   "scripts": {
     "dev": "vue-cli-service serve",
-    "build": "vue-cli-service build --report --target lib ./src/index.js",
-    "lint": "vue-cli-service lint"
+    "test:unit": "vue-cli-service test:unit",
+    "lint": "vue-cli-service lint",
+    "build": "vue-cli-service build --report --target lib ./src/index.js"
   },
   "peerDependencies": {
+    "deepdash-es": "^5.3.5",
     "lodash-es": "^4.17.20",
-    "vue": "^3.0.4"
+    "vue": "^3.0.4",
+    "vue-i18n": "^9.0.0-rc.2"
   },
   "devDependencies": {
-    "@babel/core": "^7.12.10",
-    "@babel/eslint-parser": "^7.12.1",
-    "@vue/cli-plugin-babel": "~5.0.0-alpha.3",
-    "@vue/cli-plugin-eslint": "~5.0.0-alpha.3",
-    "@vue/cli-plugin-router": "~5.0.0-alpha.3",
-    "@vue/cli-plugin-unit-mocha": "~5.0.0-alpha.3",
-    "@vue/cli-plugin-webpack-4": "^5.0.0-alpha.3",
-    "@vue/cli-service": "~5.0.0-alpha.3",
-    "@vue/compiler-sfc": "^3.0.4",
-    "@vue/eslint-config-standard": "^6.0.0",
+    "@types/chai": "^4.2.11",
+    "@types/mocha": "^5.2.4",
+    "@typescript-eslint/eslint-plugin": "^2.33.0",
+    "@typescript-eslint/parser": "^2.33.0",
+    "@vue/cli-plugin-babel": "~4.5.0",
+    "@vue/cli-plugin-eslint": "~4.5.0",
+    "@vue/cli-plugin-router": "~4.5.0",
+    "@vue/cli-plugin-typescript": "~4.5.0",
+    "@vue/cli-plugin-unit-mocha": "~4.5.0",
+    "@vue/cli-service": "~4.5.0",
+    "@vue/compiler-sfc": "^3.0.0",
+    "@vue/eslint-config-standard": "^5.1.2",
+    "@vue/eslint-config-typescript": "^5.0.2",
     "@vue/test-utils": "^2.0.0-0",
-    "babel-eslint": "^10.1.0",
-    "babel-plugin-import": "^1.13.3",
-    "chai": "^4.2.0",
-    "compression-webpack-plugin": "^5.0.1",
-    "eslint": "^7.15.0",
+    "chai": "^4.1.2",
+    "eslint": "^6.7.2",
     "eslint-plugin-import": "^2.20.2",
     "eslint-plugin-node": "^11.1.0",
     "eslint-plugin-promise": "^4.2.1",
-    "eslint-plugin-standard": "^5.0.0",
-    "eslint-plugin-vue": "^7.2.0",
+    "eslint-plugin-standard": "^4.0.0",
+    "eslint-plugin-vue": "^7.0.0-0",
     "less": "^3.0.4",
     "less-loader": "^5.0.0",
     "lint-staged": "^9.5.0",
-    "postcss": "^8.2.4"
+    "typescript": "~3.9.3"
   },
-  "resolutions": {
-    "@vue/cli-*/webpack": "^4.0.0"
+  "gitHooks": {
+    "pre-commit": "lint-staged"
   },
-  "browserslist": [
-    "> 1%",
-    "last 2 versions",
-    "not dead"
-  ]
+  "lint-staged": {
+    "*.{js,jsx,vue,ts,tsx}": [
+      "vue-cli-service lint",
+      "git add"
+    ]
+  }
 }

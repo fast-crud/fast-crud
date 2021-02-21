@@ -1,4 +1,4 @@
-import { compute, dict } from '@/components/fast-crud'
+import { compute, dict } from '@fast-crud/fast-crud'
 import * as api from '@/views/home/api'
 const pageRequest = async (query) => {
   return await api.GetList(query)

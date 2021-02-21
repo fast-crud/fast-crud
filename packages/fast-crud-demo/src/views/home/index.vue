@@ -32,7 +32,7 @@
 <script >
 import { defineComponent, ref, onMounted, isReactive } from 'vue'
 import { ElNotification } from 'element-plus'
-import { useCrud, dict } from '@/components/fast-crud/index.js'
+import { useCrud, dict } from '@fast-crud/fast-crud'
 import createCrudOptions from './crud'
 export default defineComponent({
   setup () {

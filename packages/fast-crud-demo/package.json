@@ -9,6 +9,7 @@
     "lint": "vue-cli-service lint"
   },
   "dependencies": {
+    "@fast-crud/fast-crud": "^0.1.0",
     "axios": "^0.21.1",
     "axios-mock-adapter": "^1.19.0",
     "core-js": "^3.6.5",
