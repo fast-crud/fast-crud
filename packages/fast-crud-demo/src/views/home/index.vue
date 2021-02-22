@@ -1,5 +1,5 @@
 <template>
-  <fs-crud class="home-page" ref="crudRef" v-bind="crudOptions">
+  <fs-crud class="home-page" ref="crudRef" v-bind="crudOptions" :columns="columns" >
     <template #cell-date="scope">
       <el-button @click="dateClick('date',scope)" >cell- date,{{scope.row.date}}</el-button>
     </template>
@@ -26,6 +26,7 @@
     <template #pagination-append>
       <el-button >批量删除</el-button>
     </template>
+
   </fs-crud>
 </template>
 

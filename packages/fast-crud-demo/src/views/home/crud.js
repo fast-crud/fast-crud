@@ -18,6 +18,9 @@ const addRequest = async ({ form }) => {
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 export default function ({ crudRef }) {
   return {
+    table: {
+      show: true
+    },
     options: {
 
     },
@@ -171,6 +174,7 @@ export default function ({ crudRef }) {
       }
     },
     rowHandle: {
+      show: false,
       label: '操作',
       width: '300px',
       edit: {

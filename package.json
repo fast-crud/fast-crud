@@ -1,6 +1,9 @@
 {
   "name": "fast-crud-root",
   "private": true,
+  "scripts": {
+    "bootstrap": "lerna bootstrap --hoist"
+  },
   "devDependencies": {
     "lerna": "^4.0.0"
   }

@@ -32,13 +32,18 @@
     <slot :scope="{data}"/>
     <el-table v-if="computedTable?.show!==false" class="fs-crud-table" v-bind="computedTable" :data="data"
               v-loading="computedTable.loading">
-      <fs-column v-for="(item,key) of columns" :column="item" :key="key" :prop="key"
-                 :slots="computedCellSlots"></fs-column>
-      <!--    <el-table-column-->
-      <!--      v-for="(item,key) of columns"  :column="item" :key="key" :prop="key"-->
-      <!--    ></el-table-column>-->
+<!--      <fs-column v-for="(item,key) of columns" :column="item" :key="key" :prop="key"-->
+<!--                 :slots="computedCellSlots"></fs-column>-->
       <el-table-column
-          v-if="rowHandle"
+        v-for="(item,key) of columns"  v-bind="item" :key="key" :prop="key"
+      >
+        <template #default="scope">
+          {{scope.row[key]}}
+        </template>
+      </el-table-column>
+
+      <el-table-column
+          v-if="rowHandle && rowHandle.show!==false"
           v-bind="rowHandle"
           prop="rowHandle"
       >

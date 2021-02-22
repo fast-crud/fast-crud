@@ -1,6 +1,6 @@
 import defaultCrudOptions from './default-crud-options'
 import _ from 'lodash-es'
-import { ref, nextTick } from 'vue'
+import { reactive, nextTick } from 'vue'
 import logger from '../utils/util.log'
 import typesUtil from '../utils/util.types'
 import { ElMessageBox, ElNotification } from 'element-plus'
@@ -24,40 +24,44 @@ export interface CrudOptions{
 export default function (ctx) {
   const options: CrudOptions = ctx.options
   const crudRef = ctx.crudRef
-  const crudOptions = ref()
+  let crudOptions = {}
+  let columns = {}
 
   async function doRefresh () {
-    const pagination = crudOptions.value.pagination
+    const pagination = crudOptions.pagination
     let page
     if (pagination) {
       page = { currentPage: pagination.currentPage, pageSize: pagination.pageSize }
     }
-    const searchFormData = crudRef.value.getSearchFormData()
+    const searchFormData = {}
+    if (crudRef.value) {
+      crudRef.value.getSearchFormData()
+    }
     let query = { page, form: searchFormData }
-    if (crudOptions.value.request.transformQuery) {
-      query = crudOptions.value.request.transformQuery(query)
+    if (crudOptions.request.transformQuery) {
+      query = crudOptions.request.transformQuery(query)
     }
 
-    crudOptions.value.table.loading = true
+    crudOptions.table.loading = true
     let pageRes
     try {
-      pageRes = await crudOptions.value.request.pageRequest(query)
+      pageRes = await crudOptions.request.pageRequest(query)
     } finally {
-      crudOptions.value.table.loading = false
+      crudOptions.table.loading = false
     }
     if (pageRes == null) {
       logger.warn('pageRequest返回结果不能为空')
       return
     }
-    if (crudOptions.value.request.transformRes) {
-      pageRes = crudOptions.value.request.transformRes({ res: pageRes, query })
+    if (crudOptions.request.transformRes) {
+      pageRes = crudOptions.request.transformRes({ res: pageRes, query })
     }
     let { currentPage = page.currentPage, pageSize = page.pageSize, total, records } = pageRes
     if (records == null) {
       logger.warn('pageRequest返回结构不正确，请配置transform，期望：{currentPage, pageSize, total, records:[]},实际返回：', pageRes)
       return
     }
-    crudOptions.value.data = records || (records = [])
+    crudOptions.data = records || (records = [])
     if (pagination) {
       pagination.currentPage = currentPage
       pagination.pageSize = pageSize
@@ -66,7 +70,7 @@ export default function (ctx) {
   }
 
   function doPageTurn (no: number) {
-    crudOptions.value.pagination.currentPage = no
+    crudOptions.pagination.currentPage = no
   }
   /**
    *
@@ -81,7 +85,7 @@ export default function (ctx) {
     if (opts.goFirstPage) {
       doPageTurn(1)
     }
-    if (opts.form) {
+    if (opts.form && crudRef.value) {
       crudRef.value.setSearchFormData(opts)
     }
 
@@ -92,11 +96,11 @@ export default function (ctx) {
     return {
       pagination: {
         onSizeChange (event) {
-          crudOptions.value.pagination.pageSize = event
+          crudOptions.pagination.pageSize = event
           doRefresh()
         },
         onCurrentChange (event) {
-          crudOptions.value.pagination.currentPage = event
+          crudOptions.pagination.currentPage = event
           doRefresh()
         }
       }
@@ -107,13 +111,13 @@ export default function (ctx) {
     return {
       editForm: {
         async doSubmit (context) {
-          await crudOptions.value.request.editRequest(context)
+          await crudOptions.request.editRequest(context)
           doRefresh()
         }
       },
       addForm: {
         async doSubmit (context) {
-          await crudOptions.value.request.addRequest(context)
+          await crudOptions.request.addRequest(context)
           doRefresh()
         }
       }
@@ -134,7 +138,7 @@ export default function (ctx) {
               logger.info('用户取消删除')
               return
             }
-            await crudOptions.value.request.delRequest(context.row.id)
+            await crudOptions.request.delRequest(context.row.id)
             ElNotification({
               type: 'success',
               message: '删除成功!'
@@ -159,15 +163,16 @@ export default function (ctx) {
       onUpdate (e) {
         logger.debug('onUpdate', e)
         if (e.key === 'columns') {
-          _.forEach(crudOptions.value.columns, (value, key) => {
-            delete crudOptions.value.columns[key]
+          _.forEach(crudOptions.columns, (value, key) => {
+            delete crudOptions.columns[key]
           })
           nextTick(() => {
-            crudOptions.value.columns = e.value
+            crudOptions.columns = e
           })
           return
         }
-        _.set(crudOptions.value, e.key, e.value)
+        console.log('crudOptions', crudOptions)
+        _.set(crudOptions, e.key, e.value)
       },
       onRefresh () {
         doRefresh()
@@ -255,9 +260,13 @@ export default function (ctx) {
       value.component.disabled = true
     })
     // 与默认配置合并
-    crudOptions.value = userOptions
+    const temp = userOptions.columns
+    delete userOptions.columns
+    crudOptions = reactive(userOptions)
 
-    logger.info('fast-crud inited:', crudOptions.value)
+    columns = reactive(temp)
+
+    logger.info('fast-crud inited:', crudOptions)
   }
 
   setCrudOptions(options)
@@ -267,6 +276,7 @@ export default function (ctx) {
     doPageTurn,
     doSearch,
     setCrudOptions,
-    crudOptions
+    crudOptions,
+    columns
   }
 }
