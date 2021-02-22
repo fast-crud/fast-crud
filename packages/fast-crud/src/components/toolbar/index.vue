@@ -2,14 +2,13 @@
   <div class="fs-toolbar" >
     <slot name="toolbar-prefix"/>
     <template v-for="(item,key) of _buttons" :key="key">
-      <fs-button v-if="item?.show!==false" v-bind="item" @click="doClick(item.click)"/>
+      <fs-button v-if="item?.show!==false" v-bind="item" @click="doClick(item)"/>
     </template>
     <slot name="toolbar-append"/>
-    <fs-table-columns-filter v-if="columns!=null" ref="columnsSetup"
-                             v-model="columnsFilter.value"
-                             :options="columnsFilter.options"
-                             :storage="storage"
-                             @change="handleColumnsFilterChanged"/>
+    <fs-table-columns-filter v-if="columns" ref="columnsFilterRef"
+                             :columns="columns"
+                             @update:columns="$emit('update:columns',$event)"
+                             :storage="storage"/>
 
   </div>
 </template>
@@ -18,10 +17,12 @@
 import FsTableColumnsFilter from './fs-table-columns-filter/component'
 import FsButton from '../basic/fs-button'
 import _ from 'lodash-es'
-
+import { ref } from 'vue'
+import traceUtil from '../../utils/util.trace'
 export default {
   name: 'fs-toolbar',
   components: { FsTableColumnsFilter, FsButton },
+  emits: ['refresh', 'update:search', 'update:compact', 'update:columns'],
   props: {
     buttons: {
       type: Object
@@ -42,10 +43,10 @@ export default {
       default: true
     },
     /**
-     * 列配置，传null隐藏按钮
+     * 列配置
      */
     columns: {
-      type: Array,
+      type: Object,
       default: undefined
     },
     /**
@@ -57,21 +58,12 @@ export default {
       default: true
     }
   },
-  data () {
+  setup () {
+    const columnsFilterRef = ref()
+    traceUtil.trace()
     return {
-      columnsFilter: {
-        value: [],
-        options: []
-      }
+      columnsFilterRef
     }
-  },
-  watch: {
-    columns (value) {
-      this.setColumns(value)
-    }
-  },
-  created () {
-    this.setColumns(this.columns)
   },
   computed: {
     _buttons () {
@@ -81,16 +73,16 @@ export default {
           icon: 'el-icon-refresh',
           title: '刷新',
           circle: true,
-          click () {
+          click: () => {
             this.doRefresh()
           }
         },
         search: {
           type: 'primary',
           icon: 'el-icon-search',
-          title: '刷新',
+          title: '查询显示',
           circle: true,
-          click () {
+          click: () => {
             this.doSearch()
           }
         },
@@ -99,7 +91,7 @@ export default {
           icon: 'el-icon-rank',
           title: '紧凑模式',
           circle: true,
-          click () {
+          click: () => {
             this.doCompact()
           }
         },
@@ -108,7 +100,7 @@ export default {
           icon: 'el-icon-upload2',
           title: '导出',
           circle: true,
-          click () {
+          click: () => {
             this.doExport()
           }
         },
@@ -117,7 +109,7 @@ export default {
           icon: 'el-icon-set-up',
           title: '列设置',
           circle: true,
-          click () {
+          click: () => {
             this.doColumnsFilter()
           }
         }
@@ -125,15 +117,18 @@ export default {
 
       _.merge(defaultButtons, this.buttons)
       if (defaultButtons.search) {
-        defaultButtons.search.type = this.search ? 'primary' : ''
+        defaultButtons.search.type = this.search ? 'primary' : 'default'
       }
       if (defaultButtons.compact) {
-        defaultButtons.compact.type = this.compact ? 'primary' : ''
+        defaultButtons.compact.type = this.compact ? 'primary' : 'default'
       }
       return defaultButtons
     }
   },
   methods: {
+    doClick (item) {
+      item.click()
+    },
     doRefresh () {
       this.$emit('refresh')
     },
@@ -144,17 +139,10 @@ export default {
       this.$emit('update:compact', !this.compact)
     },
     doColumnsFilter () {
-      this.$refs.columnsSetup.start()
-    },
-    handleColumnsFilterChanged (event) {
-      this.$emit('columns-filter-changed', event)
+      this.columnsFilterRef.start()
     },
     doExport () {
       this.$emit('export')
-    },
-    setColumns (columns) {
-      this.columnsFilter.options = _.cloneDeep(columns)
-      this.columnsFilter.value = _.cloneDeep(columns)
     }
   }
 }

@@ -2,6 +2,6 @@
   "name": "fast-crud-root",
   "private": true,
   "devDependencies": {
-    "lerna": "^3.18.4"
+    "lerna": "^4.0.0"
   }
 }

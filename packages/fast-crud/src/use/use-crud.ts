@@ -1,6 +1,6 @@
 import defaultCrudOptions from './default-crud-options'
 import _ from 'lodash-es'
-import { ref } from 'vue'
+import { ref, nextTick } from 'vue'
 import logger from '../utils/util.log'
 import typesUtil from '../utils/util.types'
 import { ElMessageBox, ElNotification } from 'element-plus'
@@ -153,6 +153,27 @@ export default function (ctx) {
       }
     }
   }
+
+  function useEvent () {
+    return {
+      onUpdate (e) {
+        logger.debug('onUpdate', e)
+        if (e.key === 'columns') {
+          _.forEach(crudOptions.value.columns, (value, key) => {
+            delete crudOptions.value.columns[key]
+          })
+          nextTick(() => {
+            crudOptions.value.columns = e.value
+          })
+          return
+        }
+        _.set(crudOptions.value, e.key, e.value)
+      },
+      onRefresh () {
+        doRefresh()
+      }
+    }
+  }
   function setCrudOptions (pageOptions: CrudOptions) {
     const userOptions = _.merge(
       defaultCrudOptions.defaultOptions,
@@ -160,6 +181,7 @@ export default function (ctx) {
       useFormSubmit(),
       useRemove(),
       useSearch(),
+      useEvent(),
       _.cloneDeep(defaultCrudOptions.commonOptions(ctx)),
       pageOptions
     )

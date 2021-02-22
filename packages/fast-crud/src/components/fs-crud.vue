@@ -1,64 +1,74 @@
 <template>
-<fs-container class="fs-crud-container" :class="{impact:toolbar.impact}">
-  <template #header>
-    <slot name="header-before"/>
-    <div class="fs-crud-header">
-      <div class="fs-crud-search">
-        <fs-search ref="searchRef"  v-bind="search"  @search="onSearchSubmit" @reset="onSearchReset" :slots="computedSearchSlots"/>
-      </div>
-      <div class="fs-crud-actionbar" v-if="actionbar?.show!==false">
-        <slot name="actionbar-prefix"/>
-        <fs-actionbar v-bind="actionbar" @action="onActionHandle"></fs-actionbar>
-        <slot name="actionbar-append"/>
-      </div>
-      <div class="fs-crud-toolbar" v-if="toolbar?.show!==false">
-        <slot name="toolbar-prefix"/>
-        <fs-toolbar v-bind="toolbar"
-                    @update:search="$emit('update:search',$event)"
-                    @update:compact="$emit('update:compact',$event)"
-                    @update:columns="$emit('update:columns',$event)"
-                    @action="onToolbarHandle"></fs-toolbar>
-        <slot name="toolbar-append"/>
-      </div>
-    </div>
-    <slot name="header-after"/>
-  </template>
-  <slot :scope="{data}"/>
-  <el-table v-if="computedTable?.show!==false" class="fs-crud-table" v-bind="computedTable"  :data="data"  v-loading="computedTable.loading">
-    <fs-column v-for="(item,key) of columns"  :column="item" :key="key" :prop="key" :slots="computedCellSlots"></fs-column>
-<!--    <el-table-column-->
-<!--      v-for="(item,key) of columns"  :column="item" :key="key" :prop="key"-->
-<!--    ></el-table-column>-->
-    <el-table-column
-        v-if="rowHandle"
-        v-bind="rowHandle"
-        prop="rowHandle"
-    >
-      <template  #default="scope" >
-        <fs-row-handle v-bind="rowHandle" :scope="scope" @handle="onRowHandle"></fs-row-handle>
-      </template>
-    </el-table-column>
-  </el-table>
+  <fs-container class="fs-crud-container" :class="{compact:toolbar.compact!==false}">
+    <template #header>
+      <div class="fs-crud-header">
+        <slot name="header-before"/>
+        <div class="fs-crud-search">
+          <fs-search ref="searchRef" v-bind="search" @search="onSearchSubmit" @reset="onSearchReset"
+                     :slots="computedSearchSlots"/>
+        </div>
+        <div class="fs-crud-actionbar" v-if="actionbar?.show!==false">
+          <slot name="actionbar-prefix"/>
+          <fs-actionbar v-bind="actionbar" @action="onActionHandle"></fs-actionbar>
+          <slot name="actionbar-append"/>
+        </div>
 
-  <fs-form-wrapper ref="formWrapperRef"  :slots="computedFormSlots"/>
+        <div class="fs-crud-toolbar" v-if="toolbar?.show!==false">
+          <slot name="toolbar-prefix"/>
+          <fs-toolbar v-bind="toolbar"
+                      :search="search?.show"
+                      @update:search="$emit('update',{key:'search.show',value:$event})"
+                      :compact="toolbar.compact"
+                      @update:compact="$emit('update',{key:'toolbar.compact',value:$event})"
+                      :columns="columns"
+                      @update:columns="$emit('update',{key:'columns',value:$event})"
+                      @refresh="$emit('refresh')"
+                      @action="onToolbarHandle"></fs-toolbar>
+          <slot name="toolbar-append"/>
+        </div>
+        <slot name="header-after"/>
+      </div>
+    </template>
+    <slot :scope="{data}"/>
+    <el-table v-if="computedTable?.show!==false" class="fs-crud-table" v-bind="computedTable" :data="data"
+              v-loading="computedTable.loading">
+      <fs-column v-for="(item,key) of columns" :column="item" :key="key" :prop="key"
+                 :slots="computedCellSlots"></fs-column>
+      <!--    <el-table-column-->
+      <!--      v-for="(item,key) of columns"  :column="item" :key="key" :prop="key"-->
+      <!--    ></el-table-column>-->
+      <el-table-column
+          v-if="rowHandle"
+          v-bind="rowHandle"
+          prop="rowHandle"
+      >
+        <template #default="scope">
+          <fs-row-handle v-bind="rowHandle" :scope="scope" @handle="onRowHandle"></fs-row-handle>
+        </template>
+      </el-table-column>
+    </el-table>
 
-  <template #footer>
-    <slot name="footerBefore"/>
-    <div class="fs-crud-pagination">
-      <div class="fs-pagination-prefix">
-        <slot name="pagination-prefix"/>
-      </div>
-      <div class="fs-pagination">
-        <el-pagination v-bind="pagination"/>
-      </div>
-      <div class="fs-pagination-append">
-        <slot name="pagination-append"/>
-      </div>
-    </div>
-    <slot name="footerAfter"/>
-  </template>
+    <fs-form-wrapper ref="formWrapperRef" :slots="computedFormSlots"/>
 
-</fs-container>
+    <template #footer>
+      <div class="fs-crud-footer">
+        <slot name="footerBefore"/>
+        <div class="fs-crud-pagination">
+          <div class="fs-pagination-prefix">
+            <slot name="pagination-prefix"/>
+          </div>
+          <div class="fs-pagination">
+            <el-pagination v-bind="pagination"/>
+          </div>
+          <div class="fs-pagination-append">
+            <slot name="pagination-append"/>
+          </div>
+        </div>
+        <slot name="footerAfter"/>
+      </div>
+    </template>
+
+  </fs-container>
 </template>
 <script>
 import { defineComponent, computed, provide, ref } from 'vue'
@@ -70,7 +80,7 @@ import FsFormWrapper from './crud/fs-form-wrapper'
 import FsActionbar from './actionbar'
 import FsToolbar from './toolbar'
 import { ComputeValue } from '../core/compute-value'
-
+import traceUtil from '../utils/util.trace'
 function useProviders (props, ctx) {
   provide('get:columns', () => {
     return props.columns
@@ -107,6 +117,7 @@ function useSearch (props, ctx) {
   const getSearchFormData = () => {
     return searchFormData.value
   }
+
   /**
    * 设置form值
    * @param form form对象
@@ -159,13 +170,12 @@ function useTable (props, ctx) {
       stripe: true,
       border: true
     }
-
     return _.merge(def, ComputeValue.buildBindProps(props.table), ctx.attrs)
   })
 
   const computedToolbar = computed(() => {
     const def = {
-      impact: true
+      compact: true
     }
     return _.merge(def, ComputeValue.buildBindProps(props.toolbar))
   })
@@ -219,7 +229,7 @@ function useTable (props, ctx) {
 
 export default defineComponent({
   name: 'fs-crud',
-  emits: ['search-submit', 'search-reset'],
+  emits: ['search-submit', 'search-reset', 'update', 'refresh'],
   // eslint-disable-next-line vue/no-unused-components
   components: { FsRowHandle, FsContainer, FsColumn, FsFormWrapper, FsActionbar, FsToolbar },
   props: {
@@ -242,7 +252,7 @@ export default defineComponent({
   },
   setup (props, ctx) {
     console.log('ctx', ctx)
-
+    // traceUtil.trace()
     useProviders()
     const search = useSearch(props, ctx)
     const table = useTable(props, ctx, search)
@@ -256,55 +266,71 @@ export default defineComponent({
 <style lang="less">
 
 .fs-crud-container {
-  &.impact{
-    .el-table--border{
-      border-left:0
+  &.compact {
+    .el-table--border {
+      border-left: 0
+    }
+    .fs-crud-header{
+      padding-left: 10px;
+      padding-right: 10px;
+    }
+    .fs-crud-footer{
+      padding-left:10px;
+      padding-right: 10px;
     }
   }
 
-  .fs-crud-header{
+  .fs-crud-header {
     display: grid;
     grid-template-columns: 50% 50%;
+    padding: 10px 0;
 
-    .fs-crud-search{
+    .fs-crud-search {
       grid-column: span 2;
-      padding:6px;
+      padding-bottom: 5px;
     }
 
-    .fs-crud-actionbar{
-      padding:6px;
+    .fs-crud-actionbar {
+      padding-top: 5px;
     }
-    .fs-crud-toolbar{
+
+    .fs-crud-toolbar {
       display: flex;
       justify-content: flex-end;
       align-items: center;
-      margin-right:20px;
+      margin-right: 20px;
     }
   }
 
   .fs-crud-table {
     height: 100%;
-    width:100%
+    width: 100%
   }
 
-  .fs-crud-pagination{
-    padding:10px;
-    display: flex;
-    flex-direction: row;
-    justify-content: center;
-    align-items: center;
-    .fs-pagination-append{
-      flex:0
-    }
-    .fs-pagination{
-      flex:1;
-      .el-pagination{
-        padding-left:0;
-        padding-right:0;
+  .fs-crud-footer{
+    padding:10px 0;
+    .fs-crud-pagination {
+      display: flex;
+      flex-direction: row;
+      justify-content: center;
+      align-items: center;
+
+      .fs-pagination-append {
+        flex: 0
       }
-    }
-    .fs-pagination-append{
-      flex:0
+
+      .fs-pagination {
+        flex: 1;
+
+        .el-pagination {
+          padding-left: 0;
+          padding-right: 0;
+        }
+      }
+
+      .fs-pagination-append {
+        flex: 0
+      }
     }
   }
 

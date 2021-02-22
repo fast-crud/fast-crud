@@ -5,7 +5,7 @@ export default class TableStore {
   }
 
   getTableId (name) {
-    let storeName = 'd2CrudPlus'
+    let storeName = 'fs-crud'
     if (process.env.VUE_APP_D2P_STORE_NAME) {
       storeName = process.env.VUE_APP_D2P_STORE_NAME
     }

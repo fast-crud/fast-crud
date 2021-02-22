@@ -3,6 +3,9 @@ export default {
   commonOptions (ctx) {
   },
   defaultOptions: {
+    search: {
+      show: true
+    },
     form: {
       options: {
         labelPosition: 'right',
@@ -28,6 +31,7 @@ export default {
       }
     },
     rowHandle: {
+      fixed: 'right',
       label: '操作'
     },
     pagination: {
@@ -38,6 +42,9 @@ export default {
     },
     table: {
 
+    },
+    toolbar: {
+      compact: true
     },
     actionbar: {
       buttons: {

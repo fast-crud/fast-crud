@@ -3,6 +3,7 @@
   .fs-button {
     padding: 2px;
     font-size: 10px;
+    min-height: auto;
   }
 }
 </style>
@@ -12,8 +13,9 @@
     <fs-button
       v-for="option of options"
       :key="option.icon"
-      :type="value === option.value ? 'primary' : 'default'"
+      :type="modelValue === option.value ? 'primary' : 'default'"
       :icon="option.icon"
+      size="small"
       @click="submit(option.value)"/>
   </el-button-group>
 </template>
@@ -22,11 +24,12 @@
 import FsButton from '../../basic/fs-button'
 export default {
   name: 'fs-table-columns-fixed-controller',
+  emits: ['update:modelValue', 'change'],
   components: {
     FsButton
   },
   props: {
-    value: {
+    modelValue: {
       default: false
     }
   },
@@ -50,7 +53,7 @@ export default {
   },
   methods: {
     submit (value) {
-      this.$emit('input', value)
+      this.$emit('update:modelValue', value)
       this.$emit('change', value)
     }
   }

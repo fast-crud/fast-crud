@@ -89,7 +89,8 @@ export default {
       }
     },
     show: {
-      type: Boolean
+      type: Boolean,
+      default: true
     }
   },
   setup (props, ctx) {

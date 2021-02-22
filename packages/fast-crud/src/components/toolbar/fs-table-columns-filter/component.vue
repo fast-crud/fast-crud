@@ -24,7 +24,7 @@
     }
     .el-drawer__body{
       height: 0;
-      .d2p-drawer-wrapper{
+      .fs-drawer-wrapper{
         padding:10px;
         height: 100%;
         overflow-y: scroll;
@@ -52,8 +52,7 @@
           margin-bottom: 0px;
         }
         .component--list-item-handle {
-          margin: -10px;
-          padding: 10px;
+          margin-left: 10px;
           cursor: move;
           &.disabled {
             opacity: .3;
@@ -68,9 +67,9 @@
 <template>
   <el-drawer
     :title="_text.title"
-    v-model:visible="active"
+    v-model="active"
     size="300px"
-    class="fs-table-columns-filter"
+    custom-class="fs-table-columns-filter"
     append-to-body>
     <div class="fs-drawer-wrapper">
       <!-- 全选 反选 -->
@@ -82,57 +81,51 @@
             flex="main:justify cross:center">
               <span :span="12">
                 <el-checkbox
-                  :indeterminate="isIndeterminate"
                   v-model="checkAll"
+                  :indeterminate="isIndeterminate"
                   @change="onCheckAllChange">
-                  {{ showLength }} / {{ options.length }}
+                  {{ showLength }} / {{ currentValue.length }}
                 </el-checkbox>
               </span>
             <span class="title">{{_text.fixed}} / {{_text.order}}</span>
           </div>
-        <draggable
-          ghost-class="ghost"
-          handle=".handle"
-          v-model="currentValue">
-          <transition-group>
-            <div
-              v-for="(option, index) of currentValue"
-              :key="option.key"
-              class="component--list-item"
-              flex="main:justify cross:center">
-              <el-checkbox flex-box="1" v-model="currentValue[index].show">
-                {{ option.title || option.key || _text.unnamed }}
-              </el-checkbox>
-              <fs-table-columns-fixed-controller
-                flex-box="0"
-                class="d2-mr-10"
-                v-model="currentValue[index].fixed"
-                @change="value => fixedChange(index, value)"/>
+
+          <draggable v-model="currentValue" tag="transition-group" item-key="key">
+            <template #item="{element,index}" >
               <div
-                flex-box="0"
-                class="component--list-item-handle handle">
-                <i class="el-icon-sort" ></i>
+                  class="component--list-item"
+                  flex="main:justify cross:center">
+                <el-checkbox flex-box="1" v-model="element.show" @change="showChange(index,$event)">
+                  {{ element.label ||element.title || element.key || _text.unnamed }}
+                </el-checkbox>
+                <fs-table-columns-fixed-controller
+                    flex-box="0"
+                    class="d2-mr-10"
+                    v-model="element.fixed"
+                    @change="fixedChange(index, $event)"/>
+                <div
+                    flex-box="0"
+                    class="component--list-item-handle handle">
+                  <i class="el-icon-sort" ></i>
+                </div>
               </div>
-            </div>
-          </transition-group>
-        </draggable>
+            </template>
+          </draggable>
         </div>
       </el-card>
       <el-row class="drawer-footer" :gutter="10">
         <el-col :span="12">
           <fs-button
-            size="default"
             icon="el-icon-refresh"
-            :label="_text.reset"
+            :text="_text.reset"
             block
             @click="reset"/>
         </el-col>
         <el-col :span="12">
           <fs-button
-            size="default"
             type="primary"
             icon="el-icon-check"
-            :label="_text.confirm"
+            :text="_text.confirm"
             block
             @click="submit()"/>
         </el-col>
@@ -142,7 +135,7 @@
 </template>
 
 <script>
-// import draggable from 'vuedraggable'
+import draggable from 'vuedraggable'
 import _ from 'lodash-es'
 import FsButton from '../../basic/fs-button'
 import FsTableColumnsFixedController from '../fs-table-columns-fixed-controller/component'
@@ -152,19 +145,14 @@ import TableStore from '../../../utils/util.store'
 
 export default {
   name: 'fs-table-columns-filter',
+  emits: ['update:columns'],
   components: {
-    FsButton, FsTableColumnsFixedController
+    // eslint-disable-next-line vue/no-unused-components
+    draggable, FsButton, FsTableColumnsFixedController
   },
   props: {
-    options: {
-      type: Array,
-      default: () => [],
-      required: false
-    },
-    value: {
-      type: Array,
-      default: () => [],
-      required: false
+    columns: {
+      type: Object
     },
     storage: {
       type: [Boolean, String],
@@ -178,20 +166,20 @@ export default {
   },
   data () {
     return {
+      original: {},
       currentValue: [],
       active: false,
-      checkAll: false
+      checkAll: false,
+      indeterminate: false
     }
   },
   computed: {
     // 显示的数量
     showLength () {
-      return this.currentValue.filter(e => e.show).length
+      return this.currentValue.filter(e => e.show === true).length
     },
-    // 半选状态
     isIndeterminate () {
-      const optionsLength = this.options.length
-      return this.showLength > 0 && optionsLength !== this.showLength
+      return (this.showLength > 0 && (this.showLength < this.currentValue.length))
     },
     _text () {
       const def = {
@@ -207,40 +195,65 @@ export default {
     }
   },
   watch: {
-    options () {
-      this.refresh()
-    },
-    value () {
-      this.refresh()
-    },
-    active (value) {
-      if (value === false) {
-        this.refresh()
-      }
+    columns (value) {
+      this.setCurrentValue(value)
     }
   },
   created () {
-    let storedOptions = this.getOptionsFromStorage()
+    this.original = this.buildColumns(this.columns)
+    this.setCurrentValue(this.columns)
+    const storedOptions = this.getOptionsFromStorage()
     if (storedOptions) {
       const storeHash = this.getColumnsHash(storedOptions)
-      const optionHash = this.getColumnsHash(this.options)
+      const optionHash = this.getColumnsHash(this.original)
       if (optionHash !== storeHash) {
         // 如果字段列有过修改，则不使用本地设置
-        storedOptions = null
+        return
       }
-    }
-    this.storedOptions = storedOptions
-    this.refresh()
-    if (storedOptions) {
-      this.submit()
+
+      const currentValue = []
+      for (const storedOption of storedOptions) {
+        const found = this.currentValue.find(item => item.key === storedOption.key)
+        found.fixed = storedOption.fixed
+        found.show = storedOption.show
+        currentValue.push(found)
+      }
+      this.currentValue = currentValue
+      this.submit(true)
     }
   },
   methods: {
+    setCurrentValue (value) {
+      this.currentValue = this.buildColumns(value)
+      this.checkAll = this.showLength > 0
+    },
+    buildColumns (value) {
+      const columns = _.cloneDeep(value)
+      const currentValue = []
+      _.forEach(columns, (value, key) => {
+        value.key = key
+        if (value.show == null) {
+          value.show = true
+        }
+        value.show = !!value.show
+        if (value.fixed == null) {
+          value.fixed = false
+        }
+        currentValue.push(value)
+      })
+      return currentValue
+    },
     // fixed 变化时触发
     fixedChange (index, value) {
       if (value) this.currentValue[index].show = true
       if (value === 'left') this.currentValue.unshift(this.currentValue.splice(index, 1)[0])
       if (value === 'right') this.currentValue.push(this.currentValue.splice(index, 1)[0])
+
+      this.showChange()
+    },
+    showChange () {
+      console.log('checkAll', this.checkAll)
+      this.checkAll = this.showLength > 0
     },
     // 全选和反选发生变化时触发
     onCheckAllChange (value) {
@@ -249,70 +262,30 @@ export default {
         return e
       })
     },
-    // 根据 value 和 options 计算 currentValue
-    // 规则
-    // currentValue.length === options.length
-    // value.length <= options.length
-    refresh () {
-      const options = _.cloneDeep(this.options)
-      const value = _.cloneDeep(this.value)
-      const currentValue = []
-      let checkAll = true
-      // 设置比较源
-      let compareSource = options
-      if (this.storedOptions != null) {
-        compareSource = this.storedOptions
-      }
-      // 计算
-      compareSource.forEach(option => {
-        // 在 value 尝试找到这个项目
-        // 没有的话使用 option 中的默认值
-        let storeItem = null
-        if (this.storedOptions != null) {
-          storeItem = option
-          option = options.find(column => column.key === option.key)
-        }
-        let item = value.find(column => column.key === option.key)
-        let show = item != null && item.show !== false
-        item = item || option
-
-        if (storeItem) {
-          // 使用本地保存的设置
-          show = storeItem.show
-          item.fixed = storeItem.fixed
-        }
-        item.show = show
-        if (!show) checkAll = false
-        currentValue.push(item)
-      })
-      this.currentValue = currentValue
-      this.checkAll = checkAll
-    },
     // 开始选择
     start () {
       this.active = true
     },
     // 还原
     reset () {
-      this.currentValue = _.cloneDeep(this.options)
+      this.currentValue = _.cloneDeep(this.original)
       this.submit(true)
       this.clearThisStorage()
     },
     // 确认
     submit (noSave) {
-      const result = []
-      this.currentValue.forEach((item, index) => {
-        result.push(item)
-      })
       if (noSave !== true) {
-        this.saveOptionsToStorage(result)
+        this.saveOptionsToStorage(this.currentValue)
       }
+      const result = {}
+      this.currentValue.forEach((item, index) => {
+        result[item.key] = item
+      })
       this.emit(result)
       this.active = false
     },
     emit (result) {
-      this.$emit('input', result)
-      this.$emit('change', result)
+      this.$emit('update:columns', result)
     },
     saveOptionsToStorage (value) {
       if (this.storage === false) {
