@@ -23,6 +23,7 @@
 import { computed, ref, reactive } from 'vue'
 import _ from 'lodash-es'
 import { ComputeValue } from '../../core/compute-value'
+import traceUtil from '../../utils/util.trace'
 export default {
   name: 'fs-form',
   components: { },
@@ -53,6 +54,7 @@ export default {
     }
   },
   setup (props, ctx) {
+    traceUtil.trace('fs-from')
     const formRef = ref()
 
     const form = reactive({})

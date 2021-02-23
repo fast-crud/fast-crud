@@ -17,9 +17,13 @@
 </template>
 
 <script>
+import traceUtil from '../../utils/util.trace'
 import { defineComponent } from 'vue'
 export default defineComponent({
-  name: 'fs-container'
+  name: 'fs-container',
+  setup () {
+    traceUtil.trace('fs-container')
+  }
 })
 </script>
 

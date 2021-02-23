@@ -6,12 +6,12 @@
 
 import { onRenderTracked, onRenderTriggered } from 'vue'
 export default {
-  trace () {
+  trace (name) {
     onRenderTracked((event) => {
-      console.log('状态跟踪----------->', event.key, event.target.name, event)
+      console.log('状态跟踪track----------->', name, event.key, event.target, event.type, event)
     })
     onRenderTriggered((event) => {
-      console.log('状态触发--------------->', event.key, event)
+      console.log('状态触发trigger--------------->', name, event.key, event.target, event.type, event)
     })
   }
 }

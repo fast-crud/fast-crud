@@ -29,7 +29,7 @@ export default {
     }
   },
   setup (props, ctx) {
-    traceUtil.trace()
+    traceUtil.trace('fs-component-render')
 
     const newScope = {
       ...ctx.attrs,
@@ -91,9 +91,9 @@ export default {
     if (props.name !== 'div') {
       comp = resolveComponent(props.name)
     }
-
+    const children = childrenRender()
     return () => {
-      return h(comp, allAttrs, childrenRender())
+      return h(comp, allAttrs, children)
     }
   }
 }

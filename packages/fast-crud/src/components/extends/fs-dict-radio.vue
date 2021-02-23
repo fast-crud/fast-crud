@@ -5,6 +5,7 @@
 </template>
 <script>
 import { useDict } from '../../use/use-dict'
+
 export default {
   name: 'fs-dict-radio',
   props: {

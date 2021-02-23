@@ -47,9 +47,12 @@ import log from '../../utils/util.log'
 import { ElNotification } from 'element-plus'
 import FsComponentRender from '../../components/render/fs-component-render'
 import { ComputeValue } from '../../core/compute-value'
+import traceUtil from '../../utils/util.trace'
+
 export default {
   name: 'fs-search',
   inheritAttrs: false,
+  // eslint-disable-next-line vue/no-unused-components
   components: { FsComponentRender, fsButton },
   emits: ['search', 'reset'],
   props: {
@@ -94,6 +97,7 @@ export default {
     }
   },
   setup (props, ctx) {
+    traceUtil.trace('fs-search')
     let autoSearch = ref(null)
     const form = ref(_.cloneDeep(props.initial || {}))
     const searchFormRef = ref()
@@ -172,7 +176,9 @@ export default {
       return btns
     })
 
-    const computedColumns = ComputeValue.computed(props.columns, getContextFn)
+    const computedColumns = computed(() => {
+      return props.columns
+    })// ComputeValue.computed(props.columns, getContextFn)
 
     function initAutoSearch () {
       // 构建防抖查询函数
@@ -230,10 +236,8 @@ export default {
     return {
       get: _.get,
       set: _.set,
-      computedButtons,
       doSearch,
       doReset,
-      computedColumns,
       form,
       getForm,
       setForm,
@@ -241,7 +245,9 @@ export default {
       onInput,
       inputEventDisabled,
       changeInputEventDisabled,
-      onChange
+      onChange,
+      computedColumns,
+      computedButtons
     }
   },
 

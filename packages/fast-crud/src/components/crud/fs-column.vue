@@ -4,6 +4,7 @@ import FsCell from './fs-cell'
 import _ from 'lodash-es'
 import { ComputeValue } from '../../core/compute-value'
 import FsRender from '../render/fs-render'
+import traceUtil from '../../utils/util.trace'
 export default {
   name: 'fs-column',
   components: { FsCell, FsRender },
@@ -20,6 +21,7 @@ export default {
     }
   },
   setup (props) {
+    traceUtil.trace('fs-column')
     const dependContext = {}
     function getContextFn () {
       return dependContext
@@ -64,7 +66,8 @@ export default {
         slots = {
           default: (scope) => {
             const newScope = { key: prop, ...scope }
-            return <fs-cell column={props.column} prop={prop} scope={newScope} />
+            return <fs-component-render v-model={scope.row[prop]}
+              {...props.column.component} scope={newScope}/>
           }
         }
       }

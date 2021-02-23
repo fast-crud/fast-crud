@@ -41,7 +41,10 @@ export default {
       layout: 'total, sizes, prev, pager, next, jumper'
     },
     table: {
-
+      height: '100%',
+      rowKey: 'id',
+      stripe: true,
+      border: true
     },
     toolbar: {
       compact: true

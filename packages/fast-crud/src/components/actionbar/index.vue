@@ -8,6 +8,7 @@
 <script>
 import { defineComponent } from 'vue'
 import FsButton from '../basic/fs-button'
+import traceUtil from '../../utils/util.trace'
 export default defineComponent({
   name: 'fs-actionbar',
   components: { FsButton },
@@ -16,6 +17,7 @@ export default defineComponent({
     buttons: {}
   },
   setup (props, ctx) {
+    traceUtil.trace('fs-actionbar')
     function onClick (key, value, $event) {
       const e = { key, btn: value, $event }
       if (value.click) {

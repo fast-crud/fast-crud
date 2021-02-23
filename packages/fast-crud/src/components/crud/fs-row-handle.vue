@@ -14,10 +14,12 @@
 import { computed } from 'vue'
 import FsButton from '../basic/fs-button'
 import _ from 'lodash-es'
+import traceUtil from '../../utils/util.trace'
 export default {
   name: 'fs-row-handle',
   emits: ['handle'],
   components: {
+    // eslint-disable-next-line vue/no-unused-components
     FsButton
   },
   props: {
@@ -37,6 +39,7 @@ export default {
     scope: {}
   },
   setup (props, ctx) {
+    traceUtil.trace('fs-row-handler')
     const doClick = (item) => {
       const e = { key: item.key, btn: item, ...props.scope }
       if (item?.click) {

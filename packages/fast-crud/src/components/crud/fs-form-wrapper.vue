@@ -1,6 +1,7 @@
 <script>
 import { ref, resolveComponent } from 'vue'
 import FsButton from '../basic/fs-button'
+import traceUtil from '../../utils/util.trace'
 export default {
   name: 'fs-form-wrapper',
   inheritAttrs: false,
@@ -49,6 +50,7 @@ export default {
     </comp>
   },
   setup () {
+    traceUtil.trace('fs-from-wrapper')
     const formWrapperOpen = ref(false)
     const formProps = ref()
     const formWrapper = ref()

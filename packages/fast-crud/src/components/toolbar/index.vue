@@ -2,13 +2,13 @@
   <div class="fs-toolbar" >
     <slot name="toolbar-prefix"/>
     <template v-for="(item,key) of _buttons" :key="key">
-      <fs-button v-if="item?.show!==false" v-bind="item" @click="doClick(item)"/>
+      <fs-button v-if="item.show!==false" v-bind="item" @click="item.click()"/>
     </template>
     <slot name="toolbar-append"/>
-    <fs-table-columns-filter v-if="columns" ref="columnsFilterRef"
-                             :columns="columns"
-                             @update:columns="$emit('update:columns',$event)"
-                             :storage="storage"/>
+<!--    <fs-table-columns-filter v-if="columns" ref="columnsFilterRef"-->
+<!--                             :columns="columns"-->
+<!--                             @update:columns="$emit('update:columns',$event)"-->
+<!--                             :storage="storage"/>-->
 
   </div>
 </template>
@@ -17,10 +17,11 @@
 import FsTableColumnsFilter from './fs-table-columns-filter/component'
 import FsButton from '../basic/fs-button'
 import _ from 'lodash-es'
-import { ref } from 'vue'
+import { ref, computed } from 'vue'
 import traceUtil from '../../utils/util.trace'
 export default {
   name: 'fs-toolbar',
+  // eslint-disable-next-line vue/no-unused-components
   components: { FsTableColumnsFilter, FsButton },
   emits: ['refresh', 'update:search', 'update:compact', 'update:columns'],
   props: {
@@ -58,15 +59,11 @@ export default {
       default: true
     }
   },
-  setup () {
+  setup (props, ctx) {
     const columnsFilterRef = ref()
-    traceUtil.trace()
-    return {
-      columnsFilterRef
-    }
-  },
-  computed: {
-    _buttons () {
+    traceUtil.trace('fs-toolbar')
+
+    const _buttons = computed(() => {
       const defaultButtons = {
         refresh: {
           type: 'primary',
@@ -74,6 +71,7 @@ export default {
           title: '刷新',
           circle: true,
           click: () => {
+            ctx.emit('refresh')
             this.doRefresh()
           }
         },
@@ -83,7 +81,7 @@ export default {
           title: '查询显示',
           circle: true,
           click: () => {
-            this.doSearch()
+            ctx.emit('update:search', !props.search)
           }
         },
         compact: {
@@ -92,7 +90,7 @@ export default {
           title: '紧凑模式',
           circle: true,
           click: () => {
-            this.doCompact()
+            ctx.emit('update:compact', !props.compact)
           }
         },
         export: {
@@ -101,7 +99,7 @@ export default {
           title: '导出',
           circle: true,
           click: () => {
-            this.doExport()
+            ctx.emit('export')
           }
         },
         columns: {
@@ -110,39 +108,23 @@ export default {
           title: '列设置',
           circle: true,
           click: () => {
-            this.doColumnsFilter()
+            columnsFilterRef.value.start()
           }
         }
       }
 
-      _.merge(defaultButtons, this.buttons)
+      _.merge(defaultButtons, props.buttons)
       if (defaultButtons.search) {
-        defaultButtons.search.type = this.search ? 'primary' : 'default'
+        defaultButtons.search.type = props.search ? 'primary' : 'default'
       }
       if (defaultButtons.compact) {
-        defaultButtons.compact.type = this.compact ? 'primary' : 'default'
+        defaultButtons.compact.type = props.compact ? 'primary' : 'default'
       }
       return defaultButtons
-    }
-  },
-  methods: {
-    doClick (item) {
-      item.click()
-    },
-    doRefresh () {
-      this.$emit('refresh')
-    },
-    doSearch () {
-      this.$emit('update:search', !this.search)
-    },
-    doCompact () {
-      this.$emit('update:compact', !this.compact)
-    },
-    doColumnsFilter () {
-      this.columnsFilterRef.start()
-    },
-    doExport () {
-      this.$emit('export')
+    })
+    return {
+      columnsFilterRef,
+      _buttons
     }
   }
 }

@@ -4,7 +4,7 @@
       <div class="fs-crud-header">
         <slot name="header-before"/>
         <div class="fs-crud-search">
-          <fs-search ref="searchRef" v-bind="search" @search="onSearchSubmit" @reset="onSearchReset"
+          <fs-search ref="searchRef" :show="search.show" @search="onSearchSubmit" @reset="onSearchReset"
                      :slots="computedSearchSlots"/>
         </div>
         <div class="fs-crud-actionbar" v-if="actionbar?.show!==false">
@@ -16,12 +16,12 @@
         <div class="fs-crud-toolbar" v-if="toolbar?.show!==false">
           <slot name="toolbar-prefix"/>
           <fs-toolbar v-bind="toolbar"
-                      :search="search?.show"
-                      @update:search="$emit('update',{key:'search.show',value:$event})"
+                      :search="search.show"
+                      @update:search="$emit('update:search',$event)"
                       :compact="toolbar.compact"
-                      @update:compact="$emit('update',{key:'toolbar.compact',value:$event})"
+                      @update:compact="$emit('update:compact',$event)"
                       :columns="columns"
-                      @update:columns="$emit('update',{key:'columns',value:$event})"
+                      @update:columns="$emit('update:columns',$event)"
                       @refresh="$emit('refresh')"
                       @action="onToolbarHandle"></fs-toolbar>
           <slot name="toolbar-append"/>
@@ -32,15 +32,15 @@
     <slot :scope="{data}"/>
     <el-table v-if="computedTable?.show!==false" class="fs-crud-table" v-bind="computedTable" :data="data"
               v-loading="computedTable.loading">
-<!--      <fs-column v-for="(item,key) of columns" :column="item" :key="key" :prop="key"-->
-<!--                 :slots="computedCellSlots"></fs-column>-->
-      <el-table-column
-        v-for="(item,key) of columns"  v-bind="item" :key="key" :prop="key"
-      >
-        <template #default="scope">
-          {{scope.row[key]}}
-        </template>
-      </el-table-column>
+      <fs-column v-for="(item,key) of columns" :column="item" :key="key" :prop="key"
+                 :slots="computedCellSlots"></fs-column>
+<!--      <el-table-column-->
+<!--        v-for="(item,key) of columns"  v-bind="item" :key="key" :prop="key"-->
+<!--      >-->
+<!--        <template #default="scope">-->
+<!--          {{scope.row[key]}}-->
+<!--        </template>-->
+<!--      </el-table-column>-->
 
       <el-table-column
           v-if="rowHandle && rowHandle.show!==false"
@@ -76,7 +76,7 @@
   </fs-container>
 </template>
 <script>
-import { defineComponent, computed, provide, ref } from 'vue'
+import { defineComponent, computed, provide, ref, toRef } from 'vue'
 import _ from 'lodash-es'
 import FsContainer from './container/fs-container'
 import FsColumn from './crud/fs-column'
@@ -168,33 +168,14 @@ function slotFilter (ctxSlots, keyPrefix) {
 }
 
 function useTable (props, ctx) {
-  const computedTable = computed(() => {
-    const def = {
-      height: '100%',
-      rowKey: 'id',
-      stripe: true,
-      border: true
-    }
-    return _.merge(def, ComputeValue.buildBindProps(props.table), ctx.attrs)
-  })
+  const computedTable = toRef(props, 'table')
 
-  const computedToolbar = computed(() => {
-    const def = {
-      compact: true
-    }
-    return _.merge(def, ComputeValue.buildBindProps(props.toolbar))
-  })
+  const computedToolbar = toRef(props, 'toolbar')
 
-  const computedCellSlots = computed(() => {
-    return slotFilter(ctx.slots, 'cell-')
-  })
+  const computedCellSlots = {}
 
-  const computedFormSlots = computed(() => {
-    return slotFilter(ctx.slots, 'form-')
-  })
-  const computedSearchSlots = computed(() => {
-    return slotFilter(ctx.slots, 'search-')
-  })
+  const computedFormSlots = {}
+  const computedSearchSlots = {}
   const formWrapperRef = ref()
 
   const onRowHandle = (scope) => {
@@ -234,7 +215,8 @@ function useTable (props, ctx) {
 
 export default defineComponent({
   name: 'fs-crud',
-  emits: ['search-submit', 'search-reset', 'update', 'refresh'],
+  inheritAttrs: false,
+  emits: ['search-submit', 'search-reset', 'refresh', 'update:search', 'update:compact', 'update:columns'],
   // eslint-disable-next-line vue/no-unused-components
   components: { FsRowHandle, FsContainer, FsColumn, FsFormWrapper, FsActionbar, FsToolbar },
   props: {
@@ -257,7 +239,7 @@ export default defineComponent({
   },
   setup (props, ctx) {
     console.log('ctx', ctx)
-    // traceUtil.trace()
+    traceUtil.trace('fs-crud')
     useProviders()
     const search = useSearch(props, ctx)
     const table = useTable(props, ctx, search)
