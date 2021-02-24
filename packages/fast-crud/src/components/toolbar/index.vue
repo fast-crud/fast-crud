@@ -1,14 +1,14 @@
 <template>
   <div class="fs-toolbar" >
     <slot name="toolbar-prefix"/>
-    <template v-for="(item,key) of _buttons" :key="key">
+    <template v-for="(item,key) of computedButtons" :key="key">
       <fs-button v-if="item.show!==false" v-bind="item" @click="item.click()"/>
     </template>
     <slot name="toolbar-append"/>
-<!--    <fs-table-columns-filter v-if="columns" ref="columnsFilterRef"-->
-<!--                             :columns="columns"-->
-<!--                             @update:columns="$emit('update:columns',$event)"-->
-<!--                             :storage="storage"/>-->
+    <fs-table-columns-filter v-if="columns" ref="columnsFilterRef"
+                             :columns="columns"
+                             @update:columns="$emit('update:columns',$event)"
+                             :storage="storage"/>
 
   </div>
 </template>
@@ -63,7 +63,7 @@ export default {
     const columnsFilterRef = ref()
     traceUtil.trace('fs-toolbar')
 
-    const _buttons = computed(() => {
+    const computedButtons = computed(() => {
       const defaultButtons = {
         refresh: {
           type: 'primary',
@@ -72,7 +72,6 @@ export default {
           circle: true,
           click: () => {
             ctx.emit('refresh')
-            this.doRefresh()
           }
         },
         search: {
@@ -124,7 +123,7 @@ export default {
     })
     return {
       columnsFilterRef,
-      _buttons
+      computedButtons
     }
   }
 }

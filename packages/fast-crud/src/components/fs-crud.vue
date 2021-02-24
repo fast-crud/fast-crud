@@ -4,7 +4,7 @@
       <div class="fs-crud-header">
         <slot name="header-before"/>
         <div class="fs-crud-search">
-          <fs-search ref="searchRef" :show="search.show" @search="onSearchSubmit" @reset="onSearchReset"
+          <fs-search ref="searchRef" v-bind="search" :show="search.show" @search="onSearchSubmit" @reset="onSearchReset"
                      :slots="computedSearchSlots"/>
         </div>
         <div class="fs-crud-actionbar" v-if="actionbar?.show!==false">
@@ -172,10 +172,16 @@ function useTable (props, ctx) {
 
   const computedToolbar = toRef(props, 'toolbar')
 
-  const computedCellSlots = {}
+  const computedCellSlots = computed(() => {
+    return slotFilter(ctx.slots, 'cell-')
+  })
 
-  const computedFormSlots = {}
-  const computedSearchSlots = {}
+  const computedFormSlots = computed(() => {
+    return slotFilter(ctx.slots, 'form-')
+  })
+  const computedSearchSlots = computed(() => {
+    return slotFilter(ctx.slots, 'search-')
+  })
   const formWrapperRef = ref()
 
   const onRowHandle = (scope) => {

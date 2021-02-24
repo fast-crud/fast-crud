@@ -60,7 +60,9 @@ export default function ({ crudRef }) {
           component: {
             name: 'el-button',
             children: {
-              default: (scope) => <div>{scope.row.name}</div>
+              default: (scope) => {
+                return <div>{scope.row.name}</div>
+              }
             },
             style: 'width:100px',
             events: {
@@ -88,7 +90,7 @@ export default function ({ crudRef }) {
           }),
           component: {
             show: compute((context) => {
-              return context.row.show === false
+              return context.row?.show === true
             }),
             name: 'el-image',
             valueBinding: 'src',

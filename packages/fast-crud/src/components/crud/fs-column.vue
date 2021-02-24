@@ -1,13 +1,14 @@
 <script>
-import { computed } from 'vue'
+import { computed, h } from 'vue'
 import FsCell from './fs-cell'
 import _ from 'lodash-es'
 import { ComputeValue } from '../../core/compute-value'
 import FsRender from '../render/fs-render'
 import traceUtil from '../../utils/util.trace'
+import FsComponentRender from '../../components/render/fs-component-render'
 export default {
   name: 'fs-column',
-  components: { FsCell, FsRender },
+  components: { FsComponentRender, FsCell, FsRender },
   props: {
     column: {
       type: Object
@@ -39,41 +40,52 @@ export default {
       return props.column.children
     })
 
+    let slots = null
+    if (computedChildren.value != null) {
+      slots = {
+        default () {
+          const children = []
+          _.forEach(computedChildren.value, (item, key) => {
+            children.push(<fs-column column={item} key={key} prop={key} slots={props.slots}/>)
+          })
+          return children
+        }
+      }
+    } else if (props.slots && props.slots['cell-' + props.prop]) {
+      slots = {
+        default: (scope) => {
+          const newScope = { key: props.prop, ...scope }
+          return h(props.slots['cell-' + props.prop], newScope)
+        }
+      }
+    } else if (props.column.component) {
+      slots = {
+        default: (scope) => {
+          if (scope.$index === -1) {
+            return
+          }
+          function getScope () {
+            return { key: props.prop, ...scope }
+          }
+          const newScope = getScope()
+          const component = ComputeValue.buildBindProps(props.column.component, getScope)
+          if (component.show === false) {
+            return
+          }
+          if (props.column.component.render) {
+            return props.column.component.render(newScope)
+          }
+          return <fs-component-render v-model={scope.row[props.prop]} {...props.column.component} scope={newScope} />
+        }
+      }
+    }
     return () => {
       if (computedColumn.value.show === false) {
         return
       }
-      const prop = props.prop
-      let slots = null
-      if (computedChildren.value != null) {
-        slots = {
-          default () {
-            const children = []
-            _.forEach(computedChildren.value, (item, key) => {
-              children.push(<fs-column column={item} key={key} prop={key} slots={props.slots}/>)
-            })
-            return children
-          }
-        }
-      } else if (props.slots && props.slots['cell-' + prop]) {
-        slots = {
-          default: (scope) => {
-            const newScope = { key: prop, ...scope }
-            return <fs-slot-render slots={props.slots['cell-' + prop]} scope={newScope}/>
-          }
-        }
-      } else if (props.column.component) {
-        slots = {
-          default: (scope) => {
-            const newScope = { key: prop, ...scope }
-            return <fs-component-render v-model={scope.row[prop]}
-              {...props.column.component} scope={newScope}/>
-          }
-        }
-      }
       return <el-table-column
         {...computedColumn.value}
-        prop={prop} v-slots={slots} />
+        prop={props.prop} v-slots={slots} />
     }
   }
 }

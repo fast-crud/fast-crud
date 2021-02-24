@@ -7,8 +7,7 @@
           ref="searchFormRef"
           v-bind="options" class="search-form" @compositionstart="changeInputEventDisabled(true)" @compositionend="changeInputEventDisabled(false)">
         <slot name="prefix" :form="form"/>
-        <template v-for="(item,key) in computedColumns"
-                  :key="key">
+        <template v-for="(item,key) in computedColumns" :key="key">
           <el-form-item v-if="item.show===true" v-bind="item" :prop="key">
             <template v-if="slots['search-' + key]">
               <fs-slot-render :slots="slots['search-' + key]" :scope="{form,key}"/>
@@ -20,7 +19,6 @@
                                    @input="onInput(item)" @change="onChange(item)"
                                    v-bind="item.component"  :scope="{form}"/>
             </template>
-
           </el-form-item>
         </template>
 
@@ -43,7 +41,6 @@
 import { computed, ref, nextTick } from 'vue'
 import _ from 'lodash-es'
 import fsButton from '../basic/fs-button'
-import log from '../../utils/util.log'
 import { ElNotification } from 'element-plus'
 import FsComponentRender from '../../components/render/fs-component-render'
 import { ComputeValue } from '../../core/compute-value'
@@ -176,9 +173,7 @@ export default {
       return btns
     })
 
-    const computedColumns = computed(() => {
-      return props.columns
-    })// ComputeValue.computed(props.columns, getContextFn)
+    const computedColumns = ComputeValue.computed(props.columns, getContextFn)
 
     function initAutoSearch () {
       // 构建防抖查询函数
@@ -249,42 +244,8 @@ export default {
       computedColumns,
       computedButtons
     }
-  },
-
-  methods: {
-    getColumnTemplate (key) {
-      log.debug('getColumn', this.currentColumns)
-      for (const item of this.currentColumns) {
-        if (item.key === key) {
-          return item
-        }
-      }
-    },
-    getComponentRef (key) {
-      if (this.$refs) {
-        const wrapper = this.$refs['form_item_' + key]
-        if (wrapper && wrapper.length > 0 && wrapper[0]) {
-          return wrapper[0].getComponentRef()
-        }
-      }
-    },
-    getContext (key) {
-      const context = {
-        mode: 'search',
-        key: key,
-        value: this.form[key],
-        form: this.form,
-        getComponent: this.getComponentRef,
-        component: this.getComponentRef(key),
-        column: this.getColumn(key),
-        getColumn: this.getColumn
-      }
-      return context
-    },
-    getColumn (key) {
-      return this.currentColumns[key]
-    }
   }
+
 }
 </script>
 <style lang="less">

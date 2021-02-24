@@ -1,31 +1,31 @@
 <template>
   <fs-crud class="home-page" ref="crudRef" v-bind="crudOptions" >
-<!--    <template #cell-date="scope">-->
-<!--      <el-button @click="dateClick('date',scope)" >cell- date,{{scope.row.date}}</el-button>-->
-<!--    </template>-->
+    <template #cell-date="scope">
+      <el-button @click="dateClick('date',scope)" >cell- date,{{scope.row.date}}</el-button>
+    </template>
 
-<!--    <template #form-date="scope">-->
-<!--      <el-button @click="dateClick('date',scope)" >form- date,{{scope.row.date}}</el-button>-->
-<!--    </template>-->
+    <template #form-date="scope">
+      <el-button @click="dateClick('date',scope)" >form- date,{{scope.row.date}}</el-button>
+    </template>
 
-<!--    <template #form-body-before="scope">-->
-<!--      <el-button @click="formBodyClick(scope)">form-body-before</el-button>-->
-<!--    </template>-->
+    <template #form-body-before="scope">
+      <el-button @click="formBodyClick(scope)">form-body-before</el-button>
+    </template>
 
-<!--    <template #form-footer-prefix="scope">-->
-<!--      <el-button @click="closeDialog(scope)">取消</el-button>-->
-<!--    </template>-->
+    <template #form-footer-prefix="scope">
+      <el-button @click="closeDialog(scope)">取消</el-button>
+    </template>
 
-<!--    <template #form-footer-append="scope">-->
-<!--      <el-button @click="formBodyClick(scope)">form-footer-append</el-button>-->
-<!--    </template>-->
+    <template #form-footer-append="scope">
+      <el-button @click="formBodyClick(scope)">form-footer-append</el-button>
+    </template>
 
-<!--    <template #pagination-prefix>-->
-<!--      <el-button >批量删除</el-button>-->
-<!--    </template>-->
-<!--    <template #pagination-append>-->
-<!--      <el-button >批量删除</el-button>-->
-<!--    </template>-->
+    <template #pagination-prefix>
+      <el-button >批量删除</el-button>
+    </template>
+    <template #pagination-append>
+      <el-button >批量删除</el-button>
+    </template>
 
   </fs-crud>
 </template>
