@@ -4,7 +4,7 @@
       <span v-for="(item) in _items" :key="item[dict.value]">{{item[dict.label]}}</span>
     </template>
     <template v-else >
-      <el-tag class='tag-item' v-for="(item) in _items" v-bind="$attrs"
+      <component :is="$fsui.tag.name" class='tag-item' v-for="(item) in _items" v-bind="$attrs"
               :key="item[dict.value]"
               size="small"
               :type="item[dict.color]"
@@ -12,7 +12,7 @@
               :effect="item.effect"
       >
         {{item[dict.label]}}
-      </el-tag>
+      </component>
     </template>
   </span>
 </template>

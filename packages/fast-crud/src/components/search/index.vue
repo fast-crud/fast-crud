@@ -1,14 +1,14 @@
 <template>
-  <el-collapse-transition >
+  <component :is="$fsui.collapseTransition.name" >
     <div class="fs-search" v-if="show!==false">
-      <el-form
-          :inline="true"
+      <component :is="$fsui.form.name"
+               :inline="true"
           :model="form"
           ref="searchFormRef"
           v-bind="options" class="search-form" @compositionstart="changeInputEventDisabled(true)" @compositionend="changeInputEventDisabled(false)">
         <slot name="prefix" :form="form"/>
         <template v-for="(item,key) in computedColumns" :key="key">
-          <el-form-item v-if="item.show===true" v-bind="item" :prop="key">
+          <component :is="$fsui.formItem.name" v-if="item.show===true" v-bind="item" :prop="key">
             <template v-if="slots['search-' + key]">
               <fs-slot-render :slots="slots['search-' + key]" :scope="{form,key}"/>
             </template>
@@ -19,22 +19,22 @@
                                    @input="onInput(item)" @change="onChange(item)"
                                    v-bind="item.component"  :scope="{form}"/>
             </template>
-          </el-form-item>
+          </component>
         </template>
 
         <slot :form="form"/>
-        <el-form-item class="search-btns">
+        <component :is="$fsui.formItem.name" class="search-btns">
           <template v-for="(item, index) in computedButtons" :key="index">
             <fs-button v-if="item.show"
                        @click="item.doClick()"
                        v-bind="item"
             />
           </template>
-        </el-form-item>
+        </component>
         <slot name="suffix" :form="form"/>
-      </el-form>
+      </component>
     </div>
-  </el-collapse-transition>
+  </component>
 </template>
 
 <script>

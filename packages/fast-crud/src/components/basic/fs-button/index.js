@@ -1,10 +1,11 @@
 import './style.less'
-
+import { resolveComponent } from 'vue'
 export default {
   name: 'fs-button',
   render () {
+    const comp = resolveComponent(this.$fsui.button.name)
     const button =
-      <el-button
+      <comp
         { ...{ attrs: this.$attrs } }
         class={
           {
@@ -14,7 +15,7 @@ export default {
         }
       >
         { this.$slots.default ? this.$slots.default : this.text}
-      </el-button>
+      </comp>
     return button
   },
   props: {

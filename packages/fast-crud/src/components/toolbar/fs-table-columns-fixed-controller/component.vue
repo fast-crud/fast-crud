@@ -9,7 +9,7 @@
 </style>
 
 <template>
-  <el-button-group class="fs-table-columns-fixed-controller">
+  <component :is="$fsui.buttonGroup.name" class="fs-table-columns-fixed-controller">
     <fs-button
       v-for="option of options"
       :key="option.icon"
@@ -17,7 +17,7 @@
       :icon="option.icon"
       size="small"
       @click="submit(option.value)"/>
-  </el-button-group>
+  </component>
 </template>
 
 <script>

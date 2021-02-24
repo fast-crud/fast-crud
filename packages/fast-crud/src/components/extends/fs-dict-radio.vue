@@ -1,7 +1,7 @@
 <template>
-  <el-radio-group >
-    <el-radio  v-for="item of dictData" :key="item.value" :label="item.value" >{{item.label}}</el-radio>
-  </el-radio-group>
+  <component :is="$fsui.radioGroup.name" >
+    <component :is="$fsui.radio.name"  v-for="item of dictData" :key="item.value" :label="item.value" >{{item.label}}</component>
+  </component>
 </template>
 <script>
 import { useDict } from '../../use/use-dict'

@@ -5,6 +5,8 @@ import * as components from './components'
 import utils from './utils'
 import { setDictRequest, dict } from './core/dict'
 import { useDict } from './use/use-dict.ts'
+import { uiContext } from './ui'
+
 export * as components from './components'
 export {
   ComputeValue,
@@ -17,6 +19,9 @@ export {
 export default {
   install (app, options) {
     console.log('options', options)
+    if (options?.ui) {
+      uiContext.set(options.ui)
+    }
     if (options?.commonOptions) {
       defaultCrudOptions.commonOptions = options.commonOptions
     }
@@ -27,5 +32,7 @@ export default {
       const com = components[key]
       app.component(key, com)
     }
+
+    app.config.globalProperties.$fsui = uiContext.get()
   }
 }

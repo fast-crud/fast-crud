@@ -1,11 +1,12 @@
 <script>
-import { computed, h } from 'vue'
+import { computed, h, resolveComponent, getCurrentInstance } from 'vue'
 import FsCell from './fs-cell'
 import _ from 'lodash-es'
 import { ComputeValue } from '../../core/compute-value'
 import FsRender from '../render/fs-render'
 import traceUtil from '../../utils/util.trace'
 import FsComponentRender from '../../components/render/fs-component-render'
+
 export default {
   name: 'fs-column',
   components: { FsComponentRender, FsCell, FsRender },
@@ -59,7 +60,7 @@ export default {
     } else if (props.column.component) {
       slots = {
         default: (scope) => {
-          if (scope.$index === -1) {
+          if (scope?.$index === -1) {
             return
           }
           function getScope () {
@@ -77,11 +78,13 @@ export default {
         }
       }
     }
+    const { proxy } = getCurrentInstance()
     return () => {
       if (computedColumn.value.show === false) {
         return
       }
-      return <el-table-column
+      const comp = resolveComponent(proxy.$fsui.tableColumn.name)
+      return <comp
         {...computedColumn.value}
         prop={props.prop} v-slots={slots} />
     }

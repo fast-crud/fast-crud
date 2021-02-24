@@ -65,7 +65,7 @@
 </style>
 
 <template>
-  <el-drawer
+  <component :is="$fsui.drawer.name"
     :title="_text.title"
     v-model="active"
     size="300px"
@@ -73,19 +73,19 @@
     append-to-body>
     <div class="fs-drawer-wrapper">
       <!-- 全选 反选 -->
-      <el-card shadow="never">
+      <component :is="$fsui.card.name" shadow="never">
         <div class="component--list">
           <div
             key="__first__"
             class="component--list-item"
             flex="main:justify cross:center">
               <span :span="12">
-                <el-checkbox
+                <component :is="$fsui.checkbox.name"
                   v-model="checkAll"
                   :indeterminate="isIndeterminate"
                   @change="onCheckAllChange">
                   {{ showLength }} / {{ currentValue.length }}
-                </el-checkbox>
+                </component>
               </span>
             <span class="title">{{_text.fixed}} / {{_text.order}}</span>
           </div>
@@ -95,9 +95,9 @@
               <div
                   class="component--list-item"
                   flex="main:justify cross:center">
-                <el-checkbox flex-box="1" v-model="element.show" @change="showChange(index,$event)">
+                <component :is="$fsui.checkbox.name" flex-box="1" v-model="element.show" @change="showChange(index,$event)">
                   {{ element.label ||element.title || element.key || _text.unnamed }}
-                </el-checkbox>
+                </component>
                 <fs-table-columns-fixed-controller
                     flex-box="0"
                     class="d2-mr-10"
@@ -112,26 +112,26 @@
             </template>
           </draggable>
         </div>
-      </el-card>
-      <el-row class="drawer-footer" :gutter="10">
-        <el-col :span="12">
+      </component>
+      <component  :is="$fsui.row.name" class="drawer-footer" :gutter="10">
+        <component :is="$fsui.col.name" :span="12">
           <fs-button
             icon="el-icon-refresh"
             :text="_text.reset"
             block
             @click="reset"/>
-        </el-col>
-        <el-col :span="12">
+        </component>
+        <component :is="$fsui.col.name" :span="12">
           <fs-button
             type="primary"
             icon="el-icon-check"
             :text="_text.confirm"
             block
             @click="submit()"/>
-        </el-col>
-      </el-row>
+        </component>
+      </component>
     </div>
-  </el-drawer>
+  </component>
 </template>
 
 <script>

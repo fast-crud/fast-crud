@@ -43,8 +43,10 @@ export default {
       }
     }
 
+    const visible = this.$fsui.dialog.visible
+    console.log('visible', visible)
     return <comp custom-class="fs-form-wrapper"
-      v-model={this.formWrapperOpen}
+      v-model={[this.formWrapperOpen, visible]}
       {...this.formWrapper}
       onClosed={this.closed} v-slots={children}>
     </comp>
@@ -63,6 +65,8 @@ export default {
       delete formProps.value.wrapper
 
       formWrapperOpen.value = true
+
+      debugger
     }
     const close = () => {
       formWrapperOpen.value = false

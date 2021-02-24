@@ -30,8 +30,9 @@
       </div>
     </template>
     <slot :scope="{data}"/>
-    <el-table v-if="computedTable?.show!==false" class="fs-crud-table" v-bind="computedTable" :data="data"
-              v-loading="computedTable.loading">
+    <component :is="$fsui.table.name" v-if="computedTable?.show!==false" class="fs-crud-table" v-bind="computedTable" :data="data"
+    >
+<!--      v-loading="computedTable.loading"-->
       <fs-column v-for="(item,key) of columns" :column="item" :key="key" :prop="key"
                  :slots="computedCellSlots"></fs-column>
 <!--      <el-table-column-->
@@ -42,7 +43,7 @@
 <!--        </template>-->
 <!--      </el-table-column>-->
 
-      <el-table-column
+      <component :is="$fsui.tableColumn.name"
           v-if="rowHandle && rowHandle.show!==false"
           v-bind="rowHandle"
           prop="rowHandle"
@@ -50,8 +51,8 @@
         <template #default="scope">
           <fs-row-handle v-bind="rowHandle" :scope="scope" @handle="onRowHandle"></fs-row-handle>
         </template>
-      </el-table-column>
-    </el-table>
+      </component>
+    </component>
 
     <fs-form-wrapper ref="formWrapperRef" :slots="computedFormSlots"/>
 
@@ -63,7 +64,7 @@
             <slot name="pagination-prefix"/>
           </div>
           <div class="fs-pagination">
-            <el-pagination v-bind="pagination"/>
+            <component :is="$fsui.pagination.name" v-bind="pagination"/>
           </div>
           <div class="fs-pagination-append">
             <slot name="pagination-append"/>

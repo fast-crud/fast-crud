@@ -178,7 +178,7 @@ export default function (ctx) {
     }
   }
   const userOptions = _.merge(
-    defaultCrudOptions.defaultOptions,
+    defaultCrudOptions.defaultOptions(),
     usePagination(),
     useFormSubmit(),
     useRemove(),

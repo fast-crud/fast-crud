@@ -102,7 +102,7 @@ export default {
           }
         },
         columns: {
-          type: 'success',
+          type: 'primary',
           icon: 'el-icon-set-up',
           title: '列设置',
           circle: true,

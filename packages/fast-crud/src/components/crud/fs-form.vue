@@ -1,8 +1,8 @@
 <template>
   <div class="fs-form">
-    <el-form class="fs-form-grid" ref="formRef" :model="form" v-bind="options">
+    <component :is="$fsui.form.name" class="fs-form-grid" ref="formRef" :model="form" v-bind="options">
       <template  v-for="(item,key) in computedColumns" :key="key" >
-        <el-form-item :key="key" v-if="item.show!==false" v-bind="item">
+        <component :is="$fsui.formItem.name" :key="key" v-if="item.show!==false" v-bind="item">
           <fs-slot-render v-if="slots && slots['form-' + key]" :slots="slots['form-' + key]" :scope="{key,...scope}"/>
           <template v-else>
             <fs-component-render v-if="item.component?.show!==false"
@@ -12,9 +12,9 @@
                                  @update:modelValue="set(form,key,$event)"
                                   :scope="{key,...scope}"/>
           </template>
-        </el-form-item>
+        </component>
       </template>
-    </el-form>
+    </component>
   </div>
 
 </template>
