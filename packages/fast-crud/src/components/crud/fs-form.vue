@@ -81,9 +81,7 @@ export default {
       return scope.value
     }
 
-    const computedColumns = computed(() => {
-      return ComputeValue.buildBindProps(props.columns, getContextFn)
-    })
+    const computedColumns = ComputeValue.computed(props.columns, getContextFn)
 
     async function getFormRef () {
       return formRef.value

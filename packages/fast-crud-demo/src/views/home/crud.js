@@ -116,7 +116,7 @@ export default function ({ crudRef }) {
           },
           show: compute((context) => {
             console.log('show context', context)
-            return context.form.show
+            return context.form.show === false
           })
         }
       },
@@ -134,6 +134,7 @@ export default function ({ crudRef }) {
         },
         form: {
           label: compute((context) => {
+            console.log('xianyin ,', context)
             return context.form.show ? '隐藏头像' : '显示头像'
           }),
           component: {

@@ -191,10 +191,15 @@ export default function (ctx) {
   const viewFormColumns = {}
   const searchColumns = {}
 
-  function mergeFromForm (targetColumns, item, key, mergeSrc) {
+  function mergeFromForm (targetColumns, item, key, mergeSrc, addLabel = false) {
     const formColumn = _.cloneDeep(item[mergeSrc]) || {}
-    formColumn.label = item.label
-    formColumn.key = key
+    if (addLabel) {
+      if (formColumn.label == null) {
+        formColumn.label = item.label
+      }
+      formColumn.key = key
+    }
+
     targetColumns[key] = formColumn
   }
   function eachColumns (columns, columnParentColumns = cellColumns) {
@@ -219,14 +224,17 @@ export default function (ctx) {
       }
 
       const cellColumn = item.column || {}
-      cellColumn.label = item.label
+      if (cellColumn.label == null) {
+        cellColumn.label = item.label
+      }
       cellColumn.key = key
       columnParentColumns[key] = cellColumn
       if (item.children) {
         eachColumns(item.children, cellColumn.children = {})
         return
       }
-      mergeFromForm(formColumns, item, key, 'form')
+
+      mergeFromForm(formColumns, item, key, 'form', true)
       mergeFromForm(addFormColumns, item, key, 'addForm')
       mergeFromForm(editFormColumns, item, key, 'editForm')
       mergeFromForm(viewFormColumns, item, key, 'viewForm')
@@ -236,6 +244,7 @@ export default function (ctx) {
 
   eachColumns(userOptions.columns)
 
+  debugger
   // 分置合并
   userOptions.form = _.merge(_.cloneDeep(userOptions.form), { columns: formColumns })
   userOptions.editForm = _.merge(_.cloneDeep(userOptions.form), { columns: editFormColumns }, userOptions.editForm)
