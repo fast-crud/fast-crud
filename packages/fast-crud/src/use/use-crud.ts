@@ -4,10 +4,11 @@ import { reactive, nextTick, ref } from 'vue'
 import logger from '../utils/util.log'
 import typesUtil from '../utils/util.types'
 import { ElMessageBox, ElNotification } from 'element-plus'
+import { uiContext } from '../ui'
 
 export interface CrudOptions{
   table?: {};
-  columns?: {};
+  columns?: [];
   data?: [];
   rowHandle?: {};
   search?: {};
@@ -22,6 +23,7 @@ export interface CrudOptions{
 }
 
 export default function (ctx) {
+  const fsui = uiContext.get()
   const options: CrudOptions = ctx.options
   const crudRef = ctx.crudRef
 
@@ -189,7 +191,7 @@ export default function (ctx) {
   )
 
   // 分散 合并到不同的维度
-  const cellColumns = {}
+  const tableColumns: any[] = []
   const formColumns = {}
   const addFormColumns = {}
   const editFormColumns = {}
@@ -199,15 +201,15 @@ export default function (ctx) {
   function mergeFromForm (targetColumns, item, key, mergeSrc, addLabel = false) {
     const formColumn = _.cloneDeep(item[mergeSrc]) || {}
     if (addLabel) {
-      if (formColumn.label == null) {
-        formColumn.label = item.label
+      if (formColumn.title == null) {
+        formColumn.title = item.title
       }
       formColumn.key = key
     }
 
     targetColumns[key] = formColumn
   }
-  function eachColumns (columns, columnParentColumns = cellColumns) {
+  function eachColumns (columns, tableParentColumns: any[] = tableColumns) {
     _.forEach(columns, (item, key) => {
       // types merge
       if (item.type) {
@@ -217,7 +219,6 @@ export default function (ctx) {
         }
       }
       // copy dict
-
       if (item.dict) {
         if (item.column?.component) {
           item.column.component.dict = _.cloneDeep(item.dict)
@@ -228,14 +229,14 @@ export default function (ctx) {
         console.log('item.dict', item)
       }
 
-      const cellColumn = item.column || {}
-      if (cellColumn.label == null) {
-        cellColumn.label = item.label
+      const tableColumn = item.column || {}
+      if (tableColumn.title == null) {
+        tableColumn.title = item.title
       }
-      cellColumn.key = key
-      columnParentColumns[key] = cellColumn
+      tableColumn.key = key
+      tableParentColumns.push(tableColumn)
       if (item.children) {
-        eachColumns(item.children, cellColumn.children = {})
+        eachColumns(item.children, tableColumn.children = [])
         return
       }
 
@@ -255,7 +256,7 @@ export default function (ctx) {
   userOptions.addForm = _.merge(_.cloneDeep(userOptions.form), { columns: addFormColumns }, userOptions.addForm)
   userOptions.viewForm = _.merge(_.cloneDeep(userOptions.form), { columns: viewFormColumns }, userOptions.viewForm)
   userOptions.search = _.merge({ columns: userOptions.form.columns }, { columns: searchColumns }, userOptions.search)
-  userOptions.columns = cellColumns
+  userOptions.columns = tableColumns
 
   // 单独处理viewForm的component
   _.forEach(userOptions.viewForm.columns, (value) => {

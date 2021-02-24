@@ -1,4 +1,4 @@
-import { TextAreaCI, CI, UiInterface, DialogCI } from './ui-interface'
+import { TextAreaCI, CI, UiInterface, DialogCI, TableColumnCI } from './ui-interface'
 export class Element implements UiInterface {
   dialog: DialogCI={
     name: 'el-dialog',
@@ -65,8 +65,10 @@ export class Element implements UiInterface {
     name: 'el-pagination'
   };
 
-  tableColumn: CI={
-    name: 'el-table-column'
+  tableColumn: TableColumnCI={
+    name: 'el-table-column',
+    label: 'label',
+    prop: 'prop'
   };
 
   table: CI={

@@ -47,13 +47,13 @@ export default function ({ crudRef }) {
     },
     columns: {
       date: {
-        label: '日期'
+        title: '日期'
         // column: {
         //   sortable: true
         // }
       },
       name: {
-        label: '姓名',
+        title: '姓名',
         type: 'text',
         search: { show: true }
         // column: {
@@ -81,7 +81,7 @@ export default function ({ crudRef }) {
         // }
       },
       avatar: {
-        label: '头像',
+        title: '头像',
         search: { show: true }
         // column: {
         //   align: 'center',
@@ -121,7 +121,7 @@ export default function ({ crudRef }) {
         // }
       },
       show: {
-        label: '显隐'
+        title: '显隐'
         // column: {
         //   component: {
         //     name: 'el-switch',
@@ -133,7 +133,7 @@ export default function ({ crudRef }) {
         //   }
         // },
         // form: {
-        //   label: compute((context) => {
+        //   title: compute((context) => {
         //     console.log('xianyin ,', context)
         //     return context.form.show ? '隐藏头像' : '显示头像'
         //   }),
@@ -146,10 +146,10 @@ export default function ({ crudRef }) {
         // }
       },
       addressGroup: {
-        label: '地址',
+        title: '地址',
         children: {
           province: {
-            label: '省份'
+            title: '省份'
             // type: 'select',
             // search: { show: true },
             // dict: dict({
@@ -157,14 +157,14 @@ export default function ({ crudRef }) {
             // })
           },
           city: {
-            label: '城市'
+            title: '城市'
             // type: 'select',
             // dict: dict({
             //   url: '/dicts/OpenStatusEnum'
             // })
           },
           address: {
-            label: '地址'
+            title: '地址'
             // search: {
             //   show: true
             // },
@@ -173,11 +173,11 @@ export default function ({ crudRef }) {
         }
       },
       zip: {
-        label: '邮编'
+        title: '邮编'
       }
     },
     rowHandle: {
-      label: '操作',
+      title: '操作',
       width: '300px',
       edit: {
         icon: 'el-icon-edit',

@@ -9,12 +9,17 @@ export interface TextAreaCI extends CI{
 export interface DialogCI extends CI{
   visible;
 }
+
+export interface TableColumnCI extends CI{
+  label;
+  prop;
+}
 export interface UiInterface {
   input: CI;
   textArea: TextAreaCI;
   tag: CI;
   table: CI;
-  tableColumn: CI;
+  tableColumn: TableColumnCI;
   pagination: CI;
   button: CI;
   form: CI;

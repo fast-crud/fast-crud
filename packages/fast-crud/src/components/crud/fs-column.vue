@@ -32,6 +32,7 @@ export default {
       const target = { ...props.column }
       delete target.children // 这里必须删除掉children
       delete target.component
+      target.label = target.title
       return ComputeValue.buildBindProps(target, getContextFn)
     })
 

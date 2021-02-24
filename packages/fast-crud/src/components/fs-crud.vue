@@ -33,7 +33,7 @@
     <component :is="$fsui.table.name" v-if="computedTable?.show!==false" class="fs-crud-table" v-bind="computedTable" :data="data"
     >
 <!--      v-loading="computedTable.loading"-->
-      <fs-column v-for="(item,key) of columns" :column="item" :key="key" :prop="key"
+      <fs-column v-for="(item,index) of columns" :column="item" :key="index" :prop="item.key"
                  :slots="computedCellSlots"></fs-column>
 <!--      <el-table-column-->
 <!--        v-for="(item,key) of columns"  v-bind="item" :key="key" :prop="key"-->
@@ -45,7 +45,7 @@
 
       <component :is="$fsui.tableColumn.name"
           v-if="rowHandle && rowHandle.show!==false"
-          v-bind="rowHandle"
+          v-bind="rowHandle" :label="rowHandle.title"
           prop="rowHandle"
       >
         <template #default="scope">

@@ -1,4 +1,4 @@
-import { CI, DialogCI, TextAreaCI, UiInterface } from './ui-interface'
+import { CI, DialogCI, TableColumnCI, TextAreaCI, UiInterface } from './ui-interface'
 export class Antdv implements UiInterface {
   dialog: DialogCI={
     name: 'a-modal',
@@ -69,8 +69,10 @@ export class Antdv implements UiInterface {
     name: 'a-table'
   }
 
-  tableColumn: CI={
-    name: 'a-table-column'
+  tableColumn: TableColumnCI={
+    name: 'a-table-column',
+    label: 'title',
+    prop: 'key'
   };
 
   textArea: TextAreaCI={ name: 'a-textarea', type: undefined };
