@@ -9,9 +9,7 @@
     "build": "vue-cli-service build --report --target lib ./src/index.js"
   },
   "dependencies": {
-    "core-js": "^3.6.5",
     "deepdash-es": "^5.3.5",
-    "element-plus": "latest",
     "lodash-es": "^4.17.20",
     "vue-i18n": "^9.0.0-rc.2",
     "vuedraggable": "^4.0.1"
