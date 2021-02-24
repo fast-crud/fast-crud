@@ -27,13 +27,12 @@ export default {
       return {}
     }
 
-    // const computedColumn = computed(() => {
-    //   const target = { ...props.column }
-    //   delete target.children // 这里必须删除掉children
-    //   delete target.component
-    //   return ComputeValue.buildBindProps(target, getContextFn)
-    // })
-    const computedColumn = ComputeValue.computed(props.column, getContextFn, true, ['children', 'component'])
+    const computedColumn = computed(() => {
+      const target = { ...props.column }
+      delete target.children // 这里必须删除掉children
+      delete target.component
+      return ComputeValue.buildBindProps(target, getContextFn)
+    })
 
     const computedChildren = computed(() => {
       return props.column.children

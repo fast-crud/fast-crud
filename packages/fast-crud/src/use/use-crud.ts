@@ -165,7 +165,12 @@ export default function (ctx) {
         crudOptions.value.toolbar.compact = value
       },
       'onUpdate:columns' (value) {
-        crudOptions.value.columns.columns = value
+        _.forEach(crudOptions.value.columns, (item, key) => {
+          delete crudOptions.value.columns[key]
+        })
+        nextTick(() => {
+          crudOptions.value.columns = value
+        })
       },
       onRefresh () {
         doRefresh()
@@ -244,7 +249,6 @@ export default function (ctx) {
 
   eachColumns(userOptions.columns)
 
-  debugger
   // 分置合并
   userOptions.form = _.merge(_.cloneDeep(userOptions.form), { columns: formColumns })
   userOptions.editForm = _.merge(_.cloneDeep(userOptions.form), { columns: editFormColumns }, userOptions.editForm)
