@@ -2,7 +2,7 @@
   <div class="fs-form">
     <component :is="$fsui.form.name" class="fs-form-grid" ref="formRef" :model="form" v-bind="options">
       <template  v-for="(item,key) in computedColumns" :key="key" >
-        <component :is="$fsui.formItem.name" :label="item.title" v-if="item.show!==false" v-bind="item">
+        <component :is="$fsui.formItem.name" v-if="item.show!==false" v-bind="item" :label="item.title"  :name="key" >
           <fs-slot-render v-if="slots && slots['form-' + key]" :slots="slots['form-' + key]" :scope="{key,...scope}"/>
           <template v-else>
             <fs-component-render v-if="item.component?.show!==false"
@@ -96,6 +96,7 @@ export default {
     }
 
     async function submit () {
+      console.log('form submit')
       const valid = await formRef.value.validate()
       const ret = scope.value
       if (valid) {
@@ -140,5 +141,9 @@ export default {
 .fs-form-grid{
   display: grid;
   grid-template-columns: 50% 50%;
+
+  .ant-form-item-label{
+    width:80px
+  }
 }
 </style>

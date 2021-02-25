@@ -8,7 +8,9 @@ const list = [
     name: 'aa',
     date: '2016-05-02',
     status: '0',
-    province: '1'
+    province: '1',
+    avatar: 'https://alicdn.antdv.com/vue.png',
+    show: true
   },
   {
     name: 'bb',

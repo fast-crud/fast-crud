@@ -1,9 +1,11 @@
+import { uiContext } from '../../ui'
 export default function () {
+  const ui = uiContext.get()
   return {
     select: {
       search: { autoSearchTrigger: 'change' },
       column: { component: { name: 'fs-values-format' } },
-      form: { component: { name: 'fs-dict-select', clearable: true } }
+      form: { component: { name: 'fs-dict-select', clearable: true, valueBinding: ui.select.modelValue } }
     },
     radio: {
       search: { component: { name: 'fs-dict-select', clearable: true }, autoSearchTrigger: 'change' },

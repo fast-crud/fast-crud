@@ -1,4 +1,4 @@
-import { TextAreaCI, CI, UiInterface, DialogCI, TableColumnCI, Icons, IconCI, TableCI } from './ui-interface'
+import { TextAreaCI, CI, UiInterface, DialogCI, TableColumnCI, Icons, IconCI, TableCI, SelectCI } from './ui-interface'
 export class Element implements UiInterface {
   type='element'
   icon: IconCI={
@@ -55,8 +55,9 @@ export class Element implements UiInterface {
     name: 'el-option'
   };
 
-  select: CI={
-    name: 'el-select'
+  select: SelectCI={
+    name: 'el-select',
+    modelValue: 'modelValue'
   };
 
   radio: CI={
@@ -86,13 +87,17 @@ export class Element implements UiInterface {
   tableColumn: TableColumnCI={
     name: 'el-table-column',
     label: 'label',
-    prop: 'prop'
+    prop: 'prop',
+    row: 'row',
+    index: '$index'
   };
 
   tableColumnGroup: TableColumnCI={
     name: 'el-table-column',
     label: 'label',
-    prop: 'prop'
+    prop: 'prop',
+    row: 'row',
+    index: '$index'
   };
 
   table: TableCI={

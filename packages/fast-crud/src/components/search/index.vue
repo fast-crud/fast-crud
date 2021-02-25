@@ -8,7 +8,7 @@
           v-bind="options" class="search-form" @compositionstart="changeInputEventDisabled(true)" @compositionend="changeInputEventDisabled(false)">
         <slot name="prefix" :form="form"/>
         <template v-for="(item,key) in computedColumns" :key="key">
-          <component :is="$fsui.formItem.name" v-if="item.show===true" v-bind="item" :prop="key" :label="item.title">
+          <component :is="$fsui.formItem.name" v-if="item.show===true" v-bind="item" :prop="key" :name="key"  :label="item.title">
             <template v-if="slots['search-' + key]">
               <fs-slot-render :slots="slots['search-' + key]" :scope="{form,key}"/>
             </template>

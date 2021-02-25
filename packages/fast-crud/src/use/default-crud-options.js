@@ -20,14 +20,16 @@ export default {
       },
       form: {
         options: {
+          labelAlign: 'right',
           labelPosition: 'right',
           labelWidth: '80px',
           style: {
-            //  'grid-template-columns': '47% 47%' // grid布局，默认两列
+            'grid-template-columns': '50% 50%' // grid布局，默认两列
           }
         },
         wrapper: {
-          is: ui.dialog.name
+          is: ui.dialog.name,
+          width: '50%'
         }
       },
       addForm: {

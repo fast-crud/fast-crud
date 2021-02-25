@@ -194,9 +194,13 @@ function useTable (props, ctx) {
   })
   const formWrapperRef = ref()
 
+  const { proxy } = getCurrentInstance()
   const onRowHandle = (scope) => {
-    let { key, row, $index, index } = scope
-    index = $index ?? index
+    const { key } = scope
+    const tableColumnCI = proxy.$fsui.tableColumn
+    const index = scope[tableColumnCI.index]
+    const row = scope[tableColumnCI.row]
+
     const e = { mode: key, initial: row, slots: ctx.slots, index }
     console.log('handle', scope)
     if (key === 'edit') {

@@ -1,11 +1,12 @@
 <script>
-import { h, resolveComponent, getCurrentInstance } from 'vue'
+import { h, resolveComponent, getCurrentInstance, ref, toRef, computed, reactive } from 'vue'
 import _ from 'lodash-es'
 import traceUtil from '../../utils/util.trace'
 export default {
   name: 'fs-component-render',
-  emits: ['update:dict'],
+  emits: ['update:dict', 'update:modelValue'],
   props: {
+    modelValue: {},
     name: {
       type: String
     },
@@ -30,31 +31,28 @@ export default {
   setup (props, ctx) {
     traceUtil.trace('fs-component-render')
 
-    const newScope = {
-      ...ctx.attrs,
-      ...props.scope,
-      dict: props.dict
-    }
-    const baseAttrs = {
-      ...ctx.attrs,
-      scope: props.scope,
-      dict: props.dict
-    }
+    const newScope = computed(() => {
+      return {
+        ...ctx.attrs,
+        ...props.scope,
+        dict: props.dict
+      }
+    })
 
     // 带事件的attrs
     const allAttrs = {
-      ...baseAttrs
+      scope: props.scope,
+      dict: props.dict,
+      modelValue: props.modelValue
     }
-    if (props.valueBinding) {
-      if (typeof props.valueBinding === 'string') {
-        _.set(allAttrs, props.valueBinding, baseAttrs.modelValue)
-      } else {
-        // eslint-disable-next-line vue/no-setup-props-destructure
-        const prop = props.valueBinding.prop
-        // eslint-disable-next-line vue/no-setup-props-destructure
-        const handle = props.valueBinding.handle
-        _.set(allAttrs, prop, handle({ value: baseAttrs.modelValue }))
-      }
+    const computedModelValue = computed(() => {
+      return props.modelValue
+    })
+    const valueBinding = computed(() => {
+      return props.valueBinding || 'modelValue'
+    })
+    allAttrs['onUpdate:' + valueBinding.value] = (value) => {
+      ctx.emit('update:modelValue', value)
     }
 
     const events = { ...props.events, ...props.on }
@@ -65,7 +63,7 @@ export default {
         handler = eval(value)
       }
       allAttrs[key] = ($event) => {
-        return handler({ ...newScope, $event })
+        return handler({ ...newScope.value, $event })
       }
     })
 
@@ -74,7 +72,7 @@ export default {
       _.forEach(props.children, (item, key) => {
         if (item instanceof Function) {
           children[key] = () => {
-            return item(newScope)
+            return item(newScope.value)
           }
         } else {
           children[key] = () => {
@@ -92,6 +90,7 @@ export default {
     }
     const children = childrenRender()
     return () => {
+      _.set(allAttrs, valueBinding.value, computedModelValue.value)
       return h(comp, allAttrs, children)
     }
   }

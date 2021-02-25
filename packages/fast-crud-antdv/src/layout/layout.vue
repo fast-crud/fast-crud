@@ -4,7 +4,7 @@
     <a-layout-header>fast-crud</a-layout-header>
     <a-layout>
       <a-layout-sider><aside-menu></aside-menu></a-layout-sider>
-      <a-layout-content> <router-view></router-view></a-layout-content>
+      <a-layout-content><router-view></router-view></a-layout-content>
 
     </a-layout>
     <a-layout-footer>by fast-crud</a-layout-footer>
@@ -19,6 +19,7 @@ export default {
 </script>
 <style lang="less">
 .ant-layout{
+  height:100%;
   .ant-layout-header{
     height: 64px;
     padding: 0 50px;

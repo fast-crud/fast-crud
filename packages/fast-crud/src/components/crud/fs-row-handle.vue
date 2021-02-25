@@ -103,5 +103,9 @@ export default {
     margin-top:2px;
     margin-bottom: 2px;
   }
+  .ant-btn{
+    margin-left:2px;
+    margin-right:2px;
+  }
 }
 </style>

@@ -1,4 +1,4 @@
-import { CI, DialogCI, IconCI, Icons, TableCI, TableColumnCI, TextAreaCI, UiInterface } from './ui-interface'
+import { CI, DialogCI, IconCI, Icons, SelectCI, TableCI, TableColumnCI, TextAreaCI, UiInterface } from './ui-interface'
 export class Antdv implements UiInterface {
   type='antdv'
   icon: IconCI={
@@ -60,7 +60,7 @@ export class Antdv implements UiInterface {
   };
 
   option: CI={
-    name: 'a-formItem'
+    name: 'a-select-option'
   };
 
   pagination: CI={
@@ -79,8 +79,9 @@ export class Antdv implements UiInterface {
     name: 'a-row'
   };
 
-  select: CI={
-    name: 'a-select'
+  select: SelectCI={
+    name: 'a-select',
+    modelValue: 'value'
   };
 
   table: TableCI={
@@ -91,13 +92,17 @@ export class Antdv implements UiInterface {
   tableColumn: TableColumnCI={
     name: 'a-table-column',
     label: 'title',
-    prop: 'key'
+    prop: 'key',
+    row: 'record',
+    index: 'index'
   };
 
   tableColumnGroup: TableColumnCI={
     name: 'a-table-column-group',
     label: 'title',
-    prop: 'key'
+    prop: 'key',
+    row: 'record',
+    index: 'index'
   };
 
   textArea: TextAreaCI={ name: 'a-textarea', type: undefined };

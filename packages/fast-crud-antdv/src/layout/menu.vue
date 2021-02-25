@@ -91,3 +91,8 @@ export default {
   }
 }
 </script>
+<style lang="less">
+.ant-menu{
+  height:100%
+}
+</style>

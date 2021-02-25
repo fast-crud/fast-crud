@@ -1,7 +1,9 @@
 export interface CI{
   name;
 }
-
+export interface SelectCI extends CI{
+  modelValue;
+}
 export interface TextAreaCI extends CI{
   type;
 }
@@ -13,6 +15,8 @@ export interface DialogCI extends CI{
 export interface TableColumnCI extends CI{
   label;
   prop;
+  row;
+  index;
 }
 
 export interface TableCI extends CI{
@@ -47,7 +51,7 @@ export interface UiInterface {
   formItem: CI;
   radioGroup: CI;
   radio: CI;
-  select: CI;
+  select: SelectCI;
   option: CI;
   collapseTransition: CI;
   checkbox: CI;

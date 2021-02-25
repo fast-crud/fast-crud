@@ -52,16 +52,33 @@ export default {
             } else if (item.component) {
               cellSlots.default = (scope) => {
                 function getContextFn () {
-                  return scope
+                  const row = scope.record || scope.row
+                  return { ...scope, row }
                 }
+                const newScope = getContextFn()
                 const component = ComputeValue.buildBindProps(item.component, getContextFn)
                 if (component.show === false) {
                   return
                 }
                 if (item.component.render) {
-                  return item.component.render(scope)
+                  return item.component.render(newScope)
                 } else {
-                  return <fs-component-render v-model={scope.row[item.key]} {...component} scope={scope}/>
+                  const vModel = {
+                    modelValue: scope[proxy.$fsui.tableColumn.row][item.key],
+                    'onUpdate:modelValue': (value) => {
+                      console.log('onUpdate:modelValue', value)
+                      scope[proxy.$fsui.tableColumn.row][item.key] = value
+                    },
+                    'onUpdate:value': (value) => {
+                      console.log('onUpdate:value', value)
+                      scope[proxy.$fsui.tableColumn.row][item.key] = value
+                    },
+                    input: (value) => {
+                      console.log('input', value)
+                      scope[proxy.$fsui.tableColumn.row][item.key] = value
+                    }
+                  }
+                  return <fs-component-render {...component} {...vModel} scope={newScope}/>
                 }
               }
             }
@@ -69,7 +86,7 @@ export default {
           const newItem = { ...item }
           delete newItem.children
 
-          return <currentTableColumnComp {...newItem} label={item.title} prop={item.key} v-slots={cellSlots}/>
+          return <currentTableColumnComp {...newItem} label={item.title} prop={item.key} dataIndex={item.key} v-slots={cellSlots}/>
         }
         _.forEach(this.columns, (item, index) => {
           children.push(buildColumn(item))
