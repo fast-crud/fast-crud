@@ -167,12 +167,8 @@ export default function (ctx) {
         crudOptions.value.toolbar.compact = value
       },
       'onUpdate:columns' (value) {
-        _.forEach(crudOptions.value.columns, (item, key) => {
-          delete crudOptions.value.columns[key]
-        })
-        nextTick(() => {
-          crudOptions.value.columns = value
-        })
+        console.log('update columns', value)
+        crudOptions.value.columns = value
       },
       onRefresh () {
         doRefresh()
@@ -204,9 +200,8 @@ export default function (ctx) {
       if (formColumn.title == null) {
         formColumn.title = item.title
       }
-      formColumn.key = key
     }
-
+    formColumn.key = key
     targetColumns[key] = formColumn
   }
   function eachColumns (columns, tableParentColumns: any[] = tableColumns) {
@@ -226,7 +221,6 @@ export default function (ctx) {
         if (item.form?.component) {
           item.form.component.dict = _.cloneDeep(item.dict)
         }
-        console.log('item.dict', item)
       }
 
       const tableColumn = item.column || {}

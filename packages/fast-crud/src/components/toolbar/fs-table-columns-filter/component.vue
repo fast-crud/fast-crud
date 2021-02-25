@@ -140,6 +140,7 @@ import _ from 'lodash-es'
 import FsButton from '../../basic/fs-button'
 import FsTableColumnsFixedController from '../fs-table-columns-fixed-controller/component'
 import TableStore from '../../../utils/util.store'
+import { toRaw } from 'vue'
 // 输入 全部分表格列设置
 // 输出 要显示的表格列 + 每列的设置
 
@@ -152,7 +153,7 @@ export default {
   },
   props: {
     columns: {
-      type: Object
+      type: Array
     },
     storage: {
       type: [Boolean, String],
@@ -219,7 +220,9 @@ export default {
         currentValue.push(found)
       }
       this.currentValue = currentValue
-      this.submit(true)
+      this.$nextTick(() => {
+        this.submit(true)
+      })
     }
   },
   methods: {
@@ -230,8 +233,7 @@ export default {
     buildColumns (value) {
       const columns = _.cloneDeep(value)
       const currentValue = []
-      _.forEach(columns, (value, key) => {
-        value.key = key
+      _.forEach(columns, (value) => {
         if (value.show == null) {
           value.show = true
         }
@@ -277,10 +279,7 @@ export default {
       if (noSave !== true) {
         this.saveOptionsToStorage(this.currentValue)
       }
-      const result = {}
-      this.currentValue.forEach((item, index) => {
-        result[item.key] = item
-      })
+      const result = _.cloneDeep(this.currentValue)
       this.emit(result)
       this.active = false
     },

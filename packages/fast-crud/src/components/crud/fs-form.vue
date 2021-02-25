@@ -2,7 +2,7 @@
   <div class="fs-form">
     <component :is="$fsui.form.name" class="fs-form-grid" ref="formRef" :model="form" v-bind="options">
       <template  v-for="(item,key) in computedColumns" :key="key" >
-        <component :is="$fsui.formItem.name" :key="key" v-if="item.show!==false" v-bind="item">
+        <component :is="$fsui.formItem.name" :label="item.title" v-if="item.show!==false" v-bind="item">
           <fs-slot-render v-if="slots && slots['form-' + key]" :slots="slots['form-' + key]" :scope="{key,...scope}"/>
           <template v-else>
             <fs-component-render v-if="item.component?.show!==false"

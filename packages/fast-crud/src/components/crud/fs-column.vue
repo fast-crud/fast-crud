@@ -11,83 +11,86 @@ export default {
   name: 'fs-column',
   components: { FsComponentRender, FsCell, FsRender },
   props: {
-    column: {
+    component: {
       type: Object
-    },
-    prop: {
-      type: String,
-      required: true
     },
     slots: {
       type: Object
+    },
+    prop: {
+
+    },
+    key: {
+    // 不要用它
+    },
+    title: {
+
+    },
+    children: {
+
+    },
+    show: {
+
     }
   },
-  setup (props) {
+  setup (props, ctx) {
     traceUtil.trace('fs-column')
     function getContextFn () {
       return {}
     }
 
-    const computedColumn = computed(() => {
-      const target = { ...props.column }
-      delete target.children // 这里必须删除掉children
-      delete target.component
-      target.label = target.title
-      return ComputeValue.buildBindProps(target, getContextFn)
-    })
-
     const computedChildren = computed(() => {
-      return props.column.children
+      return props.children
     })
 
-    let slots = null
-    if (computedChildren.value != null) {
-      slots = {
-        default () {
-          const children = []
-          _.forEach(computedChildren.value, (item, key) => {
-            children.push(<fs-column column={item} key={key} prop={key} slots={props.slots}/>)
-          })
-          return children
-        }
-      }
-    } else if (props.slots && props.slots['cell-' + props.prop]) {
-      slots = {
-        default: (scope) => {
-          const newScope = { key: props.prop, ...scope }
-          return h(props.slots['cell-' + props.prop], newScope)
-        }
-      }
-    } else if (props.column.component) {
-      slots = {
-        default: (scope) => {
-          if (scope?.$index === -1) {
-            return
-          }
-          function getScope () {
-            return { key: props.prop, ...scope }
-          }
-          const newScope = getScope()
-          const component = ComputeValue.buildBindProps(props.column.component, getScope)
-          if (component.show === false) {
-            return
-          }
-          if (props.column.component.render) {
-            return props.column.component.render(newScope)
-          }
-          return <fs-component-render v-model={scope.row[props.prop]} {...props.column.component} scope={newScope} />
-        }
-      }
-    }
     const { proxy } = getCurrentInstance()
     return () => {
-      if (computedColumn.value.show === false) {
+      if (props.show === false) {
         return
+      }
+      let slots = null
+      if (computedChildren.value != null) {
+        slots = {
+          default () {
+            const children = []
+            _.forEach(computedChildren.value, (item) => {
+              children.push(<fs-column {...item} prop={item.key} slots={props.slots}/>)
+            })
+            return children
+          }
+        }
+      } else if (props.slots && props.slots['cell-' + props.prop]) {
+        slots = {
+          default: (scope) => {
+            const newScope = { key: props.prop, ...scope }
+            return h(props.slots['cell-' + props.prop], newScope)
+          }
+        }
+      } else if (props.component) {
+        slots = {
+          default: (scope) => {
+            if (scope?.$index === -1) {
+              return
+            }
+            function getScope () {
+              return { key: props.prop, ...scope }
+            }
+            const newScope = getScope()
+            const component = ComputeValue.buildBindProps(props.component, getScope)
+            if (component.show === false) {
+              return
+            }
+            if (props.component.render) {
+              return props.component.render(newScope)
+            }
+            return <fs-component-render v-model={scope.row[props.prop]} {...props.component} scope={newScope} />
+          }
+        }
       }
       const comp = resolveComponent(proxy.$fsui.tableColumn.name)
       return <comp
-        {...computedColumn.value}
-        prop={props.prop} v-slots={slots} />
+        {...ctx.attrs}
+        label={props.title} prop={props.prop} v-slots={slots} />
     }
   }
 }

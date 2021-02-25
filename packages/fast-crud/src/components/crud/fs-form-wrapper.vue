@@ -4,7 +4,6 @@ import FsButton from '../basic/fs-button'
 import traceUtil from '../../utils/util.trace'
 export default {
   name: 'fs-form-wrapper',
-  inheritAttrs: false,
   // eslint-disable-next-line vue/no-unused-components
   components: { FsButton },
   emits: ['reset', 'submit', 'validationError'],
@@ -15,8 +14,6 @@ export default {
     if (!this.formWrapper) {
       return null
     }
-    const is = this.formWrapper.is || 'el-dialog'
-    const comp = resolveComponent(is)
     let children = {}
     const _slots = { ...this.$slots, ...this.slots }
     const slotsRender = (key, scope, slots = _slots) => {
@@ -31,7 +28,7 @@ export default {
         default: () => {
           return <div>
             {slotsRender('form-body-before', scope)}
-            <fs-form ref="formRef" {...this.formProps}/>
+            <fs-form ref="formRef" {...this.formProps} />
             {slotsRender('form-body-after', scope)}
             <div className="fs-form-footer-btns">
               {slotsRender('form-footer-prefix', scope)}
@@ -43,6 +40,8 @@ export default {
       }
     }
 
+    const is = this.formWrapperIs || 'el-dialog'
+    const comp = resolveComponent(is)
     const visible = this.$fsui.dialog.visible
     console.log('visible', visible)
     return <comp custom-class="fs-form-wrapper"
@@ -54,19 +53,22 @@ export default {
   setup () {
     traceUtil.trace('fs-from-wrapper')
     const formWrapperOpen = ref(false)
+    const formWrapperIs = ref()
     const formProps = ref()
     const formWrapper = ref()
     const loading = ref(false)
     const open = (opts) => {
-      formWrapper.value = opts.wrapper
+      formWrapper.value = {
+        ...opts.wrapper
+      }
+      delete formWrapper.value.is
+      formWrapperIs.value = opts.wrapper.is
       formProps.value = {
         ...opts
       }
       delete formProps.value.wrapper
 
       formWrapperOpen.value = true
-
-      debugger
     }
     const close = () => {
       formWrapperOpen.value = false
@@ -101,6 +103,7 @@ export default {
       closed,
       open,
       formProps,
+      formWrapperIs,
       formWrapperOpen,
       formWrapper,
       formRef,

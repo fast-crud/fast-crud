@@ -47,7 +47,7 @@ export default {
      * 列配置
      */
     columns: {
-      type: Object,
+      type: Array,
       default: undefined
     },
     /**

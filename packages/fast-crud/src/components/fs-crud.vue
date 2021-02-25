@@ -30,11 +30,12 @@
       </div>
     </template>
     <slot :scope="{data}"/>
-    <component :is="$fsui.table.name" v-if="computedTable?.show!==false" class="fs-crud-table" v-bind="computedTable" :data="data"
-    >
+    <component :is="$fsui.table.name" v-if="computedTable?.show!==false" class="fs-crud-table" v-bind="computedTable" :data="data">
 <!--      v-loading="computedTable.loading"-->
-      <fs-column v-for="(item,index) of columns" :column="item" :key="index" :prop="item.key"
-                 :slots="computedCellSlots"></fs-column>
+      <template  v-for="(item) of computedColumns" :key="item.key">
+        <fs-column v-bind="item" :prop="item.key" :slots="computedCellSlots"></fs-column>
+      </template>
+
 <!--      <el-table-column-->
 <!--        v-for="(item,key) of columns"  v-bind="item" :key="key" :prop="key"-->
 <!--      >-->
@@ -173,6 +174,8 @@ function useTable (props, ctx) {
 
   const computedToolbar = toRef(props, 'toolbar')
 
+  const computedColumns = toRef(props, 'columns')
+
   const computedCellSlots = computed(() => {
     return slotFilter(ctx.slots, 'cell-')
   })
@@ -210,6 +213,7 @@ function useTable (props, ctx) {
   return {
     computedTable,
     computedToolbar,
+    computedColumns,
     computedCellSlots,
     onRowHandle,
     onActionHandle,
@@ -230,7 +234,7 @@ export default defineComponent({
     table: {
       show: true
     },
-    columns: { type: Object },
+    columns: { type: Array },
     data: {
       type: Array
     },
