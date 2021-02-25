@@ -33,9 +33,9 @@ export default function (ctx) {
     if (crudOptions.value.pagination) {
       page = { currentPage: crudOptions.value.pagination.currentPage, pageSize: crudOptions.value.pagination.pageSize }
     }
-    const searchFormData = {}
+    let searchFormData = {}
     if (crudRef.value) {
-      crudRef.value.getSearchFormData()
+      searchFormData = crudRef.value.getSearchFormData()
     }
     let query = { page, form: searchFormData }
     if (crudOptions.value.request.transformQuery) {
@@ -45,6 +45,7 @@ export default function (ctx) {
     crudOptions.value.table.loading = true
     let pageRes
     try {
+      logger.debug('pageRequest', query)
       pageRes = await crudOptions.value.request.pageRequest(query)
     } finally {
       crudOptions.value.table.loading = false
@@ -81,6 +82,7 @@ export default function (ctx) {
    * }
    */
   async function doSearch (opts) {
+    logger.debug('dosearch:', opts)
     opts = _.merge({ goFirstPage: true }, opts)
     if (opts.goFirstPage) {
       doPageTurn(1)
