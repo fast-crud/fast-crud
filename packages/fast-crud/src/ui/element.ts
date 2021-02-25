@@ -1,5 +1,23 @@
-import { TextAreaCI, CI, UiInterface, DialogCI, TableColumnCI } from './ui-interface'
+import { TextAreaCI, CI, UiInterface, DialogCI, TableColumnCI, Icons, IconCI, TableCI } from './ui-interface'
 export class Element implements UiInterface {
+  type='element'
+  icon: IconCI={
+    name: '',
+    isComponent: false,
+    circle: { circle: true }
+  };
+
+  icons: Icons={
+    add: 'el-icon-plus',
+    columnsFilter: 'el-icon-set-up',
+    compact: 'el-icon-rank',
+    edit: 'el-icon-edit',
+    remove: 'el-icon-remove',
+    search: 'el-icon-search',
+    refresh: 'el-icon-refresh',
+    export: 'el-icon-upload2'
+  };
+
   dialog: DialogCI={
     name: 'el-dialog',
     visible: 'modelValue'
@@ -71,8 +89,15 @@ export class Element implements UiInterface {
     prop: 'prop'
   };
 
-  table: CI={
-    name: 'el-table'
+  tableColumnGroup: TableColumnCI={
+    name: 'el-table-column',
+    label: 'label',
+    prop: 'prop'
+  };
+
+  table: TableCI={
+    name: 'el-table',
+    data: 'data'
   }
 
   textArea: TextAreaCI ={

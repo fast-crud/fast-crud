@@ -5,6 +5,7 @@
     <a-layout>
       <a-layout-sider><aside-menu></aside-menu></a-layout-sider>
       <a-layout-content> <router-view></router-view></a-layout-content>
+
     </a-layout>
     <a-layout-footer>by fast-crud</a-layout-footer>
   </a-layout>
@@ -17,19 +18,22 @@ export default {
 }
 </script>
 <style lang="less">
-.layout{
-  .layout-header{
+.ant-layout{
+  .ant-layout-header{
     height: 64px;
     padding: 0 50px;
     line-height: 64px;
     background: #001529;
     color:#fff;
   }
-  .layout-footer{
+  .ant-layout-footer{
     padding: 24px 50px;
     color: rgba(0,0,0,.85);
     font-size: 14px;
     background: #f0f2f5;
+  }
+  .ant-layout-content{
+    background: #FFF;
   }
 
   .el-aside{

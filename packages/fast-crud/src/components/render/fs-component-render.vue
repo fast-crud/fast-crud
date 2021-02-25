@@ -1,5 +1,5 @@
 <script>
-import { h, resolveComponent } from 'vue'
+import { h, resolveComponent, getCurrentInstance } from 'vue'
 import _ from 'lodash-es'
 import traceUtil from '../../utils/util.trace'
 export default {
@@ -7,8 +7,7 @@ export default {
   emits: ['update:dict'],
   props: {
     name: {
-      type: String,
-      default: 'el-input'
+      type: String
     },
     children: {
       type: Object
@@ -85,11 +84,11 @@ export default {
       })
       return children
     }
-
+    const { proxy } = getCurrentInstance()
     // eslint-disable-next-line vue/no-setup-props-destructure
-    let comp = props.name
-    if (props.name !== 'div') {
-      comp = resolveComponent(props.name)
+    let comp = props.name || proxy.$fsui.input.name
+    if (comp !== 'div' || comp !== 'span') {
+      comp = resolveComponent(comp)
     }
     const children = childrenRender()
     return () => {

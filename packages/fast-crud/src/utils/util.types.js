@@ -1,17 +1,17 @@
 import DefaultTypes from '../types/index.ts'
 
 function getTypes () {
-  return DefaultTypes
+  return DefaultTypes.defaultTypes
 }
 
 function getType (key) {
-  return DefaultTypes[key]
+  return DefaultTypes.defaultTypes[key]
 }
 const TypesUtil = {
   getType: getType,
   addTypes (newTypes) {
     for (const key in newTypes) {
-      DefaultTypes[key] = newTypes[key]
+      DefaultTypes.defaultTypes[key] = newTypes[key]
     }
   },
   getTypes: getTypes

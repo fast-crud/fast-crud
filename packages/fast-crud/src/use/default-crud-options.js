@@ -5,9 +5,18 @@ export default {
   commonOptions (ctx) {
   },
   defaultOptions () {
+    const ui = uiContext.get()
     return {
       search: {
-        show: true
+        show: true,
+        buttons: {
+          search: {
+            icon: ui.icons.search
+          },
+          reset: {
+            icon: ui.icons.refresh
+          }
+        }
       },
       form: {
         options: {
@@ -18,7 +27,7 @@ export default {
           }
         },
         wrapper: {
-          is: uiContext.get().dialog.name
+          is: ui.dialog.name
         }
       },
       addForm: {
@@ -50,7 +59,8 @@ export default {
         height: '100%',
         rowKey: 'id',
         stripe: true,
-        border: true
+        border: true,
+        bordered: true
       },
       toolbar: {
         compact: true

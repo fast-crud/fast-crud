@@ -1,5 +1,23 @@
-import { CI, DialogCI, TableColumnCI, TextAreaCI, UiInterface } from './ui-interface'
+import { CI, DialogCI, IconCI, Icons, TableCI, TableColumnCI, TextAreaCI, UiInterface } from './ui-interface'
 export class Antdv implements UiInterface {
+  type='antdv'
+  icon: IconCI={
+    name: '',
+    isComponent: true,
+    circle: { shape: 'circle' }
+  };
+
+  icons: Icons={
+    add: 'PlusOutlined',
+    columnsFilter: 'ControlOutlined',
+    compact: 'DragOutlined',
+    edit: 'EditOutlined',
+    export: 'UploadOutlined',
+    refresh: 'SyncOutlined',
+    remove: 'DeleteOutlined',
+    search: 'SearchOutlined'
+  };
+
   dialog: DialogCI={
     name: 'a-modal',
     visible: 'visible'
@@ -34,7 +52,7 @@ export class Antdv implements UiInterface {
   };
 
   form: CI={
-    name: 'a-drawer'
+    name: 'a-form'
   };
 
   formItem: CI={
@@ -65,12 +83,19 @@ export class Antdv implements UiInterface {
     name: 'a-select'
   };
 
-  table: CI={
-    name: 'a-table'
+  table: TableCI={
+    name: 'a-table',
+    data: 'data-source'
   }
 
   tableColumn: TableColumnCI={
     name: 'a-table-column',
+    label: 'title',
+    prop: 'key'
+  };
+
+  tableColumnGroup: TableColumnCI={
+    name: 'a-table-column-group',
     label: 'title',
     prop: 'key'
   };

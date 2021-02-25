@@ -6,7 +6,7 @@ import utils from './utils'
 import { setDictRequest, dict } from './core/dict'
 import { useDict } from './use/use-dict.ts'
 import { uiContext } from './ui'
-
+import columnTypes from './types'
 export * as components from './components'
 export {
   ComputeValue,
@@ -32,6 +32,8 @@ export default {
       const com = components[key]
       app.component(key, com)
     }
+
+    columnTypes.install()
 
     app.config.globalProperties.$fsui = uiContext.get()
   }

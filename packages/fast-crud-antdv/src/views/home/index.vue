@@ -21,10 +21,10 @@
     </template>
 
     <template #pagination-prefix>
-      <a-button >批量删除</a-button>
+      <a-button type="primary" >批量删除</a-button>
     </template>
     <template #pagination-append>
-      <a-button >批量删除</a-button>
+      <a-button ><SearchOutlined/>批量删除</a-button>
     </template>
 
   </fs-crud>

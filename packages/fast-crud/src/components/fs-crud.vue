@@ -4,7 +4,7 @@
       <div class="fs-crud-header">
         <slot name="header-before"/>
         <div class="fs-crud-search">
-          <fs-search ref="searchRef" v-bind="search" :show="search.show" @search="onSearchSubmit" @reset="onSearchReset"
+          <fs-search ref="searchRef" v-bind="search" @search="onSearchSubmit" @reset="onSearchReset"
                      :slots="computedSearchSlots"/>
         </div>
         <div class="fs-crud-actionbar" v-if="actionbar?.show!==false">
@@ -30,30 +30,35 @@
       </div>
     </template>
     <slot :scope="{data}"/>
-    <component :is="$fsui.table.name" v-if="computedTable?.show!==false" class="fs-crud-table" v-bind="computedTable" :data="data">
-<!--      v-loading="computedTable.loading"-->
-      <template  v-for="(item) of computedColumns" :key="item.key">
-        <fs-column v-bind="item" :prop="item.key" :slots="computedCellSlots"></fs-column>
-      </template>
+    <fs-table class="fs-crud-table" v-bind="computedTable"
+              :columns="columns" :rowHandle="rowHandle"
+              :data="data" slots="computedCellSlots"
+              @rowHandle="onRowHandle"
+    />
+<!--    <component :is="$fsui.table.name" v-if="computedTable?.show!==false" class="fs-crud-table" v-bind="computedTable" :data="data">-->
+<!--&lt;!&ndash;      v-loading="computedTable.loading"&ndash;&gt;-->
+<!--      <template  v-for="(item) of computedColumns" :key="item.key">-->
+<!--        <fs-column v-bind="item" :prop="item.key" :slots="computedCellSlots"></fs-column>-->
+<!--      </template>-->
 
-<!--      <el-table-column-->
-<!--        v-for="(item,key) of columns"  v-bind="item" :key="key" :prop="key"-->
+<!--&lt;!&ndash;      <el-table-column&ndash;&gt;-->
+<!--&lt;!&ndash;        v-for="(item,key) of columns"  v-bind="item" :key="key" :prop="key"&ndash;&gt;-->
+<!--&lt;!&ndash;      >&ndash;&gt;-->
+<!--&lt;!&ndash;        <template #default="scope">&ndash;&gt;-->
+<!--&lt;!&ndash;          {{scope.row[key]}}&ndash;&gt;-->
+<!--&lt;!&ndash;        </template>&ndash;&gt;-->
+<!--&lt;!&ndash;      </el-table-column>&ndash;&gt;-->
+
+<!--      <component :is="$fsui.tableColumn.name"-->
+<!--          v-if="rowHandle && rowHandle.show!==false"-->
+<!--          v-bind="rowHandle" :label="rowHandle.title"-->
+<!--          prop="rowHandle"-->
 <!--      >-->
 <!--        <template #default="scope">-->
-<!--          {{scope.row[key]}}-->
+<!--          <fs-row-handle v-bind="rowHandle" :scope="scope" @handle="onRowHandle"></fs-row-handle>-->
 <!--        </template>-->
-<!--      </el-table-column>-->
-
-      <component :is="$fsui.tableColumn.name"
-          v-if="rowHandle && rowHandle.show!==false"
-          v-bind="rowHandle" :label="rowHandle.title"
-          prop="rowHandle"
-      >
-        <template #default="scope">
-          <fs-row-handle v-bind="rowHandle" :scope="scope" @handle="onRowHandle"></fs-row-handle>
-        </template>
-      </component>
-    </component>
+<!--      </component>-->
+<!--    </component>-->
 
     <fs-form-wrapper ref="formWrapperRef" :slots="computedFormSlots"/>
 
@@ -78,7 +83,7 @@
   </fs-container>
 </template>
 <script>
-import { defineComponent, computed, provide, ref, toRef } from 'vue'
+import { defineComponent, computed, provide, ref, toRef, getCurrentInstance } from 'vue'
 import _ from 'lodash-es'
 import FsContainer from './container/fs-container'
 import FsColumn from './crud/fs-column'
@@ -86,6 +91,7 @@ import FsRowHandle from './crud/fs-row-handle'
 import FsFormWrapper from './crud/fs-form-wrapper'
 import FsActionbar from './actionbar'
 import FsToolbar from './toolbar'
+import FsTable from './crud/fs-table'
 import { ComputeValue } from '../core/compute-value'
 import traceUtil from '../utils/util.trace'
 function useProviders (props, ctx) {
@@ -229,7 +235,7 @@ export default defineComponent({
   inheritAttrs: false,
   emits: ['search-submit', 'search-reset', 'refresh', 'update:search', 'update:compact', 'update:columns'],
   // eslint-disable-next-line vue/no-unused-components
-  components: { FsRowHandle, FsContainer, FsColumn, FsFormWrapper, FsActionbar, FsToolbar },
+  components: { FsTable, FsRowHandle, FsContainer, FsColumn, FsFormWrapper, FsActionbar, FsToolbar },
   props: {
     table: {
       show: true

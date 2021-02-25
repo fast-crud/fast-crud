@@ -95,6 +95,7 @@ export default {
   },
   setup (props, ctx) {
     traceUtil.trace('fs-search')
+    console.log('search', props)
     let autoSearch = ref(null)
     const form = ref(_.cloneDeep(props.initial || {}))
     const searchFormRef = ref()
@@ -149,7 +150,6 @@ export default {
             doSearch()
           },
           order: 1,
-          icon: 'el-icon-search',
           text: '查询',
           ...defBtnOptions.search
         })
@@ -161,7 +161,6 @@ export default {
           doClick: () => {
             doReset()
           },
-          icon: 'el-icon-refresh',
           text: '重置',
           order: 2,
           ...defBtnOptions.reset
@@ -253,6 +252,11 @@ export default {
   .search-form{
     display: flex;
     align-items: center;
+    & > *{
+      margin-bottom: 4px;
+      margin-top: 4px;
+      margin-right: 10px;
+    }
     .el-form-item {
       margin-bottom: 4px;
       margin-top: 4px;
@@ -268,5 +272,12 @@ export default {
       align-items: center;
     }
   }
+
+  .search-btns{
+    .fs-button{
+      margin-right:5px;
+    }
+  }
+
 }
 </style>

@@ -17,7 +17,7 @@
 import FsTableColumnsFilter from './fs-table-columns-filter/component'
 import FsButton from '../basic/fs-button'
 import _ from 'lodash-es'
-import { ref, computed } from 'vue'
+import { ref, computed, getCurrentInstance } from 'vue'
 import traceUtil from '../../utils/util.trace'
 export default {
   name: 'fs-toolbar',
@@ -62,12 +62,13 @@ export default {
   setup (props, ctx) {
     const columnsFilterRef = ref()
     traceUtil.trace('fs-toolbar')
-
+    const { proxy } = getCurrentInstance()
+    console.log('fsui', proxy.$fsui)
     const computedButtons = computed(() => {
       const defaultButtons = {
         refresh: {
           type: 'primary',
-          icon: 'el-icon-refresh',
+          icon: proxy.$fsui.icons.refresh,
           title: '刷新',
           circle: true,
           click: () => {
@@ -76,7 +77,7 @@ export default {
         },
         search: {
           type: 'primary',
-          icon: 'el-icon-search',
+          icon: proxy.$fsui.icons.search,
           title: '查询显示',
           circle: true,
           click: () => {
@@ -85,7 +86,7 @@ export default {
         },
         compact: {
           type: 'primary',
-          icon: 'el-icon-rank',
+          icon: proxy.$fsui.icons.compact,
           title: '紧凑模式',
           circle: true,
           click: () => {
@@ -94,7 +95,7 @@ export default {
         },
         export: {
           type: 'primary',
-          icon: 'el-icon-upload2',
+          icon: proxy.$fsui.icons.export,
           title: '导出',
           circle: true,
           click: () => {
@@ -103,7 +104,7 @@ export default {
         },
         columns: {
           type: 'primary',
-          icon: 'el-icon-set-up',
+          icon: proxy.$fsui.icons.columnsFilter,
           title: '列设置',
           circle: true,
           click: () => {
@@ -128,3 +129,11 @@ export default {
   }
 }
 </script>
+<style lang="less">
+.fs-toolbar{
+  display: flex;
+  .fs-button{
+    margin-left:5px;
+  }
+}
+</style>

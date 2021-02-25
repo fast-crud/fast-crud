@@ -180,7 +180,7 @@ export default function ({ crudRef }) {
       title: '操作',
       width: '300px',
       edit: {
-        icon: 'el-icon-edit',
+        icon: 'ThunderboltOutlined',
         text: null
       },
       custom: [

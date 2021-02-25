@@ -6,10 +6,17 @@ import {
   ArrowRightOutlined,
   NodeIndexOutlined,
   ThunderboltOutlined,
-  DeleteOutlined
+  DeleteOutlined,
+  SearchOutlined,
+  SyncOutlined,
+  DragOutlined,
+  AppstoreOutlined,
+  ControlOutlined,
+  UploadOutlined
 } from '@ant-design/icons-vue'
 
 const icons = {
+  SearchOutlined,
   PlusCircleOutlined,
   PlusOutlined,
   CheckOutlined,
@@ -17,7 +24,12 @@ const icons = {
   ArrowRightOutlined,
   NodeIndexOutlined,
   ThunderboltOutlined,
-  DeleteOutlined
+  DeleteOutlined,
+  SyncOutlined,
+  DragOutlined,
+  AppstoreOutlined,
+  ControlOutlined,
+  UploadOutlined
 }
 export default function (app) {
   _.forEach(icons, (item, key) => {
