@@ -5,10 +5,10 @@
     </template>
     <template v-else >
       <component :is="$fsui.tag.name" class='tag-item' v-for="(item) in _items" v-bind="$attrs"
-              :key="item[dict.value]"
-              size="small"
-              :type="item[dict.color]"
-              @click="onClick(item)"
+                 :key="item[dict.value]"
+                 size="small"
+                 :type="item[dict.color]"
+                 @click="onClick(item)"
               :effect="item.effect"
       >
         {{item[dict.label]}}

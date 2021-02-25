@@ -79,7 +79,6 @@ export default {
     }
     const close = () => {
       formWrapperOpen.value = false
-      formProps.value = null
     }
     const closed = () => {
       formProps.value = null

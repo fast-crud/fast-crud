@@ -96,3 +96,8 @@ export default {
   height:100%
 }
 </style>
+<style lang="less">
+.ant-menu{
+  height:100%
+}
+</style>

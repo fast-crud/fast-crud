@@ -29,7 +29,8 @@ export default {
         },
         wrapper: {
           is: ui.dialog.name,
-          width: '50%'
+          width: '50%',
+          destroyOnClose: true
         }
       },
       addForm: {
