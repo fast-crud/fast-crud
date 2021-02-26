@@ -10,7 +10,10 @@ const list = [
     status: '0',
     province: '1',
     avatar: 'https://alicdn.antdv.com/vue.png',
-    show: true
+    show: true,
+    city: 'sz',
+    address: '123123',
+    zip: '518000'
   },
   {
     name: 'bb',

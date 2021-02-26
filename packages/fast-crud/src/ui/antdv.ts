@@ -18,7 +18,7 @@ export class Antdv implements UiInterface {
   }
 
   type='antdv'
-
+  modelValue = 'value';
   messageBox: MessageBoxCI={
     name: 'a-model',
     get: undefined,
@@ -210,13 +210,20 @@ export class Antdv implements UiInterface {
     index: 'index'
   };
 
-  textArea: TextAreaCI={ name: 'a-textarea', type: undefined };
+  textArea: TextAreaCI={
+    name: 'a-textarea',
+    type: undefined,
+    modelValue: 'value',
+    clearable: 'allowClear'
+  };
+
   tag: CI = {
     name: 'a-tag'
   };
 
   input: InputCI={
     name: 'a-input',
-    clearable: 'allowClear'
+    clearable: 'allowClear',
+    modelValue: 'value'
   }
 }

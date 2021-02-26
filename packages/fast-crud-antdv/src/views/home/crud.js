@@ -47,6 +47,13 @@ export default function ({ crudRef }) {
       },
       show: true
     },
+    form: {
+      options: {
+        style: {
+          'grid-template-columns': '50% 50%'
+        }
+      }
+    },
     columns: {
       date: {
         title: '日期',
@@ -115,7 +122,6 @@ export default function ({ crudRef }) {
             style: 'width:70px'
           },
           style: {
-            'grid-column': 'span 2' // 跨2列
           },
           show: compute((context) => {
             console.log('show context', context)
@@ -146,7 +152,6 @@ export default function ({ crudRef }) {
             valueBinding: 'checked'
           },
           style: {
-            'grid-column': 'span 2' // 跨2列
           }
         }
       },
@@ -173,7 +178,12 @@ export default function ({ crudRef }) {
             search: {
               show: true
             },
-            type: 'text-area'
+            type: 'text-area',
+            form: {
+              style: {
+                'grid-column': 'span 2'
+              }
+            }
           }
         }
       },

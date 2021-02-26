@@ -2,6 +2,7 @@
 import { h, resolveComponent, getCurrentInstance, ref, toRef, computed, reactive } from 'vue'
 import _ from 'lodash-es'
 import traceUtil from '../../utils/util.trace'
+import { uiContext } from '../../ui'
 export default {
   name: 'fs-component-render',
   emits: ['update:dict', 'update:modelValue'],
@@ -30,7 +31,7 @@ export default {
   },
   setup (props, ctx) {
     traceUtil.trace('fs-component-render')
-
+    const ui = uiContext.get()
     const newScope = computed(() => {
       return {
         ...ctx.attrs,
@@ -49,7 +50,7 @@ export default {
       return props.modelValue
     })
     const valueBinding = computed(() => {
-      return props.valueBinding || 'modelValue'
+      return props.valueBinding || ui.modelValue
     })
     allAttrs['onUpdate:' + valueBinding.value] = (value) => {
       ctx.emit('update:modelValue', value)

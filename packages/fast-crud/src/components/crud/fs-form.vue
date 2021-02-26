@@ -63,6 +63,8 @@ export default {
       form[key] = props.initial[key]
     })
 
+    console.log('form', form)
+
     const componentRefs = ref({})
     function getComponentRef (key) {
       return componentRefs.value[key]
@@ -89,8 +91,7 @@ export default {
     async function reset () {
       formRef.value.resetFields()
       if (props.doReset) {
-        const ret = scope.value
-        await props.doReset(ret)
+        await props.doReset(scope.value)
       }
       ctx.emit('reset')
     }
@@ -98,14 +99,13 @@ export default {
     async function submit () {
       console.log('form submit')
       const valid = await formRef.value.validate()
-      const ret = scope.value
       if (valid) {
         if (props.doSubmit) {
-          await props.doSubmit(ret)
+          await props.doSubmit(scope.value)
         }
-        ctx.emit('submit', ret)
+        ctx.emit('submit', scope.value)
       } else {
-        ctx.emit('validationError', ret)
+        ctx.emit('validationError', scope.value)
       }
 
       return valid
@@ -144,6 +144,9 @@ export default {
 
   .ant-form-item-label{
     width:80px
+  }
+  .ant-form-item-control-wrapper{
+    flex:1
   }
 }
 </style>

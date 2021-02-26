@@ -20,7 +20,7 @@ export class Element implements UiInterface {
   }
 
   type='element'
-
+  modelValue= 'modelValue'
   messageBox: MessageBoxCI={
     name: 'el-message-box',
     get: undefined,
@@ -180,7 +180,9 @@ export class Element implements UiInterface {
 
   textArea: TextAreaCI ={
     name: 'el-input',
-    type: 'textarea'
+    type: 'textarea',
+    modelValue: 'modelValue',
+    clearable: 'clearable'
   };
 
   tag: CI ={
@@ -189,6 +191,7 @@ export class Element implements UiInterface {
 
   input: InputCI={
     name: 'el-input',
-    clearable: 'clearable'
+    clearable: 'clearable',
+    modelValue: 'modelValue'
   }
 }

@@ -7,9 +7,12 @@ export interface SelectCI extends CI{
 }
 export interface InputCI extends CI{
   clearable;
+  modelValue;
 }
 export interface TextAreaCI extends CI{
   type;
+  clearable;
+  modelValue;
 }
 
 export interface DialogCI extends CI{
@@ -71,6 +74,7 @@ export interface Icons {
   export;
 }
 export interface UiInterface {
+  modelValue: string;
   type: string;
   input: InputCI;
   textArea: TextAreaCI;

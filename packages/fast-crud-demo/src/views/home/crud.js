@@ -45,6 +45,13 @@ export default function ({ crudRef }) {
       },
       show: true
     },
+    form: {
+      wrapper: {
+
+      },
+      options: {
+      }
+    },
     columns: {
       date: {
         title: '日期',
