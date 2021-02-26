@@ -176,7 +176,9 @@ function slotFilter (ctxSlots, keyPrefix) {
 }
 
 function useTable (props, ctx) {
-  const computedTable = toRef(props, 'table')
+  const computedTable = computed(() => {
+    return { ...props.table, ...ctx.attrs }
+  })
 
   const computedToolbar = toRef(props, 'toolbar')
 
@@ -322,6 +324,10 @@ export default defineComponent({
       flex-direction: row;
       justify-content: center;
       align-items: center;
+
+      .fs-pagination-prefix{
+        margin-right:10px;
+      }
 
       .fs-pagination-append {
         flex: 0

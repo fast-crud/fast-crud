@@ -5,21 +5,23 @@ export default function () {
     select: {
       search: { autoSearchTrigger: 'change' },
       column: { component: { name: 'fs-values-format' } },
-      form: { component: { name: 'fs-dict-select', clearable: true, valueBinding: ui.select.modelValue } }
+      form: { component: { name: 'fs-dict-select', valueBinding: ui.select.modelValue, [ui.select.clearable]: true } }
     },
     radio: {
-      search: { component: { name: 'fs-dict-select', clearable: true }, autoSearchTrigger: 'change' },
-      form: { component: { name: 'fs-dict-radio' } },
-      column: { component: { name: 'fs-values-format' } }
-    },
-    checkbox: {
-      search: { component: { name: 'fs-dict-select', clearable: true, multiple: true }, autoSearchTrigger: 'change' },
-      form: { component: { name: 'fs-dict-checkbox' } },
+      search: {
+        component: { name: 'fs-dict-select', autoSearchTrigger: 'change' },
+        form: { component: { name: 'fs-dict-radio', [ui.select.clearable]: true } },
+        column: { component: { name: 'fs-values-format' } }
+      },
+      checkbox: {
+        search: { component: { name: 'fs-dict-select', multiple: true }, autoSearchTrigger: 'change' },
+        form: { component: { name: 'fs-dict-checkbox', [ui.select.clearable]: true } }
+      },
       column: { component: { name: 'fs-values-format' } }
     },
     'dict-switch': {
-      search: { component: { name: 'fs-dict-switch', clearable: true, multiple: true }, autoSearchTrigger: 'change' },
-      form: { component: { name: 'fs-dict-switch' } },
+      search: { component: { name: 'fs-dict-switch', multiple: true }, autoSearchTrigger: 'change' },
+      form: { component: { name: 'fs-dict-switch', [ui.select.clearable]: true } },
       column: { component: { name: 'fs-values-format' } }
     }
   }

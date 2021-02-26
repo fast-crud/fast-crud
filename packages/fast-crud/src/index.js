@@ -14,7 +14,8 @@ export {
   dict,
   useDict,
   useCrud,
-  utils
+  utils,
+  uiContext
 }
 export default {
   install (app, options) {

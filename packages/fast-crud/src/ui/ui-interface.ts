@@ -3,6 +3,10 @@ export interface CI{
 }
 export interface SelectCI extends CI{
   modelValue;
+  clearable;
+}
+export interface InputCI extends CI{
+  clearable;
 }
 export interface TextAreaCI extends CI{
   type;
@@ -22,9 +26,38 @@ export interface TableColumnCI extends CI{
 export interface TableCI extends CI{
   data;
 }
+
+export interface MessageCI extends CI{
+  get;
+  open;
+  success;
+  error;
+  warn;
+  info;
+}
+
+export type MessageBoxContextType = { title?: string; message?; confirmButtonText?; cancelButtonText?; type? };
+export type MessageBoxOpenType = (context: MessageBoxContextType) => Promise<any>;
+export interface MessageBoxCI extends CI{
+  get;
+  open: MessageBoxOpenType;
+  confirm: MessageBoxOpenType;
+}
+export interface NotificationCI extends CI{
+  get;
+  open;
+  success;
+  error;
+  warn;
+  info;
+}
 export interface IconCI extends CI{
   isComponent: boolean;
   circle: Record<string, any>;
+}
+
+export interface FormWrapper extends CI{
+  onClosed: (Function) => {};
 }
 export interface Icons {
 
@@ -39,7 +72,7 @@ export interface Icons {
 }
 export interface UiInterface {
   type: string;
-  input: CI;
+  input: InputCI;
   textArea: TextAreaCI;
   tag: CI;
   table: TableCI;
@@ -63,5 +96,8 @@ export interface UiInterface {
   dialog: DialogCI;
   icon: IconCI;
   icons: Icons;
+  message: MessageCI;
+  notification: NotificationCI;
+  messageBox: MessageBoxCI;
 
 }

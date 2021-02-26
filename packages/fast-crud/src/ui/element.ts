@@ -1,6 +1,78 @@
-import { TextAreaCI, CI, UiInterface, DialogCI, TableColumnCI, Icons, IconCI, TableCI, SelectCI } from './ui-interface'
+import {
+  TextAreaCI,
+  CI,
+  UiInterface,
+  DialogCI,
+  TableColumnCI,
+  Icons,
+  IconCI,
+  TableCI,
+  SelectCI,
+  MessageCI, NotificationCI, MessageBoxCI, InputCI
+} from './ui-interface'
 export class Element implements UiInterface {
+  constructor (target) {
+    if (target) {
+      this.notification.get = target.Notification
+      this.message.get = target.Message
+      this.messageBox.get = target.MessageBox
+    }
+  }
+
   type='element'
+
+  messageBox: MessageBoxCI={
+    name: 'el-message-box',
+    get: undefined,
+    open: async (context) => {
+      return this.messageBox.get(context)
+    },
+    confirm: async (context) => {
+      return this.messageBox.get(context)
+    }
+
+  };
+
+  message: MessageCI={
+    get: undefined,
+    name: 'el-message',
+    open: (context) => {
+      this.message.get.open(context)
+    },
+    success: (msg) => {
+      this.message.get.success(msg)
+    },
+    error: (msg) => {
+      this.message.get.error(msg)
+    },
+    warn: (msg) => {
+      this.message.get.warn(msg)
+    },
+    info: (msg) => {
+      this.message.get.success(msg)
+    }
+  };
+
+  notification: NotificationCI={
+    get: undefined,
+    name: 'el-notification',
+    open: (context) => {
+      this.notification.get.open(context)
+    },
+    success: (msg) => {
+      this.notification.get.success(msg)
+    },
+    error: (msg) => {
+      this.notification.get.error(msg)
+    },
+    warn: (msg) => {
+      this.notification.get.warn(msg)
+    },
+    info: (msg) => {
+      this.notification.get.success(msg)
+    }
+  };
+
   icon: IconCI={
     name: '',
     isComponent: false,
@@ -57,7 +129,8 @@ export class Element implements UiInterface {
 
   select: SelectCI={
     name: 'el-select',
-    modelValue: 'modelValue'
+    modelValue: 'modelValue',
+    clearable: 'clearable'
   };
 
   radio: CI={
@@ -114,7 +187,8 @@ export class Element implements UiInterface {
     name: 'el-tag'
   };
 
-  input: CI={
-    name: 'el-input'
+  input: InputCI={
+    name: 'el-input',
+    clearable: 'clearable'
   }
 }

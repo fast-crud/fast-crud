@@ -23,7 +23,7 @@ export interface CrudOptions{
 }
 
 export default function (ctx) {
-  const fsui = uiContext.get()
+  const ui = uiContext.get()
   const options: CrudOptions = ctx.options
   const crudRef = ctx.crudRef
 
@@ -97,12 +97,23 @@ export default function (ctx) {
   function usePagination () {
     return {
       pagination: {
+        // element 页码改动回调
+        onCurrentChange (event) {
+          crudOptions.value.pagination.currentPage = event
+          doRefresh()
+        },
         onSizeChange (event) {
           crudOptions.value.pagination.pageSize = event
           doRefresh()
         },
-        onCurrentChange (event) {
-          crudOptions.value.pagination.currentPage = event
+        // antd 页码改动回调
+        onChange (page, pageSize) {
+          crudOptions.value.pagination.currentPage = page
+          crudOptions.value.pagination.current = page
+          doRefresh()
+        },
+        onShowSizeChange (current, size) {
+          crudOptions.value.pagination.pageSize = size
           doRefresh()
         }
       }
@@ -133,18 +144,20 @@ export default function (ctx) {
           click: async function (context) {
             // TODO i18n
             try {
-              await ElMessageBox.confirm('确定要删除此记录吗?', '提示', {
-                type: 'warning'
+              console.log('ui', ui, context)
+              await ui.messageBox.confirm({
+                title: '提示',
+                message: '确定要删除此记录吗?',
+                type: 'warn'
               })
+              console.log('12312313')
             } catch (e) {
-              logger.info('用户取消删除')
+              logger.info('用户取消删除', e)
               return
             }
+            context.row = context[ui.tableColumn.row]
             await crudOptions.value.request.delRequest(context.row.id)
-            ElNotification({
-              type: 'success',
-              message: '删除成功!'
-            })
+            ui.notification.success('删除成功!')
             await doRefresh()
           }
         }

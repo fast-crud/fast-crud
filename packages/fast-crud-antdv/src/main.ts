@@ -2,13 +2,14 @@ import { createApp } from 'vue'
 import App from './App.vue'
 import router from './router'
 import FastCrud from '@fast-crud/fast-crud'
-import Antd from 'ant-design-vue'
+import Antd, { message, notification, Modal } from 'ant-design-vue'
 import 'ant-design-vue/dist/antd.css'
 import './style/common.less'
 
 import { requestForMock } from './api/service'
 import './mock'
 import icons from './icons'
+
 // vue3的bug  npm link 时无法正常工作
 const app = createApp(App)
 app.use(icons)
@@ -23,6 +24,13 @@ app.use(FastCrud, {
     return res
   },
   commonOptions () { return {} },
-  ui: 'antdv'
+  ui: {
+    name: 'antdv',
+    target: {
+      Message: message,
+      Notification: notification,
+      MessageBox: Modal
+    }
+  }
 })
 app.mount('#app')

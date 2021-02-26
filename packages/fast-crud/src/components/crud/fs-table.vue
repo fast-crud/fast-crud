@@ -107,7 +107,6 @@ export default {
         return children
       }
     }
-    console.log('tableSlots', tableSlots)
     const dataSource = {
       [proxy.$fsui.table.data]: this.data
     }

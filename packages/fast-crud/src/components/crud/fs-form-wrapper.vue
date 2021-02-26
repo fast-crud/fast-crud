@@ -43,7 +43,6 @@ export default {
     const is = this.formWrapperIs || 'el-dialog'
     const comp = resolveComponent(is)
     const visible = this.$fsui.dialog.visible
-    console.log('visible', visible)
     const vModel = {
       [visible]: this.formWrapperOpen,
       ['onUpdate:' + visible]: (value) => {
@@ -53,7 +52,7 @@ export default {
     return <comp custom-class="fs-form-wrapper"
       {...this.formWrapper}
       {...vModel}
-      onCancel={this.close}
+      onCancel={this.closed}
       onClosed={this.closed} v-slots={children}>
     </comp>
   },

@@ -1,6 +1,110 @@
-import { CI, DialogCI, IconCI, Icons, SelectCI, TableCI, TableColumnCI, TextAreaCI, UiInterface } from './ui-interface'
+import {
+  CI,
+  DialogCI,
+  IconCI,
+  Icons, InputCI, MessageBoxCI,
+  MessageCI, NotificationCI,
+  SelectCI,
+  TableCI,
+  TableColumnCI,
+  TextAreaCI,
+  UiInterface
+} from './ui-interface'
 export class Antdv implements UiInterface {
+  constructor (target) {
+    this.notification.get = target.Notification
+    this.message.get = target.Message
+    this.messageBox.get = target.MessageBox
+  }
+
   type='antdv'
+
+  messageBox: MessageBoxCI={
+    name: 'a-model',
+    get: undefined,
+    open: (context) => {
+      return this.messageBox.confirm(context)
+    },
+    confirm: (context) => {
+      console.log('on confirm')
+      return new Promise((resolve, reject) => {
+        function onOk () {
+          console.log('on ok')
+          resolve()
+        }
+        // eslint-disable-next-line @typescript-eslint/no-empty-function
+        function onCancel () {
+          reject(new Error('cancel'))
+        }
+
+        const newContext = { ...context, content: context.message, onOk, onCancel }
+        console.log('new context', newContext)
+        this.messageBox.get.confirm(newContext)
+      })
+    }
+
+  };
+
+  message: MessageCI={
+    get: undefined,
+    name: 'a-message',
+    open: (type, context) => {
+      if (typeof context === 'string') {
+        context = {
+          message: context
+        }
+      }
+      type = type || context.type
+      if (type) {
+        this.message.get[type](context)
+      } else {
+        this.message.get.open(context)
+      }
+    },
+    success: (context) => {
+      this.message.open('success', context)
+    },
+    error: (context) => {
+      this.message.open('error', context)
+    },
+    warn: (context) => {
+      this.message.open('warn', context)
+    },
+    info: (context) => {
+      this.message.open('info', context)
+    }
+  };
+
+  notification: NotificationCI={
+    get: undefined,
+    name: 'a-notification',
+    open: (type, context) => {
+      if (typeof context === 'string') {
+        context = {
+          message: context
+        }
+      }
+      type = type || context.type
+      if (type) {
+        this.notification.get[type](context)
+      } else {
+        this.notification.get.open(context)
+      }
+    },
+    success: (context) => {
+      this.notification.open('success', context)
+    },
+    error: (context) => {
+      this.notification.open('error', context)
+    },
+    warn: (context) => {
+      this.notification.open('warn', context)
+    },
+    info: (context) => {
+      this.notification.open('info', context)
+    }
+  };
+
   icon: IconCI={
     name: '',
     isComponent: true,
@@ -81,7 +185,8 @@ export class Antdv implements UiInterface {
 
   select: SelectCI={
     name: 'a-select',
-    modelValue: 'value'
+    modelValue: 'value',
+    clearable: 'allowClear'
   };
 
   table: TableCI={
@@ -110,7 +215,8 @@ export class Antdv implements UiInterface {
     name: 'a-tag'
   };
 
-  input= {
-    name: 'a-input'
+  input: InputCI={
+    name: 'a-input',
+    clearable: 'allowClear'
   }
 }

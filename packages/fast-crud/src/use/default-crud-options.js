@@ -56,7 +56,9 @@ export default {
         background: true,
         pageSize: 20,
         pageSizes: [5, 10, 20, 50],
-        layout: 'total, sizes, prev, pager, next, jumper'
+        layout: 'total, sizes, prev, pager, next, jumper',
+        showSizeChanger: true, // antdv
+        showQuickJumper: true // antdv
       },
       table: {
         height: '100%',
