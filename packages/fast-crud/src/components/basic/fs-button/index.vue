@@ -36,9 +36,9 @@ export default {
 
     const isCircle = this.circle ? this.$fsui.icon.circle : {}
 
-    const comp = resolveComponent(this.$fsui.button.name)
+    const buttonComp = resolveComponent(this.$fsui.button.name)
 
-    return h(comp, {
+    return h(buttonComp, {
       ...this.$attrs,
       ...isCircle,
       icon,

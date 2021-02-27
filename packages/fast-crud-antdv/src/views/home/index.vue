@@ -13,7 +13,7 @@
     </template>
 
     <template #form-footer-prefix="scope">
-      <a-button @click="closeDialog(scope)">取消</a-button>
+      <a-button @click="closeDialog(scope)">自定义取消</a-button>
     </template>
 
     <template #form-footer-append="scope">

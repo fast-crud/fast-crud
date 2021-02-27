@@ -19,18 +19,20 @@ export default {
         }
       },
       form: {
-        options: {
-          labelAlign: 'right',
-          labelPosition: 'right',
-          labelWidth: '80px',
-          style: {
-            'grid-template-columns': '50% 50%' // grid布局，默认两列
-          }
+
+        labelPosition: 'right',
+        labelWidth: '80px',
+        style: {
+          'grid-template-columns': '50% 50%' // grid布局，默认两列
         },
+        labelAlign: 'right', // antdv
+        labelCol: { span: 4 }, // antdv
+        wrapperCol: { span: 18 }, // antdv
         wrapper: {
           is: ui.dialog.name,
           width: '50%',
-          destroyOnClose: true
+          destroyOnClose: true, // antdv
+          footer: null // antdv
         }
       },
       addForm: {

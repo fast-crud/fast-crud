@@ -58,12 +58,16 @@ export interface IconCI extends CI{
   isComponent: boolean;
   circle: Record<string, any>;
 }
-
-export interface FormWrapper extends CI{
-  onClosed: (Function) => {};
+export interface FormItemCI extends CI{
+  prop: string;
+  label: string;
+}
+export interface FormWrapperCI extends CI{
+  visible: string;
+  buildOnClosedBind: (is, Function) => {};
+  customClass: string;
 }
 export interface Icons {
-
   refresh;
   search;
   compact;
@@ -85,7 +89,7 @@ export interface UiInterface {
   pagination: CI;
   button: CI;
   form: CI;
-  formItem: CI;
+  formItem: FormItemCI;
   radioGroup: CI;
   radio: CI;
   select: SelectCI;
@@ -103,5 +107,6 @@ export interface UiInterface {
   message: MessageCI;
   notification: NotificationCI;
   messageBox: MessageBoxCI;
+  formWrapper: FormWrapperCI;
 
 }

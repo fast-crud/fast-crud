@@ -8,7 +8,7 @@ import {
   IconCI,
   TableCI,
   SelectCI,
-  MessageCI, NotificationCI, MessageBoxCI, InputCI
+  MessageCI, NotificationCI, MessageBoxCI, InputCI, FormWrapperCI, FormItemCI
 } from './ui-interface'
 export class Element implements UiInterface {
   constructor (target) {
@@ -21,6 +21,18 @@ export class Element implements UiInterface {
 
   type='element'
   modelValue= 'modelValue'
+
+  formWrapper: FormWrapperCI={
+    visible: 'modelValue',
+    customClass: 'customClass',
+    buildOnClosedBind (is: string, onClosed: Function): {} {
+      return { onClosed }
+    },
+
+    name: 'fs-form-wrapper'
+
+  };
+
   messageBox: MessageBoxCI={
     name: 'el-message-box',
     get: undefined,
@@ -145,8 +157,10 @@ export class Element implements UiInterface {
     name: 'el-form'
   };
 
-  formItem: CI={
-    name: 'el-form-item'
+  formItem: FormItemCI={
+    name: 'el-form-item',
+    prop: 'prop',
+    label: 'label'
   };
 
   button: CI={

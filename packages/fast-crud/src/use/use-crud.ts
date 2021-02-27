@@ -152,7 +152,7 @@ export default function (ctx) {
               })
               console.log('12312313')
             } catch (e) {
-              logger.info('用户取消删除', e)
+              logger.info('用户取消删除', e.message)
               return
             }
             context.row = context[ui.tableColumn.row]

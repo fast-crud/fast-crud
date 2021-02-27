@@ -1,6 +1,6 @@
 import {
   CI,
-  DialogCI,
+  DialogCI, FormItemCI, FormWrapperCI,
   IconCI,
   Icons, InputCI, MessageBoxCI,
   MessageCI, NotificationCI,
@@ -19,6 +19,28 @@ export class Antdv implements UiInterface {
 
   type='antdv'
   modelValue = 'value';
+
+  formWrapper: FormWrapperCI={
+    visible: 'visible',
+    customClass: 'wrapClassName',
+    buildOnClosedBind (is, onClosed: Function): {} {
+      if (is === 'a-modal') {
+        return { afterClose: onClosed }
+      } else if (is === 'a-drawer') {
+        return {
+          afterVisibleChange: (visiable) => {
+            if (visiable === false) {
+              onClosed(visiable)
+            }
+          }
+        }
+      }
+      return {}
+    },
+    name: 'fs-form-wrapper'
+
+  };
+
   messageBox: MessageBoxCI={
     name: 'a-model',
     get: undefined,
@@ -26,19 +48,15 @@ export class Antdv implements UiInterface {
       return this.messageBox.confirm(context)
     },
     confirm: (context) => {
-      console.log('on confirm')
       return new Promise((resolve, reject) => {
         function onOk () {
-          console.log('on ok')
           resolve()
         }
         // eslint-disable-next-line @typescript-eslint/no-empty-function
         function onCancel () {
           reject(new Error('cancel'))
         }
-
         const newContext = { ...context, content: context.message, onOk, onCancel }
-        console.log('new context', newContext)
         this.messageBox.get.confirm(newContext)
       })
     }
@@ -159,8 +177,10 @@ export class Antdv implements UiInterface {
     name: 'a-form'
   };
 
-  formItem: CI={
-    name: 'a-form-item'
+  formItem: FormItemCI={
+    name: 'a-form-item',
+    prop: 'name',
+    label: 'label'
   };
 
   option: CI={

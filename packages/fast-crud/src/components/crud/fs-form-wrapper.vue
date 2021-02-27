@@ -1,14 +1,17 @@
 <script>
-import { ref, resolveComponent } from 'vue'
+import { ref, resolveComponent, computed } from 'vue'
 import FsButton from '../basic/fs-button'
 import traceUtil from '../../utils/util.trace'
+import _ from 'lodash-es'
 export default {
   name: 'fs-form-wrapper',
   // eslint-disable-next-line vue/no-unused-components
   components: { FsButton },
   emits: ['reset', 'submit', 'validationError'],
   props: {
-    slots: {}
+    slots: {},
+    customClass: { default: '' },
+    buttons: {}
   },
   render () {
     if (!this.formWrapper) {
@@ -26,13 +29,20 @@ export default {
     if (this.formProps) {
       children = {
         default: () => {
+          const buttons = []
+          _.forEach(this.computedButtons, (item, key) => {
+            if (item.show === false) {
+              return
+            }
+            buttons.push(<fs-button {...item} />)
+          })
           return <div>
             {slotsRender('form-body-before', scope)}
             <fs-form ref="formRef" {...this.formProps} />
             {slotsRender('form-body-after', scope)}
             <div className="fs-form-footer-btns">
               {slotsRender('form-footer-prefix', scope)}
-              <fs-button text="确定" onClick={this.submit} loading={this.loading}/>
+              {buttons}
               {slotsRender('form-footer-append', scope)}
             </div>
           </div>
@@ -41,22 +51,28 @@ export default {
     }
 
     const is = this.formWrapperIs || 'el-dialog'
-    const comp = resolveComponent(is)
-    const visible = this.$fsui.dialog.visible
+
+    const visible = this.$fsui.formWrapper.visible
     const vModel = {
       [visible]: this.formWrapperOpen,
       ['onUpdate:' + visible]: (value) => {
         this.formWrapperOpen = value
       }
     }
-    return <comp custom-class="fs-form-wrapper"
+    const onClosed = this.$fsui.formWrapper.buildOnClosedBind(is, this.closed)
+    const customClass = {
+      [this.$fsui.formWrapper.customClass]: 'fs-form-wrapper ' + this.customClass
+    }
+
+    const formWrapperComp = resolveComponent(is)
+    return <formWrapperComp
+      {...customClass}
       {...this.formWrapper}
       {...vModel}
-      onCancel={this.closed}
-      onClosed={this.closed} v-slots={children}>
-    </comp>
+      {...onClosed} v-slots={children}>
+    </formWrapperComp>
   },
-  setup () {
+  setup (props) {
     traceUtil.trace('fs-from-wrapper')
     const formWrapperOpen = ref(false)
     const formWrapperIs = ref()
@@ -70,7 +86,8 @@ export default {
       delete formWrapper.value.is
       formWrapperIs.value = opts.wrapper.is
       formProps.value = {
-        ...opts
+        ...opts,
+        wrapper: null
       }
       delete formProps.value.wrapper
 
@@ -104,6 +121,27 @@ export default {
       formRef.value = form
     }
 
+    const computedButtons = computed(() => {
+      // TODO i18n
+      const defBtns = {
+        cancel: {
+          text: '取消',
+          onClick: () => {
+            close()
+          }
+        },
+        ok: {
+          text: '确定',
+          type: 'primary',
+          onClick: () => {
+            submit()
+          },
+          loading: loading.value
+        }
+      }
+      return _.merge(defBtns, props.buttons)
+    })
+
     return {
       close,
       closed,
@@ -114,6 +152,7 @@ export default {
       formWrapper,
       formRef,
       submit,
+      computedButtons,
       loading,
       getFormData,
       setFormData
@@ -124,8 +163,12 @@ export default {
 <style lang="less">
 .fs-form-wrapper{
   .fs-form-footer-btns{
-    text-align: right;
+    display: flex;
     margin-top:20px;
+    justify-content: flex-end;
+    & > *{
+      margin-left:10px;
+    }
   }
 
   .el-dialog__header {

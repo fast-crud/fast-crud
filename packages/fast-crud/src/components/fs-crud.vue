@@ -12,7 +12,6 @@
           <fs-actionbar v-bind="actionbar" @action="onActionHandle"></fs-actionbar>
           <slot name="actionbar-append"/>
         </div>
-
         <div class="fs-crud-toolbar" v-if="toolbar?.show!==false">
           <slot name="toolbar-prefix"/>
           <fs-toolbar v-bind="toolbar"

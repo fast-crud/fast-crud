@@ -1,22 +1,23 @@
 <template>
-  <div class="fs-form">
-    <component :is="$fsui.form.name" class="fs-form-grid" ref="formRef" :model="form" v-bind="options">
-      <template  v-for="(item,key) in computedColumns" :key="key" >
-        <component :is="$fsui.formItem.name" v-if="item.show!==false" v-bind="item" :label="item.title"  :name="key" >
-          <fs-slot-render v-if="slots && slots['form-' + key]" :slots="slots['form-' + key]" :scope="{key,...scope}"/>
-          <template v-else>
-            <fs-component-render v-if="item.component?.show!==false"
-                                 :ref="el => { if (el) componentRefs[key] = el }"
-                                 v-bind="item.component"
-                                 :modelValue="get(form,key)"
-                                 @update:modelValue="set(form,key,$event)"
-                                  :scope="{key,...scope}"/>
-          </template>
-        </component>
-      </template>
-    </component>
-  </div>
-
+  <component :is="$fsui.form.name" class="fs-form" :class="{'fs-form-grid':display==='grid','fs-form-flex':display==='flex'}" ref="formRef" :model="form">
+    <template  v-for="(item,key) in computedColumns" :key="key" >
+      <component :is="$fsui.formItem.name" v-if="item.show!==false"
+                 class="fs-form-item"
+                 :[$fsui.formItem.label]="item.title"
+                 :[$fsui.formItem.prop]="key"
+                 v-bind="item">
+        <fs-slot-render v-if="slots && slots['form-' + key]" :slots="slots['form-' + key]" :scope="{key,...scope}"/>
+        <template v-else>
+          <fs-component-render v-if="item.component?.show!==false"
+                               :ref="el => { if (el) componentRefs[key] = el }"
+                               v-bind="item.component"
+                               :modelValue="get(form,key)"
+                               @update:modelValue="set(form,key,$event)"
+                                :scope="{key,...scope}"/>
+        </template>
+      </component>
+    </template>
+  </component>
 </template>
 
 <script>
@@ -29,9 +30,6 @@ export default {
   components: { },
   emits: ['reset', 'submit', 'validationError'],
   props: {
-    options: {
-
-    },
     // 初始数据
     initial: {
       default () {
@@ -51,6 +49,10 @@ export default {
     },
     slots: {
 
+    },
+    display: {
+      type: String,
+      default: 'grid' // flex
     }
   },
   setup (props, ctx) {
@@ -141,12 +143,24 @@ export default {
 .fs-form-grid{
   display: grid;
   grid-template-columns: 50% 50%;
-
+  // gap: 0 20px; //列间距 20px
   .ant-form-item-label{
-    width:80px
+    width:100px;
+    flex: none;
+    max-width: none;
   }
   .ant-form-item-control-wrapper{
-    flex:1
+    flex:1;
+    max-width:none;
+  }
+}
+.fs-form-flex{
+  display: flex;
+  justify-content: flex-start;
+  align-items: baseline;
+  flex-wrap: wrap;
+  .fs-form-item{
+    width:50%
   }
 }
 </style>

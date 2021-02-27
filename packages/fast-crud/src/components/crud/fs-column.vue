@@ -88,8 +88,8 @@ export default {
       if (props.show === false) {
         return
       }
-      const comp = resolveComponent(proxy.$fsui.tableColumn.name)
-      return <comp
+      const tableColumnComp = resolveComponent(proxy.$fsui.tableColumn.name)
+      return <tableColumnComp
         {...ctx.attrs}
         label={props.title} prop={props.prop} v-slots={slots} />
     }

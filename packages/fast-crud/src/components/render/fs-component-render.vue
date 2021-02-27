@@ -50,7 +50,7 @@ export default {
       return props.modelValue
     })
     const valueBinding = computed(() => {
-      return props.valueBinding || ui.modelValue
+      return props.valueBinding || 'modelValue'
     })
     allAttrs['onUpdate:' + valueBinding.value] = (value) => {
       ctx.emit('update:modelValue', value)
@@ -85,14 +85,14 @@ export default {
     }
     const { proxy } = getCurrentInstance()
     // eslint-disable-next-line vue/no-setup-props-destructure
-    let comp = props.name || proxy.$fsui.input.name
-    if (comp !== 'div' || comp !== 'span') {
-      comp = resolveComponent(comp)
+    let inputComp = props.name || proxy.$fsui.input.name
+    if (inputComp !== 'div' || inputComp !== 'span') {
+      inputComp = resolveComponent(inputComp)
     }
     const children = childrenRender()
     return () => {
       _.set(allAttrs, valueBinding.value, computedModelValue.value)
-      return h(comp, allAttrs, children)
+      return h(inputComp, allAttrs, children)
     }
   }
 }

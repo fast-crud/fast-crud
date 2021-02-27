@@ -48,10 +48,13 @@ export default function ({ crudRef }) {
       show: true
     },
     form: {
-      options: {
-        style: {
-          'grid-template-columns': '50% 50%'
-        }
+      display: 'flex',
+      labelCol: { span: 4 },
+      wrapperCol: { span: 18 } // antdv
+    },
+    addForm: {
+      wrapper: {
+        is: 'a-drawer'
       }
     },
     columns: {
@@ -122,6 +125,7 @@ export default function ({ crudRef }) {
             style: 'width:70px'
           },
           style: {
+            width: '100%;'
           },
           show: compute((context) => {
             console.log('show context', context)
@@ -152,6 +156,7 @@ export default function ({ crudRef }) {
             valueBinding: 'checked'
           },
           style: {
+            width: '100%;'
           }
         }
       },
