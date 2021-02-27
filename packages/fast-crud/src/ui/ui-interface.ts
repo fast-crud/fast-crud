@@ -33,6 +33,7 @@ export interface TableColumnCI extends CI{
 
 export interface TableCI extends CI{
   data;
+  fixedHeaderNeedComputeBodyHeight
 }
 
 export interface CheckboxCI extends CI{

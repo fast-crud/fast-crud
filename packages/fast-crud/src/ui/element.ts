@@ -201,7 +201,8 @@ export class Element implements UiInterface {
 
   table: TableCI={
     name: 'el-table',
-    data: 'data'
+    data: 'data',
+    fixedHeaderNeedComputeBodyHeight: false
   }
 
   textArea: TextAreaCI ={

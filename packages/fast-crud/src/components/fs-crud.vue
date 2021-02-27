@@ -1,5 +1,5 @@
 <template>
-  <fs-container class="fs-crud-container" :class="{compact:toolbar.compact!==false}">
+  <fs-container ref="containerRef" class="fs-crud-container" :class="{compact:toolbar.compact!==false}">
     <template #header>
       <div class="fs-crud-header">
         <slot name="header-before"/>
@@ -29,7 +29,7 @@
       </div>
     </template>
     <slot :scope="{data}"/>
-    <fs-table class="fs-crud-table" v-bind="computedTable"
+    <fs-table ref="tableRef" class="fs-crud-table" v-bind="computedTable"
               :columns="columns" :rowHandle="rowHandle"
               :data="data" slots="computedCellSlots"
               @rowHandle="onRowHandle"
@@ -82,7 +82,7 @@
   </fs-container>
 </template>
 <script>
-import { defineComponent, computed, provide, ref, toRef, getCurrentInstance } from 'vue'
+import { defineComponent, computed, provide, ref, toRef, getCurrentInstance, reactive, nextTick, onMounted } from 'vue'
 import _ from 'lodash-es'
 import FsContainer from './container/fs-container'
 import FsColumn from './crud/fs-column'
@@ -93,6 +93,7 @@ import FsToolbar from './toolbar'
 import FsTable from './crud/fs-table'
 import { ComputeValue } from '../core/compute-value'
 import traceUtil from '../utils/util.trace'
+import { uiContext } from '../ui'
 function useProviders (props, ctx) {
   provide('get:columns', () => {
     return props.columns
@@ -174,9 +175,62 @@ function slotFilter (ctxSlots, keyPrefix) {
   return slots
 }
 
+function useFixedHeight (props, ctx, { tableRef, containerRef }) {
+  const ui = uiContext.get()
+  if (!ui.table.fixedHeaderNeedComputeBodyHeight) {
+    return {}
+  }
+  const fixedOptions = reactive({ scroll: {} })
+
+  function computeBodyHeight () {
+    const tableDom = tableRef.value.$el
+    if (tableDom == null) {
+      return
+    }
+    const headDom = tableDom.querySelector('.ant-table-thead')
+    if (headDom == null) {
+      return
+    }
+    const tableHeight = tableDom.getBoundingClientRect().height
+    const headHeight = headDom.getBoundingClientRect().height
+    fixedOptions.scroll.y = tableHeight - headHeight - 1
+  }
+
+  function watchBodyHeightChange () {
+    const tableDom = tableRef.value.$el
+    if (tableDom == null) {
+      return
+    }
+    const containerDom = containerRef.value.$el
+    const tableWrapperDom = containerDom.querySelector('.inner .body')
+    console.log('body', tableWrapperDom)
+    const observer = new ResizeObserver(function (entries) {
+      // 每次被观测的元素尺寸发生改变这里都会执行
+      console.log('dom changed', entries)
+      if (entries.length > 0 && entries[0].contentRect.height > 0) {
+        computeBodyHeight()
+      }
+    })
+    observer.observe(tableWrapperDom) // 观测DOM元素
+  }
+  onMounted(async () => {
+    await nextTick()
+    await nextTick()
+    watchBodyHeightChange()
+  })
+  // const fs-crud-table
+
+  return { fixedOptions, computeBodyHeight }
+}
+
 function useTable (props, ctx) {
+  const tableRef = ref()
+  const containerRef = ref()
+  const fixedHeightRet = useFixedHeight(props, ctx, { tableRef, containerRef })
   const computedTable = computed(() => {
-    return { ...props.table, ...ctx.attrs }
+    // antdv 高度自适应， 如果用户有配置scroll，则优先使用用户配置的
+    const fixedHeight = _.merge({}, fixedHeightRet.fixedOptions, { scroll: ctx.attrs.scroll })
+    return { ...props.table, ...ctx.attrs, ...fixedHeight }
   })
 
   const computedToolbar = toRef(props, 'toolbar')
@@ -222,6 +276,8 @@ function useTable (props, ctx) {
   }
 
   return {
+    tableRef,
+    containerRef,
     computedTable,
     computedToolbar,
     computedColumns,
@@ -231,7 +287,8 @@ function useTable (props, ctx) {
     onToolbarHandle,
     formWrapperRef,
     computedFormSlots,
-    computedSearchSlots
+    computedSearchSlots,
+    computeBodyHeight: fixedHeightRet.computeBodyHeight
   }
 }
 
@@ -318,6 +375,7 @@ export default defineComponent({
 
   .fs-crud-footer{
     padding:10px 0;
+    border-top:1px solid #eee;
     .fs-crud-pagination {
       display: flex;
       flex-direction: row;

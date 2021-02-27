@@ -1,10 +1,11 @@
 <script>
-import { resolveComponent, getCurrentInstance } from 'vue'
+import { resolveComponent, getCurrentInstance, reactive, onMounted, ref, nextTick } from 'vue'
 import { uiContext } from '../../ui'
 import _ from 'lodash-es'
 import FsRowHandle from './fs-row-handle'
 import FsComponentRender from '../render/fs-component-render'
 import { ComputeValue } from '../../core/compute-value'
+
 export default {
   name: 'fs-table',
   components: { FsComponentRender, FsRowHandle },
@@ -26,8 +27,9 @@ export default {
     const tableSlots = {}
 
     const templateMode = true
+    const tableColumnCI = proxy.$fsui.tableColumn
     if (templateMode) {
-      const tableColumnComp = resolveComponent(proxy.$fsui.tableColumn.name)
+      const tableColumnComp = resolveComponent(tableColumnCI.name)
       const tableColumnGroupComp = resolveComponent(proxy.$fsui.tableColumnGroup.name)
 
       tableSlots.default = () => {
@@ -55,7 +57,7 @@ export default {
             } else if (item.component) {
               cellSlots.default = (scope) => {
                 function getContextFn () {
-                  const row = scope.record || scope.row
+                  const row = scope[tableColumnCI.row]
                   return { ...scope, row }
                 }
                 const newScope = getContextFn()
@@ -67,18 +69,9 @@ export default {
                   return item.component.render(newScope)
                 } else {
                   const vModel = {
-                    modelValue: scope[proxy.$fsui.tableColumn.row][item.key],
+                    modelValue: scope[tableColumnCI.row][item.key],
                     'onUpdate:modelValue': (value) => {
-                      console.log('onUpdate:modelValue', value)
-                      scope[proxy.$fsui.tableColumn.row][item.key] = value
-                    },
-                    'onUpdate:value': (value) => {
-                      console.log('onUpdate:value', value)
-                      scope[proxy.$fsui.tableColumn.row][item.key] = value
-                    },
-                    input: (value) => {
-                      console.log('input', value)
-                      scope[proxy.$fsui.tableColumn.row][item.key] = value
+                      scope[tableColumnCI.row][item.key] = value
                     }
                   }
                   return <fs-component-render {...component} {...vModel} scope={newScope}/>
@@ -116,7 +109,18 @@ export default {
     const dataSource = {
       [proxy.$fsui.table.data]: this.data
     }
-    return <tableComp {...this.$attrs} {...dataSource} v-slots={tableSlots}/>
+
+    // console.log('this.fixedHeight', this.fixedHeight)
+    return <tableComp ref={'tableRef'}
+      {...this.$attrs}
+      {...dataSource}
+      v-slots={tableSlots}/>
+  },
+  setup (props, ctx) {
+    const tableRef = ref()
+    return {
+      tableRef
+    }
   },
   methods: {
     onRowHandle (context) {
@@ -125,3 +129,8 @@ export default {
   }
 }
 </script>
+<style lang="less">
+.fs-crud-table{
+  height:100px
+}
+</style>

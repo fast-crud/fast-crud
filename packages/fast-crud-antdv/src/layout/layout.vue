@@ -2,8 +2,10 @@
 
   <a-layout>
     <a-layout-header>fast-crud</a-layout-header>
-    <a-layout>
-      <a-layout-sider><aside-menu></aside-menu></a-layout-sider>
+    <a-layout class="layout-body">
+      <a-layout-sider>
+<!--        <aside-menu></aside-menu>-->
+      </a-layout-sider>
       <a-layout-content><router-view></router-view></a-layout-content>
 
     </a-layout>
@@ -14,6 +16,7 @@
 <script>
 import AsideMenu from './menu'
 export default {
+  // eslint-disable-next-line vue/no-unused-components
   components: { AsideMenu }
 }
 </script>
@@ -35,6 +38,10 @@ export default {
   }
   .ant-layout-content{
     background: #FFF;
+    height:100%
+  }
+  .layout-body{
+    flex:1
   }
 
   .el-aside{
