@@ -9,13 +9,14 @@
     "lint": "vue-cli-service lint"
   },
   "dependencies": {
+    "@ant-design/icons-vue": "^6.0.1",
     "@fast-crud/fast-crud": "^0.1.0",
+    "ant-design-vue": "^2.0.0",
     "axios": "^0.21.1",
     "axios-mock-adapter": "^1.19.0",
     "core-js": "^3.6.5",
+    "dayjs": "^1.10.4",
     "deepdash-es": "^5.3.5",
-    "@ant-design/icons-vue": "^6.0.1",
-    "ant-design-vue": "^2.0.0",
     "lodash-es": "^4.17.20",
     "vue": "^3.0.5",
     "vue-i18n": "^9.0.0-rc.2",

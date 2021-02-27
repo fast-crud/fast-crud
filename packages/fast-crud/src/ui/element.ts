@@ -8,7 +8,7 @@ import {
   IconCI,
   TableCI,
   SelectCI,
-  MessageCI, NotificationCI, MessageBoxCI, InputCI, FormWrapperCI, FormItemCI
+  MessageCI, NotificationCI, MessageBoxCI, InputCI, FormWrapperCI, FormItemCI, DrawerCI, CheckboxCI
 } from './ui-interface'
 export class Element implements UiInterface {
   constructor (target) {
@@ -99,7 +99,14 @@ export class Element implements UiInterface {
     remove: 'el-icon-remove',
     search: 'el-icon-search',
     refresh: 'el-icon-refresh',
-    export: 'el-icon-upload2'
+    export: 'el-icon-upload2',
+    check: 'el-icon-check',
+    sort: 'el-icon-sort',
+    left: 'el-icon-arrow-left',
+    right: 'el-icon-arrow-right',
+    close: 'el-icon-close',
+    arrowLeft: 'el-icon-left',
+    arrowRight: 'el-icon-right'
   };
 
   dialog: DialogCI={
@@ -123,12 +130,17 @@ export class Element implements UiInterface {
     name: 'el-card'
   };
 
-  checkbox: CI={
-    name: 'el-checkbox'
+  checkbox: CheckboxCI={
+    name: 'el-checkbox',
+    resolveEvent (e) {
+      return e
+    }
   };
 
-  drawer: CI={
-    name: 'el-drawer'
+  drawer: DrawerCI={
+    name: 'el-drawer',
+    visible: 'visible',
+    customClass: 'custom-class'
   };
 
   collapseTransition: CI={

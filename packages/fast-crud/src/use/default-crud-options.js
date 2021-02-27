@@ -30,7 +30,7 @@ export default {
         wrapperCol: { span: 18 }, // antdv
         wrapper: {
           is: ui.dialog.name,
-          width: '50%',
+          width: '860px',
           destroyOnClose: true, // antdv
           footer: null // antdv
         }

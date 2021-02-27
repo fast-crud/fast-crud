@@ -41,10 +41,10 @@
 import { computed, ref, nextTick } from 'vue'
 import _ from 'lodash-es'
 import fsButton from '../basic/fs-button'
-import { ElNotification } from 'element-plus'
 import FsComponentRender from '../../components/render/fs-component-render'
 import { ComputeValue } from '../../core/compute-value'
 import traceUtil from '../../utils/util.trace'
+import { uiContext } from '../../ui'
 
 export default {
   name: 'fs-search',
@@ -94,6 +94,7 @@ export default {
     }
   },
   setup (props, ctx) {
+    const ui = uiContext.get()
     traceUtil.trace('fs-search')
     console.log('search', props)
     let autoSearch = ref(null)
@@ -114,7 +115,7 @@ export default {
       if (valid) {
         ctx.emit('search', { form: form.value })
       } else {
-        ElNotification.error({
+        ui.notification.error({
           title: '错误',
           message: '表单校验失败'
         })

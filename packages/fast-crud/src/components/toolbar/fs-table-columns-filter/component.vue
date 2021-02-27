@@ -1,133 +1,150 @@
-<style lang="less" >
-  .fs-table-columns-filter{
-    :focus {
-      outline: 0;
+<style lang="less">
+.fs-table-columns-filter {
+  :focus {
+    outline: 0;
+  }
+
+  [flex~="cross:center"] {
+    -ms-flex-align: center;
+    align-items: center;
+  }
+
+  [flex~="main:justify"] {
+    -ms-flex-pack: justify;
+    justify-content: space-between;
+  }
+
+  [flex] {
+    display: -ms-flexbox;
+    display: flex;
+  }
+
+  [flex-box="1"] {
+    flex-grow: 1;
+    flex-shrink: 1;
+  }
+
+  [flex] > * {
+    display: block;
+  }
+
+  .el-drawer__body {
+    height: 0;
+  }
+
+  .fs-drawer-wrapper {
+    padding: 10px;
+    height: 100%;
+    overflow-y: scroll;
+  }
+
+  .fs-drawer-footer {
+    padding: 20px;
+  }
+
+  .component--list {
+    margin: -20px;
+
+    .item-label{flex:1}
+    .title {
+      font-size: 14px;
     }
-    [flex~="cross:center"] {
-      -ms-flex-align: center;
-      align-items: center;
-    }
-    [flex~="main:justify"] {
-      -ms-flex-pack: justify;
-      justify-content: space-between;
-    }
-    [flex] {
-      display: -ms-flexbox;
-      display: flex;
-    }
-    [flex-box="1"] {
-      flex-grow: 1;
-      flex-shrink: 1;
-    }
-    [flex]>* {
-      display: block;
-    }
-    .el-drawer__body{
-      height: 0;
-      .fs-drawer-wrapper{
-        padding:10px;
-        height: 100%;
-        overflow-y: scroll;
+
+    .component--list-item {
+      padding: 10px;
+      background-color: #FFF;
+      margin-bottom: 1px;
+
+      &.ghost {
+        opacity: .5;
       }
-    }
 
-    .drawer-footer{
-      padding: 20px;
-    }
-
-    .component--list {
-      margin: -20px;
-
-      .title{
-        font-size: 14px;
+      &:last-child {
+        margin-bottom: 0px;
       }
-      .component--list-item {
-        padding: 10px;
-        background-color: #FFF;
-        margin-bottom: 1px;
-        &.ghost {
-          opacity: .5;
-        }
-        &:last-child {
-          margin-bottom: 0px;
-        }
-        .component--list-item-handle {
-          margin-left: 10px;
-          cursor: move;
-          &.disabled {
-            opacity: .3;
-            cursor: pointer;
-          }
+
+      .component--list-item-handle {
+        margin-left: 10px;
+        cursor: move;
+
+        &.disabled {
+          opacity: .3;
+          cursor: pointer;
         }
       }
     }
   }
+}
 </style>
 
 <template>
   <component :is="$fsui.drawer.name"
-    :title="_text.title"
-    v-model="active"
-    size="300px"
-    custom-class="fs-table-columns-filter"
-    append-to-body>
+             :title="_text.title"
+             v-model="active"
+             v-model:visible="active"
+             size="300px"
+             width="300px"
+             v-bind="drawerBind"
+             append-to-body>
     <div class="fs-drawer-wrapper">
       <!-- 全选 反选 -->
       <component :is="$fsui.card.name" shadow="never">
         <div class="component--list">
           <div
-            key="__first__"
-            class="component--list-item"
-            flex="main:justify cross:center">
+              key="__first__"
+              class="component--list-item"
+              flex="main:justify cross:center">
               <span :span="12">
                 <component :is="$fsui.checkbox.name"
-                  v-model="checkAll"
-                  :indeterminate="isIndeterminate"
-                  @change="onCheckAllChange">
+                           v-model="checkAll"
+                           v-model:checked="checkAll"
+                           :indeterminate="isIndeterminate"
+                           @change="onCheckAllChange">
                   {{ showLength }} / {{ currentValue.length }}
                 </component>
               </span>
-            <span class="title">{{_text.fixed}} / {{_text.order}}</span>
+            <span class="title">{{ _text.fixed }} / {{ _text.order }}</span>
           </div>
 
           <draggable v-model="currentValue" tag="transition-group" item-key="key">
-            <template #item="{element,index}" >
+            <template #item="{element,index}">
               <div
                   class="component--list-item"
                   flex="main:justify cross:center">
-                <component :is="$fsui.checkbox.name" flex-box="1" v-model="element.show" @change="showChange(index,$event)">
-                  {{ element.label ||element.title || element.key || _text.unnamed }}
+                <component :is="$fsui.checkbox.name" class="item-label"
+                           v-model="element.show"
+                           v-model:checked="element.show"
+                           @change="showChange(index,$event)">
+                  {{ element.label || element.title || element.key || _text.unnamed }}
                 </component>
                 <fs-table-columns-fixed-controller
                     flex-box="0"
                     class="d2-mr-10"
                     v-model="element.fixed"
                     @change="fixedChange(index, $event)"/>
-                <div
-                    flex-box="0"
-                    class="component--list-item-handle handle">
-                  <i class="el-icon-sort" ></i>
+                <div flex-box="0" class="component--list-item-handle handle">
+                  <fs-icon :icon="$fsui.icons.sort"></fs-icon>
                 </div>
               </div>
             </template>
           </draggable>
         </div>
       </component>
-      <component  :is="$fsui.row.name" class="drawer-footer" :gutter="10">
+      <component :is="$fsui.row.name" class="fs-drawer-footer" :gutter="10">
         <component :is="$fsui.col.name" :span="12">
           <fs-button
-            icon="el-icon-refresh"
-            :text="_text.reset"
-            block
-            @click="reset"/>
+              :icon="$fsui.icons.refresh"
+              :text="_text.reset"
+              block
+              @click="reset"/>
         </component>
         <component :is="$fsui.col.name" :span="12">
           <fs-button
-            type="primary"
-            icon="el-icon-check"
-            :text="_text.confirm"
-            block
-            @click="submit()"/>
+              type="primary"
+              :icon="$fsui.icons.check"
+              :text="_text.confirm"
+              block
+              @click="submit()"/>
         </component>
       </component>
     </div>
@@ -171,7 +188,16 @@ export default {
       currentValue: [],
       active: false,
       checkAll: false,
-      indeterminate: false
+      indeterminate: false,
+      checkAllModelValue: {
+        [this.$fsui.checkbox.modelValue]: this.checkAll,
+        ['onUpdate:' + this.$fsui.checkbox.modelValue]: (v) => {
+          this.checkAll = v
+        }
+      },
+      drawerBind: {
+        [this.$fsui.drawer.customClass]: 'fs-table-columns-filter'
+      }
     }
   },
   computed: {
@@ -259,8 +285,10 @@ export default {
     },
     // 全选和反选发生变化时触发
     onCheckAllChange (value) {
+      console.log('checkall change', value)
+      const checked = this.$fsui.checkbox.resolveEvent(value)
       this.currentValue = this.currentValue.map(e => {
-        e.show = value
+        e.show = checked
         return e
       })
     },
@@ -315,7 +343,11 @@ export default {
     },
     getStorageTable () {
       if (this.StorageTableStore == null) {
-        this.StorageTableStore = new TableStore({ $router: this.$route, tableName: 'columnsFilter', keyType: this.storage })
+        this.StorageTableStore = new TableStore({
+          $router: this.$route,
+          tableName: 'columnsFilter',
+          keyType: this.storage
+        })
       }
       return this.StorageTableStore
     },

@@ -23,7 +23,7 @@ export default {
   name: 'fs-toolbar',
   // eslint-disable-next-line vue/no-unused-components
   components: { FsTableColumnsFilter, FsButton },
-  emits: ['refresh', 'update:search', 'update:compact', 'update:columns'],
+  emits: ['refresh', 'update:search', 'update:compact', 'update:columns', 'export'],
   props: {
     buttons: {
       type: Object
@@ -108,6 +108,7 @@ export default {
           title: '列设置',
           circle: true,
           click: () => {
+            console.log('culumnsFilterRef', columnsFilterRef.value)
             columnsFilterRef.value.start()
           }
         }

@@ -6,8 +6,9 @@ const LimitChunkCountPlugin = new webpack.optimize.LimitChunkCountPlugin({
 const plugins = []
 plugins.push(LimitChunkCountPlugin)
 let externals = {
-  vue: 'Vue',
-  'lodash-es': '_'
+  vue: 'vue',
+  'lodash-es': '_',
+  dayjs: 'dayjs'
 }
 if (process.env.VUE_APP_RUN_DEMO) {
   externals = {}

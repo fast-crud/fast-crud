@@ -19,6 +19,11 @@ export interface DialogCI extends CI{
   visible;
 }
 
+export interface DrawerCI extends CI{
+  visible;
+  customClass;
+}
+
 export interface TableColumnCI extends CI{
   label;
   prop;
@@ -30,6 +35,10 @@ export interface TableCI extends CI{
   data;
 }
 
+export interface CheckboxCI extends CI{
+  resolveEvent:Function;
+}
+
 export interface MessageCI extends CI{
   get;
   open;
@@ -38,6 +47,8 @@ export interface MessageCI extends CI{
   warn;
   info;
 }
+
+
 
 export type MessageBoxContextType = { title?: string; message?; confirmButtonText?; cancelButtonText?; type? };
 export type MessageBoxOpenType = (context: MessageBoxContextType) => Promise<any>;
@@ -76,6 +87,13 @@ export interface Icons {
   edit;
   remove;
   export;
+  check;
+  sort;
+  close;
+  left;
+  right;
+  arrowLeft;
+  arrowRight;
 }
 export interface UiInterface {
   modelValue: string;
@@ -95,9 +113,9 @@ export interface UiInterface {
   select: SelectCI;
   option: CI;
   collapseTransition: CI;
-  checkbox: CI;
+  checkbox: CheckboxCI;
   card: CI;
-  drawer: CI;
+  drawer: DrawerCI;
   col: CI;
   row: CI;
   buttonGroup: CI;

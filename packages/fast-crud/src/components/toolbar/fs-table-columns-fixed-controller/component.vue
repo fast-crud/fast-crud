@@ -1,4 +1,4 @@
-<style lang="less" scoped>
+<style lang="less">
 .fs-table-columns-fixed-controller {
   .fs-button {
     padding: 2px;
@@ -38,15 +38,15 @@ export default {
       options: [
         {
           value: 'left',
-          icon: 'el-icon-arrow-left'
+          icon: this.$fsui.icons.left// 'el-icon-arrow-left'
         },
         {
           value: false,
-          icon: 'el-icon-close'
+          icon: this.$fsui.icons.close // 'el-icon-close'
         },
         {
           value: 'right',
-          icon: 'el-icon-arrow-right'
+          icon: this.$fsui.icons.right // 'el-icon-arrow-right'
         }
       ]
     }

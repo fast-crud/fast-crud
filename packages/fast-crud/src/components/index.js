@@ -1,5 +1,6 @@
 import FsContainer from './container/fs-container'
 import FsButton from './basic/fs-button'
+import FsIcon from './basic/fs-icon'
 import FsComponentRender from './render/fs-component-render'
 import FsSlotRender from './render/fs-slot-render'
 
@@ -20,6 +21,7 @@ export {
   FsComponentRender,
   FsSlotRender,
   FsButton,
+  FsIcon,
   FsForm,
   FsCrud,
   FsRowHandle,

@@ -1,6 +1,7 @@
 import {
+  CheckboxCI,
   CI,
-  DialogCI, FormItemCI, FormWrapperCI,
+  DialogCI, DrawerCI, FormItemCI, FormWrapperCI,
   IconCI,
   Icons, InputCI, MessageBoxCI,
   MessageCI, NotificationCI,
@@ -137,7 +138,14 @@ export class Antdv implements UiInterface {
     export: 'UploadOutlined',
     refresh: 'SyncOutlined',
     remove: 'DeleteOutlined',
-    search: 'SearchOutlined'
+    search: 'SearchOutlined',
+    check: 'CheckOutlined',
+    sort: 'DragOutlined',
+    close: 'CloseOutlined',
+    arrowRight: 'ArrowRightOutlined',
+    arrowLeft: 'ArrowLeftOutlined',
+    left: 'LeftOutlined',
+    right: 'RightOutlined'
   };
 
   dialog: DialogCI={
@@ -157,8 +165,11 @@ export class Antdv implements UiInterface {
     name: 'a-card'
   };
 
-  checkbox: CI={
-    name: 'a-checkbox'
+  checkbox: CheckboxCI={
+    name: 'a-checkbox',
+    resolveEvent (e) {
+      return e.target.checked
+    }
   };
 
   col: CI={
@@ -169,8 +180,10 @@ export class Antdv implements UiInterface {
     name: 'div'
   };
 
-  drawer: CI={
-    name: 'a-drawer'
+  drawer: DrawerCI={
+    name: 'a-drawer',
+    visible: 'visible',
+    customClass: 'wrapClassName'
   };
 
   form: CI={

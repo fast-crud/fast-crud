@@ -12,7 +12,13 @@ import {
   DragOutlined,
   AppstoreOutlined,
   ControlOutlined,
-  UploadOutlined
+  UploadOutlined,
+  ArrowLeftOutlined,
+  LeftOutlined,
+  RightOutlined,
+  CloseOutlined,
+  SwapOutlined
+
 } from '@ant-design/icons-vue'
 
 const icons = {
@@ -29,7 +35,12 @@ const icons = {
   DragOutlined,
   AppstoreOutlined,
   ControlOutlined,
-  UploadOutlined
+  UploadOutlined,
+  ArrowLeftOutlined,
+  LeftOutlined,
+  RightOutlined,
+  CloseOutlined,
+  SwapOutlined
 }
 export default function (app) {
   _.forEach(icons, (item, key) => {

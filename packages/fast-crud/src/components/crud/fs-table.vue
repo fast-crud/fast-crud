@@ -39,6 +39,9 @@ export default {
             cellSlots.default = () => {
               const subColumns = []
               _.forEach(item.children, (subColumn) => {
+                if (subColumn.show === false) {
+                  return
+                }
                 subColumns.push(buildColumn(subColumn))
               })
               return subColumns
@@ -89,6 +92,9 @@ export default {
           return <currentTableColumnComp {...newItem} label={item.title} prop={item.key} dataIndex={item.key} v-slots={cellSlots}/>
         }
         _.forEach(this.columns, (item, index) => {
+          if (item.show === false) {
+            return
+          }
           children.push(buildColumn(item))
         })
 
