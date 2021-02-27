@@ -1,6 +1,5 @@
 <script>
-import { resolveComponent, getCurrentInstance, reactive, onMounted, ref, nextTick } from 'vue'
-import { uiContext } from '../../ui'
+import { resolveComponent, getCurrentInstance, ref } from 'vue'
 import _ from 'lodash-es'
 import FsRowHandle from './fs-row-handle'
 import FsComponentRender from '../render/fs-component-render'
@@ -84,7 +83,7 @@ export default {
 
           return <currentTableColumnComp {...newItem} label={item.title} prop={item.key} dataIndex={item.key} v-slots={cellSlots}/>
         }
-        _.forEach(this.columns, (item, index) => {
+        _.forEach(this.columns, (item) => {
           if (item.show === false) {
             return
           }
@@ -116,7 +115,7 @@ export default {
       {...dataSource}
       v-slots={tableSlots}/>
   },
-  setup (props, ctx) {
+  setup () {
     const tableRef = ref()
     return {
       tableRef

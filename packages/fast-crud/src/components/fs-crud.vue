@@ -7,11 +7,14 @@
           <fs-search ref="searchRef" v-bind="search" @search="onSearchSubmit" @reset="onSearchReset"
                      :slots="computedSearchSlots"/>
         </div>
+        <slot name="header-middle"/>
+
         <div class="fs-crud-actionbar" v-if="actionbar?.show!==false">
           <slot name="actionbar-prefix"/>
           <fs-actionbar v-bind="actionbar" @action="onActionHandle"></fs-actionbar>
           <slot name="actionbar-append"/>
         </div>
+
         <div class="fs-crud-toolbar" v-if="toolbar?.show!==false">
           <slot name="toolbar-prefix"/>
           <fs-toolbar v-bind="toolbar"
@@ -22,48 +25,27 @@
                       :columns="columns"
                       @update:columns="$emit('update:columns',$event)"
                       @refresh="$emit('refresh')"
-                      @action="onToolbarHandle"></fs-toolbar>
+                      @action="onToolbarHandle"/>
           <slot name="toolbar-append"/>
         </div>
+
         <slot name="header-after"/>
       </div>
     </template>
-    <slot :scope="{data}"/>
+    <!-- 默认插槽 -->
+    <slot/>
+    <!-- table -->
     <fs-table ref="tableRef" class="fs-crud-table" v-bind="computedTable"
               :columns="columns" :rowHandle="rowHandle"
               :data="data" slots="computedCellSlots"
               @rowHandle="onRowHandle"
     />
-<!--    <component :is="$fsui.table.name" v-if="computedTable?.show!==false" class="fs-crud-table" v-bind="computedTable" :data="data">-->
-<!--&lt;!&ndash;      v-loading="computedTable.loading"&ndash;&gt;-->
-<!--      <template  v-for="(item) of computedColumns" :key="item.key">-->
-<!--        <fs-column v-bind="item" :prop="item.key" :slots="computedCellSlots"></fs-column>-->
-<!--      </template>-->
-
-<!--&lt;!&ndash;      <el-table-column&ndash;&gt;-->
-<!--&lt;!&ndash;        v-for="(item,key) of columns"  v-bind="item" :key="key" :prop="key"&ndash;&gt;-->
-<!--&lt;!&ndash;      >&ndash;&gt;-->
-<!--&lt;!&ndash;        <template #default="scope">&ndash;&gt;-->
-<!--&lt;!&ndash;          {{scope.row[key]}}&ndash;&gt;-->
-<!--&lt;!&ndash;        </template>&ndash;&gt;-->
-<!--&lt;!&ndash;      </el-table-column>&ndash;&gt;-->
-
-<!--      <component :is="$fsui.tableColumn.name"-->
-<!--          v-if="rowHandle && rowHandle.show!==false"-->
-<!--          v-bind="rowHandle" :label="rowHandle.title"-->
-<!--          prop="rowHandle"-->
-<!--      >-->
-<!--        <template #default="scope">-->
-<!--          <fs-row-handle v-bind="rowHandle" :scope="scope" @handle="onRowHandle"></fs-row-handle>-->
-<!--        </template>-->
-<!--      </component>-->
-<!--    </component>-->
-
+    <!-- 编辑对话框 -->
     <fs-form-wrapper ref="formWrapperRef" :slots="computedFormSlots"/>
 
     <template #footer>
       <div class="fs-crud-footer">
-        <slot name="footerBefore"/>
+        <slot name="footer-before"/>
         <div class="fs-crud-pagination">
           <div class="fs-pagination-prefix">
             <slot name="pagination-prefix"/>
@@ -75,7 +57,7 @@
             <slot name="pagination-append"/>
           </div>
         </div>
-        <slot name="footerAfter"/>
+        <slot name="footer-after"/>
       </div>
     </template>
 
@@ -85,13 +67,11 @@
 import { defineComponent, computed, provide, ref, toRef, getCurrentInstance, reactive, nextTick, onMounted } from 'vue'
 import _ from 'lodash-es'
 import FsContainer from './container/fs-container'
-import FsColumn from './crud/fs-column'
 import FsRowHandle from './crud/fs-row-handle'
 import FsFormWrapper from './crud/fs-form-wrapper'
 import FsActionbar from './actionbar'
 import FsToolbar from './toolbar'
 import FsTable from './crud/fs-table'
-import { ComputeValue } from '../core/compute-value'
 import traceUtil from '../utils/util.trace'
 import { uiContext } from '../ui'
 function useProviders (props, ctx) {
@@ -197,16 +177,13 @@ function useFixedHeight (props, ctx, { tableRef, containerRef }) {
   }
 
   function watchBodyHeightChange () {
-    const tableDom = tableRef.value.$el
-    if (tableDom == null) {
+    const containerDom = containerRef.value.$el
+    if (containerDom == null) {
       return
     }
-    const containerDom = containerRef.value.$el
     const tableWrapperDom = containerDom.querySelector('.inner .body')
-    console.log('body', tableWrapperDom)
     const observer = new ResizeObserver(function (entries) {
       // 每次被观测的元素尺寸发生改变这里都会执行
-      console.log('dom changed', entries)
       if (entries.length > 0 && entries[0].contentRect.height > 0) {
         computeBodyHeight()
       }
@@ -218,8 +195,6 @@ function useFixedHeight (props, ctx, { tableRef, containerRef }) {
     await nextTick()
     watchBodyHeightChange()
   })
-  // const fs-crud-table
-
   return { fixedOptions, computeBodyHeight }
 }
 
@@ -296,8 +271,7 @@ export default defineComponent({
   name: 'fs-crud',
   inheritAttrs: false,
   emits: ['search-submit', 'search-reset', 'refresh', 'update:search', 'update:compact', 'update:columns'],
-  // eslint-disable-next-line vue/no-unused-components
-  components: { FsTable, FsRowHandle, FsContainer, FsColumn, FsFormWrapper, FsActionbar, FsToolbar },
+  components: { FsTable, FsRowHandle, FsContainer, FsFormWrapper, FsActionbar, FsToolbar },
   props: {
     table: {
       show: true

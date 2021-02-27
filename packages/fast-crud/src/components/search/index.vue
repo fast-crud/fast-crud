@@ -6,7 +6,7 @@
           :model="form"
           ref="searchFormRef"
           v-bind="options" class="search-form" @compositionstart="changeInputEventDisabled(true)" @compositionend="changeInputEventDisabled(false)">
-        <slot name="prefix" :form="form"/>
+        <fs-slot-render v-if="slots['search-prefix']" :slots="slots['search-prefix']" :scope="{form}" />
         <template v-for="(item,key) in computedColumns" :key="key">
           <component :is="$fsui.formItem.name" v-if="item.show===true" v-bind="item"  :[$fsui.formItem.prop]="key"  :label="item.title">
             <template v-if="slots['search-' + key]">
@@ -22,7 +22,7 @@
           </component>
         </template>
 
-        <slot :form="form"/>
+        <fs-slot-render v-if="slots['search-middle']" :slots="slots['search-middle']" :scope="{form}" />
         <component :is="$fsui.formItem.name" class="search-btns">
           <template v-for="(item, index) in computedButtons" :key="index">
             <fs-button v-if="item.show"
@@ -31,7 +31,7 @@
             />
           </template>
         </component>
-        <slot name="suffix" :form="form"/>
+        <fs-slot-render v-if="slots['search-append']" :slots="slots['search-append']" :scope="{form}" />
       </component>
     </div>
   </component>
@@ -42,6 +42,7 @@ import { computed, ref, nextTick } from 'vue'
 import _ from 'lodash-es'
 import fsButton from '../basic/fs-button'
 import FsComponentRender from '../../components/render/fs-component-render'
+import FsSlotRender from '../../components/render/fs-slot-render'
 import { ComputeValue } from '../../core/compute-value'
 import traceUtil from '../../utils/util.trace'
 import { uiContext } from '../../ui'
@@ -50,7 +51,7 @@ export default {
   name: 'fs-search',
   inheritAttrs: false,
   // eslint-disable-next-line vue/no-unused-components
-  components: { FsComponentRender, fsButton },
+  components: { FsComponentRender, FsSlotRender, fsButton },
   emits: ['search', 'reset'],
   props: {
     /* 初始查询条件，点击重置，会重置成该条件 */
@@ -222,6 +223,7 @@ export default {
       }
       doAutoSearch()
     }
+    // 输入法监听
     const changeInputEventDisabled = (disabled) => {
       console.log('changeInputEventDisabled', disabled)
       inputEventDisabled.value = disabled
