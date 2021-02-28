@@ -14,7 +14,6 @@ if (process.env.VUE_APP_RUN_DEMO) {
   externals = {}
 }
 module.exports = {
-  css: { extract: false },
   configureWebpack: {
     externals: externals
   }

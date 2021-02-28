@@ -1,4 +1,3 @@
-<script>
 import traceUtil from '../../utils/util.trace'
 export default {
   name: 'fs-render',
@@ -18,4 +17,3 @@ export default {
     return this.renderFunc({ scope: this.scope, ...this.$attrs })
   }
 }
-</script>

@@ -66,12 +66,12 @@
 <script>
 import { defineComponent, computed, provide, ref, toRef, getCurrentInstance, reactive, nextTick, onMounted } from 'vue'
 import _ from 'lodash-es'
-import FsContainer from './container/fs-container'
-import FsRowHandle from './crud/fs-row-handle'
-import FsFormWrapper from './crud/fs-form-wrapper'
-import FsActionbar from './actionbar'
-import FsToolbar from './toolbar'
-import FsTable from './crud/fs-table'
+import FsContainer from './container/fs-container.vue'
+import FsRowHandle from './crud/fs-row-handle.vue'
+import FsFormWrapper from './crud/fs-form-wrapper.js'
+import FsActionbar from './actionbar/index.vue'
+import FsToolbar from './toolbar/index.vue'
+import FsTable from './crud/fs-table.js'
 import traceUtil from '../utils/util.trace'
 import { uiContext } from '../ui'
 function useProviders (props, ctx) {
@@ -305,7 +305,6 @@ export default defineComponent({
 })
 </script>
 <style lang="less">
-
 .fs-crud-container {
   &.compact {
     .el-table--border {

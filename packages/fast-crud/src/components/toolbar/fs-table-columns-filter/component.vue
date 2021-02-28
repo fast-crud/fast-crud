@@ -155,7 +155,7 @@
 import draggable from 'vuedraggable'
 import _ from 'lodash-es'
 import FsButton from '../../basic/fs-button'
-import FsTableColumnsFixedController from '../fs-table-columns-fixed-controller/component'
+import FsTableColumnsFixedController from '../fs-table-columns-fixed-controller/component.vue'
 import TableStore from '../../../utils/util.store'
 import { useI18n } from '../../../local'
 // 输入 全部分表格列设置

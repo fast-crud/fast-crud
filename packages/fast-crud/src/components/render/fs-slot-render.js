@@ -1,4 +1,3 @@
-<script>
 import { h } from 'vue'
 import traceUtil from '../../utils/util.trace'
 export default {
@@ -17,4 +16,3 @@ export default {
     return () => h(props.slots, props.scope)
   }
 }
-</script>

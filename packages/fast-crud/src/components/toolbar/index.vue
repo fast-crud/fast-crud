@@ -14,7 +14,7 @@
 </template>
 
 <script>
-import FsTableColumnsFilter from './fs-table-columns-filter/component'
+import FsTableColumnsFilter from './fs-table-columns-filter/component.vue'
 import FsButton from '../basic/fs-button'
 import _ from 'lodash-es'
 import { ref, computed, getCurrentInstance } from 'vue'

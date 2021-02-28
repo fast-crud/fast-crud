@@ -16,7 +16,7 @@ export {
   utils,
   uiContext
 }
-export * from './components'
+// export * from './components'
 export default {
   install (app, options) {
     if (options?.ui) {

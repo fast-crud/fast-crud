@@ -1,5 +1,4 @@
-<script>
-import { h, resolveComponent, getCurrentInstance, ref, toRef, computed, reactive } from 'vue'
+import { h, resolveComponent, getCurrentInstance, computed } from 'vue'
 import _ from 'lodash-es'
 import traceUtil from '../../utils/util.trace'
 import { uiContext } from '../../ui'
@@ -96,4 +95,3 @@ export default {
     }
   }
 }
-</script>

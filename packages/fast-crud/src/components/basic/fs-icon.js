@@ -1,4 +1,3 @@
-<script>
 import { resolveComponent } from 'vue'
 export default {
   name: 'fs-icon',
@@ -13,4 +12,3 @@ export default {
     return <i class={this.icon} />
   }
 }
-</script>

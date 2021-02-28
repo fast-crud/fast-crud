@@ -1,4 +1,3 @@
-<script>
 import { ref, resolveComponent, computed } from 'vue'
 import FsButton from '../basic/fs-button'
 import traceUtil from '../../utils/util.trace'
@@ -161,35 +160,3 @@ export default {
     }
   }
 }
-</script>
-<style lang="less">
-.fs-form-wrapper{
-  .fs-form-footer-btns{
-    display: flex;
-    margin-top:20px;
-    justify-content: flex-end;
-    & > *{
-      margin-left:10px;
-    }
-  }
-
-  .el-dialog__header {
-    padding: 20px 20px ;
-    border-bottom: 1px #eee solid;
-  }
-  .el-dialog__body {
-    padding: 20px 20px;
-  }
-
-  .el-drawer__body{
-    padding: 20px 20px;
-  }
-
-  .el-drawer__header {
-    margin-bottom: 0px;
-    padding: 20px 20px;
-    border-bottom: 1px #eee solid;
-  }
-}
-
-</style>

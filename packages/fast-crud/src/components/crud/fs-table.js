@@ -1,10 +1,9 @@
-<script>
 import { resolveComponent, getCurrentInstance, ref } from 'vue'
 import _ from 'lodash-es'
-import FsRowHandle from './fs-row-handle'
+import FsRowHandle from './fs-row-handle.vue'
 import FsComponentRender from '../render/fs-component-render'
 import { ComputeValue } from '../../core/compute-value'
-
+import './fs-table.less'
 export default {
   name: 'fs-table',
   components: { FsComponentRender, FsRowHandle },
@@ -127,18 +126,3 @@ export default {
     }
   }
 }
-</script>
-<style lang="less">
-.fs-crud-table{
-  height:100px;
-  &.ant-table-wrapper{
-
-  }
-  .ant-table-bordered{
-    border-bottom: 1px solid #eee;
-
-    .ant-table-content{
-    }
-  }
-}
-</style>

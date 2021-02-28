@@ -1,5 +1,5 @@
-<script>
 import { resolveComponent, h } from 'vue'
+import './style.less'
 export default {
   name: 'fs-button',
   props: {
@@ -49,27 +49,3 @@ export default {
     }, slots)
   }
 }
-</script>
-<style lang="less">
-.fs-button{
-  &.is-thin{
-    &.el-button--small, &.el-button--small.is-round {
-      padding: 9px 9px;
-    }
-    &.el-button--mini, &.el-button--mini.is-round {
-      padding: 7px 7px;
-    }
-    &.el-button [class*=el-icon-]+span {
-      margin-left: 0;
-    }
-  }
-
-  &.ant-btn{
-    line-height: 0;
-  }
-  &.ant-btn > .anticon{
-    line-height:0;
-  }
-}
-
-</style>

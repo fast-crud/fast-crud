@@ -1,20 +1,20 @@
-import FsContainer from './container/fs-container'
-import FsButton from './basic/fs-button'
+import FsContainer from './container/fs-container.vue'
+import FsButton from './basic/fs-button/index.js'
 import FsIcon from './basic/fs-icon'
-import FsComponentRender from './render/fs-component-render'
-import FsSlotRender from './render/fs-slot-render'
+import FsComponentRender from './render/fs-component-render.js'
+import FsSlotRender from './render/fs-slot-render.js'
 
-import FsForm from './crud/fs-form'
-import FsCrud from './fs-crud'
-import FsRowHandle from './crud/fs-row-handle'
+import FsForm from './crud/fs-form.vue'
+import FsCrud from './fs-crud.vue'
+import FsRowHandle from './crud/fs-row-handle.vue'
+import FsTable from './crud/fs-table'
+import FsDictRadio from './extends/fs-dict-radio.vue'
+import FsDictSelect from './extends/fs-dict-select.vue'
+import FsValuesFormat from './extends/fs-values-format.vue'
 
-import FsDictRadio from './extends/fs-dict-radio'
-import FsDictSelect from './extends/fs-dict-select'
-import FsValuesFormat from './extends/fs-values-format'
-
-import FsActionbar from './actionbar'
-import FsToolbar from './toolbar'
-import FsSearch from './search'
+import FsActionbar from './actionbar/index.vue'
+import FsToolbar from './toolbar/index.vue'
+import FsSearch from './search/index.vue'
 
 export {
   FsContainer,
@@ -24,6 +24,7 @@ export {
   FsIcon,
   FsForm,
   FsCrud,
+  FsTable,
   FsRowHandle,
   FsSearch,
   FsActionbar,
