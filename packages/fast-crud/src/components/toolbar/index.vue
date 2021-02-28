@@ -19,6 +19,7 @@ import FsButton from '../basic/fs-button'
 import _ from 'lodash-es'
 import { ref, computed, getCurrentInstance } from 'vue'
 import traceUtil from '../../utils/util.trace'
+import { useI18n } from '../../local'
 export default {
   name: 'fs-toolbar',
   // eslint-disable-next-line vue/no-unused-components
@@ -60,6 +61,7 @@ export default {
     }
   },
   setup (props, ctx) {
+    const { t } = useI18n()
     const columnsFilterRef = ref()
     traceUtil.trace('fs-toolbar')
     const { proxy } = getCurrentInstance()
@@ -69,7 +71,7 @@ export default {
         refresh: {
           type: 'primary',
           icon: proxy.$fsui.icons.refresh,
-          title: '刷新',
+          title: t('fs.toolbar.refresh.text'), // '刷新',
           circle: true,
           click: () => {
             ctx.emit('refresh')
@@ -78,7 +80,7 @@ export default {
         search: {
           type: 'primary',
           icon: proxy.$fsui.icons.search,
-          title: '查询显示',
+          title: t('fs.toolbar.search.title'), // '查询显示',
           circle: true,
           click: () => {
             ctx.emit('update:search', !props.search)
@@ -87,7 +89,7 @@ export default {
         compact: {
           type: 'primary',
           icon: proxy.$fsui.icons.compact,
-          title: '紧凑模式',
+          title: t('fs.toolbar.compact.title'), // '紧凑模式',
           circle: true,
           click: () => {
             ctx.emit('update:compact', !props.compact)
@@ -96,7 +98,7 @@ export default {
         export: {
           type: 'primary',
           icon: proxy.$fsui.icons.export,
-          title: '导出',
+          title: t('fs.toolbar.export.title'), // '导出',
           circle: true,
           click: () => {
             ctx.emit('export')
@@ -105,10 +107,9 @@ export default {
         columns: {
           type: 'primary',
           icon: proxy.$fsui.icons.columnsFilter,
-          title: '列设置',
+          title: t('fs.toolbar.columns.title'), // '列设置',
           circle: true,
           click: () => {
-            console.log('culumnsFilterRef', columnsFilterRef.value)
             columnsFilterRef.value.start()
           }
         }

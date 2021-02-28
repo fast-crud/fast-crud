@@ -3,6 +3,7 @@ import { ref, resolveComponent, computed } from 'vue'
 import FsButton from '../basic/fs-button'
 import traceUtil from '../../utils/util.trace'
 import _ from 'lodash-es'
+import { useI18n } from '../../local'
 export default {
   name: 'fs-form-wrapper',
   // eslint-disable-next-line vue/no-unused-components
@@ -74,6 +75,7 @@ export default {
   },
   setup (props) {
     traceUtil.trace('fs-from-wrapper')
+    const { t } = useI18n()
     const formWrapperOpen = ref(false)
     const formWrapperIs = ref()
     const formProps = ref()
@@ -125,13 +127,13 @@ export default {
       // TODO i18n
       const defBtns = {
         cancel: {
-          text: '取消',
+          text: t('fs.form.cancel'),
           onClick: () => {
             close()
           }
         },
         ok: {
-          text: '确定',
+          text: t('fs.form.ok'),
           type: 'primary',
           onClick: () => {
             submit()

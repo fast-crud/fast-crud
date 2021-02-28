@@ -46,7 +46,8 @@ import FsSlotRender from '../../components/render/fs-slot-render'
 import { ComputeValue } from '../../core/compute-value'
 import traceUtil from '../../utils/util.trace'
 import { uiContext } from '../../ui'
-
+import { useI18n } from '../../local'
+import logger from '../../utils/util.log'
 export default {
   name: 'fs-search',
   inheritAttrs: false,
@@ -101,7 +102,7 @@ export default {
     let autoSearch = ref(null)
     const form = ref(_.cloneDeep(props.initial || {}))
     const searchFormRef = ref()
-
+    const { t } = useI18n()
     function getContextFn () {
       return { form: form.value }
     }
@@ -112,13 +113,12 @@ export default {
         autoSearch.value.cancel()
       }
       const valid = await searchFormRef.value.validate()
-      console.log('valid', valid)
+      logger.debug('valid', valid)
       if (valid) {
         ctx.emit('search', { form: form.value })
       } else {
-        ui.notification.error({
-          title: '错误',
-          message: '表单校验失败'
+        ui.message.error({
+          message: t('fs.search.error.message')
         })
         return false
       }
@@ -152,7 +152,7 @@ export default {
             doSearch()
           },
           order: 1,
-          text: '查询',
+          text: t('fs.search.search.text'), // '查询',
           ...defBtnOptions.search
         })
       }
@@ -163,7 +163,7 @@ export default {
           doClick: () => {
             doReset()
           },
-          text: '重置',
+          text: t('fs.search.reset.text'), // '重置',
           order: 2,
           ...defBtnOptions.reset
         })

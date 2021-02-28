@@ -1,8 +1,7 @@
 <template>
   <div class="fs-row-handle">
-    <template  v-for="(item, index) in computedHandleBtns">
-      <fs-button :key="index"
-                 v-if="item.show!==false"
+    <template  v-for="(item, index) in computedHandleBtns" :key="index">
+      <fs-button v-if="item.show!==false"
                  class="row-handle-btn"
                  @click.stop="item.doClick(item,index)"
                  v-bind="item"
@@ -15,6 +14,7 @@ import { computed } from 'vue'
 import FsButton from '../basic/fs-button'
 import _ from 'lodash-es'
 import traceUtil from '../../utils/util.trace'
+import { useI18n } from '../../local'
 export default {
   name: 'fs-row-handle',
   emits: ['handle'],
@@ -40,6 +40,7 @@ export default {
   },
   setup (props, ctx) {
     traceUtil.trace('fs-row-handler')
+    const { t } = useI18n()
     const doClick = (item) => {
       const e = { key: item.key, btn: item, ...props.scope }
       if (item?.click) {
@@ -53,21 +54,21 @@ export default {
           key: 'view',
           doClick,
           order: 1,
-          text: '查看'
+          text: t('fs.rowHandle.view.text')
         },
         edit: {
           key: 'edit',
           type: 'primary',
           doClick,
           order: 2,
-          text: '编辑'
+          text: t('fs.rowHandle.edit.text')
         },
         remove: {
           key: 'remove',
           type: 'danger',
           doClick,
           order: 3,
-          text: '删除'
+          text: t('fs.rowHandle.remove.text')
         }
       }
       const mergedBtns = _.merge(defBtns, { view: props.view, edit: props.edit, remove: props.remove })

@@ -1,7 +1,7 @@
 <template>
   <div class="fs-actionbar">
     <template v-for="(value,key) in buttons" :key="key">
-      <fs-button v-bind="value" @click="onClick(key,value,$event)"></fs-button>
+      <fs-button v-if="value.show!==false" v-bind="value" @click="onClick(key,value,$event)"></fs-button>
     </template>
   </div>
 </template>

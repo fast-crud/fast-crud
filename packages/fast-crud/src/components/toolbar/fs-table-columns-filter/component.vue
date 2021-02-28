@@ -157,7 +157,7 @@ import _ from 'lodash-es'
 import FsButton from '../../basic/fs-button'
 import FsTableColumnsFixedController from '../fs-table-columns-fixed-controller/component'
 import TableStore from '../../../utils/util.store'
-import { toRaw } from 'vue'
+import { useI18n } from '../../../local'
 // 输入 全部分表格列设置
 // 输出 要显示的表格列 + 每列的设置
 
@@ -200,6 +200,10 @@ export default {
       }
     }
   },
+  setup () {
+    const { t } = useI18n()
+    return { t }
+  },
   computed: {
     // 显示的数量
     showLength () {
@@ -210,12 +214,12 @@ export default {
     },
     _text () {
       const def = {
-        title: '列设置',
-        fixed: '固定',
-        order: '排序',
-        reset: '还原',
-        confirm: '确定',
-        unnamed: '未命名'
+        title: this.t('fs.toolbar.columnFilter.title'),
+        fixed: this.t('fs.toolbar.columnFilter.fixed'),
+        order: this.t('fs.toolbar.columnFilter.order'),
+        reset: this.t('fs.toolbar.columnFilter.reset'),
+        confirm: this.t('fs.toolbar.columnFilter.confirm'),
+        unnamed: this.t('fs.toolbar.columnFilter.unnamed')
       }
       _.merge(def, this.text)
       return def

@@ -1,5 +1,5 @@
 <template>
-  <fs-container ref="containerRef" class="fs-crud-container" :class="{compact:toolbar.compact!==false}">
+  <fs-container ref="containerRef" v-bind="container" class="fs-crud-container" :class="{compact:toolbar.compact!==false}">
     <template #header>
       <div class="fs-crud-header">
         <slot name="header-before"/>
@@ -173,7 +173,7 @@ function useFixedHeight (props, ctx, { tableRef, containerRef }) {
     }
     const tableHeight = tableDom.getBoundingClientRect().height
     const headHeight = headDom.getBoundingClientRect().height
-    fixedOptions.scroll.y = tableHeight - headHeight - 1
+    fixedOptions.scroll.y = tableHeight - headHeight - 2
   }
 
   function watchBodyHeightChange () {
@@ -288,7 +288,8 @@ export default defineComponent({
     editForm: {},
     viewForm: {},
     pagination: {},
-    request: {}
+    request: {},
+    container: {}
   },
   setup (props, ctx) {
     console.log('ctx', ctx)
@@ -349,7 +350,6 @@ export default defineComponent({
 
   .fs-crud-footer{
     padding:10px 0;
-    border-top:1px solid #eee;
     .fs-crud-pagination {
       display: flex;
       flex-direction: row;

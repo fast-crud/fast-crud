@@ -3,8 +3,8 @@
   <a-layout>
     <a-layout-header>fast-crud</a-layout-header>
     <a-layout class="layout-body">
-      <a-layout-sider>
-<!--        <aside-menu></aside-menu>-->
+      <a-layout-sider style="overflow-y: scroll">
+        <aside-menu></aside-menu>
       </a-layout-sider>
       <a-layout-content><router-view></router-view></a-layout-content>
 

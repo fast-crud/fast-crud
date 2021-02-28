@@ -1,11 +1,11 @@
 import defaultCrudOptions from './default-crud-options'
 import _ from 'lodash-es'
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
 import { reactive, nextTick, ref } from 'vue'
 import logger from '../utils/util.log'
 import typesUtil from '../utils/util.types'
-import { ElMessageBox, ElNotification } from 'element-plus'
 import { uiContext } from '../ui'
-
+import { useI18n } from '../local'
 export interface CrudOptions{
   table?: {};
   columns?: [];
@@ -24,6 +24,8 @@ export interface CrudOptions{
 
 export default function (ctx) {
   const ui = uiContext.get()
+  const { t } = useI18n() // call `useI18n`, and spread `t` from  `useI18n` returning
+
   const options: CrudOptions = ctx.options
   const crudRef = ctx.crudRef
 
@@ -146,18 +148,17 @@ export default function (ctx) {
             try {
               console.log('ui', ui, context)
               await ui.messageBox.confirm({
-                title: '提示',
-                message: '确定要删除此记录吗?',
+                title: t('fs.rowHandle.remove.confirmTitle'), // '提示',
+                message: t('fs.rowHandle.remove.confirmMessage'), // '确定要删除此记录吗?',
                 type: 'warn'
               })
-              console.log('12312313')
             } catch (e) {
-              logger.info('用户取消删除', e.message)
+              logger.info('delete canceled', e.message)
               return
             }
             context.row = context[ui.tableColumn.row]
             await crudOptions.value.request.delRequest(context.row.id)
-            ui.notification.success('删除成功!')
+            ui.notification.success(t('fs.rowHandle.remove.success'))
             await doRefresh()
           }
         }
@@ -182,7 +183,6 @@ export default function (ctx) {
         crudOptions.value.toolbar.compact = value
       },
       'onUpdate:columns' (value) {
-        console.log('update columns', value)
         crudOptions.value.columns = value
       },
       onRefresh () {
@@ -190,93 +190,98 @@ export default function (ctx) {
       }
     }
   }
-  const userOptions = _.merge(
-    defaultCrudOptions.defaultOptions(),
-    usePagination(),
-    useFormSubmit(),
-    useRemove(),
-    useSearch(),
-    useEvent(),
-    defaultCrudOptions.commonOptions(ctx),
-    options
-  )
 
-  // 分散 合并到不同的维度
-  const tableColumns: any[] = []
-  const formColumns = {}
-  const addFormColumns = {}
-  const editFormColumns = {}
-  const viewFormColumns = {}
-  const searchColumns = {}
+  function initCrudOptions (options) {
+    const userOptions = _.merge(
+      defaultCrudOptions.defaultOptions({ t }),
+      usePagination(),
+      useFormSubmit(),
+      useRemove(),
+      useSearch(),
+      useEvent(),
+      defaultCrudOptions.commonOptions(ctx),
+      options
+    )
 
-  function mergeFromForm (targetColumns, item, key, mergeSrc, addLabel = false) {
-    const formColumn = _.cloneDeep(item[mergeSrc]) || {}
-    if (addLabel) {
-      if (formColumn.title == null) {
-        formColumn.title = item.title
+    // 分散 合并到不同的维度
+    const tableColumns: any[] = []
+    const formColumns = {}
+    const addFormColumns = {}
+    const editFormColumns = {}
+    const viewFormColumns = {}
+    const searchColumns = {}
+
+    function mergeFromForm (targetColumns, item, key, mergeSrc, addLabel = false) {
+      const formColumn = _.cloneDeep(item[mergeSrc]) || {}
+      if (addLabel) {
+        if (formColumn.title == null) {
+          formColumn.title = item.title
+        }
       }
+      formColumn.key = key
+      targetColumns[key] = formColumn
     }
-    formColumn.key = key
-    targetColumns[key] = formColumn
-  }
-  function eachColumns (columns, tableParentColumns: any[] = tableColumns) {
-    _.forEach(columns, (item, key) => {
-      // types merge
-      if (item.type) {
-        const typeOptions = typesUtil.getType(item.type)
-        if (typeOptions) {
-          item = _.merge({}, typeOptions, item)
+    function eachColumns (columns, tableParentColumns: any[] = tableColumns) {
+      _.forEach(columns, (item, key) => {
+        // types merge
+        if (item.type) {
+          const typeOptions = typesUtil.getType(item.type)
+          if (typeOptions) {
+            item = _.merge({}, typeOptions, item)
+          }
         }
-      }
-      // copy dict
-      if (item.dict) {
-        if (item.column?.component) {
-          item.column.component.dict = _.cloneDeep(item.dict)
+        // copy dict
+        if (item.dict) {
+          if (item.column?.component) {
+            item.column.component.dict = _.cloneDeep(item.dict)
+          }
+          if (item.form?.component) {
+            item.form.component.dict = _.cloneDeep(item.dict)
+          }
         }
-        if (item.form?.component) {
-          item.form.component.dict = _.cloneDeep(item.dict)
-        }
-      }
 
-      const tableColumn = item.column || {}
-      if (tableColumn.title == null) {
-        tableColumn.title = item.title
-      }
-      tableColumn.key = key
-      tableParentColumns.push(tableColumn)
-      if (item.children) {
-        eachColumns(item.children, tableColumn.children = [])
-        return
-      }
+        const tableColumn = item.column || {}
+        if (tableColumn.title == null) {
+          tableColumn.title = item.title
+        }
+        tableColumn.key = key
+        tableParentColumns.push(tableColumn)
+        if (item.children) {
+          eachColumns(item.children, tableColumn.children = [])
+          return
+        }
 
-      mergeFromForm(formColumns, item, key, 'form', true)
-      mergeFromForm(addFormColumns, item, key, 'addForm')
-      mergeFromForm(editFormColumns, item, key, 'editForm')
-      mergeFromForm(viewFormColumns, item, key, 'viewForm')
-      mergeFromForm(searchColumns, item, key, 'search')
+        mergeFromForm(formColumns, item, key, 'form', true)
+        mergeFromForm(addFormColumns, item, key, 'addForm')
+        mergeFromForm(editFormColumns, item, key, 'editForm')
+        mergeFromForm(viewFormColumns, item, key, 'viewForm')
+        mergeFromForm(searchColumns, item, key, 'search')
+      })
+    }
+
+    eachColumns(userOptions.columns)
+
+    // 分置合并
+    userOptions.form = _.merge(_.cloneDeep(userOptions.form), { columns: formColumns })
+    userOptions.editForm = _.merge(_.cloneDeep(userOptions.form), { columns: editFormColumns }, userOptions.editForm)
+    userOptions.addForm = _.merge(_.cloneDeep(userOptions.form), { columns: addFormColumns }, userOptions.addForm)
+    userOptions.viewForm = _.merge(_.cloneDeep(userOptions.form), { columns: viewFormColumns }, userOptions.viewForm)
+    userOptions.search = _.merge({ columns: userOptions.form.columns }, { columns: searchColumns }, userOptions.search)
+    userOptions.columns = tableColumns
+
+    // 单独处理viewForm的component
+    _.forEach(userOptions.viewForm.columns, (value) => {
+      if (!value.component) {
+        value.component = {}
+      }
+      value.component.disabled = true
     })
+    // 与默认配置合并
+    crudOptions.value = userOptions
+    logger.info('fast-crud inited:', crudOptions)
   }
 
-  eachColumns(userOptions.columns)
-
-  // 分置合并
-  userOptions.form = _.merge(_.cloneDeep(userOptions.form), { columns: formColumns })
-  userOptions.editForm = _.merge(_.cloneDeep(userOptions.form), { columns: editFormColumns }, userOptions.editForm)
-  userOptions.addForm = _.merge(_.cloneDeep(userOptions.form), { columns: addFormColumns }, userOptions.addForm)
-  userOptions.viewForm = _.merge(_.cloneDeep(userOptions.form), { columns: viewFormColumns }, userOptions.viewForm)
-  userOptions.search = _.merge({ columns: userOptions.form.columns }, { columns: searchColumns }, userOptions.search)
-  userOptions.columns = tableColumns
-
-  // 单独处理viewForm的component
-  _.forEach(userOptions.viewForm.columns, (value) => {
-    if (!value.component) {
-      value.component = {}
-    }
-    value.component.disabled = true
-  })
-  // 与默认配置合并
-  crudOptions.value = userOptions
-  logger.info('fast-crud inited:', crudOptions)
+  initCrudOptions(options)
 
   return {
     doRefresh,

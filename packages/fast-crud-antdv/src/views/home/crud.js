@@ -41,8 +41,7 @@ export default function ({ crudRef }) {
     actionbar: {
       buttons: {
         add: {
-          type: 'primary',
-          text: '添加'
+          type: 'primary'
         }
       },
       show: true
@@ -197,7 +196,6 @@ export default function ({ crudRef }) {
       }
     },
     rowHandle: {
-      title: '操作',
       width: '350px',
       custom: [
         {

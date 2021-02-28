@@ -1,7 +1,9 @@
-
 import { createI18n } from 'vue-i18n'
 import enLocale from 'element-plus/lib/locale/lang/en'
 import zhLocale from 'element-plus/lib/locale/lang/zh-cn'
+
+import enFsLocale from '@fast-crud/fast-crud/src/local/lang/en'
+import zhFsLocale from '@fast-crud/fast-crud/src/local/lang/zh-cn'
 
 const messages = {
   [enLocale.name]: {
@@ -11,9 +13,7 @@ const messages = {
     message: {
       hello: 'hello world'
     },
-    fs: {
-
-    }
+    fs: enFsLocale.fs
   },
   [zhLocale.name]: {
     el: zhLocale.el,
@@ -21,9 +21,7 @@ const messages = {
     message: {
       hello: '你好，世界'
     },
-    fs: {
-
-    }
+    fs: zhFsLocale.fs
   },
   testLocale: {
     el: {}
@@ -32,6 +30,7 @@ const messages = {
 }
 
 export default createI18n({
+  legacy: false,
   locale: zhLocale.name,
   fallbackLocale: enLocale.name,
   messages

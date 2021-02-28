@@ -1,10 +1,9 @@
 import { uiContext } from '../ui'
-
 export default {
   // eslint-disable-next-line @typescript-eslint/no-empty-function,@typescript-eslint/no-unused-vars
   commonOptions (ctx) {
   },
-  defaultOptions () {
+  defaultOptions ({ t }) {
     const ui = uiContext.get()
     return {
       search: {
@@ -37,22 +36,22 @@ export default {
       },
       addForm: {
         wrapper: {
-          title: '添加'
+          title: t('fs.addForm.title')
         }
       },
       editForm: {
         wrapper: {
-          title: '编辑'
+          title: t('fs.editForm.title')
         }
       },
       viewForm: {
         wrapper: {
-          title: '查看'
+          title: t('fs.viewForm.title')
         }
       },
       rowHandle: {
         fixed: 'right',
-        label: '操作'
+        title: t('fs.rowHandle.title')
       },
       pagination: {
         background: true,
@@ -76,7 +75,7 @@ export default {
         buttons: {
           add: {
             type: 'primary',
-            text: '添加'
+            text: t('fs.actionbar.add')
           }
         }
       }

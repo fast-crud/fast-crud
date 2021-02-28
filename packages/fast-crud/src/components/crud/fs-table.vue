@@ -130,6 +130,15 @@ export default {
 </script>
 <style lang="less">
 .fs-crud-table{
-  height:100px
+  height:100px;
+  &.ant-table-wrapper{
+
+  }
+  .ant-table-bordered{
+    border-bottom: 1px solid #eee;
+
+    .ant-table-content{
+    }
+  }
 }
 </style>

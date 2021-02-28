@@ -1,7 +1,7 @@
 {
   "name": "@fast-crud/fast-crud",
   "version": "0.1.0",
-  "private": true,
+  "private": false,
   "scripts": {
     "dev": "vue-cli-service serve",
     "test:unit": "vue-cli-service test:unit",
@@ -11,7 +11,7 @@
   "dependencies": {
     "deepdash-es": "^5.3.5",
     "lodash-es": "^4.17.20",
-    "vue-i18n": "^9.0.0-rc.2",
+    "vue-i18n": "^9.0.0",
     "vuedraggable": "^4.0.1"
   },
   "devDependencies": {
