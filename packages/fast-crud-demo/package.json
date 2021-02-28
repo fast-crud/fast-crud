@@ -23,6 +23,7 @@
     "vuedraggable": "^4.0.1"
   },
   "devDependencies": {
+    "@babel/plugin-proposal-optional-chaining": "^7.13.8",
     "@types/chai": "^4.2.11",
     "@types/mocha": "^5.2.4",
     "@typescript-eslint/eslint-plugin": "^2.33.0",
