@@ -65,8 +65,6 @@ export default {
       form[key] = props.initial[key]
     })
 
-    console.log('form', form)
-
     const componentRefs = ref({})
     function getComponentRef (key) {
       return componentRefs.value[key]

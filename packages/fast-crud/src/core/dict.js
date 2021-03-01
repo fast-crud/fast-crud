@@ -1,4 +1,4 @@
-import _ from 'lodash-es'
+import { forEach, merge } from 'lodash-es'
 import logger from '../utils/util.log'
 let dictRequest = async () => {
   logger.warn('请配置 app.use(FsCrud,{dictRequest:()=>{ 你的字典请求方法 }})')
@@ -14,14 +14,14 @@ const cache = new Map()
 function toMap (dictOpts, data) {
   const map = {}
   if (data) {
-    _.forEach(data, (item) => {
+    forEach(data, (item) => {
       map[item[dictOpts.value]] = item
     })
   }
   return map
 }
 export function dict (opts) {
-  const dictOpts = _.merge(def, opts)
+  const dictOpts = merge(def, opts)
 
   if (dictOpts.data) {
     dictOpts.dataMap = toMap(dictOpts, dictOpts.data)
@@ -85,7 +85,7 @@ export async function getDictData (dict, scope) {
     cached.loaded = true
     cached.data = ret.data
     cached.dataMap = ret.dataMap
-    _.forEach(cached.callbacks, cb => {
+    forEach(cached.callbacks, cb => {
       cb(ret)
     })
   }

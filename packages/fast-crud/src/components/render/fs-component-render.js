@@ -57,11 +57,7 @@ export default {
 
     const events = { ...props.events, ...props.on }
     _.forEach(events, (value, key) => {
-      let handler = value
-      if (typeof value === 'string') {
-        // eslint-disable-next-line no-eval
-        handler = eval(value)
-      }
+      const handler = value
       allAttrs[key] = ($event) => {
         return handler({ ...newScope.value, $event })
       }

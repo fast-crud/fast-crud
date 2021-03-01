@@ -17,7 +17,7 @@ export {
   uiContext
 }
 // export * from './components'
-export default {
+export const FastCrud = {
   install (app, options) {
     if (options?.ui) {
       uiContext.set(options.ui)

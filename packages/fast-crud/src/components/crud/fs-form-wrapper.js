@@ -3,6 +3,7 @@ import FsButton from '../basic/fs-button'
 import traceUtil from '../../utils/util.trace'
 import _ from 'lodash-es'
 import { useI18n } from '../../local'
+import './fs-form-wrapper.less'
 export default {
   name: 'fs-form-wrapper',
   // eslint-disable-next-line vue/no-unused-components
