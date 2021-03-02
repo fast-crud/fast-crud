@@ -12,6 +12,7 @@ export default {
   esbuild: {
     jsxFactory: "h",
     jsxFragment: "Fragment",
+    jsxInject: `import {h} from 'vue'`,
   },
   build: {
     lib: {
