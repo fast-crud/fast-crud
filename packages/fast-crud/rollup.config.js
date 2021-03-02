@@ -1,12 +1,12 @@
 import vue from 'rollup-plugin-vue'
-import esbuild from 'rollup-plugin-esbuild'
-import css from 'rollup-plugin-css-only'
+// import esbuild from 'rollup-plugin-esbuild'
+// import css from 'rollup-plugin-css-only'
 import postcss from 'rollup-plugin-postcss' // v4.0.0
 import typescript from '@rollup/plugin-typescript'
 import babel from '@rollup/plugin-babel'
 import commonjs from '@rollup/plugin-commonjs'
 import { terser } from 'rollup-plugin-terser'
-import resolve from '@rollup/plugin-node-resolve'
+// import resolve from '@rollup/plugin-node-resolve'
 
 export default {
   input: 'src/index.js',
@@ -32,8 +32,10 @@ export default {
     // css(),
     typescript({
       tsconfig: false,
-      // experimentalDecorators: true,
-      module: 'es2019'
+      experimentalDecorators: true,
+      target: 'ES5',
+      module: 'ES2020',
+      allowSyntheticDefaultImports: true
     }),
     vue({
       css: false,

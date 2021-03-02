@@ -9,13 +9,13 @@
     </template>
   </div>
 </template>
-<script>
-import { computed } from 'vue'
+<script lang="ts">
+import { computed, defineComponent } from 'vue'
 import FsButton from '../basic/fs-button'
 import _ from 'lodash-es'
 import traceUtil from '../../utils/util.trace'
 import { useI18n } from '../../local'
-export default {
+export default defineComponent({
   name: 'fs-row-handle',
   emits: ['handle'],
   components: {
@@ -43,7 +43,7 @@ export default {
     const { t } = useI18n()
     const doClick = (item) => {
       const e = { key: item.key, btn: item, ...props.scope }
-      if (item?.click) {
+      if (item.click) {
         return item.click(e)
       }
       ctx.emit('handle', e)
@@ -95,7 +95,7 @@ export default {
       computedHandleBtns
     }
   }
-}
+})
 </script>
 
 <style lang="less">

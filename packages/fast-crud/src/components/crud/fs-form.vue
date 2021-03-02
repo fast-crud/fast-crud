@@ -8,7 +8,7 @@
                  v-bind="item">
         <fs-slot-render v-if="slots && slots['form-' + key]" :slots="slots['form-' + key]" :scope="{key,...scope}"/>
         <template v-else>
-          <fs-component-render v-if="item.component?.show!==false"
+          <fs-component-render v-if="item.component && item.component.show!==false"
                                :ref="el => { if (el) componentRefs[key] = el }"
                                v-bind="item.component"
                                :modelValue="get(form,key)"
@@ -97,7 +97,6 @@ export default {
     }
 
     async function submit () {
-      console.log('form submit')
       const valid = await formRef.value.validate()
       if (valid) {
         if (props.doSubmit) {

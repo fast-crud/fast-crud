@@ -13,7 +13,7 @@
               <fs-slot-render :slots="slots['search-' + key]" :scope="{form,key}"/>
             </template>
             <template v-else>
-              <fs-component-render v-if="item.component?.show!==false"
+              <fs-component-render v-if="item.component && item.component.show!==false"
                                    :modelValue="get(form,key)"
                                    @update:modelValue="set(form,key,$event)"
                                    @input="onInput(item)" @change="onChange(item)"

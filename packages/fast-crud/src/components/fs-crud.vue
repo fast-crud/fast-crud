@@ -9,13 +9,13 @@
         </div>
         <slot name="header-middle"/>
 
-        <div class="fs-crud-actionbar" v-if="actionbar?.show!==false">
+        <div class="fs-crud-actionbar" v-if="actionbar && actionbar.show!==false">
           <slot name="actionbar-prefix"/>
           <fs-actionbar v-bind="actionbar" @action="onActionHandle"></fs-actionbar>
           <slot name="actionbar-append"/>
         </div>
 
-        <div class="fs-crud-toolbar" v-if="toolbar?.show!==false">
+        <div class="fs-crud-toolbar" v-if="toolbar && toolbar.show!==false">
           <slot name="toolbar-prefix"/>
           <fs-toolbar v-bind="toolbar"
                       :search="search.show"
