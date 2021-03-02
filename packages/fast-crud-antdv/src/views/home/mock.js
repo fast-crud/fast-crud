@@ -1,4 +1,4 @@
-import mockUtil from '@/mock/base'
+import mockUtil from '../../mock/base'
 const options = {
   name: 'demo',
   idGenerator: 0
