@@ -1,20 +1,20 @@
-import DefaultTypes from '../types/index.ts'
+import DefaultTypes from "../types/index.ts";
 
-function getTypes () {
-  return DefaultTypes.defaultTypes
+function getTypes() {
+  return DefaultTypes.defaultTypes;
 }
 
-function getType (key) {
-  return DefaultTypes.defaultTypes[key]
+function getType(key) {
+  return DefaultTypes.defaultTypes[key];
 }
 const TypesUtil = {
   getType: getType,
-  addTypes (newTypes) {
+  addTypes(newTypes) {
     for (const key in newTypes) {
-      DefaultTypes.defaultTypes[key] = newTypes[key]
+      DefaultTypes.defaultTypes[key] = newTypes[key];
     }
   },
-  getTypes: getTypes
-}
+  getTypes: getTypes,
+};
 
-export default TypesUtil
+export default TypesUtil;

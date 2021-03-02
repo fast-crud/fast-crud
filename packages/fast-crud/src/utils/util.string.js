@@ -1,27 +1,29 @@
-function isEmpty (value) {
-  if (value == null || value === '') {
-    return true
+function isEmpty(value) {
+  if (value == null || value === "") {
+    return true;
   }
-  return false
+  return false;
 }
-function isAllEmpty (...values) {
+function isAllEmpty(...values) {
   for (const value of values) {
-    if (value == null || value === '') {
+    if (value == null || value === "") {
     } else {
-      return false
+      return false;
     }
   }
-  return false
+  return false;
 }
-function hasEmpty (...values) {
+function hasEmpty(...values) {
   for (const value of values) {
-    if (value == null || value === '') {
-      return true
+    if (value == null || value === "") {
+      return true;
     }
   }
-  return false
+  return false;
 }
 const StringUtils = {
-  isEmpty, isAllEmpty, hasEmpty
-}
-export default StringUtils
+  isEmpty,
+  isAllEmpty,
+  hasEmpty,
+};
+export default StringUtils;

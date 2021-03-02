@@ -1,46 +1,46 @@
-export interface CI{
+export interface CI {
   name;
 }
-export interface SelectCI extends CI{
+export interface SelectCI extends CI {
   modelValue;
   clearable;
 }
-export interface InputCI extends CI{
+export interface InputCI extends CI {
   clearable;
   modelValue;
 }
-export interface TextAreaCI extends CI{
+export interface TextAreaCI extends CI {
   type;
   clearable;
   modelValue;
 }
 
-export interface DialogCI extends CI{
+export interface DialogCI extends CI {
   visible;
 }
 
-export interface DrawerCI extends CI{
+export interface DrawerCI extends CI {
   visible;
   customClass;
 }
 
-export interface TableColumnCI extends CI{
+export interface TableColumnCI extends CI {
   label;
   prop;
   row;
   index;
 }
 
-export interface TableCI extends CI{
+export interface TableCI extends CI {
   data;
-  fixedHeaderNeedComputeBodyHeight
+  fixedHeaderNeedComputeBodyHeight;
 }
 
-export interface CheckboxCI extends CI{
-  resolveEvent:Function;
+export interface CheckboxCI extends CI {
+  resolveEvent: Function;
 }
 
-export interface MessageCI extends CI{
+export interface MessageCI extends CI {
   get;
   open;
   success;
@@ -49,16 +49,22 @@ export interface MessageCI extends CI{
   info;
 }
 
-
-
-export type MessageBoxContextType = { title?: string; message?; confirmButtonText?; cancelButtonText?; type? };
-export type MessageBoxOpenType = (context: MessageBoxContextType) => Promise<any>;
-export interface MessageBoxCI extends CI{
+export type MessageBoxContextType = {
+  title?: string;
+  message?;
+  confirmButtonText?;
+  cancelButtonText?;
+  type?;
+};
+export type MessageBoxOpenType = (
+  context: MessageBoxContextType
+) => Promise<void>;
+export interface MessageBoxCI extends CI {
   get;
   open: MessageBoxOpenType;
   confirm: MessageBoxOpenType;
 }
-export interface NotificationCI extends CI{
+export interface NotificationCI extends CI {
   get;
   open;
   success;
@@ -66,15 +72,15 @@ export interface NotificationCI extends CI{
   warn;
   info;
 }
-export interface IconCI extends CI{
+export interface IconCI extends CI {
   isComponent: boolean;
   circle: Record<string, any>;
 }
-export interface FormItemCI extends CI{
+export interface FormItemCI extends CI {
   prop: string;
   label: string;
 }
-export interface FormWrapperCI extends CI{
+export interface FormWrapperCI extends CI {
   visible: string;
   buildOnClosedBind: (is, Function) => {};
   customClass: string;
@@ -127,5 +133,4 @@ export interface UiInterface {
   notification: NotificationCI;
   messageBox: MessageBoxCI;
   formWrapper: FormWrapperCI;
-
 }

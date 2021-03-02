@@ -1,77 +1,77 @@
 export default class TableStore {
-  constructor ({ $router, tableName, keyType }) {
-    this.key = this.getItemKey($router, keyType)
-    this.tableId = this.getTableId(tableName)
+  constructor({ $router, tableName, keyType }) {
+    this.key = this.getItemKey($router, keyType);
+    this.tableId = this.getTableId(tableName);
   }
 
-  getTableId (name) {
-    const prefix = 'fs-crud'
-    if (name && (typeof name) === 'string') {
-      return prefix + '.' + name
+  getTableId(name) {
+    const prefix = "fs-crud";
+    if (name && typeof name === "string") {
+      return prefix + "." + name;
     }
-    return prefix
+    return prefix;
   }
 
-  getTable () {
-    const saved = localStorage.getItem(this.tableId)
+  getTable() {
+    const saved = localStorage.getItem(this.tableId);
     if (saved == null) {
-      return
+      return;
     }
-    return JSON.parse(saved)
+    return JSON.parse(saved);
   }
 
-  saveTable (table) {
-    localStorage.setItem(this.tableId, JSON.stringify(table))
+  saveTable(table) {
+    localStorage.setItem(this.tableId, JSON.stringify(table));
   }
 
-  clearTable () {
-    localStorage.setItem(this.tableId, null)
+  clearTable() {
+    localStorage.setItem(this.tableId, null);
   }
 
-  updateTableValue (value, key) {
-    let table = this.getTable()
+  updateTableValue(value, key) {
+    let table = this.getTable();
     if (table == null) {
-      table = {}
+      table = {};
     }
 
     if (key == null) {
-      key = this.key
+      key = this.key;
     }
-    table[key] = value
-    this.saveTable(table)
+    table[key] = value;
+    this.saveTable(table);
   }
 
-  getItemKey ($route, keyType) {
-    let key = location.href
+  getItemKey($route, keyType) {
+    let key = location.href;
     if ($route) {
-      key = $route.path
+      key = $route.path;
     }
-    if (keyType == null || typeof keyType !== 'string') {
-      return key
+    if (keyType == null || typeof keyType !== "string") {
+      return key;
     }
-    return key + '.' + keyType
+    return key + "." + keyType;
   }
 
-  getTableValue (key) {
-    const table = this.getTable()
+  getTableValue(key) {
+    const table = this.getTable();
     if (table == null) {
-      return null
+      return null;
     }
     if (key == null) {
-      key = this.key
+      key = this.key;
     }
-    return table[key]
+    return table[key];
   }
 
-  clearTableValue (key) {
-    const table = this.getTable()
+  clearTableValue(key) {
+    const table = this.getTable();
     if (table == null) {
-      return
+      return;
     }
     if (key == null) {
-      key = this.key
+      key = this.key;
     }
-    delete table[key]
-    this.saveTable(table)
+    delete table[key];
+    this.saveTable(table);
   }
 }

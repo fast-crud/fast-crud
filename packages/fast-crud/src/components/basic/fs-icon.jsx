@@ -1,14 +1,14 @@
-import { resolveComponent } from 'vue'
+import { resolveComponent } from "vue";
 export default {
-  name: 'fs-icon',
+  name: "FsIcon",
   props: {
-    icon: { require: true }
+    icon: { require: true },
   },
-  render () {
+  render() {
     if (this.$fsui.icon.isComponent) {
-      const IconComp = resolveComponent(this.icon)
-      return <IconComp/>
+      const IconComp = resolveComponent(this.icon);
+      return <IconComp />;
     }
-    return <i class={this.icon} />
-  }
-}
+    return <i class={this.icon} />;
+  },
+};

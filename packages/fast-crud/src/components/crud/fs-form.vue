@@ -1,19 +1,41 @@
 <template>
-  <component :is="$fsui.form.name" class="fs-form" :class="{'fs-form-grid':display==='grid','fs-form-flex':display==='flex'}" ref="formRef" :model="form">
-    <template  v-for="(item,key) in computedColumns" :key="key" >
-      <component :is="$fsui.formItem.name" v-if="item.show!==false"
-                 class="fs-form-item"
-                 :[$fsui.formItem.label]="item.title"
-                 :[$fsui.formItem.prop]="key"
-                 v-bind="item">
-        <fs-slot-render v-if="slots && slots['form-' + key]" :slots="slots['form-' + key]" :scope="{key,...scope}"/>
+  <component
+    :is="$fsui.form.name"
+    class="fs-form"
+    :class="{
+      'fs-form-grid': display === 'grid',
+      'fs-form-flex': display === 'flex',
+    }"
+    ref="formRef"
+    :model="form"
+  >
+    <template v-for="(item, key) in computedColumns" :key="key">
+      <component
+        :is="$fsui.formItem.name"
+        v-if="item.show !== false"
+        class="fs-form-item"
+        :[$fsui.formItem.label]="item.title"
+        :[$fsui.formItem.prop]="key"
+        v-bind="item"
+      >
+        <fs-slot-render
+          v-if="slots && slots['form-' + key]"
+          :slots="slots['form-' + key]"
+          :scope="{ key, ...scope }"
+        />
         <template v-else>
-          <fs-component-render v-if="item.component && item.component.show!==false"
-                               :ref="el => { if (el) componentRefs[key] = el }"
-                               v-bind="item.component"
-                               :modelValue="get(form,key)"
-                               @update:modelValue="set(form,key,$event)"
-                                :scope="{key,...scope}"/>
+          <fs-component-render
+            v-if="item.component && item.component.show !== false"
+            :ref="
+              (el) => {
+                if (el) componentRefs[key] = el;
+              }
+            "
+            v-bind="item.component"
+            :modelValue="get(form, key)"
+            @update:modelValue="set(form, key, $event)"
+            :scope="{ key, ...scope }"
+          />
         </template>
       </component>
     </template>
@@ -21,53 +43,47 @@
 </template>
 
 <script>
-import { computed, ref, reactive } from 'vue'
-import _ from 'lodash-es'
-import { ComputeValue } from '../../core/compute-value'
-import traceUtil from '../../utils/util.trace'
+import { computed, ref, reactive } from "vue";
+import _ from "lodash-es";
+import { ComputeValue } from "../../core/compute-value";
+import traceUtil from "../../utils/util.trace";
 export default {
-  name: 'fs-form',
-  components: { },
-  emits: ['reset', 'submit', 'validationError'],
+  name: "FsForm",
+  components: {},
   props: {
     // 初始数据
     initial: {
-      default () {
-        return {}
-      }
+      default() {
+        return {};
+      },
     },
     // 字段模版
-    columns: {
-
-    },
+    columns: {},
     // 字段分组
-    groups: {
-
-    },
+    groups: {},
     doSubmit: {
-      type: Function
+      type: Function,
     },
-    slots: {
-
-    },
+    slots: {},
     display: {
       type: String,
-      default: 'grid' // flex
-    }
+      default: "grid", // flex
+    },
   },
-  setup (props, ctx) {
-    traceUtil.trace('fs-from')
-    const formRef = ref()
+  emits: ["reset", "submit", "validationError"],
+  setup(props, ctx) {
+    traceUtil.trace("fs-from");
+    const formRef = ref();
 
-    const form = reactive({})
+    const form = reactive({});
     // 初始数据赋值
     _.each(props.columns, (item, key) => {
-      form[key] = props.initial[key]
-    })
+      form[key] = props.initial[key];
+    });
 
-    const componentRefs = ref({})
-    function getComponentRef (key) {
-      return componentRefs.value[key]
+    const componentRefs = ref({});
+    function getComponentRef(key) {
+      return componentRefs.value[key];
     }
 
     const scope = ref({
@@ -76,45 +92,45 @@ export default {
       index: ctx.attrs.index,
       mode: ctx.attrs.mode,
       attrs: ctx.attrs,
-      getComponentRef
-    })
+      getComponentRef,
+    });
 
-    function getContextFn () {
-      return scope.value
+    function getContextFn() {
+      return scope.value;
     }
 
-    const computedColumns = ComputeValue.computed(props.columns, getContextFn)
+    const computedColumns = ComputeValue.computed(props.columns, getContextFn);
 
-    async function getFormRef () {
-      return formRef.value
+    async function getFormRef() {
+      return formRef.value;
     }
-    async function reset () {
-      formRef.value.resetFields()
+    async function reset() {
+      formRef.value.resetFields();
       if (props.doReset) {
-        await props.doReset(scope.value)
+        await props.doReset(scope.value);
       }
-      ctx.emit('reset')
+      ctx.emit("reset");
     }
 
-    async function submit () {
-      const valid = await formRef.value.validate()
+    async function submit() {
+      const valid = await formRef.value.validate();
       if (valid) {
         if (props.doSubmit) {
-          await props.doSubmit(scope.value)
+          await props.doSubmit(scope.value);
         }
-        ctx.emit('submit', scope.value)
+        ctx.emit("submit", scope.value);
       } else {
-        ctx.emit('validationError', scope.value)
+        ctx.emit("validationError", scope.value);
       }
 
-      return valid
+      return valid;
     }
 
-    function getFormData () {
-      return form.value
+    function getFormData() {
+      return form.value;
     }
-    function setFormData (form) {
-      form.value = form
+    function setFormData(form) {
+      form.value = form;
     }
 
     return {
@@ -130,34 +146,34 @@ export default {
       componentRefs,
       getFormData,
       setFormData,
-      getComponentRef
-    }
-  }
-}
+      getComponentRef,
+    };
+  },
+};
 </script>
 
 <style lang="less">
-.fs-form-grid{
+.fs-form-grid {
   display: grid;
   grid-template-columns: 50% 50%;
   // gap: 0 20px; //列间距 20px
-  .ant-form-item-label{
-    width:100px;
+  .ant-form-item-label {
+    width: 100px;
     flex: none;
     max-width: none;
   }
-  .ant-form-item-control-wrapper{
-    flex:1;
-    max-width:none;
+  .ant-form-item-control-wrapper {
+    flex: 1;
+    max-width: none;
   }
 }
-.fs-form-flex{
+.fs-form-flex {
   display: flex;
   justify-content: flex-start;
   align-items: baseline;
   flex-wrap: wrap;
-  .fs-form-item{
-    width:50%
+  .fs-form-item {
+    width: 50%;
   }
 }
 </style>

@@ -1,27 +1,27 @@
 export default function () {
   return {
-    'phone-number': {
+    "phone-number": {
       form: {
         component: {
-          name: 'el-phone-number-input'
-        }
+          name: "el-phone-number-input",
+        },
       },
       column: {
-        formatter (row, column, value) {
-          let ret = ''
+        formatter(row, column, value) {
+          let ret = "";
           if (value != null) {
             if (value.callingCode != null) {
-              ret += '(+' + value.callingCode + ')'
+              ret += "(+" + value.callingCode + ")";
             } else if (value.countryCode != null) {
-              ret += '(' + value.countryCode + ')'
+              ret += "(" + value.countryCode + ")";
             }
             if (value.phoneNumber != null) {
-              ret += value.phoneNumber
+              ret += value.phoneNumber;
             }
           }
-          return ret
-        }
-      }
-    }
-  }
+          return ret;
+        },
+      },
+    },
+  };
 }

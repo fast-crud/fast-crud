@@ -1,19 +1,19 @@
-import traceUtil from '../../utils/util.trace'
+import traceUtil from "../../utils/util.trace";
 export default {
-  name: 'fs-render',
+  name: "FsRender",
   functional: true,
   props: {
     renderFunc: {
-      type: Function
+      type: Function,
     },
     scope: {
-      type: Object
-    }
+      type: Object,
+    },
   },
-  setup () {
-    traceUtil.trace('fs-render')
+  setup() {
+    traceUtil.trace("fs-render");
   },
-  render () {
-    return this.renderFunc({ scope: this.scope, ...this.$attrs })
-  }
-}
+  render() {
+    return this.renderFunc({ scope: this.scope, ...this.$attrs });
+  },
+};

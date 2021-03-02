@@ -17,29 +17,29 @@
 </template>
 
 <script>
-import traceUtil from '../../utils/util.trace'
-import { defineComponent } from 'vue'
+import traceUtil from "../../utils/util.trace";
+import { defineComponent } from "vue";
 export default defineComponent({
-  name: 'fs-container',
-  setup () {
-    traceUtil.trace('fs-container')
-  }
-})
+  name: "FsContainer",
+  setup() {
+    traceUtil.trace("fs-container");
+  },
+});
 </script>
 
 <style lang="less">
-.fs-container{
-  &.compact{
-    padding:0;
+.fs-container {
+  &.compact {
+    padding: 0;
   }
-  padding:0 20px;
+  padding: 0 20px;
   height: 100%;
 
   .box {
     height: 100%;
     width: 100%;
     position: relative;
-    .inner{
+    .inner {
       position: absolute;
       top: 0;
       left: 0;
@@ -47,19 +47,17 @@ export default defineComponent({
       width: 100%;
       display: flex;
       flex-direction: column;
-      .header{
+      .header {
         flex-shrink: 0;
       }
-      .body{
+      .body {
         overflow-y: auto;
-        flex:1
+        flex: 1;
       }
-      .footer{
+      .footer {
         flex-shrink: 0;
       }
     }
-
   }
 }
-
 </style>

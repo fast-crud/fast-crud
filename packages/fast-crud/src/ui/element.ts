@@ -8,217 +8,222 @@ import {
   IconCI,
   TableCI,
   SelectCI,
-  MessageCI, NotificationCI, MessageBoxCI, InputCI, FormWrapperCI, FormItemCI, DrawerCI, CheckboxCI
-} from './ui-interface'
+  MessageCI,
+  NotificationCI,
+  MessageBoxCI,
+  InputCI,
+  FormWrapperCI,
+  FormItemCI,
+  DrawerCI,
+  CheckboxCI,
+} from "./ui-interface";
 export class Element implements UiInterface {
-  constructor (target) {
+  constructor(target) {
     if (target) {
-      this.notification.get = target.Notification
-      this.message.get = target.Message
-      this.messageBox.get = target.MessageBox
+      this.notification.get = target.Notification;
+      this.message.get = target.Message;
+      this.messageBox.get = target.MessageBox;
     }
   }
 
-  type='element'
-  modelValue= 'modelValue'
+  type = "element";
+  modelValue = "modelValue";
 
-  formWrapper: FormWrapperCI={
-    visible: 'modelValue',
-    customClass: 'customClass',
-    buildOnClosedBind (is: string, onClosed: Function): {} {
-      return { onClosed }
+  formWrapper: FormWrapperCI = {
+    visible: "modelValue",
+    customClass: "customClass",
+    buildOnClosedBind(is: string, onClosed: Function): {} {
+      return { onClosed };
     },
 
-    name: 'fs-form-wrapper'
-
+    name: "fs-form-wrapper",
   };
 
-  messageBox: MessageBoxCI={
-    name: 'el-message-box',
+  messageBox: MessageBoxCI = {
+    name: "el-message-box",
     get: undefined,
     open: async (context) => {
-      return this.messageBox.get(context)
+      return this.messageBox.get(context);
     },
     confirm: async (context) => {
-      return this.messageBox.get(context)
-    }
-
+      return this.messageBox.get(context);
+    },
   };
 
-  message: MessageCI={
+  message: MessageCI = {
     get: undefined,
-    name: 'el-message',
+    name: "el-message",
     open: (context) => {
-      this.message.get.open(context)
+      this.message.get.open(context);
     },
     success: (msg) => {
-      this.message.get.success(msg)
+      this.message.get.success(msg);
     },
     error: (msg) => {
-      this.message.get.error(msg)
+      this.message.get.error(msg);
     },
     warn: (msg) => {
-      this.message.get.warn(msg)
+      this.message.get.warn(msg);
     },
     info: (msg) => {
-      this.message.get.success(msg)
-    }
+      this.message.get.success(msg);
+    },
   };
 
-  notification: NotificationCI={
+  notification: NotificationCI = {
     get: undefined,
-    name: 'el-notification',
+    name: "el-notification",
     open: (context) => {
-      this.notification.get.open(context)
+      this.notification.get.open(context);
     },
     success: (msg) => {
-      this.notification.get.success(msg)
+      this.notification.get.success(msg);
     },
     error: (msg) => {
-      this.notification.get.error(msg)
+      this.notification.get.error(msg);
     },
     warn: (msg) => {
-      this.notification.get.warn(msg)
+      this.notification.get.warn(msg);
     },
     info: (msg) => {
-      this.notification.get.success(msg)
-    }
+      this.notification.get.success(msg);
+    },
   };
 
-  icon: IconCI={
-    name: '',
+  icon: IconCI = {
+    name: "",
     isComponent: false,
-    circle: { circle: true }
+    circle: { circle: true },
   };
 
-  icons: Icons={
-    add: 'el-icon-plus',
-    columnsFilter: 'el-icon-set-up',
-    compact: 'el-icon-rank',
-    edit: 'el-icon-edit',
-    remove: 'el-icon-remove',
-    search: 'el-icon-search',
-    refresh: 'el-icon-refresh',
-    export: 'el-icon-upload2',
-    check: 'el-icon-check',
-    sort: 'el-icon-sort',
-    left: 'el-icon-arrow-left',
-    right: 'el-icon-arrow-right',
-    close: 'el-icon-close',
-    arrowLeft: 'el-icon-left',
-    arrowRight: 'el-icon-right'
+  icons: Icons = {
+    add: "el-icon-plus",
+    columnsFilter: "el-icon-set-up",
+    compact: "el-icon-rank",
+    edit: "el-icon-edit",
+    remove: "el-icon-remove",
+    search: "el-icon-search",
+    refresh: "el-icon-refresh",
+    export: "el-icon-upload2",
+    check: "el-icon-check",
+    sort: "el-icon-sort",
+    left: "el-icon-arrow-left",
+    right: "el-icon-arrow-right",
+    close: "el-icon-close",
+    arrowLeft: "el-icon-left",
+    arrowRight: "el-icon-right",
   };
 
-  dialog: DialogCI={
-    name: 'el-dialog',
-    visible: 'modelValue'
+  dialog: DialogCI = {
+    name: "el-dialog",
+    visible: "modelValue",
   };
 
-  buttonGroup: CI={
-    name: 'el-button-group'
+  buttonGroup: CI = {
+    name: "el-button-group",
   };
 
-  col: CI={
-    name: 'el-col'
+  col: CI = {
+    name: "el-col",
   };
 
-  row: CI={
-    name: 'el-row'
+  row: CI = {
+    name: "el-row",
   };
 
-  card: CI={
-    name: 'el-card'
+  card: CI = {
+    name: "el-card",
   };
 
-  checkbox: CheckboxCI={
-    name: 'el-checkbox',
-    resolveEvent (e) {
-      return e
-    }
+  checkbox: CheckboxCI = {
+    name: "el-checkbox",
+    resolveEvent(e) {
+      return e;
+    },
   };
 
-  drawer: DrawerCI={
-    name: 'el-drawer',
-    visible: 'visible',
-    customClass: 'custom-class'
+  drawer: DrawerCI = {
+    name: "el-drawer",
+    visible: "visible",
+    customClass: "custom-class",
   };
 
-  collapseTransition: CI={
-    name: 'el-collapse-transition'
+  collapseTransition: CI = {
+    name: "el-collapse-transition",
   };
 
-  option: CI={
-    name: 'el-option'
+  option: CI = {
+    name: "el-option",
   };
 
-  select: SelectCI={
-    name: 'el-select',
-    modelValue: 'modelValue',
-    clearable: 'clearable'
+  select: SelectCI = {
+    name: "el-select",
+    modelValue: "modelValue",
+    clearable: "clearable",
   };
 
-  radio: CI={
-    name: 'el-radio'
+  radio: CI = {
+    name: "el-radio",
   };
 
-  radioGroup: CI={
-    name: 'el-radio-group'
+  radioGroup: CI = {
+    name: "el-radio-group",
   };
 
-  form: CI={
-    name: 'el-form'
+  form: CI = {
+    name: "el-form",
   };
 
-  formItem: FormItemCI={
-    name: 'el-form-item',
-    prop: 'prop',
-    label: 'label'
+  formItem: FormItemCI = {
+    name: "el-form-item",
+    prop: "prop",
+    label: "label",
   };
 
-  button: CI={
-    name: 'el-button'
+  button: CI = {
+    name: "el-button",
   };
 
-  pagination: CI={
-    name: 'el-pagination'
+  pagination: CI = {
+    name: "el-pagination",
   };
 
-  tableColumn: TableColumnCI={
-    name: 'el-table-column',
-    label: 'label',
-    prop: 'prop',
-    row: 'row',
-    index: '$index'
+  tableColumn: TableColumnCI = {
+    name: "el-table-column",
+    label: "label",
+    prop: "prop",
+    row: "row",
+    index: "$index",
   };
 
-  tableColumnGroup: TableColumnCI={
-    name: 'el-table-column',
-    label: 'label',
-    prop: 'prop',
-    row: 'row',
-    index: '$index'
+  tableColumnGroup: TableColumnCI = {
+    name: "el-table-column",
+    label: "label",
+    prop: "prop",
+    row: "row",
+    index: "$index",
   };
 
-  table: TableCI={
-    name: 'el-table',
-    data: 'data',
-    fixedHeaderNeedComputeBodyHeight: false
-  }
-
-  textArea: TextAreaCI ={
-    name: 'el-input',
-    type: 'textarea',
-    modelValue: 'modelValue',
-    clearable: 'clearable'
+  table: TableCI = {
+    name: "el-table",
+    data: "data",
+    fixedHeaderNeedComputeBodyHeight: false,
   };
 
-  tag: CI ={
-    name: 'el-tag'
+  textArea: TextAreaCI = {
+    name: "el-input",
+    type: "textarea",
+    modelValue: "modelValue",
+    clearable: "clearable",
   };
 
-  input: InputCI={
-    name: 'el-input',
-    clearable: 'clearable',
-    modelValue: 'modelValue'
-  }
+  tag: CI = {
+    name: "el-tag",
+  };
+
+  input: InputCI = {
+    name: "el-input",
+    clearable: "clearable",
+    modelValue: "modelValue",
+  };
 }

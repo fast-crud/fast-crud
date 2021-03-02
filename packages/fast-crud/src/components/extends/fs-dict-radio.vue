@@ -1,25 +1,29 @@
 <template>
-  <component :is="$fsui.radioGroup.name" >
-    <component :is="$fsui.radio.name"  v-for="item of dictData" :key="item.value" :label="item.value" >{{item.label}}</component>
+  <component :is="$fsui.radioGroup.name">
+    <component
+      :is="$fsui.radio.name"
+      v-for="item of dictData"
+      :key="item.value"
+      :label="item.value"
+      >{{ item.label }}</component
+    >
   </component>
 </template>
 <script>
-import { useDict } from '../../use/use-dict'
+import { useDict } from "../../use/use-dict";
 
 export default {
-  name: 'fs-dict-radio',
+  name: "FsDictRadio",
   props: {
-    dict: {}
+    dict: {},
   },
   // render () {
   //   return this.renderFunc({ data: this.data, dataMap: this.dataMap, scope: this.scope, attrs: this.$attrs })
   // },
-  setup (props, ctx) {
+  setup(props, ctx) {
     return {
-      ...useDict(props, ctx)
-    }
-  }
-
-}
-
+      ...useDict(props, ctx),
+    };
+  },
+};
 </script>

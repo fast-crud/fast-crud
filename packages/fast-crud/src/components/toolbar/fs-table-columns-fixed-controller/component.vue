@@ -9,53 +9,57 @@
 </style>
 
 <template>
-  <component :is="$fsui.buttonGroup.name" class="fs-table-columns-fixed-controller">
+  <component
+    :is="$fsui.buttonGroup.name"
+    class="fs-table-columns-fixed-controller"
+  >
     <fs-button
       v-for="option of options"
       :key="option.icon"
       :type="modelValue === option.value ? 'primary' : 'default'"
       :icon="option.icon"
       size="small"
-      @click="submit(option.value)"/>
+      @click="submit(option.value)"
+    />
   </component>
 </template>
 
 <script>
-import FsButton from '../../basic/fs-button'
+import FsButton from "../../basic/fs-button";
 export default {
-  name: 'fs-table-columns-fixed-controller',
-  emits: ['update:modelValue', 'change'],
+  name: "FsTableColumnsFixedController",
   components: {
-    FsButton
+    FsButton,
   },
   props: {
     modelValue: {
-      default: false
-    }
+      default: false,
+    },
   },
-  data () {
+  emits: ["update:modelValue", "change"],
+  data() {
     return {
       options: [
         {
-          value: 'left',
-          icon: this.$fsui.icons.left// 'el-icon-arrow-left'
+          value: "left",
+          icon: this.$fsui.icons.left, // 'el-icon-arrow-left'
         },
         {
           value: false,
-          icon: this.$fsui.icons.close // 'el-icon-close'
+          icon: this.$fsui.icons.close, // 'el-icon-close'
         },
         {
-          value: 'right',
-          icon: this.$fsui.icons.right // 'el-icon-arrow-right'
-        }
-      ]
-    }
+          value: "right",
+          icon: this.$fsui.icons.right, // 'el-icon-arrow-right'
+        },
+      ],
+    };
   },
   methods: {
-    submit (value) {
-      this.$emit('update:modelValue', value)
-      this.$emit('change', value)
-    }
-  }
-}
+    submit(value) {
+      this.$emit("update:modelValue", value);
+      this.$emit("change", value);
+    },
+  },
+};
 </script>
