@@ -1,8 +1,8 @@
 import FsContainer from './container/fs-container.vue'
-import FsButton from './basic/fs-button/index.js'
+import FsButton from './basic/fs-button/index.jsx'
 import FsIcon from './basic/fs-icon'
-import FsComponentRender from './render/fs-component-render.js'
-import FsSlotRender from './render/fs-slot-render.js'
+import FsComponentRender from './render/fs-component-render.jsx'
+import FsSlotRender from './render/fs-slot-render.jsx'
 
 import FsForm from './crud/fs-form.vue'
 import FsCrud from './fs-crud.vue'

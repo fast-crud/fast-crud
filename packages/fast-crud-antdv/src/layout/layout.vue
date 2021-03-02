@@ -14,7 +14,7 @@
 </template>
 
 <script>
-import AsideMenu from './menu'
+import AsideMenu from './aside-menu.vue'
 export default {
   // eslint-disable-next-line vue/no-unused-components
   components: { AsideMenu }

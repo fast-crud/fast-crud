@@ -68,10 +68,10 @@ import { defineComponent, computed, provide, ref, toRef, getCurrentInstance, rea
 import _ from 'lodash-es'
 import FsContainer from './container/fs-container.vue'
 import FsRowHandle from './crud/fs-row-handle.vue'
-import FsFormWrapper from './crud/fs-form-wrapper.js'
+import FsFormWrapper from './crud/fs-form-wrapper.jsx'
 import FsActionbar from './actionbar/index.vue'
 import FsToolbar from './toolbar/index.vue'
-import FsTable from './crud/fs-table.js'
+import FsTable from './crud/fs-table.jsx'
 import traceUtil from '../utils/util.trace'
 import { uiContext } from '../ui'
 function useProviders (props, ctx) {

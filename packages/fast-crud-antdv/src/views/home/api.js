@@ -1,4 +1,4 @@
-import { requestForMock } from '@/api/service'
+import { requestForMock } from '../../api/service'
 const request = requestForMock
 const apiPrefix = '/demo'
 export function GetList (query) {

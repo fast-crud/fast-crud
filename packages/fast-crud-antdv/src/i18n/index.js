@@ -1,8 +1,8 @@
 
 import { createI18n } from 'vue-i18n'
 
-import enFsLocale from '@fast-crud/fast-crud/src/local/lang/en'
-import zhFsLocale from '@fast-crud/fast-crud/src/local/lang/zh-cn'
+import enFsLocale from './en.js'
+import zhFsLocale from './zh-cn.js'
 
 const messages = {
   [enFsLocale.name]: {

@@ -1,5 +1,5 @@
-import { mock } from '@/api/service'
-import * as tools from '@/api/tools'
+import { mock } from '../api/service'
+import * as tools from '../api/tools'
 
 const req = context => context.keys().map(context)
 

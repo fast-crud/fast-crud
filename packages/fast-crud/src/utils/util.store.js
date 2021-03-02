@@ -5,11 +5,7 @@ export default class TableStore {
   }
 
   getTableId (name) {
-    let storeName = 'fs-crud'
-    if (process.env.VUE_APP_D2P_STORE_NAME) {
-      storeName = process.env.VUE_APP_D2P_STORE_NAME
-    }
-    const prefix = process.env.NODE_ENV + '.' + storeName
+    const prefix = 'fs-crud'
     if (name && (typeof name) === 'string') {
       return prefix + '.' + name
     }

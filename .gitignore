@@ -101,3 +101,5 @@ dist
 # TernJS port file
 .tern-port
 /.idea/
+
+./packages/vue-vben-admin
