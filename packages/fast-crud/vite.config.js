@@ -19,6 +19,7 @@ export default {
       entry: path.resolve(__dirname, "src/index.js"),
       name: "fast-crud",
     },
+    minify: false,
     rollupOptions: {
       // make sure to externalize deps that shouldn't be bundled
       // into your library
