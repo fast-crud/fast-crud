@@ -102,4 +102,4 @@ dist
 .tern-port
 /.idea/
 
-./packages/vue-vben-admin
+packages/vue-vben-admin
