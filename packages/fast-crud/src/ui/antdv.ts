@@ -160,6 +160,9 @@ export class Antdv implements UiInterface {
   dialog: DialogCI = {
     name: "a-modal",
     visible: "visible",
+    footer() {
+      return { footer: null };
+    },
   };
 
   button: CI = {
@@ -193,6 +196,7 @@ export class Antdv implements UiInterface {
     name: "a-drawer",
     visible: "visible",
     customClass: "wrapClassName",
+    width: "width",
   };
 
   form: CI = {
@@ -235,6 +239,7 @@ export class Antdv implements UiInterface {
     name: "a-table",
     data: "data-source",
     fixedHeaderNeedComputeBodyHeight: true,
+    vLoading: false,
   };
 
   tableColumn: TableColumnCI = {

@@ -1,57 +1,57 @@
-import { requestForMock } from '@/api/service'
-const request = requestForMock
-const apiPrefix = '/demo'
-export function GetList (query) {
+import { requestForMock } from "/src/api/service";
+const request = requestForMock;
+const apiPrefix = "/demo";
+export function GetList(query) {
   return request({
-    url: apiPrefix + '/page',
-    method: 'get',
-    data: query
-  })
+    url: apiPrefix + "/page",
+    method: "get",
+    data: query,
+  });
 }
 
-export function AddObj (obj) {
+export function AddObj(obj) {
   return request({
-    url: apiPrefix + '/add',
-    method: 'post',
-    data: obj
-  })
+    url: apiPrefix + "/add",
+    method: "post",
+    data: obj,
+  });
 }
 
-export function UpdateObj (obj) {
+export function UpdateObj(obj) {
   return request({
-    url: apiPrefix + '/update',
-    method: 'post',
-    data: obj
-  })
+    url: apiPrefix + "/update",
+    method: "post",
+    data: obj,
+  });
 }
 
-export function DelObj (id) {
+export function DelObj(id) {
   return request({
-    url: apiPrefix + '/delete',
-    method: 'post',
-    params: { id }
-  })
+    url: apiPrefix + "/delete",
+    method: "post",
+    params: { id },
+  });
 }
 
-export function GetObj (id) {
+export function GetObj(id) {
   return request({
-    url: apiPrefix + '/info',
-    method: 'get',
-    params: { id }
-  })
+    url: apiPrefix + "/info",
+    method: "get",
+    params: { id },
+  });
 }
-export function GetRoleList () {
+export function GetRoleList() {
   return request({
-    url: apiPrefix + '/getAllRole',
-    method: 'get'
-  })
+    url: apiPrefix + "/getAllRole",
+    method: "get",
+  });
 }
 
-export function DoAuthz (userId, roleIds) {
+export function DoAuthz(userId, roleIds) {
   return request({
-    url: apiPrefix + '/authz',
-    method: 'post',
+    url: apiPrefix + "/authz",
+    method: "post",
     params: { userId },
-    data: roleIds
-  })
+    data: roleIds,
+  });
 }

@@ -6,11 +6,11 @@
     </el-header>
     <el-container>
       <el-aside width="200px">
-        <aside-menu></aside-menu>
+        <aside-menu />
       </el-aside>
       <el-container>
         <el-main>
-          <router-view></router-view>
+          <router-view />
         </el-main>
         <el-footer class="layout-footer">by fast-crud</el-footer>
       </el-container>
@@ -19,32 +19,31 @@
 </template>
 
 <script>
-import AsideMenu from './menu'
+import AsideMenu from "./aside-menu";
 export default {
-  components: { AsideMenu }
-}
+  components: { AsideMenu },
+};
 </script>
 <style lang="less">
-.layout{
-  .layout-header{
+.layout {
+  .layout-header {
     height: 64px;
     padding: 0 50px;
     line-height: 64px;
     background: #001529;
-    color:#fff;
+    color: #fff;
   }
-  .layout-footer{
+  .layout-footer {
     padding: 24px 50px;
-    color: rgba(0,0,0,.85);
+    color: rgba(0, 0, 0, 0.85);
     font-size: 14px;
     background: #f0f2f5;
   }
 
-  .el-aside{
-    .el-menu{
+  .el-aside {
+    .el-menu {
       height: 100%;
     }
   }
 }
-
 </style>

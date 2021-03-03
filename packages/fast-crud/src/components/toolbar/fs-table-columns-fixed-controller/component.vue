@@ -1,7 +1,7 @@
 <style lang="less">
 .fs-table-columns-fixed-controller {
   .fs-button {
-    padding: 2px;
+    padding: 2px !important;
     font-size: 10px;
     min-height: auto;
   }

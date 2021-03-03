@@ -117,6 +117,9 @@ export class Element implements UiInterface {
   dialog: DialogCI = {
     name: "el-dialog",
     visible: "modelValue",
+    footer() {
+      return {};
+    },
   };
 
   buttonGroup: CI = {
@@ -144,8 +147,9 @@ export class Element implements UiInterface {
 
   drawer: DrawerCI = {
     name: "el-drawer",
-    visible: "visible",
+    visible: "modelValue",
     customClass: "custom-class",
+    width: "size",
   };
 
   collapseTransition: CI = {
@@ -208,6 +212,7 @@ export class Element implements UiInterface {
     name: "el-table",
     data: "data",
     fixedHeaderNeedComputeBodyHeight: false,
+    vLoading: "loading",
   };
 
   textArea: TextAreaCI = {

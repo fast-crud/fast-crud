@@ -1,11 +1,15 @@
 <template>
-  <fs-crud class="home-page" ref="crudRef" v-bind="crudOptions" >
+  <fs-crud class="home-page" ref="crudRef" v-bind="crudOptions">
     <template #cell-date="scope">
-      <el-button @click="dateClick('date',scope)" >cell- date,{{scope.row.date}}</el-button>
+      <el-button @click="dateClick('date', scope)"
+        >cell- date,{{ scope.row.date }}</el-button
+      >
     </template>
 
     <template #form-date="scope">
-      <el-button @click="dateClick('date',scope)" >form- date,{{scope.row.date}}</el-button>
+      <el-button @click="dateClick('date', scope)"
+        >form- date,{{ scope.row.date }}</el-button
+      >
     </template>
 
     <template #form-body-before="scope">
@@ -21,48 +25,47 @@
     </template>
 
     <template #pagination-prefix>
-      <el-button >批量删除</el-button>
+      <el-button>批量删除</el-button>
     </template>
     <template #pagination-append>
-      <el-button >批量删除</el-button>
+      <el-button>批量删除</el-button>
     </template>
-
   </fs-crud>
 </template>
 
-<script >
-import { defineComponent, ref, onMounted, isReactive } from 'vue'
-import { ElNotification } from 'element-plus'
-import { useCrud, dict, utils } from '@fast-crud/fast-crud'
-import createCrudOptions from './crud'
+<script>
+import { defineComponent, ref, onMounted, isReactive } from "vue";
+import { ElNotification } from "element-plus";
+import { useCrud, dict, utils } from "@fast-crud/fast-crud/src";
+import createCrudOptions from "./crud";
 export default defineComponent({
-  setup () {
-    utils.trace.trace('page-home')
-    const crudRef = ref()
+  setup() {
+    utils.trace.trace("page-home");
+    const crudRef = ref();
     const crud = useCrud({
       crudRef,
-      options: createCrudOptions({ crudRef })
-    })
+      options: createCrudOptions({ crudRef }),
+    });
 
     onMounted(() => {
-      crud.doRefresh()
-    })
+      crud.doRefresh();
+    });
 
-    const res = dict({})
-    console.log('isReactive:', res, isReactive(res))
+    const res = dict({});
+    console.log("isReactive:", res, isReactive(res));
 
     const formBodyClick = (scope) => {
-      console.log('scope', scope)
-      ElNotification.success('mode:' + scope.mode)
-    }
+      console.log("scope", scope);
+      ElNotification.success("mode:" + scope.mode);
+    };
 
     const dateClick = (key, scope) => {
-      console.log('dateClick', scope)
-      ElNotification.success(scope.row[key])
-    }
+      console.log("dateClick", scope);
+      ElNotification.success(scope.row[key]);
+    };
 
-    function closeDialog (scope) {
-      scope._self.close()
+    function closeDialog(scope) {
+      scope._self.close();
     }
 
     // onRenderTracked((event) => {
@@ -76,14 +79,12 @@ export default defineComponent({
       dateClick,
       crudRef,
       formBodyClick,
-      closeDialog
-    }
-  }
-})
+      closeDialog,
+    };
+  },
+});
 </script>
 <style lang="less">
-.search-form{
-
+.search-form {
 }
-
 </style>

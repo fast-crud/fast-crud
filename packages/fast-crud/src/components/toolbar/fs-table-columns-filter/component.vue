@@ -1,92 +1,7 @@
-<style lang="less">
-.fs-table-columns-filter {
-  :focus {
-    outline: 0;
-  }
-
-  [flex~="cross:center"] {
-    -ms-flex-align: center;
-    align-items: center;
-  }
-
-  [flex~="main:justify"] {
-    -ms-flex-pack: justify;
-    justify-content: space-between;
-  }
-
-  [flex] {
-    display: -ms-flexbox;
-    display: flex;
-  }
-
-  [flex-box="1"] {
-    flex-grow: 1;
-    flex-shrink: 1;
-  }
-
-  [flex] > * {
-    display: block;
-  }
-
-  .el-drawer__body {
-    height: 0;
-  }
-
-  .fs-drawer-wrapper {
-    padding: 10px;
-    height: 100%;
-    overflow-y: scroll;
-  }
-
-  .fs-drawer-footer {
-    padding: 20px;
-  }
-
-  .component--list {
-    margin: -20px;
-
-    .item-label {
-      flex: 1;
-    }
-    .title {
-      font-size: 14px;
-    }
-
-    .component--list-item {
-      padding: 10px;
-      background-color: #fff;
-      margin-bottom: 1px;
-
-      &.ghost {
-        opacity: 0.5;
-      }
-
-      &:last-child {
-        margin-bottom: 0px;
-      }
-
-      .component--list-item-handle {
-        margin-left: 10px;
-        cursor: move;
-
-        &.disabled {
-          opacity: 0.3;
-          cursor: pointer;
-        }
-      }
-    }
-  }
-}
-</style>
-
 <template>
   <component
     :is="$fsui.drawer.name"
     :title="_text.title"
-    v-model="active"
-    v-model:visible="active"
-    size="300px"
-    width="300px"
     v-bind="drawerBind"
     append-to-body
   >
@@ -181,6 +96,8 @@ import FsButton from "../../basic/fs-button";
 import FsTableColumnsFixedController from "../fs-table-columns-fixed-controller/component.vue";
 import TableStore from "../../../utils/util.store";
 import { useI18n } from "../../../local";
+import { ref, computed } from "vue";
+import { uiContext } from "../../../ui";
 // 输入 全部分表格列设置
 // 输出 要显示的表格列 + 每列的设置
 
@@ -209,13 +126,30 @@ export default {
   emits: ["update:columns"],
   setup() {
     const { t } = useI18n();
-    return { t };
+    const ui = uiContext.get();
+    const active = ref(false);
+    const drawerBind = computed(() => {
+      return {
+        [ui.drawer.customClass]: "fs-table-columns-filter",
+        [ui.drawer.visible]: active.value,
+        ["onUpdate:" + ui.drawer.visible]: (e) => {
+          active.value = e;
+        },
+        [ui.drawer.width]: "300px",
+      };
+    });
+
+    const start = () => {
+      active.value = true;
+      console.log("active", active.value, drawerBind.value);
+    };
+
+    return { t, drawerBind, active, start };
   },
   data() {
     return {
       original: {},
       currentValue: [],
-      active: false,
       checkAll: false,
       indeterminate: false,
       checkAllModelValue: {
@@ -223,9 +157,6 @@ export default {
         ["onUpdate:" + this.$fsui.checkbox.modelValue]: (v) => {
           this.checkAll = v;
         },
-      },
-      drawerBind: {
-        [this.$fsui.drawer.customClass]: "fs-table-columns-filter",
       },
     };
   },
@@ -325,10 +256,6 @@ export default {
         return e;
       });
     },
-    // 开始选择
-    start() {
-      this.active = true;
-    },
     // 还原
     reset() {
       this.currentValue = _.cloneDeep(this.original);
@@ -399,3 +326,83 @@ export default {
   },
 };
 </script>
+<style lang="less">
+.fs-table-columns-filter {
+  :focus {
+    outline: 0;
+  }
+
+  [flex~="cross:center"] {
+    -ms-flex-align: center;
+    align-items: center;
+  }
+
+  [flex~="main:justify"] {
+    -ms-flex-pack: justify;
+    justify-content: space-between;
+  }
+
+  [flex] {
+    display: -ms-flexbox;
+    display: flex;
+  }
+
+  [flex-box="1"] {
+    flex-grow: 1;
+    flex-shrink: 1;
+  }
+
+  [flex] > * {
+    display: block;
+  }
+
+  .el-drawer__body {
+    height: 0;
+  }
+
+  .fs-drawer-wrapper {
+    padding: 10px;
+    height: 100%;
+    overflow-y: scroll;
+  }
+
+  .fs-drawer-footer {
+    padding: 20px;
+  }
+
+  .component--list {
+    margin: -20px;
+
+    .item-label {
+      flex: 1;
+    }
+    .title {
+      font-size: 14px;
+    }
+
+    .component--list-item {
+      padding: 10px;
+      background-color: #fff;
+      margin-bottom: 1px;
+
+      &.ghost {
+        opacity: 0.5;
+      }
+
+      &:last-child {
+        margin-bottom: 0px;
+      }
+
+      .component--list-item-handle {
+        margin-left: 10px;
+        cursor: move;
+
+        &.disabled {
+          opacity: 0.3;
+          cursor: pointer;
+        }
+      }
+    }
+  }
+}
+</style>

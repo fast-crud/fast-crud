@@ -1,11 +1,14 @@
 import { uiContext } from "../ui";
 export default {
   // eslint-disable-next-line @typescript-eslint/no-empty-function,@typescript-eslint/no-unused-vars
-  commonOptions(ctx) {},
+  commonOptions() {},
   defaultOptions({ t }) {
     const ui = uiContext.get();
     return {
       search: {
+        options: {
+          layout: "inline",
+        },
         show: true,
         buttons: {
           search: {
@@ -29,7 +32,7 @@ export default {
           is: ui.dialog.name,
           width: "860px",
           destroyOnClose: true, // antdv
-          footer: null, // antdv
+          ...ui.dialog.footer(), // antdv
         },
       },
       addForm: {

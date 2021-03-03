@@ -18,6 +18,7 @@ export const i18n = new I18n();
 
 export function useI18n() {
   if (i18n.vueI18nInstance != null) {
+    // @ts-ignore
     return { t: i18n.vueI18nInstance.global.t };
   }
 

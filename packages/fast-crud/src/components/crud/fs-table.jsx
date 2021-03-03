@@ -1,4 +1,11 @@
-import { resolveComponent, getCurrentInstance, ref, h } from "vue";
+import {
+  resolveComponent,
+  getCurrentInstance,
+  ref,
+  h,
+  withDirectives,
+  resolveDirective,
+} from "vue";
 import _ from "lodash-es";
 import FsRowHandle from "./fs-row-handle.vue";
 import FsComponentRender from "../render/fs-component-render";
@@ -148,8 +155,7 @@ export default {
       [proxy.$fsui.table.data]: this.data,
     };
 
-    // console.log('this.fixedHeight', this.fixedHeight)
-    return (
+    const tableRender = (
       <tableComp
         ref={"tableRef"}
         {...this.$attrs}
@@ -157,5 +163,11 @@ export default {
         v-slots={tableSlots}
       />
     );
+    // console.log('this.fixedHeight', this.fixedHeight)
+    if (proxy.$fsui.table.vLoading) {
+      const loading = resolveDirective(proxy.$fsui.table.vLoading);
+      return withDirectives(tableRender, [[loading, this.$attrs.loading]]);
+    }
+    return tableRender;
   },
 };

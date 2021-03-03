@@ -83,7 +83,7 @@ export default {
         refresh: {
           type: "primary",
           icon: proxy.$fsui.icons.refresh,
-          title: t("fs.toolbar.refresh.text"), // '刷新',
+          title: t("fs.toolbar.refresh.title"), // '刷新',
           circle: true,
           click: () => {
             ctx.emit("refresh");

@@ -17,11 +17,13 @@ export interface TextAreaCI extends CI {
 
 export interface DialogCI extends CI {
   visible;
+  footer: Function;
 }
 
 export interface DrawerCI extends CI {
   visible;
   customClass;
+  width;
 }
 
 export interface TableColumnCI extends CI {
@@ -34,6 +36,7 @@ export interface TableColumnCI extends CI {
 export interface TableCI extends CI {
   data;
   fixedHeaderNeedComputeBodyHeight;
+  vLoading;
 }
 
 export interface CheckboxCI extends CI {
