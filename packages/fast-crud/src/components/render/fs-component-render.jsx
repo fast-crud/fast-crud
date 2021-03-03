@@ -81,6 +81,7 @@ export default {
     const { proxy } = getCurrentInstance();
     // eslint-disable-next-line vue/no-setup-props-destructure
     let inputComp = props.name || proxy.$fsui.input.name;
+    console.log("inputComp", inputComp);
     if (inputComp !== "div" || inputComp !== "span") {
       inputComp = resolveComponent(inputComp);
     }
