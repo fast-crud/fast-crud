@@ -1,189 +1,204 @@
 <template>
-  <span  class="fs-values-format">
+  <span class="fs-values-format">
     <template v-if="type === 'text'">
-      <span v-for="(item) in _items" :key="item[dict.value]">{{item[dict.label]}}</span>
+      <span v-for="item in _items" :key="item[dict.value]">{{
+        item[dict.label]
+      }}</span>
     </template>
-    <template v-else >
-      <component :is="$fsui.tag.name" class='tag-item' v-for="(item) in _items" v-bind="$attrs"
-                 :key="item[dict.value]"
-                 size="small"
-                 :type="item[dict.color]"
-                 @click="onClick(item)"
-              :effect="item.effect"
+    <template v-else>
+      <component
+        :is="$fsui.tag.name"
+        class="tag-item"
+        v-for="item in _items"
+        v-bind="$attrs"
+        :key="item[dict.value]"
+        size="small"
+        :type="item[dict.color]"
+        @click="onClick(item)"
+        :effect="item.effect"
       >
-        {{item[dict.label]}}
+        {{ item[dict.label] }}
       </component>
     </template>
   </span>
 </template>
 
 <script>
-import { watch, toRefs } from 'vue'
-import { useDict } from '../../use/use-dict'
-const COLOR_LIST = ['primary', 'success', 'warning', 'danger']
-const EFFECT_LIST = ['plain', 'light']
+import { watch, toRefs } from "vue";
+import { useDict } from "../../use/use-dict";
+const COLOR_LIST = ["primary", "success", "warning", "danger"];
+const EFFECT_LIST = ["plain", "light"];
 
 // value格式化展示组件
 export default {
-  name: 'fs-values-format',
-  emits: ['click'],
+  name: "FsValuesFormat",
   props: {
     // 值
     modelValue: {
-      require: false
+      require: false,
     },
     // 是否多选
     multiple: { default: true, require: false },
     // value的分隔符<br/>
     // 多选时，如果value为string，则以该分隔符分割成多个展示<br/>
     // 传入空字符串，表示不分割<br/>
-    separator: { default: ',', require: false },
+    separator: { default: ",", require: false },
     // 数据字典
     dict: {
       type: Object,
       require: false,
       default: () => {
-        return {}
-      }
+        return {};
+      },
     },
     // 颜色，【auto, primary, success, warning, danger ,info】
     // 配置auto，则自动根据value值hashcode分配颜色值
     color: {
       require: false,
-      default: 'primary'
+      default: "primary",
     },
     effect: {
-      require: false
+      require: false,
     },
 
     // 自动颜色列表，【 primary, success, warning, danger 】
     autoColors: {
-      type: Array
+      type: Array,
     },
     // 自动主题列表，【 light, plain 】
     autoEffects: {
-      type: Array
+      type: Array,
     },
     // 展示类型【text, tag】
     type: {
-      default: 'tag' // 可选【text,tag】
+      default: "tag", // 可选【text,tag】
     },
     // valuechange 是否reload
     changeReload: {
-      default: undefined
-    }
+      default: undefined,
+    },
   },
-  data () {
-    return {}
-  },
-  setup (props, ctx) {
-    const dict = useDict(props, ctx)
-    const { modelValue } = toRefs(props)
+  emits: ["click"],
+  setup(props, ctx) {
+    const dict = useDict(props, ctx);
+    const { modelValue } = toRefs(props);
     watch(modelValue, () => {
-      console.log('reload dict')
-      dict.reloadDict()
-    })
+      console.log("reload dict");
+      dict.reloadDict();
+    });
     return {
-      ...dict
-    }
+      ...dict,
+    };
+  },
+  data() {
+    return {};
   },
   computed: {
-    _items () {
-      if (this.modelValue == null || this.modelValue === '') {
-        return []
+    _items() {
+      if (this.modelValue == null || this.modelValue === "") {
+        return [];
       }
       if (this.dictLoading === true) {
-        return []
+        return [];
       }
-      const dictDataMap = this.dictMap
-      const valueArr = this.getValueArr()
-      const options = []
-      const dict = this.dict
+      const dictDataMap = this.dictMap;
+      const valueArr = this.getValueArr();
+      const options = [];
+      const dict = this.dict;
       // 没有字典，直接显示值
       if (dictDataMap == null || Object.keys(dictDataMap).length === 0) {
         for (const str of valueArr) {
-          const item = {}
-          item[dict.value] = str
-          item[dict.label] = str
-          this.setColor(item, dict)
-          options.push(item)
+          const item = {};
+          item[dict.value] = str;
+          item[dict.label] = str;
+          this.setColor(item, dict);
+          options.push(item);
         }
-        return options
+        return options;
       }
       // 根据字典展示
       for (const str of valueArr) {
-        let item = dictDataMap[str]
+        let item = dictDataMap[str];
         if (item != null) {
-          this.setColor(item, dict)
-          options.push(item)
+          this.setColor(item, dict);
+          options.push(item);
         } else {
-          item = {}
-          item[dict.value] = str
-          item[dict.label] = str
-          this.setColor(item, dict)
-          options.push(item)
+          item = {};
+          item[dict.value] = str;
+          item[dict.label] = str;
+          this.setColor(item, dict);
+          options.push(item);
         }
       }
-      return options
-    }
+      return options;
+    },
   },
   methods: {
-    getValueArr () {
-      let valueArr = []
-      if (typeof (this.modelValue) === 'string' && this.multiple && this.separator != null && this.separator !== '') {
-        valueArr = this.modelValue.split(this.separator)
+    getValueArr() {
+      let valueArr = [];
+      if (
+        typeof this.modelValue === "string" &&
+        this.multiple &&
+        this.separator != null &&
+        this.separator !== ""
+      ) {
+        valueArr = this.modelValue.split(this.separator);
       } else if (this.modelValue instanceof Array) {
         // 本来就是数组的
-        valueArr = this.modelValue
+        valueArr = this.modelValue;
       } else {
-        valueArr = [this.modelValue]
+        valueArr = [this.modelValue];
       }
-      return valueArr
+      return valueArr;
     },
-    onClick (item) {
-      this.$emit('click', { item: item })
+    onClick(item) {
+      this.$emit("click", { item: item });
     },
-    setColor (item, dict) {
+    setColor(item, dict) {
       if (!item.effect && this.effect) {
-        item.effect = this.effect
+        item.effect = this.effect;
       }
       if (item[dict.color]) {
-        return
+        return;
       }
-      if (this.color === 'auto') {
-        const hashcode = this.hashcode(item[dict.value])
-        const colors = this.autoColors ? this.autoColors : COLOR_LIST
-        item[dict.color] = colors[hashcode % colors.length]
-        const effects = this.autoEffects ? this.autoEffects : EFFECT_LIST
-        item.effect = effects[Math.floor(hashcode / colors.length) % effects.length]
+      if (this.color === "auto") {
+        const hashcode = this.hashcode(item[dict.value]);
+        const colors = this.autoColors ? this.autoColors : COLOR_LIST;
+        item[dict.color] = colors[hashcode % colors.length];
+        const effects = this.autoEffects ? this.autoEffects : EFFECT_LIST;
+        item.effect =
+          effects[Math.floor(hashcode / colors.length) % effects.length];
       } else {
-        item[dict.color] = this.color
+        item[dict.color] = this.color;
       }
     },
-    hashcode (str) {
+    hashcode(str) {
       if (str == null) {
-        return 0
+        return 0;
       }
-      if (typeof str !== 'string') {
-        str = JSON.stringify(str)
+      if (typeof str !== "string") {
+        str = JSON.stringify(str);
       }
-      let hash = 0; let i; let chr; let len
-      if (str.length === 0) return hash
+      let hash = 0;
+      let i;
+      let chr;
+      let len;
+      if (str.length === 0) return hash;
       for (i = 0, len = str.length; i < len; i++) {
-        chr = str.charCodeAt(i)
-        hash = ((hash << 5) - hash) + chr
-        hash |= 0 // Convert to 32bit integer
+        chr = str.charCodeAt(i);
+        hash = (hash << 5) - hash + chr;
+        hash |= 0; // Convert to 32bit integer
       }
-      return hash
-    }
-  }
-}
+      return hash;
+    },
+  },
+};
 </script>
-<style >
-.fs-values-format .tag-item{
+<style>
+.fs-values-format .tag-item {
   margin-right: 10px;
 }
-.fs-values-format>span{
+.fs-values-format > span {
   margin-right: 5px;
 }
 </style>

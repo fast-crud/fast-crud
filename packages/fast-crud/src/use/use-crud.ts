@@ -1,12 +1,12 @@
-import defaultCrudOptions from './default-crud-options'
-import _ from 'lodash-es'
+import defaultCrudOptions from "./default-crud-options";
+import _ from "lodash-es";
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
-import { reactive, nextTick, ref } from 'vue'
-import logger from '../utils/util.log'
-import typesUtil from '../utils/util.types'
-import { uiContext } from '../ui'
-import { useI18n } from '../local'
-export interface CrudOptions{
+import { ref } from "vue";
+import logger from "../utils/util.log";
+import typesUtil from "../utils/util.types";
+import { uiContext } from "../ui";
+import { useI18n } from "../local";
+export interface CrudOptions {
   table?: {};
   columns?: [];
   data?: [];
@@ -23,57 +23,68 @@ export interface CrudOptions{
 }
 
 export default function (ctx) {
-  const ui = uiContext.get()
-  const { t } = useI18n() // call `useI18n`, and spread `t` from  `useI18n` returning
+  const ui = uiContext.get();
+  const { t } = useI18n(); // call `useI18n`, and spread `t` from  `useI18n` returning
 
-  const options: CrudOptions = ctx.options
-  const crudRef = ctx.crudRef
+  const options: CrudOptions = ctx.options;
+  const crudRef = ctx.crudRef;
 
-  const crudOptions = ref()
-  async function doRefresh () {
-    let page
+  const crudOptions = ref();
+  async function doRefresh() {
+    let page;
     if (crudOptions.value.pagination) {
-      page = { currentPage: crudOptions.value.pagination.currentPage, pageSize: crudOptions.value.pagination.pageSize }
+      page = {
+        currentPage: crudOptions.value.pagination.currentPage,
+        pageSize: crudOptions.value.pagination.pageSize,
+      };
     }
-    let searchFormData = {}
+    let searchFormData = {};
     if (crudRef.value) {
-      searchFormData = crudRef.value.getSearchFormData()
+      searchFormData = crudRef.value.getSearchFormData();
     }
-    let query = { page, form: searchFormData }
+    let query = { page, form: searchFormData };
     if (crudOptions.value.request.transformQuery) {
-      query = crudOptions.value.request.transformQuery(query)
+      query = crudOptions.value.request.transformQuery(query);
     }
 
-    crudOptions.value.table.loading = true
-    let pageRes
+    crudOptions.value.table.loading = true;
+    let pageRes;
     try {
-      logger.debug('pageRequest', query)
-      pageRes = await crudOptions.value.request.pageRequest(query)
+      logger.debug("pageRequest", query);
+      pageRes = await crudOptions.value.request.pageRequest(query);
     } finally {
-      crudOptions.value.table.loading = false
+      crudOptions.value.table.loading = false;
     }
     if (pageRes == null) {
-      logger.warn('pageRequest返回结果不能为空')
-      return
+      logger.warn("pageRequest返回结果不能为空");
+      return;
     }
     if (crudOptions.value.request.transformRes) {
-      pageRes = crudOptions.value.request.transformRes({ res: pageRes, query })
+      pageRes = crudOptions.value.request.transformRes({ res: pageRes, query });
     }
-    let { currentPage = page.currentPage, pageSize = page.pageSize, total, records } = pageRes
+    const {
+      currentPage = page.currentPage,
+      pageSize = page.pageSize,
+      total,
+    } = pageRes;
+    let { records } = pageRes;
     if (records == null) {
-      logger.warn('pageRequest返回结构不正确，请配置transform，期望：{currentPage, pageSize, total, records:[]},实际返回：', pageRes)
-      return
+      logger.warn(
+        "pageRequest返回结构不正确，请配置transform，期望：{currentPage, pageSize, total, records:[]},实际返回：",
+        pageRes
+      );
+      return;
     }
-    crudOptions.value.data = records || (records = [])
+    crudOptions.value.data = records || (records = []);
     if (crudOptions.value.pagination) {
-      crudOptions.value.pagination.currentPage = currentPage
-      crudOptions.value.pagination.pageSize = pageSize
-      crudOptions.value.pagination.total = total || records.length
+      crudOptions.value.pagination.currentPage = currentPage;
+      crudOptions.value.pagination.pageSize = pageSize;
+      crudOptions.value.pagination.total = total || records.length;
     }
   }
 
-  function doPageTurn (no: number) {
-    crudOptions.value.pagination.currentPage = no
+  function doPageTurn(no: number) {
+    crudOptions.value.pagination.currentPage = no;
   }
   /**
    *
@@ -83,115 +94,115 @@ export default function (ctx) {
    *   mergeForm=false
    * }
    */
-  async function doSearch (opts) {
-    logger.debug('dosearch:', opts)
-    opts = _.merge({ goFirstPage: true }, opts)
+  async function doSearch(opts) {
+    logger.debug("dosearch:", opts);
+    opts = _.merge({ goFirstPage: true }, opts);
     if (opts.goFirstPage) {
-      doPageTurn(1)
+      doPageTurn(1);
     }
     if (opts.form && crudRef.value) {
-      crudRef.value.setSearchFormData(opts)
+      crudRef.value.setSearchFormData(opts);
     }
 
-    await doRefresh()
+    await doRefresh();
   }
 
-  function usePagination () {
+  function usePagination() {
     return {
       pagination: {
         // element 页码改动回调
-        onCurrentChange (event) {
-          crudOptions.value.pagination.currentPage = event
-          doRefresh()
+        onCurrentChange(event) {
+          crudOptions.value.pagination.currentPage = event;
+          doRefresh();
         },
-        onSizeChange (event) {
-          crudOptions.value.pagination.pageSize = event
-          doRefresh()
+        onSizeChange(event) {
+          crudOptions.value.pagination.pageSize = event;
+          doRefresh();
         },
         // antd 页码改动回调
-        onChange (page, pageSize) {
-          crudOptions.value.pagination.currentPage = page
-          crudOptions.value.pagination.current = page
-          doRefresh()
+        onChange(page) {
+          crudOptions.value.pagination.currentPage = page;
+          crudOptions.value.pagination.current = page;
+          doRefresh();
         },
-        onShowSizeChange (current, size) {
-          crudOptions.value.pagination.pageSize = size
-          doRefresh()
-        }
-      }
-    }
+        onShowSizeChange(current, size) {
+          crudOptions.value.pagination.pageSize = size;
+          doRefresh();
+        },
+      },
+    };
   }
 
-  function useFormSubmit () {
+  function useFormSubmit() {
     return {
       editForm: {
-        async doSubmit (context) {
-          await crudOptions.value.request.editRequest(context)
-          doRefresh()
-        }
+        async doSubmit(context) {
+          await crudOptions.value.request.editRequest(context);
+          doRefresh();
+        },
       },
       addForm: {
-        async doSubmit (context) {
-          await crudOptions.value.request.addRequest(context)
-          doRefresh()
-        }
-      }
-    }
+        async doSubmit(context) {
+          await crudOptions.value.request.addRequest(context);
+          doRefresh();
+        },
+      },
+    };
   }
 
-  function useRemove () {
+  function useRemove() {
     return {
       rowHandle: {
         remove: {
           click: async function (context) {
             // TODO i18n
             try {
-              console.log('ui', ui, context)
+              console.log("ui", ui, context);
               await ui.messageBox.confirm({
-                title: t('fs.rowHandle.remove.confirmTitle'), // '提示',
-                message: t('fs.rowHandle.remove.confirmMessage'), // '确定要删除此记录吗?',
-                type: 'warn'
-              })
+                title: t("fs.rowHandle.remove.confirmTitle"), // '提示',
+                message: t("fs.rowHandle.remove.confirmMessage"), // '确定要删除此记录吗?',
+                type: "warn",
+              });
             } catch (e) {
-              logger.info('delete canceled', e.message)
-              return
+              logger.info("delete canceled", e.message);
+              return;
             }
-            context.row = context[ui.tableColumn.row]
-            await crudOptions.value.request.delRequest(context.row.id)
-            ui.notification.success(t('fs.rowHandle.remove.success'))
-            await doRefresh()
-          }
-        }
-      }
-    }
+            context.row = context[ui.tableColumn.row];
+            await crudOptions.value.request.delRequest(context.row.id);
+            ui.notification.success(t("fs.rowHandle.remove.success"));
+            await doRefresh();
+          },
+        },
+      },
+    };
   }
 
-  function useSearch () {
+  function useSearch() {
     return {
       search: {
-        doSearch
-      }
-    }
+        doSearch,
+      },
+    };
   }
 
-  function useEvent () {
+  function useEvent() {
     return {
-      'onUpdate:search' (value) {
-        crudOptions.value.search.show = value
+      "onUpdate:search"(value) {
+        crudOptions.value.search.show = value;
       },
-      'onUpdate:compact' (value) {
-        crudOptions.value.toolbar.compact = value
+      "onUpdate:compact"(value) {
+        crudOptions.value.toolbar.compact = value;
       },
-      'onUpdate:columns' (value) {
-        crudOptions.value.columns = value
+      "onUpdate:columns"(value) {
+        crudOptions.value.columns = value;
       },
-      onRefresh () {
-        doRefresh()
-      }
-    }
+      onRefresh() {
+        doRefresh();
+      },
+    };
   }
 
-  function initCrudOptions (options) {
+  function initCrudOptions(options) {
     const userOptions = _.merge(
       defaultCrudOptions.defaultOptions({ t }),
       usePagination(),
@@ -201,92 +212,116 @@ export default function (ctx) {
       useEvent(),
       defaultCrudOptions.commonOptions(ctx),
       options
-    )
+    );
 
     // 分散 合并到不同的维度
-    const tableColumns: any[] = []
-    const formColumns = {}
-    const addFormColumns = {}
-    const editFormColumns = {}
-    const viewFormColumns = {}
-    const searchColumns = {}
+    const tableColumns: any[] = [];
+    const formColumns = {};
+    const addFormColumns = {};
+    const editFormColumns = {};
+    const viewFormColumns = {};
+    const searchColumns = {};
 
-    function mergeFromForm (targetColumns, item, key, mergeSrc, addLabel = false) {
-      const formColumn = _.cloneDeep(item[mergeSrc]) || {}
+    function mergeFromForm(
+      targetColumns,
+      item,
+      key,
+      mergeSrc,
+      addLabel = false
+    ) {
+      const formColumn = _.cloneDeep(item[mergeSrc]) || {};
       if (addLabel) {
         if (formColumn.title == null) {
-          formColumn.title = item.title
+          formColumn.title = item.title;
         }
       }
-      formColumn.key = key
-      targetColumns[key] = formColumn
+      formColumn.key = key;
+      targetColumns[key] = formColumn;
     }
-    function eachColumns (columns, tableParentColumns: any[] = tableColumns) {
+    function eachColumns(columns, tableParentColumns: any[] = tableColumns) {
       _.forEach(columns, (item, key) => {
         // types merge
         if (item.type) {
-          const typeOptions = typesUtil.getType(item.type)
+          const typeOptions = typesUtil.getType(item.type);
           if (typeOptions) {
-            item = _.merge({}, typeOptions, item)
+            item = _.merge({}, typeOptions, item);
           }
         }
         // copy dict
         if (item.dict) {
           if (item.column?.component) {
-            item.column.component.dict = _.cloneDeep(item.dict)
+            item.column.component.dict = _.cloneDeep(item.dict);
           }
           if (item.form?.component) {
-            item.form.component.dict = _.cloneDeep(item.dict)
+            item.form.component.dict = _.cloneDeep(item.dict);
           }
         }
 
-        const tableColumn = item.column || {}
+        const tableColumn = item.column || {};
         if (tableColumn.title == null) {
-          tableColumn.title = item.title
+          tableColumn.title = item.title;
         }
-        tableColumn.key = key
-        tableParentColumns.push(tableColumn)
+        tableColumn.key = key;
+        tableParentColumns.push(tableColumn);
         if (item.children) {
-          eachColumns(item.children, tableColumn.children = [])
-          return
+          eachColumns(item.children, (tableColumn.children = []));
+          return;
         }
 
-        mergeFromForm(formColumns, item, key, 'form', true)
-        mergeFromForm(addFormColumns, item, key, 'addForm')
-        mergeFromForm(editFormColumns, item, key, 'editForm')
-        mergeFromForm(viewFormColumns, item, key, 'viewForm')
-        mergeFromForm(searchColumns, item, key, 'search')
-      })
+        mergeFromForm(formColumns, item, key, "form", true);
+        mergeFromForm(addFormColumns, item, key, "addForm");
+        mergeFromForm(editFormColumns, item, key, "editForm");
+        mergeFromForm(viewFormColumns, item, key, "viewForm");
+        mergeFromForm(searchColumns, item, key, "search");
+      });
     }
 
-    eachColumns(userOptions.columns)
+    eachColumns(userOptions.columns);
 
     // 分置合并
-    userOptions.form = _.merge(_.cloneDeep(userOptions.form), { columns: formColumns })
-    userOptions.editForm = _.merge(_.cloneDeep(userOptions.form), { columns: editFormColumns }, userOptions.editForm)
-    userOptions.addForm = _.merge(_.cloneDeep(userOptions.form), { columns: addFormColumns }, userOptions.addForm)
-    userOptions.viewForm = _.merge(_.cloneDeep(userOptions.form), { columns: viewFormColumns }, userOptions.viewForm)
-    userOptions.search = _.merge({ columns: userOptions.form.columns }, { columns: searchColumns }, userOptions.search)
-    userOptions.columns = tableColumns
+    userOptions.form = _.merge(_.cloneDeep(userOptions.form), {
+      columns: formColumns,
+    });
+    userOptions.editForm = _.merge(
+      _.cloneDeep(userOptions.form),
+      { columns: editFormColumns },
+      userOptions.editForm
+    );
+    userOptions.addForm = _.merge(
+      _.cloneDeep(userOptions.form),
+      { columns: addFormColumns },
+      userOptions.addForm
+    );
+    userOptions.viewForm = _.merge(
+      _.cloneDeep(userOptions.form),
+      { columns: viewFormColumns },
+      userOptions.viewForm
+    );
+    userOptions.search = _.merge(
+      { columns: userOptions.form.columns },
+      { columns: searchColumns },
+      userOptions.search
+    );
+    userOptions.columns = tableColumns;
 
     // 单独处理viewForm的component
     _.forEach(userOptions.viewForm.columns, (value) => {
       if (!value.component) {
-        value.component = {}
+        value.component = {};
       }
-      value.component.disabled = true
-    })
+      value.component.disabled = true;
+    });
     // 与默认配置合并
-    crudOptions.value = userOptions
-    logger.info('fast-crud inited:', crudOptions)
+    crudOptions.value = userOptions;
+    logger.info("fast-crud inited:", crudOptions);
   }
 
-  initCrudOptions(options)
+  initCrudOptions(options);
 
   return {
     doRefresh,
     doPageTurn,
     doSearch,
-    crudOptions
-  }
+    crudOptions,
+  };
 }

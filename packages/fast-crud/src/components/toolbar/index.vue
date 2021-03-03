@@ -1,40 +1,45 @@
 <template>
-  <div class="fs-toolbar" >
-    <slot name="toolbar-prefix"/>
-    <template v-for="(item,key) of computedButtons" :key="key">
-      <fs-button v-if="item.show!==false" v-bind="item" @click="item.click()"/>
+  <div class="fs-toolbar">
+    <slot name="toolbar-prefix"></slot>
+    <template v-for="(item, key) of computedButtons" :key="key">
+      <fs-button
+        v-if="item.show !== false"
+        v-bind="item"
+        @click="item.click()"
+      />
     </template>
-    <slot name="toolbar-append"/>
-    <fs-table-columns-filter v-if="columns" ref="columnsFilterRef"
-                             :columns="columns"
-                             @update:columns="$emit('update:columns',$event)"
-                             :storage="storage"/>
-
+    <slot name="toolbar-append"></slot>
+    <fs-table-columns-filter
+      v-if="columns"
+      ref="columnsFilterRef"
+      :columns="columns"
+      @update:columns="$emit('update:columns', $event)"
+      :storage="storage"
+    />
   </div>
 </template>
 
 <script>
-import FsTableColumnsFilter from './fs-table-columns-filter/component.vue'
-import FsButton from '../basic/fs-button'
-import _ from 'lodash-es'
-import { ref, computed, getCurrentInstance } from 'vue'
-import traceUtil from '../../utils/util.trace'
-import { useI18n } from '../../local'
+import FsTableColumnsFilter from "./fs-table-columns-filter/component.vue";
+import FsButton from "../basic/fs-button";
+import _ from "lodash-es";
+import { ref, computed, getCurrentInstance } from "vue";
+import traceUtil from "../../utils/util.trace";
+import { useI18n } from "../../local";
 export default {
-  name: 'fs-toolbar',
+  name: "FsToolbar",
   // eslint-disable-next-line vue/no-unused-components
   components: { FsTableColumnsFilter, FsButton },
-  emits: ['refresh', 'update:search', 'update:compact', 'update:columns', 'export'],
   props: {
     buttons: {
-      type: Object
+      type: Object,
     },
     /**
      * 是否显示查询
      * 传null，则不显示按钮
      */
     search: {
-      type: Boolean
+      type: Boolean,
     },
     /**
      * 紧凑模式按钮
@@ -42,14 +47,14 @@ export default {
      */
     compact: {
       type: Boolean,
-      default: true
+      default: true,
     },
     /**
      * 列配置
      */
     columns: {
       type: Array,
-      default: undefined
+      default: undefined,
     },
     /**
      * 是否保存用户列设置
@@ -57,85 +62,92 @@ export default {
      */
     storage: {
       type: [String, Boolean],
-      default: true
-    }
+      default: true,
+    },
   },
-  setup (props, ctx) {
-    const { t } = useI18n()
-    const columnsFilterRef = ref()
-    traceUtil.trace('fs-toolbar')
-    const { proxy } = getCurrentInstance()
-    console.log('fsui', proxy.$fsui)
+  emits: [
+    "refresh",
+    "update:search",
+    "update:compact",
+    "update:columns",
+    "export",
+  ],
+  setup(props, ctx) {
+    const { t } = useI18n();
+    const columnsFilterRef = ref();
+    traceUtil.trace("fs-toolbar");
+    const { proxy } = getCurrentInstance();
+    console.log("fsui", proxy.$fsui);
     const computedButtons = computed(() => {
       const defaultButtons = {
         refresh: {
-          type: 'primary',
+          type: "primary",
           icon: proxy.$fsui.icons.refresh,
-          title: t('fs.toolbar.refresh.text'), // '刷新',
+          title: t("fs.toolbar.refresh.text"), // '刷新',
           circle: true,
           click: () => {
-            ctx.emit('refresh')
-          }
+            ctx.emit("refresh");
+          },
         },
         search: {
-          type: 'primary',
+          type: "primary",
           icon: proxy.$fsui.icons.search,
-          title: t('fs.toolbar.search.title'), // '查询显示',
+          title: t("fs.toolbar.search.title"), // '查询显示',
           circle: true,
           click: () => {
-            ctx.emit('update:search', !props.search)
-          }
+            ctx.emit("update:search", !props.search);
+          },
         },
         compact: {
-          type: 'primary',
+          type: "primary",
           icon: proxy.$fsui.icons.compact,
-          title: t('fs.toolbar.compact.title'), // '紧凑模式',
+          title: t("fs.toolbar.compact.title"), // '紧凑模式',
           circle: true,
           click: () => {
-            ctx.emit('update:compact', !props.compact)
-          }
+            ctx.emit("update:compact", !props.compact);
+          },
         },
         export: {
-          type: 'primary',
+          type: "primary",
           icon: proxy.$fsui.icons.export,
-          title: t('fs.toolbar.export.title'), // '导出',
+          title: t("fs.toolbar.export.title"), // '导出',
           circle: true,
           click: () => {
-            ctx.emit('export')
-          }
+            ctx.emit("export");
+          },
         },
         columns: {
-          type: 'primary',
+          type: "primary",
           icon: proxy.$fsui.icons.columnsFilter,
-          title: t('fs.toolbar.columns.title'), // '列设置',
+          title: t("fs.toolbar.columns.title"), // '列设置',
           circle: true,
           click: () => {
-            columnsFilterRef.value.start()
-          }
-        }
-      }
+            columnsFilterRef.value.start();
+          },
+        },
+      };
 
-      _.merge(defaultButtons, props.buttons)
+      _.merge(defaultButtons, props.buttons);
       if (defaultButtons.search) {
-        defaultButtons.search.type = props.search ? 'primary' : 'default'
+        defaultButtons.search.type = props.search ? "primary" : "default";
       }
       if (defaultButtons.compact) {
-        defaultButtons.compact.type = props.compact ? 'primary' : 'default'
+        defaultButtons.compact.type = props.compact ? "primary" : "default";
       }
-      return defaultButtons
-    })
+      return defaultButtons;
+    });
     return {
       columnsFilterRef,
-      computedButtons
-    }
-  }
-}
+      computedButtons,
+    };
+  },
+};
 </script>
 <style lang="less">
-.fs-toolbar{
+.fs-toolbar {
   display: flex;
-  .fs-button{
-    margin-left:5px;
+  .fs-button {
+    margin-left: 5px;
   }
 }
 </style>

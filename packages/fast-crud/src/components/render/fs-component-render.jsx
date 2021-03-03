@@ -1,93 +1,93 @@
-import { h, resolveComponent, getCurrentInstance, computed } from 'vue'
-import _ from 'lodash-es'
-import traceUtil from '../../utils/util.trace'
-import { uiContext } from '../../ui'
+import { h, resolveComponent, getCurrentInstance, computed } from "vue";
+import _ from "lodash-es";
+import traceUtil from "../../utils/util.trace";
+import { uiContext } from "../../ui";
 export default {
-  name: 'fs-component-render',
-  emits: ['update:dict', 'update:modelValue'],
+  name: "FsComponentRender",
   props: {
     modelValue: {},
     name: {
-      type: String
+      type: String,
     },
     children: {
-      type: Object
+      type: Object,
     },
     on: {
-      type: Object
+      type: Object,
     },
     events: {
-      type: Object
+      type: Object,
     },
     scope: {
-      type: Object
+      type: Object,
     },
     valueBinding: {
-      type: String, Object
+      type: String,
+      Object,
     },
-    dict: {
-    }
+    dict: {},
   },
-  setup (props, ctx) {
-    traceUtil.trace('fs-component-render')
-    const ui = uiContext.get()
+  emits: ["update:dict", "update:modelValue"],
+  setup(props, ctx) {
+    traceUtil.trace("fs-component-render");
+    const ui = uiContext.get();
     const newScope = computed(() => {
       return {
         ...ctx.attrs,
         ...props.scope,
-        dict: props.dict
-      }
-    })
+        dict: props.dict,
+      };
+    });
 
     // 带事件的attrs
     const allAttrs = {
       scope: props.scope,
       dict: props.dict,
-      modelValue: props.modelValue
-    }
+      modelValue: props.modelValue,
+    };
     const computedModelValue = computed(() => {
-      return props.modelValue
-    })
+      return props.modelValue;
+    });
     const valueBinding = computed(() => {
-      return props.valueBinding || 'modelValue'
-    })
-    allAttrs['onUpdate:' + valueBinding.value] = (value) => {
-      ctx.emit('update:modelValue', value)
-    }
+      return props.valueBinding || "modelValue";
+    });
+    allAttrs["onUpdate:" + valueBinding.value] = (value) => {
+      ctx.emit("update:modelValue", value);
+    };
 
-    const events = { ...props.events, ...props.on }
+    const events = { ...props.events, ...props.on };
     _.forEach(events, (value, key) => {
-      const handler = value
+      const handler = value;
       allAttrs[key] = ($event) => {
-        return handler({ ...newScope.value, $event })
-      }
-    })
+        return handler({ ...newScope.value, $event });
+      };
+    });
 
     const childrenRender = () => {
-      const children = {}
+      const children = {};
       _.forEach(props.children, (item, key) => {
         if (item instanceof Function) {
           children[key] = () => {
-            return item(newScope.value)
-          }
+            return item(newScope.value);
+          };
         } else {
           children[key] = () => {
-            return item
-          }
+            return item;
+          };
         }
-      })
-      return children
-    }
-    const { proxy } = getCurrentInstance()
+      });
+      return children;
+    };
+    const { proxy } = getCurrentInstance();
     // eslint-disable-next-line vue/no-setup-props-destructure
-    let inputComp = props.name || proxy.$fsui.input.name
-    if (inputComp !== 'div' || inputComp !== 'span') {
-      inputComp = resolveComponent(inputComp)
+    let inputComp = props.name || proxy.$fsui.input.name;
+    if (inputComp !== "div" || inputComp !== "span") {
+      inputComp = resolveComponent(inputComp);
     }
-    const children = childrenRender()
+    const children = childrenRender();
     return () => {
-      _.set(allAttrs, valueBinding.value, computedModelValue.value)
-      return h(inputComp, allAttrs, children)
-    }
-  }
-}
+      _.set(allAttrs, valueBinding.value, computedModelValue.value);
+      return h(inputComp, allAttrs, children);
+    };
+  },
+};
