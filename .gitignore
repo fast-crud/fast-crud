@@ -103,3 +103,5 @@ dist
 /.idea/
 
 packages/vue-vben-admin
+packages/vue-admin-beauty
+packages/vben-admin-thin-next

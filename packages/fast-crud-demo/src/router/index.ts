@@ -1,26 +1,26 @@
-import { createRouter, createWebHashHistory, RouteRecordRaw } from 'vue-router'
-import Layout from '../layout/layout.vue'
-import Home from '../views/home/index.vue'
+import { createRouter, createWebHashHistory, RouteRecordRaw } from "vue-router";
+import Layout from "../layout/layout.vue";
+import Home from "../views/home/index.vue";
 const routes: Array<RouteRecordRaw> = [
   {
-    path: '/',
-    name: 'layout',
+    path: "/",
+    name: "layout",
     component: Layout,
-    redirect: 'index',
+    redirect: "index",
     children: [
       {
-        path: '/index',
-        name: 'index',
-        component: Home
+        path: "/index",
+        name: "index",
+        component: Home,
         // component: () => import(/* webpackChunkName: "about" */ '../views/About.vue'
-      }
-    ]
-  }
-]
+      },
+    ],
+  },
+];
 
 const router = createRouter({
   history: createWebHashHistory(),
-  routes
-})
+  routes,
+});
 
-export default router
+export default router;

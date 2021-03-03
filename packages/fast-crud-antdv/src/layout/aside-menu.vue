@@ -54,50 +54,55 @@
   </a-menu>
 </template>
 <script>
-import { ref, watch } from 'vue'
-import { MailOutlined, QqOutlined, AppstoreOutlined, SettingOutlined } from '@ant-design/icons-vue'
+import { ref, watch } from "vue";
+import {
+  MailOutlined,
+  QqOutlined,
+  AppstoreOutlined,
+  SettingOutlined,
+} from "@ant-design/icons-vue";
 export default {
-  name: 'aside-menu',
+  name: "AsideMenu",
   components: {
     MailOutlined,
     QqOutlined,
     AppstoreOutlined,
-    SettingOutlined
+    SettingOutlined,
   },
-  setup () {
-    const selectedKeys = ref(['1'])
-    const openKeys = ref(['sub1'])
+  setup() {
+    const selectedKeys = ref(["1"]);
+    const openKeys = ref(["sub1"]);
 
-    const handleClick = e => {
-      console.log('click', e)
-    }
+    const handleClick = (e) => {
+      console.log("click", e);
+    };
 
-    const titleClick = e => {
-      console.log('titleClick', e)
-    }
+    const titleClick = (e) => {
+      console.log("titleClick", e);
+    };
 
     watch(
       () => openKeys,
-      val => {
-        console.log('openKeys', val)
+      (val) => {
+        console.log("openKeys", val);
       }
-    )
+    );
     return {
       selectedKeys,
       openKeys,
       handleClick,
-      titleClick
-    }
-  }
-}
+      titleClick,
+    };
+  },
+};
 </script>
 <style lang="less">
-.ant-menu{
-  height:100%
+.ant-menu {
+  height: 100%;
 }
 </style>
 <style lang="less">
-.ant-menu{
-  height:100%
+.ant-menu {
+  height: 100%;
 }
 </style>
