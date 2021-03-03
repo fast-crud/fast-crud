@@ -1,6 +1,5 @@
 import { compute, dict } from "@fast-crud/fast-crud/src";
 import * as api from "./api";
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
 export default function ({ crudRef }) {
   const pageRequest = async (query) => {
     return await api.GetList(query);

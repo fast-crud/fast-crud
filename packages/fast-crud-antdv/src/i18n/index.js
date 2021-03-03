@@ -5,14 +5,14 @@ import zhFsLocale from "@fast-crud/fast-crud/src/local/lang/zh-cn.js";
 
 const messages = {
   en: {
-    // 定义您自己的字典，但是请不要和 `el` 重复，这样会导致 ElementPlus 内部组件的翻译失效.
+    // 定义您自己的字典，但是请不要和 `fs` 重复，这样会导致 fast-crud 内部组件的翻译失效.
     message: {
       hello: "hello world",
     },
     fs: enFsLocale.fs,
   },
   "zh-cn": {
-    // 定义您自己的字典，但是请不要和 `el` 重复，这样会导致 ElementPlus 内部组件的翻译失效.
+    // 定义您自己的字典，但是请不要和 `fs` 重复，这样会导致 fast-crud  内部组件的翻译失效.
     message: {
       hello: "你好，世界",
     },
