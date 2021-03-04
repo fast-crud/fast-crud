@@ -2,7 +2,7 @@ import { uiContext } from "../ui";
 export default {
   // eslint-disable-next-line @typescript-eslint/no-empty-function,@typescript-eslint/no-unused-vars
   commonOptions() {},
-  defaultOptions({ t }) {
+  defaultOptions({ t, tc }) {
     const ui = uiContext.get();
     return {
       search: {
@@ -25,6 +25,7 @@ export default {
         style: {
           "grid-template-columns": "50% 50%", // grid布局，默认两列
         },
+        col: { span: 12 },
         labelAlign: "right", // antdv
         labelCol: { span: 4 }, // antdv
         wrapperCol: { span: 18 }, // antdv
@@ -51,7 +52,7 @@ export default {
         },
       },
       rowHandle: {
-        fixed: "right",
+        width: "250px",
         title: t("fs.rowHandle.title"),
       },
       pagination: {
@@ -61,6 +62,7 @@ export default {
         layout: "total, sizes, prev, pager, next, jumper",
         showSizeChanger: true, // antdv
         showQuickJumper: true, // antdv
+        showTotal: (total) => tc("fs.pagination.showTotal", total), //antdv
       },
       table: {
         height: "100%",

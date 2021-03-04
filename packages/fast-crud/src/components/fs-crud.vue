@@ -7,7 +7,7 @@
   >
     <template #header>
       <div class="fs-crud-header">
-        <slot name="header-before"></slot>
+        <slot name="header-top"></slot>
         <div class="fs-crud-search">
           <fs-search
             ref="searchRef"
@@ -18,20 +18,20 @@
           />
         </div>
         <slot name="header-middle"></slot>
-
         <div
           class="fs-crud-actionbar"
           v-if="actionbar && actionbar.show !== false"
         >
-          <slot name="actionbar-prefix"></slot>
+          <slot name="actionbar-left"></slot>
           <fs-actionbar v-bind="actionbar" @action="onActionHandle" />
-          <slot name="actionbar-append"></slot>
+          <slot name="actionbar-right"></slot>
         </div>
 
         <div class="fs-crud-toolbar" v-if="toolbar && toolbar.show !== false">
-          <slot name="toolbar-prefix"></slot>
+          <slot name="toolbar-left"></slot>
           <fs-toolbar
             v-bind="toolbar"
+            :slots="computedToolbarSlots"
             :search="search.show"
             @update:search="$emit('update:search', $event)"
             :compact="toolbar.compact"
@@ -41,10 +41,10 @@
             @refresh="$emit('refresh')"
             @action="onToolbarHandle"
           />
-          <slot name="toolbar-append"></slot>
+          <slot name="toolbar-right"></slot>
         </div>
 
-        <slot name="header-after"></slot>
+        <slot name="header-bottom"></slot>
       </div>
     </template>
     <!-- 默认插槽 -->
@@ -61,23 +61,27 @@
       @rowHandle="onRowHandle"
     />
     <!-- 编辑对话框 -->
-    <fs-form-wrapper ref="formWrapperRef" :slots="computedFormSlots" />
+    <fs-form-wrapper
+      ref="formWrapperRef"
+      :slots="computedFormSlots"
+      @value-change="this.$emit('form-value-change', $event)"
+    />
 
     <template #footer>
       <div class="fs-crud-footer">
-        <slot name="footer-before"></slot>
+        <slot name="footer-top"></slot>
         <div class="fs-crud-pagination">
-          <div class="fs-pagination-prefix">
-            <slot name="pagination-prefix"></slot>
+          <div class="fs-pagination-left">
+            <slot name="pagination-left"></slot>
           </div>
           <div class="fs-pagination">
             <component :is="$fsui.pagination.name" v-bind="pagination" />
           </div>
-          <div class="fs-pagination-append">
-            <slot name="pagination-append"></slot>
+          <div class="fs-pagination-right">
+            <slot name="pagination-right"></slot>
           </div>
         </div>
-        <slot name="footer-after"></slot>
+        <slot name="footer-bottom"></slot>
       </div>
     </template>
   </fs-container>
@@ -253,6 +257,9 @@ function useTable(props, ctx) {
   const computedSearchSlots = computed(() => {
     return slotFilter(ctx.slots, "search-");
   });
+  const computedToolbarSlots = computed(() => {
+    return slotFilter(ctx.slots, "toolbar-");
+  });
   const formWrapperRef = ref();
 
   const { proxy } = getCurrentInstance();
@@ -299,6 +306,7 @@ function useTable(props, ctx) {
     formWrapperRef,
     computedFormSlots,
     computedSearchSlots,
+    computedToolbarSlots,
     computeBodyHeight: fixedHeightRet.computeBodyHeight,
   };
 }
@@ -340,6 +348,7 @@ export default defineComponent({
     "update:search",
     "update:compact",
     "update:columns",
+    "form-value-change",
   ],
   setup(props, ctx) {
     console.log("ctx", ctx);
@@ -405,11 +414,11 @@ export default defineComponent({
       justify-content: center;
       align-items: center;
 
-      .fs-pagination-prefix {
+      .fs-pagination-left {
         margin-right: 10px;
       }
 
-      .fs-pagination-append {
+      .fs-pagination-right {
         flex: 0;
       }
 
@@ -422,7 +431,7 @@ export default defineComponent({
         }
       }
 
-      .fs-pagination-append {
+      .fs-pagination-right {
         flex: 0;
       }
     }

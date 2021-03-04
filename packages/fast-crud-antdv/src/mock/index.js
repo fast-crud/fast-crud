@@ -1,8 +1,17 @@
 import { mock } from "../api/service";
 import * as tools from "../api/tools";
-import dictMock from "./common/mock.dict";
-import demoMock from "../views/home/mock";
-const list = [dictMock, demoMock];
+import _ from "lodash-es";
+const commonMocks = import.meta.globEager("./common/*.js");
+const viewMocks = import.meta.globEager("../views/**/mock.js");
+
+const list = [];
+_.forEach(commonMocks, (value) => {
+  list.push(value.default);
+});
+_.forEach(viewMocks, (value) => {
+  list.push(value.default);
+});
+
 list.forEach((apiFile) => {
   for (const item of apiFile) {
     mock.onAny(new RegExp("/api" + item.path)).reply((config) => {

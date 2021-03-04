@@ -46,5 +46,8 @@ export default {
         message: "查询表单校验失败",
       },
     },
+    pagination: {
+      showTotal: "共 {n} 条",
+    },
   },
 };

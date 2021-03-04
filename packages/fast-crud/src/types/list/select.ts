@@ -2,7 +2,7 @@ import { uiContext } from "../../ui";
 export default function () {
   const ui = uiContext.get();
   return {
-    select: {
+    "dict-select": {
       search: { autoSearchTrigger: "change" },
       column: { component: { name: "fs-values-format" } },
       form: {
@@ -13,22 +13,30 @@ export default function () {
         },
       },
     },
-    radio: {
+    "dict-radio": {
       search: {
-        component: { name: "fs-dict-select", autoSearchTrigger: "change" },
-        form: {
-          component: { name: "fs-dict-radio", [ui.select.clearable]: true },
-        },
-        column: { component: { name: "fs-values-format" } },
-      },
-      checkbox: {
-        search: {
-          component: { name: "fs-dict-select", multiple: true },
+        component: {
+          name: "fs-dict-select",
+          valueBinding: ui.select.modelValue,
           autoSearchTrigger: "change",
         },
-        form: {
-          component: { name: "fs-dict-checkbox", [ui.select.clearable]: true },
+      },
+      form: {
+        component: {
+          name: "fs-dict-radio",
+          valueBinding: ui.radioGroup.modelValue,
+          [ui.select.clearable]: true,
         },
+      },
+      column: { component: { name: "fs-values-format" } },
+    },
+    "dict-checkbox": {
+      search: {
+        component: { name: "fs-dict-select", multiple: true },
+        autoSearchTrigger: "change",
+      },
+      form: {
+        component: { name: "fs-dict-checkbox", [ui.select.clearable]: true },
       },
       column: { component: { name: "fs-values-format" } },
     },

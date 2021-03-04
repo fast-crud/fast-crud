@@ -8,7 +8,17 @@ import { uiContext } from "./ui";
 import columnTypes from "./types";
 import * as components from "./components";
 import { i18n } from "./local";
-export { ComputeValue, compute, dict, useDict, useCrud, utils, uiContext };
+import useExpose from "./use/use-expose";
+export {
+  ComputeValue,
+  compute,
+  dict,
+  useDict,
+  useCrud,
+  utils,
+  uiContext,
+  useExpose,
+};
 // export * from './components'
 export const FastCrud = {
   install(app, options) {

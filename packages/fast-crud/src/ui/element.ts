@@ -16,6 +16,9 @@ import {
   FormItemCI,
   DrawerCI,
   CheckboxCI,
+  RadioCI,
+  RadioGroupCI,
+  TagCI,
 } from "./ui-interface";
 export class Element implements UiInterface {
   constructor(target) {
@@ -32,10 +35,9 @@ export class Element implements UiInterface {
   formWrapper: FormWrapperCI = {
     visible: "modelValue",
     customClass: "customClass",
-    buildOnClosedBind(is: string, onClosed: Function): {} {
+    buildOnClosedBind(is: string, onClosed: Function) {
       return { onClosed };
     },
-
     name: "fs-form-wrapper",
   };
 
@@ -166,12 +168,14 @@ export class Element implements UiInterface {
     clearable: "clearable",
   };
 
-  radio: CI = {
+  radio: RadioCI = {
     name: "el-radio",
+    value: "label",
   };
 
-  radioGroup: CI = {
+  radioGroup: RadioGroupCI = {
     name: "el-radio-group",
+    modelValue: "modelValue",
   };
 
   form: CI = {
@@ -222,8 +226,9 @@ export class Element implements UiInterface {
     clearable: "clearable",
   };
 
-  tag: CI = {
+  tag: TagCI = {
     name: "el-tag",
+    type: "type",
   };
 
   input: InputCI = {

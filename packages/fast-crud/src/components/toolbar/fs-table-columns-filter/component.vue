@@ -363,7 +363,7 @@ export default {
   .fs-drawer-wrapper {
     padding: 10px;
     height: 100%;
-    overflow-y: scroll;
+    overflow-y: auto;
   }
 
   .fs-drawer-footer {

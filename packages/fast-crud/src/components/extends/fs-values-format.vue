@@ -13,7 +13,7 @@
         v-bind="$attrs"
         :key="item[dict.value]"
         size="small"
-        :type="item[dict.color]"
+        :[$fsui.tag.type]="item[dict.color]"
         @click="onClick(item)"
         :effect="item.effect"
       >
@@ -130,6 +130,7 @@ export default {
           options.push(item);
         }
       }
+      console.log("options", options);
       return options;
     },
   },

@@ -5,6 +5,12 @@ export interface SelectCI extends CI {
   modelValue;
   clearable;
 }
+export interface RadioCI extends CI {
+  value;
+}
+export interface RadioGroupCI extends CI {
+  modelValue;
+}
 export interface InputCI extends CI {
   clearable;
   modelValue;
@@ -83,6 +89,11 @@ export interface FormItemCI extends CI {
   prop: string;
   label: string;
 }
+
+export interface TagCI extends CI {
+  type: string;
+}
+
 export interface FormWrapperCI extends CI {
   visible: string;
   buildOnClosedBind: (is, Function) => {};
@@ -110,7 +121,7 @@ export interface UiInterface {
   type: string;
   input: InputCI;
   textArea: TextAreaCI;
-  tag: CI;
+  tag: TagCI;
   table: TableCI;
   tableColumn: TableColumnCI;
   tableColumnGroup: TableColumnCI;
@@ -118,8 +129,8 @@ export interface UiInterface {
   button: CI;
   form: CI;
   formItem: FormItemCI;
-  radioGroup: CI;
-  radio: CI;
+  radioGroup: RadioGroupCI;
+  radio: RadioCI;
   select: SelectCI;
   option: CI;
   collapseTransition: CI;

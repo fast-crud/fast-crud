@@ -46,5 +46,8 @@ export default {
         message: "form valid error",
       },
     },
+    pagination: {
+      showTotal: "Total {n} items",
+    },
   },
 };

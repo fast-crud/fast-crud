@@ -24,7 +24,7 @@ export interface CrudOptions {
 
 export default function (ctx) {
   const ui = uiContext.get();
-  const { t } = useI18n(); // call `useI18n`, and spread `t` from  `useI18n` returning
+  const { t, tc } = useI18n(); // call `useI18n`, and spread `t` from  `useI18n` returning
 
   const options: CrudOptions = ctx.options;
   const crudRef = ctx.crudRef;
@@ -204,7 +204,7 @@ export default function (ctx) {
 
   function initCrudOptions(options) {
     const userOptions = _.merge(
-      defaultCrudOptions.defaultOptions({ t }),
+      defaultCrudOptions.defaultOptions({ t, tc }),
       usePagination(),
       useFormSubmit(),
       useRemove(),
@@ -313,15 +313,19 @@ export default function (ctx) {
     });
     // 与默认配置合并
     crudOptions.value = userOptions;
-    logger.info("fast-crud inited:", crudOptions);
+    logger.info("fast-crud inited:", crudOptions.value);
   }
 
   initCrudOptions(options);
 
+  function onFormValueChange(context) {
+    console.log("onFormValueChange", context);
+  }
   return {
     doRefresh,
     doPageTurn,
     doSearch,
+    onFormValueChange,
     crudOptions,
   };
 }

@@ -35,7 +35,7 @@
 
 <script>
 import { defineComponent, ref, onMounted, isReactive } from "vue";
-import { useCrud, dict, utils } from "@fast-crud/fast-crud/src";
+import { useCrud, dict, utils } from "@fast-crud/fast-crud";
 import createCrudOptions from "./crud";
 import { notification } from "ant-design-vue";
 export default defineComponent({

@@ -7,6 +7,7 @@ let def = {
   value: "value",
   label: "label",
   children: "children",
+  color: "color",
   cache: true,
 };
 const cache = new Map();
@@ -21,7 +22,7 @@ function toMap(dictOpts, data) {
   return map;
 }
 export function dict(opts) {
-  const dictOpts = merge(def, opts);
+  const dictOpts = merge({}, def, opts);
 
   if (dictOpts.data) {
     dictOpts.dataMap = toMap(dictOpts, dictOpts.data);

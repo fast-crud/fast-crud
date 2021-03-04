@@ -1,7 +1,7 @@
 import { createApp } from "vue";
 import App from "./App.vue";
 import router from "./router";
-import { FastCrud } from "@fast-crud/fast-crud/src/index.js";
+import { FastCrud } from "@fast-crud/fast-crud";
 // import "@fast-crud/fast-crud/dist/style.css";
 import Antd, { message, notification, Modal } from "ant-design-vue";
 import "ant-design-vue/dist/antd.css";
@@ -26,7 +26,23 @@ app.use(FastCrud, {
     return res;
   },
   commonOptions() {
-    return {};
+    return {
+      table: {
+        size: "small",
+        pagination: false,
+      },
+      request: {
+        transformQuery: ({ page, form }) => {
+          return { current: page.currentPage, size: page.pageSize, ...form };
+        },
+        transformRes: ({ res }) => {
+          return { currentPage: res.current, pageSize: res.size, ...res };
+        },
+      },
+      form: {
+        display: "flex",
+      },
+    };
   },
   ui: {
     name: "antdv",

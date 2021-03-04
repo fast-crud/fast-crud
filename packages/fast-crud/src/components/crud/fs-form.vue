@@ -9,41 +9,45 @@
     ref="formRef"
     :model="form"
   >
-    <template v-for="(item, key) in computedColumns" :key="key">
-      <component
-        :is="$fsui.formItem.name"
-        v-if="item.show !== false"
-        class="fs-form-item"
-        :[$fsui.formItem.label]="item.title"
-        :[$fsui.formItem.prop]="key"
-        v-bind="item"
-      >
-        <fs-slot-render
-          v-if="slots && slots['form-' + key]"
-          :slots="slots['form-' + key]"
-          :scope="{ key, ...scope }"
-        />
-        <template v-else>
-          <fs-component-render
-            v-if="item.component && item.component.show !== false"
-            :ref="
-              (el) => {
-                if (el) componentRefs[key] = el;
-              }
-            "
-            v-bind="item.component"
-            :modelValue="get(form, key)"
-            @update:modelValue="set(form, key, $event)"
-            :scope="{ key, ...scope }"
-          />
-        </template>
-      </component>
-    </template>
+    <component :is="$fsui.row.name" class="fs-row" v-bind="row">
+      <template v-for="(item, key) in computedColumns" :key="key">
+        <component :is="$fsui.col.name" class="fs-col" v-bind="item.col ?? col">
+          <component
+            :is="$fsui.formItem.name"
+            v-if="item.show !== false"
+            class="fs-form-item"
+            :[$fsui.formItem.label]="item.title"
+            :[$fsui.formItem.prop]="key"
+            v-bind="item"
+          >
+            <fs-slot-render
+              v-if="slots && slots['form-' + key]"
+              :slots="slots['form-' + key]"
+              :scope="{ key, ...scope }"
+            />
+            <template v-else>
+              <fs-component-render
+                v-if="item.component && item.component.show !== false"
+                :ref="
+                  (el) => {
+                    if (el) componentRefs[key] = el;
+                  }
+                "
+                v-bind="item.component"
+                :modelValue="get(form, key)"
+                @update:modelValue="set(form, key, $event)"
+                :scope="{ key, ...scope }"
+              />
+            </template>
+          </component>
+        </component>
+      </template>
+    </component>
   </component>
 </template>
 
 <script>
-import { computed, ref, reactive } from "vue";
+import { ref, reactive } from "vue";
 import _ from "lodash-es";
 import { ComputeValue } from "../../core/compute-value";
 import traceUtil from "../../utils/util.trace";
@@ -69,8 +73,10 @@ export default {
       type: String,
       default: "grid", // flex
     },
+    row: {},
+    col: {},
   },
-  emits: ["reset", "submit", "validationError"],
+  emits: ["reset", "submit", "validationError", "value-change"],
   setup(props, ctx) {
     traceUtil.trace("fs-from");
     const formRef = ref();
@@ -127,15 +133,23 @@ export default {
     }
 
     function getFormData() {
-      return form.value;
+      console.log("getFormData111", form);
+      return form;
     }
-    function setFormData(form) {
-      form.value = form;
+    function setFormData(formData) {
+      _.merge(form, formData);
     }
 
     return {
       get: _.get,
-      set: _.set,
+      set: (form, key, value) => {
+        _.set(form, key, value);
+        const event = { key, value, ...scope.value };
+        ctx.emit("value-change", event);
+        if (props.columns[key].valueChange) {
+          props.columns[key].valueChange(event);
+        }
+      },
       formRef,
       computedColumns,
       submit,
@@ -154,17 +168,22 @@ export default {
 
 <style lang="less">
 .fs-form-grid {
-  display: grid;
-  grid-template-columns: 50% 50%;
-  // gap: 0 20px; //列间距 20px
-  .ant-form-item-label {
-    width: 100px;
-    flex: none;
-    max-width: none;
-  }
-  .ant-form-item-control-wrapper {
-    flex: 1;
-    max-width: none;
+  .fs-row {
+    display: grid;
+    grid-template-columns: 50% 50%;
+    // gap: 0 20px; //列间距 20px
+    .ant-form-item-label {
+      width: 100px;
+      flex: none;
+      max-width: none;
+    }
+    .ant-form-item-control-wrapper {
+      flex: 1;
+      max-width: none;
+    }
+    .fs-col {
+      max-width: 100%;
+    }
   }
 }
 .fs-form-flex {
@@ -172,8 +191,8 @@ export default {
   justify-content: flex-start;
   align-items: baseline;
   flex-wrap: wrap;
-  .fs-form-item {
-    width: 50%;
+  .fs-row {
+    width: 100%;
   }
 }
 </style>

@@ -4,7 +4,7 @@
       :is="$fsui.radio.name"
       v-for="item of dictData"
       :key="item.value"
-      :label="item.value"
+      :[$fsui.radio.value]="item.value"
       >{{ item.label }}</component
     >
   </component>
@@ -17,9 +17,6 @@ export default {
   props: {
     dict: {},
   },
-  // render () {
-  //   return this.renderFunc({ data: this.data, dataMap: this.dataMap, scope: this.scope, attrs: this.$attrs })
-  // },
   setup(props, ctx) {
     return {
       ...useDict(props, ctx),

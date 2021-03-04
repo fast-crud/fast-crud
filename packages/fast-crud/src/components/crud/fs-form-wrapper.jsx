@@ -1,4 +1,4 @@
-import { ref, resolveComponent, computed } from "vue";
+import { ref, resolveComponent, computed, nextTick } from "vue";
 import FsButton from "../basic/fs-button";
 import traceUtil from "../../utils/util.trace";
 import _ from "lodash-es";
@@ -13,37 +13,88 @@ export default {
     customClass: { default: "" },
     buttons: {},
   },
-  emits: ["reset", "submit", "validationError"],
-  setup(props) {
+  emits: [
+    "reset",
+    "submit",
+    "validationError",
+    "value-change",
+    "open",
+    "opened",
+    "closed",
+  ],
+  setup(props, ctx) {
     traceUtil.trace("fs-from-wrapper");
     const { t } = useI18n();
     const formWrapperOpen = ref(false);
     const formWrapperIs = ref();
-    const formProps = ref();
+    const formOptions = ref();
     const formWrapper = ref();
+    const formRef = ref();
     const loading = ref(false);
+
+    const emitOnClosed = ref();
+    const emitOnOpened = ref();
     const open = (opts) => {
+      const { wrapper } = opts;
+      if (wrapper.onOpen) {
+        wrapper.onOpen(opts);
+      }
       formWrapper.value = {
-        ...opts.wrapper,
+        ..._.omit(wrapper, "onOpen", "onClosed", "onOpened"),
       };
       delete formWrapper.value.is;
       formWrapperIs.value = opts.wrapper.is;
-      formProps.value = {
-        ...opts,
-        wrapper: null,
+      formOptions.value = {
+        ..._.omit(opts, "wrapper"),
       };
-      delete formProps.value.wrapper;
 
+      // 打开表单对话框
       formWrapperOpen.value = true;
+
+      // 发射打开事件
+      function buildEvent() {
+        return {
+          wrapper: formWrapper.value,
+          options: formOptions.value,
+          formRef: formRef.value,
+        };
+      }
+
+      emitOnClosed.value = () => {
+        if (wrapper.onClosed) {
+          wrapper.onClosed(buildEvent());
+        }
+      };
+      emitOnOpened.value = () => {
+        if (wrapper.onOpened) {
+          wrapper.onOpened(buildEvent());
+        }
+      };
+
+      nextTick(() => {
+        onOpened();
+      });
     };
     const close = () => {
       formWrapperOpen.value = false;
     };
-    const closed = () => {
-      formProps.value = null;
+    const onClosed = () => {
+      formOptions.value = null;
+      if (emitOnClosed.value) {
+        emitOnClosed.value();
+      }
     };
 
-    const formRef = ref();
+    const onOpened = () => {
+      if (emitOnOpened.value) {
+        emitOnOpened.value();
+      }
+    };
+
+    const onValueChange = (e) => {
+      console.log("valueChange", e);
+      ctx.emit("value-change", e);
+    };
 
     async function submit() {
       loading.value = true;
@@ -87,9 +138,10 @@ export default {
 
     return {
       close,
-      closed,
+      onClosed,
+      onOpened,
       open,
-      formProps,
+      formOptions,
       formWrapperIs,
       formWrapperOpen,
       formWrapper,
@@ -99,6 +151,7 @@ export default {
       loading,
       getFormData,
       setFormData,
+      onValueChange,
     };
   },
   render() {
@@ -113,12 +166,12 @@ export default {
       }
       return slots[key](scope);
     };
-    const scope = { _self: this, ...this.formProps };
-    if (this.formProps) {
+    const scope = { _self: this, ...this.formOptions };
+    if (this.formOptions) {
       children = {
         default: () => {
           const buttons = [];
-          _.forEach(this.computedButtons, (item, key) => {
+          _.forEach(this.computedButtons, (item) => {
             if (item.show === false) {
               return;
             }
@@ -127,7 +180,11 @@ export default {
           return (
             <div>
               {slotsRender("form-body-before", scope)}
-              <fs-form ref="formRef" {...this.formProps} />
+              <fs-form
+                ref="formRef"
+                {...this.formOptions}
+                onValueChange={this.onValueChange}
+              />
               {slotsRender("form-body-after", scope)}
               <div className="fs-form-footer-btns">
                 {slotsRender("form-footer-prefix", scope)}
@@ -149,8 +206,8 @@ export default {
         this.formWrapperOpen = value;
       },
     };
-    const onClosed = this.$fsui.formWrapper.buildOnClosedBind(is, this.closed);
-    const customClass = {
+    const vClosed = this.$fsui.formWrapper.buildOnClosedBind(is, this.onClosed);
+    const vCustomClass = {
       [this.$fsui.formWrapper.customClass]:
         "fs-form-wrapper " + this.customClass,
     };
@@ -158,12 +215,12 @@ export default {
     const formWrapperComp = resolveComponent(is);
     return (
       <formWrapperComp
-        {...customClass}
+        {...vCustomClass}
         {...this.formWrapper}
         {...vModel}
-        {...onClosed}
+        {...vClosed}
         v-slots={children}
-      ></formWrapperComp>
+      />
     );
   },
 };

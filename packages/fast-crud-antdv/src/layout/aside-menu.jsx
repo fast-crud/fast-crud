@@ -1,21 +1,11 @@
-import menu from "../menu";
+import { menus } from "../router/resources";
+import router from "../router";
 export default {
   name: "AsideMenu",
   setup(props, ctx) {
-    let index = 0;
-    function setIndex(menus) {
-      for (let menu of menus) {
-        menu.index = index;
-        index++;
-        if (menu.children && menu.children.length > 0) {
-          setIndex(menu.children);
-        }
-      }
-    }
-    setIndex(menu.menus);
-
     function onSelect(item) {
       console.log("select", item);
+      router.push(item.key);
     }
 
     const buildMenus = (children) => {
@@ -37,7 +27,7 @@ export default {
           );
         } else {
           slots.push(
-            <a-menu-item key={"index" + sub.index} title={sub.title}>
+            <a-menu-item key={sub.path} title={sub.title}>
               {sub.title}
             </a-menu-item>
           );
@@ -47,7 +37,7 @@ export default {
     };
     const slots = {
       default() {
-        return buildMenus(menu.menus);
+        return buildMenus(menus);
       },
     };
     return () => {

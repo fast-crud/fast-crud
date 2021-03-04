@@ -12,8 +12,8 @@
         @compositionend="changeInputEventDisabled(false)"
       >
         <fs-slot-render
-          v-if="slots['search-prefix']"
-          :slots="slots['search-prefix']"
+          v-if="slots['search-left']"
+          :slots="slots['search-left']"
           :scope="{ form }"
         />
         <template v-for="(item, key) in computedColumns" :key="key">
@@ -55,8 +55,8 @@
           </template>
         </component>
         <fs-slot-render
-          v-if="slots['search-append']"
-          :slots="slots['search-append']"
+          v-if="slots['search-right']"
+          :slots="slots['search-right']"
           :scope="{ form }"
         />
       </component>

@@ -11,9 +11,12 @@ import {
   MessageBoxCI,
   MessageCI,
   NotificationCI,
+  RadioCI,
+  RadioGroupCI,
   SelectCI,
   TableCI,
   TableColumnCI,
+  TagCI,
   TextAreaCI,
   UiInterface,
 } from "./ui-interface";
@@ -35,9 +38,9 @@ export class Antdv implements UiInterface {
         return { afterClose: onClosed };
       } else if (is === "a-drawer") {
         return {
-          afterVisibleChange: (visiable) => {
-            if (visiable === false) {
-              onClosed(visiable);
+          afterVisibleChange: (visible) => {
+            if (visible === false) {
+              onClosed(visible);
             }
           },
         };
@@ -217,12 +220,14 @@ export class Antdv implements UiInterface {
     name: "a-pagination",
   };
 
-  radio: CI = {
+  radio: RadioCI = {
     name: "a-radio",
+    value: "value",
   };
 
-  radioGroup: CI = {
+  radioGroup: RadioGroupCI = {
     name: "a-radio-group",
+    modelValue: "value",
   };
 
   row: CI = {
@@ -265,8 +270,9 @@ export class Antdv implements UiInterface {
     clearable: "allowClear",
   };
 
-  tag: CI = {
+  tag: TagCI = {
     name: "a-tag",
+    type: "color",
   };
 
   input: InputCI = {

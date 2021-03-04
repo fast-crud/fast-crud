@@ -1,4 +1,4 @@
-import { compute, dict } from "@fast-crud/fast-crud/src";
+import { compute, dict } from "@fast-crud/fast-crud";
 import * as api from "./api";
 export default function ({ crudRef }) {
   const pageRequest = async (query) => {

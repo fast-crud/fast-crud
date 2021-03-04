@@ -1,6 +1,9 @@
 <template>
   <div class="fs-toolbar">
-    <slot name="toolbar-prefix"></slot>
+    <fs-slot-render
+      v-if="slots['toolbar-left']"
+      :slots="slots['toolbar-left']"
+    />
     <template v-for="(item, key) of computedButtons" :key="key">
       <fs-button
         v-if="item.show !== false"
@@ -8,7 +11,10 @@
         @click="item.click()"
       />
     </template>
-    <slot name="toolbar-append"></slot>
+    <fs-slot-render
+      v-if="slots['toolbar-right']"
+      :slots="slots['toolbar-right']"
+    />
     <fs-table-columns-filter
       v-if="columns"
       ref="columnsFilterRef"
@@ -26,10 +32,11 @@ import _ from "lodash-es";
 import { ref, computed, getCurrentInstance } from "vue";
 import traceUtil from "../../utils/util.trace";
 import { useI18n } from "../../local";
+import FsSlotRender from "../render/fs-slot-render";
 export default {
   name: "FsToolbar",
   // eslint-disable-next-line vue/no-unused-components
-  components: { FsTableColumnsFilter, FsButton },
+  components: { FsTableColumnsFilter, FsButton, FsSlotRender },
   props: {
     buttons: {
       type: Object,
@@ -64,6 +71,7 @@ export default {
       type: [String, Boolean],
       default: true,
     },
+    slots: {},
   },
   emits: [
     "refresh",
