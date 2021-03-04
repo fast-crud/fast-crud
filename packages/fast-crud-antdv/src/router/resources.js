@@ -20,6 +20,16 @@ const resources = [
         component: "/form/layout/index.vue",
       },
       {
+        title: "表单Grid布局",
+        path: "/form/layout-grid",
+        component: "/form/layout-grid/index.vue",
+      },
+      {
+        title: "表单Flex布局",
+        path: "/form/layout-flex",
+        component: "/form/layout-flex/index.vue",
+      },
+      {
         title: "文本输入(input)",
         path: "/form/text",
         component: "/form/text/index.vue",

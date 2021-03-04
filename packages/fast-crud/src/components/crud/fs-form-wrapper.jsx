@@ -10,8 +10,6 @@ export default {
   components: { FsButton },
   props: {
     slots: {},
-    customClass: { default: "" },
-    buttons: {},
   },
   emits: [
     "reset",
@@ -23,7 +21,7 @@ export default {
     "closed",
   ],
   setup(props, ctx) {
-    traceUtil.trace("fs-from-wrapper");
+    traceUtil.trace("fs-form-wrapper");
     const { t } = useI18n();
     const formWrapperOpen = ref(false);
     const formWrapperIs = ref();
@@ -92,7 +90,6 @@ export default {
     };
 
     const onValueChange = (e) => {
-      console.log("valueChange", e);
       ctx.emit("value-change", e);
     };
 
@@ -133,7 +130,7 @@ export default {
           loading: loading.value,
         },
       };
-      return _.merge(defBtns, props.buttons);
+      return _.merge(defBtns, formWrapper.value.buttons);
     });
 
     return {
@@ -209,7 +206,7 @@ export default {
     const vClosed = this.$fsui.formWrapper.buildOnClosedBind(is, this.onClosed);
     const vCustomClass = {
       [this.$fsui.formWrapper.customClass]:
-        "fs-form-wrapper " + this.customClass,
+        "fs-form-wrapper " + this.formWrapper.customClass,
     };
 
     const formWrapperComp = resolveComponent(is);

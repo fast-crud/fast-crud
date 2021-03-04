@@ -10,19 +10,23 @@
     :model="form"
   >
     <component :is="$fsui.row.name" class="fs-row" v-bind="row">
-      <template v-for="(item, key) in computedColumns" :key="key">
-        <component :is="$fsui.col.name" class="fs-col" v-bind="item.col ?? col">
+      <template v-for="item in computedColumns" :key="item.key">
+        <component
+          :is="$fsui.col.name"
+          class="fs-col"
+          v-bind="mergeCol(item.col)"
+        >
           <component
             :is="$fsui.formItem.name"
             v-if="item.show !== false"
             class="fs-form-item"
             :[$fsui.formItem.label]="item.title"
-            :[$fsui.formItem.prop]="key"
+            :[$fsui.formItem.prop]="item.key"
             v-bind="item"
           >
             <fs-slot-render
-              v-if="slots && slots['form-' + key]"
-              :slots="slots['form-' + key]"
+              v-if="slots && slots['form-' + item.key]"
+              :slots="slots['form-' + item.key]"
               :scope="{ key, ...scope }"
             />
             <template v-else>
@@ -30,13 +34,13 @@
                 v-if="item.component && item.component.show !== false"
                 :ref="
                   (el) => {
-                    if (el) componentRefs[key] = el;
+                    if (el) componentRefs[item.key] = el;
                   }
                 "
                 v-bind="item.component"
-                :modelValue="get(form, key)"
-                @update:modelValue="set(form, key, $event)"
-                :scope="{ key, ...scope }"
+                :modelValue="get(form, item.key)"
+                @update:modelValue="set(form, item.key, $event)"
+                :scope="{ key: item.key, ...scope }"
               />
             </template>
           </component>
@@ -105,7 +109,29 @@ export default {
       return scope.value;
     }
 
-    const computedColumns = ComputeValue.computed(props.columns, getContextFn);
+    const computedColumns = ComputeValue.computed(
+      props.columns,
+      getContextFn,
+      null,
+      null,
+      (columns) => {
+        //排序
+        const list = [];
+        let index = 1;
+        _.forEach(columns, (value, key) => {
+          value.key = key;
+          if (value.order == null) {
+            value.order = index;
+          }
+          index++;
+          list.push(value);
+        });
+        list.sort((a, b) => {
+          return a.order - b.order;
+        });
+        return list;
+      }
+    );
 
     async function getFormRef() {
       return formRef.value;
@@ -140,6 +166,10 @@ export default {
       _.merge(form, formData);
     }
 
+    function mergeCol(col) {
+      return _.merge({}, props.col, col);
+    }
+
     return {
       get: _.get,
       set: (form, key, value) => {
@@ -161,6 +191,7 @@ export default {
       getFormData,
       setFormData,
       getComponentRef,
+      mergeCol,
     };
   },
 };

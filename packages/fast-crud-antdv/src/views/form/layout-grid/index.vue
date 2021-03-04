@@ -31,6 +31,7 @@ export default defineComponent({
 });
 </script>
 <style lang="less">
+// grid模式下， labelWidth 需要靠样式控制
 .page-layout {
   .ant-form-item-label {
     width: 110px !important;

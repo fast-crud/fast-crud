@@ -1,5 +1,5 @@
 import * as api from "./api";
-import { dict, useExpose } from "/src/fs";
+import { dict, useExpose, compute } from "/src/fs";
 export default function ({ crudRef }) {
   const pageRequest = async (query) => {
     return await api.GetList(query);
@@ -25,21 +25,16 @@ export default function ({ crudRef }) {
       delRequest,
     },
     form: {
+      /**
+       * flex模式，通过
+       * grid模式
+       */
       display: "flex",
       wrapper: {
-        onOpen(context) {
-          //动态设置初始值
-          if (context.mode === "add") {
-            context.initial = { name: "初始姓名" };
-          }
-          console.log("form open", context);
-        },
+        customClass: "page-layout",
         onOpened(context) {
-          context.options.display = context.options.initial.display;
+          context.options.display = context.options.initial?.display;
           console.log("form opened", context, getFormData());
-        },
-        onClosed(context) {
-          console.log("form closed", context, getFormData());
         },
       },
     },
@@ -56,8 +51,8 @@ export default function ({ crudRef }) {
         form: {
           valueChange(context) {
             const { value } = context;
-            console.log("crudRef", value, crudRef.value.formWrapperRef);
-            crudRef.value.formWrapperRef.formOptions.display = value;
+            console.log("valueChange", value, context);
+            context.form.display = value;
           },
         },
       },
@@ -70,13 +65,24 @@ export default function ({ crudRef }) {
         title: "邮编",
         type: "text",
       },
-      intro: {
-        title: "简介",
+      gridSpan: {
+        title: "grid跨列",
         type: "text-area",
         form: {
           col: {
-            span: 24, // flex模式, 占两列
-            style: { gridColumn: "span 2" }, // grid 模式占两列
+            style: { gridColumn: "span 2" }, // grid 模式
+          },
+        },
+      },
+      flexSpan: {
+        title: "flex跨列",
+        type: "text-area",
+        form: {
+          show: compute((context) => {
+            return context.form.display !== "grid";
+          }),
+          col: {
+            span: 24, // flex模式
           },
           labelCol: { span: 2 }, // antdv 跨列时，需要同时修改labelCol和wrapperCol
           wrapperCol: { span: 21 },

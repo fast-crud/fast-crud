@@ -11,7 +11,7 @@ import { defineComponent, ref, onMounted } from "vue";
 import { useCrud } from "/src/fs";
 import createCrudOptions from "./crud";
 export default defineComponent({
-  name: "FormLayout",
+  name: "FormLayoutFlex",
   setup() {
     const crudRef = ref();
     const crud = useCrud({
@@ -30,10 +30,3 @@ export default defineComponent({
   },
 });
 </script>
-<style lang="less">
-.page-layout {
-  .ant-form-item-label {
-    width: 110px !important;
-  }
-}
-</style>

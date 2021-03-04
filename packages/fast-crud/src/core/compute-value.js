@@ -46,7 +46,7 @@ export class ComputeValue {
     return target;
   }
 
-  static computed(target, getContextFn, clone = true, excludes) {
+  static computed(target, getContextFn, clone = true, excludes, callback) {
     const dependValues = ComputeValue.findComputeValues(
       toRaw(target),
       excludes
@@ -54,6 +54,9 @@ export class ComputeValue {
     if (Object.keys(dependValues).length <= 0) {
       // 不需要重新计算
       return computed(() => {
+        if (callback) {
+          return callback(target);
+        }
         return target;
       });
     }
@@ -67,6 +70,9 @@ export class ComputeValue {
         const context = getContextFn ? getContextFn(key, value) : {};
         _.set(target, key, value.computeFn(context));
       });
+      if (callback) {
+        return callback(target);
+      }
       return target;
     });
   }
