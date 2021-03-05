@@ -34,11 +34,36 @@ const resources = [
         path: "/form/text",
         component: "/form/text/index.vue",
       },
-      { title: "选择(select)", path: "/form/select" },
-      { title: "级联(cascade)", path: "/form/cascade" },
-      { title: "多选(checkbox)", path: "/form/checkbox" },
-      { title: "单选(radio)", path: "/form/Select" },
-      { title: "选择联动", path: "/form/linked" },
+      {
+        title: "选择(select)",
+        path: "/form/select",
+        component: "/form/select/index.vue",
+      },
+      {
+        title: "级联(cascader)",
+        path: "/form/cascader",
+        component: "/form/cascader/index.vue",
+      },
+      {
+        title: "多选(checkbox)",
+        path: "/form/checkbox",
+        component: "/form/checkbox/index.vue",
+      },
+      {
+        title: "单选(radio)",
+        path: "/form/radio",
+        component: "/form/radio/index.vue",
+      },
+      {
+        title: "开关(switch)",
+        path: "/form/switch",
+        component: "/form/switch/index.vue",
+      },
+      {
+        title: "选择联动",
+        path: "/form/linkage",
+        component: "/form/linkage/index.vue",
+      },
     ],
   },
   {

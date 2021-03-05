@@ -1,21 +1,41 @@
-import { ref } from "vue";
+import { ref, watch, getCurrentInstance } from "vue";
 import { getDictData } from "../core/dict";
 export function useDict(props, ctx) {
   const dictData = ref([]);
   const dictMap = ref({});
   const dictLoading = ref(false);
+
+  // @ts-ignore
+  const { proxy } = getCurrentInstance();
   const loadDict = async () => {
-    dictLoading.value = true;
-    try {
-      const ret = await getDictData(props.dict, { ...ctx.attrs });
-      dictData.value = ret.data;
-      dictMap.value = ret.dataMap;
-    } finally {
-      dictLoading.value = false;
+    if (props.dict) {
+      dictLoading.value = true;
+      try {
+        const ret = await getDictData({
+          dict: props.dict,
+          scope: ctx.attrs.scope,
+          componentRef: proxy,
+        });
+        dictData.value = ret.data;
+        dictMap.value = ret.dataMap;
+      } finally {
+        dictLoading.value = false;
+      }
     }
   };
 
   loadDict();
+
+  if (props.dict && props.dict.data) {
+    watch(
+      () => {
+        return props.dict.data;
+      },
+      () => {
+        loadDict();
+      }
+    );
+  }
 
   const clearDict = () => {
     dictData.value = [];

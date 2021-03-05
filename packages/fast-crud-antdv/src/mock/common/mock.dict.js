@@ -1,8 +1,25 @@
+import cascaderData from "./cascader-data";
+import { TreeNodesLazyLoader } from "./pcas-data";
+
 const openStatus = [
-  { value: "1", label: "打开", color: "#f50" },
+  { value: "1", label: "打开", color: "success" },
   { value: "2", label: "停止", color: "cyan" },
   { value: "0", label: "关闭", color: "red" },
 ];
+
+const textStatus = [
+  { id: "1", text: "打开", color: "success" },
+  { id: "2", text: "停止", color: "cyan" },
+  { id: "0", text: "关闭", color: "red" },
+];
+
+export function GetTreeChildrenByParentId(parentId) {
+  return TreeNodesLazyLoader.getChildren(parentId);
+}
+
+export function GetNodesByValues(values) {
+  return TreeNodesLazyLoader.getNodesByValues(values);
+}
 
 export default [
   {
@@ -17,13 +34,46 @@ export default [
     },
   },
   {
-    path: "/dicts/_OpenStatusEnum",
+    path: "/dicts/_OpenStatusEnum2",
     method: "get",
     handle() {
       return {
         code: 0,
         msg: "success",
-        data: openStatus,
+        data: textStatus,
+      };
+    },
+  },
+  {
+    path: "/dicts/cascaderData",
+    method: "get",
+    handle() {
+      return {
+        code: 0,
+        msg: "success",
+        data: cascaderData,
+      };
+    },
+  },
+  {
+    path: "/tree/GetTreeChildrenByParentId",
+    method: "get",
+    async handle(data) {
+      return {
+        code: 0,
+        msg: "success",
+        data: await GetTreeChildrenByParentId(data.parentId),
+      };
+    },
+  },
+  {
+    path: "/tree/GetNodesByValues",
+    method: "get",
+    async handle(data) {
+      return {
+        code: 0,
+        msg: "success",
+        data: await GetNodesByValues(data.values),
       };
     },
   },

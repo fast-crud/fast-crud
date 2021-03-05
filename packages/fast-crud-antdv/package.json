@@ -8,16 +8,17 @@
     "pretty-quick": "pretty-quick"
   },
   "dependencies": {
-    "vue": "^3.0.5",
     "@ant-design/icons-vue": "^6.0.1",
     "@fast-crud/fast-crud": "^0.1.1-rc2",
-    "ant-design-vue": "^2.0.0",
+    "ant-design-vue": "^2.0.1",
     "axios": "^0.21.1",
     "axios-mock-adapter": "^1.19.0",
+    "china-division": "^2.3.1",
     "core-js": "^3.6.5",
     "dayjs": "^1.10.4",
     "deepdash-es": "^5.3.5",
     "lodash-es": "^4.17.20",
+    "vue": "^3.0.5",
     "vue-i18n": "^9.0.0",
     "vue-router": "^4.0.1",
     "vuedraggable": "^4.0.1"

@@ -1,5 +1,7 @@
 import {
+  CascaderCI,
   CheckboxCI,
+  CheckboxGroupCI,
   CI,
   DialogCI,
   DrawerCI,
@@ -14,6 +16,7 @@ import {
   RadioCI,
   RadioGroupCI,
   SelectCI,
+  SwitchCI,
   TableCI,
   TableColumnCI,
   TagCI,
@@ -180,11 +183,22 @@ export class Antdv implements UiInterface {
     name: "a-card",
   };
 
+  cascader: CascaderCI = {
+    name: "a-cascader",
+    modelValue: "value",
+    clearable: "allowClear",
+  };
+
+  checkboxGroup: CheckboxGroupCI = {
+    name: "a-checkbox-group",
+    modelValue: "value",
+  };
   checkbox: CheckboxCI = {
     name: "a-checkbox",
     resolveEvent(e) {
       return e.target.checked;
     },
+    value: "value",
   };
 
   col: CI = {
@@ -273,11 +287,25 @@ export class Antdv implements UiInterface {
   tag: TagCI = {
     name: "a-tag",
     type: "color",
+    colors: ["blue", "green", "orange", "red", "cyan", "purple"],
   };
 
   input: InputCI = {
     name: "a-input",
     clearable: "allowClear",
     modelValue: "value",
+  };
+  number: CI = {
+    name: "a-input-number",
+  };
+  switch: SwitchCI = {
+    activeColor: "active-color",
+    activeText: "checkedChildren",
+    activeValue: "active-value",
+    inactiveColor: "inactive-color",
+    inactiveText: "unCheckedChildren",
+    inactiveValue: "inactive-value",
+    modelValue: "checked",
+    name: "a-switch",
   };
 }

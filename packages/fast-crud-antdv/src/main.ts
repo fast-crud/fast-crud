@@ -20,10 +20,8 @@ app.use(router);
 app.use(i18n);
 app.use(icons);
 app.use(FastCrud, {
-  async dictRequest({ dict }) {
-    const res = await requestForMock({ url: dict.url });
-    console.log("get dict", res);
-    return res;
+  async dictRequest({ url }) {
+    return await requestForMock({ url });
   },
   commonOptions() {
     return {

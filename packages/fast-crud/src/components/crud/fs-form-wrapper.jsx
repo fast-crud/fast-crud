@@ -1,4 +1,4 @@
-import { ref, resolveComponent, computed, nextTick } from "vue";
+import { ref, resolveDynamicComponent, computed, nextTick } from "vue";
 import FsButton from "../basic/fs-button";
 import traceUtil from "../../utils/util.trace";
 import _ from "lodash-es";
@@ -209,7 +209,7 @@ export default {
         "fs-form-wrapper " + this.formWrapper.customClass,
     };
 
-    const formWrapperComp = resolveComponent(is);
+    const formWrapperComp = resolveDynamicComponent(is);
     return (
       <formWrapperComp
         {...vCustomClass}

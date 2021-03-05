@@ -95,7 +95,7 @@ export default function ({ crudRef }) {
               return context.row?.show === true;
             }),
             name: "el-image",
-            valueBinding: "src",
+            vModel: "src",
             style: { height: "30px" },
             fit: "contain",
             children: {
@@ -112,7 +112,7 @@ export default function ({ crudRef }) {
         form: {
           component: {
             name: "el-image",
-            valueBinding: "src",
+            vModel: "src",
             style: "width:70px",
           },
           style: {

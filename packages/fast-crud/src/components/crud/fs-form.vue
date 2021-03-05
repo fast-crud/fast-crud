@@ -13,28 +13,30 @@
       <template v-for="item in computedColumns" :key="item.key">
         <component
           :is="$fsui.col.name"
+          v-if="item.show !== false"
           class="fs-col"
           v-bind="mergeCol(item.col)"
         >
           <component
             :is="$fsui.formItem.name"
-            v-if="item.show !== false"
             class="fs-form-item"
             :[$fsui.formItem.label]="item.title"
             :[$fsui.formItem.prop]="item.key"
             v-bind="item"
           >
             <fs-slot-render
-              v-if="slots && slots['form-' + item.key]"
-              :slots="slots['form-' + item.key]"
-              :scope="{ key, ...scope }"
+              v-if="slots && slots['form_' + item.key]"
+              :slots="slots['form_' + item.key]"
+              :scope="{ key: item.key, ...scope }"
             />
             <template v-else>
               <fs-component-render
                 v-if="item.component && item.component.show !== false"
                 :ref="
                   (el) => {
-                    if (el) componentRefs[item.key] = el;
+                    if (el) {
+                      componentRefs[item.key] = el;
+                    }
                   }
                 "
                 v-bind="item.component"
@@ -42,6 +44,19 @@
                 @update:modelValue="set(form, item.key, $event)"
                 :scope="{ key: item.key, ...scope }"
               />
+            </template>
+            <template v-if="item.helper">
+              <div class="fs-form-helper">
+                <template v-if="typeof item.helper === 'string'">{{
+                  item.helper
+                }}</template>
+                <template v-else-if="item.helper.render">
+                  <fs-render
+                    :renderFunc="item.helper.render"
+                    :scope="{ key: item.key, ...scope }"
+                  />
+                </template>
+              </div>
             </template>
           </component>
         </component>
@@ -51,13 +66,14 @@
 </template>
 
 <script>
-import { ref, reactive } from "vue";
+import { ref, reactive, getCurrentInstance } from "vue";
 import _ from "lodash-es";
 import { ComputeValue } from "../../core/compute-value";
 import traceUtil from "../../utils/util.trace";
+import FsRender from "../render/fs-render";
 export default {
   name: "FsForm",
-  components: {},
+  components: { FsRender },
   props: {
     // 初始数据
     initial: {
@@ -170,11 +186,12 @@ export default {
       return _.merge({}, props.col, col);
     }
 
+    const { proxy } = getCurrentInstance();
     return {
       get: _.get,
       set: (form, key, value) => {
         _.set(form, key, value);
-        const event = { key, value, ...scope.value };
+        const event = { key, value, formRef: proxy, ...scope.value };
         ctx.emit("value-change", event);
         if (props.columns[key].valueChange) {
           props.columns[key].valueChange(event);
@@ -224,6 +241,11 @@ export default {
   flex-wrap: wrap;
   .fs-row {
     width: 100%;
+  }
+
+  .fs-form-helper {
+    color: #7d7d7d;
+    font-size: 12px;
   }
 }
 </style>

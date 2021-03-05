@@ -8,12 +8,12 @@
     <template v-else>
       <component
         :is="$fsui.tag.name"
-        class="tag-item"
+        class="fs-tag"
         v-for="item in _items"
         v-bind="$attrs"
         :key="item[dict.value]"
         size="small"
-        :[$fsui.tag.type]="item[dict.color]"
+        :[$fsui.tag.type]="item[dict.color] || 'default'"
         @click="onClick(item)"
         :effect="item.effect"
       >
@@ -26,9 +26,9 @@
 <script>
 import { watch, toRefs } from "vue";
 import { useDict } from "../../use/use-dict";
-const COLOR_LIST = ["primary", "success", "warning", "danger"];
-const EFFECT_LIST = ["plain", "light"];
-
+import { uiContext } from "../../ui";
+import { defaultDict } from "../../core/dict";
+import { cloneDeep } from "lodash-es";
 // value格式化展示组件
 export default {
   name: "FsValuesFormat",
@@ -46,16 +46,14 @@ export default {
     // 数据字典
     dict: {
       type: Object,
-      require: false,
-      default: () => {
-        return {};
+      default() {
+        return cloneDeep(defaultDict);
       },
     },
     // 颜色，【auto, primary, success, warning, danger ,info】
     // 配置auto，则自动根据value值hashcode分配颜色值
     color: {
       require: false,
-      default: "primary",
     },
     effect: {
       require: false,
@@ -73,10 +71,6 @@ export default {
     type: {
       default: "tag", // 可选【text,tag】
     },
-    // valuechange 是否reload
-    changeReload: {
-      default: undefined,
-    },
   },
   emits: ["click"],
   setup(props, ctx) {
@@ -86,12 +80,15 @@ export default {
       console.log("reload dict");
       dict.reloadDict();
     });
+
+    const ui = uiContext.get();
+    const COLOR_LIST = ui.tag.colors;
+    const EFFECT_LIST = ["plain", "light"];
     return {
       ...dict,
+      COLOR_LIST,
+      EFFECT_LIST,
     };
-  },
-  data() {
-    return {};
   },
   computed: {
     _items() {
@@ -104,14 +101,14 @@ export default {
       const dictDataMap = this.dictMap;
       const valueArr = this.getValueArr();
       const options = [];
-      const dict = this.dict;
+      const dictOpts = this.dict;
       // 没有字典，直接显示值
       if (dictDataMap == null || Object.keys(dictDataMap).length === 0) {
         for (const str of valueArr) {
           const item = {};
-          item[dict.value] = str;
-          item[dict.label] = str;
-          this.setColor(item, dict);
+          item[dictOpts.value] = str;
+          item[dictOpts.label] = str;
+          this.setColor(item, dictOpts);
           options.push(item);
         }
         return options;
@@ -120,17 +117,16 @@ export default {
       for (const str of valueArr) {
         let item = dictDataMap[str];
         if (item != null) {
-          this.setColor(item, dict);
+          this.setColor(item, dictOpts);
           options.push(item);
         } else {
           item = {};
-          item[dict.value] = str;
-          item[dict.label] = str;
-          this.setColor(item, dict);
+          item[dictOpts.value] = str;
+          item[dictOpts.label] = str;
+          this.setColor(item, dictOpts);
           options.push(item);
         }
       }
-      console.log("options", options);
       return options;
     },
   },
@@ -159,14 +155,14 @@ export default {
       if (!item.effect && this.effect) {
         item.effect = this.effect;
       }
-      if (item[dict.color]) {
+      if (item[dict.color] != null) {
         return;
       }
       if (this.color === "auto") {
         const hashcode = this.hashcode(item[dict.value]);
-        const colors = this.autoColors ? this.autoColors : COLOR_LIST;
+        const colors = this.autoColors ? this.autoColors : this.COLOR_LIST;
         item[dict.color] = colors[hashcode % colors.length];
-        const effects = this.autoEffects ? this.autoEffects : EFFECT_LIST;
+        const effects = this.autoEffects ? this.autoEffects : this.EFFECT_LIST;
         item.effect =
           effects[Math.floor(hashcode / colors.length) % effects.length];
       } else {
@@ -196,10 +192,7 @@ export default {
 };
 </script>
 <style>
-.fs-values-format .tag-item {
-  margin-right: 10px;
-}
-.fs-values-format > span {
-  margin-right: 5px;
+.fs-values-format .fs-tag {
+  margin: 2px;
 }
 </style>

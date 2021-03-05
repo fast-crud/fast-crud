@@ -1,4 +1,4 @@
-import { resolveComponent, h } from "vue";
+import { resolveDynamicComponent, h } from "vue";
 import "./style.less";
 export default {
   name: "FsButton",
@@ -15,7 +15,7 @@ export default {
     let icon = this.icon;
     let IconComp = null;
     if (icon && this.$fsui.icon.isComponent) {
-      IconComp = resolveComponent(icon);
+      IconComp = resolveDynamicComponent(icon);
       icon = null;
     }
     const slots = {
@@ -36,7 +36,7 @@ export default {
 
     const isCircle = this.circle ? this.$fsui.icon.circle : {};
 
-    const buttonComp = resolveComponent(this.$fsui.button.name);
+    const buttonComp = resolveDynamicComponent(this.$fsui.button.name);
 
     return h(
       buttonComp,

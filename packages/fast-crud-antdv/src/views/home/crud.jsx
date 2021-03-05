@@ -53,6 +53,10 @@ export default function ({ crudRef }) {
       },
     },
     columns: {
+      id: {
+        title: "id",
+        type: "text",
+      },
       date: {
         title: "日期",
         column: {
@@ -101,7 +105,7 @@ export default function ({ crudRef }) {
               return context.row?.show === true;
             }),
             name: "a-image",
-            valueBinding: "src",
+            vModel: "src",
             width: "30px",
             height: "30px",
             fit: "contain",
@@ -119,7 +123,7 @@ export default function ({ crudRef }) {
         form: {
           component: {
             name: "a-image",
-            valueBinding: "src",
+            vModel: "src",
             style: "width:70px",
           },
           style: {
@@ -136,7 +140,7 @@ export default function ({ crudRef }) {
         column: {
           component: {
             name: "a-switch",
-            valueBinding: "checked",
+            vModel: "checked",
             events: {
               onChange(context) {
                 console.log("switch context", context);
@@ -151,7 +155,7 @@ export default function ({ crudRef }) {
           }),
           component: {
             name: "a-switch",
-            valueBinding: "checked",
+            vModel: "checked",
           },
           style: {
             width: "100%;",
@@ -163,7 +167,7 @@ export default function ({ crudRef }) {
         children: {
           province: {
             title: "省份",
-            type: "select",
+            type: "dict-select",
             search: { show: true },
             dict: dict({
               url: "/dicts/OpenStatusEnum",
@@ -171,7 +175,7 @@ export default function ({ crudRef }) {
           },
           city: {
             title: "城市",
-            type: "select",
+            type: "dict-select",
             dict: dict({
               url: "/dicts/OpenStatusEnum",
             }),

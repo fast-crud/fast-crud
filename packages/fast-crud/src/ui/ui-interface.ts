@@ -45,10 +45,28 @@ export interface TableCI extends CI {
   vLoading;
 }
 
+export interface CheckboxGroupCI extends CI {
+  modelValue;
+}
 export interface CheckboxCI extends CI {
   resolveEvent: Function;
+  value;
 }
 
+export interface CascaderCI extends CI {
+  modelValue;
+  clearable;
+}
+
+export interface SwitchCI extends CI {
+  modelValue;
+  activeColor;
+  activeValue;
+  activeText;
+  inactiveText;
+  inactiveColor;
+  inactiveValue;
+}
 export interface MessageCI extends CI {
   get;
   open;
@@ -92,6 +110,7 @@ export interface FormItemCI extends CI {
 
 export interface TagCI extends CI {
   type: string;
+  colors: Array<string>;
 }
 
 export interface FormWrapperCI extends CI {
@@ -131,10 +150,11 @@ export interface UiInterface {
   formItem: FormItemCI;
   radioGroup: RadioGroupCI;
   radio: RadioCI;
+  checkboxGroup: CheckboxGroupCI;
+  checkbox: CheckboxCI;
   select: SelectCI;
   option: CI;
   collapseTransition: CI;
-  checkbox: CheckboxCI;
   card: CI;
   drawer: DrawerCI;
   col: CI;
@@ -147,4 +167,7 @@ export interface UiInterface {
   notification: NotificationCI;
   messageBox: MessageBoxCI;
   formWrapper: FormWrapperCI;
+  number: CI;
+  cascader: CascaderCI;
+  switch: SwitchCI;
 }

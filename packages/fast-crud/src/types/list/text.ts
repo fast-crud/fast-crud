@@ -6,7 +6,7 @@ export default function () {
       form: {
         component: {
           name: ui.input.name,
-          valueBinding: ui.textArea.modelValue,
+          vModel: ui.textArea.modelValue,
           [ui.input.clearable]: true,
         },
       },
@@ -23,7 +23,7 @@ export default function () {
         component: {
           name: ui.textArea.name,
           type: ui.textArea.type,
-          valueBinding: ui.textArea.modelValue,
+          vModel: ui.textArea.modelValue,
           [ui.input.clearable]: true,
         },
       },

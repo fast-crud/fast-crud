@@ -19,6 +19,9 @@ import {
   RadioCI,
   RadioGroupCI,
   TagCI,
+  CheckboxGroupCI,
+  CascaderCI,
+  SwitchCI,
 } from "./ui-interface";
 export class Element implements UiInterface {
   constructor(target) {
@@ -31,6 +34,17 @@ export class Element implements UiInterface {
 
   type = "element";
   modelValue = "modelValue";
+
+  switch: SwitchCI = {
+    activeColor: "active-color",
+    activeText: "active-text",
+    activeValue: "active-value",
+    inactiveColor: "inactive-color",
+    inactiveText: "inactive-text",
+    inactiveValue: "inactive-value",
+    modelValue: "modelValue",
+    name: "el-switch",
+  };
 
   formWrapper: FormWrapperCI = {
     visible: "modelValue",
@@ -140,11 +154,16 @@ export class Element implements UiInterface {
     name: "el-card",
   };
 
+  checkboxGroup: CheckboxGroupCI = {
+    name: "el-checkbox-group",
+    modelValue: "modelValue",
+  };
   checkbox: CheckboxCI = {
     name: "el-checkbox",
     resolveEvent(e) {
       return e;
     },
+    value: "label",
   };
 
   drawer: DrawerCI = {
@@ -176,6 +195,12 @@ export class Element implements UiInterface {
   radioGroup: RadioGroupCI = {
     name: "el-radio-group",
     modelValue: "modelValue",
+  };
+
+  cascader: CascaderCI = {
+    name: "el-cascader",
+    modelValue: "modelValue",
+    clearable: "clearable",
   };
 
   form: CI = {
@@ -229,11 +254,15 @@ export class Element implements UiInterface {
   tag: TagCI = {
     name: "el-tag",
     type: "type",
+    colors: ["primary", "success", "warning", "danger"],
   };
 
   input: InputCI = {
     name: "el-input",
     clearable: "clearable",
     modelValue: "modelValue",
+  };
+  number: CI = {
+    name: "el-input-number",
   };
 }

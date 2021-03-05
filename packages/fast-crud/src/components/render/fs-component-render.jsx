@@ -1,7 +1,6 @@
-import { h, resolveComponent, getCurrentInstance, computed } from "vue";
+import { h, resolveDynamicComponent, getCurrentInstance, computed } from "vue";
 import _ from "lodash-es";
 import traceUtil from "../../utils/util.trace";
-import { uiContext } from "../../ui";
 export default {
   name: "FsComponentRender",
   props: {
@@ -21,46 +20,49 @@ export default {
     scope: {
       type: Object,
     },
-    valueBinding: {
+    vModel: {
       type: String,
       Object,
     },
-    dict: {},
   },
   emits: ["update:dict", "update:modelValue"],
   setup(props, ctx) {
     traceUtil.trace("fs-component-render");
-    const ui = uiContext.get();
     const newScope = computed(() => {
       return {
         ...ctx.attrs,
         ...props.scope,
-        dict: props.dict,
       };
     });
 
-    // 带事件的attrs
-    const allAttrs = {
-      scope: props.scope,
-      dict: props.dict,
-      modelValue: props.modelValue,
-    };
     const computedModelValue = computed(() => {
       return props.modelValue;
     });
-    const valueBinding = computed(() => {
-      return props.valueBinding || "modelValue";
+    const vModel = computed(() => {
+      return props.vModel || "modelValue";
     });
-    allAttrs["onUpdate:" + valueBinding.value] = (value) => {
-      ctx.emit("update:modelValue", value);
-    };
 
-    const events = { ...props.events, ...props.on };
-    _.forEach(events, (value, key) => {
-      const handler = value;
-      allAttrs[key] = ($event) => {
-        return handler({ ...newScope.value, $event });
+    // 带事件的attrs
+    const allAttrs = computed(() => {
+      const attrs = {
+        ...ctx.attrs,
+        scope: props.scope,
+        modelValue: props.modelValue,
       };
+      attrs["onUpdate:" + vModel.value] = (value) => {
+        ctx.emit("update:modelValue", value);
+      };
+
+      const events = { ...props.events, ...props.on };
+      _.forEach(events, (value, key) => {
+        const handler = value;
+        attrs[key] = ($event) => {
+          return handler({ ...newScope.value, $event });
+        };
+      });
+
+      _.set(attrs, vModel.value, computedModelValue.value);
+      return attrs;
     });
 
     const childrenRender = () => {
@@ -82,12 +84,11 @@ export default {
     // eslint-disable-next-line vue/no-setup-props-destructure
     let inputComp = props.name || proxy.$fsui.input.name;
     if (inputComp !== "div" || inputComp !== "span") {
-      inputComp = resolveComponent(inputComp);
+      inputComp = resolveDynamicComponent(inputComp);
     }
     const children = childrenRender();
     return () => {
-      _.set(allAttrs, valueBinding.value, computedModelValue.value);
-      return h(inputComp, allAttrs, children);
+      return h(inputComp, allAttrs.value, children);
     };
   },
 };

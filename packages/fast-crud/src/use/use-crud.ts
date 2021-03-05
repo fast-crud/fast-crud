@@ -67,7 +67,7 @@ export default function (ctx) {
       pageSize = page.pageSize,
       total,
     } = pageRes;
-    let { records } = pageRes;
+    const { records } = pageRes;
     if (records == null) {
       logger.warn(
         "pageRequest返回结构不正确，请配置transform，期望：{currentPage, pageSize, total, records:[]},实际返回：",
@@ -75,7 +75,7 @@ export default function (ctx) {
       );
       return;
     }
-    crudOptions.value.data = records || (records = []);
+    crudOptions.value.data = records;
     if (crudOptions.value.pagination) {
       crudOptions.value.pagination.currentPage = currentPage;
       crudOptions.value.pagination.pageSize = pageSize;
@@ -250,10 +250,18 @@ export default function (ctx) {
         // copy dict
         if (item.dict) {
           if (item.column?.component) {
-            item.column.component.dict = _.cloneDeep(item.dict);
+            item.column.component.dict = _.merge(
+              {},
+              item.dict,
+              item.column.component.dict
+            );
           }
           if (item.form?.component) {
-            item.form.component.dict = _.cloneDeep(item.dict);
+            item.form.component.dict = _.merge(
+              {},
+              item.dict,
+              item.form.component.dict
+            );
           }
         }
 

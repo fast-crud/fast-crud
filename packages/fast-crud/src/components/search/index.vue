@@ -24,9 +24,9 @@
             :[$fsui.formItem.prop]="key"
             :label="item.title"
           >
-            <template v-if="slots['search-' + key]">
+            <template v-if="slots['search_' + key]">
               <fs-slot-render
-                :slots="slots['search-' + key]"
+                :slots="slots['search_' + key]"
                 :scope="{ form, key }"
               />
             </template>

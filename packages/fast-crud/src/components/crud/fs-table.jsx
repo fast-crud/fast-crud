@@ -1,5 +1,5 @@
 import {
-  resolveComponent,
+  resolveDynamicComponent,
   getCurrentInstance,
   ref,
   h,
@@ -38,22 +38,22 @@ export default {
       return;
     }
     const { proxy } = getCurrentInstance();
-    const tableComp = resolveComponent(proxy.$fsui.table.name);
+    const tableComp = resolveDynamicComponent(proxy.$fsui.table.name);
 
     const tableSlots = {};
 
     const templateMode = true;
     const tableColumnCI = proxy.$fsui.tableColumn;
     if (templateMode) {
-      const tableColumnComp = resolveComponent(tableColumnCI.name);
-      const tableColumnGroupComp = resolveComponent(
+      const tableColumnComp = resolveDynamicComponent(tableColumnCI.name);
+      const tableColumnGroupComp = resolveDynamicComponent(
         proxy.$fsui.tableColumnGroup.name
       );
 
       tableSlots.default = () => {
         const children = [];
         const buildColumn = (item) => {
-          const cellSlots = {};
+          let cellSlots = {};
           let currentTableColumnComp = tableColumnComp;
           if (item.children && item.children.length > 0) {
             cellSlots.default = () => {
@@ -67,44 +67,45 @@ export default {
               return subColumns;
             };
             currentTableColumnComp = tableColumnGroupComp;
-          } else {
-            if (this.slots && this.slots["cell-" + item.key]) {
-              cellSlots.default = (scope) => {
-                this.slots["cell-" + item.key](scope);
-              };
-            } else if (item.component) {
-              cellSlots.default = (scope) => {
-                function getContextFn() {
-                  const row = scope[tableColumnCI.row];
-                  return { ...scope, row };
-                }
-                const newScope = getContextFn();
-                const component = ComputeValue.buildBindProps(
-                  item.component,
-                  getContextFn
+          } else if (this.slots && this.slots["cell_" + item.key]) {
+            cellSlots.default = (scope) => {
+              this.slots["cell_" + item.key](scope);
+            };
+          } else if (item.component) {
+            cellSlots.default = (scope) => {
+              function getContextFn() {
+                const row = scope[tableColumnCI.row];
+                const form = row;
+                return { ...scope, row, form };
+              }
+              const newScope = getContextFn();
+              const component = ComputeValue.buildBindProps(
+                item.component,
+                getContextFn
+              );
+              if (component.show === false) {
+                return;
+              }
+              if (item.component.render) {
+                return item.component.render(newScope);
+              } else {
+                const vModel = {
+                  modelValue: scope[tableColumnCI.row][item.key],
+                  "onUpdate:modelValue": (value) => {
+                    scope[tableColumnCI.row][item.key] = value;
+                  },
+                };
+                return (
+                  <fs-component-render
+                    {...component}
+                    {...vModel}
+                    scope={newScope}
+                  />
                 );
-                if (component.show === false) {
-                  return;
-                }
-                if (item.component.render) {
-                  return item.component.render(newScope);
-                } else {
-                  const vModel = {
-                    modelValue: scope[tableColumnCI.row][item.key],
-                    "onUpdate:modelValue": (value) => {
-                      scope[tableColumnCI.row][item.key] = value;
-                    },
-                  };
-                  return (
-                    <fs-component-render
-                      {...component}
-                      {...vModel}
-                      scope={newScope}
-                    />
-                  );
-                }
-              };
-            }
+              }
+            };
+          } else {
+            cellSlots = null;
           }
           const newItem = { ...item };
           delete newItem.children;

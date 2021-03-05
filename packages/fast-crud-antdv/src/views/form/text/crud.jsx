@@ -24,7 +24,7 @@ export default function ({ crudRef }) {
     columns: {
       name: {
         title: "姓名",
-        type: "text",
+        type: "text", //虽然不写也能正确显示组件，但不建议省略它
         search: { show: true },
       },
       zip: {
