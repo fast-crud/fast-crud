@@ -118,7 +118,7 @@ function useProviders(props, ctx) {
 
 function useSearch(props, ctx) {
   const searchRef = ref();
-  const searchFormData = ref(_.cloneDeep(props.search.initial || {}));
+  const searchFormData = ref(_.cloneDeep(props.search.initialForm || {}));
   const onSearchSubmit = async (e) => {
     searchFormData.value = e.form;
     if (props.search.doSearch) {
@@ -269,7 +269,7 @@ function useTable(props, ctx) {
     const index = scope[tableColumnCI.index];
     const row = scope[tableColumnCI.row];
 
-    const e = { mode: key, initial: row, slots: ctx.slots, index };
+    const e = { mode: key, initialForm: row, slots: ctx.slots, index };
     console.log("handle", scope);
     if (key === "edit") {
       formWrapperRef.value.open({ ...props.editForm, ...e });
@@ -283,7 +283,7 @@ function useTable(props, ctx) {
       formWrapperRef.value.open({
         ...props.addForm,
         mode: "add",
-        initial: e.initial,
+        initialForm: e.initialForm,
         slots: ctx.slots,
       });
     }

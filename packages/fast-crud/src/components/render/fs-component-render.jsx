@@ -24,6 +24,8 @@ export default {
       type: String,
       Object,
     },
+    //模式：row,search,add,edit,view,自定义
+    mode: {},
   },
   emits: ["update:dict", "update:modelValue"],
   setup(props, ctx) {
@@ -45,6 +47,7 @@ export default {
     // 带事件的attrs
     const allAttrs = computed(() => {
       const attrs = {
+        ref: "targetRef",
         ...ctx.attrs,
         scope: props.scope,
         modelValue: props.modelValue,

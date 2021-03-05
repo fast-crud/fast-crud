@@ -11,6 +11,10 @@ export default function (crudRef) {
       const formRef = expose.getFormRef();
       return formRef?.getFormData();
     },
+    getFormComponentRef(key) {
+      const formRef = expose.getFormRef();
+      return formRef?.getComponentRef(key);
+    },
   };
 
   return expose;

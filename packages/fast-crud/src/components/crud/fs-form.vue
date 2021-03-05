@@ -76,7 +76,7 @@ export default {
   components: { FsRender },
   props: {
     // 初始数据
-    initial: {
+    initialForm: {
       default() {
         return {};
       },
@@ -93,6 +93,9 @@ export default {
       type: String,
       default: "grid", // flex
     },
+    index: {},
+    // mode: add,edit,view,自定义
+    mode: {},
     row: {},
     col: {},
   },
@@ -104,19 +107,24 @@ export default {
     const form = reactive({});
     // 初始数据赋值
     _.each(props.columns, (item, key) => {
-      form[key] = props.initial[key];
+      form[key] = props.initialForm[key];
     });
 
     const componentRefs = ref({});
-    function getComponentRef(key) {
+
+    function getComponentRenderRef(key) {
       return componentRefs.value[key];
     }
 
+    function getComponentRef(key) {
+      return getComponentRenderRef(key)?.$refs?.targetRef;
+    }
+
     const scope = ref({
-      row: props.initial,
+      row: props.initialForm,
       form,
       index: ctx.attrs.index,
-      mode: ctx.attrs.mode,
+      mode: props.mode,
       attrs: ctx.attrs,
       getComponentRef,
     });
@@ -175,7 +183,6 @@ export default {
     }
 
     function getFormData() {
-      console.log("getFormData111", form);
       return form;
     }
     function setFormData(formData) {

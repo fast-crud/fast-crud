@@ -67,14 +67,18 @@ options.list = list;
 options.copyTimes = 1000;
 const mock = mockUtil.buildMock(options);
 
+function omitChildren(orignalListt) {
+  const list = [];
+  orignalListt.forEach((item) => {
+    list.push(_.omit(item, "children"));
+  });
+  return list;
+}
 mock.push({
   path: "/linkage/province",
   method: "get",
   handle() {
-    const list = [];
-    tree.forEach((item) => {
-      list.push(_.omit(item, "children"));
-    });
+    const list = omitChildren(tree);
     return {
       code: 0,
       msg: "success",
@@ -91,10 +95,11 @@ mock.push({
     const a = tree.filter((item) => {
       return item.id === province;
     });
+    const list = omitChildren(a[0].children);
     return {
       code: 0,
       msg: "success",
-      data: a[0].children,
+      data: list,
     };
   },
 });
@@ -111,10 +116,12 @@ mock.push({
     const b = a[0].children.filter((item) => {
       return item.id === city;
     });
+
+    const list = omitChildren(b[0].children);
     return {
       code: 0,
       msg: "success",
-      data: b[0].children,
+      data: list,
     };
   },
 });

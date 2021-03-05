@@ -33,6 +33,13 @@
             <template v-else>
               <fs-component-render
                 v-if="item.component && item.component.show !== false"
+                :ref="
+                  (el) => {
+                    if (el) {
+                      componentRenderRefs[item.key] = el;
+                    }
+                  }
+                "
                 :modelValue="get(form, key)"
                 @update:modelValue="set(form, key, $event)"
                 @input="onInput(item)"
@@ -82,7 +89,7 @@ export default {
   inheritAttrs: false,
   props: {
     /* 初始查询条件，点击重置，会重置成该条件 */
-    initial: {
+    initialForm: {
       type: Object,
     },
     // 表单options
@@ -127,9 +134,17 @@ export default {
     traceUtil.trace("fs-search");
     console.log("search", props);
     let autoSearch = ref(null);
-    const form = ref(_.cloneDeep(props.initial || {}));
+    const form = ref(_.cloneDeep(props.initialForm || {}));
     const searchFormRef = ref();
     const { t } = useI18n();
+    const componentRenderRefs = ref({});
+
+    function getComponentRenderRef(key) {
+      return componentRenderRefs[key];
+    }
+    function getComponentRef(key) {
+      return getComponentRenderRef(key)?.$refs?.targetRef;
+    }
     function getContextFn() {
       return { form: form.value };
     }
@@ -266,6 +281,9 @@ export default {
       doSearch,
       doReset,
       form,
+      componentRenderRefs,
+      getComponentRenderRef,
+      getComponentRef,
       getForm,
       setForm,
       searchFormRef,
