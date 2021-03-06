@@ -8,11 +8,11 @@ export default defineConfig({
     vueJsx({
       // options are passed on to @vue/babel-plugin-jsx
     }),
-    vue(),
+    vue()
   ],
   esbuild: {
     jsxFactory: "h",
-    jsxFragment: "Fragment",
+    jsxFragment: "Fragment"
   },
   resolve: {
     alias: {
@@ -20,8 +20,8 @@ export default defineConfig({
         "../fast-crud/src/local/lang"
       ),
       "@fast-crud/fast-crud": path.resolve("../fast-crud/src"),
-      "/@": path.resolve("./src"),
+      "/@": path.resolve("./src")
     },
-    dedupe: ["vue"],
-  },
+    dedupe: ["vue"]
+  }
 });

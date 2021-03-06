@@ -5,26 +5,55 @@ export function useDict(props, ctx) {
   const dictMap = ref({});
   const dictLoading = ref(false);
 
+  async function getNodes() {
+    const data = await props.dict.getNodes(props.modelValue);
+    const dataMap = {};
+    for (const item of data) {
+      dataMap[item[props.dict.value]] = item;
+    }
+    dictData.value = data;
+    dictMap.value = dataMap;
+  }
+
+  function registerWatchValue() {
+    watch(
+      () => {
+        return props.modelValue;
+      },
+      async () => {
+        await loadDict();
+      }
+    );
+  }
+
   // @ts-ignore
   const { proxy } = getCurrentInstance();
   const loadDict = async () => {
-    if (props.dict) {
-      dictLoading.value = true;
-      try {
-        const ret = await getDictData({
-          dict: props.dict,
-          scope: ctx.attrs.scope,
-          componentRef: proxy,
-        });
-        dictData.value = ret.data;
-        dictMap.value = ret.dataMap;
-      } finally {
-        dictLoading.value = false;
-      }
+    if (!props.dict) {
+      return;
+    }
+    if (props.dict.getNodes) {
+      getNodes();
+      return;
+    }
+    dictLoading.value = true;
+    try {
+      const ret = await getDictData({
+        dict: props.dict,
+        ...props.scope,
+        ...ctx.attrs.scope,
+        componentRef: proxy,
+      });
+      dictData.value = ret.data;
+      dictMap.value = ret.dataMap;
+    } finally {
+      dictLoading.value = false;
     }
   };
-
   loadDict();
+  if (props.dict.getNodes) {
+    registerWatchValue();
+  }
 
   if (props.dict && props.dict.data) {
     watch(

@@ -5,16 +5,16 @@ const commonMocks = import.meta.globEager("./common/mock.*.js");
 const viewMocks = import.meta.globEager("../views/**/mock.js");
 
 const list = [];
-_.forEach(commonMocks, (value) => {
+_.forEach(commonMocks, value => {
   list.push(value.default);
 });
-_.forEach(viewMocks, (value) => {
+_.forEach(viewMocks, value => {
   list.push(value.default);
 });
 
-list.forEach((apiFile) => {
+list.forEach(apiFile => {
   for (const item of apiFile) {
-    mock.onAny(new RegExp("/api" + item.path)).reply((config) => {
+    mock.onAny(new RegExp("/api" + item.path)).reply(async config => {
       console.log("------------fake request start -------------");
       console.log("request:", config);
       const data = config.data ? JSON.parse(config.data) : {};
@@ -33,9 +33,9 @@ list.forEach((apiFile) => {
 
       const req = {
         body: data,
-        params: params,
+        params: params
       };
-      const ret = item.handle(req);
+      const ret = await item.handle(req);
       console.log("response:", ret);
       console.log("------------fake request end-------------");
       if (ret.code === 0) {

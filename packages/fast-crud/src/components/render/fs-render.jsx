@@ -14,6 +14,6 @@ export default {
     traceUtil.trace("fs-render");
   },
   render() {
-    return this.renderFunc({ scope: this.scope, ...this.$attrs });
+    return this.renderFunc(this.scope);
   },
 };

@@ -49,5 +49,8 @@ export default {
     pagination: {
       showTotal: "共 {n} 条",
     },
+    date: {
+      formatter: { to: "至" },
+    },
   },
 };

@@ -11,7 +11,17 @@ export default function () {
         },
       },
     },
-    "text-area": {
+    password: {
+      form: {
+        component: {
+          name: ui.inputPassword.name,
+          vModel: ui.textArea.modelValue,
+          [ui.input.clearable]: true,
+          [ui.inputPassword.showPassword]: true,
+        },
+      },
+    },
+    textarea: {
       search: {
         component: {
           name: ui.input.name,

@@ -18,9 +18,7 @@
 </template>
 
 <script>
-import { watch, toRefs } from "vue";
 import { useDict } from "../../use/use-dict";
-import { uiContext } from "../../index";
 // 级联数据格式化组件
 export default {
   name: "FsDictCascaderFormat",
@@ -46,12 +44,7 @@ export default {
     },
   },
   setup(props, ctx) {
-    const dict = useDict(props, ctx);
-    const { modelValue } = toRefs(props);
-    watch(modelValue, () => {
-      console.log("reload dict");
-      dict.reloadDict();
-    });
+    const dict = useDict(props, ctx, true);
     return {
       ...dict,
     };

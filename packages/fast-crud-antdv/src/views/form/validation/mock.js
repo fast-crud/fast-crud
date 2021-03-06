@@ -1,4 +1,29 @@
-export default [
+import mockUtil from "/src/mock/base";
+
+const options = {
+  name: "FormValidation",
+  idGenerator: 0
+};
+const list = [
+  {
+    name: "王小虎",
+    age: 15,
+    password: "",
+    status: "2",
+    url: "https://baidu.com"
+  },
+  {
+    name: "张三",
+    age: 18,
+    password: "",
+    url: "https://baidu.com"
+  },
+  {
+    status: "2"
+  }
+];
+
+const dictData = [
   {
     value: "zhinan",
     label: "指南",
@@ -266,3 +291,20 @@ export default [
     ]
   }
 ];
+
+options.list = list;
+options.copyTimes = 1000;
+const mock = mockUtil.buildMock(options);
+mock.push({
+  path: "/select/cascadeData",
+  method: "get",
+  handle(req) {
+    return {
+      code: 0,
+      msg: "success",
+      data: dictData
+    };
+  }
+});
+
+export default mock;

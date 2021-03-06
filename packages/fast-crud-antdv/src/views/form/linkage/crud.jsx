@@ -1,15 +1,14 @@
 import * as api from "./api";
-import { requestForMock } from "/src/api/service";
-import { dict, useExpose } from "/src/fs";
-export default function ({ crudRef }) {
-  const pageRequest = async (query) => {
+import { dict } from "/src/fs";
+export default function({ crudRef }) {
+  const pageRequest = async query => {
     return await api.GetList(query);
   };
   const editRequest = async ({ form, row }) => {
     form.id = row.id;
     return await api.UpdateObj(form);
   };
-  const delRequest = async (id) => {
+  const delRequest = async id => {
     return await api.DelObj(id);
   };
 
@@ -17,13 +16,12 @@ export default function ({ crudRef }) {
     return await api.AddObj(form);
   };
 
-  const { getFormComponentRef } = useExpose(crudRef);
   return {
     request: {
       pageRequest,
       addRequest,
       editRequest,
-      delRequest,
+      delRequest
     },
     columns: {
       id: {
@@ -31,21 +29,21 @@ export default function ({ crudRef }) {
         key: "id",
         type: "number",
         column: {
-          width: 50,
+          width: 50
         },
         form: {
-          show: false,
-        },
+          show: false
+        }
       },
       province: {
         title: "省",
         type: "dict-select",
         search: {
-          show: true,
+          show: true
         },
         dict: dict({
           url: "/linkage/province",
-          value: "id",
+          value: "id"
         }),
         form: {
           valueChange({ form, value, getComponentRef }) {
@@ -54,26 +52,25 @@ export default function ({ crudRef }) {
             if (value) {
               getComponentRef("city").reloadDict(); // 执行city的select组件的reloadDict()方法，触发“city”重新加载字典
             }
-          },
-        },
+          }
+        }
       },
       city: {
         title: "市",
         type: "dict-select",
         search: {
-          show: true,
+          show: true
         },
         dict: dict({
           // url() 改成构建url，返回一个url
-          url({ scope }) {
-            const { form } = scope;
+          url({ form }) {
             if (form && form.province != null) {
               // 本数据字典的url是通过前一个select的选项决定的
               return `/linkage/city?province=${form.province}`;
             }
             return undefined; // 返回undefined 将不加载字典
           },
-          value: "id",
+          value: "id"
         }),
         form: {
           component: { props: { dict: { cache: false } } },
@@ -88,32 +85,31 @@ export default function ({ crudRef }) {
                 countySelect.clearDict(); // 清空选项
               }
             }
-          },
-        },
+          }
+        }
       },
       county: {
         title: "区",
         type: "dict-select",
         search: {
-          show: true,
+          show: true
         },
         dict: dict({
           value: "id",
-          url({ scope }) {
-            const { form } = scope;
+          url({ form }) {
             if (form && form.province != null && form.city != null) {
               return `/linkage/county?province=${form.province} &city=${form.city}`;
             }
             return undefined;
-          },
-        }),
+          }
+        })
         // form: {
         //   component: { props: { dict: { cache: false } } },
         //   valueChange({ value }) {
         //     console.log("您选择了：", value);
         //   },
         // },
-      },
-    },
+      }
+    }
   };
 }

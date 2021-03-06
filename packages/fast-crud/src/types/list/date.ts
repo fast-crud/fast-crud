@@ -3,52 +3,65 @@ import {
   datetimerangeFormatter,
   shortcuts,
 } from "../functions";
+import { uiContext } from "../../ui";
 
 export default function () {
+  const ui = uiContext.get();
   return {
     datetime: {
       form: {
-        component: { name: "el-date-picker", props: { type: "datetime" } },
+        component: {
+          ...ui.datePicker.buildDateType("datetime"),
+          vModel: ui.datePicker.modelValue,
+        },
       },
-      component: { name: "date-format" },
+      column: {
+        width: "170px",
+        component: { name: "fs-date-format" },
+      },
     },
     date: {
-      form: { component: { name: "el-date-picker" } },
-      component: { name: "date-format", props: { format: "YYYY-MM-DD" } },
+      form: {
+        component: {
+          ...ui.datePicker.buildDateType("date"),
+          vModel: ui.datePicker.modelValue,
+        },
+      },
+      column: {
+        align: "center",
+        width: "120px",
+        component: { name: "fs-date-format", format: "YYYY-MM-DD" },
+      },
     },
     daterange: {
       form: {
         component: {
-          name: "el-date-picker",
-          props: {
-            type: "daterange",
-            "range-separator": "至",
-            "start-placeholder": "开始",
-            "end-placeholder": "结束",
-            "picker-options": { shortcuts: shortcuts },
-          },
+          ...ui.datePicker.buildDateType("daterange"),
+          vModel: ui.datePicker.modelValue,
         },
       },
-      formatter: daterangeFormatter,
+      column: { width: 210, formatter: daterangeFormatter },
     },
     datetimerange: {
       form: {
         component: {
-          name: "el-date-picker",
-          props: {
-            type: "datetimerange",
-            "range-separator": "至",
-            "start-placeholder": "开始",
-            "end-placeholder": "结束",
-            "picker-options": { shortcuts: shortcuts },
-          },
+          ...ui.datePicker.buildDateType("datetimerange"),
+          vModel: ui.datePicker.modelValue,
         },
       },
-      formatter: datetimerangeFormatter,
+      column: {
+        width: 340,
+        formatter: datetimerangeFormatter,
+      },
     },
     time: {
-      form: { component: { name: "el-time-picker" } },
-      component: { name: "date-format", props: { format: "HH:mm:ss" } },
+      form: {
+        component: { name: ui.timePicker.name },
+        vModel: ui.timePicker.modelValue,
+      },
+      column: {
+        component: { name: "fs-date-format", format: "HH:mm:ss" },
+      },
     },
   };
 }

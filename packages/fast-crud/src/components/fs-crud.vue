@@ -238,7 +238,7 @@ function useTable(props, ctx) {
   const computedTable = computed(() => {
     // antdv 高度自适应， 如果用户有配置scroll，则优先使用用户配置的
     const fixedHeight = _.merge({}, fixedHeightRet.fixedOptions, {
-      scroll: ctx.attrs.scroll,
+      scroll: props.table.scroll,
     });
     return { ...props.table, ...ctx.attrs, ...fixedHeight };
   });

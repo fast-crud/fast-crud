@@ -49,5 +49,6 @@ export default {
     pagination: {
       showTotal: "Total {n} items",
     },
+    date: { formatter: { to: "to" } },
   },
 };

@@ -75,7 +75,7 @@ export default {
             delete query.current;
             delete query.size;
             if (Object.keys(query).length > 0) {
-              data = list.filter((item) => {
+              data = list.filter(item => {
                 let allFound = true; // 是否所有条件都符合
                 for (const key in query) {
                   // 判定某一个条件
@@ -154,10 +154,10 @@ export default {
               records: records,
               total: data.length,
               size: size,
-              current: current,
-            },
+              current: current
+            }
           };
-        },
+        }
       },
       {
         path: "/" + name + "/get",
@@ -175,9 +175,9 @@ export default {
           return {
             code: 0,
             msg: "success",
-            data: current,
+            data: current
           };
-        },
+        }
       },
       {
         path: "/" + name + "/add",
@@ -188,9 +188,9 @@ export default {
           return {
             code: 0,
             msg: "success",
-            data: req.body.id,
+            data: req.body.id
           };
-        },
+        }
       },
       {
         path: "/" + name + "/update",
@@ -203,9 +203,9 @@ export default {
           return {
             code: 0,
             msg: "success",
-            data: null,
+            data: null
           };
-        },
+        }
       },
       {
         path: "/" + name + "/delete",
@@ -215,9 +215,9 @@ export default {
           return {
             code: 0,
             msg: "success",
-            data: null,
+            data: null
           };
-        },
+        }
       },
       {
         path: "/" + name + "/batchDelete",
@@ -233,10 +233,10 @@ export default {
           return {
             code: 0,
             msg: "success",
-            data: null,
+            data: null
           };
-        },
-      },
+        }
+      }
     ];
-  },
+  }
 };

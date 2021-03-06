@@ -1,5 +1,6 @@
 import StringUtils from "../utils/util.string";
 import dayjs from "dayjs";
+import { useI18n } from "../local";
 function doFormat(date, format) {
   if (StringUtils.isEmpty(date)) {
     return undefined;
@@ -11,15 +12,18 @@ function dateFormatter(value, format = "YYYY-MM-DD HH:mm:ss") {
     if (StringUtils.hasEmpty(value)) {
       return undefined;
     }
-    return doFormat(value[0], format) + "至" + doFormat(value[1], format);
+    const { t } = useI18n();
+    return `${doFormat(value[0], format)} ${t(
+      "fs.date.formatter.to"
+    )} ${doFormat(value[1], format)}`;
   }
   return doFormat(value, format);
 }
 
-function daterangeFormatter(row, column, value) {
+function daterangeFormatter({ value }) {
   return dateFormatter(value, "YYYY-MM-DD");
 }
-function datetimerangeFormatter(row, column, value) {
+function datetimerangeFormatter({ value }) {
   return dateFormatter(value, "YYYY-MM-DD HH:mm:ss");
 }
 

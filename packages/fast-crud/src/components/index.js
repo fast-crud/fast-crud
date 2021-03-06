@@ -15,7 +15,7 @@ import FsDictCascaderFormat from "./extends/fs-dict-cascader-format.vue";
 import FsDictCascader from "./extends/fs-dict-cascader.vue";
 import FsDictCheckbox from "./extends/fs-dict-checkbox.vue";
 import FsDictSwitch from "./extends/fs-dict-switch.vue";
-
+import FsDateFormat from "./extends/fs-date-format.vue";
 import FsActionbar from "./actionbar/index.vue";
 import FsToolbar from "./toolbar/index.vue";
 import FsSearch from "./search/index.vue";
@@ -40,4 +40,5 @@ export {
   FsDictCascader,
   FsDictCheckbox,
   FsDictSwitch,
+  FsDateFormat,
 };

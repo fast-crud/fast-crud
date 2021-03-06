@@ -10,7 +10,7 @@
         :is="$fsui.tag.name"
         class="fs-tag"
         v-for="item in _items"
-        v-bind="$attrs"
+        v-bind="item"
         :key="item[dict.value]"
         size="small"
         :[$fsui.tag.type]="item[dict.color] || 'default'"
@@ -74,13 +74,7 @@ export default {
   },
   emits: ["click"],
   setup(props, ctx) {
-    const dict = useDict(props, ctx);
-    const { modelValue } = toRefs(props);
-    watch(modelValue, () => {
-      console.log("reload dict");
-      dict.reloadDict();
-    });
-
+    const dict = useDict(props, ctx, true);
     const ui = uiContext.get();
     const COLOR_LIST = ui.tag.colors;
     const EFFECT_LIST = ["plain", "light"];

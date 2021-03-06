@@ -22,6 +22,10 @@ import {
   CheckboxGroupCI,
   CascaderCI,
   SwitchCI,
+  InputPasswordCI,
+  InputGroupCI,
+  DatePickerCI,
+  TimePickerCI,
 } from "./ui-interface";
 export class Element implements UiInterface {
   constructor(target) {
@@ -257,12 +261,32 @@ export class Element implements UiInterface {
     colors: ["primary", "success", "warning", "danger"],
   };
 
+  inputGroup: InputGroupCI = {
+    name: "el-input-group",
+  };
   input: InputCI = {
     name: "el-input",
     clearable: "clearable",
     modelValue: "modelValue",
   };
+  inputPassword: InputPasswordCI = {
+    name: "el-input",
+    clearable: "clearable",
+    modelValue: "modelValue",
+    showPassword: "showPassword",
+  };
   number: CI = {
     name: "el-input-number",
+  };
+  datePicker: DatePickerCI = {
+    name: "el-date-picker",
+    modelValue: "modelValue",
+    buildDateType(type) {
+      return { type };
+    },
+  };
+  timePicker: TimePickerCI = {
+    name: "el-time-picker",
+    modelValue: "modelValue",
   };
 }

@@ -32,7 +32,6 @@ export default {
     traceUtil.trace("fs-component-render");
     const newScope = computed(() => {
       return {
-        ...ctx.attrs,
         ...props.scope,
       };
     });
@@ -72,8 +71,8 @@ export default {
       const children = {};
       _.forEach(props.children, (item, key) => {
         if (item instanceof Function) {
-          children[key] = () => {
-            return item(newScope.value);
+          children[key] = (scope) => {
+            return item({ ...newScope.value, scope });
           };
         } else {
           children[key] = () => {

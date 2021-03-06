@@ -50,6 +50,12 @@ export default {
         proxy.$fsui.tableColumnGroup.name
       );
 
+      function getContextFn(item, scope) {
+        const row = scope[tableColumnCI.row];
+        const form = row;
+        return { ...scope, key: item.key, value: row[item.key], row, form };
+      }
+
       tableSlots.default = () => {
         const children = [];
         const buildColumn = (item) => {
@@ -73,12 +79,7 @@ export default {
             };
           } else if (item.component) {
             cellSlots.default = (scope) => {
-              function getContextFn() {
-                const row = scope[tableColumnCI.row];
-                const form = row;
-                return { ...scope, row, form };
-              }
-              const newScope = getContextFn();
+              const newScope = getContextFn(item, scope);
               const component = ComputeValue.buildBindProps(
                 item.component,
                 getContextFn
@@ -103,6 +104,11 @@ export default {
                   />
                 );
               }
+            };
+          } else if (item.formatter) {
+            cellSlots.default = (scope) => {
+              const newScope = getContextFn(item, scope);
+              return item.formatter(newScope);
             };
           } else {
             cellSlots = null;

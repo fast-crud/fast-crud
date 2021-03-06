@@ -23,6 +23,7 @@ module.exports = {
     "plugin:prettier/recommended",
   ],
   rules: {
+    "max-len": [0, 160, 2, { ignoreUrls: true }],
     "@typescript-eslint/ban-ts-ignore": "off",
     "@typescript-eslint/explicit-function-return-type": "off",
     "@typescript-eslint/no-explicit-any": "off",

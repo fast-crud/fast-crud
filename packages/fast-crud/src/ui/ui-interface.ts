@@ -15,6 +15,10 @@ export interface InputCI extends CI {
   clearable;
   modelValue;
 }
+export type InputGroupCI = CI;
+export interface InputPasswordCI extends InputCI {
+  showPassword;
+}
 export interface TextAreaCI extends CI {
   type;
   clearable;
@@ -118,6 +122,13 @@ export interface FormWrapperCI extends CI {
   buildOnClosedBind: (is, Function) => {};
   customClass: string;
 }
+export interface DatePickerCI extends CI {
+  modelValue;
+  buildDateType: Function;
+}
+export interface TimePickerCI extends CI {
+  modelValue;
+}
 export interface Icons {
   refresh;
   search;
@@ -138,7 +149,9 @@ export interface Icons {
 export interface UiInterface {
   modelValue: string;
   type: string;
+  inputGroup: InputGroupCI;
   input: InputCI;
+  inputPassword: InputPasswordCI;
   textArea: TextAreaCI;
   tag: TagCI;
   table: TableCI;
@@ -170,4 +183,6 @@ export interface UiInterface {
   number: CI;
   cascader: CascaderCI;
   switch: SwitchCI;
+  datePicker: DatePickerCI;
+  timePicker: TimePickerCI;
 }

@@ -6,10 +6,10 @@
 import dayjs from "dayjs";
 // 日期格式化展示组件
 export default {
-  name: "DateFormat",
+  name: "FsDateFormat",
   props: {
     // 日期时间值，支持long,string,date等，由dayjs转化
-    value: { required: true },
+    modelValue: { required: false },
     // 输入格式化，不传则由dayjs自动转化
     valueFormat: { required: false },
     // 输出格式化
@@ -22,14 +22,14 @@ export default {
   },
   computed: {
     doFormat() {
-      if (this.value == null || this.value === "") {
+      if (this.modelValue == null || this.modelValue === "") {
         return "";
       }
       let date = null;
       if (this.valueFormat != null) {
-        date = dayjs(this.value, this.valueFormat);
+        date = dayjs(this.modelValue, this.valueFormat);
       } else {
-        date = dayjs(this.value);
+        date = dayjs(this.modelValue);
       }
       return date.format(this.format);
     },

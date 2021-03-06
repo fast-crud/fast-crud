@@ -3,6 +3,7 @@ import {
   CheckboxCI,
   CheckboxGroupCI,
   CI,
+  DatePickerCI,
   DialogCI,
   DrawerCI,
   FormItemCI,
@@ -10,6 +11,8 @@ import {
   IconCI,
   Icons,
   InputCI,
+  InputGroupCI,
+  InputPasswordCI,
   MessageBoxCI,
   MessageCI,
   NotificationCI,
@@ -21,6 +24,7 @@ import {
   TableColumnCI,
   TagCI,
   TextAreaCI,
+  TimePickerCI,
   UiInterface,
 } from "./ui-interface";
 export class Antdv implements UiInterface {
@@ -290,10 +294,19 @@ export class Antdv implements UiInterface {
     colors: ["blue", "green", "orange", "red", "cyan", "purple"],
   };
 
+  inputGroup: InputGroupCI = {
+    name: "a-input",
+  };
   input: InputCI = {
     name: "a-input",
     clearable: "allowClear",
     modelValue: "value",
+  };
+  inputPassword: InputPasswordCI = {
+    name: "a-input-password",
+    clearable: "allowClear",
+    modelValue: "value",
+    showPassword: "showPassword",
   };
   number: CI = {
     name: "a-input-number",
@@ -307,5 +320,32 @@ export class Antdv implements UiInterface {
     inactiveValue: "inactive-value",
     modelValue: "checked",
     name: "a-switch",
+  };
+  datePicker: DatePickerCI = {
+    name: "a-date-picker",
+    modelValue: "value",
+    buildDateType(type) {
+      if (type === "date") {
+        return { name: "a-date-picker" };
+      }
+      // year/month/date/week/datetime/datetimerange/daterange
+      if (type === "datetime") {
+        return { name: "a-date-picker", showTime: true };
+      }
+      if (type === "datetimerange") {
+        return { name: "a-range-picker", showTime: true };
+      }
+      if (type === "month") {
+        return { name: "a-month-picker" };
+      }
+      if (type === "week") {
+        return { name: "a-week-picker" };
+      }
+      return { name: "a-date-picker" };
+    },
+  };
+  timePicker: TimePickerCI = {
+    name: "a-time-picker",
+    modelValue: "value",
   };
 }

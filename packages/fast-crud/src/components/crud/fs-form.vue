@@ -27,11 +27,16 @@
             <fs-slot-render
               v-if="slots && slots['form_' + item.key]"
               :slots="slots['form_' + item.key]"
-              :scope="{ key: item.key, ...scope }"
+              :scope="buildItemScope(item)"
             />
-            <template v-else>
+            <template v-else-if="item.component?.show !== false">
+              <fs-render
+                v-if="item.component?.render"
+                :render-func="item.component.render"
+                :scope="buildItemScope(item)"
+              />
               <fs-component-render
-                v-if="item.component && item.component.show !== false"
+                v-else
                 :ref="
                   (el) => {
                     if (el) {
@@ -42,7 +47,7 @@
                 v-bind="item.component"
                 :modelValue="get(form, item.key)"
                 @update:modelValue="set(form, item.key, $event)"
-                :scope="{ key: item.key, ...scope }"
+                :scope="buildItemScope(item)"
               />
             </template>
             <template v-if="item.helper">
@@ -53,7 +58,7 @@
                 <template v-else-if="item.helper.render">
                   <fs-render
                     :renderFunc="item.helper.render"
-                    :scope="{ key: item.key, ...scope }"
+                    :scope="buildItemScope(item)"
                   />
                 </template>
               </div>
@@ -194,6 +199,10 @@ export default {
     }
 
     const { proxy } = getCurrentInstance();
+
+    function buildItemScope(item) {
+      return { key: item.key, ...scope.value };
+    }
     return {
       get: _.get,
       set: (form, key, value) => {
@@ -210,6 +219,7 @@ export default {
       reset,
       getFormRef,
       scope,
+      buildItemScope,
       form,
       componentRefs,
       getFormData,
