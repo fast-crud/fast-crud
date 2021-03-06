@@ -72,7 +72,7 @@
 </template>
 
 <script>
-import { computed, ref, nextTick } from "vue";
+import { computed, ref, nextTick, getCurrentInstance } from "vue";
 import _ from "lodash-es";
 import fsButton from "../basic/fs-button";
 import FsComponentRender from "../../components/render/fs-component-render";
@@ -138,15 +138,14 @@ export default {
     const searchFormRef = ref();
     const { t } = useI18n();
     const componentRenderRefs = ref({});
-
     function getComponentRenderRef(key) {
-      return componentRenderRefs[key];
+      return componentRenderRefs.value[key];
     }
     function getComponentRef(key) {
       return getComponentRenderRef(key)?.$refs?.targetRef;
     }
     function getContextFn() {
-      return { form: form.value };
+      return { form: form.value, getComponentRef };
     }
 
     async function doSearch() {
@@ -262,7 +261,13 @@ export default {
       }
     };
     const onChange = (item) => {
-      console.log("onChange");
+      console.log("onChange", item);
+      if (item.valueChange) {
+        const key = item.key;
+        const value = form.value[key];
+        const componentRef = getComponentRef(key);
+        item.valueChange({ key, value, componentRef, ...getContextFn() });
+      }
       if (item.autoSearchTrigger === "change") {
         doAutoSearch();
       }

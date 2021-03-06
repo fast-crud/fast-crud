@@ -1,18 +1,16 @@
 module.exports = {
-  presets: [
-    '@vue/cli-plugin-babel/preset'
-  ],
+  presets: ["@vue/cli-plugin-babel/preset"],
   plugins: [
     // '@babel/plugin-proposal-optional-chaining',
-    '@vue/babel-plugin-jsx',
+    "@vue/babel-plugin-jsx",
     [
-      '@babel/plugin-transform-runtime',
+      "@babel/plugin-transform-runtime",
       {
         absoluteRuntime: false,
         corejs: false,
         helpers: true,
-        regenerator: true
-      }
-    ]
-  ]
-}
+        regenerator: true,
+      },
+    ],
+  ],
+};
