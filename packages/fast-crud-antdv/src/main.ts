@@ -27,7 +27,7 @@ app.use(FastCrud, {
     return {
       table: {
         size: "small",
-        pagination: false,
+        pagination: false
       },
       request: {
         transformQuery: ({ page, form }) => {
@@ -35,11 +35,11 @@ app.use(FastCrud, {
         },
         transformRes: ({ res }) => {
           return { currentPage: res.current, pageSize: res.size, ...res };
-        },
+        }
       },
       form: {
-        display: "flex",
-      },
+        display: "flex"
+      }
     };
   },
   ui: {
@@ -47,8 +47,8 @@ app.use(FastCrud, {
     target: {
       Message: message,
       Notification: notification,
-      MessageBox: Modal,
-    },
-  },
+      MessageBox: Modal
+    }
+  }
 });
 app.mount("#app");

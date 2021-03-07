@@ -5,11 +5,7 @@
   "main": "./dist/fast-crud.umd.js",
   "module": "./dist/fast-crud.es.js",
   "scripts": {
-    "dev": "vue-cli-service serve",
-    "test:unit": "vue-cli-service test:unit",
-    "lint": "vue-cli-service lint",
     "build": "vite build && npm run copy-local",
-    "build2": "rollup -c --environment BUILD:production",
     "copy-local": "copyfiles -f ./src/local/lang/* ./dist/lang"
   },
   "dependencies": {

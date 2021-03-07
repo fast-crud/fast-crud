@@ -82,7 +82,9 @@ export default {
               const newScope = getContextFn(item, scope);
               const component = ComputeValue.buildBindProps(
                 item.component,
-                getContextFn
+                () => {
+                  return newScope;
+                }
               );
               if (component.show === false) {
                 return;

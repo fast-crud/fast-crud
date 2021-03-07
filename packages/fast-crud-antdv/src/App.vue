@@ -14,7 +14,7 @@ export default {
   },
   data() {
     return {
-      locale: zhCN,
+      locale: zhCN
     };
   },
   renderTracked({ key, target, type }) {
@@ -31,6 +31,6 @@ export default {
   },
   renderTriggered({ key, target, type }) {
     console.log("triggerd", "app", { key, target, type });
-  },
+  }
 };
 </script>

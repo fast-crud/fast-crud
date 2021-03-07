@@ -1,6 +1,7 @@
 import { defineConfig } from "vite";
 import vue from "@vitejs/plugin-vue";
 import vueJsx from "@vitejs/plugin-vue-jsx";
+import visualizer from "rollup-plugin-visualizer";
 import path from "path";
 // https://vitejs.dev/config/
 export default defineConfig({
@@ -20,8 +21,14 @@ export default defineConfig({
         "../fast-crud/src/local/lang"
       ),
       "@fast-crud/fast-crud": path.resolve("../fast-crud/src"),
+      "/antdv": path.resolve("./node_modules/ant-design-vue"),
       "/@": path.resolve("./src")
     },
     dedupe: ["vue"]
+  },
+  build: {
+    rollupOptions: {
+      plugins: [visualizer()]
+    }
   }
 });

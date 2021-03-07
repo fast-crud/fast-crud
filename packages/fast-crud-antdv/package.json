@@ -3,7 +3,7 @@
   "version": "0.1.0",
   "scripts": {
     "dev": "vite --force",
-    "build": "vite build --force",
+    "build": "vite build",
     "serve": "vite preview",
     "pretty-quick": "pretty-quick"
   },
