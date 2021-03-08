@@ -2,11 +2,11 @@ import mockUtil from "/src/mock/base";
 
 const options = {
   name: "FormDate",
-  idGenerator: 0,
+  idGenerator: 0
 };
 const list = [
   {
-    // timestamp: 123123123123,
+    timestamp: 123123123123,
     datetime: "2019-09-20 11:11:11",
     date: "2019-09-20 11:11:11",
     format: "2019-09-20 11:11:11",
@@ -14,7 +14,7 @@ const list = [
     daterangeStart: "2019-09-20 11:11:11",
     daterangeEnd: "2019-09-21 11:11:11",
     datetimerangeStart: "2019-09-20 11:11:11",
-    datetimerangeEnd: "2019-09-21 11:11:11",
+    datetimerangeEnd: "2019-09-21 11:11:11"
   },
   {
     // timestamp: 444444555,
@@ -26,7 +26,7 @@ const list = [
     daterangeStart: "2019-09-20 11:11:11",
     daterangeEnd: "2019-09-21 11:11:11",
     datetimerangeStart: "2019-09-20 11:11:11",
-    datetimerangeEnd: "2019-09-21 11:11:11",
+    datetimerangeEnd: "2019-09-21 11:11:11"
   },
   {
     // timestamp: 5555555555,
@@ -36,8 +36,8 @@ const list = [
     daterangeStart: "2019-09-20 11:11:11",
     daterangeEnd: "2019-09-21 11:11:11",
     datetimerangeStart: "2019-09-20 11:11:11",
-    datetimerangeEnd: "2019-09-21 11:11:11",
-  },
+    datetimerangeEnd: "2019-09-21 11:11:11"
+  }
 ];
 options.list = list;
 const mock = mockUtil.buildMock(options);

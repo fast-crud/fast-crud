@@ -76,6 +76,7 @@ import _ from "lodash-es";
 import { ComputeValue } from "../../core/compute-value";
 import traceUtil from "../../utils/util.trace";
 import FsRender from "../render/fs-render";
+import logger from "../../utils/util.log";
 export default {
   name: "FsForm",
   components: { FsRender },
@@ -132,7 +133,7 @@ export default {
     const scope = ref({
       row: props.initialForm,
       form,
-      index: ctx.attrs.index,
+      index: props.index,
       mode: props.mode,
       attrs: ctx.attrs,
       getComponentRef,
@@ -180,6 +181,7 @@ export default {
     async function submit() {
       const valid = await formRef.value.validate();
       if (valid) {
+        logger.debug("form submit", scope.value);
         if (props.doSubmit) {
           await props.doSubmit(scope.value);
         }

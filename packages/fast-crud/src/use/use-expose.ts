@@ -1,5 +1,6 @@
 import { toRaw } from "vue";
 import _ from "lodash-es";
+import logger from "../utils/util.log";
 export default function (crudRef) {
   const expose = {
     getFormWrapperRef() {
@@ -19,6 +20,7 @@ export default function (crudRef) {
     },
     doValueBuilder(records) {
       const columns = toRaw(crudRef.value.columns);
+      logger.debug("columns", columns);
       const valueBuilderColumns = _.filter(columns, (column, key) => {
         return column.valueBuilder != null;
       });
@@ -35,6 +37,7 @@ export default function (crudRef) {
           });
         });
       });
+      logger.debug("valueBuilder success:", records);
     },
     doValueResolve(form) {
       const columns = toRaw(crudRef.value.columns);
@@ -43,6 +46,7 @@ export default function (crudRef) {
           column.valueResolve({ form, key, column });
         }
       });
+      logger.debug("valueResolve success:", form);
     },
   };
 

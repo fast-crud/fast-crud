@@ -32,7 +32,7 @@ export default function (ctx) {
 
   const crudOptions = ref();
 
-  const { doValueBuilder } = useExpose(crudRef);
+  const { doValueBuilder, doValueResolve } = useExpose(crudRef);
   async function doRefresh() {
     let page;
     if (crudOptions.value.pagination) {
@@ -144,12 +144,14 @@ export default function (ctx) {
     return {
       editForm: {
         async doSubmit(context) {
+          doValueResolve(context);
           await crudOptions.value.request.editRequest(context);
           doRefresh();
         },
       },
       addForm: {
         async doSubmit(context) {
+          doValueResolve(context);
           await crudOptions.value.request.addRequest(context);
           doRefresh();
         },
@@ -247,6 +249,7 @@ export default function (ctx) {
     }
     function eachColumns(columns, tableParentColumns: any[] = tableColumns) {
       _.forEach(columns, (item, key) => {
+        item.key = key;
         // types merge
         if (item.type) {
           const typeOptions = typesUtil.getType(item.type);

@@ -54,6 +54,7 @@ export default {
         ..._.omit(opts, "wrapper"),
       };
 
+      console.log("form options", opts, formOptions.value);
       // 打开表单对话框
       formWrapperOpen.value = true;
 

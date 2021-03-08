@@ -107,6 +107,7 @@ import FsToolbar from "./toolbar/index.vue";
 import FsTable from "./crud/fs-table.jsx";
 import traceUtil from "../utils/util.trace";
 import { uiContext } from "../ui";
+import logger from "../utils/util.log";
 function useProviders(props, ctx) {
   provide("get:columns", () => {
     return props.table.columns;
@@ -241,7 +242,6 @@ function useTable(props, ctx) {
       scroll: props.table.scroll,
     });
     const table = { ...ctx.attrs, ...props.table, ...fixedHeight };
-    console.log("props.table------", props.table, table);
     return table;
   });
 
@@ -269,8 +269,8 @@ function useTable(props, ctx) {
     const index = scope[tableColumnCI.index];
     const row = scope[tableColumnCI.row];
 
+    console.log("form,index", index);
     const e = { mode: key, initialForm: row, slots: ctx.slots, index };
-    console.log("handle", scope);
     if (key === "edit") {
       formWrapperRef.value.open({ ...props.editForm, ...e });
     } else if (key === "view") {
@@ -290,7 +290,7 @@ function useTable(props, ctx) {
   };
 
   const onToolbarHandle = (e) => {
-    console.log("toolbar handle", e);
+    logger.debug("toolbar handle", e);
   };
 
   return {
@@ -325,6 +325,8 @@ export default defineComponent({
     table: {
       show: true,
     },
+    //原始column配置
+    columns: {},
     data: {
       type: Array,
     },
@@ -349,7 +351,6 @@ export default defineComponent({
     "form-value-change",
   ],
   setup(props, ctx) {
-    console.log("ctx", ctx);
     traceUtil.trace("fs-crud");
     useProviders();
     const search = useSearch(props, ctx);

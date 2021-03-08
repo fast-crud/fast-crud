@@ -132,7 +132,6 @@ export default {
   setup(props, ctx) {
     const ui = uiContext.get();
     traceUtil.trace("fs-search");
-    console.log("search", props);
     let autoSearch = ref(null);
     const form = ref(_.cloneDeep(props.initialForm || {}));
     const searchFormRef = ref();
@@ -261,7 +260,6 @@ export default {
       }
     };
     const onChange = (item) => {
-      console.log("onChange", item);
       if (item.valueChange) {
         const key = item.key;
         const value = form.value[key];
@@ -275,7 +273,6 @@ export default {
     };
     // 输入法监听
     const changeInputEventDisabled = (disabled) => {
-      console.log("changeInputEventDisabled", disabled);
       inputEventDisabled.value = disabled;
       doAutoSearch();
     };

@@ -85,7 +85,6 @@ export default {
     const columnsFilterRef = ref();
     traceUtil.trace("fs-toolbar");
     const { proxy } = getCurrentInstance();
-    console.log("fsui", proxy.$fsui);
     const computedButtons = computed(() => {
       const defaultButtons = {
         refresh: {

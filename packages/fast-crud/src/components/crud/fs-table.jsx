@@ -22,9 +22,8 @@ export default {
     data: {},
   },
   emits: ["rowHandle"],
-  setup(props) {
+  setup() {
     const tableRef = ref();
-    console.log("tableColumns", props.columns);
     return {
       tableRef,
     };
@@ -38,7 +37,6 @@ export default {
     if (this.show === false) {
       return;
     }
-    console.log("this.columns", this.columns);
     const { proxy } = getCurrentInstance();
     const tableComp = resolveDynamicComponent(proxy.$fsui.table.name);
 
@@ -174,7 +172,6 @@ export default {
         v-slots={tableSlots}
       />
     );
-    // console.log('this.fixedHeight', this.fixedHeight)
     if (proxy.$fsui.table.vLoading) {
       const loading = resolveDirective(proxy.$fsui.table.vLoading);
       return withDirectives(tableRender, [[loading, this.$attrs.loading]]);

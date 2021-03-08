@@ -141,7 +141,6 @@ export default {
 
     const start = () => {
       active.value = true;
-      console.log("active", active.value, drawerBind.value);
     };
 
     return { t, drawerBind, active, start };
@@ -244,12 +243,10 @@ export default {
       this.showChange();
     },
     showChange() {
-      console.log("checkAll", this.checkAll);
       this.checkAll = this.showLength > 0;
     },
     // 全选和反选发生变化时触发
     onCheckAllChange(value) {
-      console.log("checkall change", value);
       const checked = this.$fsui.checkbox.resolveEvent(value);
       this.currentValue = this.currentValue.map((e) => {
         e.show = checked;
