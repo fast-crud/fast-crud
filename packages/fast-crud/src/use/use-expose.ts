@@ -19,10 +19,8 @@ export default function (crudRef) {
     },
     doValueBuilder(records) {
       const columns = toRaw(crudRef.value.columns);
-      const valueBuilderColumns = _.map(columns, (column, key) => {
-        if (column.valueBuilder) {
-          return { column, key };
-        }
+      const valueBuilderColumns = _.filter(columns, (column, key) => {
+        return column.valueBuilder != null;
       });
       if (valueBuilderColumns.length === 0) {
         return;

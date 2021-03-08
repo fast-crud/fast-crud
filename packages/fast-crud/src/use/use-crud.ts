@@ -201,7 +201,7 @@ export default function (ctx) {
         crudOptions.value.toolbar.compact = value;
       },
       "onUpdate:columns"(value) {
-        crudOptions.value.columns = value;
+        crudOptions.value.table.columns = value;
       },
       onRefresh() {
         doRefresh();
@@ -317,7 +317,7 @@ export default function (ctx) {
       { columns: searchColumns },
       userOptions.search
     );
-    userOptions.columns = tableColumns;
+    userOptions.table.columns = tableColumns;
 
     // 单独处理viewForm的component
     _.forEach(userOptions.viewForm.columns, (value) => {

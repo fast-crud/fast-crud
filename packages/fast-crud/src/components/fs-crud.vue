@@ -36,7 +36,7 @@
             @update:search="$emit('update:search', $event)"
             :compact="toolbar.compact"
             @update:compact="$emit('update:compact', $event)"
-            :columns="columns"
+            :columns="table.columns"
             @update:columns="$emit('update:columns', $event)"
             @refresh="$emit('refresh')"
             @action="onToolbarHandle"
@@ -54,7 +54,7 @@
       ref="tableRef"
       class="fs-crud-table"
       v-bind="computedTable"
-      :columns="columns"
+      :columns="computedTable.columns"
       :rowHandle="rowHandle"
       :data="data"
       slots="computedCellSlots"
@@ -109,7 +109,7 @@ import traceUtil from "../utils/util.trace";
 import { uiContext } from "../ui";
 function useProviders(props, ctx) {
   provide("get:columns", () => {
-    return props.columns;
+    return props.table.columns;
   });
   provide("update:columns", (columns) => {
     ctx.emit("update:columns", columns);
@@ -240,12 +240,12 @@ function useTable(props, ctx) {
     const fixedHeight = _.merge({}, fixedHeightRet.fixedOptions, {
       scroll: props.table.scroll,
     });
-    return { ...props.table, ...ctx.attrs, ...fixedHeight };
+    const table = { ...ctx.attrs, ...props.table, ...fixedHeight };
+    console.log("props.table------", props.table, table);
+    return table;
   });
 
   const computedToolbar = toRef(props, "toolbar");
-
-  const computedColumns = toRef(props, "columns");
 
   const computedCellSlots = computed(() => {
     return slotFilter(ctx.slots, "cell-");
@@ -298,7 +298,6 @@ function useTable(props, ctx) {
     containerRef,
     computedTable,
     computedToolbar,
-    computedColumns,
     computedCellSlots,
     onRowHandle,
     onActionHandle,
@@ -326,7 +325,6 @@ export default defineComponent({
     table: {
       show: true,
     },
-    columns: { type: Array },
     data: {
       type: Array,
     },

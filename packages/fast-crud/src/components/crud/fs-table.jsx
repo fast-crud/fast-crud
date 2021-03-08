@@ -22,8 +22,9 @@ export default {
     data: {},
   },
   emits: ["rowHandle"],
-  setup() {
+  setup(props) {
     const tableRef = ref();
+    console.log("tableColumns", props.columns);
     return {
       tableRef,
     };
@@ -37,6 +38,7 @@ export default {
     if (this.show === false) {
       return;
     }
+    console.log("this.columns", this.columns);
     const { proxy } = getCurrentInstance();
     const tableComp = resolveDynamicComponent(proxy.$fsui.table.name);
 
