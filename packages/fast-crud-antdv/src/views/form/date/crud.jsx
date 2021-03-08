@@ -1,14 +1,15 @@
 import * as api from "./api";
 import { utils } from "/src/fs";
-export default function({ crudRef }) {
-  const pageRequest = async query => {
+import moment from "moment";
+export default function ({ crudRef }) {
+  const pageRequest = async (query) => {
     return await api.GetList(query);
   };
   const editRequest = async ({ form, row }) => {
     form.id = row.id;
     return await api.UpdateObj(form);
   };
-  const delRequest = async id => {
+  const delRequest = async (id) => {
     return await api.DelObj(id);
   };
 
@@ -20,10 +21,10 @@ export default function({ crudRef }) {
       pageRequest,
       addRequest,
       editRequest,
-      delRequest
+      delRequest,
     },
     table: {
-      scroll: { x: 1700 }
+      scroll: { x: 1700 },
     },
     rowHandle: { fixed: "right" },
     columns: {
@@ -32,58 +33,84 @@ export default function({ crudRef }) {
         key: "id",
         type: "number",
         column: {
-          width: 50
+          width: 50,
         },
         form: {
-          show: false
-        }
+          show: false,
+        },
       },
       timestamp: {
         title: "时间戳",
         type: "datetime",
-        search: { show: true, width: 185 }
+        search: { show: true, width: 185 },
+        form: {
+          transformValue(value) {
+            console.log("transform", value);
+            return moment(value);
+          },
+        },
       },
       datetime: {
         title: "日期时间",
-        type: "datetime"
+        type: "datetime",
+        form: {
+          transformValue(value) {
+            console.log("transform", value);
+            return moment(value);
+          },
+        },
       },
       format: {
         title: "格式化",
         type: "datetime",
         form: {
+          transformValue(value) {
+            console.log("transform", value);
+            return moment(value);
+          },
           component: {
             format: "yyyy-MM-dd HH:mm",
-            valueFormat: "yyyy-MM-dd HH:mm"
-          }
+            valueFormat: "yyyy-MM-dd HH:mm",
+          },
         },
         column: {
           width: 180,
           component: {
             // 行展示组件使用的dayjs，格式化标准与el-datepicker不一样
-            format: "YYYY年MM月DD日 HH:mm"
-          }
-        }
+            format: "YYYY年MM月DD日 HH:mm",
+          },
+        },
       },
       date: {
         title: "仅日期",
-        type: "date"
+        type: "date",
       },
       disabledDate: {
         title: "禁用日期",
         type: "date",
         form: {
+          transformValue(value) {
+            console.log("transform", value);
+            return moment(value);
+          },
           component: {
             "picker-options": {
               disabledDate(time) {
                 return time.getTime() < Date.now();
-              }
-            }
-          }
-        }
+              },
+            },
+          },
+        },
       },
       time: {
         title: "仅时间",
-        type: "time"
+        type: "time",
+        form: {
+          transformValue(value) {
+            console.log("transform", value);
+            return moment(value);
+          },
+        },
       },
       daterange: {
         title: "日期范围",
@@ -91,9 +118,9 @@ export default function({ crudRef }) {
         search: { show: true, width: 300 },
         form: {
           component: {
-            "time-arrow-control": false
+            "time-arrow-control": false,
             //"picker-options": { shortcuts: shortcuts }
-          }
+          },
         },
         valueBuilder(row, key) {
           // if (!StringUtils.hasEmpty(row.daterangeStart, row.daterangeEnd)) {
@@ -111,7 +138,7 @@ export default function({ crudRef }) {
           //   row.daterangeStart = null;
           //   row.daterangeEnd = null;
           // }
-        }
+        },
       },
       datetimerange: {
         title: "日期时间范围",
@@ -119,9 +146,9 @@ export default function({ crudRef }) {
         form: {
           component: {
             "time-arrow-control": true,
-            "default-time": ["12:00:00", "12:00:00"]
+            "default-time": ["12:00:00", "12:00:00"],
             //"picker-options": { shortcuts: shortcuts }
-          }
+          },
         },
         valueBuilder(row, key) {
           if (
@@ -129,7 +156,7 @@ export default function({ crudRef }) {
           ) {
             row.datetimerange = [
               new Date(row.datetimerangeStart),
-              new Date(row.datetimerangeEnd)
+              new Date(row.datetimerangeEnd),
             ];
           }
         },
@@ -144,8 +171,8 @@ export default function({ crudRef }) {
             row.datetimerangeStart = null;
             row.datetimerangeEnd = null;
           }
-        }
-      }
-    }
+        },
+      },
+    },
   };
 }

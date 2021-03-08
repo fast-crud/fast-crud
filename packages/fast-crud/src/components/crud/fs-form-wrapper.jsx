@@ -1,4 +1,10 @@
-import { ref, resolveDynamicComponent, computed, nextTick } from "vue";
+import {
+  ref,
+  resolveDynamicComponent,
+  computed,
+  nextTick,
+  onMounted,
+} from "vue";
 import FsButton from "../basic/fs-button";
 import traceUtil from "../../utils/util.trace";
 import _ from "lodash-es";
@@ -9,6 +15,8 @@ export default {
   // eslint-disable-next-line vue/no-unused-components
   components: { FsButton },
   props: {
+    //默认打开配置，如果配置了options，则默认根据options自动打开
+    options: {},
     slots: {},
   },
   emits: [
@@ -133,6 +141,11 @@ export default {
       return _.merge(defBtns, formWrapper.value.buttons);
     });
 
+    onMounted(() => {
+      if (props.options != null) {
+        open(props.options);
+      }
+    });
     return {
       close,
       onClosed,

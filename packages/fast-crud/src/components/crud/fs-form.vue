@@ -112,7 +112,11 @@ export default {
     const form = reactive({});
     // 初始数据赋值
     _.each(props.columns, (item, key) => {
-      form[key] = props.initialForm[key];
+      let value = props.initialForm[key];
+      if (item.transformValue) {
+        value = item.transformValue(value);
+      }
+      form[key] = value;
     });
 
     const componentRefs = ref({});
