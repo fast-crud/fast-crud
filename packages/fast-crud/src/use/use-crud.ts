@@ -6,6 +6,7 @@ import logger from "../utils/util.log";
 import typesUtil from "../utils/util.types";
 import { uiContext } from "../ui";
 import { useI18n } from "../local";
+import useExpose from "./use-expose";
 export interface CrudOptions {
   table?: {};
   columns?: [];
@@ -30,6 +31,8 @@ export default function (ctx) {
   const crudRef = ctx.crudRef;
 
   const crudOptions = ref();
+
+  const { doValueBuilder } = useExpose(crudRef);
   async function doRefresh() {
     let page;
     if (crudOptions.value.pagination) {
@@ -75,6 +78,10 @@ export default function (ctx) {
       );
       return;
     }
+
+    //valueBuild
+    doValueBuilder(records);
+
     crudOptions.value.data = records;
     if (crudOptions.value.pagination) {
       crudOptions.value.pagination.currentPage = currentPage;
