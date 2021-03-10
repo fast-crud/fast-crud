@@ -6,6 +6,9 @@ import {
   DatePickerCI,
   DialogCI,
   DrawerCI,
+  DropdownCI,
+  DropdownItemCI,
+  DropdownMenuCI,
   FormItemCI,
   FormWrapperCI,
   IconCI,
@@ -350,5 +353,26 @@ export class Antdv implements UiInterface {
   timePicker: TimePickerCI = {
     name: "a-time-picker",
     modelValue: "value",
+  };
+  dropdown: DropdownCI = {
+    name: "a-dropdown",
+    command: () => {
+      return {};
+    },
+    slotName: "overlay",
+  };
+  dropdownMenu: DropdownMenuCI = {
+    name: "a-menu",
+    command: (callback) => {
+      return {
+        onClick($event) {
+          callback($event.key);
+        },
+      };
+    },
+  };
+  dropdownItem: DropdownItemCI = {
+    name: "a-menu-item",
+    command: "key",
   };
 }

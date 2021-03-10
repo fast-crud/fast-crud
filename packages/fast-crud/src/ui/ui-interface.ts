@@ -129,6 +129,16 @@ export interface DatePickerCI extends CI {
 export interface TimePickerCI extends CI {
   modelValue;
 }
+export interface DropdownCI extends CI {
+  command: Function;
+  slotName;
+}
+export interface DropdownMenuCI extends CI {
+  command: Function;
+}
+export interface DropdownItemCI extends CI {
+  command;
+}
 export interface Icons {
   refresh;
   search;
@@ -185,4 +195,7 @@ export interface UiInterface {
   switch: SwitchCI;
   datePicker: DatePickerCI;
   timePicker: TimePickerCI;
+  dropdown: DropdownCI;
+  dropdownMenu: DropdownMenuCI;
+  dropdownItem: DropdownItemCI;
 }

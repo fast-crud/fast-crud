@@ -1,8 +1,9 @@
-import _ from 'lodash'
+import _ from "lodash";
 import {
   PlusCircleOutlined,
   PlusOutlined,
-  CheckOutlined, EditOutlined,
+  CheckOutlined,
+  EditOutlined,
   ArrowRightOutlined,
   NodeIndexOutlined,
   ThunderboltOutlined,
@@ -18,8 +19,7 @@ import {
   RightOutlined,
   CloseOutlined,
   SwapOutlined
-
-} from '@ant-design/icons-vue'
+} from "@ant-design/icons-vue";
 
 const icons = {
   SearchOutlined,
@@ -41,9 +41,9 @@ const icons = {
   RightOutlined,
   CloseOutlined,
   SwapOutlined
-}
-export default function (app) {
+};
+export default function(app) {
   _.forEach(icons, (item, key) => {
-    app.component(key, item)
-  })
+    app.component(key, item);
+  });
 }

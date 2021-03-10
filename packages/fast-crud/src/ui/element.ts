@@ -26,6 +26,9 @@ import {
   InputGroupCI,
   DatePickerCI,
   TimePickerCI,
+  DropdownCI,
+  DropdownMenuCI,
+  DropdownItemCI,
 } from "./ui-interface";
 export class Element implements UiInterface {
   constructor(target) {
@@ -288,5 +291,26 @@ export class Element implements UiInterface {
   timePicker: TimePickerCI = {
     name: "el-time-picker",
     modelValue: "modelValue",
+  };
+  dropdown: DropdownCI = {
+    name: "el-dropdown",
+    command(callback) {
+      return {
+        onCommand($event) {
+          callback($event);
+        },
+      };
+    },
+    slotName: "dropdown",
+  };
+  dropdownMenu: DropdownMenuCI = {
+    name: "el-dropdown-menu",
+    command: () => {
+      return {};
+    },
+  };
+  dropdownItem: DropdownItemCI = {
+    name: "el-dropdown-item",
+    command: "command",
   };
 }

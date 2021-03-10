@@ -73,6 +73,11 @@ const resources = [
         title: "表单校验",
         path: "/form/validation",
         component: "/form/validation/index.vue"
+      },
+      {
+        title: "dropdown",
+        path: "/form/dropdown",
+        component: "/form/dropdown/index.vue"
       }
     ]
   },
