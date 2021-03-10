@@ -3,6 +3,7 @@ import _ from "lodash-es";
 import traceUtil from "../../utils/util.trace";
 export default {
   name: "FsComponentRender",
+  inheritAttrs: false,
   props: {
     modelValue: {},
     name: {

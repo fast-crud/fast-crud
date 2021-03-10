@@ -71,7 +71,7 @@
 </template>
 
 <script>
-import { ref, reactive, getCurrentInstance } from "vue";
+import { ref, reactive, getCurrentInstance, toRaw } from "vue";
 import _ from "lodash-es";
 import { ComputeValue } from "../../core/compute-value";
 import traceUtil from "../../utils/util.trace";
@@ -81,7 +81,7 @@ export default {
   name: "FsForm",
   components: { FsRender },
   props: {
-    // 初始数据
+    // 初始表单数据
     initialForm: {
       default() {
         return {};
@@ -111,13 +111,34 @@ export default {
     const formRef = ref();
 
     const form = reactive({});
+
+    const initialForm = _.cloneDeep(props.initialForm);
     // 初始数据赋值
     _.each(props.columns, (item, key) => {
-      let value = props.initialForm[key];
-      if (item.transformValue) {
-        value = item.transformValue(value);
+      form[key] = initialForm[key] || null;
+    });
+    //form.valueBuilder
+    _.each(props.columns, (item, key) => {
+      let value = form[key];
+      if (item.valueBuilder) {
+        item.valueBuilder({
+          value,
+          key,
+          row: form,
+          form,
+          index: props.index,
+          mode: props.mode,
+        });
       }
-      form[key] = value;
+    });
+
+    const scope = ref({
+      row: initialForm,
+      form,
+      index: props.index,
+      mode: props.mode,
+      attrs: ctx.attrs,
+      getComponentRef,
     });
 
     const componentRefs = ref({});
@@ -129,15 +150,6 @@ export default {
     function getComponentRef(key) {
       return getComponentRenderRef(key)?.$refs?.targetRef;
     }
-
-    const scope = ref({
-      row: props.initialForm,
-      form,
-      index: props.index,
-      mode: props.mode,
-      attrs: ctx.attrs,
-      getComponentRef,
-    });
 
     function getContextFn() {
       return scope.value;
@@ -180,17 +192,28 @@ export default {
 
     async function submit() {
       const valid = await formRef.value.validate();
-      if (valid) {
-        logger.debug("form submit", scope.value);
-        if (props.doSubmit) {
-          await props.doSubmit(scope.value);
-        }
-        ctx.emit("submit", scope.value);
-      } else {
+      if (!valid) {
         ctx.emit("validationError", scope.value);
+        return;
       }
+      const formData = _.cloneDeep(toRaw(form));
+      const submitScope = { ...scope.value, form: formData };
+      logger.debug("form submit", JSON.stringify(form));
+      _.each(props.columns, (item, key) => {
+        let value = initialForm[key];
+        if (item.valueResolve) {
+          item.valueResolve({
+            value,
+            key,
+            ...submitScope,
+          });
+        }
+      });
 
-      return valid;
+      if (props.doSubmit) {
+        await props.doSubmit(submitScope);
+      }
+      ctx.emit("submit", submitScope);
     }
 
     function getFormData() {

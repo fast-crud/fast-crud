@@ -56,8 +56,10 @@ export default function () {
     },
     time: {
       form: {
-        component: { name: ui.timePicker.name },
-        vModel: ui.timePicker.modelValue,
+        component: {
+          name: ui.timePicker.name,
+          vModel: ui.timePicker.modelValue,
+        },
       },
       column: {
         component: { name: "fs-date-format", format: "HH:mm:ss" },

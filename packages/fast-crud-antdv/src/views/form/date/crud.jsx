@@ -1,15 +1,16 @@
 import * as api from "./api";
 import { utils } from "/src/fs";
 import moment from "moment";
-export default function({ crudRef }) {
-  const pageRequest = async query => {
+console.log("utils", utils);
+export default function ({ crudRef }) {
+  const pageRequest = async (query) => {
     return await api.GetList(query);
   };
   const editRequest = async ({ form, row }) => {
     form.id = row.id;
     return await api.UpdateObj(form);
   };
-  const delRequest = async id => {
+  const delRequest = async (id) => {
     return await api.DelObj(id);
   };
 
@@ -21,10 +22,10 @@ export default function({ crudRef }) {
       pageRequest,
       addRequest,
       editRequest,
-      delRequest
+      delRequest,
     },
     table: {
-      scroll: { x: 1700 }
+      scroll: { x: 1700 },
     },
     rowHandle: { fixed: "right" },
     columns: {
@@ -33,152 +34,140 @@ export default function({ crudRef }) {
         key: "id",
         type: "number",
         column: {
-          width: 50
+          width: 50,
         },
         form: {
-          show: false
-        }
+          show: false,
+        },
       },
       timestamp: {
         title: "时间戳",
         type: "datetime",
         search: { show: true, width: 185 },
-        valueBuilder({ row, key }) {
-          const value = row[key];
-          if (value != null) {
-            row[key] = moment(value);
-          }
-        }
-      },
-      datetime: {
-        title: "日期时间",
-        type: "datetime",
-        valueBuilder({ row, key }) {
-          const value = row[key];
+        valueBuilder({ value, row, key }) {
           if (value != null) {
             row[key] = moment(value);
           }
         },
-        valueResolve({ form, key }) {
-          const value = form[key];
+        valueResolve({ value, row, key }) {
           if (value != null) {
-            form[key] = value.format();
+            row[key] = value.unix();
           }
-        }
+        },
+      },
+      datetime: {
+        title: "日期时间",
+        type: "datetime",
+        valueBuilder({ value, row, key }) {
+          if (value != null) {
+            row[key] = moment(value);
+          }
+        },
       },
       format: {
         title: "格式化",
         type: "datetime",
         form: {
-          transformValue(value) {
-            console.log("transform", value);
-            return moment(value);
-          },
           component: {
             format: "YYYY年MM月DD日 HH:mm",
-            valueFormat: "YYYY年MM月DD日 HH:mm"
-          }
+            valueFormat: "YYYY年MM月DD日 HH:mm",
+          },
         },
         column: {
           width: 180,
           component: {
             // 行展示组件使用的dayjs，
-            format: "YYYY年MM月DD日 HH:mm"
-          }
-        }
+            format: "YYYY年MM月DD日 HH:mm",
+          },
+        },
       },
       date: {
         title: "仅日期",
-        type: "date"
+        type: "date",
+        form: {
+          component: {
+            events: {
+              onChange(context) {
+                console.log("change", context);
+              },
+            },
+          },
+        },
+        valueBuilder({ value, row, key }) {
+          if (value != null) {
+            row[key] = moment(value);
+          }
+        },
       },
       disabledDate: {
         title: "禁用日期",
         type: "date",
         form: {
-          transformValue(value) {
-            console.log("transform", value);
-            return moment(value);
+          valueBuilder({ value, row, key }) {
+            if (value) {
+              row[key] = moment(value);
+            }
           },
           component: {
             "picker-options": {
               disabledDate(time) {
                 return time.getTime() < Date.now();
-              }
-            }
-          }
-        }
+              },
+            },
+          },
+        },
       },
       time: {
         title: "仅时间",
         type: "time",
         form: {
-          transformValue(value) {
-            console.log("transform", value);
-            return moment(value);
-          }
-        }
+          valueBuilder({ value, row, key }) {
+            if (value) {
+              row[key] = moment(value);
+            }
+          },
+          valueResolve({ value }) {
+            console.log("resolve:", value);
+          },
+        },
       },
       daterange: {
         title: "日期范围",
         type: "daterange",
         search: { show: true, width: 300 },
-        form: {
-          component: {
-            "time-arrow-control": false
-            //"picker-options": { shortcuts: shortcuts }
+        valueBuilder({ row, key }) {
+          if (!utils.strings.hasEmpty(row.daterangeStart, row.daterangeEnd)) {
+            row[key] = [moment(row.daterangeStart), moment(row.daterangeEnd)];
           }
-        }
-        // valueBuilder(row, key) {
-        //   // if (!StringUtils.hasEmpty(row.daterangeStart, row.daterangeEnd)) {
-        //   //   row.daterange = [
-        //   //     new Date(row.daterangeStart),
-        //   //     new Date(row.daterangeEnd)
-        //   //   ];
-        //   // }
-        // },
-        // valueResolve(row, key) {
-        //   // if (row.daterange != null && row.daterange.length > 1) {
-        //   //   row.daterangeStart = row.daterange[0].getTime();
-        //   //   row.daterangeEnd = row.daterange[1].getTime();
-        //   // } else {
-        //   //   row.daterangeStart = null;
-        //   //   row.daterangeEnd = null;
-        //   // }
-        // }
+        },
       },
       datetimerange: {
         title: "日期时间范围",
         type: "datetimerange",
-        form: {
-          component: {
-            "time-arrow-control": true,
-            "default-time": ["12:00:00", "12:00:00"]
-            //"picker-options": { shortcuts: shortcuts }
+        valueBuilder({ row, key }) {
+          if (
+            !utils.strings.hasEmpty(
+              row.datetimerangeStart,
+              row.datetimerangeEnd
+            )
+          ) {
+            row[key] = [
+              moment(row.datetimerangeStart),
+              moment(row.datetimerangeEnd),
+            ];
           }
-        }
-        // valueBuilder(row, key) {
-        //   if (
-        //     !utils.string.hasEmpty(row.datetimerangeStart, row.datetimerangeEnd)
-        //   ) {
-        //     row.datetimerange = [
-        //       new Date(row.datetimerangeStart),
-        //       new Date(row.datetimerangeEnd)
-        //     ];
-        //   }
-        // },
-        // valueResolve(row, key) {
-        //   if (
-        //     row.datetimerange != null &&
-        //     !utils.string.hasEmpty(row.datetimerange)
-        //   ) {
-        //     row.datetimerangeStart = row.datetimerange[0].getTime();
-        //     row.datetimerangeEnd = row.datetimerange[1].getTime();
-        //   } else {
-        //     row.datetimerangeStart = null;
-        //     row.datetimerangeEnd = null;
-        //   }
-        // }
-      }
-    }
+        },
+        valueResolve({ form, key }) {
+          const row = form;
+          if (row[key] != null && !utils.strings.hasEmpty(row[key])) {
+            row.datetimerangeStart = row[key][0];
+            row.datetimerangeEnd = row[key][1];
+          } else {
+            row.datetimerangeStart = null;
+            row.datetimerangeEnd = null;
+          }
+        },
+      },
+    },
   };
 }

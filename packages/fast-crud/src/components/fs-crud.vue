@@ -18,32 +18,33 @@
           />
         </div>
         <slot name="header-middle"></slot>
-        <div
-          class="fs-crud-actionbar"
-          v-if="actionbar && actionbar.show !== false"
-        >
-          <slot name="actionbar-left"></slot>
-          <fs-actionbar v-bind="actionbar" @action="onActionHandle" />
-          <slot name="actionbar-right"></slot>
-        </div>
+        <div class="fs-crud-action">
+          <div
+            class="fs-crud-actionbar"
+            v-if="actionbar && actionbar.show !== false"
+          >
+            <slot name="actionbar-left"></slot>
+            <fs-actionbar v-bind="actionbar" @action="onActionHandle" />
+            <slot name="actionbar-right"></slot>
+          </div>
 
-        <div class="fs-crud-toolbar" v-if="toolbar && toolbar.show !== false">
-          <slot name="toolbar-left"></slot>
-          <fs-toolbar
-            v-bind="toolbar"
-            :slots="computedToolbarSlots"
-            :search="search.show"
-            @update:search="$emit('update:search', $event)"
-            :compact="toolbar.compact"
-            @update:compact="$emit('update:compact', $event)"
-            :columns="table.columns"
-            @update:columns="$emit('update:columns', $event)"
-            @refresh="$emit('refresh')"
-            @action="onToolbarHandle"
-          />
-          <slot name="toolbar-right"></slot>
+          <div class="fs-crud-toolbar" v-if="toolbar && toolbar.show !== false">
+            <slot name="toolbar-left"></slot>
+            <fs-toolbar
+              v-bind="toolbar"
+              :slots="computedToolbarSlots"
+              :search="search.show"
+              @update:search="$emit('update:search', $event)"
+              :compact="toolbar.compact"
+              @update:compact="$emit('update:compact', $event)"
+              :columns="table.columns"
+              @update:columns="$emit('update:columns', $event)"
+              @refresh="$emit('refresh')"
+              @action="onToolbarHandle"
+            />
+            <slot name="toolbar-right"></slot>
+          </div>
         </div>
-
         <slot name="header-bottom"></slot>
       </div>
     </template>
@@ -379,17 +380,21 @@ export default defineComponent({
   }
 
   .fs-crud-header {
-    display: grid;
-    grid-template-columns: 50% 50%;
     padding: 10px 0;
 
     .fs-crud-search {
       grid-column: span 2;
       padding-bottom: 5px;
     }
-
+    .fs-crud-action {
+      display: flex;
+      align-items: center;
+    }
     .fs-crud-actionbar {
       padding-top: 5px;
+      display: flex;
+      flex: 1;
+      align-items: center;
     }
 
     .fs-crud-toolbar {

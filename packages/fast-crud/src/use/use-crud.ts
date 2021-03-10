@@ -73,7 +73,7 @@ export default function (ctx) {
     const { records } = pageRes;
     if (records == null) {
       logger.warn(
-        "pageRequest返回结构不正确，请配置transform，期望：{currentPage, pageSize, total, records:[]},实际返回：",
+        "pageRequest返回结构不正确，请配置request.transformRes，期望：{currentPage, pageSize, total, records:[]},实际返回：",
         pageRes
       );
       return;

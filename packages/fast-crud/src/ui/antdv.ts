@@ -332,6 +332,9 @@ export class Antdv implements UiInterface {
       if (type === "datetime") {
         return { name: "a-date-picker", showTime: true };
       }
+      if (type === "daterange") {
+        return { name: "a-range-picker" };
+      }
       if (type === "datetimerange") {
         return { name: "a-range-picker", showTime: true };
       }

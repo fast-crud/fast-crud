@@ -21,7 +21,7 @@ export default function (crudRef) {
     doValueBuilder(records) {
       const columns = toRaw(crudRef.value.columns);
       logger.debug("columns", columns);
-      const valueBuilderColumns = _.filter(columns, (column, key) => {
+      const valueBuilderColumns = _.filter(columns, (column) => {
         return column.valueBuilder != null;
       });
       if (valueBuilderColumns.length === 0) {
@@ -30,6 +30,7 @@ export default function (crudRef) {
       _.forEach(records, (row, index) => {
         _.forEach(valueBuilderColumns, (builder) => {
           builder.valueBuilder({
+            value: row[builder.key],
             row,
             index,
             key: builder.key,
@@ -39,11 +40,17 @@ export default function (crudRef) {
       });
       logger.debug("valueBuilder success:", records);
     },
-    doValueResolve(form) {
+    doValueResolve({ form }) {
       const columns = toRaw(crudRef.value.columns);
       _.forEach(columns, (column, key) => {
         if (column.valueResolve) {
-          column.valueResolve({ form, key, column });
+          column.valueResolve({
+            value: form[key],
+            row: form,
+            form,
+            key,
+            column,
+          });
         }
       });
       logger.debug("valueResolve success:", form);
