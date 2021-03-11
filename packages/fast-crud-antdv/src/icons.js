@@ -20,7 +20,8 @@ import {
   CloseOutlined,
   SwapOutlined,
   CompressOutlined,
-  ExpandOutlined
+  ExpandOutlined,
+  EllipsisOutlined
 } from "@ant-design/icons-vue";
 
 const icons = {
@@ -44,7 +45,8 @@ const icons = {
   CloseOutlined,
   SwapOutlined,
   CompressOutlined,
-  ExpandOutlined
+  ExpandOutlined,
+  EllipsisOutlined
 };
 export default function(app) {
   _.forEach(icons, (item, key) => {

@@ -168,6 +168,7 @@ export class Antdv implements UiInterface {
     arrowLeft: "ArrowLeftOutlined",
     left: "LeftOutlined",
     right: "RightOutlined",
+    more: "EllipsisOutlined",
   };
 
   dialog: DialogCI = {

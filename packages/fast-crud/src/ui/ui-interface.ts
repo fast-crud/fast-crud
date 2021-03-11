@@ -155,6 +155,7 @@ export interface Icons {
   right;
   arrowLeft;
   arrowRight;
+  more;
 }
 export interface UiInterface {
   modelValue: string;

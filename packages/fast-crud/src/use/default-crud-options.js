@@ -54,6 +54,12 @@ export default {
       rowHandle: {
         width: "250px",
         title: t("fs.rowHandle.title"),
+        dropdown: {
+          // 操作列折叠
+          text: null, // dropdown按钮文字
+          type: "primary",
+          icon: ui.icons.more,
+        },
       },
       pagination: {
         background: true,

@@ -135,6 +135,7 @@ export class Element implements UiInterface {
     close: "el-icon-close",
     arrowLeft: "el-icon-left",
     arrowRight: "el-icon-right",
+    more: "el-icon-more",
   };
 
   dialog: DialogCI = {

@@ -31,10 +31,7 @@ export default function({ crudRef }) {
     rowHandle: {
       dropdown: {
         // 操作列折叠
-        atLeast: 2, // 至少几个以上的按钮才会被折叠,注意show=false的按钮也会计算在内（行编辑按钮默认是隐藏的也会占一个位置）
-        text: "更多", // dropdown按钮文字
-        type: "primary",
-        icon: "DragOutlined"
+        atLeast: 2 // 至少几个以上的按钮才会被折叠,注意show=false的按钮也会计算在内（行编辑按钮默认是隐藏的也会占一个位置）
       }
     },
     columns: {
