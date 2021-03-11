@@ -10,6 +10,7 @@ import traceUtil from "../../utils/util.trace";
 import _ from "lodash-es";
 import { useI18n } from "../../local";
 import "./fs-form-wrapper.less";
+import logger from "../../utils/util.log";
 export default {
   name: "FsFormWrapper",
   // eslint-disable-next-line vue/no-unused-components
@@ -40,13 +41,15 @@ export default {
 
     const emitOnClosed = ref();
     const emitOnOpened = ref();
+    const title = ref();
     const open = (opts) => {
       const { wrapper } = opts;
       if (wrapper.onOpen) {
         wrapper.onOpen(opts);
       }
+      title.value = wrapper.title;
       formWrapper.value = {
-        ..._.omit(wrapper, "onOpen", "onClosed", "onOpened"),
+        ..._.omit(wrapper, "title", "onOpen", "onClosed", "onOpened"),
       };
       delete formWrapper.value.is;
       formWrapperIs.value = opts.wrapper.is;
@@ -54,7 +57,6 @@ export default {
         ..._.omit(opts, "wrapper"),
       };
 
-      console.log("form options", opts, formOptions.value);
       // 打开表单对话框
       formWrapperOpen.value = true;
 
@@ -147,11 +149,20 @@ export default {
         open(props.options);
       }
     });
+
+    const fullscreen = ref(false);
+    function toggleFullscreen() {
+      fullscreen.value = !fullscreen.value;
+    }
+
     return {
       close,
       onClosed,
       onOpened,
       open,
+      title,
+      fullscreen,
+      toggleFullscreen,
       formOptions,
       formWrapperIs,
       formWrapperOpen,
@@ -169,6 +180,7 @@ export default {
     if (!this.formWrapper) {
       return null;
     }
+    logger.debug("formWrapper", this.formWrapper);
     let children = {};
     const _slots = { ...this.$slots, ...this.slots };
     const slotsRender = (key, scope, slots = _slots) => {
@@ -180,6 +192,19 @@ export default {
     const scope = { _self: this, ...this.formOptions };
     if (this.formOptions) {
       children = {
+        title: () => {
+          return (
+            <div class={"fs-wrapper-title"}>
+              {this.title}
+              <div class={"fs-wrapper-title-right"}>
+                <fs-icon
+                  onClick={this.toggleFullscreen}
+                  icon={this.fullscreen ? "CompressOutlined" : "ExpandOutlined"}
+                />
+              </div>
+            </div>
+          );
+        },
         default: () => {
           const buttons = [];
           _.forEach(this.computedButtons, (item) => {
@@ -189,14 +214,16 @@ export default {
             buttons.push(<fs-button {...item} />);
           });
           return (
-            <div>
-              {slotsRender("form-body-before", scope)}
-              <fs-form
-                ref="formRef"
-                {...this.formOptions}
-                onValueChange={this.onValueChange}
-              />
-              {slotsRender("form-body-after", scope)}
+            <div class={"fs-form-wrapper-body"}>
+              <div class={"fs-form-body"}>
+                {slotsRender("form-body-before", scope)}
+                <fs-form
+                  ref="formRef"
+                  {...this.formOptions}
+                  onValueChange={this.onValueChange}
+                />
+                {slotsRender("form-body-after", scope)}
+              </div>
               <div className="fs-form-footer-btns">
                 {slotsRender("form-footer-prefix", scope)}
                 {buttons}
@@ -219,8 +246,9 @@ export default {
     };
     const vClosed = this.$fsui.formWrapper.buildOnClosedBind(is, this.onClosed);
     const vCustomClass = {
-      [this.$fsui.formWrapper.customClass]:
-        "fs-form-wrapper " + this.formWrapper.customClass,
+      [this.$fsui.formWrapper.customClass]: `fs-form-wrapper ${
+        this.formWrapper.customClass || ""
+      }  ${this.fullscreen ? "fs-fullscreen" : ""}`,
     };
 
     const formWrapperComp = resolveDynamicComponent(is);

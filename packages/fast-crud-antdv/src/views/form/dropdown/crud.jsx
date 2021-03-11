@@ -23,6 +23,11 @@ export default function({ crudRef }) {
       editRequest,
       delRequest
     },
+    form: {
+      wrapper: {
+        fullscreen: true
+      }
+    },
     rowHandle: {
       dropdown: {
         // 操作列折叠
