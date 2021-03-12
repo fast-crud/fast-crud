@@ -381,36 +381,26 @@ export default defineComponent({
   }
 
   .fs-crud-header {
-    display: grid;
+    display: flex;
     padding: 10px 0;
-    grid-template-areas:
-      "top top"
-      "search search"
-      "middle middle"
-      "actionbar toolbar"
-      "bottom bottom";
+    flex-wrap: wrap;
 
+    .fs-header-top {
+      width: 100%;
+    }
     .fs-crud-search {
-      grid-area: search;
+      width: 100%;
       grid-column: span 2;
       padding-bottom: 5px;
     }
 
-    .fs-header-top {
-      grid-area: top;
-    }
     .fs-header-middle {
-      grid-area: middle;
+      width: 100%;
     }
     .fs-header-bottom {
-      grid-area: bottom;
+      width: 100%;
     }
-    //.fs-crud-action {
-    //  display: flex;
-    //  align-items: center;
-    //}
     .fs-crud-actionbar {
-      grid-area: actionbar;
       // padding-top: 5px;
       display: flex;
       flex: 1;
@@ -418,7 +408,6 @@ export default defineComponent({
     }
 
     .fs-crud-toolbar {
-      grid-area: toolbar;
       display: flex;
       justify-content: flex-end;
       align-items: center;

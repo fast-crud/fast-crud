@@ -12,6 +12,8 @@ _.forEach(viewMocks, value => {
   list.push(value.default);
 });
 
+console.log("mocks", list);
+
 list.forEach(apiFile => {
   for (const item of apiFile) {
     mock.onAny(new RegExp("/api" + item.path)).reply(async config => {

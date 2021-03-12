@@ -29,6 +29,8 @@ import {
   DropdownCI,
   DropdownMenuCI,
   DropdownItemCI,
+  ImageGroupCI,
+  ImageCI,
 } from "./ui-interface";
 export class Element implements UiInterface {
   constructor(target) {
@@ -141,6 +143,10 @@ export class Element implements UiInterface {
   dialog: DialogCI = {
     name: "el-dialog",
     visible: "modelValue",
+    customClass: "customClass",
+    buildOnClosedBind(onClosed) {
+      return { onClosed };
+    },
     footer() {
       return {};
     },
@@ -313,5 +319,15 @@ export class Element implements UiInterface {
   dropdownItem: DropdownItemCI = {
     name: "el-dropdown-item",
     command: "command",
+  };
+
+  imageGroup: ImageGroupCI = {
+    name: "div",
+  };
+  image: ImageCI = {
+    name: "el-image",
+    buildPreviewList: (urls) => {
+      return { "preview-src-list": urls };
+    },
   };
 }

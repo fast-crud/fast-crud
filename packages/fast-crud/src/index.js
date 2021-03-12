@@ -5,7 +5,7 @@ import utils from "./utils";
 import { setDictRequest, dict } from "./core/dict";
 import { useDict } from "./use/use-dict.ts";
 import { uiContext } from "./ui";
-import columnTypes from "./types";
+import types from "./types";
 import * as components from "./components";
 import { i18n } from "./local";
 import useExpose from "./use/use-expose";
@@ -18,6 +18,7 @@ export {
   utils,
   uiContext,
   useExpose,
+  types,
 };
 // export * from './components'
 export const FastCrud = {
@@ -40,7 +41,7 @@ export const FastCrud = {
       app.component(key, com);
     }
 
-    columnTypes.install();
+    types.install();
 
     app.config.globalProperties.$fsui = uiContext.get();
   },

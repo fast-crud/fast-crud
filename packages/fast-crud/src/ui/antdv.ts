@@ -13,6 +13,8 @@ import {
   FormWrapperCI,
   IconCI,
   Icons,
+  ImageCI,
+  ImageGroupCI,
   InputCI,
   InputGroupCI,
   InputPasswordCI,
@@ -174,8 +176,12 @@ export class Antdv implements UiInterface {
   dialog: DialogCI = {
     name: "a-modal",
     visible: "visible",
+    customClass: "wrapClassName",
     footer() {
       return { footer: null };
+    },
+    buildOnClosedBind(onClosed: Function): {} {
+      return { afterClose: onClosed };
     },
   };
 
@@ -375,5 +381,14 @@ export class Antdv implements UiInterface {
   dropdownItem: DropdownItemCI = {
     name: "a-menu-item",
     command: "key",
+  };
+  imageGroup: ImageGroupCI = {
+    name: "a-image-preview-group",
+  };
+  image: ImageCI = {
+    name: "a-image",
+    buildPreviewList: () => {
+      return {};
+    },
   };
 }

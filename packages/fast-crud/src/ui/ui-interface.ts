@@ -28,6 +28,8 @@ export interface TextAreaCI extends CI {
 export interface DialogCI extends CI {
   visible;
   footer: Function;
+  buildOnClosedBind: Function;
+  customClass;
 }
 
 export interface DrawerCI extends CI {
@@ -139,6 +141,10 @@ export interface DropdownMenuCI extends CI {
 export interface DropdownItemCI extends CI {
   command;
 }
+export type ImageGroupCI = CI;
+export interface ImageCI extends CI {
+  buildPreviewList;
+}
 export interface Icons {
   refresh;
   search;
@@ -199,4 +205,6 @@ export interface UiInterface {
   dropdown: DropdownCI;
   dropdownMenu: DropdownMenuCI;
   dropdownItem: DropdownItemCI;
+  imageGroup: ImageGroupCI;
+  image: ImageCI;
 }

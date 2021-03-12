@@ -21,6 +21,7 @@ export default defineConfig({
         "../fast-crud/src/local/lang"
       ),
       "@fast-crud/fast-crud": path.resolve("../fast-crud/src"),
+      "@fast-crud/fast-crud-extends": path.resolve("../fast-crud-extends/src"),
       "/antdv": path.resolve("./node_modules/ant-design-vue"),
       "/@": path.resolve("./src")
     },
