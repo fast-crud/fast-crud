@@ -6,93 +6,126 @@ const resources = [
     title: "首页",
     name: "index",
     path: "/index",
-    component: "/home/index.vue"
+    component: "/home/index.vue",
   },
   {
-    title: "表单示例",
+    title: "组件示例",
+    name: "component",
+    path: "/component",
+    redirect: "/component/text",
+    children: [
+      {
+        title: "文本输入(input)",
+        path: "/component/text",
+        component: "/component/text/index.vue",
+      },
+      {
+        title: "选择(select)",
+        path: "/component/select",
+        component: "/component/select/index.vue",
+      },
+      {
+        title: "级联(cascader)",
+        path: "/component/cascader",
+        component: "/component/cascader/index.vue",
+      },
+      {
+        title: "多选(checkbox)",
+        path: "/component/checkbox",
+        component: "/component/checkbox/index.vue",
+      },
+      {
+        title: "单选(radio)",
+        path: "/component/radio",
+        component: "/component/radio/index.vue",
+      },
+      {
+        title: "开关(switch)",
+        path: "/component/switch",
+        component: "/component/switch/index.vue",
+      },
+      {
+        title: "日期时间(date)",
+        path: "/component/date",
+        component: "/component/date/index.vue",
+      },
+      {
+        title: "按钮链接",
+        path: "/component/button",
+        component: "/component/button/index.vue",
+      },
+    ],
+  },
+  {
+    title: "表单相关",
     name: "form",
     path: "/form",
     redirect: "/form/text",
     children: [
       {
-        title: "表单布局",
-        path: "/form/layout",
-        component: "/form/layout/index.vue"
-      },
-      {
         title: "表单Grid布局",
         path: "/form/layout-grid",
-        component: "/form/layout-grid/index.vue"
+        component: "/form/layout-grid/index.vue",
       },
       {
         title: "表单Flex布局",
         path: "/form/layout-flex",
-        component: "/form/layout-flex/index.vue"
+        component: "/form/layout-flex/index.vue",
       },
       {
-        title: "文本输入(input)",
-        path: "/form/text",
-        component: "/form/text/index.vue"
-      },
-      {
-        title: "选择(select)",
-        path: "/form/select",
-        component: "/form/select/index.vue"
-      },
-      {
-        title: "级联(cascader)",
-        path: "/form/cascader",
-        component: "/form/cascader/index.vue"
-      },
-      {
-        title: "多选(checkbox)",
-        path: "/form/checkbox",
-        component: "/form/checkbox/index.vue"
-      },
-      {
-        title: "单选(radio)",
-        path: "/form/radio",
-        component: "/form/radio/index.vue"
-      },
-      {
-        title: "开关(switch)",
-        path: "/form/switch",
-        component: "/form/switch/index.vue"
-      },
-      {
-        title: "日期时间(date)",
-        path: "/form/date",
-        component: "/form/date/index.vue"
-      },
-      {
-        title: "选择联动",
-        path: "/form/linkage",
-        component: "/form/linkage/index.vue"
+        title: "表单动态布局",
+        path: "/form/layout",
+        component: "/form/layout/index.vue",
       },
       {
         title: "表单校验",
         path: "/form/validation",
-        component: "/form/validation/index.vue"
+        component: "/form/validation/index.vue",
       },
-      {
-        title: "dropdown",
-        path: "/form/dropdown",
-        component: "/form/dropdown/index.vue"
-      }
-    ]
+    ],
   },
   {
-    title: "高级示例",
+    title: "特性示例",
+    path: "feature",
+    children: [
+      {
+        title: "操作列按钮折叠",
+        path: "/feature/dropdown",
+        component: "/feature/dropdown/index.vue",
+      },
+      {
+        title: "布局插槽",
+        path: "/feature/layout-slots",
+        component: "/feature/layout-slots/index.vue",
+      },
+      {
+        title: "单元格插槽",
+        path: "/feature/cell-slots",
+        component: "/feature/cell-slots/index.vue",
+      },
+      {
+        title: "表单字段插槽",
+        path: "/feature/form-slots",
+        component: "/feature/form-slots/index.vue",
+      },
+      {
+        title: "查询字段插槽",
+        path: "/feature/search-slots",
+        component: "/feature/search-slots/index.vue",
+      },
+    ],
+  },
+  {
+    title: "高级功能",
     path: "advanced",
     children: [
-      { title: "树形表格", path: "/advanced/advancedInput" },
-      { title: "行展开", path: "/advanced/formSelect" },
-      { title: "多选表格", path: "/advanced/formSelect" },
-      { title: "单选表格", path: "/advanced/formSelect" },
-      { title: "批量删除", path: "/advanced/formSelect" },
-      { title: "联动", path: "/advanced/formSelect" }
-    ]
-  }
+      {
+        title: "选择联动",
+        path: "/advanced/linkage",
+        component: "/advanced/linkage/index.vue",
+      },
+    ],
+  },
 ];
 
 function createRouters(adminRouters) {
@@ -102,8 +135,8 @@ function createRouters(adminRouters) {
       name: "/",
       component: Layout,
       redirect: "index",
-      children: adminRouters
-    }
+      children: adminRouters,
+    },
   ];
 }
 
@@ -123,11 +156,11 @@ function transformOneResource(resource) {
 
   return {
     menu,
-    route
+    route,
   };
 }
 
-const buildMenusAndRouters = resources => {
+const buildMenusAndRouters = (resources) => {
   const routes = [];
   const menus = [];
 
@@ -146,7 +179,7 @@ const buildMenusAndRouters = resources => {
   }
   return {
     routes,
-    menus
+    menus,
   };
 };
 

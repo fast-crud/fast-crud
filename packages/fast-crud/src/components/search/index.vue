@@ -11,11 +11,13 @@
         @compositionstart="changeInputEventDisabled(true)"
         @compositionend="changeInputEventDisabled(false)"
       >
-        <fs-slot-render
-          v-if="slots['search-left']"
-          :slots="slots['search-left']"
-          :scope="{ form }"
-        />
+        <component :is="$fsui.formItem.name">
+          <fs-slot-render
+            v-if="slots['search-left']"
+            :slots="slots['search-left']"
+            :scope="{ form }"
+          />
+        </component>
         <template v-for="(item, key) in computedColumns" :key="key">
           <component
             :is="$fsui.formItem.name"
@@ -50,22 +52,25 @@
             </template>
           </component>
         </template>
-
-        <fs-slot-render
-          v-if="slots['search-middle']"
-          :slots="slots['search-middle']"
-          :scope="{ form }"
-        />
+        <component :is="$fsui.formItem.name">
+          <fs-slot-render
+            v-if="slots['search-middle']"
+            :slots="slots['search-middle']"
+            :scope="{ form }"
+          />
+        </component>
         <component :is="$fsui.formItem.name" class="search-btns">
           <template v-for="(item, index) in computedButtons" :key="index">
             <fs-button v-if="item.show" @click="item.doClick()" v-bind="item" />
           </template>
         </component>
-        <fs-slot-render
-          v-if="slots['search-right']"
-          :slots="slots['search-right']"
-          :scope="{ form }"
-        />
+        <component :is="$fsui.formItem.name">
+          <fs-slot-render
+            v-if="slots['search-right']"
+            :slots="slots['search-right']"
+            :scope="{ form }"
+          />
+        </component>
       </component>
     </div>
   </component>
@@ -82,6 +87,7 @@ import traceUtil from "../../utils/util.trace";
 import { uiContext } from "../../ui";
 import { useI18n } from "../../local";
 import logger from "../../utils/util.log";
+
 export default {
   name: "FsSearch",
   // eslint-disable-next-line vue/no-unused-components
@@ -137,12 +143,15 @@ export default {
     const searchFormRef = ref();
     const { t } = useI18n();
     const componentRenderRefs = ref({});
+
     function getComponentRenderRef(key) {
       return componentRenderRefs.value[key];
     }
+
     function getComponentRef(key) {
       return getComponentRenderRef(key)?.$refs?.targetRef;
     }
+
     function getContextFn() {
       return { form: form.value, getComponentRef };
     }
@@ -242,6 +251,7 @@ export default {
     function setForm(form) {
       form.value = form;
     }
+
     const inputEventDisabled = ref(false);
 
     const doAutoSearch = () => {
@@ -304,21 +314,25 @@ export default {
   .search-form {
     display: flex;
     align-items: center;
+
     & > * {
       margin-bottom: 4px;
       margin-top: 4px;
       margin-right: 10px;
     }
+
     .el-form-item {
       margin-bottom: 4px;
       margin-top: 4px;
       display: flex;
       align-items: center;
     }
+
     .el-form--inline {
       display: flex;
       align-items: center;
     }
+
     .el-form-item__content {
       display: flex;
       align-items: center;

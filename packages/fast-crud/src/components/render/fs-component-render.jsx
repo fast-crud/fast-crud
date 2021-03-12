@@ -63,7 +63,6 @@ export default {
           return handler({ ...newScope.value, $event });
         };
       });
-
       _.set(attrs, vModel.value, computedModelValue.value);
       return attrs;
     });

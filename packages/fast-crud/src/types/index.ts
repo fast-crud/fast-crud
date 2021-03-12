@@ -1,5 +1,5 @@
 import _ from "lodash-es";
-
+import logger from "../utils/util.log";
 // @ts-ignore
 const typeList = import.meta.globEager("./list/*.ts");
 const defaultTypeCreators: Array<any> = [];
@@ -16,5 +16,6 @@ export default {
         defaultTypes[key] = item;
       });
     }
+    logger.debug("types installed:", defaultTypes);
   },
 };

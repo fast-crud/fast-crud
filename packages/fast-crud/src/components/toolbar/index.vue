@@ -1,9 +1,5 @@
 <template>
   <div class="fs-toolbar">
-    <fs-slot-render
-      v-if="slots['toolbar-left']"
-      :slots="slots['toolbar-left']"
-    />
     <template v-for="(item, key) of computedButtons" :key="key">
       <fs-button
         v-if="item.show !== false"
@@ -11,10 +7,6 @@
         @click="item.click()"
       />
     </template>
-    <fs-slot-render
-      v-if="slots['toolbar-right']"
-      :slots="slots['toolbar-right']"
-    />
     <fs-table-columns-filter
       v-if="columns"
       ref="columnsFilterRef"

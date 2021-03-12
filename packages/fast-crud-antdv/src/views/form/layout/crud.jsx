@@ -79,6 +79,7 @@ export default function ({ crudRef }) {
       flexSpan: {
         title: "flex跨列",
         type: "text-area",
+        search: { show: false },
         form: {
           show: compute((context) => {
             // grid跨列模式下使用flex模式的设置会显示异常，为了演示效果，在grid模式下隐藏
