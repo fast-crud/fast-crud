@@ -8,8 +8,24 @@ _.forEach(typeList, (value: any) => {
 });
 
 const defaultTypes = {};
+
+function getTypes() {
+  return defaultTypes;
+}
+
+function getType(key) {
+  return defaultTypes[key];
+}
+
+function addTypes(newTypes) {
+  for (const key in newTypes) {
+    defaultTypes[key] = newTypes[key];
+  }
+}
 export default {
-  defaultTypes,
+  getType,
+  addTypes,
+  getTypes,
   install() {
     for (const creator of defaultTypeCreators) {
       _.forEach(creator(), (item, key) => {

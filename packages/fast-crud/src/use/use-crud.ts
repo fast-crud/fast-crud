@@ -3,7 +3,7 @@ import _ from "lodash-es";
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 import { ref } from "vue";
 import logger from "../utils/util.log";
-import typesUtil from "../utils/util.types";
+import types from "../types";
 import { uiContext } from "../ui";
 import { useI18n } from "../local";
 import useExpose from "./use-expose";
@@ -252,7 +252,7 @@ export default function (ctx) {
         item.key = key;
         // types merge
         if (item.type) {
-          const typeOptions = typesUtil.getType(item.type);
+          const typeOptions = types.getType(item.type);
           if (typeOptions) {
             item = _.merge({}, typeOptions, item);
           }

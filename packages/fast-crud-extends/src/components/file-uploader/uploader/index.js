@@ -1,7 +1,7 @@
 import choose from "./choose";
 import config from "./config";
 import _ from "lodash-es";
-import logger from "../../utils/util.log";
+import logger from "../../../utils/util.log";
 function install(Vue, options) {
   _.merge(config, options);
 }

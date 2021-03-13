@@ -3,7 +3,7 @@ import FsButton from "./basic/fs-button";
 import FsIcon from "./basic/fs-icon";
 import FsComponentRender from "./render/fs-component-render.jsx";
 import FsSlotRender from "./render/fs-slot-render";
-
+import FsBox from "./basic/fs-box.vue";
 import FsForm from "./crud/fs-form.vue";
 import FsCrud from "./fs-crud.vue";
 import FsRowHandle from "./crud/fs-row-handle.vue";
@@ -41,4 +41,5 @@ export {
   FsDictCheckbox,
   FsDictSwitch,
   FsDateFormat,
+  FsBox
 };

@@ -55,9 +55,10 @@
 </template>
 
 <script>
-import FsCropper from "./cropper";
+import FsCropper from "./cropper/index.vue";
 import FsUploader from "../uploader";
-import log from "../../../utils/util.log";
+import { utils } from "@fast-crud/fast-crud";
+const logger = utils.logger;
 /**
  * 图片裁剪上传组件,封装了fs-cropper, fs-cropper内部封装了cropperjs
  */
@@ -65,68 +66,68 @@ import log from "../../../utils/util.log";
 export default {
   name: "FsCropperUploader",
   components: {
-    FsCropper,
+    FsCropper
   },
   props: {
     // 初始图片url,或者是数组
     modelValue: {
-      type: [String, Array],
+      type: [String, Array]
     },
     // 上传后端类型，[form, cos, qiniu , alioss]
     type: {
-      type: String,
+      type: String
     },
     // 上传提示
     uploadTip: {
-      type: String,
+      type: String
     },
     // 对话框标题
     title: String,
     // cropper的高度，默认为浏览器可视窗口高度的40%，最小270
     cropperHeight: {
-      type: [String, Number],
+      type: [String, Number]
     },
     // 对话框宽度，默认50%
     dialogWidth: {
       type: [String, Number],
-      default: "50%",
+      default: "50%"
     },
     // 图片大小限制，单位MB
     maxSize: {
       type: Number,
-      default: 5,
+      default: 5
     },
     // 图片数量限制,0为不限制
     limit: {
       type: Number,
-      default: 1,
+      default: 1
     },
     // 可接收的文件后缀
     accept: {
       type: String,
-      default: ".jpg, .jpeg, .png, .gif, .webp",
+      default: ".jpg, .jpeg, .png, .gif, .webp"
     },
     // [cropperjs的参数](https://github.com/fengyuanchen/cropperjs)
     cropper: {
-      type: Object,
+      type: Object
     },
     // 上传参数，会临时覆盖全局上传配置参数[d2p-uploader](/guide/extends/uploader.html)
     uploader: {
-      type: Object,
+      type: Object
     },
     // 构建下载url方法,不影响提交的value
     buildUrl: {
       type: Function,
-      default: function (value, item) {
+      default: function(value, item) {
         return typeof value === "object" ? item.url : value;
-      },
-    },
+      }
+    }
   },
   emits: ["update:modelValue", "change"],
   data() {
     return {
       index: undefined,
-      list: [],
+      list: []
     };
   },
   computed: {
@@ -138,7 +139,7 @@ export default {
         }
       }
       return urlList;
-    },
+    }
   },
   watch: {
     modelValue(val) {
@@ -147,7 +148,7 @@ export default {
         return;
       }
       this.initValue(val);
-    },
+    }
   },
   created() {
     this.emitValue = this.value;
@@ -201,22 +202,22 @@ export default {
         url: undefined,
         dataUrl: dataUrl,
         status: "uploading",
-        progress: 0,
+        progress: 0
       };
-      const onProgress = (e) => {
+      const onProgress = e => {
         item.progress = e.percent;
       };
-      const onError = (e) => {
+      const onError = e => {
         item.status = "error";
         item.message = "文件上传出错:" + e.message;
-        log.debug(e);
+        logger.debug(e);
       };
-      log.debug("blob:", blob);
+      logger.debug("blob:", blob);
       const option = {
         file: blob,
         fileName: file.name,
         onProgress,
-        onError,
+        onError
       };
       this.list.push(item);
       const upload = await this.doUpload(option);
@@ -227,8 +228,8 @@ export default {
     },
     doUpload(option) {
       option.config = this.uploader;
-      return this.getUploader().then((uploader) => {
-        return uploader.upload(option).then((ret) => {
+      return this.getUploader().then(uploader => {
+        return uploader.upload(option).then(ret => {
           if (this.suffix != null) {
             ret.url += this.suffix;
           }
@@ -254,8 +255,8 @@ export default {
       }
       this.emitValue = ret;
       this.$emit("update:modelValue", ret);
-    },
-  },
+    }
+  }
 };
 </script>
 

@@ -23,7 +23,7 @@ function install(Vue, options) {
   }
 }
 
-const createAllUploadedValidator = (getFormComponentRef) => {
+const createAllUploadedValidator = getFormComponentRef => {
   return (rule, value, callback) => {
     const ref = getFormComponentRef(rule.fullField);
     if (ref && ref.isHasUploadingItem()) {
@@ -36,5 +36,5 @@ const createAllUploadedValidator = (getFormComponentRef) => {
 
 export default {
   install,
-  createAllUploadedValidator,
+  createAllUploadedValidator
 };

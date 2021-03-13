@@ -6,7 +6,7 @@ const resources = [
     title: "首页",
     name: "index",
     path: "/index",
-    component: "/home/index.vue",
+    component: "/home/index.vue"
   },
   {
     title: "组件示例",
@@ -17,44 +17,49 @@ const resources = [
       {
         title: "文本输入(input)",
         path: "/component/text",
-        component: "/component/text/index.vue",
+        component: "/component/text/index.vue"
       },
       {
         title: "选择(select)",
         path: "/component/select",
-        component: "/component/select/index.vue",
+        component: "/component/select/index.vue"
       },
       {
         title: "级联(cascader)",
         path: "/component/cascader",
-        component: "/component/cascader/index.vue",
+        component: "/component/cascader/index.vue"
       },
       {
         title: "多选(checkbox)",
         path: "/component/checkbox",
-        component: "/component/checkbox/index.vue",
+        component: "/component/checkbox/index.vue"
       },
       {
         title: "单选(radio)",
         path: "/component/radio",
-        component: "/component/radio/index.vue",
+        component: "/component/radio/index.vue"
       },
       {
         title: "开关(switch)",
         path: "/component/switch",
-        component: "/component/switch/index.vue",
+        component: "/component/switch/index.vue"
       },
       {
         title: "日期时间(date)",
         path: "/component/date",
-        component: "/component/date/index.vue",
+        component: "/component/date/index.vue"
       },
       {
         title: "按钮链接",
         path: "/component/button",
-        component: "/component/button/index.vue",
+        component: "/component/button/index.vue"
       },
-    ],
+      {
+        title: "文件上传",
+        path: "/component/uploader",
+        component: "/component/uploader/index.vue"
+      }
+    ]
   },
   {
     title: "表单相关",
@@ -65,24 +70,24 @@ const resources = [
       {
         title: "表单Grid布局",
         path: "/form/layout-grid",
-        component: "/form/layout-grid/index.vue",
+        component: "/form/layout-grid/index.vue"
       },
       {
         title: "表单Flex布局",
         path: "/form/layout-flex",
-        component: "/form/layout-flex/index.vue",
+        component: "/form/layout-flex/index.vue"
       },
       {
         title: "表单动态布局",
         path: "/form/layout",
-        component: "/form/layout/index.vue",
+        component: "/form/layout/index.vue"
       },
       {
         title: "表单校验",
         path: "/form/validation",
-        component: "/form/validation/index.vue",
-      },
-    ],
+        component: "/form/validation/index.vue"
+      }
+    ]
   },
   {
     title: "特性示例",
@@ -91,29 +96,29 @@ const resources = [
       {
         title: "操作列按钮折叠",
         path: "/feature/dropdown",
-        component: "/feature/dropdown/index.vue",
+        component: "/feature/dropdown/index.vue"
       },
       {
         title: "布局插槽",
         path: "/feature/layout-slots",
-        component: "/feature/layout-slots/index.vue",
+        component: "/feature/layout-slots/index.vue"
       },
       {
         title: "单元格插槽",
         path: "/feature/cell-slots",
-        component: "/feature/cell-slots/index.vue",
+        component: "/feature/cell-slots/index.vue"
       },
       {
         title: "表单字段插槽",
         path: "/feature/form-slots",
-        component: "/feature/form-slots/index.vue",
+        component: "/feature/form-slots/index.vue"
       },
       {
         title: "查询字段插槽",
         path: "/feature/search-slots",
-        component: "/feature/search-slots/index.vue",
-      },
-    ],
+        component: "/feature/search-slots/index.vue"
+      }
+    ]
   },
   {
     title: "高级功能",
@@ -122,10 +127,10 @@ const resources = [
       {
         title: "选择联动",
         path: "/advanced/linkage",
-        component: "/advanced/linkage/index.vue",
-      },
-    ],
-  },
+        component: "/advanced/linkage/index.vue"
+      }
+    ]
+  }
 ];
 
 function createRouters(adminRouters) {
@@ -135,8 +140,8 @@ function createRouters(adminRouters) {
       name: "/",
       component: Layout,
       redirect: "index",
-      children: adminRouters,
-    },
+      children: adminRouters
+    }
   ];
 }
 
@@ -156,11 +161,11 @@ function transformOneResource(resource) {
 
   return {
     menu,
-    route,
+    route
   };
 }
 
-const buildMenusAndRouters = (resources) => {
+const buildMenusAndRouters = resources => {
   const routes = [];
   const menus = [];
 
@@ -179,7 +184,7 @@ const buildMenusAndRouters = (resources) => {
   }
   return {
     routes,
-    menus,
+    menus
   };
 };
 

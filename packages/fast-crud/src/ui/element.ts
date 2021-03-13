@@ -322,7 +322,7 @@ export class Element implements UiInterface {
   };
 
   imageGroup: ImageGroupCI = {
-    name: "div",
+    name: "fs-box",
   };
   image: ImageCI = {
     name: "el-image",

@@ -2,8 +2,6 @@ import { createApp } from "vue";
 import App from "./App.vue";
 import router from "./router";
 import { FastCrud } from "@fast-crud/fast-crud";
-import { FsFileUploader, FsUploader } from "@fast-crud/fast-crud-extends";
-// import "@fast-crud/fast-crud/dist/style.css";
 import Antd, { message, notification, Modal } from "ant-design-vue";
 import "ant-design-vue/dist/antd.css";
 import "./style/common.less";
@@ -12,6 +10,8 @@ import { requestForMock } from "./api/service";
 import "./mock";
 import icons from "./icons";
 import i18n from "./i18n";
+import FsFileUploader from "./extends/file-uploader";
+// import FsUploader from "./extends/file-uploader/uploader";
 const app = createApp(App);
 app.use(Antd);
 // app.use(ElementPlus, { size: 'small', zIndex: 3000, i18n: i18n.global.t })
@@ -50,6 +50,5 @@ app.use(FastCrud, {
     }
   }
 });
-app.use(FsUploader);
 app.use(FsFileUploader);
 app.mount("#app");
