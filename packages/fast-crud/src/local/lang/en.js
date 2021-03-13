@@ -50,5 +50,13 @@ export default {
       showTotal: "Total {n} items",
     },
     date: { formatter: { to: "to" } },
+    extends: {
+      cropper: {
+        reChoose: "reChoose",
+        flipX: "flipX",
+        flipY: "flipY",
+        reset: "reset",
+      },
+    },
   },
 };

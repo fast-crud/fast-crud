@@ -171,6 +171,11 @@ export class Antdv implements UiInterface {
     left: "LeftOutlined",
     right: "RightOutlined",
     more: "EllipsisOutlined",
+    plus: "PlusOutlined",
+    zoomIn: "ZoomInOutlined",
+    zoomOut: "ZoomOutOutlined",
+    refreshLeft: "UndoOutlined",
+    refreshRight: "RedoOutlined",
   };
 
   dialog: DialogCI = {
@@ -390,5 +395,8 @@ export class Antdv implements UiInterface {
     buildPreviewList: () => {
       return {};
     },
+  };
+  progress: ProgressCI = {
+    name: "a-progress",
   };
 }

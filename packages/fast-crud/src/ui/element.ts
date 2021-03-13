@@ -31,6 +31,7 @@ import {
   DropdownItemCI,
   ImageGroupCI,
   ImageCI,
+  ProgressCI,
 } from "./ui-interface";
 export class Element implements UiInterface {
   constructor(target) {
@@ -138,6 +139,11 @@ export class Element implements UiInterface {
     arrowLeft: "el-icon-left",
     arrowRight: "el-icon-right",
     more: "el-icon-more",
+    plus: "el-icon-plus",
+    zoomIn: "el-icon-zoom-in",
+    zoomOut: "el-icon-zoom-out",
+    refreshLeft: "el-icon-refresh-left",
+    refreshRight: "el-icon-refresh-right",
   };
 
   dialog: DialogCI = {
@@ -329,5 +335,8 @@ export class Element implements UiInterface {
     buildPreviewList: (urls) => {
       return { "preview-src-list": urls };
     },
+  };
+  progress: ProgressCI = {
+    name: "el-progress",
   };
 }

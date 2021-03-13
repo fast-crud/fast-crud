@@ -7,7 +7,7 @@ import { useDict } from "./use/use-dict.ts";
 import { uiContext } from "./ui";
 import types from "./types";
 import * as components from "./components";
-import { i18n } from "./local";
+import { i18n, useI18n } from "./local";
 import useExpose from "./use/use-expose";
 export {
   ComputeValue,
@@ -16,6 +16,7 @@ export {
   useDict,
   useCrud,
   utils,
+  useI18n,
   uiContext,
   useExpose,
   types,

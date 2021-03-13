@@ -1,46 +1,48 @@
 <template>
   <div class="fs-cropper-uploader" :class="{ 'is-disabled': disabled }">
-    <component :is="$fsui.imageGroup.name" class="image-list">
-      <div class="image-item" v-for="(item, index) in list" :key="index">
-        <compomnent
-          :is="$fsui.image.name"
-          class="image"
-          :src="item.dataUrl ? item.dataUrl : item.url"
-          :data-src="item.url"
-          :preview-src-list="_urlList"
-          fit="contain"
-        >
-          <template #placeholder>
-            <div class="image-slot">
-              <img src="./loading-spin.svg" />
-            </div>
-          </template>
-        </compomnent>
-        <div class="delete" v-if="!disabled">
-          <i class="el-icon-delete" @click="removeImage(index, item)"></i>
-        </div>
-        <div class="status-uploading" v-if="item.status === 'uploading'">
+    <div class="image-list">
+      <component :is="$fsui.imageGroup.name">
+        <div class="image-item" v-for="(item, index) in list" :key="index">
           <component
-            :is="$fsui.progress.name"
-            type="circle"
-            :percentage="item.progress"
-            :width="70"
-          />
+            :is="$fsui.image.name"
+            class="image"
+            :src="item.dataUrl ? item.dataUrl : item.url"
+            :data-src="item.url"
+            :preview-src-list="_urlList"
+            fit="contain"
+          >
+            <template #placeholder>
+              <div class="image-slot">
+                <img src="./loading-spin.svg" />
+              </div>
+            </template>
+          </component>
+          <div class="delete" v-if="!disabled">
+            <i class="el-icon-delete" @click="removeImage(index, item)"></i>
+          </div>
+          <div class="status-uploading" v-if="item.status === 'uploading'">
+            <component
+              :is="$fsui.progress.name"
+              type="circle"
+              :percentage="item.progress"
+              :width="70"
+            />
+          </div>
+          <div class="status-done" v-else-if="item.status === 'done'">
+            <fs-icon :icon="$fsui.icons.check" class="el-icon-upload-success" />
+          </div>
         </div>
-        <div class="status-done" v-else-if="item.status === 'done'">
-          <fs-icon icon="$fsui.icons.check" class="el-icon-upload-success" />
+        <div
+          v-if="limit <= 0 || limit > list.length"
+          class="image-item image-plus"
+          @click="addNewImage"
+        >
+          <fs-icon :icon="$fsui.icons.plus" class="cropper-uploader-icon" />
         </div>
-      </div>
-      <div
-        v-if="limit <= 0 || limit > list.length"
-        class="image-item image-plus"
-        @click="addNewImage"
-      >
-        <fs-icon icon="$fsui.icons.plus" class="cropper-uploader-icon" />
-      </div>
-    </component>
+      </component>
+    </div>
     <fs-cropper
-      ref="cropper"
+      ref="cropperRef"
       :title="title"
       :cropperHeight="cropperHeight"
       :dialogWidth="dialogWidth"
@@ -57,7 +59,7 @@
 <script>
 import FsCropper from "./cropper/index.vue";
 import FsUploader from "../uploader";
-import { utils } from "@fast-crud/fast-crud";
+import { utils, useI18n } from "@fast-crud/fast-crud";
 const logger = utils.logger;
 /**
  * 图片裁剪上传组件,封装了fs-cropper, fs-cropper内部封装了cropperjs
@@ -69,6 +71,7 @@ export default {
     FsCropper
   },
   props: {
+    disabled: {},
     // 初始图片url,或者是数组
     modelValue: {
       type: [String, Array]
@@ -151,8 +154,8 @@ export default {
     }
   },
   created() {
-    this.emitValue = this.value;
-    this.initValue(this.value);
+    this.emitValue = this.modelValue;
+    this.initValue(this.modelValue);
   },
   methods: {
     initValue(value) {
@@ -175,8 +178,8 @@ export default {
         return;
       }
       this.index = undefined;
-      this.$refs.cropper.clear();
-      this.$refs.cropper.open();
+      this.$refs.cropperRef.clear();
+      this.$refs.cropperRef.open();
     },
     removeImage(index) {
       this.list.splice(index, 1);

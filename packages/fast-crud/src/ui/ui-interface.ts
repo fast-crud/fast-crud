@@ -145,6 +145,7 @@ export type ImageGroupCI = CI;
 export interface ImageCI extends CI {
   buildPreviewList;
 }
+export type ProgressCI = CI;
 export interface Icons {
   refresh;
   search;
@@ -162,6 +163,11 @@ export interface Icons {
   arrowLeft;
   arrowRight;
   more;
+  plus;
+  zoomIn;
+  zoomOut;
+  refreshLeft;
+  refreshRight;
 }
 export interface UiInterface {
   modelValue: string;
@@ -207,4 +213,5 @@ export interface UiInterface {
   dropdownItem: DropdownItemCI;
   imageGroup: ImageGroupCI;
   image: ImageCI;
+  progress: ProgressCI;
 }

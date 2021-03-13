@@ -64,7 +64,7 @@ export default {
     },
     column: {
       align: "center",
-      component: { name: "fs-images-format" }
+      component: { name: "fs-images-format", width: "30px" }
     },
     viewForm: {
       component: { height: 100, width: 100 }
