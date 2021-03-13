@@ -31,5 +31,13 @@ export default defineConfig({
     rollupOptions: {
       plugins: [visualizer()]
     }
+  },
+  server: {
+    proxy: {
+      // with options
+      "/api": {
+        target: "http://www.docmirror.cn:7070"
+      }
+    }
   }
 });

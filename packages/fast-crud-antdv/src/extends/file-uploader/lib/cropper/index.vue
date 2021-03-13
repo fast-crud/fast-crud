@@ -236,14 +236,17 @@ export default {
       }
     }
 
-    function cropImageDataUrl() {
+    function getCropImageDataUrl() {
       // get image data for post processing, e.g. upload or setting image src
-      cropperRef.value.getCroppedCanvas().toDataURL();
+      return cropperRef.value.getCroppedCanvas().toDataURL();
     }
     function getCropImageBlob(callback, type, quality) {
-      cropperRef.value.getCroppedCanvas().toBlob(callback, type, quality);
+      return cropperRef.value
+        .getCroppedCanvas()
+        .toBlob(callback, type, quality);
     }
     function emit(result) {
+      logger.debug("crop done:", result);
       ctx.emit("done", result);
     }
     function doOutput(file) {
@@ -251,11 +254,12 @@ export default {
       const ret = { file };
       if (props.output === "all") {
         getCropImageBlob(blob => {
-          const dataUrl = cropImageDataUrl();
+          const dataUrl = getCropImageDataUrl();
           ret.blob = blob;
           ret.dataUrl = dataUrl;
           emit(ret);
         });
+        return;
       }
 
       if (props.output === "blob") {
@@ -263,10 +267,11 @@ export default {
           ret.blob = blob;
           emit(ret);
         });
+        return;
       }
       if (props.output === "dataUrl") {
-        ret.dataUrl = cropImageDataUrl();
-        ctx.emit("done", ret);
+        ret.dataUrl = getCropImageDataUrl();
+        emit(ret);
       }
     }
 
@@ -419,7 +424,7 @@ export default {
       doCropper,
       doOutput,
       getCropImageBlob,
-      cropImageDataUrl,
+      getCropImageDataUrl,
       handleChange,
       setImage,
       checkFile,

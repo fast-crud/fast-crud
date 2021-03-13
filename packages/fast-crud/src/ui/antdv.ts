@@ -21,6 +21,7 @@ import {
   MessageBoxCI,
   MessageCI,
   NotificationCI,
+  ProgressCI,
   RadioCI,
   RadioGroupCI,
   SelectCI,

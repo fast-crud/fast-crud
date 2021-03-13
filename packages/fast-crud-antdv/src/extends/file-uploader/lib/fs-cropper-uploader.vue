@@ -7,9 +7,6 @@
             :is="$fsui.image.name"
             class="image"
             :src="item.dataUrl ? item.dataUrl : item.url"
-            :data-src="item.url"
-            :preview-src-list="_urlList"
-            fit="contain"
           >
             <template #placeholder>
               <div class="image-slot">
@@ -18,7 +15,10 @@
             </template>
           </component>
           <div class="delete" v-if="!disabled">
-            <i class="el-icon-delete" @click="removeImage(index, item)"></i>
+            <fs-icon
+              :icon="$fsui.icons.remove"
+              @click="removeImage(index, item)"
+            />
           </div>
           <div class="status-uploading" v-if="item.status === 'uploading'">
             <component
@@ -57,6 +57,7 @@
 </template>
 
 <script>
+import { reactive } from "vue";
 import FsCropper from "./cropper/index.vue";
 import FsUploader from "../uploader";
 import { utils, useI18n } from "@fast-crud/fast-crud";
@@ -201,12 +202,12 @@ export default {
       const dataUrl = ret.dataUrl;
       const file = ret.file;
       // 开始上传
-      const item = {
+      const item = reactive({
         url: undefined,
         dataUrl: dataUrl,
         status: "uploading",
         progress: 0
-      };
+      });
       const onProgress = e => {
         item.progress = e.percent;
       };
@@ -222,12 +223,15 @@ export default {
         onProgress,
         onError
       };
+      console.log("item", item, this.list);
       this.list.push(item);
-      const upload = await this.doUpload(option);
-      item.url = this.buildUrl(upload.url);
-      item.value = upload.url;
-      item.status = "done";
-      this.emit();
+      this.doUpload(option).then(upload => {
+        item.url = this.buildUrl(upload.url);
+        item.value = upload.url;
+        item.status = "done";
+        console.log("item", upload, item, this.list);
+        this.emit();
+      });
     },
     doUpload(option) {
       option.config = this.uploader;
