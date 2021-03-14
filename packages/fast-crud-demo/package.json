@@ -16,7 +16,7 @@
     "deepdash-es": "^5.3.5",
     "element-plus": "latest",
     "lodash-es": "^4.17.20",
-    "vue": "^3.0.5",
+    "vue": "^3.0.7",
     "vue-i18n": "^9.0.0-rc.2",
     "vue-router": "^4.0.1",
     "vuedraggable": "^4.0.1"

@@ -146,6 +146,10 @@ export interface ImageCI extends CI {
   buildPreviewList;
 }
 export type ProgressCI = CI;
+export interface LoadingCI extends CI {
+  name;
+  type;
+}
 export interface Icons {
   refresh;
   search;
@@ -214,4 +218,5 @@ export interface UiInterface {
   imageGroup: ImageGroupCI;
   image: ImageCI;
   progress: ProgressCI;
+  loading: LoadingCI;
 }

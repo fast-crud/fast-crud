@@ -10,8 +10,7 @@ import { request, requestForMock } from "./api/service";
 import "./mock";
 import icons from "./icons";
 import i18n from "./i18n";
-import FsFileUploader from "./extends/file-uploader";
-import FsUploader from "./extends/file-uploader/uploader";
+import { FsUploader } from "@fast-crud/fast-crud-extends";
 const app = createApp(App);
 app.use(Antd);
 // app.use(ElementPlus, { size: 'small', zIndex: 3000, i18n: i18n.global.t })
@@ -50,7 +49,6 @@ app.use(FastCrud, {
     }
   }
 });
-app.use(FsFileUploader);
 app.use(FsUploader, {
   defaultType: "cos",
   cos: {
@@ -130,10 +128,10 @@ app.use(FsUploader, {
     withCredentials: false,
     successHandle(ret) {
       // 上传完成后的结果处理， 此处后台返回的结果应该为 ret = {code:0,msg:'',data:fileUrl}
-      if (ret == null || ret === "") {
+      if (!ret.data) {
         throw new Error("上传失败");
       }
-      return { url: ret };
+      return { url: ret.data };
     }
   }
 });

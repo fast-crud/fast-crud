@@ -12,7 +12,7 @@
     "dayjs": "^1.10.4",
     "deepdash-es": "^5.3.5",
     "lodash-es": "^4.17.20",
-    "vue": "^3.0.5",
+    "vue": "^3.0.7",
     "vuedraggable": "^4.0.1"
   },
   "devDependencies": {

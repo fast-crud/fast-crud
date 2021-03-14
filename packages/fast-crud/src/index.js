@@ -5,7 +5,8 @@ import utils from "./utils";
 import { setDictRequest, dict } from "./core/dict";
 import { useDict } from "./use/use-dict.ts";
 import { uiContext } from "./ui";
-import types from "./types";
+import { useTypes } from "./use/use-types";
+import types from "./types/index";
 import * as components from "./components";
 import { i18n, useI18n } from "./local";
 import useExpose from "./use/use-expose";
@@ -19,7 +20,7 @@ export {
   useI18n,
   uiContext,
   useExpose,
-  types,
+  useTypes,
 };
 // export * from './components'
 export const FastCrud = {

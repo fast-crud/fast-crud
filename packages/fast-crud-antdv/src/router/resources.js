@@ -55,9 +55,29 @@ const resources = [
         component: "/component/button/index.vue"
       },
       {
-        title: "文件上传",
-        path: "/component/uploader",
-        component: "/component/uploader/index.vue"
+        title: "图片裁剪上传",
+        path: "/component/uploader/cropper",
+        component: "/component/uploader/cropper/index.vue"
+      },
+      {
+        title: "表单上传",
+        path: "/component/uploader/form",
+        component: "/component/uploader/form/index.vue"
+      },
+      {
+        title: "阿里云oss上传",
+        path: "/component/uploader/alioss",
+        component: "/component/uploader/alioss/index.vue"
+      },
+      {
+        title: "腾讯云cos上传",
+        path: "/component/uploader/cos",
+        component: "/component/uploader/cos/index.vue"
+      },
+      {
+        title: "七牛云上传",
+        path: "/component/uploader/qiniu",
+        component: "/component/uploader/qiniu/index.vue"
       }
     ]
   },

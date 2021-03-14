@@ -32,6 +32,7 @@ import {
   ImageGroupCI,
   ImageCI,
   ProgressCI,
+  LoadingCI,
 } from "./ui-interface";
 export class Element implements UiInterface {
   constructor(target) {
@@ -338,5 +339,9 @@ export class Element implements UiInterface {
   };
   progress: ProgressCI = {
     name: "el-progress",
+  };
+  loading: LoadingCI = {
+    name: "v-loading",
+    type: "directive",
   };
 }

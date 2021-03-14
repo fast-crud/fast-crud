@@ -2,7 +2,7 @@ import vue from "@vitejs/plugin-vue";
 import vueJsx from "@vitejs/plugin-vue-jsx";
 import path from "path";
 import visualizer from "rollup-plugin-visualizer";
-
+const { resolve } = path;
 // https://vitejs.dev/config/
 export default {
   plugins: [
@@ -20,9 +20,14 @@ export default {
       entry: path.resolve(__dirname, "src/index.js"),
       name: "fast-crud",
     },
+    // cssCodeSplit: true,
     sourcemap: true,
     // minify: false,
     rollupOptions: {
+      // input: {
+      //   main: resolve(__dirname, "src/index.js"),
+      //   en: resolve(__dirname, "src/local/lang/en.js"),
+      // },
       plugins: [visualizer()],
       // make sure to externalize deps that shouldn't be bundled
       // into your library

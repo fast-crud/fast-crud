@@ -18,6 +18,7 @@ import {
   InputCI,
   InputGroupCI,
   InputPasswordCI,
+  LoadingCI,
   MessageBoxCI,
   MessageCI,
   NotificationCI,
@@ -93,17 +94,11 @@ export class Antdv implements UiInterface {
     get: undefined,
     name: "a-message",
     open: (type, context) => {
-      if (typeof context === "string") {
-        context = {
-          message: context,
-        };
+      let content = context;
+      if (typeof context !== "string") {
+        content = context.message || context.content;
       }
-      type = type || context.type;
-      if (type) {
-        this.message.get[type](context);
-      } else {
-        this.message.get.open(context);
-      }
+      this.message.get[type](content);
     },
     success: (context) => {
       this.message.open("success", context);
@@ -399,5 +394,9 @@ export class Antdv implements UiInterface {
   };
   progress: ProgressCI = {
     name: "a-progress",
+  };
+  loading: LoadingCI = {
+    name: "a-spin",
+    type: "component",
   };
 }
