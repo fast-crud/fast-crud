@@ -5,12 +5,14 @@ export default {
     domain: "https://d2p-demo-1251260344.cos.ap-guangzhou.myqcloud.com",
     bucket: "d2p-demo-1251260344",
     region: "",
-    custom: {
-      // buildKey，获取授权等接口中将会传入
-    },
     secretId: "", //
     secretKey: "", // 传了secretKey 和secretId 代表使用本地签名模式（不安全，生产环境不推荐）
-    getAuthorization: null, // 不传secretKey代表使用临时签名模式时，此参数必传（安全，生产环境推荐）
+    async getAuthorization() {
+      // 不传secretKey代表使用临时签名模式时，此参数必传（安全，生产环境推荐）
+      throw new Error(
+        "请配置config.cos.getAuthorization 或 uploader.getAuthorization"
+      );
+    },
   },
   alioss: {
     domain: "https://d2p-demo.oss-cn-shenzhen.aliyuncs.com",
@@ -18,7 +20,7 @@ export default {
     region: "oss-cn-shenzhen",
     secretId: "",
     secretKey: "", // 传了secretKey 和secretId 代表使用本地签名模式（不安全，生产环境不推荐）
-    getAuthorization(custom) {
+    getAuthorization(context) {
       // 不传secretKey代表使用临时签名模式时（安全）
       return new Promise((resolve, reject) => {
         reject(
@@ -28,10 +30,7 @@ export default {
         );
       });
     },
-    custom: {
-      // buildKey，获取授权等接口中将会传入
-      keepName: false, // 阿里云的精简oss有点问题，中文文件名的文件无法上传
-    },
+    keepName: false, // 阿里云的精简oss有点问题，中文文件名的文件无法上传
     sdkOpts: {
       // sdk配置
       // secure: false // 默认为非https上传,为了安全，你可以设置为true
@@ -39,14 +38,10 @@ export default {
   },
   qiniu: {
     bucket: "d2p-demo",
-    getToken(custom, fileName) {
-      return new Promise((resolve, reject) => {
-        reject(
-          new Error(
-            "请实现config.qiniu.getToken方法，返回Promise获取七牛的授权token{token:xxx,expires:xxx}"
-          )
-        );
-      });
+    async getToken(context) {
+      throw new Error(
+        "请实现config.qiniu.getToken方法，返回Promise获取七牛的授权token{token:xxx,expires:xxx}"
+      );
     },
     domain: "http://pzrsldiu3.bkt.clouddn.com",
     custom: {

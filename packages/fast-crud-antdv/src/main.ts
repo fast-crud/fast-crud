@@ -107,7 +107,7 @@ app.use(FsUploader, {
   },
   qiniu: {
     bucket: "d2p-demo",
-    getToken(custom) {
+    getToken(options) {
       return request({
         url: "/upload/qiniu/getToken",
         method: "get"

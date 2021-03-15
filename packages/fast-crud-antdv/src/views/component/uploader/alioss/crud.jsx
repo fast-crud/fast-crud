@@ -35,9 +35,19 @@ export default function({ crudRef }) {
           show: false
         }
       },
-      avatar: {
-        title: "裁剪上传",
-        type: "cropper-uploader"
+      file: {
+        title: "上传",
+        type: "file-uploader"
+      },
+      picture: {
+        title: "图片列表",
+        type: "file-uploader",
+        form: { component: { "list-type": "picture" } }
+      },
+      pictureCard: {
+        title: "照片墙",
+        type: "file-uploader",
+        form: { component: { "list-type": "picture-card" } }
       }
     }
   };

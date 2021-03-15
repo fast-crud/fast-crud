@@ -250,11 +250,7 @@ export default {
     },
     async doUpload(option) {
       option.options = this.uploader;
-      const ret = await this.$refs.uploaderImplRef.upload(option);
-      if (this.suffix != null) {
-        ret.url += this.suffix;
-      }
-      return ret;
+      return await this.$refs.uploaderImplRef.upload(option);
     },
     emit() {
       const list = [];

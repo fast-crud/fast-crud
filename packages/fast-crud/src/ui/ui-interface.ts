@@ -150,6 +150,10 @@ export interface LoadingCI extends CI {
   name;
   type;
 }
+export interface UploadCI extends CI {
+  name;
+  type;
+}
 export interface Icons {
   refresh;
   search;
@@ -172,6 +176,7 @@ export interface Icons {
   zoomOut;
   refreshLeft;
   refreshRight;
+  upload;
 }
 export interface UiInterface {
   modelValue: string;
@@ -219,4 +224,5 @@ export interface UiInterface {
   image: ImageCI;
   progress: ProgressCI;
   loading: LoadingCI;
+  upload: UploadCI;
 }

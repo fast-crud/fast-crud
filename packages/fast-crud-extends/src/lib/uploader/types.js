@@ -10,7 +10,7 @@ export default function () {
       },
       column: {
         align: "center",
-        component: { name: "fs-images-format" },
+        component: { name: "fs-images-format", width: "30px" },
       },
       viewForm: {
         component: { height: 100, width: 100 },
@@ -28,7 +28,7 @@ export default function () {
       },
       column: {
         align: "center",
-        component: { name: "fs-images-format" },
+        component: { name: "fs-images-format", width: "30px" },
       },
       viewForm: {
         component: { height: 100, width: 100 },
@@ -47,12 +47,12 @@ export default function () {
     "file-uploader": {
       form: {
         component: {
-          name: "fs-el-file-uploader",
+          name: "fs-file-uploader",
           listType: "text",
         },
       },
       column: {
-        component: { name: "fs-images-format" },
+        component: { name: "fs-images-format", width: "30px" },
       },
     },
     "cropper-uploader": {

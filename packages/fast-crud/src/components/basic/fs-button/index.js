@@ -26,7 +26,7 @@ export default {
           children.push(h(IconComp));
         }
         if (this.$slots.default) {
-          children.push(this.$slots.default);
+          children.push(this.$slots.default());
         } else if (this.text) {
           children.push(this.text);
         }

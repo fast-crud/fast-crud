@@ -33,6 +33,7 @@ import {
   ImageCI,
   ProgressCI,
   LoadingCI,
+  UploadCI,
 } from "./ui-interface";
 export class Element implements UiInterface {
   constructor(target) {
@@ -145,6 +146,7 @@ export class Element implements UiInterface {
     zoomOut: "el-icon-zoom-out",
     refreshLeft: "el-icon-refresh-left",
     refreshRight: "el-icon-refresh-right",
+    upload: "el-icon-upload",
   };
 
   dialog: DialogCI = {
@@ -343,5 +345,9 @@ export class Element implements UiInterface {
   loading: LoadingCI = {
     name: "v-loading",
     type: "directive",
+  };
+  upload: UploadCI = {
+    name: "el-upload",
+    type: "",
   };
 }

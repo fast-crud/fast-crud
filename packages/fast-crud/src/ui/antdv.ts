@@ -33,6 +33,7 @@ import {
   TextAreaCI,
   TimePickerCI,
   UiInterface,
+  UploadCI,
 } from "./ui-interface";
 export class Antdv implements UiInterface {
   constructor(target) {
@@ -172,6 +173,7 @@ export class Antdv implements UiInterface {
     zoomOut: "ZoomOutOutlined",
     refreshLeft: "UndoOutlined",
     refreshRight: "RedoOutlined",
+    upload: "UploadOutlined",
   };
 
   dialog: DialogCI = {
@@ -398,5 +400,9 @@ export class Antdv implements UiInterface {
   loading: LoadingCI = {
     name: "a-spin",
     type: "component",
+  };
+  upload: UploadCI = {
+    name: "a-upload",
+    type: "",
   };
 }
