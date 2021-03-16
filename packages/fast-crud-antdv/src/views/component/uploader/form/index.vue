@@ -7,7 +7,7 @@ import { defineComponent, ref, onMounted } from "vue";
 import { useCrud } from "/src/fs";
 import createCrudOptions from "./crud";
 export default defineComponent({
-  name: "AliossUploader",
+  name: "FormUploader",
   setup() {
     // crud的ref
     const crudRef = ref();

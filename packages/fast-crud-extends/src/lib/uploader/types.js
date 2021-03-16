@@ -3,13 +3,12 @@ export default function () {
     "image-uploader": {
       form: {
         component: {
-          name: "fs-el-file-uploader",
+          name: "fs-file-uploader",
           listType: "picture-card",
-          accept: ".png,.jpeg,.jpg,.ico,.bmp,.gif",
+          accept: ".png,.jpeg,.jpg,.ico,.bmp,.gif,.webp,.svg",
         },
       },
       column: {
-        align: "center",
         component: { name: "fs-images-format", width: "30px" },
       },
       viewForm: {
@@ -22,7 +21,7 @@ export default function () {
           name: "fs-el-file-uploader",
           limit: 1,
           listType: "avatar",
-          accept: ".png,.jpeg,.jpg,.ico,.bmp,.gif",
+          accept: ".png,.jpeg,.jpg,.ico,.bmp,.gif,.webp,.svg",
           showFileList: false,
         },
       },
@@ -59,7 +58,7 @@ export default function () {
       form: {
         component: {
           name: "fs-cropper-uploader",
-          accept: ".png,.jpeg,.jpg,.ico,.bmp,.gif",
+          accept: ".png,.jpeg,.jpg,.ico,.bmp,.gif,.svg,.webp",
           cropper: { viewMode: 1 },
         },
       },

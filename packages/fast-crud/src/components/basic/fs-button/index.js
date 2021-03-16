@@ -27,7 +27,8 @@ export default {
         }
         if (this.$slots.default) {
           children.push(this.$slots.default());
-        } else if (this.text) {
+        }
+        if (this.text) {
           children.push(this.text);
         }
         return children;

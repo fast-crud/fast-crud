@@ -36,12 +36,12 @@ export default function ({ crudRef }) {
         },
       },
       file: {
-        title: "阿里云上传",
+        title: "表单上传",
         type: "file-uploader",
         form: {
           component: {
             uploader: {
-              type: "alioss",
+              type: "form",
             },
           },
         },
@@ -51,10 +51,12 @@ export default function ({ crudRef }) {
         type: "image-uploader",
         form: {
           component: {
+            limit: 2,
             uploader: {
-              type: "alioss",
+              type: "form",
             },
           },
+          helper: "最大可上传2个文件",
         },
       },
       cropper: {
@@ -63,9 +65,35 @@ export default function ({ crudRef }) {
         form: {
           component: {
             uploader: {
-              type: "alioss",
+              type: "form",
             },
           },
+        },
+      },
+      limit: {
+        title: "限制数量",
+        type: "file-uploader",
+        form: {
+          component: {
+            limit: 2,
+            uploader: {
+              type: "form",
+            },
+          },
+          helper: "最大可上传2个文件",
+        },
+      },
+      sizeLimit: {
+        title: "限制大小",
+        type: "file-uploader",
+        form: {
+          component: {
+            sizeLimit: 1024,
+            uploader: {
+              type: "form",
+            },
+          },
+          helper: "大小不能超过1k",
         },
       },
     },

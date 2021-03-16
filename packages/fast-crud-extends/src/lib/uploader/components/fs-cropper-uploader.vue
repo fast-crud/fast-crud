@@ -7,6 +7,7 @@
             :is="$fsui.image.name"
             class="image"
             :src="item.dataUrl ? item.dataUrl : item.url"
+            v-bind="img"
           >
             <template #placeholder>
               <div class="image-slot">
@@ -29,7 +30,7 @@
             />
           </div>
           <div class="status-done" v-else-if="item.status === 'done'">
-            <fs-icon :icon="$fsui.icons.check" class="el-icon-upload-success" />
+            <fs-icon :icon="$fsui.icons.check" class="status-down-icon" />
           </div>
         </div>
         <div
@@ -76,6 +77,7 @@ export default {
     modelValue: {
       type: [String, Array],
     },
+    img: {},
     // 上传后端类型，[form, cos, qiniu , alioss]
     type: {
       type: String,
@@ -316,7 +318,6 @@ export default {
       }
       .image {
         width: 100px;
-        height: 100px;
       }
 
       .delete {
@@ -385,7 +386,7 @@ export default {
         display: flex;
         justify-content: center;
         align-items: center;
-        i {
+        .status-down-icon {
           font-size: 12px;
           margin-top: 11px;
           color: #fff;

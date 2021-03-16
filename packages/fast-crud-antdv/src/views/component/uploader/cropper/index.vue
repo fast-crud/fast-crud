@@ -7,7 +7,7 @@ import { defineComponent, ref, onMounted } from "vue";
 import { useCrud } from "/src/fs";
 import createCrudOptions from "./crud";
 export default defineComponent({
-  name: "Uploader",
+  name: "CropperUploader",
   setup() {
     // crud的ref
     const crudRef = ref();
@@ -15,7 +15,7 @@ export default defineComponent({
     // useCrud
     const crud = useCrud({
       crudRef,
-      options: createCrudOptions({ crudRef })
+      options: createCrudOptions({ crudRef }),
     });
 
     // 获取列表数据
@@ -25,8 +25,8 @@ export default defineComponent({
 
     return {
       ...crud,
-      crudRef
+      crudRef,
     };
-  }
+  },
 });
 </script>

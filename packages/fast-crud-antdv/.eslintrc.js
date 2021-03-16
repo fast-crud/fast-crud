@@ -23,7 +23,7 @@ module.exports = {
     "plugin:prettier/recommended",
   ],
   rules: {
-    "comma-dangle": ["error", "never"],
+    "comma-dangle": ["off"],
     "max-len": [0, 160, 2, { ignoreUrls: true }],
     "@typescript-eslint/ban-ts-ignore": "off",
     "@typescript-eslint/explicit-function-return-type": "off",

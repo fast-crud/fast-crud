@@ -1,20 +1,25 @@
 import zhCN from "./lang/zh-cn";
 import _ from "lodash-es";
-class I18n {
-  vueI18nInstance = null;
-  t(key) {
-    const value = _.get(zhCN, key);
-    if (value == null) {
-      return key;
-    }
+function t(key, args) {
+  let value = _.get(zhCN, key);
+  if (value == null) {
+    return key;
+  }
+  if (args instanceof Array) {
+    _.forEach(args, (arg, index) => {
+      value = value.replace("{" + index + "}", arg);
+    });
     return value;
   }
-  tc(key, n) {
-    const value = _.get(zhCN, key);
-    if (value == null) {
-      return key;
-    }
-    return value.replace("{n}", n);
+  return value.replace("{n}", args);
+}
+class I18n {
+  vueI18nInstance = null;
+  t(key, args) {
+    return t(key, args);
+  }
+  tc(key, args) {
+    return t(key, args);
   }
   setVueI18n(instance) {
     this.vueI18nInstance = instance;

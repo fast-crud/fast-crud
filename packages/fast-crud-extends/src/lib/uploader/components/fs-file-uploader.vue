@@ -1,26 +1,39 @@
 <template>
-  <div class="fs-file-uploader">
+  <div
+    class="fs-file-uploader"
+    :class="{ 'fs-file-uploader-limit': computedOnLimit }"
+  >
     <component
       :is="$fsui.upload.name"
       v-model:fileList="fileList"
       @change="handleChange"
       :customRequest="customRequest"
       :beforeUpload="onBeforeUpload"
+      :listType="listType"
+      @preview="handlePreview"
       v-bind="$attrs"
     >
-      <fs-button>
-        <fs-icon :icon="$fsui.icons.upload" />
-        Click to Upload
-      </fs-button>
+      <component
+        :is="computedFileSelectBtn.is"
+        v-bind="computedFileSelectBtn"
+      />
     </component>
     <component :is="computedUploaderImpl" ref="uploaderImplRef" />
+    <component
+      :is="$fsui.dialog.name"
+      v-model:[$fsui.dialog.visible]="previewVisible"
+      :footer="null"
+      v-bind="preview"
+    >
+      <img style="width: 100%" :src="previewImage" />
+    </component>
   </div>
 </template>
 
 <script>
 import { computed, ref, watch } from "vue";
 import { useUploader } from "./uploader-impl";
-import { uiContext, utils } from "@fast-crud/fast-crud";
+import { uiContext, utils, useI18n } from "@fast-crud/fast-crud";
 import _ from "lodash-es";
 const logger = utils.logger;
 export default {
@@ -37,8 +50,11 @@ export default {
         };
       },
     },
+    button: {},
+    listType: {},
     beforeUpload: {},
     uploader: {},
+    preview: {},
     valueType: {
       type: String, // url ,key, object
       default: "object",
@@ -47,6 +63,7 @@ export default {
   emits: ["change", "update:modelValue"],
   setup(props, ctx) {
     const ui = uiContext.get();
+    const { t, tc } = useI18n();
     const fileList = ref([]);
     const currentValue = ref();
     function pickFileName(url) {
@@ -126,10 +143,7 @@ export default {
       return array;
     }
     function isUploadSuccess(change) {
-      if (change.file.status === "done") {
-        return true;
-      }
-      return false;
+      return change.file.status === "done";
     }
     function hasUploading() {
       const uploading = fileList.value.filter((item) => {
@@ -141,7 +155,6 @@ export default {
       if (!isUploadSuccess(change)) {
         return;
       }
-      console.log("upload file change", change);
       const { fileList } = change;
       onInput(buildEmitValue(fileList));
     }
@@ -165,10 +178,19 @@ export default {
       return sizeTip;
     }
 
-    async function onBeforeUpload(file, fileList) {
-      if (props.limit > 0 && fileList.length >= props.limit) {
+    const computedOnLimit = computed(() => {
+      return props.limit > 0 && fileList.value.length >= props.limit;
+    });
+
+    function checkLimit() {
+      if (computedOnLimit.value) {
+        ui.message.warn(t("fs.extends.fileUploader.limitTip", [props.limit]));
         throw new Error("文件数量超限");
       }
+    }
+
+    async function onBeforeUpload(file) {
+      checkLimit();
       if (props.sizeLimit != null) {
         let limit = props.sizeLimit;
         let showMessage = null;
@@ -177,7 +199,7 @@ export default {
             const limitTip = computeFileSize(limit);
             const fileSizeTip = computeFileSize(file.size);
             ui.message.warn(
-              ` "文件大小不能超过${limitTip},当前文件大小:${fileSizeTip}`
+              t("fs.extends.fileUploader.sizeLimitTip", [limitTip, fileSizeTip])
             );
           };
         } else {
@@ -212,6 +234,37 @@ export default {
       }
     }
 
+    const computedFileSelectBtn = computed(() => {
+      if (props.listType === "picture-card") {
+        return {
+          is: "FsIcon",
+          icon: ui.icons.plus,
+        };
+      }
+      return {
+        is: "FsButton",
+        icon: ui.icons.upload,
+        text: t("fs.extends.fileUploader.text"),
+      };
+    });
+
+    const previewVisible = ref(false);
+    const previewImage = ref();
+    function getBase64(file) {
+      return new Promise((resolve, reject) => {
+        const reader = new FileReader();
+        reader.readAsDataURL(file);
+        reader.onload = () => resolve(reader.result);
+        reader.onerror = (error) => reject(error);
+      });
+    }
+    const handlePreview = async (file) => {
+      if (!file.url && !file.preview && file.originFileObj) {
+        file.preview = await getBase64(file.originFileObj);
+      }
+      previewImage.value = file.url || file.preview;
+      previewVisible.value = true;
+    };
     return {
       fileList,
       initValue,
@@ -223,7 +276,21 @@ export default {
       uploaderImplRef,
       customRequest,
       onBeforeUpload,
+      computedFileSelectBtn,
+      previewVisible,
+      previewImage,
+      handlePreview,
+      computedOnLimit,
     };
   },
 };
 </script>
+<style lang="less">
+.fs-file-uploader {
+  &.fs-file-uploader-limit {
+    .ant-upload-select-picture-card {
+      display: none;
+    }
+  }
+}
+</style>
