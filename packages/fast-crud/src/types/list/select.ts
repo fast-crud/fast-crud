@@ -7,7 +7,6 @@ export default function () {
       form: {
         component: {
           name: ui.select.name,
-          vModel: ui.select.modelValue,
           [ui.select.clearable]: true,
         },
       },

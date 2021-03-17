@@ -6,15 +6,18 @@ const options = {
 const list = [
   {
     switch: true,
-    showTarget: "显示或隐藏",
+    cellSwitch: true,
+    showTarget: "点左边开关显示或隐藏",
   },
   {
     switch: false,
-    showTarget: "显示或隐藏",
+    cellSwitch: true,
+    showTarget: "点左边开关显示或隐藏",
   },
   {
     switch: true,
-    showTarget: "显示或隐藏",
+    cellSwitch: false,
+    showTarget: "点左边开关显示或隐藏",
   },
 ];
 options.list = list;

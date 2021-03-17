@@ -12,8 +12,9 @@ export default {
     options: {},
   },
   setup(props, ctx) {
+    const ui = uiContext.get();
     return {
-      ...useDict(props, ctx),
+      ...useDict(props, ctx, ui.switch.modelValue),
     };
   },
   computed: {

@@ -1,17 +1,17 @@
 import mockUtil from "/src/mock/base";
 const options = {
-  name: "formRadio",
+  name: "FormNumber",
   idGenerator: 0,
 };
 const list = [
   {
-    radio: "1",
+    number: 1,
   },
   {
-    radio: "2",
+    number: 2,
   },
   {
-    radio: "0",
+    number: 3,
   },
 ];
 options.list = list;

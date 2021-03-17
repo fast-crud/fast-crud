@@ -11,6 +11,7 @@
 </template>
 <script>
 import { useDict } from "../../use/use-dict";
+import { uiContext } from "../../ui";
 
 export default {
   name: "FsDictRadio",
@@ -18,8 +19,10 @@ export default {
     dict: {},
   },
   setup(props, ctx) {
+    const ui = uiContext.get();
+
     return {
-      ...useDict(props, ctx),
+      ...useDict(props, ctx, ui.radioGroup.modelValue),
     };
   },
 };

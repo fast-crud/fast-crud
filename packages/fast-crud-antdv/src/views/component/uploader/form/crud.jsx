@@ -96,6 +96,18 @@ export default function ({ crudRef }) {
           helper: "大小不能超过1k",
         },
       },
+      validation: {
+        title: "校验",
+        type: "file-uploader",
+        form: {
+          rules: [],
+          component: {
+            uploader: {
+              type: "form",
+            },
+          },
+        },
+      },
     },
   };
 }

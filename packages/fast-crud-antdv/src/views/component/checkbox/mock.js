@@ -5,13 +5,13 @@ const options = {
 };
 const list = [
   {
-    checkbox: [1, 2],
+    checkbox: ["1", "2"],
   },
   {
-    checkbox: 2,
+    checkbox: "2",
   },
   {
-    checkbox: 0,
+    checkbox: "0",
   },
 ];
 options.list = list;

@@ -1,12 +1,21 @@
-import { ref, watch, getCurrentInstance } from "vue";
+import { ref, watch, getCurrentInstance, computed } from "vue";
 import { getDictData } from "../core/dict";
-export function useDict(props, ctx) {
+export function useDict(props, ctx, vModel = "modelValue") {
   const dictData = ref([]);
   const dictMap = ref({});
   const dictLoading = ref(false);
+  const computedOptions = computed(() => {
+    if (props.options) {
+      return props.options;
+    }
+    if (props.dict?.data) {
+      return props.dict.data;
+    }
+    return dictData.value;
+  });
 
   async function getNodes() {
-    const data = await props.dict.getNodes(props.modelValue);
+    const data = await props.dict.getNodes(props[vModel]);
     const dataMap = {};
     for (const item of data) {
       dataMap[item[props.dict.value]] = item;
@@ -18,7 +27,7 @@ export function useDict(props, ctx) {
   function registerWatchValue() {
     watch(
       () => {
-        return props.modelValue;
+        return props[vModel];
       },
       async () => {
         await loadDict();
@@ -77,6 +86,7 @@ export function useDict(props, ctx) {
   };
 
   return {
+    computedOptions,
     dictData,
     dictMap,
     loadDict,

@@ -74,7 +74,7 @@ export default {
   },
   emits: ["click"],
   setup(props, ctx) {
-    const dict = useDict(props, ctx, true);
+    const dict = useDict(props, ctx);
     const ui = uiContext.get();
     const COLOR_LIST = ui.tag.colors;
     const EFFECT_LIST = ["plain", "light"];

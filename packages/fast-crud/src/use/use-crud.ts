@@ -23,6 +23,15 @@ export interface CrudOptions {
   request?: {};
 }
 
+function merge(target, ...sources) {
+  function customizer(objValue, srcValue) {
+    if (_.isArray(objValue)) {
+      return srcValue;
+    }
+  }
+  return _.mergeWith(target, ...sources, customizer);
+}
+
 export default function (ctx) {
   const ui = uiContext.get();
   const { t, tc } = useI18n(); // call `useI18n`, and spread `t` from  `useI18n` returning
@@ -103,7 +112,7 @@ export default function (ctx) {
    */
   async function doSearch(opts) {
     logger.debug("dosearch:", opts);
-    opts = _.merge({ goFirstPage: true }, opts);
+    opts = merge({ goFirstPage: true }, opts);
     if (opts.goFirstPage) {
       doPageTurn(1);
     }
@@ -212,7 +221,7 @@ export default function (ctx) {
   }
 
   function initCrudOptions(options) {
-    const userOptions = _.merge(
+    const userOptions = merge(
       defaultCrudOptions.defaultOptions({ t, tc }),
       usePagination(),
       useFormSubmit(),
@@ -254,20 +263,20 @@ export default function (ctx) {
         if (item.type) {
           const typeOptions = types.getType(item.type);
           if (typeOptions) {
-            item = _.merge({}, typeOptions, item);
+            item = merge({}, typeOptions, item);
           }
         }
         // copy dict
         if (item.dict) {
           if (item.column?.component) {
-            item.column.component.dict = _.merge(
+            item.column.component.dict = merge(
               {},
               item.dict,
               item.column.component.dict
             );
           }
           if (item.form?.component) {
-            item.form.component.dict = _.merge(
+            item.form.component.dict = merge(
               {},
               item.dict,
               item.form.component.dict
@@ -297,25 +306,25 @@ export default function (ctx) {
     eachColumns(userOptions.columns);
 
     // 分置合并
-    userOptions.form = _.merge(_.cloneDeep(userOptions.form), {
+    userOptions.form = merge(_.cloneDeep(userOptions.form), {
       columns: formColumns,
     });
-    userOptions.editForm = _.merge(
+    userOptions.editForm = merge(
       _.cloneDeep(userOptions.form),
       { columns: editFormColumns },
       userOptions.editForm
     );
-    userOptions.addForm = _.merge(
+    userOptions.addForm = merge(
       _.cloneDeep(userOptions.form),
       { columns: addFormColumns },
       userOptions.addForm
     );
-    userOptions.viewForm = _.merge(
+    userOptions.viewForm = merge(
       _.cloneDeep(userOptions.form),
       { columns: viewFormColumns },
       userOptions.viewForm
     );
-    userOptions.search = _.merge(
+    userOptions.search = merge(
       { columns: userOptions.form.columns },
       { columns: searchColumns },
       userOptions.search

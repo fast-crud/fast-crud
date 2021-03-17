@@ -44,7 +44,7 @@ export default {
     },
   },
   setup(props, ctx) {
-    const dict = useDict(props, ctx, true);
+    const dict = useDict(props, ctx);
     return {
       ...dict,
     };
