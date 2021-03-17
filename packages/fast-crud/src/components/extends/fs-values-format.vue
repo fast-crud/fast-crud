@@ -46,9 +46,6 @@ export default {
     // 数据字典
     dict: {
       type: Object,
-      default() {
-        return cloneDeep(defaultDict);
-      },
     },
     // 颜色，【auto, primary, success, warning, danger ,info】
     // 配置auto，则自动根据value值hashcode分配颜色值

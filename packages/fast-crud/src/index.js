@@ -2,14 +2,17 @@ import { ComputeValue, compute } from "./core/compute-value";
 import useCrud from "./use/use-crud.ts";
 import defaultCrudOptions from "./use/default-crud-options";
 import utils from "./utils";
-import { setDictRequest, dict } from "./core/dict";
+import { dict } from "./core/dict";
 import { useDict } from "./use/use-dict.ts";
+import { useDictDefine } from "./use/use-dict-define";
 import { uiContext } from "./ui";
 import { useTypes } from "./use/use-types";
 import types from "./types/index";
 import * as components from "./components";
 import { i18n, useI18n } from "./local";
 import useExpose from "./use/use-expose";
+
+const { dict, setDictRequest } = useDictDefine();
 export {
   ComputeValue,
   compute,
@@ -21,6 +24,7 @@ export {
   uiContext,
   useExpose,
   useTypes,
+  useDictDefine,
 };
 // export * from './components'
 export const FastCrud = {

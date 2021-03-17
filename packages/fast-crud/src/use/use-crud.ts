@@ -6,6 +6,7 @@ import logger from "../utils/util.log";
 import types from "../types";
 import { uiContext } from "../ui";
 import { useI18n } from "../local";
+import { useMerge } from "../use/use-merge";
 import useExpose from "./use-expose";
 export interface CrudOptions {
   table?: {};
@@ -23,14 +24,7 @@ export interface CrudOptions {
   request?: {};
 }
 
-function merge(target, ...sources) {
-  function customizer(objValue, srcValue) {
-    if (_.isArray(objValue)) {
-      return srcValue;
-    }
-  }
-  return _.mergeWith(target, ...sources, customizer);
-}
+const { merge } = useMerge();
 
 export default function (ctx) {
   const ui = uiContext.get();
