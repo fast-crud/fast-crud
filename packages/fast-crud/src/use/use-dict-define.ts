@@ -32,7 +32,7 @@ class Dict extends NotMerge {
   color = "color";
   isTree = false;
   cache = true;
-  data = [];
+  data: undefined | Array<any> = undefined;
   dataMap = {};
   loaded = false;
   custom = {};
@@ -40,7 +40,12 @@ class Dict extends NotMerge {
   cacheNodes = {};
   constructor(dict) {
     super();
+
     merge(this, dict);
+    if (dict.data != null) {
+      this.setData(dict.data);
+    }
+
     if (!this.isDynamic()) {
       this.loadDict();
     }
@@ -50,13 +55,38 @@ class Dict extends NotMerge {
     return this.url instanceof Function || this.getData instanceof Function;
   }
 
+  _pickItemProp(item, key) {
+    if (key instanceof Function) {
+      return key(item);
+    }
+    return _.get(item, key);
+  }
+
   setData(data) {
-    this.data = data;
+    const formatedData: Array<any> = [];
+    _.forEach(data, (item) => {
+      const value = this._pickItemProp(item, this.value);
+      const label = this._pickItemProp(item, this.label);
+      const children = this._pickItemProp(item, this.children);
+      const color = this._pickItemProp(item, this.color);
+
+      item.value = value;
+      item.label = label;
+      if (children) {
+        item.children = children;
+      }
+
+      if (color) {
+        item.color = color;
+      }
+      formatedData.push(item);
+    });
+    this.data = formatedData;
     this.toMap();
   }
 
   async loadDict(context?) {
-    if (this.loaded) {
+    if (this.data) {
       return;
     }
     const data = await this.getRemoteDictData(context);
@@ -65,7 +95,7 @@ class Dict extends NotMerge {
   }
 
   async reloadDict(context?) {
-    this.loaded = false;
+    this.data = undefined;
     return this.loadDict(context);
   }
 
@@ -85,7 +115,7 @@ class Dict extends NotMerge {
     const map = {};
     if (this.data) {
       _.forEach(this.data, (item) => {
-        map[item[this.value]] = item;
+        map[item.value] = item;
       });
     }
     this.dataMap = map;
@@ -99,7 +129,11 @@ class Dict extends NotMerge {
     return this.dataMap;
   }
 
-  getNodesByValue(value, context) {
+  getNodeByValue(value) {
+    return this.dataMap[value];
+  }
+
+  getNodesByValues(value, context) {
     if (value == null) {
       return [];
     }

@@ -73,7 +73,7 @@
 <script>
 import { ref, reactive, getCurrentInstance, toRaw } from "vue";
 import _ from "lodash-es";
-import { ComputeValue } from "../../core/compute-value";
+import { AsyncComputeValue, useCompute } from "../../use/use-compute";
 import traceUtil from "../../utils/util.trace";
 import FsRender from "../render/fs-render";
 import logger from "../../utils/util.log";
@@ -107,6 +107,7 @@ export default {
   },
   emits: ["reset", "submit", "validationError", "value-change"],
   setup(props, ctx) {
+    const { doComputed } = useCompute();
     traceUtil.trace("fs-from");
     const formRef = ref();
 
@@ -155,7 +156,7 @@ export default {
       return scope.value;
     }
 
-    const computedColumns = ComputeValue.computed(
+    const computedColumns = doComputed(
       props.columns,
       getContextFn,
       null,

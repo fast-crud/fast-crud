@@ -9,7 +9,7 @@ import {
 import _ from "lodash-es";
 import FsRowHandle from "./fs-row-handle.vue";
 import FsComponentRender from "../render/fs-component-render";
-import { ComputeValue } from "../../core/compute-value";
+import { useCompute } from "../../use/use-compute";
 import "./fs-table.less";
 export default {
   name: "FsTable",
@@ -37,6 +37,7 @@ export default {
     if (this.show === false) {
       return;
     }
+    const { ComputeValue } = useCompute();
     const { proxy } = getCurrentInstance();
     const tableComp = resolveDynamicComponent(proxy.$fsui.table.name);
 

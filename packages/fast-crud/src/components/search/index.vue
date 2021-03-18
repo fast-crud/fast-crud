@@ -77,12 +77,12 @@
 </template>
 
 <script>
-import { computed, ref, nextTick, getCurrentInstance } from "vue";
+import { computed, ref, nextTick } from "vue";
 import _ from "lodash-es";
 import fsButton from "../basic/fs-button";
 import FsComponentRender from "../../components/render/fs-component-render";
 import FsSlotRender from "../../components/render/fs-slot-render";
-import { ComputeValue } from "../../core/compute-value";
+import { useCompute } from "../../use/use-compute";
 import traceUtil from "../../utils/util.trace";
 import { uiContext } from "../../ui";
 import { useI18n } from "../../local";
@@ -142,6 +142,7 @@ export default {
     const form = ref(_.cloneDeep(props.initialForm || {}));
     const searchFormRef = ref();
     const { t } = useI18n();
+    const { doComputed } = useCompute();
     const componentRenderRefs = ref({});
 
     function getComponentRenderRef(key) {
@@ -223,7 +224,7 @@ export default {
       return btns;
     });
 
-    const computedColumns = ComputeValue.computed(props.columns, getContextFn);
+    const computedColumns = doComputed(props.columns, getContextFn);
 
     function initAutoSearch() {
       // 构建防抖查询函数

@@ -1,8 +1,7 @@
-import { ComputeValue, compute } from "./core/compute-value";
 import useCrud from "./use/use-crud.ts";
 import defaultCrudOptions from "./use/default-crud-options";
 import utils from "./utils";
-import { dict } from "./core/dict";
+import { useCompute } from "./use/use-compute";
 import { useDict } from "./use/use-dict.ts";
 import { useDictDefine } from "./use/use-dict-define";
 import { uiContext } from "./ui";
@@ -13,7 +12,9 @@ import { i18n, useI18n } from "./local";
 import useExpose from "./use/use-expose";
 
 const { dict, setDictRequest } = useDictDefine();
+const { ComputeValue, compute } = useCompute();
 export {
+  useCompute,
   ComputeValue,
   compute,
   dict,

@@ -25,7 +25,7 @@ app.use(FastCrud, {
     return {
       table: {
         size: "small",
-        pagination: false,
+        pagination: false
       },
       request: {
         transformQuery: ({ page, form }) => {
@@ -33,11 +33,11 @@ app.use(FastCrud, {
         },
         transformRes: ({ res }) => {
           return { currentPage: res.current, pageSize: res.size, ...res };
-        },
+        }
       },
       form: {
-        display: "flex",
-      },
+        display: "flex"
+      }
     };
   },
   ui: {
@@ -45,9 +45,9 @@ app.use(FastCrud, {
     target: {
       Message: message,
       Notification: notification,
-      MessageBox: Modal,
-    },
-  },
+      MessageBox: Modal
+    }
+  }
 });
 app.use(FsUploader, {
   defaultType: "cos",
@@ -61,8 +61,8 @@ app.use(FsUploader, {
       // 不传secretKey代表使用临时签名模式,此时此参数必传（安全，生产环境推荐）
       return request({
         url: "/upload/cos/getAuthorization",
-        method: "get",
-      }).then((ret) => {
+        method: "get"
+      }).then(ret => {
         // 返回结构如下
         // ret.data:{
         //   TmpSecretId,
@@ -77,7 +77,7 @@ app.use(FsUploader, {
       // 上传完成后可以在此处处理结果，修改url什么的
       console.log("success handle:", ret);
       return ret;
-    },
+    }
   },
   alioss: {
     domain: "https://d2p-demo.oss-cn-shenzhen.aliyuncs.com",
@@ -89,29 +89,29 @@ app.use(FsUploader, {
       // 不传accessKeySecret代表使用临时签名模式,此时此参数必传（安全，生产环境推荐）
       return request({
         url: "/upload/alioss/getAuthorization",
-        method: "get",
-      }).then((ret) => {
+        method: "get"
+      }).then(ret => {
         console.log("ret", ret);
         return ret;
       });
     },
     sdkOpts: {
       // sdk配置
-      secure: true, // 默认为非https上传,为了安全，设置为true
+      secure: true // 默认为非https上传,为了安全，设置为true
     },
     successHandle(ret) {
       // 上传完成后可以在此处处理结果，修改url什么的
       console.log("success handle:", ret);
       return ret;
-    },
+    }
   },
   qiniu: {
     bucket: "d2p-demo",
     getToken(options) {
       return request({
         url: "/upload/qiniu/getToken",
-        method: "get",
-      }).then((ret) => {
+        method: "get"
+      }).then(ret => {
         return ret; // {token:xxx,expires:xxx}
       });
     },
@@ -120,7 +120,7 @@ app.use(FsUploader, {
       console.log("success handle:", ret);
       return ret;
     },
-    domain: "http://d2p.file.veryreader.com",
+    domain: "http://d2p.file.veryreader.com"
   },
   form: {
     action: "/api/upload/form/upload",
@@ -132,7 +132,7 @@ app.use(FsUploader, {
         throw new Error("上传失败");
       }
       return { url: ret.data };
-    },
-  },
+    }
+  }
 });
 app.mount("#app");
