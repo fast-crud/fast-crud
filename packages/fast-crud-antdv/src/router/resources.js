@@ -9,11 +9,16 @@ const resources = [
     component: "/home/index.vue"
   },
   {
-    title: "基础逻辑",
+    title: "核心特性",
     name: "basis",
     path: "/basis",
     redirect: "/basis/dict",
     children: [
+      {
+        title: "动态计算",
+        path: "/basis/compute",
+        component: "/basis/compute/index.vue"
+      },
       {
         title: "数据字典",
         path: "/basis/dict",

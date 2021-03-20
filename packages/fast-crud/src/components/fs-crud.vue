@@ -6,6 +6,8 @@
     :class="{ compact: toolbar.compact !== false }"
   >
     <template #header>
+      --- {{ table.columnsMap.remote.component.dict }}---
+      {{ search.columns.remote.component.dict }}
       <div class="fs-crud-header">
         <div class="fs-header-top"><slot name="header-top"></slot></div>
         <div class="fs-crud-search">

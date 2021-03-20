@@ -1,9 +1,13 @@
 <template>
   <span class="fs-values-format">
+    {{ dict.url }}
     <template v-if="type === 'text'">
-      <span v-for="item in computedOptions" :key="item.value">{{
-        item.label
-      }}</span>
+      <span
+        v-for="item in computedOptions"
+        :key="item.value"
+        @click="doClick(item)"
+        >{{ item.label }}</span
+      >
     </template>
     <template v-else>
       <component
@@ -14,7 +18,7 @@
         :key="item.value"
         size="small"
         :[$fsui.tag.type]="item.color || 'default'"
-        @click="onClick(item)"
+        @click="doClick(item)"
         :effect="item.effect"
       >
         {{ item.label }}
@@ -26,6 +30,65 @@
 <script>
 import { uiContext } from "../../ui";
 import _ from "lodash-es";
+import { computed } from "vue";
+
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
+function hashcode(str) {
+  if (str == null) {
+    return 0;
+  }
+  if (typeof str !== "string") {
+    str = JSON.stringify(str);
+  }
+  let hash = 0;
+  let i;
+  let chr;
+  let len;
+  if (str.length === 0) return hash;
+  for (i = 0, len = str.length; i < len; i++) {
+    chr = str.charCodeAt(i);
+    hash = (hash << 5) - hash + chr;
+    hash |= 0; // Convert to 32bit integer
+  }
+  return hash;
+}
+function setColor(props, item, COLOR_LIST, EFFECT_LIST) {
+  if (!item.effect && props.effect) {
+    item.effect = props.effect;
+  }
+  if (item.color != null) {
+    return;
+  }
+  if (props.color === "auto") {
+    const hashcode = hashcode(item.value);
+    const colors = props.autoColors ? props.autoColors : COLOR_LIST;
+    item.color = colors[hashcode % colors.length];
+    const effects = props.autoEffects ? props.autoEffects : EFFECT_LIST;
+    item.effect =
+      effects[Math.floor(hashcode / colors.length) % effects.length];
+  } else {
+    item.color = props.color;
+  }
+}
+
+function buildArrayValue(props) {
+  let valueArr = [];
+  if (
+    typeof props.modelValue === "string" &&
+    props.multiple &&
+    props.separator != null &&
+    props.separator !== ""
+  ) {
+    valueArr = props.modelValue.split(props.separator);
+  } else if (props.modelValue instanceof Array) {
+    // 本来就是数组的
+    valueArr = props.modelValue;
+  } else {
+    valueArr = [props.modelValue];
+  }
+  return valueArr;
+}
+
 // value格式化展示组件
 export default {
   name: "FsValuesFormat",
@@ -69,95 +132,58 @@ export default {
     const ui = uiContext.get();
     const COLOR_LIST = ui.tag.colors;
     const EFFECT_LIST = ["plain", "light"];
+
+    const computedDictDataMap = computed(() => {
+      return props.dict?.dataMap;
+    });
+
+    const computedOptions = computed(() => {
+      if (props.modelValue == null || props.modelValue === "") {
+        return [];
+      }
+      const valueArr = buildArrayValue(props);
+
+      let options = [];
+      if (props.dict && computedDictDataMap.value) {
+        _.forEach(valueArr, (value) => {
+          let item = computedDictDataMap.value[value];
+          if (item) {
+            options.push(item);
+          }
+        });
+      } else {
+        options = [];
+        _.forEach(valueArr, (item) => {
+          if (item instanceof Object) {
+            options.push(item);
+          } else {
+            options.push({
+              value: item,
+              label: item,
+            });
+          }
+        });
+      }
+
+      const colorfulOptions = _.cloneDeep(options);
+      _.forEach(colorfulOptions, (item) => {
+        setColor(props, item, COLOR_LIST, EFFECT_LIST);
+      });
+      console.log("recomputed options", props.modelValue, valueArr);
+      return colorfulOptions;
+    });
+
+    function doClick(item) {
+      ctx.emit("click", { item: item });
+    }
+
     return {
       COLOR_LIST,
       EFFECT_LIST,
+      computedDictDataMap,
+      computedOptions,
+      doClick,
     };
-  },
-  computed: {
-    computedOptions() {
-      if (this.modelValue == null || this.modelValue === "") {
-        return [];
-      }
-      const valueArr = _.cloneDeep(this.getValueArr());
-      _.forEach(valueArr, (item) => {
-        this.setColor(item);
-      });
-      return valueArr;
-    },
-  },
-  methods: {
-    getValueArr() {
-      let valueArr = [];
-      if (
-        typeof this.modelValue === "string" &&
-        this.multiple &&
-        this.separator != null &&
-        this.separator !== ""
-      ) {
-        valueArr = this.modelValue.split(this.separator);
-      } else if (this.modelValue instanceof Array) {
-        // 本来就是数组的
-        valueArr = this.modelValue;
-      } else {
-        valueArr = [this.modelValue];
-      }
-      if (this.dict) {
-        return this.dict.getNodesByValues(valueArr);
-      }
-      const options = [];
-      _.forEach(valueArr, (item) => {
-        if (item instanceof Object) {
-          options.push(item);
-        } else {
-          options.push({
-            value: item,
-            label: item,
-          });
-        }
-      });
-      return options;
-    },
-    onClick(item) {
-      this.$emit("click", { item: item });
-    },
-    setColor(item) {
-      if (!item.effect && this.effect) {
-        item.effect = this.effect;
-      }
-      if (item.color != null) {
-        return;
-      }
-      if (this.color === "auto") {
-        const hashcode = this.hashcode(item.value);
-        const colors = this.autoColors ? this.autoColors : this.COLOR_LIST;
-        item.color = colors[hashcode % colors.length];
-        const effects = this.autoEffects ? this.autoEffects : this.EFFECT_LIST;
-        item.effect =
-          effects[Math.floor(hashcode / colors.length) % effects.length];
-      } else {
-        item.color = this.color;
-      }
-    },
-    hashcode(str) {
-      if (str == null) {
-        return 0;
-      }
-      if (typeof str !== "string") {
-        str = JSON.stringify(str);
-      }
-      let hash = 0;
-      let i;
-      let chr;
-      let len;
-      if (str.length === 0) return hash;
-      for (i = 0, len = str.length; i < len; i++) {
-        chr = str.charCodeAt(i);
-        hash = (hash << 5) - hash + chr;
-        hash |= 0; // Convert to 32bit integer
-      }
-      return hash;
-    },
   },
 };
 </script>

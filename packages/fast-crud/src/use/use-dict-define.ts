@@ -2,13 +2,12 @@ import _ from "lodash-es";
 import { useMerge } from "./use-merge";
 import logger from "../utils/util.log";
 import { reactive } from "vue";
-const { merge, NotMerge } = useMerge();
+const { UnMergeable } = useMerge();
 
 function setDictRequest(request) {
   dictRequest = request;
 }
 
-// eslint-disable-next-line @typescript-eslint/no-unused-vars,no-unused-vars
 let dictRequest = async (dict) => {
   logger.warn(
     "请配置 app.use(FsCrud,{dictRequest:(context)=>{ 你的字典请求方法 }})"
@@ -23,7 +22,7 @@ let dictRequest = async (dict) => {
  * @returns {Promise<*>}
  */
 
-class Dict extends NotMerge {
+class Dict extends UnMergeable {
   url: undefined | String | Function = undefined;
   getData: undefined | Function = undefined;
   value = "value";
@@ -33,6 +32,7 @@ class Dict extends NotMerge {
   isTree = false;
   cache = true;
   data: undefined | Array<any> = undefined;
+  originalData: undefined | Array<any> = undefined;
   dataMap = {};
   loaded = false;
   custom = {};
@@ -41,7 +41,7 @@ class Dict extends NotMerge {
   constructor(dict) {
     super();
 
-    merge(this, dict);
+    _.merge(this, dict);
     if (dict.data != null) {
       this.setData(dict.data);
     }
@@ -63,7 +63,9 @@ class Dict extends NotMerge {
   }
 
   setData(data) {
-    const formatedData: Array<any> = [];
+    this.originalData = data;
+    const formatData: Array<any> = [];
+    data = _.cloneDeep(data);
     _.forEach(data, (item) => {
       const value = this._pickItemProp(item, this.value);
       const label = this._pickItemProp(item, this.label);
@@ -79,18 +81,19 @@ class Dict extends NotMerge {
       if (color) {
         item.color = color;
       }
-      formatedData.push(item);
+      formatData.push(item);
     });
-    this.data = formatedData;
+    this.data = formatData;
     this.toMap();
   }
 
   async loadDict(context?) {
     if (this.data) {
-      return;
+      return this.data;
     }
     const data = await this.getRemoteDictData(context);
     this.setData(data);
+    console.log("dict data loaded:", this.url);
     return this.data;
   }
 
@@ -134,6 +137,7 @@ class Dict extends NotMerge {
   }
 
   getNodesByValues(value, context) {
+    console.log("getNodesByValues", value, this);
     if (value == null) {
       return [];
     }

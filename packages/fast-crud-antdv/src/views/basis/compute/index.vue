@@ -1,7 +1,4 @@
 <template>
-  <p>1.{{ remoteDict }}</p>
-  <p>2.{{ crudOptions.search.columns.remote.component.dict }}</p>
-  <p>3.{{ crudOptions.table.columns[2].component.dict }}</p>
   <fs-crud ref="crudRef" v-bind="crudOptions" />
 </template>
 
@@ -10,23 +7,17 @@ import { defineComponent, ref, onMounted } from "vue";
 import { useCrud } from "/src/fs";
 import createCrudOptions from "./crud";
 export default defineComponent({
-  name: "FormDict",
+  name: "FormCompute",
   setup() {
     // crud的ref
     const crudRef = ref();
 
     // useCrud
-    const options = createCrudOptions({ crudRef });
     const crud = useCrud({
       crudRef,
-      options
+      options: createCrudOptions({ crudRef })
     });
 
-    const remoteDict = options.remoteDict;
-    console.log(
-      "init after",
-      crud.crudOptions.value.table.columns[2].component.dict === remoteDict
-    );
     // 获取列表数据
     onMounted(() => {
       crud.doRefresh();
@@ -34,8 +25,7 @@ export default defineComponent({
 
     return {
       ...crud,
-      crudRef,
-      remoteDict
+      crudRef
     };
   }
 });

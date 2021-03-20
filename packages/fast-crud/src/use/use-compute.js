@@ -1,7 +1,8 @@
 import _ from "lodash-es";
 import { computed, ref, toRaw, watch } from "vue";
 import getEachDeep from "deepdash-es/getEachDeep";
-
+import { useMerge } from "./use-merge";
+const { cloneDeep } = useMerge();
 const eachDeep = getEachDeep(_);
 
 function isAsyncCompute(value) {
@@ -40,44 +41,44 @@ function doAsyncCompute(dependAsyncValues, getContextFn) {
   _.forEach(dependAsyncValues, (item, key) => {
     asyncValueMap[key] = item.buildAsyncRef(getContextFn);
   });
-  console.log("asyncComputedValues", asyncValueMap);
   return asyncValueMap;
 }
 
 function setAsyncComputeValue(target, asyncValuesMap) {
-  console.log("setAsyncComputeValue", target, asyncValuesMap);
   if (asyncValuesMap == null || Object.keys(asyncValuesMap).length <= 0) {
     return;
   }
   _.forEach(asyncValuesMap, (valueRef, key) => {
-    console.log("setAsyncComputeValue2", key, valueRef, valueRef.value);
-    _.set(target, key, valueRef.value);
+    _.set(target, key, valueRef.value == null ? null : valueRef.value);
   });
 }
 
-function doComputed(target, getContextFn, clone = true, excludes, callback) {
+function doComputed(target, getContextFn, excludes, userComputedFn) {
   let raw = toRaw(target);
-  const dependValues = ComputeValue.findComputeValues(raw, excludes);
+  const dependValues = findComputeValues(raw, excludes, false);
 
-  const dependAsyncValues = AsyncComputeValue.findComputeValues(raw, excludes);
-  console.log("form async value", dependAsyncValues);
+  const dependAsyncValues = findComputeValues(raw, excludes, true);
   const asyncValuesMap = doAsyncCompute(dependAsyncValues, getContextFn);
 
   if (Object.keys(dependValues).length <= 0) {
-    // 不需要重新计算
+    // 没有同步compute类型的配置
     return computed(() => {
-      setAsyncComputeValue(target, asyncValuesMap);
-      if (callback) {
-        return callback(target);
+      // 设置异步compute类型的value
+      if (asyncValuesMap && Object.keys(asyncValuesMap).length <= 0) {
+        target = cloneDeep(target);
+        setAsyncComputeValue(target, asyncValuesMap);
       }
+
+      if (userComputedFn) {
+        return userComputedFn(target);
+      }
+      console.log("同步computed", target);
       return target;
     });
   }
-
+  // 有同步compute类型的配置
   return computed(() => {
-    if (clone) {
-      target = _.cloneDeep(target);
-    }
+    target = _.cloneDeep(target);
     // console.log('function recomputed', target)
     _.forEach(dependValues, (value, key) => {
       const context = getContextFn ? getContextFn(key, value) : {};
@@ -85,8 +86,8 @@ function doComputed(target, getContextFn, clone = true, excludes, callback) {
     });
 
     setAsyncComputeValue(target, asyncValuesMap);
-    if (callback) {
-      return callback(target);
+    if (userComputedFn) {
+      return userComputedFn(target);
     }
     return target;
   });
@@ -100,24 +101,6 @@ export class ComputeValue {
   static create(computeFn) {
     return new ComputeValue(computeFn);
   }
-
-  static findComputeValues(target, exclude) {
-    return findComputeValues(target, exclude, false);
-  }
-
-  static buildBindProps(target, getContextFn, clone = true) {
-    const dependValues = ComputeValue.findComputeValues(target);
-    if (Object.keys(dependValues).length > 0) {
-      if (clone) {
-        target = _.cloneDeep(target);
-      }
-      _.forEach(dependValues, (value, key) => {
-        const context = getContextFn ? getContextFn(key, value) : {};
-        _.set(target, key, value.computeFn(context));
-      });
-    }
-    return target;
-  }
 }
 
 function compute(computeFn) {
@@ -125,13 +108,9 @@ function compute(computeFn) {
 }
 
 export class AsyncComputeValue {
-  constructor({ watch, asyncFunc }) {
+  constructor({ watch, asyncFn }) {
     this.watch = watch;
-    this.asyncFunc = asyncFunc;
-  }
-
-  static findComputeValues(target, exclude) {
-    return findComputeValues(target, exclude, true);
+    this.asyncFn = asyncFn;
   }
 
   buildAsyncRef(getContextFn) {
@@ -145,12 +124,9 @@ export class AsyncComputeValue {
 
     watch(
       () => computedValue.value,
-      async () => {
+      async (value) => {
         //执行异步方法
-        asyncRef.value = await this.asyncFunc(
-          computedValue.value,
-          getContextFn()
-        );
+        asyncRef.value = await this.asyncFn(value, getContextFn());
         console.log("watch effect", asyncRef);
       },
       { immediate: true }
@@ -159,8 +135,8 @@ export class AsyncComputeValue {
     return asyncRef;
   }
 }
-function asyncCompute({ watch, asyncFunc }) {
-  return new AsyncComputeValue({ watch, asyncFunc });
+function asyncCompute({ watch, asyncFn }) {
+  return new AsyncComputeValue({ watch, asyncFn });
 }
 export function useCompute() {
   return {

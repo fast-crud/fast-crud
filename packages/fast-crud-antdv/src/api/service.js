@@ -11,8 +11,8 @@ function createService() {
   const service = axios.create();
   // 请求拦截
   service.interceptors.request.use(
-    (config) => config,
-    (error) => {
+    config => config,
+    error => {
       // 发送失败
       console.log(error);
       return Promise.reject(error);
@@ -20,7 +20,7 @@ function createService() {
   );
   // 响应拦截
   service.interceptors.response.use(
-    (response) => {
+    response => {
       if (response.config.responseType === "blob") {
         return response;
       }
@@ -49,7 +49,7 @@ function createService() {
         }
       }
     },
-    (error) => {
+    error => {
       const status = get(error, "response.status");
       switch (status) {
         case 400:
@@ -100,14 +100,14 @@ function createService() {
  * @param {Object} service axios 实例
  */
 function createRequestFunction(service) {
-  return function (config) {
+  return function(config) {
     const configDefault = {
       headers: {
-        "Content-Type": get(config, "headers.Content-Type", "application/json"),
+        "Content-Type": get(config, "headers.Content-Type", "application/json")
       },
       timeout: 5000,
       baseURL: "/api",
-      data: {},
+      data: {}
     };
     return service(Object.assign(configDefault, config));
   };
@@ -122,4 +122,4 @@ export const serviceForMock = createService();
 export const requestForMock = createRequestFunction(serviceForMock);
 
 // 网络请求数据模拟工具
-export const mock = new Adapter(serviceForMock, { delayResponse: 30 });
+export const mock = new Adapter(serviceForMock, { delayResponse: 200 });

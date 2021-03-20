@@ -1,6 +1,24 @@
-import { h, resolveDynamicComponent, getCurrentInstance, computed } from "vue";
+import {
+  h,
+  resolveDynamicComponent,
+  getCurrentInstance,
+  computed,
+  mergeProps,
+} from "vue";
 import _ from "lodash-es";
 import traceUtil from "../../utils/util.trace";
+
+function mergeEventHandles(target, eventName) {
+  if (target[eventName] instanceof Array) {
+    const events = target[eventName];
+    target[eventName] = ($event) => {
+      for (let event of events) {
+        event($event);
+      }
+    };
+  }
+}
+const htmlTags = ["div", "span", "a", "p", "pre", "li", "ol", "ul"];
 export default {
   name: "FsComponentRender",
   inheritAttrs: false,
@@ -31,28 +49,27 @@ export default {
   emits: ["update:dict", "update:modelValue"],
   setup(props, ctx) {
     traceUtil.trace("fs-component-render");
+    const { proxy } = getCurrentInstance();
+    function getComponentRef(key) {
+      console.log("getComponentRef", proxy);
+      return proxy.$refs[key];
+    }
     const newScope = computed(() => {
       return {
         ...props.scope,
+        getComponentRef,
       };
-    });
-
-    const computedModelValue = computed(() => {
-      return props.modelValue;
-    });
-    const vModel = computed(() => {
-      return props.vModel || "modelValue";
     });
 
     // 带事件的attrs
     const allAttrs = computed(() => {
+      const vModel = props.vModel || "modelValue";
       const attrs = {
         ref: "targetRef",
-        ...ctx.attrs,
         scope: props.scope,
-        modelValue: props.modelValue,
+        [vModel]: props.modelValue,
       };
-      attrs["onUpdate:" + vModel.value] = (value) => {
+      attrs["onUpdate:" + vModel] = (value) => {
         ctx.emit("update:modelValue", value);
       };
 
@@ -63,7 +80,6 @@ export default {
           return handler({ ...newScope.value, $event });
         };
       });
-      _.set(attrs, vModel.value, computedModelValue.value);
       return attrs;
     });
 
@@ -82,15 +98,20 @@ export default {
       });
       return children;
     };
-    const { proxy } = getCurrentInstance();
     // eslint-disable-next-line vue/no-setup-props-destructure
     let inputComp = props.name || proxy.$fsui.input.name;
-    if (inputComp !== "div" || inputComp !== "span") {
+    if (!htmlTags.includes(inputComp)) {
       inputComp = resolveDynamicComponent(inputComp);
     }
     const children = childrenRender();
     return () => {
-      return h(inputComp, allAttrs.value, children);
+      const oldDict = ctx.attrs.dict;
+      const props = mergeProps(allAttrs.value, ctx.attrs);
+      const newDict = props.dict;
+      console.log("render dict", oldDict, newDict, oldDict === newDict);
+      mergeEventHandles(props, "onChange");
+      mergeEventHandles(props, "onBlur");
+      return h(inputComp, props, children);
     };
   },
 };

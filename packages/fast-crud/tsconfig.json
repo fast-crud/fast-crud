@@ -15,6 +15,7 @@
     "baseUrl": ".",
     "outDir": "./dist/ts",
     "types": [
+      "vite/client", "@types/jest",
       "webpack-env",
       "mocha",
       "chai"

@@ -2,7 +2,6 @@ import * as api from "./api";
 import { requestForMock } from "/src/api/service";
 import { dict } from "/src/fs";
 import { useCompute } from "@fast-crud/fast-crud";
-import { a } from "../../../../dist/assets/vendor.3a530989";
 const { asyncCompute, compute } = useCompute();
 export default function({ crudRef }) {
   const pageRequest = async query => {
@@ -28,9 +27,13 @@ export default function({ crudRef }) {
   });
 
   const remoteDict = dict({
-    url: "/dicts/OpenStatusEnum?remote"
+    url: "/dicts/OpenStatusEnum"
   });
+  //设置为不可clone，将会复制引用，从而可以控制dictData 影响全部的实例
+  remoteDict.unCloneable();
+  remoteDict.loadDict();
   return {
+    remoteDict,
     request: {
       pageRequest,
       addRequest,
@@ -52,43 +55,65 @@ export default function({ crudRef }) {
       status: {
         title: "本地字典",
         search: { show: false },
-        form: {
-          component: {
-            name: "a-select",
-            vModel: "value",
-            options: compute(() => {
-              console.log("statusdict.data", statusDict);
-              return statusDict.data;
-            })
-          }
-        },
+        dict: statusDict,
+        type: "dict-select",
         column: {
           component: {
-            name: "fs-values-format",
-            dict: statusDict
+            show: false
           }
         }
       },
       remote: {
         title: "远程字典",
         search: { show: true },
+        dict: remoteDict,
+        type: "dict-select",
+        column: {
+          component: {
+            on: {
+              onClick(event) {
+                console.log("clicked", event);
+                console.log(
+                  "clicked",
+                  event.column.component.dict,
+                  event.column.component.dict === remoteDict
+                );
+              }
+            }
+          }
+        }
+      },
+      modifyDict: {
+        title: "动态修改字典",
+        search: { show: false },
+        type: "text",
         form: {
           component: {
-            name: "a-select",
-            vModel: "value",
-            placeholder: "请选择",
-            options: asyncCompute({
-              asyncFunc: async () => {
-                await statusDict.loadDict();
-                return statusDict.data;
+            name: "a-switch",
+            vModel: "checked",
+            on: {
+              onChange({ form }) {
+                console.log("changed", form.modifyDict);
+                remoteDict.url = form.modifyDict
+                  ? "/dicts/OpenStatusEnum?remote"
+                  : "/dicts/moreOpenStatusEnum?remote";
+                remoteDict.reloadDict();
               }
-            })
+            }
           }
         },
         column: {
           component: {
-            name: "fs-values-format",
-            dict: statusDict
+            name: "a-switch",
+            vModel: "checked",
+            on: {
+              onChange({ row }) {
+                remoteDict.url = row.modifyDict
+                  ? "/dicts/OpenStatusEnum?remote"
+                  : "/dicts/moreOpenStatusEnum?remote";
+                remoteDict.reloadDict();
+              }
+            }
           }
         }
       }

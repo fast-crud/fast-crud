@@ -9,6 +9,8 @@ import FsForm from "./crud/fs-form.vue";
 import FsCrud from "./fs-crud.vue";
 import FsRowHandle from "./crud/fs-row-handle.vue";
 import FsTable from "./crud/fs-table";
+import FsCell from "./crud/fs-cell";
+
 import FsDictRadio from "./extends/fs-dict-radio.vue";
 import FsDictSelect from "./extends/fs-dict-select.vue";
 import FsValuesFormat from "./extends/fs-values-format.vue";
@@ -31,6 +33,7 @@ export {
   FsForm,
   FsCrud,
   FsTable,
+  FsCell,
   FsRowHandle,
   FsSearch,
   FsActionbar,

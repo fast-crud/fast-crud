@@ -293,6 +293,7 @@ export default {
   .fs-form-helper {
     color: #7d7d7d;
     font-size: 12px;
+    line-height: 1.5;
   }
 }
 </style>

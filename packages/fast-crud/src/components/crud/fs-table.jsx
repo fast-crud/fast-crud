@@ -9,7 +9,6 @@ import {
 import _ from "lodash-es";
 import FsRowHandle from "./fs-row-handle.vue";
 import FsComponentRender from "../render/fs-component-render";
-import { useCompute } from "../../use/use-compute";
 import "./fs-table.less";
 export default {
   name: "FsTable",
@@ -37,7 +36,6 @@ export default {
     if (this.show === false) {
       return;
     }
-    const { ComputeValue } = useCompute();
     const { proxy } = getCurrentInstance();
     const tableComp = resolveDynamicComponent(proxy.$fsui.table.name);
 
@@ -81,32 +79,22 @@ export default {
           } else if (item.component) {
             cellSlots.default = (scope) => {
               const newScope = getContextFn(item, scope);
-              const component = ComputeValue.buildBindProps(
-                item.component,
-                () => {
-                  return newScope;
-                }
+              const getScopeFn = () => {
+                return newScope;
+              };
+              const vModel = {
+                modelValue: scope[tableColumnCI.row][item.key],
+                "onUpdate:modelValue": (value) => {
+                  scope[tableColumnCI.row][item.key] = value;
+                },
+              };
+              return (
+                <fs-cell
+                  component={item.component}
+                  getScope={getScopeFn}
+                  {...vModel}
+                />
               );
-              if (component.show === false) {
-                return;
-              }
-              if (item.component.render) {
-                return item.component.render(newScope);
-              } else {
-                const vModel = {
-                  modelValue: scope[tableColumnCI.row][item.key],
-                  "onUpdate:modelValue": (value) => {
-                    scope[tableColumnCI.row][item.key] = value;
-                  },
-                };
-                return (
-                  <fs-component-render
-                    {...component}
-                    {...vModel}
-                    scope={newScope}
-                  />
-                );
-              }
             };
           } else if (item.formatter) {
             cellSlots.default = (scope) => {

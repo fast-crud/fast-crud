@@ -24,8 +24,42 @@ export interface CrudOptions {
   request?: {};
 }
 
-const { merge } = useMerge();
+const { merge, cloneDeep } = useMerge();
 
+// mergeColumnPlugin 注册
+const mergeColumnPlugins: Array<Function> = [];
+export function registerMergeColumnPlugin(mergeFn) {
+  mergeColumnPlugins.push(mergeFn);
+}
+function mergeColumnDict(item) {
+  // copy dict
+  if (item.dict) {
+    if (item.column?.component) {
+      item.column.component.dict = merge(
+        {},
+        item.dict,
+        item.column.component.dict
+      );
+    }
+    if (item.form?.component) {
+      item.form.component.dict = merge({}, item.dict, item.form.component.dict);
+    }
+  }
+  return item;
+}
+function mergeColumnType(item) {
+  if (item.type) {
+    const typeOptions = types.getType(item.type);
+    if (typeOptions) {
+      item = merge({}, typeOptions, item);
+    }
+  }
+  return item;
+}
+registerMergeColumnPlugin(mergeColumnType);
+registerMergeColumnPlugin(mergeColumnDict);
+
+// 导出useCrud
 export default function (ctx) {
   const ui = uiContext.get();
   const { t, tc } = useI18n(); // call `useI18n`, and spread `t` from  `useI18n` returning
@@ -241,7 +275,7 @@ export default function (ctx) {
       mergeSrc,
       addLabel = false
     ) {
-      const formColumn = _.cloneDeep(item[mergeSrc]) || {};
+      const formColumn = cloneDeep(item[mergeSrc]) || {};
       if (addLabel) {
         if (formColumn.title == null) {
           formColumn.title = item.title;
@@ -253,29 +287,9 @@ export default function (ctx) {
     function eachColumns(columns, tableParentColumns: any[] = tableColumns) {
       _.forEach(columns, (item, key) => {
         item.key = key;
-        // types merge
-        if (item.type) {
-          const typeOptions = types.getType(item.type);
-          if (typeOptions) {
-            item = merge({}, typeOptions, item);
-          }
-        }
-        // copy dict
-        if (item.dict) {
-          if (item.column?.component) {
-            item.column.component.dict = merge(
-              {},
-              item.dict,
-              item.column.component.dict
-            );
-          }
-          if (item.form?.component) {
-            item.form.component.dict = merge(
-              {},
-              item.dict,
-              item.form.component.dict
-            );
-          }
+        //执行mergePlugin，复制type，复制dict
+        for (const plugin of mergeColumnPlugins) {
+          item = plugin(item);
         }
 
         const tableColumn = item.column || {};
@@ -300,21 +314,21 @@ export default function (ctx) {
     eachColumns(userOptions.columns);
 
     // 分置合并
-    userOptions.form = merge(_.cloneDeep(userOptions.form), {
+    userOptions.form = merge(cloneDeep(userOptions.form), {
       columns: formColumns,
     });
     userOptions.editForm = merge(
-      _.cloneDeep(userOptions.form),
+      cloneDeep(userOptions.form),
       { columns: editFormColumns },
       userOptions.editForm
     );
     userOptions.addForm = merge(
-      _.cloneDeep(userOptions.form),
+      cloneDeep(userOptions.form),
       { columns: addFormColumns },
       userOptions.addForm
     );
     userOptions.viewForm = merge(
-      _.cloneDeep(userOptions.form),
+      cloneDeep(userOptions.form),
       { columns: viewFormColumns },
       userOptions.viewForm
     );
@@ -324,7 +338,11 @@ export default function (ctx) {
       userOptions.search
     );
     userOptions.table.columns = tableColumns;
-
+    const tableColumnsMap = {};
+    _.forEach(tableColumns, (item) => {
+      tableColumnsMap[item.key] = item;
+    });
+    userOptions.table.columnsMap = tableColumnsMap;
     // 单独处理viewForm的component
     _.forEach(userOptions.viewForm.columns, (value) => {
       if (!value.component) {

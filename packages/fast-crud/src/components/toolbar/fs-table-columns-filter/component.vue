@@ -98,6 +98,8 @@ import TableStore from "../../../utils/util.store";
 import { useI18n } from "../../../local";
 import { ref, computed } from "vue";
 import { uiContext } from "../../../ui";
+import { useMerge } from "../../../use/use-merge";
+const { cloneDeep } = useMerge();
 // 输入 全部分表格列设置
 // 输出 要显示的表格列 + 每列的设置
 
@@ -218,7 +220,7 @@ export default {
       this.checkAll = this.showLength > 0;
     },
     buildColumns(value) {
-      const columns = _.cloneDeep(value);
+      const columns = cloneDeep(value);
       const currentValue = [];
       _.forEach(columns, (value) => {
         if (value.show == null) {

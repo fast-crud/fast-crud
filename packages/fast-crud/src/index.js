@@ -1,15 +1,15 @@
 import useCrud from "./use/use-crud.ts";
-import defaultCrudOptions from "./use/default-crud-options";
-import utils from "./utils";
-import { useCompute } from "./use/use-compute";
+import defaultCrudOptions from "./use/default-crud-options.js";
+import utils from "./utils/index.js";
+import { useCompute } from "./use/use-compute.js";
 import { useDict } from "./use/use-dict.ts";
-import { useDictDefine } from "./use/use-dict-define";
-import { uiContext } from "./ui";
-import { useTypes } from "./use/use-types";
-import types from "./types/index";
-import * as components from "./components";
-import { i18n, useI18n } from "./local";
-import useExpose from "./use/use-expose";
+import { useDictDefine } from "./use/use-dict-define.ts";
+import { uiContext } from "./ui/index.ts";
+import { useTypes } from "./use/use-types.ts";
+import types from "./types/index.ts";
+import * as components from "./components/index.js";
+import { i18n, useI18n } from "./local/index.ts";
+import useExpose from "./use/use-expose.ts";
 
 const { dict, setDictRequest } = useDictDefine();
 const { ComputeValue, compute } = useCompute();

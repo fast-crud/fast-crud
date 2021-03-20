@@ -7,6 +7,12 @@ const openStatus = [
   { value: "0", label: "关闭", color: "red" }
 ];
 
+const moreOpenStatus = [
+  { value: "1", label: "打开(open)", color: "success" },
+  { value: "2", label: "停止(stop)", color: "cyan" },
+  { value: "0", label: "关闭(close)", color: "red" }
+];
+
 const textStatus = [
   { id: "1", text: "打开", color: "success" },
   { id: "2", text: "停止", color: "cyan" },
@@ -41,6 +47,17 @@ export default [
         code: 0,
         msg: "success",
         data: textStatus
+      };
+    }
+  },
+  {
+    path: "/dicts/moreOpenStatusEnum",
+    method: "get",
+    handle() {
+      return {
+        code: 0,
+        msg: "success",
+        data: moreOpenStatus
       };
     }
   },
