@@ -23,7 +23,7 @@ function merge(target, ...sources) {
   return _.mergeWith(target, ...sources, customizer);
 }
 function isUnCloneable(value) {
-  return value != null && value instanceof UnMergeable && value.__unCloneable__;
+  return value != null && value instanceof UnMergeable && !value.cloneable;
 }
 function cloneDeep(target) {
   if (isUnCloneable(target)) {
@@ -38,12 +38,9 @@ function cloneDeep(target) {
   return _.cloneDeepWith(target, customizer);
 }
 class UnMergeable {
-  __unCloneable__ = true;
-  unCloneable() {
-    this.__unCloneable__ = true;
-  }
-  cloneable() {
-    this.__unCloneable__ = false;
+  cloneable = false;
+  setCloneable(cloneable) {
+    this.cloneable = cloneable;
   }
 }
 

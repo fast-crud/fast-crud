@@ -29,9 +29,6 @@ export default function({ crudRef }) {
   const remoteDict = dict({
     url: "/dicts/OpenStatusEnum"
   });
-  //设置为不可clone，将会复制引用，从而可以控制dictData 影响全部的实例
-  remoteDict.unCloneable();
-  remoteDict.loadDict();
   return {
     remoteDict,
     request: {

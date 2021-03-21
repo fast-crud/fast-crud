@@ -1,15 +1,15 @@
 import * as api from "./api";
 import { requestForMock } from "/src/api/service";
 import { dict } from "/src/fs";
-export default function ({ crudRef }) {
-  const pageRequest = async (query) => {
+export default function({ expose }) {
+  const pageRequest = async query => {
     return await api.GetList(query);
   };
   const editRequest = async ({ form, row }) => {
     form.id = row.id;
     return await api.UpdateObj(form);
   };
-  const delRequest = async (id) => {
+  const delRequest = async id => {
     return await api.DelObj(id);
   };
 
@@ -21,7 +21,7 @@ export default function ({ crudRef }) {
       pageRequest,
       addRequest,
       editRequest,
-      delRequest,
+      delRequest
     },
     columns: {
       id: {
@@ -29,11 +29,11 @@ export default function ({ crudRef }) {
         key: "id",
         type: "number",
         column: {
-          width: 50,
+          width: 50
         },
         form: {
-          show: false,
-        },
+          show: false
+        }
       },
       file: {
         title: "阿里云上传",
@@ -41,10 +41,10 @@ export default function ({ crudRef }) {
         form: {
           component: {
             uploader: {
-              type: "alioss",
-            },
-          },
-        },
+              type: "alioss"
+            }
+          }
+        }
       },
       pictureCard: {
         title: "照片墙",
@@ -52,10 +52,10 @@ export default function ({ crudRef }) {
         form: {
           component: {
             uploader: {
-              type: "alioss",
-            },
-          },
-        },
+              type: "alioss"
+            }
+          }
+        }
       },
       cropper: {
         title: "裁剪",
@@ -63,11 +63,11 @@ export default function ({ crudRef }) {
         form: {
           component: {
             uploader: {
-              type: "alioss",
-            },
-          },
-        },
-      },
-    },
+              type: "alioss"
+            }
+          }
+        }
+      }
+    }
   };
 }

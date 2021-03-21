@@ -13,6 +13,7 @@
 </template>
 <script>
 import { computed } from "vue";
+import useDict from "./use-dict";
 export default {
   name: "FsDictSelect",
   props: {
@@ -30,22 +31,9 @@ export default {
       return props.placeholder || "请选择";
     });
 
-    if (props.dict && props.dict.data == null) {
-      props.dict.loadDict();
-    }
-
-    const computedOptions = computed(() => {
-      if (props.options) {
-        return props.options;
-      }
-      if (props.dict?.data) {
-        return props.dict.data;
-      }
-      return [];
-    });
     return {
       computedPlaceholder,
-      computedOptions,
+      ...useDict(props, ctx),
     };
   },
 };

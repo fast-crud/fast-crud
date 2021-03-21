@@ -7,7 +7,6 @@ import types from "../types";
 import { uiContext } from "../ui";
 import { useI18n } from "../local";
 import { useMerge } from "../use/use-merge";
-import useExpose from "./use-expose";
 export interface CrudOptions {
   table?: {};
   columns?: [];
@@ -65,91 +64,10 @@ export default function (ctx) {
   const { t, tc } = useI18n(); // call `useI18n`, and spread `t` from  `useI18n` returning
 
   const options: CrudOptions = ctx.options;
-  const crudRef = ctx.crudRef;
+  const expose = ctx.expose;
+  const crudOptions = expose.crudOptions;
 
-  const crudOptions = ref();
-
-  const { doValueBuilder, doValueResolve } = useExpose(crudRef);
-  async function doRefresh() {
-    let page;
-    if (crudOptions.value.pagination) {
-      page = {
-        currentPage: crudOptions.value.pagination.currentPage,
-        pageSize: crudOptions.value.pagination.pageSize,
-      };
-    }
-    let searchFormData = {};
-    if (crudRef.value) {
-      searchFormData = crudRef.value.getSearchFormData();
-    }
-    let query = { page, form: searchFormData };
-    if (crudOptions.value.request.transformQuery) {
-      query = crudOptions.value.request.transformQuery(query);
-    }
-
-    crudOptions.value.table.loading = true;
-    let pageRes;
-    try {
-      logger.debug("pageRequest", query);
-      pageRes = await crudOptions.value.request.pageRequest(query);
-    } finally {
-      crudOptions.value.table.loading = false;
-    }
-    if (pageRes == null) {
-      logger.warn("pageRequest返回结果不能为空");
-      return;
-    }
-    if (crudOptions.value.request.transformRes) {
-      pageRes = crudOptions.value.request.transformRes({ res: pageRes, query });
-    }
-    const {
-      currentPage = page.currentPage,
-      pageSize = page.pageSize,
-      total,
-    } = pageRes;
-    const { records } = pageRes;
-    if (records == null) {
-      logger.warn(
-        "pageRequest返回结构不正确，请配置request.transformRes，期望：{currentPage, pageSize, total, records:[]},实际返回：",
-        pageRes
-      );
-      return;
-    }
-
-    //valueBuild
-    doValueBuilder(records);
-
-    crudOptions.value.data = records;
-    if (crudOptions.value.pagination) {
-      crudOptions.value.pagination.currentPage = currentPage;
-      crudOptions.value.pagination.pageSize = pageSize;
-      crudOptions.value.pagination.total = total || records.length;
-    }
-  }
-
-  function doPageTurn(no: number) {
-    crudOptions.value.pagination.currentPage = no;
-  }
-  /**
-   *
-   * @param opts = {
-   *   form
-   *   goFirstPage =true
-   *   mergeForm=false
-   * }
-   */
-  async function doSearch(opts) {
-    logger.debug("dosearch:", opts);
-    opts = merge({ goFirstPage: true }, opts);
-    if (opts.goFirstPage) {
-      doPageTurn(1);
-    }
-    if (opts.form && crudRef.value) {
-      crudRef.value.setSearchFormData(opts);
-    }
-
-    await doRefresh();
-  }
+  const { doRefresh, doValueResolve, doSearch } = expose;
 
   function usePagination() {
     return {
@@ -258,7 +176,7 @@ export default function (ctx) {
     };
   }
 
-  function initCrudOptions(options) {
+  function resetCrudOptions(options) {
     const userOptions = merge(
       defaultCrudOptions.defaultOptions({ t, tc }),
       usePagination(),
@@ -363,21 +281,14 @@ export default function (ctx) {
       }
       value.component.disabled = true;
     });
-    // 与默认配置合并
+    // 设置crudOptions Ref
     crudOptions.value = userOptions;
     logger.info("fast-crud inited:", crudOptions.value);
   }
 
-  initCrudOptions(options);
+  resetCrudOptions(options);
 
-  function onFormValueChange(context) {
-    console.log("onFormValueChange", context);
-  }
   return {
-    doRefresh,
-    doPageTurn,
-    doSearch,
-    onFormValueChange,
-    crudOptions,
+    resetCrudOptions,
   };
 }

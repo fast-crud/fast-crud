@@ -2,15 +2,15 @@ import * as api from "./api";
 import { requestForMock } from "/src/api/service";
 import { dict, compute } from "/src/fs";
 import { message } from "ant-design-vue";
-export default function ({ crudRef }) {
-  const pageRequest = async (query) => {
+export default function({ expose }) {
+  const pageRequest = async query => {
     return await api.GetList(query);
   };
   const editRequest = async ({ form, row }) => {
     form.id = row.id;
     return await api.UpdateObj(form);
   };
-  const delRequest = async (id) => {
+  const delRequest = async id => {
     return await api.DelObj(id);
   };
 
@@ -22,11 +22,11 @@ export default function ({ crudRef }) {
       pageRequest,
       addRequest,
       editRequest,
-      delRequest,
+      delRequest
     },
     form: {
       //配置表单label的宽度
-      labelCol: { span: 6 },
+      labelCol: { span: 6 }
     },
     columns: {
       id: {
@@ -34,11 +34,11 @@ export default function ({ crudRef }) {
         key: "id",
         type: "number",
         column: {
-          width: 50,
+          width: 50
         },
         form: {
-          show: false,
-        },
+          show: false
+        }
       },
       button: {
         title: "按钮",
@@ -53,10 +53,10 @@ export default function ({ crudRef }) {
             on: {
               onClick({ row }) {
                 message.success("按钮点击:" + row.button);
-              },
-            },
-          },
-        },
+              }
+            }
+          }
+        }
       },
       link: {
         title: "链接",
@@ -69,10 +69,10 @@ export default function ({ crudRef }) {
                 if (row.url) {
                   window.open(row.url);
                 }
-              },
-            },
-          },
-        },
+              }
+            }
+          }
+        }
       },
       link2: {
         title: "手写link配置",
@@ -89,11 +89,11 @@ export default function ({ crudRef }) {
                 if (row.url) {
                   window.open(row.url);
                 }
-              },
-            },
-          },
-        },
-      },
-    },
+              }
+            }
+          }
+        }
+      }
+    }
   };
 }

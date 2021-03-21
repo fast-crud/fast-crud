@@ -1,15 +1,15 @@
 import * as api from "./api";
 import { requestForMock } from "/src/api/service";
 import { dict } from "/src/fs";
-export default function ({ crudRef }) {
-  const pageRequest = async (query) => {
+export default function({}) {
+  const pageRequest = async query => {
     return await api.GetList(query);
   };
   const editRequest = async ({ form, row }) => {
     form.id = row.id;
     return await api.UpdateObj(form);
   };
-  const delRequest = async (id) => {
+  const delRequest = async id => {
     return await api.DelObj(id);
   };
 
@@ -21,7 +21,7 @@ export default function ({ crudRef }) {
       pageRequest,
       addRequest,
       editRequest,
-      delRequest,
+      delRequest
     },
     columns: {
       id: {
@@ -29,11 +29,11 @@ export default function ({ crudRef }) {
         key: "id",
         type: "number",
         column: {
-          width: 50,
+          width: 50
         },
         form: {
-          show: false,
-        },
+          show: false
+        }
       },
       file: {
         title: "表单上传",
@@ -41,10 +41,10 @@ export default function ({ crudRef }) {
         form: {
           component: {
             uploader: {
-              type: "form",
-            },
-          },
-        },
+              type: "form"
+            }
+          }
+        }
       },
       pictureCard: {
         title: "照片墙",
@@ -53,11 +53,11 @@ export default function ({ crudRef }) {
           component: {
             limit: 2,
             uploader: {
-              type: "form",
-            },
+              type: "form"
+            }
           },
-          helper: "最大可上传2个文件",
-        },
+          helper: "最大可上传2个文件"
+        }
       },
       cropper: {
         title: "裁剪",
@@ -65,10 +65,10 @@ export default function ({ crudRef }) {
         form: {
           component: {
             uploader: {
-              type: "form",
-            },
-          },
-        },
+              type: "form"
+            }
+          }
+        }
       },
       limit: {
         title: "限制数量",
@@ -77,11 +77,11 @@ export default function ({ crudRef }) {
           component: {
             limit: 2,
             uploader: {
-              type: "form",
-            },
+              type: "form"
+            }
           },
-          helper: "最大可上传2个文件",
-        },
+          helper: "最大可上传2个文件"
+        }
       },
       sizeLimit: {
         title: "限制大小",
@@ -90,11 +90,11 @@ export default function ({ crudRef }) {
           component: {
             sizeLimit: 1024,
             uploader: {
-              type: "form",
-            },
+              type: "form"
+            }
           },
-          helper: "大小不能超过1k",
-        },
+          helper: "大小不能超过1k"
+        }
       },
       validation: {
         title: "校验",
@@ -103,11 +103,11 @@ export default function ({ crudRef }) {
           rules: [],
           component: {
             uploader: {
-              type: "form",
-            },
-          },
-        },
-      },
-    },
+              type: "form"
+            }
+          }
+        }
+      }
+    }
   };
 }

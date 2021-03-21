@@ -34,7 +34,7 @@ class Dict extends UnMergeable {
   data: undefined | Array<any> = undefined;
   originalData: undefined | Array<any> = undefined;
   dataMap = {};
-  loaded = false;
+  loading = false;
   custom = {};
   getNodes: undefined | Function = undefined;
   cacheNodes = {};
@@ -91,8 +91,13 @@ class Dict extends UnMergeable {
     if (this.data) {
       return this.data;
     }
-    const data = await this.getRemoteDictData(context);
-    this.setData(data);
+    this.loading = true;
+    try {
+      const data = await this.getRemoteDictData(context);
+      this.setData(data);
+    } finally {
+      this.loading = false;
+    }
     console.log("dict data loaded:", this.url);
     return this.data;
   }

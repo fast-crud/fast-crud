@@ -1,7 +1,7 @@
 import * as api from "./api";
 import { requestForMock } from "/src/api/service";
 import { dict } from "/src/fs";
-export default function({ crudRef }) {
+export default function({ expose }) {
   const pageRequest = async query => {
     return await api.GetList(query);
   };

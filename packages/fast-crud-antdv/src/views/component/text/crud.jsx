@@ -1,5 +1,5 @@
 import * as api from "./api";
-export default function({ crudRef }) {
+export default function({ expose }) {
   const pageRequest = async query => {
     return await api.GetList(query);
   };

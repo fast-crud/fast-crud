@@ -1,7 +1,7 @@
 import * as api from "./api";
 import { dict, useExpose } from "/src/fs";
-export default function({ crudRef }) {
-  const { getFormRef, getFormData } = useExpose(crudRef);
+export default function({ expose }) {
+  const { getFormRef, getFormData } = expose;
   const validatePass1 = async (rule, value) => {
     if (value === "") {
       throw new Error("请输入密码");

@@ -1,13 +1,13 @@
 import * as api from "./api";
-export default function ({ crudRef }) {
-  const pageRequest = async (query) => {
+export default function({}) {
+  const pageRequest = async query => {
     return await api.GetList(query);
   };
   const editRequest = async ({ form, row }) => {
     form.id = row.id;
     return await api.UpdateObj(form);
   };
-  const delRequest = async (id) => {
+  const delRequest = async id => {
     return await api.DelObj(id);
   };
 
@@ -20,23 +20,23 @@ export default function ({ crudRef }) {
       pageRequest,
       addRequest,
       editRequest,
-      delRequest,
+      delRequest
     },
     form: {
-      display: "flex",
+      display: "flex"
     },
     columns: {
       name: {
         title: "姓名",
         type: "text",
-        search: { show: true },
+        search: { show: true }
       },
       order: {
         title: "字段排序",
         type: "text",
         form: {
-          order: 0,
-        },
+          order: 0
+        }
       },
       intro: {
         title: "跨列",
@@ -44,12 +44,12 @@ export default function ({ crudRef }) {
         form: {
           // flex模式控制跨列
           col: {
-            span: 24,
+            span: 24
           },
           labelCol: { span: 2 },
-          wrapperCol: { span: 21 },
-        },
-      },
-    },
+          wrapperCol: { span: 21 }
+        }
+      }
+    }
   };
 }

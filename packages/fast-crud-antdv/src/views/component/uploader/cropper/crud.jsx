@@ -1,15 +1,15 @@
 import * as api from "./api";
 import { requestForMock } from "/src/api/service";
 import { dict } from "/src/fs";
-export default function ({ crudRef }) {
-  const pageRequest = async (query) => {
+export default function({ expose }) {
+  const pageRequest = async query => {
     return await api.GetList(query);
   };
   const editRequest = async ({ form, row }) => {
     form.id = row.id;
     return await api.UpdateObj(form);
   };
-  const delRequest = async (id) => {
+  const delRequest = async id => {
     return await api.DelObj(id);
   };
 
@@ -21,7 +21,7 @@ export default function ({ crudRef }) {
       pageRequest,
       addRequest,
       editRequest,
-      delRequest,
+      delRequest
     },
     columns: {
       id: {
@@ -29,24 +29,24 @@ export default function ({ crudRef }) {
         key: "id",
         type: "number",
         column: {
-          width: 50,
+          width: 50
         },
         form: {
-          show: false,
-        },
+          show: false
+        }
       },
       cropper: {
         title: "头像裁剪上传",
-        type: "cropper-uploader",
+        type: "cropper-uploader"
       },
       avatar: {
         title: "数量限制",
         type: "cropper-uploader",
         form: {
           component: {
-            limit: 5, //默认限制1个，即头像上传，0为不限制
-          },
-        },
+            limit: 5 //默认限制1个，即头像上传，0为不限制
+          }
+        }
       },
       aspect: {
         title: "按比例裁剪",
@@ -54,10 +54,10 @@ export default function ({ crudRef }) {
         form: {
           component: {
             cropper: {
-              aspectRatio: 2,
-            },
-          },
-        },
+              aspectRatio: 2
+            }
+          }
+        }
       },
       alioss: {
         title: "alioss",
@@ -65,10 +65,10 @@ export default function ({ crudRef }) {
         form: {
           component: {
             uploader: {
-              type: "alioss",
-            },
-          },
-        },
+              type: "alioss"
+            }
+          }
+        }
       },
       qiniu: {
         title: "七牛",
@@ -76,10 +76,10 @@ export default function ({ crudRef }) {
         form: {
           component: {
             uploader: {
-              type: "qiniu",
-            },
-          },
-        },
+              type: "qiniu"
+            }
+          }
+        }
       },
       cos: {
         title: "腾讯cos",
@@ -87,10 +87,10 @@ export default function ({ crudRef }) {
         form: {
           component: {
             uploader: {
-              type: "cos",
-            },
-          },
-        },
+              type: "cos"
+            }
+          }
+        }
       },
       form: {
         title: "表单",
@@ -98,11 +98,11 @@ export default function ({ crudRef }) {
         form: {
           component: {
             uploader: {
-              type: "form",
-            },
-          },
-        },
-      },
-    },
+              type: "form"
+            }
+          }
+        }
+      }
+    }
   };
 }
