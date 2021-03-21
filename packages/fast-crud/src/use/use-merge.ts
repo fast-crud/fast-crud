@@ -38,7 +38,7 @@ function cloneDeep(target) {
   return _.cloneDeepWith(target, customizer);
 }
 class UnMergeable {
-  __unCloneable__ = false;
+  __unCloneable__ = true;
   unCloneable() {
     this.__unCloneable__ = true;
   }

@@ -1,7 +1,7 @@
 import defaultCrudOptions from "./default-crud-options";
 import _ from "lodash-es";
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
-import { ref } from "vue";
+import { ref, reactive } from "vue";
 import logger from "../utils/util.log";
 import types from "../types";
 import { uiContext } from "../ui";
@@ -240,7 +240,17 @@ export default function (ctx) {
         crudOptions.value.toolbar.compact = value;
       },
       "onUpdate:columns"(value) {
-        crudOptions.value.table.columns = value;
+        const original = crudOptions.value.table.columns;
+        const columns: Array<any> = [];
+        _.forEach(value, (item) => {
+          for (const column of original) {
+            if (column.key === item.key) {
+              merge(column, item);
+              columns.push(column);
+            }
+          }
+        });
+        crudOptions.value.table.columns = columns;
       },
       onRefresh() {
         doRefresh();
@@ -261,7 +271,7 @@ export default function (ctx) {
     );
 
     // 分散 合并到不同的维度
-    const tableColumns: any[] = [];
+    const tableColumns: Array<any> = [];
     const formColumns = {};
     const addFormColumns = {};
     const editFormColumns = {};
@@ -284,7 +294,10 @@ export default function (ctx) {
       formColumn.key = key;
       targetColumns[key] = formColumn;
     }
-    function eachColumns(columns, tableParentColumns: any[] = tableColumns) {
+    function eachColumns(
+      columns,
+      tableParentColumns: Array<any> = tableColumns
+    ) {
       _.forEach(columns, (item, key) => {
         item.key = key;
         //执行mergePlugin，复制type，复制dict
@@ -292,7 +305,7 @@ export default function (ctx) {
           item = plugin(item);
         }
 
-        const tableColumn = item.column || {};
+        const tableColumn = reactive(item.column || {});
         if (tableColumn.title == null) {
           tableColumn.title = item.title;
         }

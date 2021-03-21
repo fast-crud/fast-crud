@@ -1,7 +1,4 @@
 <template>
-  <p>1.{{ remoteDict }}</p>
-  <p>2.{{ crudOptions.search.columns.remote.component.dict }}</p>
-  <p>3.{{ crudOptions.table.columns[2].component.dict }}</p>
   <fs-crud ref="crudRef" v-bind="crudOptions" />
 </template>
 

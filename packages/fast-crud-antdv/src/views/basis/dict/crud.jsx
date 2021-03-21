@@ -56,12 +56,7 @@ export default function({ crudRef }) {
         title: "本地字典",
         search: { show: false },
         dict: statusDict,
-        type: "dict-select",
-        column: {
-          component: {
-            show: false
-          }
-        }
+        type: "dict-select"
       },
       remote: {
         title: "远程字典",

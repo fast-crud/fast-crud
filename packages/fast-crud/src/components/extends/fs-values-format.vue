@@ -1,6 +1,5 @@
 <template>
   <span class="fs-values-format">
-    {{ dict.url }}
     <template v-if="type === 'text'">
       <span
         v-for="item in computedOptions"
@@ -51,24 +50,6 @@ function hashcode(str) {
     hash |= 0; // Convert to 32bit integer
   }
   return hash;
-}
-function setColor(props, item, COLOR_LIST, EFFECT_LIST) {
-  if (!item.effect && props.effect) {
-    item.effect = props.effect;
-  }
-  if (item.color != null) {
-    return;
-  }
-  if (props.color === "auto") {
-    const hashcode = hashcode(item.value);
-    const colors = props.autoColors ? props.autoColors : COLOR_LIST;
-    item.color = colors[hashcode % colors.length];
-    const effects = props.autoEffects ? props.autoEffects : EFFECT_LIST;
-    item.effect =
-      effects[Math.floor(hashcode / colors.length) % effects.length];
-  } else {
-    item.color = props.color;
-  }
 }
 
 function buildArrayValue(props) {
@@ -133,9 +114,24 @@ export default {
     const COLOR_LIST = ui.tag.colors;
     const EFFECT_LIST = ["plain", "light"];
 
-    const computedDictDataMap = computed(() => {
-      return props.dict?.dataMap;
-    });
+    function setColor(props, item) {
+      if (!item.effect && props.effect) {
+        item.effect = props.effect;
+      }
+      if (item.color != null) {
+        return;
+      }
+      if (props.color === "auto") {
+        const hashcode = hashcode(item.value);
+        const colors = props.autoColors ? props.autoColors : COLOR_LIST;
+        item.color = colors[hashcode % colors.length];
+        const effects = props.autoEffects ? props.autoEffects : EFFECT_LIST;
+        item.effect =
+          effects[Math.floor(hashcode / colors.length) % effects.length];
+      } else {
+        item.color = props.color;
+      }
+    }
 
     const computedOptions = computed(() => {
       if (props.modelValue == null || props.modelValue === "") {
@@ -144,13 +140,8 @@ export default {
       const valueArr = buildArrayValue(props);
 
       let options = [];
-      if (props.dict && computedDictDataMap.value) {
-        _.forEach(valueArr, (value) => {
-          let item = computedDictDataMap.value[value];
-          if (item) {
-            options.push(item);
-          }
-        });
+      if (props.dict) {
+        options = props.dict.getNodesByValues(valueArr);
       } else {
         options = [];
         _.forEach(valueArr, (item) => {
@@ -167,7 +158,7 @@ export default {
 
       const colorfulOptions = _.cloneDeep(options);
       _.forEach(colorfulOptions, (item) => {
-        setColor(props, item, COLOR_LIST, EFFECT_LIST);
+        setColor(props, item);
       });
       console.log("recomputed options", props.modelValue, valueArr);
       return colorfulOptions;
@@ -178,9 +169,6 @@ export default {
     }
 
     return {
-      COLOR_LIST,
-      EFFECT_LIST,
-      computedDictDataMap,
       computedOptions,
       doClick,
     };

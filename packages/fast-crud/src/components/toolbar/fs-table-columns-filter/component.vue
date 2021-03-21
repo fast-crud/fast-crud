@@ -220,19 +220,17 @@ export default {
       this.checkAll = this.showLength > 0;
     },
     buildColumns(value) {
-      const columns = cloneDeep(value);
-      const currentValue = [];
-      _.forEach(columns, (value) => {
-        if (value.show == null) {
-          value.show = true;
-        }
-        value.show = !!value.show;
-        if (value.fixed == null) {
-          value.fixed = false;
-        }
-        currentValue.push(value);
+      const columns = [];
+      _.forEach(value, (item) => {
+        const column = {
+          key: item.key,
+          title: item.title,
+          show: !!item.show,
+          fixed: !!item.fixed,
+        };
+        columns.push(column);
       });
-      return currentValue;
+      return columns;
     },
     // fixed 变化时触发
     fixedChange(index, value) {

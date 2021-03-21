@@ -6,8 +6,6 @@
     :class="{ compact: toolbar.compact !== false }"
   >
     <template #header>
-      --- {{ table.columnsMap.remote.component.dict }}---
-      {{ search.columns.remote.component.dict }}
       <div class="fs-crud-header">
         <div class="fs-header-top"><slot name="header-top"></slot></div>
         <div class="fs-crud-search">
@@ -112,6 +110,8 @@ import FsTable from "./crud/fs-table.jsx";
 import traceUtil from "../utils/util.trace";
 import { uiContext } from "../ui";
 import logger from "../utils/util.log";
+import { useMerge } from "../use/use-merge";
+const { merge } = useMerge();
 function useProviders(props, ctx) {
   provide("get:columns", () => {
     return props.table.columns;
@@ -242,7 +242,7 @@ function useTable(props, ctx) {
   const fixedHeightRet = useFixedHeight(props, ctx, { tableRef, containerRef });
   const computedTable = computed(() => {
     // antdv 高度自适应， 如果用户有配置scroll，则优先使用用户配置的
-    const fixedHeight = _.merge({}, fixedHeightRet.fixedOptions, {
+    const fixedHeight = merge({}, fixedHeightRet.fixedOptions, {
       scroll: props.table.scroll,
     });
     const table = { ...ctx.attrs, ...props.table, ...fixedHeight };
@@ -326,9 +326,7 @@ export default defineComponent({
   },
   inheritAttrs: false,
   props: {
-    table: {
-      show: true,
-    },
+    table: {},
     //原始column配置
     columns: {},
     data: {

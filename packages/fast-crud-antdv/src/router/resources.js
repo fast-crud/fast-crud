@@ -23,6 +23,11 @@ const resources = [
         title: "数据字典",
         path: "/basis/dict",
         component: "/basis/dict/index.vue"
+      },
+      {
+        title: "bug",
+        path: "/basis/bug",
+        component: "/basis/reactive-in-array/index.vue"
       }
     ]
   },
