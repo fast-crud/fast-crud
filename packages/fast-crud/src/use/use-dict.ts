@@ -1,11 +1,21 @@
-import { ref, watch, getCurrentInstance, computed } from "vue";
-export function useDict(props, ctx, vModel = "modelValue") {
+import { getCurrentInstance, computed, ref, toRef } from "vue";
+import _ from "lodash-es";
+export function useDict(props, ctx) {
+  let dictRef = ref();
+  if (props.dict) {
+    if (props.cloneDict) {
+      dictRef.value = _.cloneDeep(props.dict);
+    } else {
+      dictRef = toRef(props, "dict");
+    }
+  }
+
   const computedOptions = computed(() => {
     if (props.options) {
       return props.options;
     }
-    if (props.dict?.data) {
-      return props.dict.data;
+    if (dictRef.value) {
+      return dictRef.value.data;
     }
     return [];
   });
@@ -13,20 +23,19 @@ export function useDict(props, ctx, vModel = "modelValue") {
   // @ts-ignore
   const { proxy } = getCurrentInstance();
   const loadDict = async (reload = false) => {
-    if (!props.dict) {
+    if (!dictRef.value) {
       return;
     }
     const scope = {
-      dict: props.dict,
       ...props.scope,
       ...ctx.attrs.scope,
       componentRef: proxy,
     };
     if (reload) {
-      await props.dict.reloadDict(scope);
+      await dictRef.value.reloadDict(scope);
       return;
     }
-    await props.dict.loadDict(scope);
+    await dictRef.value.loadDict(scope);
   };
   loadDict();
 

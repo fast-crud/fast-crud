@@ -102,75 +102,12 @@ export default {
       }
       return arr;
     },
-    getDictItem(value, dict, deepMatch) {
-      let valueName = "value";
-      if (this.dict && this.dict.value) {
-        valueName = this.dict.value;
-      }
-      if (deepMatch) {
-        let childrenName = "children";
-        if (this.dict && this.dict.children) {
-          childrenName = this.dict.children;
-        }
-        return this.deepMatch(value, valueName, childrenName, dict);
-      } else {
-        for (const item of dict) {
-          if (item[valueName] === value) {
-            return item;
-          }
-        }
-      }
-    },
-    deepMatch(value, valueName, childrenName, dict) {
-      for (const item of dict) {
-        if (item[valueName] === value) {
-          return item;
-        }
-      }
-      for (const item of dict) {
-        if (item[childrenName]) {
-          const matched = this.deepMatch(
-            value,
-            valueName,
-            childrenName,
-            item[childrenName]
-          );
-          if (matched) {
-            return matched;
-          }
-        }
-      }
-    },
     buildValueItem(values) {
       const arr = this.getValueArr(values);
 
-      let labelName = "label";
-      if (this.dict != null && this.dict.label != null) {
-        labelName = this.dict.label;
+      if (props.dict) {
+        return props.dict.getNodesByValues(arr);
       }
-
-      let childrenName = "children";
-      if (this.dict != null && this.dict.children != null) {
-        childrenName = this.dict.children;
-      }
-      const labelArr = [];
-
-      if (this.dictData != null) {
-        let dict = this.dictData;
-        const deepMatch = arr.length === 1;
-        for (const value of arr) {
-          if (dict != null) {
-            const dictItem = this.getDictItem(value, dict, deepMatch);
-            if (dictItem != null) {
-              dict = dictItem[childrenName];
-              labelArr.push(dictItem[labelName]);
-              continue;
-            }
-          }
-          labelArr.push(value);
-        }
-      }
-      return labelArr;
     },
   },
 };

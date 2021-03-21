@@ -34,14 +34,12 @@ function mergeColumnDict(item) {
   // copy dict
   if (item.dict) {
     if (item.column?.component) {
-      item.column.component.dict = merge(
-        {},
-        item.dict,
-        item.column.component.dict
-      );
+      const dict = cloneDeep(item.dict);
+      item.column.component.dict = merge(dict, item.column.component.dict);
     }
     if (item.form?.component) {
-      item.form.component.dict = merge({}, item.dict, item.form.component.dict);
+      const dict = cloneDeep(item.dict);
+      item.form.component.dict = merge(dict, item.form.component.dict);
     }
   }
   return item;
@@ -121,7 +119,6 @@ export default function (ctx) {
           click: async function (context) {
             // TODO i18n
             try {
-              console.log("ui", ui, context);
               await ui.messageBox.confirm({
                 title: t("fs.rowHandle.remove.confirmTitle"), // '提示',
                 message: t("fs.rowHandle.remove.confirmMessage"), // '确定要删除此记录吗?',

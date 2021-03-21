@@ -1,9 +1,6 @@
 import * as api from "./api";
-import { requestForMock } from "/src/api/service";
 import { dict } from "/src/fs";
-import { useCompute } from "@fast-crud/fast-crud";
-const { asyncCompute, compute } = useCompute();
-export default function({ crudRef }) {
+export default function({ expose }) {
   const pageRequest = async query => {
     return await api.GetList(query);
   };
@@ -27,6 +24,7 @@ export default function({ crudRef }) {
   });
 
   const remoteDict = dict({
+    cloneable: false, // 关闭cloneable，任何情况下，都使用同一个dict
     url: "/dicts/OpenStatusEnum"
   });
   return {

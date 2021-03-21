@@ -14,7 +14,6 @@ export default {
     const computedComponent = doComputed(props.component, props.getScope);
     const newDict = computedComponent.value.dict;
 
-    console.log("fs cell -------", oldDict === newDict, oldDict, newDict);
     // const component = ComputeValue.buildBindProps(
     //   props.component,
     //   props.getScope

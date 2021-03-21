@@ -152,7 +152,6 @@ export default defineComponent({
     });
 
     function doDropdownItemClick($event) {
-      console.log("dropdown clicked", $event);
       for (let btn of computedAllHandleBtns.value) {
         if ($event === btn.key) {
           doClick(btn);

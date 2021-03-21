@@ -82,19 +82,12 @@ export default function({ expose }) {
         width: 120,
         type: "dict-select",
         dict: dict({
-          url: "custom-dict-cache-key", // 配置任意字符串,当做缓存key，避免每行都请求一次数据字典
-          getData({ url, dict, scope }) {
+          getData({ dict }) {
             // 覆盖全局获取字典请求配置
-            console.log(
-              `我是从自定义的getData方法中加载的数据字典,cachekey:${url}`,
-              dict,
-              scope
-            );
+            console.log(`我是从自定义的getData方法中加载的数据字典`, dict);
             return requestForMock({
               url: "/dicts/OpenStatusEnum?cache",
               method: "get"
-            }).then(ret => {
-              return ret;
             });
           }
         }),
@@ -111,40 +104,8 @@ export default function({ expose }) {
           }
         }
       },
-      customDictUrl: {
-        title: "动态url",
-        search: {},
-        type: "dict-select",
-        dict: dict({
-          url: ({ dict, form }) => {
-            // console.log("动态url：", dict, scope);
-            return "/dicts/OpenStatusEnum?dictUrlCustom";
-          }
-        })
-      },
-      disabledCache: {
-        title: "禁用字典缓存",
-        key: "disableCache",
-        width: 120,
-        sortable: true,
-        search: {},
-        type: "dict-select",
-        disabled: false,
-        dict: dict({
-          url: "/dicts/OpenStatusEnum?disabledCache",
-          cache: true // 列表中展示建议启用缓存，否则会每一行都请求一次
-        }),
-        form: {
-          component: {
-            dict: {
-              cache: false // 表单的dict可以禁用缓存,每次打开都请求
-            }
-          },
-          helper: "禁用字典缓存，每次打开对话框都会发出字典请求"
-        }
-      },
       disabledOptions: {
-        title: "禁用字典选项",
+        title: "禁用某个选项",
         key: "disabledOptions",
         type: "dict-select",
         dict: dict({
@@ -153,11 +114,12 @@ export default function({ expose }) {
         form: {
           component: {
             dict: {
-              // 此处配置不影响列展示的效率
-              clone: true, // 获取成功后clone一份，不影响全局缓存
-              onReady({ data, dataMap, dict, scope }) {
-                console.log("字典请求ready", data, dataMap, dict, scope);
-                data[0].disabled = true; // 禁用某个选项， 还可以自己修改选项，如果没有禁用缓存，则可能会影响全局
+              // 此处dict配置会覆盖上面dict的属性
+              cache: false, // 每次初始化组件都会重新获取dict
+              //因为分发时会clone一份，此处修改不影响其他的dict配置
+              onReady({ dict }) {
+                console.log("字典请求ready", dict);
+                dict.data[0].disabled = true; // 禁用某个选项， 还可以自己修改选项，如果没有禁用缓存，则可能会影响全局
               }
             }
           },

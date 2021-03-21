@@ -31,8 +31,7 @@ import { uiContext } from "../../ui";
 import _ from "lodash-es";
 import { computed } from "vue";
 
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
-function hashcode(str) {
+function getHashCode(str) {
   if (str == null) {
     return 0;
   }
@@ -122,7 +121,7 @@ export default {
         return;
       }
       if (props.color === "auto") {
-        const hashcode = hashcode(item.value);
+        const hashcode = getHashCode(item.value);
         const colors = props.autoColors ? props.autoColors : COLOR_LIST;
         item.color = colors[hashcode % colors.length];
         const effects = props.autoEffects ? props.autoEffects : EFFECT_LIST;
@@ -160,7 +159,6 @@ export default {
       _.forEach(colorfulOptions, (item) => {
         setColor(props, item);
       });
-      console.log("recomputed options", props.modelValue, valueArr);
       return colorfulOptions;
     });
 

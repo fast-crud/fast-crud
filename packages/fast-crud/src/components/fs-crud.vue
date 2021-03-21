@@ -273,7 +273,6 @@ function useTable(props, ctx) {
     const index = scope[tableColumnCI.index];
     const row = scope[tableColumnCI.row];
 
-    console.log("form,index", index);
     const e = { mode: key, initialForm: row, slots: ctx.slots, index };
     if (key === "edit") {
       formWrapperRef.value.open({ ...props.editForm, ...e });

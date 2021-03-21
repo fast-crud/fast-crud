@@ -72,7 +72,6 @@ function doComputed(target, getContextFn, excludes, userComputedFn) {
       if (userComputedFn) {
         return userComputedFn(target);
       }
-      console.log("同步computed", target);
       return target;
     });
   }
@@ -127,7 +126,6 @@ export class AsyncComputeValue {
       async (value) => {
         //执行异步方法
         asyncRef.value = await this.asyncFn(value, getContextFn());
-        console.log("watch effect", asyncRef);
       },
       { immediate: true }
     );

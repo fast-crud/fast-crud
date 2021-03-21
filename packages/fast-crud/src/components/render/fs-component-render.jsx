@@ -4,6 +4,7 @@ import {
   getCurrentInstance,
   computed,
   mergeProps,
+  onMounted,
 } from "vue";
 import _ from "lodash-es";
 import traceUtil from "../../utils/util.trace";
@@ -50,16 +51,18 @@ export default {
   setup(props, ctx) {
     traceUtil.trace("fs-component-render");
     const { proxy } = getCurrentInstance();
-    function getComponentRef(key) {
-      console.log("getComponentRef", proxy);
-      return proxy.$refs[key];
-    }
+
     const newScope = computed(() => {
       return {
         ...props.scope,
-        getComponentRef,
       };
     });
+
+    if (props.onMounted) {
+      onMounted(() => {
+        props.onMounted(newScope.value);
+      });
+    }
 
     // 带事件的attrs
     const allAttrs = computed(() => {
@@ -105,10 +108,7 @@ export default {
     }
     const children = childrenRender();
     return () => {
-      const oldDict = ctx.attrs.dict;
       const props = mergeProps(allAttrs.value, ctx.attrs);
-      const newDict = props.dict;
-      console.log("render dict", oldDict, newDict, oldDict === newDict);
       mergeEventHandles(props, "onChange");
       mergeEventHandles(props, "onBlur");
       return h(inputComp, props, children);

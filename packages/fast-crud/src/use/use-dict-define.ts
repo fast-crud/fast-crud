@@ -8,7 +8,8 @@ function setDictRequest(request) {
   dictRequest = request;
 }
 
-let dictRequest = async (dict) => {
+// eslint-disable-next-line @typescript-eslint/no-unused-vars,no-unused-vars
+let dictRequest = async ({ url, dict }) => {
   logger.warn(
     "请配置 app.use(FsCrud,{dictRequest:(context)=>{ 你的字典请求方法 }})"
   );
@@ -38,11 +39,13 @@ class Dict extends UnMergeable {
   custom = {};
   getNodes: undefined | Function = undefined;
   cacheNodes = {};
+  onReady: undefined | Function = undefined;
   constructor(dict) {
     super();
 
     _.merge(this, dict);
     if (dict.data != null) {
+      this.originalData = dict.data;
       this.setData(dict.data);
     }
 
@@ -63,7 +66,6 @@ class Dict extends UnMergeable {
   }
 
   setData(data) {
-    this.originalData = data;
     const formatData: Array<any> = [];
     data = _.cloneDeep(data);
     _.forEach(data, (item) => {
@@ -88,17 +90,24 @@ class Dict extends UnMergeable {
   }
 
   async loadDict(context?) {
-    if (this.data) {
+    if (this.data && this.cache) {
       return this.data;
     }
-    this.loading = true;
-    try {
-      const data = await this.getRemoteDictData(context);
-      this.setData(data);
-    } finally {
-      this.loading = false;
+    let data: Array<any>;
+    if (this.originalData) {
+      data = this.originalData;
+    } else {
+      this.loading = true;
+      try {
+        data = await this.getRemoteDictData(context);
+      } finally {
+        this.loading = false;
+      }
     }
-    console.log("dict data loaded:", this.url);
+    this.setData(data);
+    if (this.onReady) {
+      this.onReady({ dict: this, ...context });
+    }
     return this.data;
   }
 
@@ -108,13 +117,16 @@ class Dict extends UnMergeable {
   }
 
   async getRemoteDictData(context?) {
-    const url = this.url;
     let dictData: Array<any> = [];
     if (this.getData != null) {
       // @ts-ignore
-      dictData = await this.getData(this, context);
-    } else if (url) {
-      dictData = await dictRequest(this);
+      dictData = await this.getData({ dict: this, ...context });
+    } else if (this.url) {
+      let url = this.url;
+      if (url instanceof Function) {
+        url = url({ ...context, dict: this });
+      }
+      dictData = await dictRequest({ url, dict });
     }
     return dictData;
   }
@@ -142,7 +154,6 @@ class Dict extends UnMergeable {
   }
 
   getNodesByValues(value, context) {
-    console.log("getNodesByValues", value, this);
     if (value == null) {
       return [];
     }

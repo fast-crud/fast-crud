@@ -1,7 +1,7 @@
 import mockUtil from "/src/mock/base";
 const options = {
   name: "formSelect",
-  idGenerator: 0,
+  idGenerator: 0
 };
 const list = [
   {
@@ -14,17 +14,17 @@ const list = [
     statusRemote: "0",
     status_custom_2: "0",
     customDictGetData: "1",
-    checkbox_btn: "1",
+    checkbox_btn: "1"
   },
   {
-    statusLocal: "sz,sh",
+    statusLocal: "sz",
     customDictUrl: "1",
     statusValue: 2,
     statusRemote: "1",
     status_custom_2: "2",
     select_local: "gz",
     multiple: ["sh", "sz"],
-    checkbox: "0",
+    checkbox: "0"
   },
   {
     statusLocal: "gz",
@@ -34,8 +34,8 @@ const list = [
     disabledOptions: "2",
     select_local: "gz",
     multiple: ["sh", "gz"],
-    checkbox: "0",
-  },
+    checkbox: "0"
+  }
 ];
 options.list = list;
 const mock = mockUtil.buildMock(options);

@@ -2,7 +2,7 @@
   <component :is="$fsui.radioGroup.name">
     <component
       :is="$fsui.radio.name"
-      v-for="item of dictData"
+      v-for="item of computedOptions"
       :key="item.value"
       :[$fsui.radio.value]="item.value"
       >{{ item.label }}</component

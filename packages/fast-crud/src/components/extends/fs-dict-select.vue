@@ -13,7 +13,7 @@
 </template>
 <script>
 import { computed } from "vue";
-import useDict from "./use-dict";
+import { useDict } from "../../use/use-dict";
 export default {
   name: "FsDictSelect",
   props: {

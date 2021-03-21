@@ -2,7 +2,7 @@
   <component :is="$fsui.checkboxGroup.name">
     <component
       :is="$fsui.checkbox.name"
-      v-for="item of dictData"
+      v-for="item of computedOptions"
       :key="item.value"
       :[$fsui.checkbox.value]="item.value"
       >{{ item.label }}</component

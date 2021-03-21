@@ -18,24 +18,15 @@ export default {
     };
   },
   computed: {
-    _options() {
-      if (this.options != null) {
-        return this.options;
-      }
-      if (this.dictData != null) {
-        return this.dictData;
-      }
-      return [];
-    },
     _active() {
-      if (this._options.length > 0) {
-        return this._options[0];
+      if (this.computedOptions.length > 0) {
+        return this.computedOptions[0];
       }
       return {};
     },
     _inActive() {
-      if (this._options.length > 1) {
-        return this._options[1];
+      if (this.computedOptions.length > 1) {
+        return this.computedOptions[1];
       }
       return {};
     },
