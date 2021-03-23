@@ -9,15 +9,8 @@ export default {
   },
   setup(props) {
     const { doComputed } = useCompute();
-    // eslint-disable-next-line vue/no-setup-props-destructure
-    const oldDict = props.component.dict;
     const computedComponent = doComputed(props.component, props.getScope);
-    const newDict = computedComponent.value.dict;
 
-    // const component = ComputeValue.buildBindProps(
-    //   props.component,
-    //   props.getScope
-    // );
     return () => {
       if (computedComponent.value.show === false) {
         return;
@@ -27,9 +20,18 @@ export default {
         return computedComponent.value.render(newScope);
       } else {
         return (
-          <fs-component-render {...computedComponent.value} scope={newScope} />
+          <fs-component-render
+            ref={"targetRef"}
+            {...computedComponent.value}
+            scope={newScope}
+          />
         );
       }
     };
+  },
+  methods: {
+    getTargetRef() {
+      return this.$refs.targetRef?.getTargetRef();
+    },
   },
 };

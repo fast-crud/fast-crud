@@ -32,6 +32,29 @@ const resources = [
     ]
   },
   {
+    title: "数据字典",
+    name: "dict",
+    path: "/dict",
+    redirect: "/dict/single",
+    children: [
+      {
+        title: "单例",
+        path: "/dict/single",
+        component: "/dict/single/index.vue"
+      },
+      {
+        title: "分发复制",
+        path: "/dict/cloneable",
+        component: "/dict/cloneable/index.vue"
+      },
+      {
+        title: "原型复制",
+        path: "/dict/prototype",
+        component: "/dict/prototype/index.vue"
+      }
+    ]
+  },
+  {
     title: "组件示例",
     name: "component",
     path: "/component",

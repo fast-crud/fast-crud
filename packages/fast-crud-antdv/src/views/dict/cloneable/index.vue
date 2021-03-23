@@ -1,5 +1,11 @@
 <template>
-  <fs-crud ref="crudRef" v-bind="crudOptions" />
+  <fs-crud ref="crudRef" v-bind="crudOptions">
+    <template #actionbar-right>
+      <div style="margin-left:10px;">
+        分发时复制，当columns[x].dict分发到addForm、editForm、viewForm、search、table.columns时将会clone一份
+      </div>
+    </template>
+  </fs-crud>
 </template>
 
 <script>
@@ -8,7 +14,7 @@ import { useCrud } from "/src/fs";
 import createCrudOptions from "./crud";
 import { useExpose } from "@fast-crud/fast-crud";
 export default defineComponent({
-  name: "FormDict",
+  name: "DictCloneable",
   setup() {
     // crud组件的ref
     const crudRef = ref();

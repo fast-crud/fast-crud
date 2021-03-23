@@ -114,4 +114,9 @@ export default {
       return h(inputComp, props, children);
     };
   },
+  methods: {
+    getTargetRef() {
+      return this.$refs.targetRef;
+    },
+  },
 };

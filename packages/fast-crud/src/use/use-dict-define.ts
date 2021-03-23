@@ -24,6 +24,12 @@ let dictRequest = async ({ url, dict }) => {
  */
 
 class Dict extends UnMergeable {
+  set loading(value: boolean) {
+    this._loading = value;
+  }
+  cache = true;
+  prototype = false;
+  immediate = true;
   url: undefined | String | Function = undefined;
   getData: undefined | Function = undefined;
   value = "value";
@@ -31,11 +37,10 @@ class Dict extends UnMergeable {
   children = "children";
   color = "color";
   isTree = false;
-  cache = true;
   data: undefined | Array<any> = undefined;
   originalData: undefined | Array<any> = undefined;
   dataMap = {};
-  loading = false;
+  private _loading = false;
   custom = {};
   getNodes: undefined | Function = undefined;
   cacheNodes = {};
@@ -49,13 +54,17 @@ class Dict extends UnMergeable {
       this.setData(dict.data);
     }
 
-    if (!this.isDynamic()) {
+    if (this.immediate && !this.prototype) {
       this.loadDict();
     }
   }
 
   isDynamic() {
-    return this.url instanceof Function || this.getData instanceof Function;
+    return (
+      this.url instanceof Function ||
+      this.getData instanceof Function ||
+      this.prototype
+    );
   }
 
   _pickItemProp(item, key) {
@@ -90,30 +99,37 @@ class Dict extends UnMergeable {
   }
 
   async loadDict(context?) {
+    if (this._loading) {
+      return;
+    }
     if (this.data && this.cache) {
-      return this.data;
+      return;
     }
     let data: Array<any>;
     if (this.originalData) {
       data = this.originalData;
     } else {
-      this.loading = true;
+      this._loading = true;
       try {
         data = await this.getRemoteDictData(context);
       } finally {
-        this.loading = false;
+        this._loading = false;
       }
     }
     this.setData(data);
     if (this.onReady) {
       this.onReady({ dict: this, ...context });
     }
-    return this.data;
   }
 
   async reloadDict(context?) {
-    this.data = undefined;
+    this.clear();
     return this.loadDict(context);
+  }
+
+  clear() {
+    this.data = undefined;
+    this.dataMap = {};
   }
 
   async getRemoteDictData(context?) {

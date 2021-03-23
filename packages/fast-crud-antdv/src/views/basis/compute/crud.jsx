@@ -4,7 +4,7 @@ import { dict } from "/src/fs";
 import { useCompute } from "@fast-crud/fast-crud";
 import { message } from "ant-design-vue";
 const { asyncCompute, compute } = useCompute();
-export default function({ crudRef }) {
+export default function({ expose }) {
   const pageRequest = async query => {
     return await api.GetList(query);
   };

@@ -3,8 +3,12 @@ import _ from "lodash-es";
 export function useDict(props, ctx) {
   let dictRef = ref();
   if (props.dict) {
-    if (props.cloneDict) {
+    if (props.dict.prototype) {
+      props.dict.clear();
       dictRef.value = _.cloneDeep(props.dict);
+    } else if (!props.dict.cache) {
+      props.dict.clear();
+      dictRef.value = props.dict;
     } else {
       dictRef = toRef(props, "dict");
     }
@@ -19,6 +23,13 @@ export function useDict(props, ctx) {
     }
     return [];
   });
+
+  function getDict() {
+    return dictRef.value;
+  }
+  function getDictRef() {
+    return dictRef;
+  }
 
   // @ts-ignore
   const { proxy } = getCurrentInstance();
@@ -47,5 +58,7 @@ export function useDict(props, ctx) {
     computedOptions,
     loadDict,
     reloadDict,
+    getDict,
+    getDictRef,
   };
 }

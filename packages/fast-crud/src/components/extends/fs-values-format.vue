@@ -2,7 +2,7 @@
   <span class="fs-values-format">
     <template v-if="type === 'text'">
       <span
-        v-for="item in computedOptions"
+        v-for="item in computedValueItems"
         :key="item.value"
         @click="doClick(item)"
         >{{ item.label }}</span
@@ -12,7 +12,7 @@
       <component
         :is="$fsui.tag.name"
         class="fs-tag"
-        v-for="item in computedOptions"
+        v-for="item in computedValueItems"
         v-bind="item"
         :key="item.value"
         size="small"
@@ -30,7 +30,7 @@
 import { uiContext } from "../../ui";
 import _ from "lodash-es";
 import { computed } from "vue";
-
+import { useDict } from "../../use/use-dict";
 function getHashCode(str) {
   if (str == null) {
     return 0;
@@ -113,6 +113,8 @@ export default {
     const COLOR_LIST = ui.tag.colors;
     const EFFECT_LIST = ["plain", "light"];
 
+    const usedDict = useDict(props, ctx);
+
     function setColor(props, item) {
       if (!item.effect && props.effect) {
         item.effect = props.effect;
@@ -131,16 +133,17 @@ export default {
         item.color = props.color;
       }
     }
-
-    const computedOptions = computed(() => {
+    const dictRef = usedDict.getDictRef();
+    const computedValueItems = computed(() => {
       if (props.modelValue == null || props.modelValue === "") {
         return [];
       }
       const valueArr = buildArrayValue(props);
 
       let options = [];
-      if (props.dict) {
-        options = props.dict.getNodesByValues(valueArr);
+
+      if (dictRef.value) {
+        options = dictRef.value.getNodesByValues(valueArr);
       } else {
         options = [];
         _.forEach(valueArr, (item) => {
@@ -167,8 +170,9 @@ export default {
     }
 
     return {
-      computedOptions,
+      ...usedDict,
       doClick,
+      computedValueItems,
     };
   },
 };

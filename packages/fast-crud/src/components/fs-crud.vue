@@ -60,7 +60,7 @@
       :rowHandle="rowHandle"
       :data="data"
       slots="computedCellSlots"
-      @rowHandle="onRowHandle"
+      @row-handle="onRowHandle"
     />
     <!-- 编辑对话框 -->
     <fs-form-wrapper

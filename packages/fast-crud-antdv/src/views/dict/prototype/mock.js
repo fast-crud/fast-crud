@@ -1,6 +1,6 @@
 import mockUtil from "/src/mock/base";
 const options = {
-  name: "FormDict",
+  name: "DictPrototype",
   idGenerator: 0
 };
 const list = [

@@ -1,15 +1,15 @@
 import {
-  resolveDynamicComponent,
   getCurrentInstance,
   ref,
-  h,
-  withDirectives,
   resolveDirective,
+  resolveDynamicComponent,
+  withDirectives,
 } from "vue";
 import _ from "lodash-es";
 import FsRowHandle from "./fs-row-handle.vue";
 import FsComponentRender from "../render/fs-component-render";
 import "./fs-table.less";
+
 export default {
   name: "FsTable",
   components: { FsComponentRender, FsRowHandle },
@@ -20,16 +20,27 @@ export default {
     show: {},
     data: {},
   },
-  emits: ["rowHandle"],
+  emits: ["row-handle", "value-change"],
   setup() {
     const tableRef = ref();
+    const componentRefs = ref([]);
+    const getComponentRef = (index, key) => {
+      if (!key || index == null || index > componentRefs.value.length) {
+        return;
+      }
+      const row = componentRefs.value[index];
+      const cellRef = row[key];
+      return cellRef.getTargetRef();
+    };
     return {
       tableRef,
+      componentRefs,
+      getComponentRef,
     };
   },
   methods: {
     onRowHandle(context) {
-      this.$emit("rowHandle", context);
+      this.$emit("row-handle", context);
     },
   },
   render() {
@@ -49,11 +60,22 @@ export default {
         proxy.$fsui.tableColumnGroup.name
       );
 
-      function getContextFn(item, scope) {
+      const getContextFn = (item, scope) => {
         const row = scope[tableColumnCI.row];
         const form = row;
-        return { ...scope, key: item.key, value: row[item.key], row, form };
-      }
+        const getComponentRef = (key) => {
+          const index = scope.index;
+          return this.getComponentRef(index, key);
+        };
+        return {
+          ...scope,
+          key: item.key,
+          value: row[item.key],
+          row,
+          form,
+          getComponentRef,
+        };
+      };
 
       tableSlots.default = () => {
         const children = [];
@@ -78,18 +100,38 @@ export default {
             };
           } else if (item.component) {
             cellSlots.default = (scope) => {
-              const newScope = getContextFn(item, scope);
               const getScopeFn = () => {
-                return newScope;
+                return getContextFn(item, scope);
               };
               const vModel = {
                 modelValue: scope[tableColumnCI.row][item.key],
                 "onUpdate:modelValue": (value) => {
                   scope[tableColumnCI.row][item.key] = value;
+                  const newScope = getContextFn(item, scope);
+                  this.$emit("value-change", newScope);
+                  const key = newScope.key;
+                  for (let column of this.columns) {
+                    if (column.key === key) {
+                      if (column.valueChange) {
+                        column.valueChange(newScope);
+                      }
+                      break;
+                    }
+                  }
                 },
+              };
+              const setRef = (el) => {
+                const index = scope.index;
+                const key = item.key;
+                let row = this.componentRefs[index];
+                if (row == null) {
+                  this.componentRefs[index] = row = {};
+                }
+                row[key] = el;
               };
               return (
                 <fs-cell
+                  ref={setRef}
                   component={item.component}
                   getScope={getScopeFn}
                   {...vModel}
@@ -109,6 +151,7 @@ export default {
 
           return (
             <currentTableColumnComp
+              ref={"tableColumnRef"}
               {...newItem}
               label={item.title}
               prop={item.key}
@@ -139,6 +182,7 @@ export default {
           };
           children.push(
             <tableColumnComp
+              ref={"tableColumnRef"}
               {...this.rowHandle}
               label={this.rowHandle.title}
               prop={this.rowHandle.key || "rowHandle"}

@@ -1,14 +1,19 @@
 <template>
-  <fs-crud ref="crudRef" v-bind="crudOptions" />
+  <fs-crud ref="crudRef" v-bind="crudOptions">
+    <template #actionbar-right>
+      <div style="margin-left:10px;">单例dict，修改一个，影响全部</div>
+      <a-button @click="onClick">onClick</a-button>
+    </template>
+  </fs-crud>
 </template>
 
 <script>
 import { defineComponent, ref, onMounted } from "vue";
 import { useCrud } from "/src/fs";
-import { useExpose } from "@fast-crud/fast-crud";
 import createCrudOptions from "./crud";
+import { useExpose } from "@fast-crud/fast-crud";
 export default defineComponent({
-  name: "FormCompute",
+  name: "DictSingle",
   setup() {
     // crud组件的ref
     const crudRef = ref();
@@ -29,9 +34,14 @@ export default defineComponent({
       expose.doRefresh();
     });
 
+    function onClick() {
+      console.log("this.ref", crudRef.value);
+    }
+
     return {
       crudOptions,
-      crudRef
+      crudRef,
+      onClick
     };
   }
 });
