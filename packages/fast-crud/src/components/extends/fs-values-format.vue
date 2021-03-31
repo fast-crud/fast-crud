@@ -133,7 +133,7 @@ export default {
         item.color = props.color;
       }
     }
-    const dictRef = usedDict.getDictRef();
+    const dict = usedDict.getDict();
     const computedValueItems = computed(() => {
       if (props.modelValue == null || props.modelValue === "") {
         return [];
@@ -142,8 +142,8 @@ export default {
 
       let options = [];
 
-      if (dictRef.value) {
-        options = dictRef.value.getNodesByValues(valueArr);
+      if (dict) {
+        options = dict.getNodesByValues(valueArr);
       } else {
         options = [];
         _.forEach(valueArr, (item) => {

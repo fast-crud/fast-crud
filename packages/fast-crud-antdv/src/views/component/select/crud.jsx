@@ -67,9 +67,7 @@ export default function({ expose }) {
         },
         type: "dict-select",
         dict: dict({
-          value: "id",
-          label: "text",
-          url: "/dicts/_OpenStatusEnum2?simple"
+          url: "/dicts/OpenStatusEnum?simple"
         }),
         form: {
           rules: [{ required: true, message: "请选择一个选项" }]
@@ -109,11 +107,13 @@ export default function({ expose }) {
         key: "disabledOptions",
         type: "dict-select",
         dict: dict({
+          cloneable: true,
           url: "/dicts/OpenStatusEnum?disabledOptions"
         }),
         form: {
           component: {
             dict: {
+              prototype: true,
               // 此处dict配置会覆盖上面dict的属性
               cache: false, // 每次初始化组件都会重新获取dict
               //因为分发时会clone一份，此处修改不影响其他的dict配置

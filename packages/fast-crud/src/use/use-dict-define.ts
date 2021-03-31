@@ -24,9 +24,6 @@ let dictRequest = async ({ url, dict }) => {
  */
 
 class Dict extends UnMergeable {
-  set loading(value: boolean) {
-    this._loading = value;
-  }
   cache = true;
   prototype = false;
   immediate = true;
@@ -40,7 +37,7 @@ class Dict extends UnMergeable {
   data: undefined | Array<any> = undefined;
   originalData: undefined | Array<any> = undefined;
   dataMap = {};
-  private _loading = false;
+  loading = false;
   custom = {};
   getNodes: undefined | Function = undefined;
   cacheNodes = {};
@@ -55,6 +52,7 @@ class Dict extends UnMergeable {
     }
 
     if (this.immediate && !this.prototype) {
+      console.log(" immediate load dict");
       this.loadDict();
     }
   }
@@ -99,7 +97,7 @@ class Dict extends UnMergeable {
   }
 
   async loadDict(context?) {
-    if (this._loading) {
+    if (this.loading) {
       return;
     }
     if (this.data && this.cache) {
@@ -109,11 +107,11 @@ class Dict extends UnMergeable {
     if (this.originalData) {
       data = this.originalData;
     } else {
-      this._loading = true;
+      this.loading = true;
       try {
         data = await this.getRemoteDictData(context);
       } finally {
-        this._loading = false;
+        this.loading = false;
       }
     }
     this.setData(data);

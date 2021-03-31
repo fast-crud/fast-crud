@@ -1,40 +1,32 @@
-import { getCurrentInstance, computed, ref, toRef } from "vue";
+import { getCurrentInstance, computed, reactive } from "vue";
 import _ from "lodash-es";
 export function useDict(props, ctx) {
-  let dictRef = ref();
-  if (props.dict) {
-    if (props.dict.prototype) {
-      props.dict.clear();
-      dictRef.value = _.cloneDeep(props.dict);
-    } else if (!props.dict.cache) {
-      props.dict.clear();
-      dictRef.value = props.dict;
-    } else {
-      dictRef = toRef(props, "dict");
+  let dict = props.dict;
+  if (dict) {
+    if (dict.prototype) {
+      dict.clear();
+      dict = reactive(_.cloneDeep(props.dict));
     }
   }
 
   const computedOptions = computed(() => {
+    console.log("recomputed", dict);
     if (props.options) {
       return props.options;
     }
-    if (dictRef.value) {
-      return dictRef.value.data;
+    if (dict && dict.data != null) {
+      return dict.data;
     }
     return [];
   });
 
   function getDict() {
-    return dictRef.value;
+    return dict;
   }
-  function getDictRef() {
-    return dictRef;
-  }
-
   // @ts-ignore
   const { proxy } = getCurrentInstance();
   const loadDict = async (reload = false) => {
-    if (!dictRef.value) {
+    if (!dict) {
       return;
     }
     const scope = {
@@ -43,10 +35,10 @@ export function useDict(props, ctx) {
       componentRef: proxy,
     };
     if (reload) {
-      await dictRef.value.reloadDict(scope);
+      await dict.reloadDict(scope);
       return;
     }
-    await dictRef.value.loadDict(scope);
+    await dict.loadDict(scope);
   };
   loadDict();
 
@@ -59,6 +51,5 @@ export function useDict(props, ctx) {
     loadDict,
     reloadDict,
     getDict,
-    getDictRef,
   };
 }
