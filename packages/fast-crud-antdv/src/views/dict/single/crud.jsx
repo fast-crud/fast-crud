@@ -26,8 +26,10 @@ export default function({ expose }) {
 
   const remoteDict = dict({
     cloneable: false, // 关闭cloneable，任何情况下，都使用同一个dict
-    url: "/dicts/OpenStatusEnum"
+    url: "/dicts/OpenStatusEnum",
+    immediate: false
   });
+  // remoteDict.loadDict();
 
   return {
     remoteDict,

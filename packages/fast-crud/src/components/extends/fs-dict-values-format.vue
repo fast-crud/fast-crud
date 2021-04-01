@@ -71,12 +71,15 @@ export default {
   },
   emits: ["click"],
   setup(props, ctx) {
-    const dict = useDict(props, ctx);
+    const usedDict = useDict(props, ctx);
     const ui = uiContext.get();
     const COLOR_LIST = ui.tag.colors;
     const EFFECT_LIST = ["plain", "light"];
+    usedDict.watchValue(() => {
+      return props.modelValue;
+    });
     return {
-      ...dict,
+      ...usedDict,
       COLOR_LIST,
       EFFECT_LIST,
     };

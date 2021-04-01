@@ -4,14 +4,14 @@
       <div v-for="(Labels, Index) in multipleLabels" :key="Index">
         <span v-for="(label, index) in Labels" :key="index">
           <span v-if="index !== 0"> / </span>
-          <span>{{ label }}</span>
+          <span>{{ label.label }}</span>
         </span>
       </div>
     </template>
     <template v-else>
       <span v-for="(label, index) in labels" :key="index">
         <span v-if="index !== 0"> / </span>
-        <span>{{ label }}</span>
+        <span>{{ label.label }}</span>
       </span>
     </template>
   </span>
@@ -105,8 +105,9 @@ export default {
     buildValueItem(values) {
       const arr = this.getValueArr(values);
 
-      if (props.dict) {
-        return props.dict.getNodesByValues(arr);
+      const dict = this.getDict();
+      if (dict) {
+        return dict.getNodesByValues(arr);
       }
     },
   },

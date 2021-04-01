@@ -1,4 +1,4 @@
-import { getCurrentInstance, computed, reactive } from "vue";
+import { getCurrentInstance, computed, reactive, watch } from "vue";
 import _ from "lodash-es";
 export function useDict(props, ctx) {
   let dict = props.dict;
@@ -10,7 +10,6 @@ export function useDict(props, ctx) {
   }
 
   const computedOptions = computed(() => {
-    console.log("recomputed", dict);
     if (props.options) {
       return props.options;
     }
@@ -27,6 +26,9 @@ export function useDict(props, ctx) {
   const { proxy } = getCurrentInstance();
   const loadDict = async (reload = false) => {
     if (!dict) {
+      return;
+    }
+    if (dict.loading) {
       return;
     }
     const scope = {
@@ -46,10 +48,18 @@ export function useDict(props, ctx) {
     await loadDict(true);
   };
 
+  const watchValue = (value) => {
+    watch(value, () => {
+      console.log("reload dict", dict);
+      reloadDict();
+    });
+  };
+
   return {
     computedOptions,
     loadDict,
     reloadDict,
     getDict,
+    watchValue,
   };
 }

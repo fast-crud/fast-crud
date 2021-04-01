@@ -44,8 +44,7 @@ export default {
       type: String,
       Object,
     },
-    //模式：row,search,add,edit,view,自定义
-    mode: {},
+    props: {},
   },
   emits: ["update:dict", "update:modelValue"],
   setup(props, ctx) {
@@ -71,6 +70,7 @@ export default {
         ref: "targetRef",
         scope: props.scope,
         [vModel]: props.modelValue,
+        ...props.props,
       };
       attrs["onUpdate:" + vModel] = (value) => {
         ctx.emit("update:modelValue", value);

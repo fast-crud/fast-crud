@@ -17,7 +17,7 @@ export default function({ expose }) {
   };
 
   const remoteDict = dict({
-    cloneable: false, // 关闭cloneable，任何情况下，都使用同一个dict
+    cloneable: true,
     url: "/dicts/OpenStatusEnum"
   });
 
@@ -57,35 +57,31 @@ export default function({ expose }) {
         column: {
           component: {
             name: "a-switch",
-            vModel: "checked",
-            on: {
-              onChange({ $event }) {
-                // 这里不能使用remoteDict,因为在分发时已经clone到form配置中了
-                const targetDict =
-                  expose.crudOptions.value.table.columns[1].component.dict;
-                targetDict.url = $event
-                  ? "/dicts/moreOpenStatusEnum?remote"
-                  : "/dicts/OpenStatusEnum?remote";
-                targetDict.reloadDict();
-              }
-            }
+            vModel: "checked"
+          },
+          valueChange({ row, getComponentRef }) {
+            // 这里不能使用remoteDict,因为在分发时已经clone到form配置中了
+            // 这里dict修改不会影响列里面的数据
+            const targetDict = getComponentRef("remote").dict;
+            targetDict.url = row.modifyDict
+              ? "/dicts/moreOpenStatusEnum?remote"
+              : "/dicts/OpenStatusEnum?remote";
+            targetDict.reloadDict();
           }
         },
         form: {
           component: {
             name: "a-switch",
-            vModel: "checked",
-            valueChange({ form }) {
-              // 这里不能使用remoteDict,因为在分发时已经clone到form配置中了
-              // 这里dict修改不会影响列里面的数据
-              const targetDict = expose.getFormRef().getComponentRef("remote")
-                .dict;
-              targetDict.url = form.modifyDict
-                ? "/dicts/moreOpenStatusEnum?remote"
-                : "/dicts/OpenStatusEnum?remote";
-              // 由于remoteDict.cloneable =false,所以全局公用一个实例，修改会影响全部地方
-              targetDict.reloadDict();
-            }
+            vModel: "checked"
+          },
+          valueChange({ form, getComponentRef }) {
+            // 这里不能使用remoteDict,因为在分发时已经clone到form配置中了
+            // 这里dict修改不会影响列里面的数据
+            const targetDict = getComponentRef("remote").dict;
+            targetDict.url = form.modifyDict
+              ? "/dicts/moreOpenStatusEnum?remote"
+              : "/dicts/OpenStatusEnum?remote";
+            targetDict.reloadDict();
           }
         }
       }

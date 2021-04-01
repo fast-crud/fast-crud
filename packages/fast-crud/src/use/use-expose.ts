@@ -4,10 +4,10 @@ import logger from "../utils/util.log";
 import { useMerge } from "../use/use-merge";
 const { merge } = useMerge();
 
-export default function ({ crudRef, crudOptions }) {
+export default function ({ crudRef, crudBinding }) {
   const expose = {
     crudRef,
-    crudOptions,
+    crudBinding,
     getFormWrapperRef() {
       return crudRef.value.formWrapperRef;
     },
@@ -24,7 +24,7 @@ export default function ({ crudRef, crudOptions }) {
       return formRef?.getComponentRef(key);
     },
     doValueBuilder(records) {
-      const columns = toRaw(crudOptions.value.columns);
+      const columns = toRaw(crudBinding.value.columns);
       logger.debug("columns", columns);
       const valueBuilderColumns = _.filter(columns, (column) => {
         return column.valueBuilder != null;
@@ -46,7 +46,7 @@ export default function ({ crudRef, crudOptions }) {
       logger.debug("valueBuilder success:", records);
     },
     doValueResolve({ form }) {
-      const columns = toRaw(crudOptions.value.columns);
+      const columns = toRaw(crudBinding.value.columns);
       _.forEach(columns, (column, key) => {
         if (column.valueResolve) {
           column.valueResolve({
@@ -62,10 +62,10 @@ export default function ({ crudRef, crudOptions }) {
     },
     async doRefresh() {
       let page;
-      if (crudOptions.value.pagination) {
+      if (crudBinding.value.pagination) {
         page = {
-          currentPage: crudOptions.value.pagination.currentPage,
-          pageSize: crudOptions.value.pagination.pageSize,
+          currentPage: crudBinding.value.pagination.currentPage,
+          pageSize: crudBinding.value.pagination.pageSize,
         };
       }
       let searchFormData = {};
@@ -73,24 +73,24 @@ export default function ({ crudRef, crudOptions }) {
         searchFormData = crudRef.value.getSearchFormData();
       }
       let query = { page, form: searchFormData };
-      if (crudOptions.value.request.transformQuery) {
-        query = crudOptions.value.request.transformQuery(query);
+      if (crudBinding.value.request.transformQuery) {
+        query = crudBinding.value.request.transformQuery(query);
       }
 
-      crudOptions.value.table.loading = true;
+      crudBinding.value.table.loading = true;
       let pageRes;
       try {
         logger.debug("pageRequest", query);
-        pageRes = await crudOptions.value.request.pageRequest(query);
+        pageRes = await crudBinding.value.request.pageRequest(query);
       } finally {
-        crudOptions.value.table.loading = false;
+        crudBinding.value.table.loading = false;
       }
       if (pageRes == null) {
         logger.warn("pageRequest返回结果不能为空");
         return;
       }
-      if (crudOptions.value.request.transformRes) {
-        pageRes = crudOptions.value.request.transformRes({
+      if (crudBinding.value.request.transformRes) {
+        pageRes = crudBinding.value.request.transformRes({
           res: pageRes,
           query,
         });
@@ -112,15 +112,15 @@ export default function ({ crudRef, crudOptions }) {
       //valueBuild
       expose.doValueBuilder(records);
 
-      crudOptions.value.data = records;
-      if (crudOptions.value.pagination) {
-        crudOptions.value.pagination.currentPage = currentPage;
-        crudOptions.value.pagination.pageSize = pageSize;
-        crudOptions.value.pagination.total = total || records.length;
+      crudBinding.value.data = records;
+      if (crudBinding.value.pagination) {
+        crudBinding.value.pagination.currentPage = currentPage;
+        crudBinding.value.pagination.pageSize = pageSize;
+        crudBinding.value.pagination.total = total || records.length;
       }
     },
     doPageTurn(no: number) {
-      crudOptions.value.pagination.currentPage = no;
+      crudBinding.value.pagination.currentPage = no;
     },
     /**
      *

@@ -17,6 +17,8 @@ export default {
   name: "FsDictCheckbox",
   props: {
     dict: {},
+    //选项，比dict.data优先级高
+    options: { type: Array },
   },
   setup(props, ctx) {
     const ui = uiContext.get();

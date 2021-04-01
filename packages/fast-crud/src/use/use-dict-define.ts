@@ -2,6 +2,9 @@ import _ from "lodash-es";
 import { useMerge } from "./use-merge";
 import logger from "../utils/util.log";
 import { reactive } from "vue";
+import LRU from "lru-cache";
+const DictGlobalCache = new LRU(50); // sets just the max size
+
 const { UnMergeable } = useMerge();
 
 function setDictRequest(request) {
@@ -22,11 +25,9 @@ let dictRequest = async ({ url, dict }) => {
  * @param context = {dict, scope}
  * @returns {Promise<*>}
  */
-
 class Dict extends UnMergeable {
-  cache = true;
-  prototype = false;
-  immediate = true;
+  cache = false; // 获取到结果是否进行全局缓存
+  prototype = false; // 是否原型配置
   url: undefined | String | Function = undefined;
   getData: undefined | Function = undefined;
   value = "value";
@@ -51,10 +52,10 @@ class Dict extends UnMergeable {
       this.setData(dict.data);
     }
 
-    if (this.immediate && !this.prototype) {
-      console.log(" immediate load dict");
-      this.loadDict();
-    }
+    // if (this.immediate && !this.prototype) {
+    //   console.log(" immediate load dict");
+    //   this.loadDict();
+    // }
   }
 
   isDynamic() {
@@ -100,7 +101,7 @@ class Dict extends UnMergeable {
     if (this.loading) {
       return;
     }
-    if (this.data && this.cache) {
+    if (this.data) {
       return;
     }
     let data: Array<any>;
@@ -131,28 +132,85 @@ class Dict extends UnMergeable {
   }
 
   async getRemoteDictData(context?) {
-    let dictData: Array<any> = [];
+    let getFromRemote;
+    let cacheKey;
     if (this.getData != null) {
-      // @ts-ignore
-      dictData = await this.getData({ dict: this, ...context });
+      cacheKey = this.getData;
+      getFromRemote = async () => {
+        // @ts-ignore
+        return await this.getData({ dict: this, ...context });
+      };
     } else if (this.url) {
       let url = this.url;
       if (url instanceof Function) {
         url = url({ ...context, dict: this });
       }
-      dictData = await dictRequest({ url, dict });
+      if (url == null) {
+        return;
+      }
+      cacheKey = url;
+      getFromRemote = async () => {
+        return await dictRequest({ url, dict });
+      };
     }
-    return dictData;
+    if (this.cache) {
+      let cached = DictGlobalCache.get(cacheKey);
+
+      if (cached == null) {
+        cached = {
+          loaded: false,
+          loading: true,
+          data: undefined,
+          callback: [],
+        };
+        DictGlobalCache.set(cacheKey, cached);
+      } else if (cached.loaded) {
+        return cached.data;
+      } else if (cached.loading) {
+        return new Promise((resolve) => {
+          const callback = (data) => {
+            resolve(data);
+          };
+          cached.callback.push(callback);
+        });
+      }
+
+      try {
+        cached.loaded = false;
+        cached.loading = true;
+        const dictData = await getFromRemote();
+        cached.data = dictData;
+        cached.loaded = true;
+        cached.loading = false;
+        for (const callback of cached.callback) {
+          callback(dictData);
+        }
+        cached.callback = [];
+        return dictData;
+      } catch (e) {
+        cached.loading = false;
+        cached.loaded = false;
+        logger.error("load dict error:", e);
+      }
+    }
+
+    return await getFromRemote();
   }
 
   toMap() {
     const map = {};
     if (this.data) {
-      _.forEach(this.data, (item) => {
-        map[item.value] = item;
-      });
+      this.buildMap(map, this.data);
     }
     this.dataMap = map;
+  }
+  buildMap(map, list) {
+    _.forEach(list, (item) => {
+      map[item.value] = item;
+      if (this.isTree && item.children) {
+        this.buildMap(map, item.children);
+      }
+    });
   }
 
   getDictData() {
@@ -190,6 +248,9 @@ class Dict extends UnMergeable {
     //本地获取
     const nodes: Array<any> = [];
     _.forEach(value, (item) => {
+      if (this.data != null) {
+        debugger;
+      }
       const node = this.dataMap[item];
       if (node) {
         nodes.push(node);

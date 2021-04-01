@@ -19,9 +19,6 @@ export default function({ expose }) {
   const addRequest = async ({ form }) => {
     return await api.AddObj(form);
   };
-  const remoteDict = dict({
-    url: "/dicts/OpenStatusEnum?remote"
-  });
   return {
     request: {
       pageRequest,
@@ -86,8 +83,8 @@ export default function({ expose }) {
             placeholder: "异步计算远程获取options",
             options: asyncCompute({
               async asyncFn(watchValue, context) {
-                console.log("asyncFn,loadDict", context);
-                return await remoteDict.loadDict();
+                const url = "/dicts/OpenStatusEnum?remote";
+                return await requestForMock({ url });
               }
             })
           },

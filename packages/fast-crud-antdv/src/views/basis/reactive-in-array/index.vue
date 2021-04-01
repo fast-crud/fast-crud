@@ -2,6 +2,7 @@
   {{ data }}
 
   <a-sub :table="data.table" />
+  <dict-select :dict="dict" />
 </template>
 
 <script>

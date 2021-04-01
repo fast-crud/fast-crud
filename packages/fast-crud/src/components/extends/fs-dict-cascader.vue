@@ -7,7 +7,8 @@ export default {
   name: "FsDictCascader",
   props: {
     dict: {},
-    options: {},
+    //选项，比dict.data优先级高
+    options: { type: Array },
   },
   setup(props, ctx) {
     const dictUseRet = useDict(props, ctx);

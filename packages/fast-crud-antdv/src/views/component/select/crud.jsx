@@ -113,13 +113,11 @@ export default function({ expose }) {
         form: {
           component: {
             dict: {
-              prototype: true,
               // 此处dict配置会覆盖上面dict的属性
-              cache: false, // 每次初始化组件都会重新获取dict
-              //因为分发时会clone一份，此处修改不影响其他的dict配置
+              prototype: true, // form表单的dict设置为原型复制，每次初始化时都会重新loadDict
               onReady({ dict }) {
                 console.log("字典请求ready", dict);
-                dict.data[0].disabled = true; // 禁用某个选项， 还可以自己修改选项，如果没有禁用缓存，则可能会影响全局
+                dict.data[0].disabled = true; // 禁用某个选项， 还可以自己修改选项
               }
             }
           },
@@ -153,9 +151,10 @@ export default function({ expose }) {
       },
       statusSimple: {
         title: "普通选择",
-        type: "select",
         form: {
           component: {
+            name: "a-select",
+            vModel: "value",
             options: [
               { value: "sz", label: "深圳", color: "success" },
               { value: "gz", label: "广州", color: "blue" },

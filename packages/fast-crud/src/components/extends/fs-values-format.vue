@@ -115,6 +115,9 @@ export default {
 
     const usedDict = useDict(props, ctx);
 
+    usedDict.watchValue(() => {
+      return props.modelValue;
+    });
     function setColor(props, item) {
       if (!item.effect && props.effect) {
         item.effect = props.effect;

@@ -46,6 +46,7 @@ export default function({ crudRef }) {
         search: { show: true },
         type: "dict-cascader",
         dict: dict({
+          isTree: true,
           url: "/dicts/cascaderData?single"
         })
       },
@@ -56,6 +57,7 @@ export default function({ crudRef }) {
           url: "/tree/GetTreeChildrenByParentId?lazyLoad",
           value: "code",
           label: "name",
+          isTree: true,
           getNodes(values) {
             if (values == null) {
               return [];
@@ -108,13 +110,27 @@ export default function({ crudRef }) {
         }
       },
       multiple: {
-        title: "级联多选",
+        title: "可搜索，可只选父节点",
         type: "dict-cascader",
         dict: dict({
+          isTree: true,
           url: "/dicts/cascaderData?multiple"
         }),
         form: {
-          component: { showSearch: true }
+          component: {
+            showSearch: {
+              filter: (inputValue, path) => {
+                return path.some(
+                  option =>
+                    option.label
+                      .toLowerCase()
+                      .indexOf(inputValue.toLowerCase()) > -1
+                );
+              }
+            },
+            "change-on-select": true
+          },
+          helper: "antd cascader 不支持级联多选"
         }
       }
     }

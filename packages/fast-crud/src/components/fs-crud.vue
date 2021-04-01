@@ -410,7 +410,7 @@ export default defineComponent({
       display: flex;
       justify-content: flex-end;
       align-items: center;
-      margin-right: 20px;
+      margin-right: 10px;
     }
   }
 

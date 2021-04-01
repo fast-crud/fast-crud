@@ -17,7 +17,6 @@ import { useDict } from "../../use/use-dict";
 export default {
   name: "FsDictSelect",
   props: {
-    modelValue: {},
     dict: {},
     //选项，比dict.data优先级高
     options: { type: Array },

@@ -61,9 +61,9 @@ export default function (ctx) {
   const ui = uiContext.get();
   const { t, tc } = useI18n(); // call `useI18n`, and spread `t` from  `useI18n` returning
 
-  const options: CrudOptions = ctx.options;
+  const options: CrudOptions = ctx.crudOptions;
   const expose = ctx.expose;
-  const crudOptions = expose.crudOptions;
+  const crudBinding = expose.crudBinding;
 
   const { doRefresh, doValueResolve, doSearch } = expose;
 
@@ -72,21 +72,21 @@ export default function (ctx) {
       pagination: {
         // element 页码改动回调
         onCurrentChange(event) {
-          crudOptions.value.pagination.currentPage = event;
+          crudBinding.value.pagination.currentPage = event;
           doRefresh();
         },
         onSizeChange(event) {
-          crudOptions.value.pagination.pageSize = event;
+          crudBinding.value.pagination.pageSize = event;
           doRefresh();
         },
         // antd 页码改动回调
         onChange(page) {
-          crudOptions.value.pagination.currentPage = page;
-          crudOptions.value.pagination.current = page;
+          crudBinding.value.pagination.currentPage = page;
+          crudBinding.value.pagination.current = page;
           doRefresh();
         },
         onShowSizeChange(current, size) {
-          crudOptions.value.pagination.pageSize = size;
+          crudBinding.value.pagination.pageSize = size;
           doRefresh();
         },
       },
@@ -98,14 +98,14 @@ export default function (ctx) {
       editForm: {
         async doSubmit(context) {
           doValueResolve(context);
-          await crudOptions.value.request.editRequest(context);
+          await crudBinding.value.request.editRequest(context);
           doRefresh();
         },
       },
       addForm: {
         async doSubmit(context) {
           doValueResolve(context);
-          await crudOptions.value.request.addRequest(context);
+          await crudBinding.value.request.addRequest(context);
           doRefresh();
         },
       },
@@ -129,7 +129,7 @@ export default function (ctx) {
               return;
             }
             context.row = context[ui.tableColumn.row];
-            await crudOptions.value.request.delRequest(context.row.id);
+            await crudBinding.value.request.delRequest(context.row.id);
             ui.notification.success(t("fs.rowHandle.remove.success"));
             await doRefresh();
           },
@@ -149,13 +149,13 @@ export default function (ctx) {
   function useEvent() {
     return {
       "onUpdate:search"(value) {
-        crudOptions.value.search.show = value;
+        crudBinding.value.search.show = value;
       },
       "onUpdate:compact"(value) {
-        crudOptions.value.toolbar.compact = value;
+        crudBinding.value.toolbar.compact = value;
       },
       "onUpdate:columns"(value) {
-        const original = crudOptions.value.table.columns;
+        const original = crudBinding.value.table.columns;
         const columns: Array<any> = [];
         _.forEach(value, (item) => {
           for (const column of original) {
@@ -165,7 +165,7 @@ export default function (ctx) {
             }
           }
         });
-        crudOptions.value.table.columns = columns;
+        crudBinding.value.table.columns = columns;
       },
       onRefresh() {
         doRefresh();
@@ -279,8 +279,8 @@ export default function (ctx) {
       value.component.disabled = true;
     });
     // 设置crudOptions Ref
-    crudOptions.value = userOptions;
-    logger.info("fast-crud inited:", crudOptions.value);
+    crudBinding.value = userOptions;
+    logger.info("fast-crud inited:", crudBinding.value);
   }
 
   resetCrudOptions(options);

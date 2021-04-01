@@ -43,7 +43,8 @@ export default function({ crudRef }) {
         },
         dict: dict({
           url: "/linkage/province",
-          value: "id"
+          value: "id",
+          cache: true
         }),
         form: {
           valueChange({ form, value, getComponentRef }) {
@@ -62,6 +63,8 @@ export default function({ crudRef }) {
           show: true
         },
         dict: dict({
+          cache: true,
+          prototype: true,
           // url() 改成构建url，返回一个url
           url({ form }) {
             if (form && form.province != null) {
@@ -73,7 +76,6 @@ export default function({ crudRef }) {
           value: "id"
         }),
         form: {
-          component: { props: { dict: { cache: false } } },
           // 注释同上
           valueChange({ value, form, getComponentRef }) {
             if (value) {
@@ -96,6 +98,8 @@ export default function({ crudRef }) {
         },
         dict: dict({
           value: "id",
+          cache: true,
+          prototype: true,
           url({ form }) {
             if (form && form.province != null && form.city != null) {
               return `/linkage/county?province=${form.province} &city=${form.city}`;
@@ -103,12 +107,6 @@ export default function({ crudRef }) {
             return undefined;
           }
         })
-        // form: {
-        //   component: { props: { dict: { cache: false } } },
-        //   valueChange({ value }) {
-        //     console.log("您选择了：", value);
-        //   },
-        // },
       }
     }
   };
