@@ -5,6 +5,10 @@ export interface SelectCI extends CI {
   modelValue;
   clearable;
 }
+export interface TreeSelectCI extends CI {
+  modelValue;
+  clearable;
+}
 export interface RadioCI extends CI {
   value;
 }
@@ -64,6 +68,10 @@ export interface CascaderCI extends CI {
   clearable;
 }
 
+export type TabsCI = CI;
+export type TabPaneCI = CI;
+export type CollapseCI = CI;
+export type CollapseItemCI = CI;
 export interface SwitchCI extends CI {
   modelValue;
   activeColor;
@@ -198,6 +206,7 @@ export interface UiInterface {
   checkboxGroup: CheckboxGroupCI;
   checkbox: CheckboxCI;
   select: SelectCI;
+  treeSelect: TreeSelectCI;
   option: CI;
   collapseTransition: CI;
   card: CI;
@@ -225,4 +234,8 @@ export interface UiInterface {
   progress: ProgressCI;
   loading: LoadingCI;
   upload: UploadCI;
+  tabs: TabsCI;
+  tabPane: TabPaneCI;
+  collapse: CollapseCI;
+  collapseItem: CollapseItemCI;
 }

@@ -35,32 +35,26 @@ export default function({ expose }) {
           show: false
         }
       },
-      integer: {
-        title: "整数",
+      tree: {
+        title: "树形选择",
         search: { show: true },
-        type: "number"
+        type: "dict-tree",
+        dict: dict({
+          isTree: true,
+          url: "/dicts/cascaderData?single"
+        })
       },
-      float: {
-        title: "小数",
-        type: "number",
+      multiple: {
+        title: "多选",
+        search: { show: true },
+        type: "dict-tree",
+        dict: dict({
+          isTree: true,
+          url: "/dicts/cascaderData?single"
+        }),
         form: {
           component: {
-            step: "0.1"
-          }
-        }
-      },
-      format: {
-        title: "格式化",
-        type: "number",
-        form: {
-          component: {
-            formatter: value => `${value}%`,
-            parser: value => value.replace("%", "")
-          }
-        },
-        column: {
-          formatter({ value }) {
-            return value + "%";
+            "tree-checkable": true
           }
         }
       }

@@ -1,6 +1,11 @@
 export default {
   name: "en",
   fs: {
+    component: {
+      select: {
+        placeholder: "please select",
+      },
+    },
     addForm: { title: "add" },
     editForm: { title: "edit" },
     viewForm: { title: "view" },

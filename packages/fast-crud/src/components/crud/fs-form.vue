@@ -9,77 +9,88 @@
     ref="formRef"
     :model="form"
   >
+    <!-- row -->
     <component :is="$fsui.row.name" class="fs-row" v-bind="row">
-      <template v-for="item in computedColumns" :key="item.key">
+      <!-- col -->
+      <template v-for="item in computedDefaultColumns" :key="item.key">
         <component
           :is="$fsui.col.name"
           v-if="item.show !== false"
           class="fs-col"
           v-bind="mergeCol(item.col)"
         >
-          <component
-            :is="$fsui.formItem.name"
-            class="fs-form-item"
-            :[$fsui.formItem.label]="item.title"
-            :[$fsui.formItem.prop]="item.key"
-            v-bind="item"
-          >
-            <fs-slot-render
-              v-if="slots && slots['form_' + item.key]"
-              :slots="slots['form_' + item.key]"
-              :scope="buildItemScope(item)"
-            />
-            <template v-else-if="item.component?.show !== false">
-              <fs-render
-                v-if="item.component?.render"
-                :render-func="item.component.render"
-                :scope="buildItemScope(item)"
-              />
-              <fs-component-render
-                v-else
-                :ref="
-                  (el) => {
-                    if (el) {
-                      componentRefs[item.key] = el;
-                    }
-                  }
-                "
-                v-bind="item.component"
-                :modelValue="get(form, item.key)"
-                @update:modelValue="set(form, item.key, $event)"
-                :scope="buildItemScope(item)"
-              />
-            </template>
-            <template v-if="item.helper">
-              <div class="fs-form-helper">
-                <template v-if="typeof item.helper === 'string'">{{
-                  item.helper
-                }}</template>
-                <template v-else-if="item.helper.render">
-                  <fs-render
-                    :renderFunc="item.helper.render"
-                    :scope="buildItemScope(item)"
-                  />
-                </template>
-              </div>
-            </template>
-          </component>
+          <fs-form-item
+            :ref="
+              (el) => {
+                if (el) {
+                  componentRefs[item.key] = el;
+                }
+              }
+            "
+            :item="item"
+            v-if="item.show !== false"
+            :modelValue="get(form, item.key)"
+            @update:modelValue="set(form, item.key, $event)"
+            :slots="slots['form_' + item.key]"
+            :get-context-fn="getContextFn"
+          />
         </component>
+      </template>
+    </component>
+    <component
+      style="width: 100%"
+      v-if="computedGroup.wrapper"
+      :is="computedGroup.wrapper.parent"
+      v-model:activeKey="groupActiveKeys"
+    >
+      <template v-for="(groupItem, key) of computedGroup.groups" :key="key">
+        <template v-if="key">
+          <component
+            :is="computedGroup.wrapper.child"
+            :header="groupItem.title"
+            :key="key"
+          >
+            <!-- row -->
+            <component :is="$fsui.row.name" class="fs-row" v-bind="row">
+              <!-- col -->
+              <template v-for="key in groupItem.columns" :key="key">
+                <component
+                  :is="$fsui.col.name"
+                  v-if="computedColumns[key].show !== false"
+                  class="fs-col"
+                  v-bind="mergeCol(computedColumns[key].col)"
+                >
+                  <fs-form-item
+                    :item="computedColumns[key]"
+                    v-if="computedColumns[key].show !== false"
+                    :modelValue="get(form, key)"
+                    @update:modelValue="set(form, key, $event)"
+                    :slots="slots['form_' + key]"
+                    :get-context-fn="getContextFn"
+                  />
+                </component>
+              </template>
+            </component>
+          </component>
+        </template>
       </template>
     </component>
   </component>
 </template>
 
 <script>
-import { ref, reactive, getCurrentInstance, toRaw } from "vue";
+import { ref, reactive, getCurrentInstance, toRaw, computed } from "vue";
 import _ from "lodash-es";
-import { AsyncComputeValue, useCompute } from "../../use/use-compute";
+import { useCompute } from "../../use/use-compute";
 import traceUtil from "../../utils/util.trace";
 import FsRender from "../render/fs-render";
 import logger from "../../utils/util.log";
+import { uiContext } from "../../ui";
+import { useMerge } from "../../use/use-merge";
+import FsFormItem from "./fs-form-item.vue";
 export default {
   name: "FsForm",
-  components: { FsRender },
+  components: { FsFormItem, FsRender },
   props: {
     // 初始表单数据
     initialForm: {
@@ -90,7 +101,16 @@ export default {
     // 字段模版
     columns: {},
     // 字段分组
-    groups: {},
+    /**
+     * 字段分组
+     * {
+     *   type:'xxx',
+     *   groups:{
+     *     groupKey:{ title:'xxx',columns:[]}
+     *   }
+     * }
+     */
+    group: {},
     doSubmit: {
       type: Function,
     },
@@ -107,6 +127,8 @@ export default {
   },
   emits: ["reset", "submit", "validationError", "value-change"],
   setup(props, ctx) {
+    const { merge } = useMerge();
+    const ui = uiContext.get();
     const { doComputed } = useCompute();
     traceUtil.trace("fs-from");
     const formRef = ref();
@@ -156,29 +178,76 @@ export default {
       return scope.value;
     }
 
-    const computedColumns = doComputed(
-      props.columns,
-      getContextFn,
+    const computedColumns = doComputed(props.columns, getContextFn, null, null);
+
+    //构建分组数据
+    const computedGroup = doComputed(
+      props.group,
+      getContextFn(),
       null,
-      null,
-      (columns) => {
-        //排序
-        const list = [];
-        let index = 1;
-        _.forEach(columns, (value, key) => {
-          value.key = key;
-          if (value.order == null) {
-            value.order = index;
-          }
-          index++;
-          list.push(value);
+      (group) => {
+        const defaultForm = { ...form };
+        //找出没有添加进分组的字段
+        const defaultColumns = [];
+        _.forEach(group?.groups, (groupItem) => {
+          _.forEach(groupItem.columns, (item) => {
+            if (defaultForm[item]) {
+              delete defaultForm[item];
+            }
+            defaultColumns.push(item);
+          });
         });
-        list.sort((a, b) => {
-          return a.order - b.order;
-        });
-        return list;
+
+        const type = group.type;
+        let wrapper = {
+          parent: ui.collapse.name,
+          child: ui.collapseItem.name,
+        };
+        if (type === "tab") {
+          wrapper = {
+            parent: ui.tabs.name,
+            child: ui.tabPane.name,
+          };
+        }
+        const merged = merge(
+          {
+            wrapper,
+            defaultColumns,
+          },
+          group
+        );
+        console.log("merged", merged);
+        return merged;
       }
     );
+
+    const computedDefaultColumns = computed(() => {
+      const columns = [];
+      let index = 1;
+      //default columns排序
+      _.forEach(computedColumns.value, (value, key) => {
+        value.key = key;
+        if (value.order == null) {
+          value.order = index;
+        }
+        index++;
+        if (
+          computedGroup.value?.defaultColumns &&
+          computedGroup.value?.defaultColumns[key]
+        ) {
+          columns.push(value);
+        }
+        value.col = mergeCol(value.col);
+      });
+      //排序
+      columns.sort((a, b) => {
+        return a.order - b.order;
+      });
+
+      return columns;
+    });
+
+    const groupActiveKeys = ref([]);
 
     async function getFormRef() {
       return formRef.value;
@@ -245,17 +314,21 @@ export default {
       },
       formRef,
       computedColumns,
+      computedDefaultColumns,
       submit,
       reset,
       getFormRef,
       scope,
       buildItemScope,
+      groupActiveKeys,
       form,
       componentRefs,
       getFormData,
       setFormData,
       getComponentRef,
       mergeCol,
+      computedGroup,
+      getContextFn,
     };
   },
 };

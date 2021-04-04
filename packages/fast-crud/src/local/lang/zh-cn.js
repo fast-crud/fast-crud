@@ -1,6 +1,11 @@
 export default {
   name: "zh-cn",
   fs: {
+    component: {
+      select: {
+        placeholder: "请选择",
+      },
+    },
     addForm: { title: "添加" },
     editForm: { title: "编辑" },
     viewForm: { title: "查看" },

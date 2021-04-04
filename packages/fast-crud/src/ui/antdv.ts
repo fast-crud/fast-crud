@@ -34,6 +34,11 @@ import {
   TimePickerCI,
   UiInterface,
   UploadCI,
+  TreeSelectCI,
+  TabsCI,
+  TabPaneCI,
+  CollapseCI,
+  CollapseItemCI,
 } from "./ui-interface";
 export class Antdv implements UiInterface {
   constructor(target) {
@@ -271,6 +276,11 @@ export class Antdv implements UiInterface {
     clearable: "allowClear",
   };
 
+  treeSelect: TreeSelectCI = {
+    name: "a-tree-select",
+    modelValue: "value",
+    clearable: "allowClear",
+  };
   table: TableCI = {
     name: "a-table",
     data: "data-source",
@@ -404,5 +414,17 @@ export class Antdv implements UiInterface {
   upload: UploadCI = {
     name: "a-upload",
     type: "",
+  };
+  tabs: TabsCI = {
+    name: "a-tabs",
+  };
+  tabPane: TabPaneCI = {
+    name: "a-tab-pane",
+  };
+  collapse: CollapseCI = {
+    name: "a-collapse",
+  };
+  collapseItem: CollapseItemCI = {
+    name: "a-collapse-panel",
   };
 }

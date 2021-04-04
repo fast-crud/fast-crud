@@ -96,12 +96,22 @@ const resources = [
         component: "/component/button/index.vue"
       },
       {
+        title: "数字",
+        path: "/component/number",
+        component: "/component/number/index.vue"
+      },
+      {
+        title: "树形选择",
+        path: "/component/tree",
+        component: "/component/tree/index.vue"
+      },
+      {
         title: "图片裁剪上传",
         path: "/component/uploader/cropper",
         component: "/component/uploader/cropper/index.vue"
       },
       {
-        title: "表单上传",
+        title: "表单本地上传",
         path: "/component/uploader/form",
         component: "/component/uploader/form/index.vue"
       },
@@ -123,7 +133,7 @@ const resources = [
     ]
   },
   {
-    title: "表单相关",
+    title: "编辑表单",
     name: "form",
     path: "/form",
     redirect: "/form/text",
@@ -147,6 +157,26 @@ const resources = [
         title: "表单校验",
         path: "/form/validation",
         component: "/form/validation/index.vue"
+      },
+      {
+        title: "抽屉表单",
+        path: "/form/drawer",
+        component: "/form/drawer/index.vue"
+      },
+      {
+        title: "表单分组",
+        path: "/form/group",
+        component: "/form/group/index.vue"
+      },
+      {
+        title: "自定义表单",
+        path: "/form/custom",
+        component: "/form/custom/index.vue"
+      },
+      {
+        title: "独立使用表单",
+        path: "/form/independent",
+        component: "/form/independent/index.vue"
       }
     ]
   },
@@ -178,17 +208,32 @@ const resources = [
         title: "查询字段插槽",
         path: "/feature/search-slots",
         component: "/feature/search-slots/index.vue"
+      },
+      {
+        title: "可选择",
+        path: "/feature/checkable",
+        component: "/feature/checkable/index.vue"
+      },
+      {
+        title: "批量删除",
+        path: "/feature/batch-delete",
+        component: "/feature/batch-delete/index.vue"
       }
     ]
   },
   {
-    title: "高级功能",
+    title: "复杂需求",
     path: "advanced",
     children: [
       {
         title: "选择联动",
         path: "/advanced/linkage",
         component: "/advanced/linkage/index.vue"
+      },
+      {
+        title: "嵌套子表格",
+        path: "/form/nest",
+        component: "/form/nest/index.vue"
       }
     ]
   }

@@ -28,6 +28,7 @@ let dictRequest = async ({ url, dict }) => {
 class Dict extends UnMergeable {
   cache = false; // 获取到结果是否进行全局缓存
   prototype = false; // 是否原型配置
+  immediate = true; //是否立即请求
   url: undefined | String | Function = undefined;
   getData: undefined | Function = undefined;
   value = "value";
@@ -46,6 +47,12 @@ class Dict extends UnMergeable {
   constructor(dict) {
     super();
 
+    // 设置为不可枚举
+    Object.defineProperty(this, "loading", {
+      value: false,
+      enumerable: false,
+    });
+    this.loading = false;
     _.merge(this, dict);
     if (dict.data != null) {
       this.originalData = dict.data;
@@ -261,7 +268,11 @@ class Dict extends UnMergeable {
 }
 
 function dict(config) {
-  return reactive(new Dict(config));
+  const ret = reactive(new Dict(config));
+  if (ret.immediate && !ret.prototype) {
+    ret.loadDict();
+  }
+  return ret;
 }
 export function useDictDefine() {
   return {

@@ -34,6 +34,11 @@ import {
   ProgressCI,
   LoadingCI,
   UploadCI,
+  TreeSelectCI,
+  TabsCI,
+  TabPaneCI,
+  CollapseCI,
+  CollapseItemCI,
 } from "./ui-interface";
 export class Element implements UiInterface {
   constructor(target) {
@@ -210,6 +215,12 @@ export class Element implements UiInterface {
     clearable: "clearable",
   };
 
+  treeSelect: TreeSelectCI = {
+    name: "el-tree-select",
+    modelValue: "modelValue",
+    clearable: "clearable",
+  };
+
   radio: RadioCI = {
     name: "el-radio",
     value: "label",
@@ -349,5 +360,17 @@ export class Element implements UiInterface {
   upload: UploadCI = {
     name: "el-upload",
     type: "",
+  };
+  tabs: TabsCI = {
+    name: "el-tabs",
+  };
+  tabPane: TabPaneCI = {
+    name: "el-tab-pane",
+  };
+  collapse: CollapseCI = {
+    name: "el-collapse",
+  };
+  collapseItem: CollapseItemCI = {
+    name: "el-collapse-item",
   };
 }

@@ -1,24 +1,15 @@
 import mockUtil from "/src/mock/base";
 const options = {
-  name: "FormNumber",
+  name: "FormTree",
   idGenerator: 0
 };
 const list = [
   {
-    integer: 1,
-    float: 1.1,
-    format: 100
+    tree: "zhinan",
+    multiple: ["zhinan", "yizhi"]
   },
-  {
-    integer: 2,
-    float: 1.2,
-    format: 100
-  },
-  {
-    integer: 3,
-    float: 1.3,
-    format: 100
-  }
+  { tree: "zhinan" },
+  { tree: "zhinan" }
 ];
 options.list = list;
 const mock = mockUtil.buildMock(options);

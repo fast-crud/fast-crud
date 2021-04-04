@@ -10,6 +10,9 @@ import FsCrud from "./fs-crud.vue";
 import FsRowHandle from "./crud/fs-row-handle.vue";
 import FsTable from "./crud/fs-table";
 import FsCell from "./crud/fs-cell";
+import FsActionbar from "./actionbar/index.vue";
+import FsToolbar from "./toolbar/index.vue";
+import FsSearch from "./search/index.vue";
 
 import FsDictRadio from "./extends/fs-dict-radio.vue";
 import FsDictSelect from "./extends/fs-dict-select.vue";
@@ -19,9 +22,7 @@ import FsDictCascader from "./extends/fs-dict-cascader.vue";
 import FsDictCheckbox from "./extends/fs-dict-checkbox.vue";
 import FsDictSwitch from "./extends/fs-dict-switch.vue";
 import FsDateFormat from "./extends/fs-date-format.vue";
-import FsActionbar from "./actionbar/index.vue";
-import FsToolbar from "./toolbar/index.vue";
-import FsSearch from "./search/index.vue";
+import FsDictTree from "./extends/fs-dict-tree.vue";
 
 export {
   FsContainer,
@@ -47,4 +48,5 @@ export {
   FsDictSwitch,
   FsDateFormat,
   FsBox,
+  FsDictTree,
 };

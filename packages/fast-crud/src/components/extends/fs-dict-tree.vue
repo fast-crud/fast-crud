@@ -1,22 +1,16 @@
 <template>
-  <component :is="$fsui.select.name" :placeholder="computedPlaceholder">
-    <template v-for="item of computedOptions" :key="item.value">
-      <component
-        :is="$fsui.option.name"
-        v-bind="item"
-        :[$fsui.option.value]="item.value"
-        :title="item.label"
-        >{{ item.label }}</component
-      >
-    </template>
-  </component>
+  <component
+    :is="$fsui.treeSelect.name"
+    :treeData="computedOptions"
+    :placeholder="computedPlaceholder"
+  />
 </template>
 <script>
 import { computed } from "vue";
 import { useDict } from "../../use/use-dict";
 import { useI18n } from "../../local";
 export default {
-  name: "FsDictSelect",
+  name: "FsDictTree",
   props: {
     dict: {},
     //选项，比dict.data优先级高
