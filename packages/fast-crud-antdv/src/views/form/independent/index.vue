@@ -1,6 +1,6 @@
 <template>
-  <a-row gutter="10">
-    <a-col span="12">
+  <a-row :gutter="10">
+    <a-col :span="12">
       <a-card title="直接显示表单">
         <fs-form ref="formRef" v-bind="formOptions" />
         <div style="margin-top:10px;">

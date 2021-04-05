@@ -73,7 +73,7 @@
                 :ref="
                   (el) => {
                     if (el) {
-                      formItemRefs[item.key] = el;
+                      formItemRefs[key] = el;
                     }
                   }
                 "
