@@ -1,7 +1,7 @@
 <template>
   <fs-crud ref="crudRef" v-bind="crudBinding">
     <template #actionbar-right>
-      <span class="ml-10">form表单字段插槽，可以做一些很复杂的输入</span>
+      <span class="ml-10">在表单的各个位置都可以插入自定义内容</span>
     </template>
 
     <template #form-header-left>

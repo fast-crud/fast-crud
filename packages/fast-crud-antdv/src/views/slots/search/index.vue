@@ -4,7 +4,7 @@
       <a-input-number
         style="width:200px;"
         v-model:value="scope.form.radio"
-        placeholder="字段插槽"
+        placeholder="字段插槽自定义"
       />
     </template>
     <template #search-middle="scope">
