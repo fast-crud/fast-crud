@@ -56,7 +56,10 @@ export default {
     const componentRenderRef = ref();
     function buildItemScope(item) {
       const scope = props.getContextFn();
-      return { value: props.modelValue, key: item.key, ...scope };
+      console.log("build scope", scope, item);
+      const newScope = { value: props.modelValue, key: item.key, ...scope };
+      console.log("new scope", newScope);
+      return newScope;
     }
 
     function updateModelValue(value) {

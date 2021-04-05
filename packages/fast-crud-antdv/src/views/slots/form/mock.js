@@ -1,18 +1,12 @@
 import mockUtil from "/src/mock/base";
 const options = {
-  name: "LayoutSlots",
-  idGenerator: 0,
+  name: "SlotsForm",
+  idGenerator: 0
 };
 const list = [
   {
-    radio: 1,
-  },
-  {
-    radio: 2,
-  },
-  {
-    radio: 0,
-  },
+    text: "文本输入"
+  }
 ];
 options.list = list;
 const mock = mockUtil.buildMock(options);

@@ -195,26 +195,6 @@ const resources = [
         component: "/feature/dropdown/index.vue"
       },
       {
-        title: "布局插槽",
-        path: "/feature/layout-slots",
-        component: "/feature/layout-slots/index.vue"
-      },
-      {
-        title: "单元格插槽",
-        path: "/feature/cell-slots",
-        component: "/feature/cell-slots/index.vue"
-      },
-      {
-        title: "表单字段插槽",
-        path: "/feature/form-slots",
-        component: "/feature/form-slots/index.vue"
-      },
-      {
-        title: "查询字段插槽",
-        path: "/feature/search-slots",
-        component: "/feature/search-slots/index.vue"
-      },
-      {
         title: "可选择",
         path: "/feature/checkable",
         component: "/feature/checkable/index.vue"
@@ -223,6 +203,37 @@ const resources = [
         title: "批量删除",
         path: "/feature/batch-delete",
         component: "/feature/batch-delete/index.vue"
+      }
+    ]
+  },
+  {
+    title: "插槽",
+    path: "slots",
+    children: [
+      {
+        title: "布局插槽",
+        path: "/slots/layout",
+        component: "/slots/layout/index.vue"
+      },
+      {
+        title: "查询字段插槽",
+        path: "/slots/search",
+        component: "/slots/search/index.vue"
+      },
+      {
+        title: "单元格插槽",
+        path: "/slots/cell",
+        component: "/slots/cell/index.vue"
+      },
+      {
+        title: "表单字段插槽",
+        path: "/slots/form-item",
+        component: "/slots/form-item/index.vue"
+      },
+      {
+        title: "表单插槽",
+        path: "/slots/form",
+        component: "/slots/form/index.vue"
       }
     ]
   },

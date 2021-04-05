@@ -194,13 +194,19 @@ export default {
       children = {
         title: () => {
           return (
-            <div class={"fs-wrapper-title"}>
-              {this.title}
-              <div class={"fs-wrapper-title-right"}>
+            <div class={"fs-form-header"}>
+              <div class={"fs-form-header-left"}>
+                {slotsRender("form-header-left", scope)}
+                {this.title}
+                {slotsRender("form-header-right", scope)}
+              </div>
+              <div class={"fs-form-header-action"}>
+                {slotsRender("form-header-action-left", scope)}
                 <fs-icon
                   onClick={this.toggleFullscreen}
                   icon={this.fullscreen ? "CompressOutlined" : "ExpandOutlined"}
                 />
+                {slotsRender("form-header-action-right", scope)}
               </div>
             </div>
           );
@@ -216,18 +222,18 @@ export default {
           return (
             <div class={"fs-form-wrapper-body"}>
               <div class={"fs-form-body"}>
-                {slotsRender("form-body-before", scope)}
+                {slotsRender("form-body-top", scope)}
                 <fs-form
                   ref="formRef"
                   {...this.formOptions}
                   onValueChange={this.onValueChange}
                 />
-                {slotsRender("form-body-after", scope)}
+                {slotsRender("form-body-bottom", scope)}
               </div>
               <div className="fs-form-footer-btns">
-                {slotsRender("form-footer-prefix", scope)}
+                {slotsRender("form-footer-left", scope)}
                 {buttons}
-                {slotsRender("form-footer-append", scope)}
+                {slotsRender("form-footer-right", scope)}
               </div>
             </div>
           );

@@ -1,0 +1,50 @@
+import * as api from "./api";
+import { dict } from "/src/fs";
+import moment from "moment";
+export default function({}) {
+  const pageRequest = async query => {
+    return await api.GetList(query);
+  };
+  const editRequest = async ({ form, row }) => {
+    form.id = row.id;
+    return await api.UpdateObj(form);
+  };
+  const delRequest = async id => {
+    return await api.DelObj(id);
+  };
+
+  const addRequest = async ({ form }) => {
+    return await api.AddObj(form);
+  };
+  return {
+    crudOptions: {
+      request: {
+        pageRequest,
+        addRequest,
+        editRequest,
+        delRequest
+      },
+      columns: {
+        id: {
+          title: "ID",
+          key: "id",
+          type: "number",
+          column: {
+            width: 50
+          },
+          form: {
+            show: false
+          }
+        },
+        topics: {
+          title: "多行输入",
+          type: "text",
+          search: { show: true },
+          column: {
+            component: { name: "fs-values-format" }
+          }
+        }
+      }
+    }
+  };
+}

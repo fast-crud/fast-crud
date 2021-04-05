@@ -25,7 +25,8 @@ import {
   ZoomInOutlined,
   ZoomOutOutlined,
   UndoOutlined,
-  RedoOutlined
+  RedoOutlined,
+  LikeOutlined
 } from "@ant-design/icons-vue";
 
 const icons = {
@@ -54,7 +55,8 @@ const icons = {
   ZoomInOutlined,
   ZoomOutOutlined,
   UndoOutlined,
-  RedoOutlined
+  RedoOutlined,
+  LikeOutlined
 };
 export default function(app) {
   _.forEach(icons, (item, key) => {

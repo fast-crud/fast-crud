@@ -59,7 +59,7 @@
       :columns="computedTable.columns"
       :rowHandle="rowHandle"
       :data="data"
-      slots="computedCellSlots"
+      :slots="computedCellSlots"
       @row-handle="onRowHandle"
     />
     <!-- 编辑对话框 -->
@@ -252,17 +252,17 @@ function useTable(props, ctx) {
   const computedToolbar = toRef(props, "toolbar");
 
   const computedCellSlots = computed(() => {
-    return slotFilter(ctx.slots, "cell-");
+    return slotFilter(ctx.slots, "cell");
   });
 
   const computedFormSlots = computed(() => {
-    return slotFilter(ctx.slots, "form-");
+    return slotFilter(ctx.slots, "form");
   });
   const computedSearchSlots = computed(() => {
-    return slotFilter(ctx.slots, "search-");
+    return slotFilter(ctx.slots, "search");
   });
   const computedToolbarSlots = computed(() => {
-    return slotFilter(ctx.slots, "toolbar-");
+    return slotFilter(ctx.slots, "toolbar");
   });
   const formWrapperRef = ref();
 

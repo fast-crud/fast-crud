@@ -9,6 +9,7 @@ import _ from "lodash-es";
 import FsRowHandle from "./fs-row-handle.vue";
 import FsComponentRender from "../render/fs-component-render";
 import "./fs-table.less";
+import { uiContext } from "../../ui";
 
 export default {
   name: "FsTable",
@@ -47,6 +48,7 @@ export default {
     if (this.show === false) {
       return;
     }
+    const ui = uiContext.get();
     const { proxy } = getCurrentInstance();
     const tableComp = resolveDynamicComponent(proxy.$fsui.table.name);
 
@@ -82,6 +84,7 @@ export default {
         const buildColumn = (item) => {
           let cellSlots = {};
           let currentTableColumnComp = tableColumnComp;
+          const cellSlotName = "cell_" + item.key;
           if (item.children && item.children.length > 0) {
             cellSlots.default = () => {
               const subColumns = [];
@@ -94,12 +97,14 @@ export default {
               return subColumns;
             };
             currentTableColumnComp = tableColumnGroupComp;
-          } else if (this.slots && this.slots["cell_" + item.key]) {
+          } else if (this.slots && this.slots[cellSlotName]) {
             cellSlots.default = (scope) => {
-              this.slots["cell_" + item.key](scope);
+              scope.row = scope[tableColumnCI.row];
+              return this.slots[cellSlotName](scope);
             };
           } else if (item.component) {
             cellSlots.default = (scope) => {
+              scope.row = scope[tableColumnCI.row];
               const getScopeFn = () => {
                 return getContextFn(item, scope);
               };
