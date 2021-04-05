@@ -43,9 +43,8 @@
                   }
                 "
                 :modelValue="get(form, key)"
-                @update:modelValue="set(form, key, $event)"
+                @update:modelValue="onValueChanged($event, item)"
                 @input="onInput(item)"
-                @change="onChange(item)"
                 v-bind="item.component"
                 :scope="{ form }"
               />
@@ -270,7 +269,15 @@ export default {
         doAutoSearch();
       }
     };
-    const onChange = (item) => {
+    // 输入法监听
+    const changeInputEventDisabled = (disabled) => {
+      inputEventDisabled.value = disabled;
+      doAutoSearch();
+    };
+
+    function onValueChanged(value, item) {
+      const key = item.key;
+      _.set(form.value, key, value);
       if (item.valueChange) {
         const key = item.key;
         const value = form.value[key];
@@ -281,16 +288,11 @@ export default {
         doAutoSearch();
       }
       doAutoSearch();
-    };
-    // 输入法监听
-    const changeInputEventDisabled = (disabled) => {
-      inputEventDisabled.value = disabled;
-      doAutoSearch();
-    };
+    }
 
     return {
       get: _.get,
-      set: _.set,
+      onValueChanged,
       doSearch,
       doReset,
       form,
@@ -303,7 +305,6 @@ export default {
       onInput,
       inputEventDisabled,
       changeInputEventDisabled,
-      onChange,
       computedColumns,
       computedButtons,
     };

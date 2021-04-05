@@ -23,7 +23,7 @@
             :ref="
               (el) => {
                 if (el) {
-                  componentRefs[item.key] = el;
+                  formItemRefs[item.key] = el;
                 }
               }
             "
@@ -41,39 +41,52 @@
       style="width: 100%"
       v-if="computedGroup.wrapper"
       :is="computedGroup.wrapper.parent"
-      v-model:activeKey="groupActiveKeys"
+      v-model:activeKey="groupActiveKey"
+      v-bind="computedGroup"
     >
-      <template v-for="(groupItem, key) of computedGroup.groups" :key="key">
-        <template v-if="key">
-          <component
-            :is="computedGroup.wrapper.child"
-            :header="groupItem.title"
-            :key="key"
-          >
-            <!-- row -->
-            <component :is="$fsui.row.name" class="fs-row" v-bind="row">
-              <!-- col -->
-              <template v-for="key in groupItem.columns" :key="key">
-                <component
-                  :is="$fsui.col.name"
-                  v-if="computedColumns[key].show !== false"
-                  class="fs-col"
-                  v-bind="mergeCol(computedColumns[key].col)"
-                >
-                  <fs-form-item
-                    :item="computedColumns[key]"
-                    v-if="computedColumns[key].show !== false"
-                    :modelValue="get(form, key)"
-                    @update:modelValue="set(form, key, $event)"
-                    :slots="slots['form_' + key]"
-                    :get-context-fn="getContextFn"
-                  />
-                </component>
-              </template>
-            </component>
-          </component>
+      <component
+        v-for="(groupItem, groupKey) of computedGroup.groups"
+        :key="groupKey"
+        :is="computedGroup.wrapper.child"
+        v-bind="groupItem"
+      >
+        <!-- tabPane的slots -->
+        <template
+          v-for="(item, slotName) of groupItem.slots"
+          :key="slotName"
+          #[slotName]="scope"
+        >
+          <fs-render :renderFunc="item" :scope="scope" />
         </template>
-      </template>
+        <!-- row -->
+        <component :is="$fsui.row.name" class="fs-row" v-bind="row">
+          <!-- col -->
+          <template v-for="key in groupItem.columns" :key="key">
+            <component
+              :is="$fsui.col.name"
+              v-if="computedColumns[key].show !== false"
+              class="fs-col"
+              v-bind="mergeCol(computedColumns[key].col)"
+            >
+              <fs-form-item
+                v-if="computedColumns[key].show !== false"
+                :ref="
+                  (el) => {
+                    if (el) {
+                      formItemRefs[item.key] = el;
+                    }
+                  }
+                "
+                :item="computedColumns[key]"
+                :modelValue="get(form, key)"
+                @update:modelValue="set(form, key, $event)"
+                :slots="slots['form_' + key]"
+                :get-context-fn="getContextFn"
+              />
+            </component>
+          </template>
+        </component>
+      </component>
     </component>
   </component>
 </template>
@@ -114,7 +127,9 @@ export default {
     doSubmit: {
       type: Function,
     },
-    slots: {},
+    slots: {
+      default: {},
+    },
     display: {
       type: String,
       default: "grid", // flex
@@ -164,21 +179,33 @@ export default {
       getComponentRef,
     });
 
-    const componentRefs = ref({});
+    const formItemRefs = ref({});
 
-    function getComponentRenderRef(key) {
-      return componentRefs.value[key];
+    function getFormItemRef(key) {
+      return formItemRefs.value[key];
     }
 
     function getComponentRef(key) {
-      return getComponentRenderRef(key)?.$refs?.targetRef;
+      return getFormItemRef(key)?.getComponentRef();
     }
 
     function getContextFn() {
       return scope.value;
     }
 
-    const computedColumns = doComputed(props.columns, getContextFn, null, null);
+    const computedColumns = doComputed(props.columns, getContextFn);
+
+    const groupActiveKey = ref([]);
+
+    _.forEach(props.group?.groups, (groupItem, key) => {
+      if (groupItem.collapsed !== true) {
+        groupActiveKey.value.push(key);
+      }
+    });
+    if (props.group?.groupType === "tabs") {
+      groupActiveKey.value =
+        groupActiveKey.value.length > 0 ? groupActiveKey.value[0] : null;
+    }
 
     //构建分组数据
     const computedGroup = doComputed(
@@ -186,33 +213,30 @@ export default {
       getContextFn(),
       null,
       (group) => {
-        const defaultForm = { ...form };
+        if (!group) {
+          return {};
+        }
         //找出没有添加进分组的字段
-        const defaultColumns = [];
+        const groupedKeys = new Set();
         _.forEach(group?.groups, (groupItem) => {
           _.forEach(groupItem.columns, (item) => {
-            if (defaultForm[item]) {
-              delete defaultForm[item];
-            }
-            defaultColumns.push(item);
+            groupedKeys.add(item);
           });
         });
 
-        const type = group.type;
+        const type = group.groupType;
         let wrapper = {
           parent: ui.collapse.name,
           child: ui.collapseItem.name,
         };
-        if (type === "tab") {
-          wrapper = {
-            parent: ui.tabs.name,
-            child: ui.tabPane.name,
-          };
+        if (type === "tabs") {
+          wrapper.parent = ui.tabs.name;
+          wrapper.child = ui.tabPane.name;
         }
         const merged = merge(
           {
             wrapper,
-            defaultColumns,
+            groupedKeys,
           },
           group
         );
@@ -231,10 +255,7 @@ export default {
           value.order = index;
         }
         index++;
-        if (
-          computedGroup.value?.defaultColumns &&
-          computedGroup.value?.defaultColumns[key]
-        ) {
+        if (!computedGroup.value?.groupedKeys?.has(key)) {
           columns.push(value);
         }
         value.col = mergeCol(value.col);
@@ -244,10 +265,9 @@ export default {
         return a.order - b.order;
       });
 
+      console.log("columns", columns, computedGroup.value?.defaultColumns);
       return columns;
     });
-
-    const groupActiveKeys = ref([]);
 
     async function getFormRef() {
       return formRef.value;
@@ -320,9 +340,9 @@ export default {
       getFormRef,
       scope,
       buildItemScope,
-      groupActiveKeys,
+      groupActiveKey,
       form,
-      componentRefs,
+      formItemRefs,
       getFormData,
       setFormData,
       getComponentRef,

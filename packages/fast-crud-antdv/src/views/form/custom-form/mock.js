@@ -1,7 +1,7 @@
 import mockUtil from "/src/mock/base";
 
 const options = {
-  name: "FormGroup",
+  name: "FormCustomForm",
   idGenerator: 0
 };
 const list = [

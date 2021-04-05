@@ -133,7 +133,7 @@ const resources = [
     ]
   },
   {
-    title: "编辑表单",
+    title: "Form表单",
     name: "form",
     path: "/form",
     redirect: "/form/text",
@@ -169,9 +169,14 @@ const resources = [
         component: "/form/group/index.vue"
       },
       {
+        title: "表单分组(tabs)",
+        path: "/form/group-tabs",
+        component: "/form/group-tabs/index.vue"
+      },
+      {
         title: "自定义表单",
-        path: "/form/custom",
-        component: "/form/custom/index.vue"
+        path: "/form/custom-form",
+        component: "/form/custom-form/index.vue"
       },
       {
         title: "独立使用表单",

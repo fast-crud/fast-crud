@@ -6,14 +6,17 @@ const options = {
 const list = [
   {
     status: "1",
-    remote: "2"
+    remote: "2",
+    modifyDict: false
   },
   {
     status: "2",
-    remote: "0"
+    remote: "0",
+    modifyDict: false
   },
   {
-    status: "0"
+    status: "0",
+    modifyDict: false
   }
 ];
 options.list = list;

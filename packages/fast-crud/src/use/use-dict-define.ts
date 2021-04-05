@@ -255,9 +255,6 @@ class Dict extends UnMergeable {
     //本地获取
     const nodes: Array<any> = [];
     _.forEach(value, (item) => {
-      if (this.data != null) {
-        debugger;
-      }
       const node = this.dataMap[item];
       if (node) {
         nodes.push(node);

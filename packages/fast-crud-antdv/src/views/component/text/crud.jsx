@@ -61,6 +61,9 @@ export default function({ expose }) {
         type: "textarea",
         form: {
           component: { showCount: true, maxlength: 200 }
+        },
+        column: {
+          ellipsis: true
         }
       },
       render: {

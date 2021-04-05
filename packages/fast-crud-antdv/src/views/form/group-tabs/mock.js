@@ -1,7 +1,7 @@
 import mockUtil from "/src/mock/base";
 
 const options = {
-  name: "FormGroup",
+  name: "FormGroupTabs",
   idGenerator: 0
 };
 const list = [

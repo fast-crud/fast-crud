@@ -40,6 +40,7 @@
 <script>
 import traceUtil from "../../utils/util.trace";
 import FsRender from "../render/fs-render";
+import { ref } from "vue";
 export default {
   name: "FsFormItem",
   components: { FsRender },
@@ -52,7 +53,7 @@ export default {
   emits: ["update:modelValue"],
   setup(props, ctx) {
     traceUtil.trace("fs-from-item");
-
+    const componentRenderRef = ref();
     function buildItemScope(item) {
       const scope = props.getContextFn();
       return { value: props.modelValue, key: item.key, ...scope };
@@ -61,9 +62,14 @@ export default {
     function updateModelValue(value) {
       ctx.emit("update:modelValue", value);
     }
+    function getComponentRef() {
+      return componentRenderRef.value?.getTargetRef();
+    }
     return {
       updateModelValue,
       buildItemScope,
+      getComponentRef,
+      componentRenderRef,
     };
   },
 };

@@ -48,16 +48,16 @@ export default function({ expose }) {
       },
       modifyDict: {
         title: "动态修改字典",
-        search: { show: false },
+        search: { show: true },
         type: "text",
         form: {
           component: {
             name: "a-switch",
             vModel: "checked"
           },
-          valueChange({ form, value }) {
+          valueChange({ form, value, getComponentRef }) {
             console.log("form", value);
-            const targetDict = expose.getFormComponentRef("remote").getDict();
+            const targetDict = getComponentRef("remote").getDict();
             targetDict.url = form.modifyDict
               ? "/dicts/moreOpenStatusEnum?remote"
               : "/dicts/OpenStatusEnum?remote";
@@ -69,12 +69,9 @@ export default function({ expose }) {
             name: "a-switch",
             vModel: "checked"
           },
-          valueChange(context) {
-            console.log("valueChange", context);
-            const { value, getComponentRef } = context;
-            const targetComponent = getComponentRef("remote");
-            console.log("targetComponent", targetComponent);
-            const targetDict = targetComponent.getDict();
+          valueChange({ value, getComponentRef }) {
+            console.log("value", value);
+            const targetDict = getComponentRef("remote").getDict();
             targetDict.url = value
               ? "/dicts/moreOpenStatusEnum?remote"
               : "/dicts/OpenStatusEnum?remote";

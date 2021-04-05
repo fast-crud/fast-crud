@@ -6,6 +6,7 @@ import FsComponentRender from "./render/fs-component-render.jsx";
 import FsSlotRender from "./render/fs-slot-render";
 import FsBox from "./basic/fs-box.vue";
 import FsForm from "./crud/fs-form.vue";
+import FsFormWrapper from "./crud/fs-form-wrapper.jsx";
 import FsCrud from "./fs-crud.vue";
 import FsRowHandle from "./crud/fs-row-handle.vue";
 import FsTable from "./crud/fs-table";
@@ -32,6 +33,7 @@ export {
   FsLoading,
   FsIcon,
   FsForm,
+  FsFormWrapper,
   FsCrud,
   FsTable,
   FsCell,

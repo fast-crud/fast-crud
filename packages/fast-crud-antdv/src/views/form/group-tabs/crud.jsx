@@ -71,30 +71,32 @@ export default function({ expose }) {
     },
     form: {
       group: {
-        type: "collapse", // tab
-        accordion: true, //手风琴模式
+        groupType: "tabs", //collapse， tabs
+        accordion: false,
         groups: {
           base: {
             slots: {
-              //自定义header
-              header: () => {
+              tab: () => {
                 return (
                   <span style={"color:green"}>
+                    <CheckOutlined />
                     商品基础
-                    <CheckOutlined style={"margin-left:10px;"} />
                   </span>
                 );
               }
             },
+            icon: "el-icon-goods",
             columns: ["code", "title", "images"]
           },
           price: {
-            header: "库存价格",
+            tab: "库存价格",
+            icon: "el-icon-price-tag",
             columns: ["store", "price"]
           },
           info: {
-            header: "详情",
+            tab: "详情",
             collapsed: true, //默认折叠
+            icon: "el-icon-warning-outline",
             columns: ["intro", "content"]
           }
           // custom: {

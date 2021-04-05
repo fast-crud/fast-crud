@@ -146,7 +146,6 @@ export default {
 
       let options = [];
 
-      debugger;
       if (dict) {
         options = dict.getNodesByValues(valueArr);
       } else {
