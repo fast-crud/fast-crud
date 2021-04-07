@@ -14,8 +14,10 @@ export default ({ command, mode }) => {
       "@fast-crud/fast-crud/dist/lang": path.resolve(
         "../fast-crud/src/local/lang"
       ),
-      "@fast-crud/fast-crud": path.resolve("../fast-crud/src"),
-      "@fast-crud/fast-crud-extends": path.resolve("../fast-crud-extends/src")
+      "@fast-crud/fast-crud": path.resolve("../fast-crud/src/"),
+      "@fast-crud/fast-crud-extends": path.resolve(
+        "../fast-crud-extends/src/index.es.js"
+      )
     };
   }
 
