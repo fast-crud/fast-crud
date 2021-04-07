@@ -10,7 +10,7 @@ import { request, requestForMock } from "./api/service";
 import "./mock";
 import icons from "./icons";
 import i18n from "./i18n";
-import { FsUploader } from "@fast-crud/fast-crud-extends";
+import { FsUploader } from "@fast-crud/fast-crud-extends/index.es.js";
 const app = createApp(App);
 app.use(Antd);
 // app.use(ElementPlus, { size: 'small', zIndex: 3000, i18n: i18n.global.t })
