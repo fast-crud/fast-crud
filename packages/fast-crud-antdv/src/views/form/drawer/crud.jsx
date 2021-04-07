@@ -1,13 +1,13 @@
 import * as api from "./api";
-export default function({ expose }) {
-  const pageRequest = async query => {
+export default function ({ expose }) {
+  const pageRequest = async (query) => {
     return await api.GetList(query);
   };
   const editRequest = async ({ form, row }) => {
     form.id = row.id;
     return await api.UpdateObj(form);
   };
-  const delRequest = async id => {
+  const delRequest = async (id) => {
     return await api.DelObj(id);
   };
 
@@ -15,28 +15,30 @@ export default function({ expose }) {
     return await api.AddObj(form);
   };
   return {
-    request: {
-      pageRequest,
-      addRequest,
-      editRequest,
-      delRequest
+    crudOptions: {
+      request: {
+        pageRequest,
+        addRequest,
+        editRequest,
+        delRequest,
+      },
+      form: {
+        wrapper: {
+          is: "a-drawer",
+        },
+      },
+      columns: {
+        name: {
+          title: "姓名",
+          type: "text", //虽然不写也能正确显示组件，但不建议省略它
+          search: { show: true },
+          form: {
+            component: {
+              maxlength: 20,
+            },
+          },
+        },
+      },
     },
-    form: {
-      wrapper: {
-        is: "a-drawer"
-      }
-    },
-    columns: {
-      name: {
-        title: "姓名",
-        type: "text", //虽然不写也能正确显示组件，但不建议省略它
-        search: { show: true },
-        form: {
-          component: {
-            maxlength: 20
-          }
-        }
-      }
-    }
   };
 }

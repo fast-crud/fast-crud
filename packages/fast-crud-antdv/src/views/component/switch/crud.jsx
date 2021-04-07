@@ -1,15 +1,15 @@
 import * as api from "./api";
 import { requestForMock } from "/src/api/service";
 import { dict, compute } from "/src/fs";
-export default function({ expose }) {
-  const pageRequest = async query => {
+export default function ({ expose }) {
+  const pageRequest = async (query) => {
     return await api.GetList(query);
   };
   const editRequest = async ({ form, row }) => {
     form.id = row.id;
     return await api.UpdateObj(form);
   };
-  const delRequest = async id => {
+  const delRequest = async (id) => {
     return await api.DelObj(id);
   };
 
@@ -17,75 +17,77 @@ export default function({ expose }) {
     return await api.AddObj(form);
   };
   return {
-    request: {
-      pageRequest,
-      addRequest,
-      editRequest,
-      delRequest
-    },
-    columns: {
-      id: {
-        title: "ID",
-        key: "id",
-        type: "number",
-        column: {
-          width: 50
+    crudOptions: {
+      request: {
+        pageRequest,
+        addRequest,
+        editRequest,
+        delRequest,
+      },
+      columns: {
+        id: {
+          title: "ID",
+          key: "id",
+          type: "number",
+          column: {
+            width: 50,
+          },
+          form: {
+            show: false,
+          },
         },
-        form: {
-          show: false
-        }
-      },
-      switch: {
-        title: "状态",
-        search: { show: true },
-        type: "dict-switch",
-        dict: dict({
-          data: [
-            { value: true, label: "开启" },
-            { value: false, label: "关闭" }
-          ]
-        })
-      },
-      cellSwitch: {
-        title: "cell显示",
-        search: { show: true },
-        type: "dict-switch",
-        column: {
-          component: {
-            name: "fs-dict-switch",
-            vModel: "checked"
-          }
+        switch: {
+          title: "状态",
+          search: { show: true },
+          type: "dict-switch",
+          dict: dict({
+            data: [
+              { value: true, label: "开启" },
+              { value: false, label: "关闭" },
+            ],
+          }),
         },
-        dict: dict({
-          data: [
-            { value: true, label: "开启" },
-            { value: false, label: "关闭" }
-          ]
-        })
-      },
-      showTarget: {
-        title: "显隐目标",
-        type: "text",
-        column: {
-          component: {
-            name: "fs-values-format",
-            show: compute(context => {
+        cellSwitch: {
+          title: "cell显示",
+          search: { show: true },
+          type: "dict-switch",
+          column: {
+            component: {
+              name: "fs-dict-switch",
+              vModel: "checked",
+            },
+          },
+          dict: dict({
+            data: [
+              { value: true, label: "开启" },
+              { value: false, label: "关闭" },
+            ],
+          }),
+        },
+        showTarget: {
+          title: "显隐目标",
+          type: "text",
+          column: {
+            component: {
+              name: "fs-values-format",
+              show: compute((context) => {
+                //根据cellSwitch字段显隐
+                return context.row.cellSwitch === true;
+              }),
+            },
+          },
+          search: {
+            show: false,
+          },
+          form: {
+            show: compute((context) => {
+              console.log("context", context);
               //根据cellSwitch字段显隐
-              return context.row.cellSwitch === true;
-            })
-          }
+              return context.form.cellSwitch === true;
+            }),
+          },
         },
-        search: {
-          show: false
-        },
-        form: {
-          show: compute(context => {
-            console.log("context", context);
-            //根据cellSwitch字段显隐
-            return context.form.cellSwitch === true;
-          })
-        }
-      }
-    }
+      },
+    },
   };
 }

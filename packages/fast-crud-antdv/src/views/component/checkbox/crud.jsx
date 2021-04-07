@@ -17,31 +17,33 @@ export default function ({ crudRef }) {
     return await api.AddObj(form);
   };
   return {
-    request: {
-      pageRequest,
-      addRequest,
-      editRequest,
-      delRequest,
-    },
-    columns: {
-      id: {
-        title: "ID",
-        key: "id",
-        type: "number",
-        column: {
-          width: 50,
-        },
-        form: {
-          show: false,
-        },
+    crudOptions: {
+      request: {
+        pageRequest,
+        addRequest,
+        editRequest,
+        delRequest,
       },
-      checkbox: {
-        title: "状态",
-        search: { show: true },
-        type: "dict-checkbox",
-        dict: dict({
-          url: "/dicts/OpenStatusEnum?single",
-        }),
+      columns: {
+        id: {
+          title: "ID",
+          key: "id",
+          type: "number",
+          column: {
+            width: 50,
+          },
+          form: {
+            show: false,
+          },
+        },
+        checkbox: {
+          title: "状态",
+          search: { show: true },
+          type: "dict-checkbox",
+          dict: dict({
+            url: "/dicts/OpenStatusEnum?single",
+          }),
+        },
       },
     },
   };
