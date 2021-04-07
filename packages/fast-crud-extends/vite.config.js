@@ -31,8 +31,9 @@ export default {
   build: {
     //outDir: "dist/es/components/fs-cropper",
     lib: {
-      entry: path.resolve(__dirname, "src/components/uploader/fs-cropper.vue"),
+      entry: "src/index.es.js",
       name: "index",
+      formats: ["es"],
     },
     sourcemap: true,
     // minify: false,
