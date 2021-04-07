@@ -159,6 +159,8 @@ class Dict extends UnMergeable {
       getFromRemote = async () => {
         return await dictRequest({ url, dict });
       };
+    } else {
+      return [];
     }
     if (this.cache) {
       let cached = DictGlobalCache.get(cacheKey);

@@ -1,6 +1,9 @@
 import Layout from "../layout/layout.vue";
 import LayoutPass from "../layout/layout-pass.vue";
 import _ from "lodash-es";
+
+const modules = import.meta.glob("/src/views/**/*.vue");
+console.log(" modules", modules);
 const resources = [
   {
     title: "首页",
@@ -248,8 +251,8 @@ const resources = [
       },
       {
         title: "嵌套子表格",
-        path: "/form/nest",
-        component: "/form/nest/index.vue"
+        path: "/advanced/nest",
+        component: "/advanced/nest/index.vue"
       }
     ]
   }
@@ -275,7 +278,7 @@ function transformOneResource(resource) {
     route = _.cloneDeep(resource);
     if (route.component) {
       const path = "/src/views" + route.component;
-      route.component = () => import(/* @vite-ignore */ path);
+      route.component = modules[path];
     } else {
       route.component = LayoutPass;
     }

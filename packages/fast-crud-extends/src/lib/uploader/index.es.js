@@ -2,6 +2,8 @@ import { useTypes } from "@fast-crud/fast-crud";
 import types from "./types";
 import { useUploader } from "./components/uploader-impl";
 import esInstall from "../../utils/util.es";
+const imports = import.meta.glob("./components/**/*.vue");
+console.log("uploader modules ", imports);
 const components = {
   FsCropper: "components/fs-cropper.vue",
   FsCropperUploader: "components/fs-cropper-uploader.vue",
@@ -24,6 +26,6 @@ export default {
     const { setConfig } = useUploader();
     setConfig(options);
 
-    esInstall.install(app, { uploader: components });
+    esInstall.install(app, components, imports);
   },
 };
