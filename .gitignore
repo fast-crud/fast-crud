@@ -105,3 +105,4 @@ dist
 packages/vue-vben-admin
 packages/vue-admin-beauty
 packages/vben-admin-thin-next
+/packages/fast-crud-antdv/stats.html

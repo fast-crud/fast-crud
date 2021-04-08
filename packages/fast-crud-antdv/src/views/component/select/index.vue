@@ -8,7 +8,7 @@ import { useCrud } from "/src/fs";
 import createCrudOptions from "./crud";
 import { useExpose } from "@fast-crud/fast-crud";
 export default defineComponent({
-  name: "FormText",
+  name: "FormSelect",
   setup() {
     // crud组件的ref
     const crudRef = ref();

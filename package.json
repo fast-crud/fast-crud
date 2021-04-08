@@ -4,6 +4,8 @@
   "scripts": {
     "bootstrap": "lerna bootstrap --hoist"
   },
+  "author": "Greper",
+  "license": "MIT",
   "devDependencies": {
     "lerna": "^4.0.0"
   }
