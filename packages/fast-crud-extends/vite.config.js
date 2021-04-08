@@ -31,7 +31,7 @@ export default {
   build: {
     //outDir: "dist/es/components/fs-cropper",
     lib: {
-      entry: "src/index.es.js",
+      entry: "src/index.js",
       name: "index",
       formats: ["es"],
     },
