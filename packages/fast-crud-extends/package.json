@@ -1,6 +1,6 @@
 {
   "name": "@fast-crud/fast-crud-extends",
-  "version": "0.1.1-rc2",
+  "version": "0.2.0",
   "private": false,
   "main": "./dist/index.es.js",
   "module": "./dist/fast-crud-extends.es.js",
