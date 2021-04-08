@@ -36,9 +36,9 @@ export default ({ command, mode }) => {
       // commonjs(),
       vue(),
     ],
-    optimizeDeps: {
-      exclude: ["@fast-crud/fast-crud-extends"],
-    },
+    // optimizeDeps: {
+    //   exclude: ["@fast-crud/fast-crud-extends"],
+    // },
     esbuild: {
       jsxFactory: "h",
       jsxFragment: "Fragment",

@@ -2,7 +2,7 @@ import { createApp } from "vue";
 import App from "./App.vue";
 import router from "./router";
 import { FastCrud } from "@fast-crud/fast-crud";
-//import "@fast-crud/fast-crud/dist/style.css";
+import "@fast-crud/fast-crud/dist/style.css";
 import Antd, { message, notification, Modal } from "ant-design-vue";
 import "ant-design-vue/dist/antd.css";
 import "./style/common.less";
