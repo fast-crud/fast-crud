@@ -3,6 +3,7 @@ import vueJsx from "@vitejs/plugin-vue-jsx";
 import path from "path";
 import visualizer from "rollup-plugin-visualizer";
 import glob from "glob";
+import commonjs from "@rollup/plugin-commonjs";
 const { resolve } = path;
 // options is optional
 const lazyComponents = {};
@@ -19,6 +20,7 @@ console.log("lazyComponents", lazyComponents);
 // https://vitejs.dev/config/
 export default {
   plugins: [
+    commonjs(),
     vueJsx({
       // options are passed on to @vue/babel-plugin-jsx
     }),

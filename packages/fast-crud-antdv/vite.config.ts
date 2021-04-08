@@ -1,9 +1,8 @@
-import { defineConfig } from "vite";
 import vue from "@vitejs/plugin-vue";
 import vueJsx from "@vitejs/plugin-vue-jsx";
 import visualizer from "rollup-plugin-visualizer";
 import path from "path";
-
+import commonjs from "@rollup/plugin-commonjs";
 // https://vitejs.dev/config/
 export default ({ command, mode }) => {
   console.log("args", command, mode);
@@ -27,6 +26,12 @@ export default ({ command, mode }) => {
       vueJsx({
         // options are passed on to @vue/babel-plugin-jsx
       }),
+      // commonjs({
+      //   // non-CommonJS modules will be ignored, but you can also
+      //   // specifically include/exclude files
+      //   include: ["node_modules/@fast-crud/fast-crud-extends/**"] // Default: undefined
+      //   //exclude: ["node_modules/foo/**", "node_modules/bar/**"] // Default: undefined
+      // }),
       vue()
     ],
     esbuild: {

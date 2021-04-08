@@ -3,7 +3,7 @@
   "version": "0.2.0",
   "private": false,
   "main": "./dist/fast-crud-extends.umd.js",
-  "module": "./dist/fast-crud-extends.es.js",
+  "module": "./src/index.es.js",
   "scripts": {
     "build": "vite build && npm run copy-local",
     "copy-local": "copyfiles -f ./src/local/lang/* ./dist/lang"
@@ -26,6 +26,7 @@
     "@commitlint/config-conventional": "^12.0.1",
     "@iconify/json": "^1.1.310",
     "@ls-lint/ls-lint": "^1.9.2",
+    "@rollup/plugin-commonjs": "^18.0.0",
     "@types/chai": "^4.2.11",
     "@types/mocha": "^5.2.4",
     "@typescript-eslint/eslint-plugin": "^4.16.1",
