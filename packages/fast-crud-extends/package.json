@@ -8,6 +8,8 @@
     "build": "vite build && npm run copy-local",
     "copy-local": "copyfiles -f ./src/local/lang/* ./dist/lang"
   },
+  "author": "Greper",
+  "license": "MIT",
   "dependencies": {
     "ali-oss": "^6.13.2",
     "base64-js": "^1.5.1",

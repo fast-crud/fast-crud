@@ -9,6 +9,8 @@
     "copy-local": "copyfiles -f ./src/local/lang/* ./dist/lang",
     "test": "jest"
   },
+  "author": "Greper",
+  "license": "MIT",
   "dependencies": {
     "dayjs": "^1.10.4",
     "deepdash-es": "^5.3.5",

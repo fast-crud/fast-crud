@@ -7,6 +7,8 @@
     "serve": "vite preview",
     "pretty-quick": "pretty-quick"
   },
+  "author": "Greper",
+  "license": "MIT",
   "dependencies": {
     "@ant-design/icons-vue": "^6.0.1",
     "@fast-crud/fast-crud": "^0.2.0",

@@ -1,5 +1,5 @@
 {
-  "name": "@fast-crud/fast-crud-demo",
+  "name": "@fast-crud/fast-crud-element",
   "version": "0.2.0",
   "private": false,
   "scripts": {
@@ -7,6 +7,8 @@
     "build": "vite build",
     "lint": "vite lint"
   },
+  "author": "Greper",
+  "license": "MIT",
   "dependencies": {
     "@fast-crud/fast-crud": "^0.2.0",
     "axios": "^0.21.1",
