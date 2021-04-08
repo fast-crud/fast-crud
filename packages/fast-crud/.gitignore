@@ -22,4 +22,3 @@ pnpm-debug.log*
 *.sln
 *.sw?
 stats.html
-package-lock.json
