@@ -2,7 +2,7 @@
   "name": "@fast-crud/fast-crud-extends",
   "version": "0.2.0",
   "private": false,
-  "main": "./dist/index.es.js",
+  "main": "./dist/fast-crud-extends.umd.js",
   "module": "./dist/fast-crud-extends.es.js",
   "scripts": {
     "build": "vite build && npm run copy-local",
@@ -70,5 +70,6 @@
     "vite-plugin-theme": "^0.4.8",
     "vite-plugin-windicss": "0.6.2",
     "vue-eslint-parser": "^7.5.0"
-  }
+  },
+  "gitHead": "c3469555fb1d051a74b873722b7a2877f7089c98"
 }

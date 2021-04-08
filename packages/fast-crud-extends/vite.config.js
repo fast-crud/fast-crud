@@ -33,7 +33,7 @@ export default {
     lib: {
       entry: "src/index.js",
       name: "index",
-      formats: ["es"],
+      // formats: ["es"],
     },
     sourcemap: true,
     // minify: false,
