@@ -1,7 +1,7 @@
 import * as api from "./api";
 import { dict } from "/src/fs";
 import moment from "moment";
-export default function({}) {
+export default function({ expose }) {
   const pageRequest = async query => {
     return await api.GetList(query);
   };

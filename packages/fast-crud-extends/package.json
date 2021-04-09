@@ -3,7 +3,7 @@
   "version": "0.2.0",
   "private": false,
   "main": "./dist/fast-crud-extends.umd.js",
-  "module": "./src/index.es.js",
+  "module": "./dict/fast-crud-extends.es.js",
   "scripts": {
     "build": "vite build && npm run copy-local",
     "copy-local": "copyfiles -f ./src/local/lang/* ./dist/lang"

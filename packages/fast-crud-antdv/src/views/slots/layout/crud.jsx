@@ -1,6 +1,6 @@
 import * as api from "./api";
 import { dict } from "/src/fs";
-export default function({}) {
+export default function({ expose }) {
   const pageRequest = async query => {
     return await api.GetList(query);
   };

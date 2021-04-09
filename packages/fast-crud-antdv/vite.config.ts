@@ -2,8 +2,6 @@ import vue from "@vitejs/plugin-vue";
 import vueJsx from "@vitejs/plugin-vue-jsx";
 import visualizer from "rollup-plugin-visualizer";
 import path from "path";
-import nodeResolve from "@rollup/plugin-node-resolve";
-import commonjs from "@rollup/plugin-commonjs";
 // https://vitejs.dev/config/
 export default ({ command, mode }) => {
   console.log("args", command, mode);
@@ -14,10 +12,11 @@ export default ({ command, mode }) => {
       "@fast-crud/fast-crud/dist/lang": path.resolve(
         "../fast-crud/src/local/lang"
       ),
-      "@fast-crud/fast-crud": path.resolve("../fast-crud/src/"),
+      "@fast-crud/fast-crud/dist": path.resolve("../fast-crud/src"),
+      "@fast-crud/fast-crud": path.resolve("../fast-crud/src"),
       "@fast-crud/fast-crud-extends": path.resolve(
-        "../fast-crud-extends/src/index.es.js"
-      ),
+        "../fast-crud-extends/src/index.js"
+      )
     };
   }
 
@@ -34,34 +33,34 @@ export default ({ command, mode }) => {
       //   //exclude: ["node_modules/foo/**", "node_modules/bar/**"] // Default: undefined
       // }),
       // commonjs(),
-      vue(),
+      vue()
     ],
     // optimizeDeps: {
     //   exclude: ["@fast-crud/fast-crud-extends"],
     // },
     esbuild: {
       jsxFactory: "h",
-      jsxFragment: "Fragment",
+      jsxFragment: "Fragment"
     },
     resolve: {
       alias: {
         ...devAlias,
-        "/@": path.resolve("./src"),
+        "/@": path.resolve("./src")
       },
-      dedupe: ["vue"],
+      dedupe: ["vue"]
     },
     build: {
       rollupOptions: {
-        plugins: [visualizer()],
-      },
+        plugins: [visualizer()]
+      }
     },
     server: {
       proxy: {
         // with options
         "/api": {
-          target: "http://www.docmirror.cn:7070",
-        },
-      },
-    },
+          target: "http://www.docmirror.cn:7070"
+        }
+      }
+    }
   };
 };

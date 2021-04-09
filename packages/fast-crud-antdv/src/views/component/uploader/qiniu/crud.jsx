@@ -1,13 +1,13 @@
 import * as api from "./api";
-export default function ({}) {
-  const pageRequest = async (query) => {
+export default function({ expose }) {
+  const pageRequest = async query => {
     return await api.GetList(query);
   };
   const editRequest = async ({ form, row }) => {
     form.id = row.id;
     return await api.UpdateObj(form);
   };
-  const delRequest = async (id) => {
+  const delRequest = async id => {
     return await api.DelObj(id);
   };
 
@@ -20,7 +20,7 @@ export default function ({}) {
         pageRequest,
         addRequest,
         editRequest,
-        delRequest,
+        delRequest
       },
       columns: {
         id: {
@@ -28,11 +28,11 @@ export default function ({}) {
           key: "id",
           type: "number",
           column: {
-            width: 50,
+            width: 50
           },
           form: {
-            show: false,
-          },
+            show: false
+          }
         },
         file: {
           title: "七牛云上传",
@@ -40,10 +40,10 @@ export default function ({}) {
           form: {
             component: {
               uploader: {
-                type: "qiniu",
-              },
-            },
-          },
+                type: "qiniu"
+              }
+            }
+          }
         },
         pictureCard: {
           title: "照片墙",
@@ -51,10 +51,10 @@ export default function ({}) {
           form: {
             component: {
               uploader: {
-                type: "qiniu",
-              },
-            },
-          },
+                type: "qiniu"
+              }
+            }
+          }
         },
         cropper: {
           title: "裁剪",
@@ -62,12 +62,12 @@ export default function ({}) {
           form: {
             component: {
               uploader: {
-                type: "qiniu",
-              },
-            },
-          },
-        },
-      },
-    },
+                type: "qiniu"
+              }
+            }
+          }
+        }
+      }
+    }
   };
 }
