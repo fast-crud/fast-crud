@@ -3,6 +3,7 @@
 </template>
 <script>
 import _ from "lodash-es";
+import { getCurrentInstance } from "vue";
 import { buildKey } from "./lib/utils";
 import { useUploader } from "./index";
 import { utils } from "@fast-crud/fast-crud";
@@ -79,7 +80,8 @@ async function doUpload({ file, fileName, onProgress, options }) {
 export default {
   name: "FsCosUploader",
   setup() {
-    const { getConfig } = useUploader();
+    const { proxy } = getCurrentInstance();
+    const { getConfig } = useUploader(proxy);
     const global = getConfig("cos");
     async function upload(context) {
       const options = context.options;

@@ -22,6 +22,7 @@
     "cos-js-sdk-v5": "^0.5.27",
     "dayjs": "^1.10.4",
     "deepdash-es": "^5.3.5",
+    "highlight.js": "^10.7.2",
     "lodash-es": "^4.17.15",
     "moment": "^2.29.1",
     "object-assign": "^4.1.1",

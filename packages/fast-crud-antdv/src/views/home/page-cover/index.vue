@@ -1,11 +1,14 @@
 <template>
   <div class="d2-page-cover">
-    <p
+    <div
       class="d2-page-cover__title"
       @click="$open('https://github.com/fast-crud/fast-crud')"
     >
-      <img width="50" src="./image/logo.svg" /> Fast Crud {{ $version }}
-    </p>
+      <div class="title-line">
+        <img width="50" src="./image/logo.svg" />
+        Fast Crud v{{ version }}
+      </div>
+    </div>
     <p class="d2-page-cover__sub-title">
       面向配置的crud编程，快速开发crud功能
     </p>
@@ -14,7 +17,7 @@
         <d2-highlight :code="helper.crud" lang="javascript" />
       </div>
       <div class="icon">
-        <i class="el-icon-right"></i>
+        <fs-icon :icon="$fsui.icons.arrowRight" />
       </div>
       <div class="right">
         <img src="./image/gif.webp" />
@@ -25,9 +28,16 @@
 <script>
 import helper from "./helper";
 
-import { defineComponent } from "vue";
+import { defineComponent, ref } from "vue";
 export default defineComponent({
   name: "PageCover",
+  setup() {
+    const version = ref(import.meta.env.VITE_APP_VERSION);
+
+    return {
+      version
+    };
+  },
   data() {
     return {
       helper: helper
@@ -51,15 +61,19 @@ export default defineComponent({
     }
   }
   .d2-page-cover__title {
-    margin: 10px;
+    margin: 20px;
     font-weight: bold;
     display: -webkit-flex; /* Safari */
     display: flex;
-    align-items: center;
-    flex-direction: row;
-    justify-content: center;
-    cursor: pointer;
-    font-size: 30px;
+    justify-content: flex-end;
+    .title-line {
+      display: flex;
+      align-items: center;
+      flex-direction: row;
+      justify-content: center;
+      cursor: pointer;
+      font-size: 20px;
+    }
   }
   .d2-page-cover__sub-title {
     margin: 0px;
@@ -75,8 +89,8 @@ export default defineComponent({
   .exampleBox {
     display: flex;
     align-items: center;
-    height: 420px;
-    width: 90%;
+    height: 380px;
+    width: 96%;
     padding: 5px;
     margin: auto;
     justify-content: center;
@@ -86,7 +100,8 @@ export default defineComponent({
       border: 1px solid #aaa;
     }
     .icon {
-      font-size: 50px;
+      padding: 10px;
+      font-size: 20px;
     }
     .right {
       height: 100%;

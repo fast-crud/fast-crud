@@ -3,6 +3,12 @@ import vueJsx from "@vitejs/plugin-vue-jsx";
 import visualizer from "rollup-plugin-visualizer";
 import path from "path";
 // https://vitejs.dev/config/
+// 增加环境变量
+process.env.VITE_APP_VERSION = require("./package.json").version;
+process.env.VITE_APP_BUILD_TIME = require("dayjs")().format(
+  "YYYY-M-D HH:mm:ss"
+);
+
 export default ({ command, mode }) => {
   console.log("args", command, mode);
 
