@@ -21,11 +21,6 @@ const resources = [
         title: "动态计算",
         path: "/basis/compute",
         component: "/basis/compute/index.vue"
-      },
-      {
-        title: "bug",
-        path: "/basis/bug",
-        component: "/basis/reactive-in-array/index.vue"
       }
     ]
   },

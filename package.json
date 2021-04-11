@@ -2,12 +2,18 @@
   "name": "fast-crud-root",
   "private": true,
   "scripts": {
-    "bootstrap": "lerna bootstrap --hoist"
+    "bootstrap": "lerna bootstrap --hoist",
+    "docs:dev": "vitepress dev docs",
+    "docs:build": "vitepress build docs",
+    "docs:serve": "vitepress serve docs",
+    "docgen:crud": "vue-docgen -c docgen/crud.config.js",
+    "docgen:extends": "vue-docgen -c docgen/extends.config.js"
   },
   "author": "Greper",
   "license": "MIT",
   "devDependencies": {
-    "lerna": "^4.0.0"
+    "lerna": "^4.0.0",
+    "vitepress": "^0.13.0",
+    "vue-docgen-cli": "^4.37.0"
   }
 }
-

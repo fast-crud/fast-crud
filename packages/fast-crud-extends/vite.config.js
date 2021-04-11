@@ -2,30 +2,14 @@ import vue from "@vitejs/plugin-vue";
 import vueJsx from "@vitejs/plugin-vue-jsx";
 import path from "path";
 import visualizer from "rollup-plugin-visualizer";
-import glob from "glob";
 import commonjs from "@rollup/plugin-commonjs";
+import multi from "@rollup/plugin-multi-entry";
+
 const { resolve } = path;
-// options is optional
-const lazyComponents = {};
-console.log("files");
-const files = glob.sync("src/components/**/*.vue", {});
-console.log("files", files);
-for (let file of files) {
-  console.log("file", file);
-  const name = file.substring(file.lastIndexOf("/") + 1, file.lastIndexOf("."));
-  lazyComponents[name] = resolve(__dirname, file);
-}
-console.log("lazyComponents", lazyComponents);
 
 // https://vitejs.dev/config/
 export default {
-  plugins: [
-    commonjs(),
-    vueJsx({
-      // options are passed on to @vue/babel-plugin-jsx
-    }),
-    vue(),
-  ],
+  plugins: [vueJsx(), vue()],
   esbuild: {
     jsxFactory: "h",
     jsxFragment: "Fragment",
@@ -33,14 +17,18 @@ export default {
   build: {
     //outDir: "dist/es/components/fs-cropper",
     lib: {
-      entry: "src/index.js",
+      entry: "",
       name: "index",
       // formats: ["es"],
     },
     sourcemap: true,
     // minify: false,
     rollupOptions: {
-      plugins: [visualizer()],
+      input: [
+        resolve("src/index.js"),
+        resolve("src/lib/uploader/fs-cropper.vue"),
+      ],
+      plugins: [commonjs(), visualizer()],
       // make sure to externalize deps that shouldn't be bundled
       // into your library
       external: [

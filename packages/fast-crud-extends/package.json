@@ -5,7 +5,7 @@
   "main": "./dist/fast-crud-extends.umd.js",
   "module": "./src/index.js",
   "scripts": {
-    "build": "vite build && npm run copy-local",
+    "build": "vite build",
     "copy-local": "copyfiles -f ./src/local/lang/* ./dist/lang"
   },
   "author": "Greper",
@@ -29,6 +29,7 @@
     "@iconify/json": "^1.1.310",
     "@ls-lint/ls-lint": "^1.9.2",
     "@rollup/plugin-commonjs": "^18.0.0",
+    "@rollup/plugin-multi-entry": "^4.0.0",
     "@types/chai": "^4.2.11",
     "@types/mocha": "^5.2.4",
     "@typescript-eslint/eslint-plugin": "^4.16.1",

@@ -13,10 +13,13 @@ export default ({ command, mode }) => {
         "../fast-crud/src/local/lang"
       ),
       "@fast-crud/fast-crud/dist": path.resolve("../fast-crud/src"),
+
+      "@fast-crud/fast-crud/src": path.resolve("../fast-crud/src"),
+      "@fast-crud/fast-crud-extends/src": path.resolve(
+        "../fast-crud-extends/src"
+      ),
       "@fast-crud/fast-crud": path.resolve("../fast-crud/src"),
-      "@fast-crud/fast-crud-extends": path.resolve(
-        "../fast-crud-extends/src/index.js"
-      )
+      "@fast-crud/fast-crud-extends": path.resolve("../fast-crud-extends/src")
     };
   }
 

@@ -15,7 +15,7 @@
 import AsideMenu from "./aside-menu.jsx";
 export default {
   // eslint-disable-next-line vue/no-unused-components
-  components: { AsideMenu },
+  components: { AsideMenu }
 };
 </script>
 <style lang="less">
@@ -37,6 +37,7 @@ export default {
   .ant-layout-content {
     background: #fff;
     height: 100%;
+    position: relative;
   }
   .layout-body {
     flex: 1;
