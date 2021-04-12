@@ -53,7 +53,6 @@ app.use(FastCrud, {
 });
  ```
 
-[更多关于后台返回数据结构的配置说明](/guide/structure.md)
 
 
 ### 3. 安装扩展组件
