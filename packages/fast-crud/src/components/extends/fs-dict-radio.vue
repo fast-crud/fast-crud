@@ -3,10 +3,11 @@
     <component
       :is="$fsui.radio.name"
       v-for="item of computedOptions"
-      :key="item.value"
-      :[$fsui.radio.value]="item.value"
-      >{{ item.label }}</component
+      :key="getValue(item)"
+      :[$fsui.radio.value]="getValue(item)"
     >
+      {{ getLabel(item) }}
+    </component>
   </component>
 </template>
 <script>

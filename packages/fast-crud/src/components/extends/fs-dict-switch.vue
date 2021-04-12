@@ -33,12 +33,12 @@ export default {
     binding() {
       const ui = uiContext.get();
       return {
-        [ui.switch.activeText]: this._active[this.dict.label],
-        [ui.switch.inactiveText]: this._inActive[this.dict.label],
-        [ui.switch.activeColor]: this._active[this.dict.color],
-        [ui.switch.inactiveColor]: this._inActive[this.dict.color],
-        [ui.switch.activeValue]: this._active[this.dict.value],
-        [ui.switch.inactiveValue]: this._inActive[this.dict.value]
+        [ui.switch.activeText]: this._active[this.dict?.label || "label"],
+        [ui.switch.inactiveText]: this._inActive[this.dict?.label || "label"],
+        [ui.switch.activeColor]: this._active[this.dict?.color || "color"],
+        [ui.switch.inactiveColor]: this._inActive[this.dict?.color || "color"],
+        [ui.switch.activeValue]: this._active[this.dict?.value || "value"],
+        [ui.switch.inactiveValue]: this._inActive[this.dict?.value || "value"]
       };
     }
   }

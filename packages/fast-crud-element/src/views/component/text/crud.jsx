@@ -39,11 +39,11 @@ export default function ({ expose }) {
           type: "text",
           form: {
             component: {
-              addonAfter: "后置",
-              suffix: "suffix",
+              "suffix-icon": "el-icon-date",
               children: {
-                addonBefore() {
-                  return <SearchOutlined />;
+                // slot
+                prepend() {
+                  return "https://";
                 }
               }
             }
@@ -75,18 +75,10 @@ export default function ({ expose }) {
               render(context) {
                 console.log("context scope", context);
                 return (
-                  <a-input-group compact>
-                    <a-input
-                      placeholder={"render1 input"}
-                      style="width: 50%"
-                      v-model={[context.form.render, "value"]}
-                    />
-                    <a-input
-                      placeholder={"render2 input"}
-                      style="width: 50%"
-                      v-model={[context.form.render2, "value"]}
-                    />
-                  </a-input-group>
+                  <div style={"display:flex"}>
+                    <el-input placeholder={"render1 input"} style="width: 50%" v-model={context.form.render} />
+                    <el-input placeholder={"render2 input"} style="width: 50%" v-model={context.form.render2} />
+                  </div>
                 );
               }
             }

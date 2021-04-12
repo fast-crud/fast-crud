@@ -1,17 +1,17 @@
 <template>
   <span class="fs-values-format">
     <template v-if="type === 'text'">
-      <span v-for="item in computedValueItems" :key="item.value" @click="doClick(item)">{{ item.label }}</span>
+      <span v-for="item in computedValueItems" :key="getValue(item)" @click="doClick(item)">{{ getLabel(item) }}</span>
     </template>
     <template v-else>
       <component
         :is="$fsui.tag.name"
         v-for="item in computedValueItems"
         v-bind="item"
-        :key="item.value"
+        :key="getValue(item)"
         class="fs-tag"
         size="small"
-        :[$fsui.tag.type]="item.color || 'default'"
+        :[$fsui.tag.type]="getColor(item) || 'default'"
         :effect="item.effect"
         @click="doClick(item)"
       >
@@ -104,7 +104,7 @@ export default {
     const EFFECT_LIST = ["plain", "light"];
 
     const usedDict = useDict(props, ctx);
-
+    const { getColor, getValue } = usedDict;
     usedDict.watchValue(() => {
       return props.modelValue;
     });
@@ -112,17 +112,18 @@ export default {
       if (!item.effect && props.effect) {
         item.effect = props.effect;
       }
-      if (item.color != null) {
+      if (getColor(item) != null) {
         return;
       }
+      const colorProp = props.dict?.color || "color";
       if (props.color === "auto") {
-        const hashcode = getHashCode(item.value);
+        const hashcode = getHashCode(getValue(item));
         const colors = props.autoColors ? props.autoColors : COLOR_LIST;
-        item.color = colors[hashcode % colors.length];
+        item[colorProp] = colors[hashcode % colors.length];
         const effects = props.autoEffects ? props.autoEffects : EFFECT_LIST;
         item.effect = effects[Math.floor(hashcode / colors.length) % effects.length];
       } else {
-        item.color = props.color;
+        item[colorProp] = props.color;
       }
     }
 
@@ -135,6 +136,9 @@ export default {
 
       let options = [];
 
+      const valueProp = props.dict?.value || "value";
+      const labelProp = props.dict?.label || "label";
+
       if (dict) {
         options = dict.getNodesByValues(valueArr);
       } else {
@@ -144,8 +148,8 @@ export default {
             options.push(item);
           } else {
             options.push({
-              value: item,
-              label: item
+              [valueProp]: item,
+              [labelProp]: item
             });
           }
         });

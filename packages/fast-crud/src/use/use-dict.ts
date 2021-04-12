@@ -1,6 +1,6 @@
 import { getCurrentInstance, computed, reactive, watch } from "vue";
 import _ from "lodash-es";
-export function useDict(props, ctx) {
+export function useDict(props, ctx, vModel = "modelValue") {
   let dict = props.dict;
   if (dict) {
     if (dict.prototype) {
@@ -31,10 +31,12 @@ export function useDict(props, ctx) {
     if (dict.loading) {
       return;
     }
+    const value = props[vModel];
     const scope = {
       ...props.scope,
       ...ctx.attrs.scope,
       componentRef: proxy,
+      value
     };
     if (reload) {
       await dict.reloadDict(scope);
@@ -50,16 +52,45 @@ export function useDict(props, ctx) {
 
   const watchValue = (value) => {
     watch(value, () => {
-      console.log("reload dict", dict);
       reloadDict();
     });
+  };
+
+  const getDictData = () => {
+    return getDict()?.data;
+  };
+
+  const getPropValue = (item, prop) => {
+    let attr = prop;
+    if (getDict()) {
+      attr = getDict()[prop];
+    }
+    return item[attr];
+  };
+  const getValue = (item) => {
+    return getPropValue(item, "value");
+  };
+
+  const getChildren = (item) => {
+    return getPropValue(item, "children");
+  };
+  const getLabel = (item) => {
+    return getPropValue(item, "label");
+  };
+  const getColor = (item) => {
+    return getPropValue(item, "color");
   };
 
   return {
     computedOptions,
     loadDict,
     reloadDict,
+    getDictData,
     getDict,
     watchValue,
+    getValue,
+    getLabel,
+    getChildren,
+    getColor
   };
 }

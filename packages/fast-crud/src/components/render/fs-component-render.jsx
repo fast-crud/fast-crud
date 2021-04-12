@@ -61,7 +61,7 @@ export default {
       const vModel = props.vModel || "modelValue";
       const attrs = {
         ref: "targetRef",
-        scope: props.scope,
+        // scope: props.scope,
         [vModel]: props.modelValue,
         ...props.props
       };

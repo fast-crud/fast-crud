@@ -1,11 +1,12 @@
+import _ from "lodash-es";
 const pcasData = () => import("china-division/dist/pcas-code.json");
+
 const getPcasData = pcasData().then((ret) => {
   return ret.default;
 });
 export default getPcasData;
 export const TreeNodesLazyLoader = {
   getNodesByValues(values) {
-    console.log("getNodesByValues", values);
     if (!(values instanceof Array)) {
       values = [values];
     }
@@ -14,7 +15,9 @@ export const TreeNodesLazyLoader = {
       for (const value of values) {
         const found = this.getNode(data, value);
         if (found) {
-          nodes.push(found);
+          const target = _.cloneDeep(found);
+          delete target.children;
+          nodes.push(target);
         }
       }
       return nodes;

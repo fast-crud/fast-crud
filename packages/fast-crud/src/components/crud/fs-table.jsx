@@ -58,7 +58,7 @@ export default {
         const row = scope[tableColumnCI.row];
         const form = row;
         const getComponentRef = (key) => {
-          const index = scope.index;
+          const index = scope[ui.tableColumn.index];
           return this.getComponentRef(index, key);
         };
         return {
@@ -118,7 +118,7 @@ export default {
                 }
               };
               const setRef = (el) => {
-                const index = scope.index;
+                const index = scope[ui.tableColumn.index];
                 const key = item.key;
                 let row = this.componentRefs[index];
                 if (row == null) {

@@ -24,12 +24,6 @@ export default function ({ crudRef }) {
         editRequest,
         delRequest
       },
-      form: {
-        // 单列布局
-        col: { span: 24 },
-        labelCol: { span: 4 },
-        wrapperCol: { span: 18 }
-      },
       columns: {
         id: {
           title: "ID",
@@ -59,59 +53,42 @@ export default function ({ crudRef }) {
             value: "code",
             label: "name",
             isTree: true,
-            getNodes(values) {
+            async getNodes(values) {
               if (values == null) {
                 return [];
               }
-              return requestForMock({
+              //用于单元格展示
+              const ret = await requestForMock({
                 url: "/tree/GetNodesByValues",
                 params: { values }
               });
+              console.log("getNodes", ret);
+              return ret;
             }
           }),
           form: {
             component: {
-              vModel: "value",
-              options: [
-                {
-                  value: "11",
-                  label: "北京",
-                  isLeaf: false
-                },
-                {
-                  value: "12",
-                  label: "天津",
-                  isLeaf: false
+              props: {
+                props: {
+                  lazy: true,
+                  value: "code",
+                  label: "name",
+                  async lazyLoad(node, resolve) {
+                    console.log("node", node);
+                    const { value } = node;
+                    const ret = await requestForMock({
+                      url: "/tree/GetTreeChildrenByParentId",
+                      params: { parentId: value }
+                    });
+                    resolve(ret);
+                  }
                 }
-              ],
-              loadData: async (selectedOptions) => {
-                console.log("lazyLoad", selectedOptions);
-                const targetOption = selectedOptions[selectedOptions.length - 1];
-                targetOption.loading = true;
-
-                const ret = await requestForMock({
-                  url: "/tree/GetTreeChildrenByParentId",
-                  params: { parentId: targetOption.value }
-                });
-                targetOption.loading = false;
-                const list = [];
-                for (const item of ret) {
-                  list.push({
-                    value: item.code,
-                    label: item.name,
-                    isLeaf: item.leaf === true
-                  });
-                }
-                console.log("layz loaded", list);
-                targetOption.children = list;
-                //options.value = [...options.value];
-              },
-              changeOnSelect: true
+              }
             }
           }
         },
         multiple: {
-          title: "可搜索，可只选父节点",
+          title: "多选",
           type: "dict-cascader",
           dict: dict({
             isTree: true,
@@ -119,14 +96,17 @@ export default function ({ crudRef }) {
           }),
           form: {
             component: {
-              showSearch: {
-                filter: (inputValue, path) => {
-                  return path.some((option) => option.label.toLowerCase().indexOf(inputValue.toLowerCase()) > -1);
-                }
-              },
-              "change-on-select": true
+              filterable: true,
+              // props下配置属性跟配置在component下是一样的效果，而el-cascade下也有一个叫props的属性，所以需要配置两层
+              props: { props: { multiple: true, checkStrictly: true } }
             },
-            helper: "antd cascader 不支持级联多选"
+            helper: "可搜索，多选，可只选父节点"
+          },
+          column: {
+            //级联多选展示
+            component: {
+              multiple: true
+            }
           }
         }
       }

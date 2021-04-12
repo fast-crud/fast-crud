@@ -3,9 +3,9 @@
     <component
       :is="$fsui.checkbox.name"
       v-for="item of computedOptions"
-      :key="item.value"
-      :[$fsui.checkbox.value]="item.value"
-      >{{ item.label }}</component
+      :key="getValue(item)"
+      :[$fsui.checkbox.value]="getValue(item)"
+      >{{ getLabel(item) }}</component
     >
   </component>
 </template>

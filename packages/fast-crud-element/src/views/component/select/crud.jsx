@@ -26,9 +26,7 @@ export default function ({ expose }) {
       },
       form: {
         // 单列布局
-        col: { span: 24 },
-        labelCol: { span: 4 },
-        wrapperCol: { span: 18 }
+        // col: { span: 24 }
       },
       columns: {
         id: {
@@ -133,7 +131,7 @@ export default function ({ expose }) {
           form: {
             title: "多选本地",
             component: {
-              mode: "multiple"
+              multiple: true
             }
           },
           dict: dict({
@@ -148,22 +146,6 @@ export default function ({ expose }) {
           }),
           column: {
             component: { color: "auto" } // 自动染色
-          }
-        },
-        statusSimple: {
-          title: "普通选择",
-          form: {
-            component: {
-              name: "a-select",
-              vModel: "value",
-              options: [
-                { value: "sz", label: "深圳", color: "success" },
-                { value: "gz", label: "广州", color: "primary" },
-                { value: "bj", label: "北京" },
-                { value: "wh", label: "武汉" },
-                { value: "sh", label: "上海" }
-              ]
-            }
           }
         }
       }

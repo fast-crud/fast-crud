@@ -38,7 +38,7 @@ import {
   TabsCI,
   TabPaneCI,
   CollapseCI,
-  CollapseItemCI,
+  CollapseItemCI
 } from "./ui-interface";
 export class Element implements UiInterface {
   constructor(target) {
@@ -60,7 +60,7 @@ export class Element implements UiInterface {
     inactiveText: "inactive-text",
     inactiveValue: "inactive-value",
     modelValue: "modelValue",
-    name: "el-switch",
+    name: "el-switch"
   };
 
   formWrapper: FormWrapperCI = {
@@ -69,7 +69,7 @@ export class Element implements UiInterface {
     buildOnClosedBind(is: string, onClosed: Function) {
       return { onClosed };
     },
-    name: "fs-form-wrapper",
+    name: "fs-form-wrapper"
   };
 
   messageBox: MessageBoxCI = {
@@ -80,7 +80,7 @@ export class Element implements UiInterface {
     },
     confirm: async (context) => {
       return this.messageBox.get(context);
-    },
+    }
   };
 
   message: MessageCI = {
@@ -100,7 +100,7 @@ export class Element implements UiInterface {
     },
     info: (msg) => {
       this.message.get.success(msg);
-    },
+    }
   };
 
   notification: NotificationCI = {
@@ -120,13 +120,13 @@ export class Element implements UiInterface {
     },
     info: (msg) => {
       this.notification.get.success(msg);
-    },
+    }
   };
 
   icon: IconCI = {
     name: "",
     isComponent: false,
-    circle: { circle: true },
+    circle: { circle: true }
   };
 
   icons: Icons = {
@@ -151,7 +151,7 @@ export class Element implements UiInterface {
     zoomOut: "el-icon-zoom-out",
     refreshLeft: "el-icon-refresh-left",
     refreshRight: "el-icon-refresh-right",
-    upload: "el-icon-upload",
+    upload: "el-icon-upload"
   };
 
   dialog: DialogCI = {
@@ -163,96 +163,96 @@ export class Element implements UiInterface {
     },
     footer() {
       return {};
-    },
+    }
   };
 
   buttonGroup: CI = {
-    name: "el-button-group",
+    name: "el-button-group"
   };
 
   col: CI = {
-    name: "el-col",
+    name: "el-col"
   };
 
   row: CI = {
-    name: "el-row",
+    name: "el-row"
   };
 
   card: CI = {
-    name: "el-card",
+    name: "el-card"
   };
 
   checkboxGroup: CheckboxGroupCI = {
     name: "el-checkbox-group",
-    modelValue: "modelValue",
+    modelValue: "modelValue"
   };
   checkbox: CheckboxCI = {
     name: "el-checkbox",
     resolveEvent(e) {
       return e;
     },
-    value: "label",
+    value: "label"
   };
 
   drawer: DrawerCI = {
     name: "el-drawer",
     visible: "modelValue",
     customClass: "custom-class",
-    width: "size",
+    width: "size"
   };
 
   collapseTransition: CI = {
-    name: "el-collapse-transition",
+    name: "el-collapse-transition"
   };
 
   option: CI = {
-    name: "el-option",
+    name: "el-option"
   };
 
   select: SelectCI = {
     name: "el-select",
     modelValue: "modelValue",
-    clearable: "clearable",
+    clearable: "clearable"
   };
 
   treeSelect: TreeSelectCI = {
     name: "el-tree-select",
     modelValue: "modelValue",
-    clearable: "clearable",
+    clearable: "clearable"
   };
 
   radio: RadioCI = {
     name: "el-radio",
-    value: "label",
+    value: "label"
   };
 
   radioGroup: RadioGroupCI = {
     name: "el-radio-group",
-    modelValue: "modelValue",
+    modelValue: "modelValue"
   };
 
   cascader: CascaderCI = {
     name: "el-cascader",
     modelValue: "modelValue",
-    clearable: "clearable",
+    clearable: "clearable"
   };
 
   form: CI = {
-    name: "el-form",
+    name: "el-form"
   };
 
   formItem: FormItemCI = {
     name: "el-form-item",
     prop: "prop",
-    label: "label",
+    label: "label"
   };
 
   button: CI = {
-    name: "el-button",
+    name: "el-button"
   };
 
   pagination: CI = {
-    name: "el-pagination",
+    name: "el-pagination"
   };
 
   tableColumn: TableColumnCI = {
@@ -260,7 +260,7 @@ export class Element implements UiInterface {
     label: "label",
     prop: "prop",
     row: "row",
-    index: "$index",
+    index: "$index"
   };
 
   tableColumnGroup: TableColumnCI = {
@@ -268,56 +268,56 @@ export class Element implements UiInterface {
     label: "label",
     prop: "prop",
     row: "row",
-    index: "$index",
+    index: "$index"
   };
 
   table: TableCI = {
     name: "el-table",
     data: "data",
     fixedHeaderNeedComputeBodyHeight: false,
-    vLoading: "loading",
+    vLoading: "loading"
   };
 
   textArea: TextAreaCI = {
     name: "el-input",
     type: "textarea",
     modelValue: "modelValue",
-    clearable: "clearable",
+    clearable: "clearable"
   };
 
   tag: TagCI = {
     name: "el-tag",
     type: "type",
-    colors: ["primary", "success", "warning", "danger"],
+    colors: ["primary", "success", "warning", "danger"]
   };
 
   inputGroup: InputGroupCI = {
-    name: "el-input-group",
+    name: "el-input-group"
   };
   input: InputCI = {
     name: "el-input",
     clearable: "clearable",
-    modelValue: "modelValue",
+    modelValue: "modelValue"
   };
   inputPassword: InputPasswordCI = {
     name: "el-input",
     clearable: "clearable",
     modelValue: "modelValue",
-    showPassword: "showPassword",
+    showPassword: "showPassword"
   };
   number: CI = {
-    name: "el-input-number",
+    name: "el-input-number"
   };
   datePicker: DatePickerCI = {
     name: "el-date-picker",
     modelValue: "modelValue",
     buildDateType(type) {
       return { type };
-    },
+    }
   };
   timePicker: TimePickerCI = {
     name: "el-time-picker",
-    modelValue: "modelValue",
+    modelValue: "modelValue"
   };
   dropdown: DropdownCI = {
     name: "el-dropdown",
@@ -325,52 +325,52 @@ export class Element implements UiInterface {
       return {
         onCommand($event) {
           callback($event);
-        },
+        }
       };
     },
-    slotName: "dropdown",
+    slotName: "dropdown"
   };
   dropdownMenu: DropdownMenuCI = {
     name: "el-dropdown-menu",
     command: () => {
       return {};
-    },
+    }
   };
   dropdownItem: DropdownItemCI = {
     name: "el-dropdown-item",
-    command: "command",
+    command: "command"
   };
 
   imageGroup: ImageGroupCI = {
-    name: "fs-box",
+    name: "fs-box"
   };
   image: ImageCI = {
     name: "el-image",
     buildPreviewList: (urls) => {
       return { "preview-src-list": urls };
-    },
+    }
   };
   progress: ProgressCI = {
-    name: "el-progress",
+    name: "el-progress"
   };
   loading: LoadingCI = {
     name: "v-loading",
-    type: "directive",
+    type: "directive"
   };
   upload: UploadCI = {
     name: "el-upload",
-    type: "",
+    type: ""
   };
   tabs: TabsCI = {
-    name: "el-tabs",
+    name: "el-tabs"
   };
   tabPane: TabPaneCI = {
-    name: "el-tab-pane",
+    name: "el-tab-pane"
   };
   collapse: CollapseCI = {
-    name: "el-collapse",
+    name: "el-collapse"
   };
   collapseItem: CollapseItemCI = {
-    name: "el-collapse-item",
+    name: "el-collapse-item"
   };
 }

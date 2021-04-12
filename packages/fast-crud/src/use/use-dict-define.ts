@@ -13,9 +13,7 @@ function setDictRequest(request) {
 
 // eslint-disable-next-line @typescript-eslint/no-unused-vars,no-unused-vars
 let dictRequest = async ({ url, dict }) => {
-  logger.warn(
-    "请配置 app.use(FsCrud,{dictRequest:(context)=>{ 你的字典请求方法 }})"
-  );
+  logger.warn("请配置 app.use(FsCrud,{dictRequest:(context)=>{ 你的字典请求方法 }})");
   return [];
 };
 
@@ -50,7 +48,7 @@ class Dict extends UnMergeable {
     // 设置为不可枚举
     Object.defineProperty(this, "loading", {
       value: false,
-      enumerable: false,
+      enumerable: false
     });
     this.loading = false;
     _.merge(this, dict);
@@ -66,11 +64,7 @@ class Dict extends UnMergeable {
   }
 
   isDynamic() {
-    return (
-      this.url instanceof Function ||
-      this.getData instanceof Function ||
-      this.prototype
-    );
+    return this.url instanceof Function || this.getData instanceof Function || this.prototype;
   }
 
   _pickItemProp(item, key) {
@@ -81,26 +75,7 @@ class Dict extends UnMergeable {
   }
 
   setData(data) {
-    const formatData: Array<any> = [];
-    data = _.cloneDeep(data);
-    _.forEach(data, (item) => {
-      const value = this._pickItemProp(item, this.value);
-      const label = this._pickItemProp(item, this.label);
-      const children = this._pickItemProp(item, this.children);
-      const color = this._pickItemProp(item, this.color);
-
-      item.value = value;
-      item.label = label;
-      if (children) {
-        item.children = children;
-      }
-
-      if (color) {
-        item.color = color;
-      }
-      formatData.push(item);
-    });
-    this.data = formatData;
+    this.data = data;
     this.toMap();
   }
 
@@ -170,7 +145,7 @@ class Dict extends UnMergeable {
           loaded: false,
           loading: true,
           data: undefined,
-          callback: [],
+          callback: []
         };
         DictGlobalCache.set(cacheKey, cached);
       } else if (cached.loaded) {
@@ -215,13 +190,25 @@ class Dict extends UnMergeable {
   }
   buildMap(map, list) {
     _.forEach(list, (item) => {
-      map[item.value] = item;
-      if (this.isTree && item.children) {
-        this.buildMap(map, item.children);
+      map[this.getValue(item)] = item;
+      if (this.isTree && this.getChildren(item)) {
+        this.buildMap(map, this.getChildren(item));
       }
     });
   }
 
+  getValue(item) {
+    return item[this.value];
+  }
+  getLabel(item) {
+    return item[this.label];
+  }
+  getChildren(item) {
+    return item[this.children];
+  }
+  getColor(item) {
+    return item[this.color];
+  }
   getDictData() {
     return this.data;
   }
@@ -277,6 +264,6 @@ export function useDictDefine() {
   return {
     dict,
     setDictRequest,
-    Dict,
+    Dict
   };
 }
