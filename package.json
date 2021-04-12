@@ -8,7 +8,7 @@
     "docs:serve": "vitepress serve docs",
     "docgen:crud": "vue-docgen -c docgen/crud.config.js",
     "docgen:extends": "vue-docgen -c docgen/extends.config.js",
-    "pre:publish": "cd ./packages/fast-crud && npm run build && cd ../fast-crud-extends && npm run build && cd ../../ "
+    "pre:publish": "cd ./packages/fast-crud && npm run build  && cd ../../ "
   },
   "author": "Greper",
   "license": "MIT",
