@@ -1,6 +1,6 @@
 {
   "name": "@fast-crud/fast-crud-element",
-  "version": "0.3.0",
+  "version": "0.3.1",
   "private": false,
   "scripts": {
     "dev": "vite --force",
@@ -10,7 +10,7 @@
   "author": "Greper",
   "license": "MIT",
   "dependencies": {
-    "@fast-crud/fast-crud": "^0.3.0",
+    "@fast-crud/fast-crud": "^0.3.1",
     "axios": "^0.21.1",
     "axios-mock-adapter": "^1.19.0",
     "core-js": "^3.6.5",
