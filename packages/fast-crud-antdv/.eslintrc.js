@@ -23,6 +23,8 @@ module.exports = {
     "plugin:prettier/recommended",
   ],
   rules: {
+    trailingComma: "off",
+    "prettier.trailingComma": "off",
     "comma-dangle": ["off"],
     "max-len": [0, 200, 2, { ignoreUrls: true }],
     "@typescript-eslint/ban-ts-ignore": "off",
