@@ -5,15 +5,15 @@ export default function () {
         component: {
           name: "fs-file-uploader",
           listType: "picture-card",
-          accept: ".png,.jpeg,.jpg,.ico,.bmp,.gif,.webp,.svg",
-        },
+          accept: ".png,.jpeg,.jpg,.ico,.bmp,.gif,.webp,.svg"
+        }
       },
       column: {
-        component: { name: "fs-images-format", width: "30px" },
+        component: { name: "fs-images-format", width: "30px" }
       },
       viewForm: {
-        component: { height: 100, width: 100 },
-      },
+        component: { height: 100, width: 100 }
+      }
     },
     "avatar-uploader": {
       form: {
@@ -22,15 +22,15 @@ export default function () {
           limit: 1,
           listType: "avatar",
           accept: ".png,.jpeg,.jpg,.ico,.bmp,.gif,.webp,.svg",
-          showFileList: false,
-        },
+          showFileList: false
+        }
       },
       column: {
         align: "center",
-        component: { name: "fs-images-format", width: "30px" },
+        component: { name: "fs-images-format", width: "30px" }
       },
       viewForm: {
-        component: { height: 100, width: 100 },
+        component: { height: 100, width: 100 }
       },
       valueResolve({ row, key }) {
         const value = row[key];
@@ -41,34 +41,34 @@ export default function () {
             row[key] = null;
           }
         }
-      },
+      }
     },
     "file-uploader": {
       form: {
         component: {
           name: "fs-file-uploader",
-          listType: "text",
-        },
+          listType: "text"
+        }
       },
       column: {
-        component: { name: "fs-images-format", width: "30px" },
-      },
+        component: { name: "fs-images-format", width: "30px" }
+      }
     },
     "cropper-uploader": {
       form: {
         component: {
           name: "fs-cropper-uploader",
           accept: ".png,.jpeg,.jpg,.ico,.bmp,.gif,.svg,.webp",
-          cropper: { viewMode: 1 },
-        },
+          cropper: { viewMode: 1 }
+        }
       },
       column: {
         align: "center",
-        component: { name: "fs-images-format", width: "30px" },
+        component: { name: "fs-images-format", width: "30px" }
       },
       viewForm: {
-        component: { height: 100, width: 100 },
-      },
-    },
+        component: { height: 100, width: 100 }
+      }
+    }
   };
 }

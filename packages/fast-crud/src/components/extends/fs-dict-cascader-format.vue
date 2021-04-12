@@ -28,7 +28,7 @@ export default {
     // 多选[[1,2,3],[4,5,6]]<br/>
     modelValue: {
       type: [String, Array],
-      require: true,
+      require: true
     },
     // value的分隔符<br/>
     // 多选时，如果value为string，则以该分隔符分割成多个展示<br/>
@@ -40,13 +40,13 @@ export default {
     // 示例：{url:'xxx',data:[],value:'',label:'',children:''}
     dict: {
       type: Object,
-      require: false,
-    },
+      require: false
+    }
   },
   setup(props, ctx) {
     const dict = useDict(props, ctx);
     return {
-      ...dict,
+      ...dict
     };
   },
   data() {
@@ -68,7 +68,7 @@ export default {
         arr.push(this.buildValueItem(item));
       }
       return arr;
-    },
+    }
   },
   methods: {
     getValueArr(values) {
@@ -88,12 +88,7 @@ export default {
         return [];
       }
       let arr = null;
-      if (
-        typeof values === "string" &&
-        !this.multiple &&
-        this.separator != null &&
-        this.separator !== ""
-      ) {
+      if (typeof values === "string" && !this.multiple && this.separator != null && this.separator !== "") {
         arr = values.split(this.separator);
       } else if (values instanceof Array) {
         arr = values;
@@ -109,7 +104,7 @@ export default {
       if (dict) {
         return dict.getNodesByValues(arr);
       }
-    },
-  },
+    }
+  }
 };
 </script>

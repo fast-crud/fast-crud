@@ -22,13 +22,13 @@ function newClient(options) {
         getAuthorization(options).then((data) => {
           callback(data);
         });
-      },
+      }
     });
   } else {
     logger.warn("您还未配置getAuthorization，将使用SecretKey授权进行上传");
     client = new COS({
       SecretId: secretId,
-      SecretKey: secretKey,
+      SecretKey: secretKey
     });
   }
 
@@ -57,7 +57,7 @@ async function doUpload({ file, fileName, onProgress, options }) {
             e.percent = Math.floor((e.loaded / e.total) * 100);
           }
           onProgress(e);
-        },
+        }
       },
       async function (err, data) {
         if (err != null) {
@@ -90,6 +90,6 @@ export default {
       return await doUpload(context);
     }
     return { upload };
-  },
+  }
 };
 </script>

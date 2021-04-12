@@ -1,19 +1,10 @@
 <template>
-  <component
-    :is="$fsui.drawer.name"
-    :title="_text.title"
-    v-bind="drawerBind"
-    append-to-body
-  >
+  <component :is="$fsui.drawer.name" :title="_text.title" v-bind="drawerBind" append-to-body>
     <div class="fs-drawer-wrapper">
       <!-- 全选 反选 -->
       <component :is="$fsui.card.name" shadow="never">
         <div class="component--list">
-          <div
-            key="__first__"
-            class="component--list-item"
-            flex="main:justify cross:center"
-          >
+          <div key="__first__" class="component--list-item" flex="main:justify cross:center">
             <span :span="12">
               <component
                 :is="$fsui.checkbox.name"
@@ -28,34 +19,22 @@
             <span class="title">{{ _text.fixed }} / {{ _text.order }}</span>
           </div>
 
-          <draggable
-            v-model="currentValue"
-            tag="transition-group"
-            item-key="key"
-          >
+          <draggable v-model="currentValue" tag="transition-group" item-key="key">
             <template #item="{ element, index }">
-              <div
-                class="component--list-item"
-                flex="main:justify cross:center"
-              >
+              <div class="component--list-item" flex="main:justify cross:center">
                 <component
                   :is="$fsui.checkbox.name"
-                  class="item-label"
                   v-model="element.show"
                   v-model:checked="element.show"
+                  class="item-label"
                   @change="showChange(index, $event)"
                 >
-                  {{
-                    element.label ||
-                    element.title ||
-                    element.key ||
-                    _text.unnamed
-                  }}
+                  {{ element.label || element.title || element.key || _text.unnamed }}
                 </component>
                 <fs-table-columns-fixed-controller
+                  v-model="element.fixed"
                   flex-box="0"
                   class="d2-mr-10"
-                  v-model="element.fixed"
                   @change="fixedChange(index, $event)"
                 />
                 <div flex-box="0" class="component--list-item-handle handle">
@@ -68,21 +47,10 @@
       </component>
       <component :is="$fsui.row.name" class="fs-drawer-footer" :gutter="10">
         <component :is="$fsui.col.name" :span="12">
-          <fs-button
-            :icon="$fsui.icons.refresh"
-            :text="_text.reset"
-            block
-            @click="reset"
-          />
+          <fs-button :icon="$fsui.icons.refresh" :text="_text.reset" block @click="reset" />
         </component>
         <component :is="$fsui.col.name" :span="12">
-          <fs-button
-            type="primary"
-            :icon="$fsui.icons.check"
-            :text="_text.confirm"
-            block
-            @click="submit()"
-          />
+          <fs-button type="primary" :icon="$fsui.icons.check" :text="_text.confirm" block @click="submit()" />
         </component>
       </component>
     </div>
@@ -109,21 +77,21 @@ export default {
     // eslint-disable-next-line vue/no-unused-components
     draggable,
     FsButton,
-    FsTableColumnsFixedController,
+    FsTableColumnsFixedController
   },
   props: {
     columns: {
-      type: Array,
+      type: Array
     },
     storage: {
       type: [Boolean, String],
       default: true,
-      required: false,
+      required: false
     },
     text: {
       type: Object,
-      default: undefined,
-    },
+      default: undefined
+    }
   },
   emits: ["update:columns"],
   setup() {
@@ -137,7 +105,7 @@ export default {
         ["onUpdate:" + ui.drawer.visible]: (e) => {
           active.value = e;
         },
-        [ui.drawer.width]: "300px",
+        [ui.drawer.width]: "300px"
       };
     });
 
@@ -157,8 +125,8 @@ export default {
         [this.$fsui.checkbox.modelValue]: this.checkAll,
         ["onUpdate:" + this.$fsui.checkbox.modelValue]: (v) => {
           this.checkAll = v;
-        },
-      },
+        }
+      }
     };
   },
   computed: {
@@ -176,16 +144,16 @@ export default {
         order: this.t("fs.toolbar.columnFilter.order"),
         reset: this.t("fs.toolbar.columnFilter.reset"),
         confirm: this.t("fs.toolbar.columnFilter.confirm"),
-        unnamed: this.t("fs.toolbar.columnFilter.unnamed"),
+        unnamed: this.t("fs.toolbar.columnFilter.unnamed")
       };
       _.merge(def, this.text);
       return def;
-    },
+    }
   },
   watch: {
     columns(value) {
       this.setCurrentValue(value);
-    },
+    }
   },
   created() {
     this.original = this.buildColumns(this.columns);
@@ -201,9 +169,7 @@ export default {
 
       const currentValue = [];
       for (const storedOption of storedOptions) {
-        const found = this.currentValue.find(
-          (item) => item.key === storedOption.key
-        );
+        const found = this.currentValue.find((item) => item.key === storedOption.key);
         found.fixed = storedOption.fixed;
         found.show = storedOption.show;
         currentValue.push(found);
@@ -226,7 +192,7 @@ export default {
           key: item.key,
           title: item.title,
           show: !!item.show,
-          fixed: !!item.fixed,
+          fixed: !!item.fixed
         };
         columns.push(column);
       });
@@ -235,10 +201,8 @@ export default {
     // fixed 变化时触发
     fixedChange(index, value) {
       if (value) this.currentValue[index].show = true;
-      if (value === "left")
-        this.currentValue.unshift(this.currentValue.splice(index, 1)[0]);
-      if (value === "right")
-        this.currentValue.push(this.currentValue.splice(index, 1)[0]);
+      if (value === "left") this.currentValue.unshift(this.currentValue.splice(index, 1)[0]);
+      if (value === "right") this.currentValue.push(this.currentValue.splice(index, 1)[0]);
 
       this.showChange();
     },
@@ -282,7 +246,7 @@ export default {
         const target = {
           key: item.key,
           show: item.show != null ? item.show : true,
-          fixed: item.fixed,
+          fixed: item.fixed
         };
         storedOptions.push(target);
       }
@@ -303,7 +267,7 @@ export default {
         this.StorageTableStore = new TableStore({
           $router: this.$route,
           tableName: "columnsFilter",
-          keyType: this.storage,
+          keyType: this.storage
         });
       }
       return this.StorageTableStore;
@@ -319,8 +283,8 @@ export default {
         hash += key;
       }
       return hash;
-    },
-  },
+    }
+  }
 };
 </script>
 <style lang="less">

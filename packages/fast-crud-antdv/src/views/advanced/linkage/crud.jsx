@@ -22,7 +22,7 @@ export default function ({ expose }) {
         pageRequest,
         addRequest,
         editRequest,
-        delRequest,
+        delRequest
       },
       columns: {
         id: {
@@ -30,22 +30,22 @@ export default function ({ expose }) {
           key: "id",
           type: "number",
           column: {
-            width: 50,
+            width: 50
           },
           form: {
-            show: false,
-          },
+            show: false
+          }
         },
         province: {
           title: "省",
           type: "dict-select",
           search: {
-            show: true,
+            show: true
           },
           dict: dict({
             url: "/linkage/province",
             value: "id",
-            cache: true,
+            cache: true
           }),
           form: {
             valueChange({ form, value, getComponentRef }) {
@@ -54,14 +54,14 @@ export default function ({ expose }) {
               if (value) {
                 getComponentRef("city").reloadDict(); // 执行city的select组件的reloadDict()方法，触发“city”重新加载字典
               }
-            },
-          },
+            }
+          }
         },
         city: {
           title: "市",
           type: "dict-select",
           search: {
-            show: true,
+            show: true
           },
           dict: dict({
             cache: true,
@@ -74,7 +74,7 @@ export default function ({ expose }) {
               }
               return undefined; // 返回undefined 将不加载字典
             },
-            value: "id",
+            value: "id"
           }),
           form: {
             // 注释同上
@@ -88,14 +88,14 @@ export default function ({ expose }) {
                   countySelect.clearDict(); // 清空选项
                 }
               }
-            },
-          },
+            }
+          }
         },
         county: {
           title: "区",
           type: "dict-select",
           search: {
-            show: true,
+            show: true
           },
           dict: dict({
             value: "id",
@@ -106,10 +106,10 @@ export default function ({ expose }) {
                 return `/linkage/county?province=${form.province} &city=${form.city}`;
               }
               return undefined;
-            },
-          }),
-        },
-      },
-    },
+            }
+          })
+        }
+      }
+    }
   };
 }

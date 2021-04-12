@@ -16,15 +16,9 @@ export default {
           const subSlots = {
             default: () => {
               return buildMenus(sub.children);
-            },
+            }
           };
-          slots.push(
-            <a-sub-menu
-              title={sub.title}
-              key={"index" + sub.index}
-              v-slots={subSlots}
-            />
-          );
+          slots.push(<a-sub-menu title={sub.title} key={"index" + sub.index} v-slots={subSlots} />);
         } else {
           slots.push(
             <a-menu-item key={sub.path} title={sub.title}>
@@ -38,17 +32,10 @@ export default {
     const slots = {
       default() {
         return buildMenus(menus);
-      },
+      }
     };
     return () => {
-      return (
-        <a-menu
-          mode={"inline"}
-          theme={"dark"}
-          v-slots={slots}
-          onClick={onSelect}
-        />
-      );
+      return <a-menu mode={"inline"} theme={"dark"} v-slots={slots} onClick={onSelect} />;
     };
-  },
+  }
 };

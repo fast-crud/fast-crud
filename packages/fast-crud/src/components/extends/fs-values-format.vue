@@ -1,24 +1,19 @@
 <template>
   <span class="fs-values-format">
     <template v-if="type === 'text'">
-      <span
-        v-for="item in computedValueItems"
-        :key="item.value"
-        @click="doClick(item)"
-        >{{ item.label }}</span
-      >
+      <span v-for="item in computedValueItems" :key="item.value" @click="doClick(item)">{{ item.label }}</span>
     </template>
     <template v-else>
       <component
         :is="$fsui.tag.name"
-        class="fs-tag"
         v-for="item in computedValueItems"
         v-bind="item"
         :key="item.value"
+        class="fs-tag"
         size="small"
         :[$fsui.tag.type]="item.color || 'default'"
-        @click="doClick(item)"
         :effect="item.effect"
+        @click="doClick(item)"
       >
         {{ item.label }}
       </component>
@@ -53,12 +48,7 @@ function getHashCode(str) {
 
 function buildArrayValue(props) {
   let valueArr = [];
-  if (
-    typeof props.modelValue === "string" &&
-    props.multiple &&
-    props.separator != null &&
-    props.separator !== ""
-  ) {
+  if (typeof props.modelValue === "string" && props.multiple && props.separator != null && props.separator !== "") {
     valueArr = props.modelValue.split(props.separator);
   } else if (props.modelValue instanceof Array) {
     // 本来就是数组的
@@ -75,7 +65,7 @@ export default {
   props: {
     // 值
     modelValue: {
-      require: false,
+      require: false
     },
     dict: {},
     // 是否多选
@@ -87,24 +77,24 @@ export default {
     // 颜色，【auto, primary, success, warning, danger ,info】
     // 配置auto，则自动根据value值hashcode分配颜色值
     color: {
-      require: false,
+      require: false
     },
     effect: {
-      require: false,
+      require: false
     },
 
     // 自动颜色列表，【 primary, success, warning, danger 】
     autoColors: {
-      type: Array,
+      type: Array
     },
     // 自动主题列表，【 light, plain 】
     autoEffects: {
-      type: Array,
+      type: Array
     },
     // 展示类型【text, tag】
     type: {
-      default: "tag", // 可选【text,tag】
-    },
+      default: "tag" // 可选【text,tag】
+    }
   },
   emits: ["click"],
   setup(props, ctx) {
@@ -130,8 +120,7 @@ export default {
         const colors = props.autoColors ? props.autoColors : COLOR_LIST;
         item.color = colors[hashcode % colors.length];
         const effects = props.autoEffects ? props.autoEffects : EFFECT_LIST;
-        item.effect =
-          effects[Math.floor(hashcode / colors.length) % effects.length];
+        item.effect = effects[Math.floor(hashcode / colors.length) % effects.length];
       } else {
         item.color = props.color;
       }
@@ -156,7 +145,7 @@ export default {
           } else {
             options.push({
               value: item,
-              label: item,
+              label: item
             });
           }
         });
@@ -176,9 +165,9 @@ export default {
     return {
       ...usedDict,
       doClick,
-      computedValueItems,
+      computedValueItems
     };
-  },
+  }
 };
 </script>
 <style>

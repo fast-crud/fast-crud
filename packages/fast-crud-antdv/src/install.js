@@ -14,7 +14,7 @@ import FsExtendComponentInstall from "@fast-crud/fast-crud-extends/src/install/i
 //   extendsDir + "src/components/**/*.vue"
 // );
 // console.log("fs extends install", FsExtendComponents, FsExtendImports);
-export default function(app) {
+export default function (app) {
   app.use(FastCrud, {
     async dictRequest({ url }) {
       return await requestForMock({ url });
@@ -63,7 +63,7 @@ export default function(app) {
         return request({
           url: "/upload/cos/getAuthorization",
           method: "get"
-        }).then(ret => {
+        }).then((ret) => {
           // 返回结构如下
           // ret.data:{
           //   TmpSecretId,
@@ -91,7 +91,7 @@ export default function(app) {
         return request({
           url: "/upload/alioss/getAuthorization",
           method: "get"
-        }).then(ret => {
+        }).then((ret) => {
           console.log("ret", ret);
           return ret;
         });
@@ -112,7 +112,7 @@ export default function(app) {
         return request({
           url: "/upload/qiniu/getToken",
           method: "get"
-        }).then(ret => {
+        }).then((ret) => {
           return ret; // {token:xxx,expires:xxx}
         });
       },

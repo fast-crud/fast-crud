@@ -5,5 +5,5 @@ export default {
     _.forEach(components, (value, key) => {
       app.component(key, value);
     });
-  },
+  }
 };

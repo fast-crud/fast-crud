@@ -14,5 +14,5 @@ export default {
     _.forEach(asyncComponents, (value, key) => {
       app.component(key, value);
     });
-  },
+  }
 };

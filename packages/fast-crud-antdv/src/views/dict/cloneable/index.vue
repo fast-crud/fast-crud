@@ -1,7 +1,7 @@
 <template>
   <fs-crud ref="crudRef" v-bind="crudBinding">
     <template #actionbar-right>
-      <div style="margin-left:10px;">
+      <div style="margin-left: 10px">
         分发时复制，当columns[x].dict分发到addForm、editForm、viewForm、search、table.columns时将会clone一份
       </div>
     </template>

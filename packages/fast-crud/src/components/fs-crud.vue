@@ -12,32 +12,29 @@
           <fs-search
             ref="searchRef"
             v-bind="search"
+            :slots="computedSearchSlots"
             @search="onSearchSubmit"
             @reset="onSearchReset"
-            :slots="computedSearchSlots"
           />
         </div>
         <div class="fs-header-middle"><slot name="header-middle"></slot></div>
 
-        <div
-          class="fs-crud-actionbar"
-          v-if="actionbar && actionbar.show !== false"
-        >
+        <div v-if="actionbar && actionbar.show !== false" class="fs-crud-actionbar">
           <slot name="actionbar-left"></slot>
           <fs-actionbar v-bind="actionbar" @action="onActionHandle" />
           <slot name="actionbar-right"></slot>
         </div>
 
-        <div class="fs-crud-toolbar" v-if="toolbar && toolbar.show !== false">
+        <div v-if="toolbar && toolbar.show !== false" class="fs-crud-toolbar">
           <slot name="toolbar-left"></slot>
           <fs-toolbar
             v-bind="toolbar"
             :slots="computedToolbarSlots"
             :search="search.show"
-            @update:search="$emit('update:search', $event)"
             :compact="toolbar.compact"
-            @update:compact="$emit('update:compact', $event)"
             :columns="table.columns"
+            @update:search="$emit('update:search', $event)"
+            @update:compact="$emit('update:compact', $event)"
             @update:columns="$emit('update:columns', $event)"
             @refresh="$emit('refresh')"
             @action="onToolbarHandle"
@@ -57,7 +54,7 @@
       class="fs-crud-table"
       v-bind="computedTable"
       :columns="computedTable.columns"
-      :rowHandle="rowHandle"
+      :row-handle="rowHandle"
       :data="data"
       :slots="computedCellSlots"
       @row-handle="onRowHandle"
@@ -89,17 +86,7 @@
   </fs-container>
 </template>
 <script>
-import {
-  defineComponent,
-  computed,
-  provide,
-  ref,
-  toRef,
-  getCurrentInstance,
-  reactive,
-  nextTick,
-  onMounted,
-} from "vue";
+import { defineComponent, computed, provide, ref, toRef, getCurrentInstance, reactive, nextTick, onMounted } from "vue";
 import _ from "lodash-es";
 import FsContainer from "./container/fs-container.vue";
 import FsRowHandle from "./crud/fs-row-handle.vue";
@@ -176,7 +163,7 @@ function useSearch(props, ctx) {
     onSearchReset,
     getSearchRef,
     getSearchFormData,
-    setSearchFormData,
+    setSearchFormData
   };
 }
 
@@ -243,7 +230,7 @@ function useTable(props, ctx) {
   const computedTable = computed(() => {
     // antdv 高度自适应， 如果用户有配置scroll，则优先使用用户配置的
     const fixedHeight = merge({}, fixedHeightRet.fixedOptions, {
-      scroll: props.table.scroll,
+      scroll: props.table.scroll
     });
     const table = { ...ctx.attrs, ...props.table, ...fixedHeight };
     return table;
@@ -287,7 +274,7 @@ function useTable(props, ctx) {
         ...props.addForm,
         mode: "add",
         initialForm: e.initialForm,
-        slots: ctx.slots,
+        slots: ctx.slots
       });
     }
   };
@@ -309,7 +296,7 @@ function useTable(props, ctx) {
     computedFormSlots,
     computedSearchSlots,
     computedToolbarSlots,
-    computeBodyHeight: fixedHeightRet.computeBodyHeight,
+    computeBodyHeight: fixedHeightRet.computeBodyHeight
   };
 }
 
@@ -321,7 +308,7 @@ export default defineComponent({
     FsContainer,
     FsFormWrapper,
     FsActionbar,
-    FsToolbar,
+    FsToolbar
   },
   inheritAttrs: false,
   props: {
@@ -329,7 +316,7 @@ export default defineComponent({
     //原始column配置
     columns: {},
     data: {
-      type: Array,
+      type: Array
     },
     rowHandle: {},
     search: {},
@@ -340,7 +327,7 @@ export default defineComponent({
     viewForm: {},
     pagination: {},
     request: {},
-    container: {},
+    container: {}
   },
   emits: [
     "search-submit",
@@ -349,7 +336,7 @@ export default defineComponent({
     "update:search",
     "update:compact",
     "update:columns",
-    "form-value-change",
+    "form-value-change"
   ],
   setup(props, ctx) {
     traceUtil.trace("fs-crud");
@@ -358,9 +345,9 @@ export default defineComponent({
     const table = useTable(props, ctx, search);
     return {
       ...search,
-      ...table,
+      ...table
     };
-  },
+  }
 });
 </script>
 <style lang="less">

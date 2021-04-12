@@ -8,7 +8,7 @@ const components = {
   FsAliossUploader: "components/uploader-impl/fs-alioss-uploader.vue",
   FsCosUploader: "components/uploader-impl/fs-cos-uploader.vue",
   FsQiniuUploader: "components/uploader-impl/fs-qiniu-uploader.vue",
-  FsFormUploader: "components/uploader-impl/fs-form-uploader.vue",
+  FsFormUploader: "components/uploader-impl/fs-form-uploader.vue"
 };
 
 export default components;

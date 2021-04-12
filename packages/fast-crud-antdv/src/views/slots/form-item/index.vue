@@ -6,11 +6,11 @@
 
     <template #form_topics="scope">
       <a-input-search
-        :disabled="scope.mode === 'view'"
-        class="d2-mb-5"
         v-for="(item, index) in scope.form.topics"
         :key="index"
         v-model:value="scope.form.topics[index]"
+        :disabled="scope.mode === 'view'"
+        class="d2-mb-5"
         @search="removeTopic(index, scope.form, scope.key)"
       >
         <template #enterButton>
@@ -19,11 +19,7 @@
           </a-button>
         </template>
       </a-input-search>
-      <a-button
-        :disabled="scope.mode === 'view'"
-        @click="addTopic(scope.form, scope.key)"
-        >添加主题</a-button
-      >
+      <a-button :disabled="scope.mode === 'view'" @click="addTopic(scope.form, scope.key)">添加主题</a-button>
     </template>
   </fs-crud>
 </template>

@@ -19,5 +19,5 @@ export default {
   FsAliossUploader,
   FsCosUploader,
   FsQiniuUploader,
-  FsFormUploader,
+  FsFormUploader
 };

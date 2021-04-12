@@ -8,30 +8,21 @@
   >
     <fs-slot-render v-if="slots" :slots="slots" :scope="buildItemScope(item)" />
     <template v-else-if="item.component?.show !== false">
-      <fs-render
-        v-if="item.component?.render"
-        :render-func="item.component.render"
-        :scope="buildItemScope(item)"
-      />
+      <fs-render v-if="item.component?.render" :render-func="item.component.render" :scope="buildItemScope(item)" />
       <fs-component-render
         v-else
         ref="componentRenderRef"
         v-bind="item.component"
-        :modelValue="modelValue"
-        @update:modelValue="updateModelValue"
+        :model-value="modelValue"
         :scope="buildItemScope(item)"
+        @update:modelValue="updateModelValue"
       />
     </template>
     <template v-if="item.helper">
       <div class="fs-form-helper">
-        <template v-if="typeof item.helper === 'string'">{{
-          item.helper
-        }}</template>
+        <template v-if="typeof item.helper === 'string'">{{ item.helper }}</template>
         <template v-else-if="item.helper.render">
-          <fs-render
-            :renderFunc="item.helper.render"
-            :scope="buildItemScope(item)"
-          />
+          <fs-render :render-func="item.helper.render" :scope="buildItemScope(item)" />
         </template>
       </div>
     </template>
@@ -48,7 +39,7 @@ export default {
     modelValue: {},
     item: {},
     slots: {},
-    getContextFn: {},
+    getContextFn: {}
   },
   emits: ["update:modelValue"],
   setup(props, ctx) {
@@ -72,9 +63,9 @@ export default {
       updateModelValue,
       buildItemScope,
       getComponentRef,
-      componentRenderRef,
+      componentRenderRef
     };
-  },
+  }
 };
 </script>
 

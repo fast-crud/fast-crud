@@ -23,7 +23,7 @@ export default defineComponent({
   name: "FsContainer",
   setup() {
     traceUtil.trace("fs-container");
-  },
+  }
 });
 </script>
 

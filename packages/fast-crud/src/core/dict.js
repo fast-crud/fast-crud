@@ -8,7 +8,7 @@ let def = {
   label: "label",
   children: "children",
   color: "color",
-  cache: true,
+  cache: true
 };
 const cache = new Map();
 
@@ -65,7 +65,7 @@ export async function getDictData(context) {
       const data = cloneDeep(ret.data);
       ret = {
         data,
-        dataMap: toMap(dict, data),
+        dataMap: toMap(dict, data)
       };
     }
     if (dict.onReady) {
@@ -77,7 +77,7 @@ export async function getDictData(context) {
   if (dict.data) {
     return ready({
       data: dict.data,
-      dataMap: dict.dataMap,
+      dataMap: dict.dataMap
     });
   }
 
@@ -87,9 +87,7 @@ export async function getDictData(context) {
   }
   const cacheEnabled = dictUrl && dict.cache;
   if (dictUrl == null && cacheEnabled) {
-    logger.warn(
-      "开启缓存时，dict.url必须配置，如果你是自定义getData，也要配置任意字符串作为缓存key"
-    );
+    logger.warn("开启缓存时，dict.url必须配置，如果你是自定义getData，也要配置任意字符串作为缓存key");
   }
   let cached = null;
   if (cacheEnabled) {
@@ -98,7 +96,7 @@ export async function getDictData(context) {
       if (cached.loaded) {
         return ready({
           data: cached.data,
-          dataMap: cached.dataMap,
+          dataMap: cached.dataMap
         });
       } else {
         // 还在load
@@ -119,7 +117,7 @@ export async function getDictData(context) {
   const dictData = await getRemoteDictData(dictUrl, context);
   const ret = {
     data: dictData,
-    dataMap: toMap(dict, dictData),
+    dataMap: toMap(dict, dictData)
   };
 
   if (cached) {

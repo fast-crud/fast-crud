@@ -24,6 +24,6 @@ function hasEmpty(...values) {
 const StringUtils = {
   isEmpty,
   isAllEmpty,
-  hasEmpty,
+  hasEmpty
 };
 export default StringUtils;

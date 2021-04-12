@@ -1,13 +1,13 @@
 import * as api from "./api";
-export default function({ expose }) {
-  const pageRequest = async query => {
+export default function ({ expose }) {
+  const pageRequest = async (query) => {
     return await api.GetList(query);
   };
   const editRequest = async ({ form, row }) => {
     form.id = row.id;
     return await api.UpdateObj(form);
   };
-  const delRequest = async id => {
+  const delRequest = async (id) => {
     return await api.DelObj(id);
   };
 
@@ -28,8 +28,7 @@ export default function({ expose }) {
           type: "text",
           form: {
             col: { span: 24 },
-            helper:
-              "未分组的字段会显示在这里，一般来说你应该把所有字段都编入分组内"
+            helper: "未分组的字段会显示在这里，一般来说你应该把所有字段都编入分组内"
           }
         },
         title: {

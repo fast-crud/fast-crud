@@ -22,7 +22,7 @@ export default function ({ expose }) {
         pageRequest,
         addRequest,
         editRequest,
-        delRequest,
+        delRequest
       },
       columns: {
         id: {
@@ -30,11 +30,11 @@ export default function ({ expose }) {
           key: "id",
           type: "number",
           column: {
-            width: 50,
+            width: 50
           },
           form: {
-            show: false,
-          },
+            show: false
+          }
         },
         tree: {
           title: "树形选择",
@@ -42,8 +42,8 @@ export default function ({ expose }) {
           type: "dict-tree",
           dict: dict({
             isTree: true,
-            url: "/dicts/cascaderData?single",
-          }),
+            url: "/dicts/cascaderData?single"
+          })
         },
         multiple: {
           title: "多选",
@@ -51,15 +51,15 @@ export default function ({ expose }) {
           type: "dict-tree",
           dict: dict({
             isTree: true,
-            url: "/dicts/cascaderData?single",
+            url: "/dicts/cascaderData?single"
           }),
           form: {
             component: {
-              "tree-checkable": true,
-            },
-          },
-        },
-      },
-    },
+              "tree-checkable": true
+            }
+          }
+        }
+      }
+    }
   };
 }

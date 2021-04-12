@@ -37,7 +37,7 @@ export default function ({ expose }) {
         pageRequest,
         addRequest,
         editRequest,
-        delRequest,
+        delRequest
       },
       columns: {
         name: {
@@ -51,14 +51,14 @@ export default function ({ expose }) {
               maxlength: 5, // 原生属性要写在这里
               props: {
                 type: "text",
-                showWordLimit: true,
-              },
-            },
+                showWordLimit: true
+              }
+            }
           },
           editForm: {
             // 由于数组配置合并时是取并集，所以需要分开配置
-            rules: [{ min: 2, max: 5, message: "姓名长度为2-5" }],
-          },
+            rules: [{ min: 2, max: 5, message: "姓名长度为2-5" }]
+          }
         },
         age: {
           title: "年龄",
@@ -66,8 +66,8 @@ export default function ({ expose }) {
           form: {
             // 由于数组配置合并时是取并集，不同的部分需要分开配置
             rules: [{ pattern: /^\d+$/, message: "必须为整数" }],
-            helper: "正则表达式",
-          },
+            helper: "正则表达式"
+          }
         },
         password: {
           title: "密码",
@@ -76,15 +76,15 @@ export default function ({ expose }) {
             component: {
               render() {
                 return <span>******</span>;
-              },
-            },
+              }
+            }
           },
           form: {
             rules: [
               { required: true, message: "请输入密码" },
-              { validator: validatePass1, trigger: "blur" },
-            ],
-          },
+              { validator: validatePass1, trigger: "blur" }
+            ]
+          }
         },
         password2: {
           title: "确认密码",
@@ -93,35 +93,35 @@ export default function ({ expose }) {
           form: {
             rules: [
               { required: true, message: "请输入确认密码" },
-              { validator: validatePass2, trigger: "blur" },
-            ],
-          },
+              { validator: validatePass2, trigger: "blur" }
+            ]
+          }
         },
         status: {
           title: "必选",
           type: "dict-select",
           dict: dict({
-            url: "/dicts/OpenStatusEnum",
+            url: "/dicts/OpenStatusEnum"
           }),
           form: {
-            rules: [{ required: true, message: "请选择一个选项" }],
-          },
+            rules: [{ required: true, message: "请选择一个选项" }]
+          }
         },
         email: {
           title: "邮箱",
           type: "text",
           form: {
-            rules: [{ type: "email", message: "请填写正确的邮箱" }],
-          },
+            rules: [{ type: "email", message: "请填写正确的邮箱" }]
+          }
         },
         url: {
           title: "URL",
           type: "text",
           form: {
-            rules: [{ type: "url", message: "请填写正确的url" }],
-          },
-        },
-      },
-    },
+            rules: [{ type: "url", message: "请填写正确的url" }]
+          }
+        }
+      }
+    }
   };
 }

@@ -8,13 +8,13 @@ export default {
   props: {
     dict: {},
     //选项，比dict.data优先级高
-    options: { type: Array },
+    options: { type: Array }
   },
   setup(props, ctx) {
     const dictUseRet = useDict(props, ctx);
     return {
-      ...dictUseRet,
+      ...dictUseRet
     };
-  },
+  }
 };
 </script>

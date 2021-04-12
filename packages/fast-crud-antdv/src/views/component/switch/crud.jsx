@@ -22,7 +22,7 @@ export default function ({ expose }) {
         pageRequest,
         addRequest,
         editRequest,
-        delRequest,
+        delRequest
       },
       columns: {
         id: {
@@ -30,11 +30,11 @@ export default function ({ expose }) {
           key: "id",
           type: "number",
           column: {
-            width: 50,
+            width: 50
           },
           form: {
-            show: false,
-          },
+            show: false
+          }
         },
         switch: {
           title: "状态",
@@ -43,9 +43,9 @@ export default function ({ expose }) {
           dict: dict({
             data: [
               { value: true, label: "开启" },
-              { value: false, label: "关闭" },
-            ],
-          }),
+              { value: false, label: "关闭" }
+            ]
+          })
         },
         cellSwitch: {
           title: "cell显示",
@@ -54,15 +54,15 @@ export default function ({ expose }) {
           column: {
             component: {
               name: "fs-dict-switch",
-              vModel: "checked",
-            },
+              vModel: "checked"
+            }
           },
           dict: dict({
             data: [
               { value: true, label: "开启" },
-              { value: false, label: "关闭" },
-            ],
-          }),
+              { value: false, label: "关闭" }
+            ]
+          })
         },
         showTarget: {
           title: "显隐目标",
@@ -73,21 +73,21 @@ export default function ({ expose }) {
               show: compute((context) => {
                 //根据cellSwitch字段显隐
                 return context.row.cellSwitch === true;
-              }),
-            },
+              })
+            }
           },
           search: {
-            show: false,
+            show: false
           },
           form: {
             show: compute((context) => {
               console.log("context", context);
               //根据cellSwitch字段显隐
               return context.form.cellSwitch === true;
-            }),
-          },
-        },
-      },
-    },
+            })
+          }
+        }
+      }
+    }
   };
 }

@@ -4,11 +4,7 @@
       <span class="ml-10">通过cell字段插槽，可以做一些很复杂的显示</span>
     </template>
     <template #cell_like="scope">
-      <a-statistic
-        title="自定义复杂显示"
-        :value="scope.row.like"
-        style="margin-right: 50px"
-      >
+      <a-statistic title="自定义复杂显示" :value="scope.row.like" style="margin-right: 50px">
         <template #suffix>
           <like-outlined />
         </template>

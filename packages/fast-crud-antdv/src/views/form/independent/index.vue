@@ -27,17 +27,17 @@ function useFormDirect() {
     labelPosition: "right",
     labelWidth: "80px",
     style: {
-      "grid-template-columns": "50% 50%",
+      "grid-template-columns": "50% 50%"
     },
     col: {
-      span: 12,
+      span: 12
     },
     labelAlign: "right",
     labelCol: {
-      span: 8,
+      span: 8
     },
     wrapperCol: {
-      span: 14,
+      span: 14
     },
     display: "flex",
     columns: {
@@ -46,31 +46,31 @@ function useFormDirect() {
         component: {
           name: "a-input",
           vModel: "value",
-          allowClear: true,
-        },
+          allowClear: true
+        }
       },
       groupField: {
         title: "分组字段",
         component: {
           name: "a-input",
           vModel: "value",
-          allowClear: true,
-        },
-      },
+          allowClear: true
+        }
+      }
     },
     group: {
       groups: {
         testGroupName: {
           header: "分组测试",
-          columns: ["groupField"],
-        },
-      },
+          columns: ["groupField"]
+        }
+      }
     },
     doSubmit({ form }) {
       console.log("form submit:", form);
       message.info("自定义表单提交:" + JSON.stringify(form));
       message.success("保存成功");
-    },
+    }
   });
 
   function formSubmit() {
@@ -79,7 +79,7 @@ function useFormDirect() {
   return {
     formOptions,
     formRef,
-    formSubmit,
+    formSubmit
   };
 }
 function useFormWrapper() {
@@ -88,24 +88,24 @@ function useFormWrapper() {
     labelPosition: "right",
     labelWidth: "80px",
     style: {
-      "grid-template-columns": "50% 50%",
+      "grid-template-columns": "50% 50%"
     },
     col: {
-      span: 12,
+      span: 12
     },
     labelAlign: "right",
     labelCol: {
-      span: 6,
+      span: 6
     },
     wrapperCol: {
-      span: 16,
+      span: 16
     },
     wrapper: {
       is: "a-modal",
       width: "960px",
       destroyOnClose: true,
       footer: null,
-      title: "表单独立使用",
+      title: "表单独立使用"
     },
     display: "flex",
     columns: {
@@ -114,39 +114,39 @@ function useFormWrapper() {
         component: {
           name: "a-input",
           vModel: "value",
-          allowClear: true,
-        },
+          allowClear: true
+        }
       },
       groupField: {
         title: "分组字段",
         component: {
           name: "a-input",
           vModel: "value",
-          allowClear: true,
-        },
-      },
+          allowClear: true
+        }
+      }
     },
     group: {
       groups: {
         testGroupName: {
           header: "分组测试",
-          columns: ["groupField"],
-        },
-      },
+          columns: ["groupField"]
+        }
+      }
     },
     doSubmit({ form }) {
       console.log("form submit:", form);
       message.info("自定义表单提交:" + JSON.stringify(form));
       message.warn("抛出异常可以阻止表单关闭");
       throw new Error("抛出异常可以阻止表单关闭");
-    },
+    }
   });
   function openFormWrapper() {
     formWrapperRef.value.open(formWrapperOptions.value);
   }
   return {
     formWrapperRef,
-    openFormWrapper,
+    openFormWrapper
   };
 }
 export default defineComponent({
@@ -154,8 +154,8 @@ export default defineComponent({
   setup() {
     return {
       ...useFormDirect(),
-      ...useFormWrapper(),
+      ...useFormWrapper()
     };
-  },
+  }
 });
 </script>

@@ -23,7 +23,7 @@ export default function ({ expose }) {
         pageRequest,
         addRequest,
         editRequest,
-        delRequest,
+        delRequest
       },
       form: {
         /**
@@ -34,11 +34,10 @@ export default function ({ expose }) {
         wrapper: {
           customClass: "page-layout",
           onOpened(context) {
-            getFormWrapperRef().formOptions.display =
-              context.options.initial?.display;
+            getFormWrapperRef().formOptions.display = context.options.initial?.display;
             console.log("form opened", context, getFormData());
-          },
-        },
+          }
+        }
       },
       columns: {
         display: {
@@ -47,8 +46,8 @@ export default function ({ expose }) {
           dict: dict({
             data: [
               { value: "flex", label: "flex", color: "blue" },
-              { value: "grid", label: "grid", color: "green" },
-            ],
+              { value: "grid", label: "grid", color: "green" }
+            ]
           }),
           search: { show: true, valueChange: null },
           form: {
@@ -56,26 +55,26 @@ export default function ({ expose }) {
               const { value } = context;
               getFormWrapperRef().formOptions.display = value;
               console.log("valueChange", value, context);
-            },
-          },
+            }
+          }
         },
         name: {
           title: "姓名",
           type: "text",
-          search: { show: true },
+          search: { show: true }
         },
         zip: {
           title: "邮编",
-          type: "text",
+          type: "text"
         },
         gridSpan: {
           title: "grid跨列",
           type: "text-area",
           form: {
             col: {
-              style: { gridColumn: "span 2" }, // grid 模式
-            },
-          },
+              style: { gridColumn: "span 2" } // grid 模式
+            }
+          }
         },
         flexSpan: {
           title: "flex跨列",
@@ -87,13 +86,13 @@ export default function ({ expose }) {
               return context.form.display !== "grid";
             }),
             col: {
-              span: 24, // flex模式
+              span: 24 // flex模式
             },
             labelCol: { span: 2 }, // antdv 跨列时，需要同时修改labelCol和wrapperCol
-            wrapperCol: { span: 21 },
-          },
-        },
-      },
-    },
+            wrapperCol: { span: 21 }
+          }
+        }
+      }
+    }
   };
 }

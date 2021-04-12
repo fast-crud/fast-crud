@@ -50,5 +50,5 @@ export {
   FsDictSwitch,
   FsDateFormat,
   FsBox,
-  FsDictTree,
+  FsDictTree
 };

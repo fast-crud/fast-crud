@@ -43,12 +43,10 @@ async function doUpload({ file, fileName, onProgress, options }) {
     sts = await getSts({
       key,
       file,
-      ...options,
+      ...options
     });
   } else {
-    logger.warn(
-      "您还未配置getAuthorization，将使用accessKeySecret作为授权进行上传"
-    );
+    logger.warn("您还未配置getAuthorization，将使用accessKeySecret作为授权进行上传");
   }
   let client = null;
   if (sts != null) {
@@ -58,7 +56,7 @@ async function doUpload({ file, fileName, onProgress, options }) {
       accessKeySecret: sts.accessKeySecret,
       stsToken: sts.securityToken,
       bucket: options.bucket,
-      ...options.sdkOpts,
+      ...options.sdkOpts
     });
   } else {
     client = new OSS({
@@ -66,7 +64,7 @@ async function doUpload({ file, fileName, onProgress, options }) {
       accessKeyId: options.accessKeyId,
       accessKeySecret: options.accessKeySecret,
       bucket: options.bucket,
-      ...options.sdkOpts,
+      ...options.sdkOpts
     });
   }
   await client.put(key, file);
@@ -102,6 +100,6 @@ export default {
       return await doUpload(context);
     }
     return { upload };
-  },
+  }
 };
 </script>

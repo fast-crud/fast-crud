@@ -22,7 +22,7 @@ export default function ({ expose }) {
         pageRequest,
         addRequest,
         editRequest,
-        delRequest,
+        delRequest
       },
       columns: {
         id: {
@@ -30,21 +30,21 @@ export default function ({ expose }) {
           key: "id",
           type: "number",
           column: {
-            width: 50,
+            width: 50
           },
           form: {
-            show: false,
-          },
+            show: false
+          }
         },
         radio: {
           title: "状态",
           search: { show: true },
           type: "dict-radio",
           dict: dict({
-            url: "/dicts/OpenStatusEnum?single",
-          }),
-        },
-      },
-    },
+            url: "/dicts/OpenStatusEnum?single"
+          })
+        }
+      }
+    }
   };
 }

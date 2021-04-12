@@ -15,5 +15,5 @@ export default {
     setConfig(options);
 
     esInstall.install(app, components, imports);
-  },
+  }
 };

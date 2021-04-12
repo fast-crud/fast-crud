@@ -22,13 +22,13 @@ export default function ({ crudRef }) {
         pageRequest,
         addRequest,
         editRequest,
-        delRequest,
+        delRequest
       },
       form: {
         // 单列布局
         col: { span: 24 },
         labelCol: { span: 4 },
-        wrapperCol: { span: 18 },
+        wrapperCol: { span: 18 }
       },
       columns: {
         id: {
@@ -36,11 +36,11 @@ export default function ({ crudRef }) {
           key: "id",
           type: "number",
           column: {
-            width: 50,
+            width: 50
           },
           form: {
-            show: false,
-          },
+            show: false
+          }
         },
         cascader: {
           title: "级联",
@@ -48,8 +48,8 @@ export default function ({ crudRef }) {
           type: "dict-cascader",
           dict: dict({
             isTree: true,
-            url: "/dicts/cascaderData?single",
-          }),
+            url: "/dicts/cascaderData?single"
+          })
         },
         lazyLoad: {
           title: "懒加载",
@@ -65,9 +65,9 @@ export default function ({ crudRef }) {
               }
               return requestForMock({
                 url: "/tree/GetNodesByValues",
-                params: { values },
+                params: { values }
               });
-            },
+            }
           }),
           form: {
             component: {
@@ -76,23 +76,22 @@ export default function ({ crudRef }) {
                 {
                   value: "11",
                   label: "北京",
-                  isLeaf: false,
+                  isLeaf: false
                 },
                 {
                   value: "12",
                   label: "天津",
-                  isLeaf: false,
-                },
+                  isLeaf: false
+                }
               ],
               loadData: async (selectedOptions) => {
                 console.log("lazyLoad", selectedOptions);
-                const targetOption =
-                  selectedOptions[selectedOptions.length - 1];
+                const targetOption = selectedOptions[selectedOptions.length - 1];
                 targetOption.loading = true;
 
                 const ret = await requestForMock({
                   url: "/tree/GetTreeChildrenByParentId",
-                  params: { parentId: targetOption.value },
+                  params: { parentId: targetOption.value }
                 });
                 targetOption.loading = false;
                 const list = [];
@@ -100,42 +99,37 @@ export default function ({ crudRef }) {
                   list.push({
                     value: item.code,
                     label: item.name,
-                    isLeaf: item.leaf === true,
+                    isLeaf: item.leaf === true
                   });
                 }
                 console.log("layz loaded", list);
                 targetOption.children = list;
                 //options.value = [...options.value];
               },
-              changeOnSelect: true,
-            },
-          },
+              changeOnSelect: true
+            }
+          }
         },
         multiple: {
           title: "可搜索，可只选父节点",
           type: "dict-cascader",
           dict: dict({
             isTree: true,
-            url: "/dicts/cascaderData?multiple",
+            url: "/dicts/cascaderData?multiple"
           }),
           form: {
             component: {
               showSearch: {
                 filter: (inputValue, path) => {
-                  return path.some(
-                    (option) =>
-                      option.label
-                        .toLowerCase()
-                        .indexOf(inputValue.toLowerCase()) > -1
-                  );
-                },
+                  return path.some((option) => option.label.toLowerCase().indexOf(inputValue.toLowerCase()) > -1);
+                }
               },
-              "change-on-select": true,
+              "change-on-select": true
             },
-            helper: "antd cascader 不支持级联多选",
-          },
-        },
-      },
-    },
+            helper: "antd cascader 不支持级联多选"
+          }
+        }
+      }
+    }
   };
 }

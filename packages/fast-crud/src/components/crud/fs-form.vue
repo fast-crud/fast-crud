@@ -1,12 +1,12 @@
 <template>
   <component
     :is="$fsui.form.name"
+    ref="formRef"
     class="fs-form"
     :class="{
       'fs-form-grid': display === 'grid',
       'fs-form-flex': display === 'flex'
     }"
-    ref="formRef"
     :model="form"
   >
     <!-- row -->
@@ -15,6 +15,7 @@
       <template v-for="item in computedDefaultColumns" :key="item.key">
         <component :is="$fsui.col.name" v-if="item.show !== false" class="fs-col" v-bind="mergeCol(item.col)">
           <fs-form-item
+            v-if="item.show !== false"
             :ref="
               (el) => {
                 if (el) {
@@ -23,26 +24,41 @@
               }
             "
             :item="item"
-            v-if="item.show !== false"
-            :modelValue="get(form, item.key)"
-            @update:modelValue="set(form, item.key, $event)"
+            :model-value="get(form, item.key)"
             :slots="slots['form_' + item.key]"
             :get-context-fn="getContextFn"
+            @update:modelValue="set(form, item.key, $event)"
           />
         </component>
       </template>
     </component>
-    <component style="width: 100%" v-if="computedGroup.wrapper" :is="computedGroup.wrapper.parent" v-model:activeKey="groupActiveKey" v-bind="computedGroup">
-      <component v-for="(groupItem, groupKey) of computedGroup.groups" :key="groupKey" :is="computedGroup.wrapper.child" v-bind="groupItem">
+    <component
+      :is="computedGroup.wrapper.parent"
+      v-if="computedGroup.wrapper"
+      v-model:activeKey="groupActiveKey"
+      style="width: 100%"
+      v-bind="computedGroup"
+    >
+      <component
+        :is="computedGroup.wrapper.child"
+        v-for="(groupItem, groupKey) of computedGroup.groups"
+        :key="groupKey"
+        v-bind="groupItem"
+      >
         <!-- tabPane的slots -->
         <template v-for="(item, slotName) of groupItem.slots" :key="slotName" #[slotName]="scope">
-          <fs-render :renderFunc="item" :scope="scope" />
+          <fs-render :render-func="item" :scope="scope" />
         </template>
         <!-- row -->
         <component :is="$fsui.row.name" class="fs-row" v-bind="row">
           <!-- col -->
           <template v-for="key in groupItem.columns" :key="key">
-            <component :is="$fsui.col.name" v-if="computedColumns[key].show !== false" class="fs-col" v-bind="mergeCol(computedColumns[key].col)">
+            <component
+              :is="$fsui.col.name"
+              v-if="computedColumns[key].show !== false"
+              class="fs-col"
+              v-bind="mergeCol(computedColumns[key].col)"
+            >
               <fs-form-item
                 v-if="computedColumns[key].show !== false"
                 :ref="
@@ -53,10 +69,10 @@
                   }
                 "
                 :item="computedColumns[key]"
-                :modelValue="get(form, key)"
-                @update:modelValue="set(form, key, $event)"
+                :model-value="get(form, key)"
                 :slots="slots['form_' + key]"
                 :get-context-fn="getContextFn"
+                @update:modelValue="set(form, key, $event)"
               />
             </component>
           </template>

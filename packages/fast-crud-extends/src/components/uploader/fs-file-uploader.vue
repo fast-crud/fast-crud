@@ -1,30 +1,19 @@
 <template>
-  <div
-    class="fs-file-uploader"
-    :class="{ 'fs-file-uploader-limit': computedOnLimit }"
-  >
+  <div class="fs-file-uploader" :class="{ 'fs-file-uploader-limit': computedOnLimit }">
     <component
       :is="$fsui.upload.name"
       v-model:fileList="fileList"
-      @change="handleChange"
-      :customRequest="customRequest"
-      :beforeUpload="onBeforeUpload"
-      :listType="listType"
-      @preview="handlePreview"
+      :custom-request="customRequest"
+      :before-upload="onBeforeUpload"
+      :list-type="listType"
       v-bind="$attrs"
+      @change="handleChange"
+      @preview="handlePreview"
     >
-      <component
-        :is="computedFileSelectBtn.is"
-        v-bind="computedFileSelectBtn"
-      />
+      <component :is="computedFileSelectBtn.is" v-bind="computedFileSelectBtn" />
     </component>
     <component :is="computedUploaderImpl" ref="uploaderImplRef" />
-    <component
-      :is="$fsui.dialog.name"
-      v-model:[$fsui.dialog.visible]="previewVisible"
-      :footer="null"
-      v-bind="preview"
-    >
+    <component :is="$fsui.dialog.name" v-model:[$fsui.dialog.visible]="previewVisible" :footer="null" v-bind="preview">
       <img style="width: 100%" :src="previewImage" />
     </component>
   </div>
@@ -48,7 +37,7 @@ export default {
         return (value) => {
           return value;
         };
-      },
+      }
     },
     button: {},
     listType: {},
@@ -57,8 +46,8 @@ export default {
     preview: {},
     valueType: {
       type: String, // url ,key, object
-      default: "object",
-    }, //''
+      default: "object"
+    } //''
   },
   emits: ["change", "update:modelValue"],
   setup(props, ctx) {
@@ -75,7 +64,7 @@ export default {
           value,
           name: pickFileName(value),
           url: props.buildUrl(value),
-          uid: Math.random(),
+          uid: Math.random()
         };
       }
 
@@ -86,7 +75,7 @@ export default {
         size: file.size,
         name: file.name,
         uid: file.uid,
-        ...(file.response ? file.response : file),
+        ...(file.response ? file.response : file)
       };
       if (props.valueType === "object") {
         return value;
@@ -199,9 +188,7 @@ export default {
           showMessage = (fileSize, limit) => {
             const limitTip = computeFileSize(limit);
             const fileSizeTip = computeFileSize(file.size);
-            ui.message.warn(
-              t("fs.extends.fileUploader.sizeLimitTip", [limitTip, fileSizeTip])
-            );
+            ui.message.warn(t("fs.extends.fileUploader.sizeLimitTip", [limitTip, fileSizeTip]));
           };
         } else {
           limit = props.sizeLimit.limit;
@@ -224,7 +211,7 @@ export default {
       const option = {
         file,
         fileName: file.name,
-        onProgress,
+        onProgress
       };
       try {
         const ret = await doUpload(option);
@@ -239,13 +226,13 @@ export default {
       if (props.listType === "picture-card") {
         return {
           is: "FsIcon",
-          icon: ui.icons.plus,
+          icon: ui.icons.plus
         };
       }
       return {
         is: "FsButton",
         icon: ui.icons.upload,
-        text: t("fs.extends.fileUploader.text"),
+        text: t("fs.extends.fileUploader.text")
       };
     });
 
@@ -281,9 +268,9 @@ export default {
       previewVisible,
       previewImage,
       handlePreview,
-      computedOnLimit,
+      computedOnLimit
     };
-  },
+  }
 };
 </script>
 <style lang="less">

@@ -22,7 +22,7 @@ export default function ({ expose }) {
         pageRequest,
         addRequest,
         editRequest,
-        delRequest,
+        delRequest
       },
       columns: {
         id: {
@@ -30,11 +30,11 @@ export default function ({ expose }) {
           key: "id",
           type: "number",
           column: {
-            width: 50,
+            width: 50
           },
           form: {
-            show: false,
-          },
+            show: false
+          }
         },
         file: {
           title: "阿里云上传",
@@ -42,10 +42,10 @@ export default function ({ expose }) {
           form: {
             component: {
               uploader: {
-                type: "alioss",
-              },
-            },
-          },
+                type: "alioss"
+              }
+            }
+          }
         },
         pictureCard: {
           title: "照片墙",
@@ -53,10 +53,10 @@ export default function ({ expose }) {
           form: {
             component: {
               uploader: {
-                type: "alioss",
-              },
-            },
-          },
+                type: "alioss"
+              }
+            }
+          }
         },
         cropper: {
           title: "裁剪",
@@ -64,12 +64,12 @@ export default function ({ expose }) {
           form: {
             component: {
               uploader: {
-                type: "alioss",
-              },
-            },
-          },
-        },
-      },
-    },
+                type: "alioss"
+              }
+            }
+          }
+        }
+      }
+    }
   };
 }

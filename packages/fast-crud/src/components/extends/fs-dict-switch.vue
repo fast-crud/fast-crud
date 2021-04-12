@@ -9,12 +9,12 @@ export default {
   name: "FsDictSwitch",
   props: {
     dict: {},
-    options: {},
+    options: {}
   },
   setup(props, ctx) {
     const ui = uiContext.get();
     return {
-      ...useDict(props, ctx, ui.switch.modelValue),
+      ...useDict(props, ctx, ui.switch.modelValue)
     };
   },
   computed: {
@@ -38,9 +38,9 @@ export default {
         [ui.switch.activeColor]: this._active[this.dict.color],
         [ui.switch.inactiveColor]: this._inActive[this.dict.color],
         [ui.switch.activeValue]: this._active[this.dict.value],
-        [ui.switch.inactiveValue]: this._inActive[this.dict.value],
+        [ui.switch.inactiveValue]: this._inActive[this.dict.value]
       };
-    },
-  },
+    }
+  }
 };
 </script>

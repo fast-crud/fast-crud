@@ -1,11 +1,7 @@
 <template>
   <div class="fs-actionbar">
     <template v-for="(value, key) in buttons" :key="key">
-      <fs-button
-        v-if="value.show !== false"
-        v-bind="value"
-        @click="onClick(key, value, $event)"
-      />
+      <fs-button v-if="value.show !== false" v-bind="value" @click="onClick(key, value, $event)" />
     </template>
   </div>
 </template>
@@ -17,7 +13,7 @@ export default defineComponent({
   name: "FsActionbar",
   components: { FsButton },
   props: {
-    buttons: {},
+    buttons: {}
   },
   emits: ["action"],
   setup(props, ctx) {
@@ -31,8 +27,8 @@ export default defineComponent({
       ctx.emit("action", e);
     }
     return {
-      onClick,
+      onClick
     };
-  },
+  }
 });
 </script>

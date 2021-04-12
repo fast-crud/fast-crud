@@ -18,7 +18,7 @@ export default function ({ expose }) {
 
   const remoteDict = dict({
     cloneable: true,
-    url: "/dicts/OpenStatusEnum",
+    url: "/dicts/OpenStatusEnum"
   });
 
   return {
@@ -28,7 +28,7 @@ export default function ({ expose }) {
         pageRequest,
         addRequest,
         editRequest,
-        delRequest,
+        delRequest
       },
       columns: {
         id: {
@@ -36,11 +36,11 @@ export default function ({ expose }) {
           key: "id",
           type: "number",
           column: {
-            width: 50,
+            width: 50
           },
           form: {
-            show: false,
-          },
+            show: false
+          }
         },
         remote: {
           title: "远程字典",
@@ -48,8 +48,8 @@ export default function ({ expose }) {
           dict: remoteDict,
           type: "dict-select",
           form: {
-            component: { dict: { cache: false } },
-          },
+            component: { dict: { cache: false } }
+          }
         },
         modifyDict: {
           title: "动态修改字典",
@@ -58,35 +58,31 @@ export default function ({ expose }) {
           column: {
             component: {
               name: "a-switch",
-              vModel: "checked",
+              vModel: "checked"
             },
             valueChange({ row, getComponentRef }) {
               // 这里不能使用remoteDict,因为在分发时已经clone到form配置中了
               // 这里dict修改不会影响列里面的数据
               const targetDict = getComponentRef("remote").dict;
-              targetDict.url = row.modifyDict
-                ? "/dicts/moreOpenStatusEnum?remote"
-                : "/dicts/OpenStatusEnum?remote";
+              targetDict.url = row.modifyDict ? "/dicts/moreOpenStatusEnum?remote" : "/dicts/OpenStatusEnum?remote";
               targetDict.reloadDict();
-            },
+            }
           },
           form: {
             component: {
               name: "a-switch",
-              vModel: "checked",
+              vModel: "checked"
             },
             valueChange({ form, getComponentRef }) {
               // 这里不能使用remoteDict,因为在分发时已经clone到form配置中了
               // 这里dict修改不会影响列里面的数据
               const targetDict = getComponentRef("remote").dict;
-              targetDict.url = form.modifyDict
-                ? "/dicts/moreOpenStatusEnum?remote"
-                : "/dicts/OpenStatusEnum?remote";
+              targetDict.url = form.modifyDict ? "/dicts/moreOpenStatusEnum?remote" : "/dicts/OpenStatusEnum?remote";
               targetDict.reloadDict();
-            },
-          },
-        },
-      },
-    },
+            }
+          }
+        }
+      }
+    }
   };
 }

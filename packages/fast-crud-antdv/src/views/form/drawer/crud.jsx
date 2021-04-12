@@ -20,12 +20,12 @@ export default function ({ expose }) {
         pageRequest,
         addRequest,
         editRequest,
-        delRequest,
+        delRequest
       },
       form: {
         wrapper: {
-          is: "a-drawer",
-        },
+          is: "a-drawer"
+        }
       },
       columns: {
         name: {
@@ -34,11 +34,11 @@ export default function ({ expose }) {
           search: { show: true },
           form: {
             component: {
-              maxlength: 20,
-            },
-          },
-        },
-      },
-    },
+              maxlength: 20
+            }
+          }
+        }
+      }
+    }
   };
 }

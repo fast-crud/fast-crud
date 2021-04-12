@@ -1,13 +1,13 @@
 import * as api from "./api";
-export default function({ expose }) {
-  const pageRequest = async query => {
+export default function ({ expose }) {
+  const pageRequest = async (query) => {
     return await api.GetList(query);
   };
   const editRequest = async ({ form, row }) => {
     form.id = row.id;
     return await api.UpdateObj(form);
   };
-  const delRequest = async id => {
+  const delRequest = async (id) => {
     return await api.DelObj(id);
   };
 

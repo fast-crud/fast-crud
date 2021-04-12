@@ -1,9 +1,7 @@
 <template>
   <fs-crud ref="crudRef" v-bind="crudBinding">
     <template #actionbar-right>
-      <div style="margin-left:10px;">
-        dict配置作为原型，任何用到的地方都复制一份
-      </div>
+      <div style="margin-left: 10px">dict配置作为原型，任何用到的地方都复制一份</div>
     </template>
   </fs-crud>
 </template>

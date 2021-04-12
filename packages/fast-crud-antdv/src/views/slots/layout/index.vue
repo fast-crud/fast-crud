@@ -1,20 +1,10 @@
 <template>
   <fs-crud ref="crudRef" v-bind="crudBinding">
-    <template #header-top>
-      <a-alert type="warning" message="header-top 插槽"
-    /></template>
-    <template #header-bottom
-      ><a-alert type="warning" message="header-bottom 插槽"
-    /></template>
-    <template #header-middle>
-      <a-alert type="warning" message="header-middle 插槽"
-    /></template>
-    <template #footer-top>
-      <a-alert type="warning" message="footer-top 插槽"
-    /></template>
-    <template #footer-bottom>
-      <a-alert type="warning" message="footer-bottom 插槽"
-    /></template>
+    <template #header-top> <a-alert type="warning" message="header-top 插槽" /></template>
+    <template #header-bottom><a-alert type="warning" message="header-bottom 插槽" /></template>
+    <template #header-middle> <a-alert type="warning" message="header-middle 插槽" /></template>
+    <template #footer-top> <a-alert type="warning" message="footer-top 插槽" /></template>
+    <template #footer-bottom> <a-alert type="warning" message="footer-bottom 插槽" /></template>
 
     <template #pagination-left>
       <a-button type="danger">pagination-left插槽</a-button>

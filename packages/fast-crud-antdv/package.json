@@ -5,7 +5,8 @@
     "dev": "vite --force",
     "build": "vite build",
     "serve": "vite preview",
-    "pretty-quick": "pretty-quick"
+    "pretty-quick": "pretty-quick",
+    "lint-fix": "eslint --fix --ext .js --ext .jsx --ext .vue src/"
   },
   "author": "Greper",
   "license": "MIT",
@@ -46,7 +47,6 @@
     "@vitejs/plugin-vue": "^1.1.5",
     "@vitejs/plugin-vue-jsx": "^1.1.2",
     "@vue/compiler-sfc": "^3.0.7",
-    "@vue/eslint-config-standard": "^5.1.2",
     "@vue/eslint-config-typescript": "^5.0.2",
     "@vue/test-utils": "^2.0.0-0",
     "autoprefixer": "^10.2.4",

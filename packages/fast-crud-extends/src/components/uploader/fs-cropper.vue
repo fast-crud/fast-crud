@@ -1,35 +1,23 @@
 <template>
   <component
     :is="$fsui.dialog.name"
+    ref="cropperDialogRef"
+    v-model:[$fsui.dialog.visible]="dialogVisible"
     append-to-body
     width="900px"
     :close-on-click-modal="true"
-    ref="cropperDialogRef"
-    v-model:[$fsui.dialog.visible]="dialogVisible"
     v-bind="dialogBinding"
-    :destroyOnClose="false"
+    :destroy-on-close="false"
   >
     <div class="fs-cropper-dialog-wrap">
-      <input
-        type="file"
-        v-show="false"
-        ref="fileInputRef"
-        :accept="accept"
-        @change="handleChange"
-      />
+      <input v-show="false" ref="fileInputRef" type="file" :accept="accept" @change="handleChange" />
       <!-- step1 -->
-      <div
-        class="fs-cropper-dialog__choose fs-cropper-dialog_left"
-        v-show="!isLoaded"
-      >
-        <fs-button round @click="showFileChooser" text="+选择图片" />
+      <div v-show="!isLoaded" class="fs-cropper-dialog__choose fs-cropper-dialog_left">
+        <fs-button round text="+选择图片" @click="showFileChooser" />
         <p>{{ _uploadTip }}</p>
       </div>
       <!-- step2 -->
-      <div
-        class="fs-cropper-dialog__edit fs-cropper-dialog_left"
-        v-show="isLoaded"
-      >
+      <div v-show="isLoaded" class="fs-cropper-dialog__edit fs-cropper-dialog_left">
         <div class="fs-cropper-dialog__edit-area">
           <vue-cropper
             ref="cropperRef"
@@ -41,33 +29,21 @@
         </div>
         <div class="tool-bar">
           <component :is="$fsui.buttonGroup.name">
-            <fs-button
-              v-for="(item, index) of computedButtons"
-              :key="index"
-              v-bind="item"
-            />
+            <fs-button v-for="(item, index) of computedButtons" :key="index" v-bind="item" />
           </component>
         </div>
       </div>
       <div class="fs-cropper-dialog__preview">
         <span class="fs-cropper-dialog__preview-title">预览</span>
         <div class="fs-cropper-dialog__preview-120 preview"></div>
-        <div
-          class="fs-cropper-dialog__preview-65 preview"
-          :class="{ round: _cropper.aspectRatio === 1 }"
-        ></div>
+        <div class="fs-cropper-dialog__preview-65 preview" :class="{ round: _cropper.aspectRatio === 1 }"></div>
       </div>
     </div>
 
     <template #footer>
       <div class="dialog-footer">
-        <fs-button @click="handleClose" size="small" text="取消" />
-        <fs-button
-          type="primary"
-          size="small"
-          @click="doCropper()"
-          text="确定"
-        />
+        <fs-button size="small" text="取消" @click="handleClose" />
+        <fs-button type="primary" size="small" text="确定" @click="doCropper()" />
       </div>
     </template>
   </component>
@@ -83,46 +59,46 @@ const logger = utils.logger;
 export default {
   name: "FsCropper",
   components: {
-    VueCropper,
+    VueCropper
   },
   props: {
     // 对话框标题
     title: {
       type: String,
-      default: "图片裁剪",
+      default: "图片裁剪"
     },
     // cropper的高度，默认为浏览器可视窗口高度的40%，最小270
     cropperHeight: {
-      type: [String, Number],
+      type: [String, Number]
     },
     // 对话框宽度，默认50%
     dialogWidth: {
       type: [String, Number],
-      default: "50%",
+      default: "50%"
     },
     // 图片大小限制，单位MB，0为不限制
     maxSize: {
       type: Number,
-      default: 5,
+      default: 5
     },
     // 上传提示
     uploadTip: {
-      type: String,
+      type: String
     },
     // cropperjs的参数，详见：https://github.com/fengyuanchen/cropperjs
     cropper: {
-      type: Object,
+      type: Object
     },
     // 可接收的文件后缀
     accept: {
       type: String,
-      default: ".jpg, .jpeg, .png, .gif, .webp",
+      default: ".jpg, .jpeg, .png, .gif, .webp"
     },
     // 输出类型，blob,dataUrl,all
     output: {
       type: String,
-      default: "blob", // blob
-    },
+      default: "blob" // blob
+    }
   },
   emits: ["cancel", "done", "ready"],
   setup(props, ctx) {
@@ -137,7 +113,7 @@ export default {
     const file = ref();
     const scale = ref({
       x: 1,
-      y: 1,
+      y: 1
     });
     // 点击关闭弹窗
     function handleClose() {
@@ -151,7 +127,7 @@ export default {
     const customClass = ui.dialog.customClass;
     const dialogBinding = ref({
       ...vClosed,
-      [customClass]: "fs-cropper-dialog",
+      [customClass]: "fs-cropper-dialog"
     });
 
     function open(url) {
@@ -200,9 +176,7 @@ export default {
       }
       // 超出大小
       if (props.maxSize > 0 && file.size / 1024 / 1024 > props.maxSize) {
-        ui.message.warn(
-          `图片大小超出最大限制（${props.maxSize}MB），请重新选择.`
-        );
+        ui.message.warn(`图片大小超出最大限制（${props.maxSize}MB），请重新选择.`);
         return false;
       }
       return true;
@@ -246,9 +220,7 @@ export default {
       return cropperRef.value.getCroppedCanvas().toDataURL();
     }
     function getCropImageBlob(callback, type, quality) {
-      return cropperRef.value
-        .getCroppedCanvas()
-        .toBlob(callback, type, quality);
+      return cropperRef.value.getCroppedCanvas().toBlob(callback, type, quality);
     }
     function emit(result) {
       logger.debug("crop done:", result);
@@ -337,7 +309,7 @@ export default {
           text: t("fs.extends.cropper.reChoose"),
           onClick() {
             handleClick();
-          },
+          }
         },
         {
           size,
@@ -345,7 +317,7 @@ export default {
           text: t("fs.extends.cropper.flipX"),
           onClick() {
             flipX();
-          },
+          }
         },
         {
           size,
@@ -353,7 +325,7 @@ export default {
           text: t("fs.extends.cropper.flipY"),
           onClick() {
             flipY();
-          },
+          }
         },
         {
           size,
@@ -361,7 +333,7 @@ export default {
           icon: ui.icons.zoomIn,
           onClick() {
             zoom(0.1);
-          },
+          }
         },
         {
           size,
@@ -369,7 +341,7 @@ export default {
           icon: ui.icons.zoomOut,
           onClick() {
             zoom(-0.1);
-          },
+          }
         },
         {
           size,
@@ -377,7 +349,7 @@ export default {
           icon: ui.icons.refreshLeft,
           onClick() {
             rotate(90);
-          },
+          }
         },
         {
           size,
@@ -385,7 +357,7 @@ export default {
           icon: ui.icons.refreshRight,
           onClick() {
             rotate(-90);
-          },
+          }
         },
         {
           size,
@@ -394,8 +366,8 @@ export default {
           text: t("fs.extends.cropper.reset"),
           onClick() {
             reset();
-          },
-        },
+          }
+        }
       ];
 
       return buttons;
@@ -438,7 +410,7 @@ export default {
       open,
       clear,
       getCropperRef,
-      ready,
+      ready
     };
   },
   data() {
@@ -450,9 +422,7 @@ export default {
         return this.uploadTip;
       }
       if (this.maxSize > 0) {
-        return `只支持${this.accept.replace(/,/g, "、")},大小不超过${
-          this.maxSize
-        }M`;
+        return `只支持${this.accept.replace(/,/g, "、")},大小不超过${this.maxSize}M`;
       } else {
         return `只支持${this.accept},大小无限制`;
       }
@@ -460,7 +430,7 @@ export default {
     _cropper() {
       const def = {
         aspectRatio: 1,
-        ready: this.ready,
+        ready: this.ready
       };
       if (this.cropper == null) {
         return def;
@@ -491,8 +461,8 @@ export default {
         width += "px";
       }
       return width;
-    },
-  },
+    }
+  }
 };
 </script>
 

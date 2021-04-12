@@ -40,8 +40,8 @@ export default defineComponent({
     return {
       crudBinding,
       crudRef,
-      onClick,
+      onClick
     };
-  },
+  }
 });
 </script>

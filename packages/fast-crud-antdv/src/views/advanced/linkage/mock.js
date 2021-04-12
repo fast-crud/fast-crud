@@ -69,7 +69,7 @@ const mock = mockUtil.buildMock(options);
 
 function omitChildren(orignalListt) {
   const list = [];
-  orignalListt.forEach(item => {
+  orignalListt.forEach((item) => {
     list.push(_.omit(item, "children"));
   });
   return list;
@@ -92,7 +92,7 @@ mock.push({
   method: "get",
   handle(req) {
     const province = parseInt(req.params.province);
-    const a = tree.filter(item => {
+    const a = tree.filter((item) => {
       return item.id === province;
     });
     const list = omitChildren(a[0].children);
@@ -109,11 +109,11 @@ mock.push({
   method: "get",
   handle(req) {
     const province = parseInt(req.params.province);
-    const a = tree.filter(item => {
+    const a = tree.filter((item) => {
       return item.id === province;
     });
     const city = parseInt(req.params.city);
-    const b = a[0].children.filter(item => {
+    const b = a[0].children.filter((item) => {
       return item.id === city;
     });
 

@@ -3,8 +3,8 @@ export default {
   fs: {
     component: {
       select: {
-        placeholder: "please select",
-      },
+        placeholder: "please select"
+      }
     },
     addForm: { title: "add" },
     editForm: { title: "edit" },
@@ -15,18 +15,18 @@ export default {
         text: "remove",
         confirmTitle: "remove tip",
         confirmMessage: "Are you sure you want to delete this record?",
-        success: "delete success!",
+        success: "delete success!"
       },
       edit: {
-        text: "edit",
+        text: "edit"
       },
       view: {
-        text: "view",
-      },
+        text: "view"
+      }
     },
     form: {
       cancel: "cancel",
-      ok: "ok",
+      ok: "ok"
     },
     actionbar: { add: "add" },
     toolbar: {
@@ -36,23 +36,23 @@ export default {
         order: "sort",
         reset: "reset",
         confirm: "ok",
-        unnamed: "unnamed",
+        unnamed: "unnamed"
       },
       search: { title: "show search bar" },
       refresh: { title: "refresh" },
       compact: { title: "compact mode" },
       export: { title: "export" },
-      columns: { title: "columns set" },
+      columns: { title: "columns set" }
     },
     search: {
       search: { text: "search" },
       reset: { text: "reset" },
       error: {
-        message: "form valid error",
-      },
+        message: "form valid error"
+      }
     },
     pagination: {
-      showTotal: "Total {n} items",
+      showTotal: "Total {n} items"
     },
     date: { formatter: { to: "to" } },
     extends: {
@@ -60,8 +60,8 @@ export default {
         reChoose: "reChoose",
         flipX: "flipX",
         flipY: "flipY",
-        reset: "reset",
-      },
-    },
-  },
+        reset: "reset"
+      }
+    }
+  }
 };

@@ -1,17 +1,12 @@
 <template>
   <div class="d2-page-cover">
-    <div
-      class="d2-page-cover__title"
-      @click="$open('https://github.com/fast-crud/fast-crud')"
-    >
+    <div class="d2-page-cover__title" @click="$open('https://github.com/fast-crud/fast-crud')">
       <div class="title-line">
         <img width="50" src="./image/logo.svg" />
         Fast Crud v{{ version }}
       </div>
     </div>
-    <p class="d2-page-cover__sub-title">
-      面向配置的crud编程，快速开发crud功能
-    </p>
+    <p class="d2-page-cover__sub-title">面向配置的crud编程，快速开发crud功能</p>
     <div class="exampleBox">
       <div class="left">
         <d2-highlight :code="helper.crud" lang="javascript" />
@@ -21,6 +16,18 @@
       </div>
       <div class="right">
         <img src="./image/gif.webp" />
+      </div>
+    </div>
+    <div class="footer_box">
+      <div class="left"></div>
+      <div class="right">
+        <div>如果觉得好用，请不要吝啬你的star哟！</div>
+        <a href="https://gitee.com/fast-crud/fast-crud" target="_blank"
+          ><img src="https://gitee.com/fast-crud/fast-crud/badge/star.svg?theme=dark" alt="star"
+        /></a>
+        <a href="https://github.com/fast-crud/fast-crud" target="_blank"
+          ><img alt="GitHub stars" src="https://img.shields.io/github/stars/fast-crud/fast-crud?logo=github"
+        /></a>
       </div>
     </div>
   </div>
@@ -114,73 +121,18 @@ export default defineComponent({
     }
   }
 
-  .toStar {
-    position: absolute;
-    top: 20px;
-    right: 150px;
-    border: 0;
-    color: #4cc134;
-    margin: 10px;
-    animation: changeshadow 1s ease-in infinite;
-    /* 其它浏览器兼容性前缀 */
-    -webkit-animation: changeshadow 1s linear infinite;
-    -moz-animation: changeshadow 1s linear infinite;
-    -ms-animation: changeshadow 1s linear infinite;
-    -o-animation: changeshadow 1s linear infinite;
-  }
-  @keyframes changeshadow {
-    0% {
-      text-shadow: 0 0 4px #4cc134;
-    }
-    50% {
-      text-shadow: 0 0 40px #4cc134;
-    }
-    100% {
-      text-shadow: 0 0 4px #4cc134;
-    }
-  }
-  @-webkit-keyframes changeshadow {
-    0% {
-      text-shadow: 0 0 4px #4cc134;
-    }
-    50% {
-      text-shadow: 0 0 40px #4cc134;
-    }
-    100% {
-      text-shadow: 0 0 4px #4cc134;
-    }
-  }
-  @-moz-keyframes changeshadow {
-    0% {
-      text-shadow: 0 0 4px #4cc134;
-    }
-    50% {
-      text-shadow: 0 0 40px #4cc134;
-    }
-    100% {
-      text-shadow: 0 0 4px #4cc134;
-    }
-  }
-  @-ms-keyframes changeshadow {
-    0% {
-      text-shadow: 0 0 4px #4cc134;
-    }
-    50% {
-      text-shadow: 0 0 40px #4cc134;
-    }
-    100% {
-      text-shadow: 0 0 4px #4cc134;
-    }
-  }
-  @-o-keyframes changeshadow {
-    0% {
-      text-shadow: 0 0 4px #4cc134;
-    }
-    50% {
-      text-shadow: 0 0 40px #4cc134;
-    }
-    100% {
-      text-shadow: 0 0 4px #4cc134;
+  .footer_box {
+    padding: 10px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    .right {
+      display: flex;
+      justify-items: center;
+      align-items: center;
+      & > * {
+        display: flex;
+      }
     }
   }
 }

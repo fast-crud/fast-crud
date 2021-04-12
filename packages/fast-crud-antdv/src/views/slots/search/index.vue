@@ -1,19 +1,12 @@
 <template>
   <fs-crud ref="crudRef" v-bind="crudBinding">
     <template #search_radio="scope">
-      <a-input-number
-        style="width:200px;"
-        v-model:value="scope.form.radio"
-        placeholder="字段插槽自定义"
-      />
+      <a-input-number v-model:value="scope.form.radio" style="width: 200px" placeholder="字段插槽自定义" />
     </template>
     <template #search-middle="scope">
       <a-form-item label="自定义">
         <a-tooltip title="注意：search-middle插槽自定义的内容，无法被重置">
-          <a-input
-            v-model:value="scope.form.custom"
-            placeholder="search-middle插槽"
-          />
+          <a-input v-model:value="scope.form.custom" placeholder="search-middle插槽" />
         </a-tooltip>
       </a-form-item>
     </template>

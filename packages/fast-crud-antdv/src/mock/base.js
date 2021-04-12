@@ -75,7 +75,7 @@ export default {
             delete query.current;
             delete query.size;
             if (Object.keys(query).length > 0) {
-              data = list.filter(item => {
+              data = list.filter((item) => {
                 let allFound = true; // 是否所有条件都符合
                 for (const key in query) {
                   // 判定某一个条件
@@ -100,11 +100,7 @@ export default {
                         if (found) {
                           break;
                         }
-                      } else if (
-                        item[key] === i ||
-                        (typeof item[key] === "string" &&
-                          item[key].indexOf(i + "") >= 0)
-                      ) {
+                      } else if (item[key] === i || (typeof item[key] === "string" && item[key].indexOf(i + "") >= 0)) {
                         found = true;
                         break;
                       }
@@ -137,10 +133,7 @@ export default {
             end = data.length;
           }
           const records = data.slice(start, end);
-          const maxPage =
-            data.length % size === 0
-              ? data.length / size
-              : Math.floor(data.length / size) + 1;
+          const maxPage = data.length % size === 0 ? data.length / size : Math.floor(data.length / size) + 1;
           if (current > maxPage) {
             current = maxPage;
           }

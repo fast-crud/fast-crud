@@ -1,7 +1,7 @@
 <template>
   <div class="fs-file-format">
     <template v-if="type === 'text'">
-      <span v-for="item in items" class="fs-file-item" :key="item.url">
+      <span v-for="item in items" :key="item.url" class="fs-file-item">
         <a :href="item.url" target="_blank" v-bind="a">
           {{ item.name }}
         </a>
@@ -10,9 +10,9 @@
     <template v-else>
       <component
         :is="$fsui.tag.name"
-        class="fs-tag-item"
         v-for="item in items"
         :key="item.url"
+        class="fs-tag-item"
         :type="item.color"
         v-bind="tag"
       >
@@ -29,16 +29,16 @@ export default {
   props: {
     // 值
     modelValue: {
-      require: true,
+      require: true
     },
     // tag颜色，【primary, success, warning, danger ,info】
     color: {
       require: false,
-      default: "primary",
+      default: "primary"
     },
     // 展示类型【text, tag】
     type: {
-      default: "tag", // 可选【text,tag】
+      default: "tag" // 可选【text,tag】
     },
     // 链接配置
     a: {},
@@ -49,8 +49,8 @@ export default {
       type: Function,
       default: function (value) {
         return value;
-      },
-    },
+      }
+    }
   },
   data() {
     return {};
@@ -71,7 +71,7 @@ export default {
         }
       }
       return valueArr;
-    },
+    }
   },
   created() {},
   methods: {
@@ -86,10 +86,10 @@ export default {
         url: this.buildUrl(value),
         value: value,
         name: this.getFileName(value),
-        color: this.color,
+        color: this.color
       };
-    },
-  },
+    }
+  }
 };
 </script>
 <style lang="less">

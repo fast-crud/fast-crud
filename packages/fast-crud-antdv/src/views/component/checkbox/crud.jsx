@@ -22,7 +22,7 @@ export default function ({ crudRef }) {
         pageRequest,
         addRequest,
         editRequest,
-        delRequest,
+        delRequest
       },
       columns: {
         id: {
@@ -30,21 +30,21 @@ export default function ({ crudRef }) {
           key: "id",
           type: "number",
           column: {
-            width: 50,
+            width: 50
           },
           form: {
-            show: false,
-          },
+            show: false
+          }
         },
         checkbox: {
           title: "状态",
           search: { show: true },
           type: "dict-checkbox",
           dict: dict({
-            url: "/dicts/OpenStatusEnum?single",
-          }),
-        },
-      },
-    },
+            url: "/dicts/OpenStatusEnum?single"
+          })
+        }
+      }
+    }
   };
 }

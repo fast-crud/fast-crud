@@ -4,10 +4,7 @@ import _ from "lodash-es";
 import defaultConfig from "./config";
 
 function setConfig(app, config) {
-  app.config.globalProperties.$fs_uploader_config = _.merge(
-    defaultConfig,
-    config
-  );
+  app.config.globalProperties.$fs_uploader_config = _.merge(defaultConfig, config);
 }
 export default {
   install(app, options) {
@@ -20,5 +17,5 @@ export default {
     // _.forEach(components, (component, key) => {
     //   app.component(key, component);
     // });
-  },
+  }
 };

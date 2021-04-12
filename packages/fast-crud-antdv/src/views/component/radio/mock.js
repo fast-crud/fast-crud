@@ -1,18 +1,18 @@
 import mockUtil from "/src/mock/base";
 const options = {
   name: "formRadio",
-  idGenerator: 0,
+  idGenerator: 0
 };
 const list = [
   {
-    radio: "1",
+    radio: "1"
   },
   {
-    radio: "2",
+    radio: "2"
   },
   {
-    radio: "0",
-  },
+    radio: "0"
+  }
 ];
 options.list = list;
 const mock = mockUtil.buildMock(options);
