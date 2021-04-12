@@ -11,11 +11,6 @@ export default {
     const newTypes = types();
     const { addTypes } = useTypes();
     addTypes(newTypes);
-
     setConfig(app, options);
-
-    // _.forEach(components, (component, key) => {
-    //   app.component(key, component);
-    // });
   }
 };
