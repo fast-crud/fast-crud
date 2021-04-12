@@ -140,7 +140,7 @@ export default {
     const formRef = ref();
 
     const form = reactive({});
-
+    const { proxy } = getCurrentInstance();
     const initialForm = _.cloneDeep(props.initialForm);
     // 初始数据赋值
     _.each(props.columns, (item, key) => {
@@ -301,8 +301,6 @@ export default {
     function mergeCol(col) {
       return _.merge({}, props.col, col);
     }
-
-    const { proxy } = getCurrentInstance();
 
     function buildItemScope(item) {
       return { key: item.key, ...scope.value };

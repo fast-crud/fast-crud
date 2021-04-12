@@ -100,11 +100,7 @@ export default {
                         if (found) {
                           break;
                         }
-                      } else if (
-                        item[key] === i ||
-                        (typeof item[key] === "string" &&
-                          item[key].indexOf(i + "") >= 0)
-                      ) {
+                      } else if (item[key] === i || (typeof item[key] === "string" && item[key].indexOf(i + "") >= 0)) {
                         found = true;
                         break;
                       }
@@ -137,10 +133,7 @@ export default {
             end = data.length;
           }
           const records = data.slice(start, end);
-          const maxPage =
-            data.length % size === 0
-              ? data.length / size
-              : Math.floor(data.length / size) + 1;
+          const maxPage = data.length % size === 0 ? data.length / size : Math.floor(data.length / size) + 1;
           if (current > maxPage) {
             current = maxPage;
           }
@@ -154,10 +147,10 @@ export default {
               records: records,
               total: data.length,
               size: size,
-              current: current,
-            },
+              current: current
+            }
           };
-        },
+        }
       },
       {
         path: "/" + name + "/get",
@@ -175,9 +168,9 @@ export default {
           return {
             code: 0,
             msg: "success",
-            data: current,
+            data: current
           };
-        },
+        }
       },
       {
         path: "/" + name + "/add",
@@ -188,9 +181,9 @@ export default {
           return {
             code: 0,
             msg: "success",
-            data: req.body.id,
+            data: req.body.id
           };
-        },
+        }
       },
       {
         path: "/" + name + "/update",
@@ -203,9 +196,9 @@ export default {
           return {
             code: 0,
             msg: "success",
-            data: null,
+            data: null
           };
-        },
+        }
       },
       {
         path: "/" + name + "/delete",
@@ -215,9 +208,9 @@ export default {
           return {
             code: 0,
             msg: "success",
-            data: null,
+            data: null
           };
-        },
+        }
       },
       {
         path: "/" + name + "/batchDelete",
@@ -233,10 +226,10 @@ export default {
           return {
             code: 0,
             msg: "success",
-            data: null,
+            data: null
           };
-        },
-      },
+        }
+      }
     ];
-  },
+  }
 };

@@ -31,7 +31,7 @@ export default ({ command, mode }) => {
 
   console.log("devAlias", devAlias);
   return {
-    base: "antdv",
+    base: "/antdv/",
     plugins: [
       vueJsx({
         // options are passed on to @vue/babel-plugin-jsx
