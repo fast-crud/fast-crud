@@ -53,7 +53,9 @@ export default function ({ crudRef }) {
             value: "code",
             label: "name",
             isTree: true,
-            async getNodes(values) {
+            cache: true,
+            prototype: true,
+            async getNodesByValues(values) {
               if (values == null) {
                 return [];
               }

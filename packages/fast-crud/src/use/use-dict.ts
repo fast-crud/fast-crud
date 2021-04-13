@@ -50,10 +50,15 @@ export function useDict(props, ctx, vModel = "modelValue") {
     await loadDict(true);
   };
 
-  const watchValue = (value) => {
-    watch(value, () => {
-      reloadDict();
-    });
+  const watchValue = () => {
+    watch(
+      () => {
+        return props[vModel];
+      },
+      () => {
+        reloadDict();
+      }
+    );
   };
 
   const getDictData = () => {

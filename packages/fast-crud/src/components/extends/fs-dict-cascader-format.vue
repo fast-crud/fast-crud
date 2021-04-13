@@ -45,6 +45,10 @@ export default {
   },
   setup(props, ctx) {
     const dict = useDict(props, ctx);
+    if (props.dict?.getNodesByValues) {
+      dict.watchValue();
+    }
+
     return {
       ...dict
     };
@@ -102,7 +106,7 @@ export default {
 
       const dict = this.getDict();
       if (dict) {
-        return dict.getNodesByValues(arr);
+        return dict.getNodesFromDataMap(arr);
       }
     }
   }

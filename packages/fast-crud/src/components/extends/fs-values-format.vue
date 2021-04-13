@@ -140,7 +140,7 @@ export default {
       const labelProp = props.dict?.label || "label";
 
       if (dict) {
-        options = dict.getNodesByValues(valueArr);
+        options = dict.getNodesFromDataMap(valueArr);
       } else {
         options = [];
         _.forEach(valueArr, (item) => {

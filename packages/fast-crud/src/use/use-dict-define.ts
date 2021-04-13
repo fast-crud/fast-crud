@@ -3,7 +3,7 @@ import { useMerge } from "./use-merge";
 import logger from "../utils/util.log";
 import { reactive } from "vue";
 import LRU from "lru-cache";
-const DictGlobalCache = new LRU(50); // sets just the max size
+const DictGlobalCache = new LRU(100); //全局cache， sets just the max size
 
 const { UnMergeable } = useMerge();
 
@@ -39,13 +39,13 @@ class Dict extends UnMergeable {
   dataMap = {};
   loading = false;
   custom = {};
-  getNodes: undefined | Function = undefined;
+  getNodesByValues: undefined | Function = undefined;
   cacheNodes = {};
   onReady: undefined | Function = undefined;
   constructor(dict) {
     super();
 
-    // 设置为不可枚举
+    // 设置为不可枚举,就不会在clone的时候复制值，导致不会loadDict的bug
     Object.defineProperty(this, "loading", {
       value: false,
       enumerable: false
@@ -56,22 +56,10 @@ class Dict extends UnMergeable {
       this.originalData = dict.data;
       this.setData(dict.data);
     }
-
-    // if (this.immediate && !this.prototype) {
-    //   console.log(" immediate load dict");
-    //   this.loadDict();
-    // }
   }
 
   isDynamic() {
     return this.url instanceof Function || this.getData instanceof Function || this.prototype;
-  }
-
-  _pickItemProp(item, key) {
-    if (key instanceof Function) {
-      return key(item);
-    }
-    return _.get(item, key);
   }
 
   setData(data) {
@@ -86,8 +74,28 @@ class Dict extends UnMergeable {
     if (this.data) {
       return;
     }
-    let data: Array<any>;
-    if (this.originalData) {
+    let data: Array<any> = [];
+    if (this.getNodesByValues) {
+      if (context.value) {
+        let cacheKey = null;
+        if (this.cache && this.url) {
+          cacheKey = this.url + context.value;
+        }
+        let cached = null;
+
+        if (cacheKey) {
+          cached = DictGlobalCache.get(cacheKey);
+        }
+        if (cached) {
+          data = cached;
+        } else {
+          data = await this.getNodesByValues(context.value, context);
+          if (cacheKey) {
+            DictGlobalCache.set(cacheKey, data);
+          }
+        }
+      }
+    } else if (this.originalData) {
       data = this.originalData;
     } else {
       this.loading = true;
@@ -186,6 +194,9 @@ class Dict extends UnMergeable {
     if (this.data) {
       this.buildMap(map, this.data);
     }
+    // if (this.getNodesByValues) {
+    //   _.merge(this.dataMap, map);
+    // }
     this.dataMap = map;
   }
   buildMap(map, list) {
@@ -221,26 +232,13 @@ class Dict extends UnMergeable {
     return this.dataMap[value];
   }
 
-  getNodesByValues(value, context) {
+  getNodesFromDataMap(value) {
     if (value == null) {
       return [];
     }
     if (!_.isArray(value)) {
       value = [value];
     }
-
-    if (this.getNodes) {
-      const valueKey = value.toString();
-      const cached = this.cacheNodes[valueKey];
-      //要远程获取
-      if (cached) {
-        return cached;
-      }
-      const nodes = this.getNodes(value, context);
-      this.cacheNodes[valueKey] = cached;
-      return nodes;
-    }
-
     //本地获取
     const nodes: Array<any> = [];
     _.forEach(value, (item) => {
