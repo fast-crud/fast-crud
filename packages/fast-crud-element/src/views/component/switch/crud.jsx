@@ -1,5 +1,4 @@
 import * as api from "./api";
-import { requestForMock } from "/src/api/service";
 import { dict, compute } from "/src/fs";
 export default function ({ expose }) {
   const pageRequest = async (query) => {
@@ -53,8 +52,7 @@ export default function ({ expose }) {
           type: "dict-switch",
           column: {
             component: {
-              name: "fs-dict-switch",
-              vModel: "checked"
+              name: "fs-dict-switch"
             }
           },
           dict: dict({
