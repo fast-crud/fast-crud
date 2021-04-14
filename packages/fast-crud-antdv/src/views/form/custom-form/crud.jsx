@@ -22,19 +22,19 @@ export default function ({ expose }) {
         pageRequest,
         addRequest,
         editRequest,
-        delRequest,
+        delRequest
       },
       columns: {
         title: {
           title: "商品标题",
-          type: "text",
+          type: "text"
         },
         code: {
           title: "商品代码",
           search: { show: true },
-          type: "text",
-        },
-      },
-    },
+          type: "text"
+        }
+      }
+    }
   };
 }

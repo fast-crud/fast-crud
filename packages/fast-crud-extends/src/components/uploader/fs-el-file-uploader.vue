@@ -1,6 +1,7 @@
 <template>
   <div class="fs-el-file-uploader" :class="{ 'is-disabled': disabled }">
     <el-upload
+      ref="fileUploader"
       :class="uploadClass"
       :file-list="fileList"
       :disabled="disabled"
@@ -10,33 +11,23 @@
       :on-success="handleUploadFileSuccess"
       :on-error="handleUploadFileError"
       :on-progress="handleUploadProgress"
-      @blur="handleBlur"
-      ref="fileUploader"
       v-bind="$attrs"
+      @blur="handleBlur"
     >
       <el-button
+        v-if="_elProps.listType === 'text' || this._elProps.listType === 'picture'"
         :disabled="disabled"
         :size="btnSize"
         type="primary"
-        v-if="
-          _elProps.listType === 'text' || this._elProps.listType === 'picture'
-        "
         >{{ btnName }}</el-button
       >
-      <div
-        class="avatar-item-wrapper"
-        v-else-if="this._elProps.listType === 'picture-card'"
-      >
+      <div v-else-if="this._elProps.listType === 'picture-card'" class="avatar-item-wrapper">
         <i class="el-icon-plus avatar-uploader-icon"></i>
       </div>
       <template v-else-if="_elProps.listType === 'avatar'">
         <div class="avatar-item-wrapper">
-          <div class="status-uploading" v-if="avatarLoading != null">
-            <el-progress
-              type="circle"
-              :percentage="avatarLoading"
-              :width="70"
-            />
+          <div v-if="avatarLoading != null" class="status-uploading">
+            <el-progress type="circle" :percentage="avatarLoading" :width="70" />
           </div>
           <div v-if="avatarUrl != null" class="avatar">
             <el-image :src="avatarUrl">
@@ -48,14 +39,10 @@
             </el-image>
             <div class="preview" @click.stop="">
               <i class="el-icon-zoom-in" @click="previewAvatar"></i>
-              <i
-                class="el-icon-delete"
-                v-if="!disabled"
-                @click="removeAvatar"
-              ></i>
+              <i v-if="!disabled" class="el-icon-delete" @click="removeAvatar"></i>
             </div>
           </div>
-          <i class="el-icon-plus avatar-uploader-icon" v-else></i>
+          <i v-else class="el-icon-plus avatar-uploader-icon"></i>
         </div>
       </template>
     </el-upload>
@@ -83,7 +70,7 @@ export default {
     // 上传后端类型，[cos,qiniu,alioss,form]
     type: {
       type: String,
-      default: undefined, // 上传类型：form cos qiniu  alioss
+      default: undefined // 上传类型：form cos qiniu  alioss
     },
     // 值：url<br/>
     // 或 [url1,url2]<br/>
@@ -93,51 +80,51 @@ export default {
     // limit=1 时 input事件返回 {url:'url',md5:'',size:number}<br/>
     // limit>1 时 input事件返回 数组<br/>
     modelValue: {
-      type: [String, Array, Object],
+      type: [String, Array, Object]
     },
     // 样式后缀 追加到url的后面，进行图片处理，需要到对象存储平台配置样式
     suffix: {
       type: String,
-      required: false,
+      required: false
     },
     // 返回类型: url=仅返回链接, object=包含md5和size , key=仅返回文件key
     returnType: {
       type: String,
-      default: "url",
+      default: "url"
     },
     // 自定义参数
     custom: {
-      type: Object,
+      type: Object
     },
     // 内部封装[el-upload](https://element.eleme.cn/#/zh-CN/component/upload)组件的属性参数<br/>
     // 注意，form方式上传的action、name、headers等参数不在此设置
     elProps: {
-      type: Object,
+      type: Object
     },
     // 预览对话框的配置
     preview: {
-      type: Object,
+      type: Object
     },
     // 文件大小限制 <br/>
     // 如果传入{limit,tip(fileSize,limit){vm.$message('可以自定义提示')}}
     sizeLimit: {
       type: Number,
-      Object,
+      Object
     },
     // 构建下载url方法
     buildUrl: {
       type: Function,
       default: function (value, item) {
         return typeof value === "object" ? item.url : value;
-      },
+      }
     },
     // 上传组件参数，会临时覆盖全局上传配置参数[d2p-uploader](/guide/extends/uploader.html)
     uploader: {
       type: Object,
       default() {
         return {};
-      },
-    },
+      }
+    }
   },
   data() {
     return {
@@ -145,7 +132,7 @@ export default {
       context: {},
       dialogImageUrl: "",
       dialogVisible: false,
-      avatarLoading: undefined,
+      avatarLoading: undefined
     };
   },
   computed: {
@@ -170,17 +157,13 @@ export default {
       if (this._elProps.listType === "avatar") {
         return "avatar-uploader";
       } else if (this._elProps.listType === "picture-card") {
-        if (
-          this.fileList &&
-          this._elProps.limit !== 0 &&
-          this.fileList.length >= this._elProps.limit
-        ) {
+        if (this.fileList && this._elProps.limit !== 0 && this.fileList.length >= this._elProps.limit) {
           return "image-uploader hide-plus";
         }
         return "image-uploader";
       }
       return "file-uploader";
-    },
+    }
   },
   watch: {
     value(value) {
@@ -191,7 +174,7 @@ export default {
       }
       this.emitValue = value;
       this.initValue(value);
-    },
+    }
   },
   created() {
     this.emitValue = this.value;
@@ -232,12 +215,8 @@ export default {
                 const limitTip = this.computeFileSize(limit);
                 const fileSizeTip = this.computeFileSize(file.size);
                 this.$message({
-                  message:
-                    "文件大小不能超过" +
-                    limitTip +
-                    "，当前文件大小:" +
-                    fileSizeTip,
-                  type: "warning",
+                  message: "文件大小不能超过" + limitTip + "，当前文件大小:" + fileSizeTip,
+                  type: "warning"
                 });
               }
             };
@@ -250,7 +229,7 @@ export default {
             showMessage(file.size, limit);
             return false;
           }
-        },
+        }
       };
     },
     setValue(value) {
@@ -428,7 +407,7 @@ export default {
             fileName: option.file.name,
             onProgress: option.onProgress,
             onError: option.onError,
-            config: config,
+            config: config
           });
         })
         .then((ret) => {
@@ -449,7 +428,7 @@ export default {
       this.$message({
         showClose: true,
         message: "已达最大限制数量，请删除一个文件后再上传",
-        type: "warning",
+        type: "warning"
       });
     },
     clearFiles() {
@@ -459,8 +438,8 @@ export default {
     },
     getFileList() {
       return this.fileList;
-    },
-  },
+    }
+  }
 };
 </script>
 <style lang="less">
@@ -539,9 +518,7 @@ export default {
     color: #8c939d;
     line-height: 100px;
   }
-  .image-uploader
-    .el-upload-list--picture-card
-    .el-upload-list__item-thumbnail {
+  .image-uploader .el-upload-list--picture-card .el-upload-list__item-thumbnail {
     max-width: 100%;
     max-height: 100%;
     width: auto;

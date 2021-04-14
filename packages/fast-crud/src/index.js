@@ -25,7 +25,7 @@ export {
   uiContext,
   useExpose,
   useTypes,
-  useDictDefine,
+  useDictDefine
 };
 // export * from './components'
 export const FastCrud = {
@@ -51,5 +51,5 @@ export const FastCrud = {
     types.install();
 
     app.config.globalProperties.$fsui = uiContext.get();
-  },
+  }
 };

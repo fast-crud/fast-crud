@@ -4,17 +4,8 @@ import { message, notification, Modal } from "ant-design-vue";
 import { request, requestForMock } from "./api/service";
 import "./mock";
 import { FsUploader } from "@fast-crud/fast-crud-extends";
-import FsExtendComponentInstall from "@fast-crud/fast-crud-extends/src/install/install";
-// import FsExtendComponents from "@fast-crud/fast-crud-extends/src/install/components.lazy";
-// import FsLazyInstall from "@fast-crud/fast-crud-extends/src/install/install.vite";
-// import path from "path";
-// const extendsDir = path.resolve("./node_modules/@fast-crud/fast-crud-extends/");
-// console.log("extendsDir", extendsDir);
-// const FsExtendImports = import.meta.glob(
-//   extendsDir + "src/components/**/*.vue"
-// );
-// console.log("fs extends install", FsExtendComponents, FsExtendImports);
-export default function(app) {
+import FsExtendComponentInstall from "@fast-crud/fast-crud-extends/src/install";
+export default function (app) {
   app.use(FastCrud, {
     async dictRequest({ url }) {
       return await requestForMock({ url });
@@ -48,8 +39,9 @@ export default function(app) {
     }
   });
 
+  //安装extends component
   FsExtendComponentInstall.install(app);
-  //FsLazyInstall.install(app, FsExtendComponents, FsExtendImports);
+  //配置uploader 公共参数
   app.use(FsUploader, {
     defaultType: "cos",
     cos: {
@@ -63,7 +55,7 @@ export default function(app) {
         return request({
           url: "/upload/cos/getAuthorization",
           method: "get"
-        }).then(ret => {
+        }).then((ret) => {
           // 返回结构如下
           // ret.data:{
           //   TmpSecretId,
@@ -91,7 +83,7 @@ export default function(app) {
         return request({
           url: "/upload/alioss/getAuthorization",
           method: "get"
-        }).then(ret => {
+        }).then((ret) => {
           console.log("ret", ret);
           return ret;
         });
@@ -112,7 +104,7 @@ export default function(app) {
         return request({
           url: "/upload/qiniu/getToken",
           method: "get"
-        }).then(ret => {
+        }).then((ret) => {
           return ret; // {token:xxx,expires:xxx}
         });
       },

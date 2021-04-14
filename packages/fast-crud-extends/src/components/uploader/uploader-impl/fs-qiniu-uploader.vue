@@ -14,7 +14,7 @@ async function getToken(file, fileName, key, config) {
     fileName,
     key,
     file,
-    ...config.custom,
+    ...config.custom
   });
 
   let tokenWrapper = null;
@@ -35,13 +35,7 @@ async function doUpload({ file, fileName, onProgress, options }) {
   return new Promise((resolve, reject) => {
     /**
      */
-    const observable = qiniu.upload(
-      file,
-      key,
-      token,
-      options.putExtra,
-      options.putConfig
-    );
+    const observable = qiniu.upload(file, key, token, options.putExtra, options.putConfig);
     // eslint-disable-next-line no-unused-vars,@typescript-eslint/no-unused-vars
     const subscription = observable.subscribe({
       next(res) {
@@ -60,7 +54,7 @@ async function doUpload({ file, fileName, onProgress, options }) {
           return;
         }
         resolve(ret);
-      },
+      }
     }); // 上传开始
     // subscription.unsubscribe() // 上传取消
   });
@@ -78,6 +72,6 @@ export default {
       return await doUpload(context);
     }
     return { upload };
-  },
+  }
 };
 </script>

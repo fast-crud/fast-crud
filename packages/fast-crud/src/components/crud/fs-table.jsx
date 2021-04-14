@@ -1,10 +1,4 @@
-import {
-  getCurrentInstance,
-  ref,
-  resolveDirective,
-  resolveDynamicComponent,
-  withDirectives,
-} from "vue";
+import { getCurrentInstance, ref, resolveDirective, resolveDynamicComponent, withDirectives } from "vue";
 import _ from "lodash-es";
 import FsRowHandle from "./fs-row-handle.vue";
 import FsComponentRender from "../render/fs-component-render";
@@ -19,7 +13,7 @@ export default {
     columns: {},
     rowHandle: {},
     show: {},
-    data: {},
+    data: {}
   },
   emits: ["row-handle", "value-change"],
   setup() {
@@ -36,13 +30,13 @@ export default {
     return {
       tableRef,
       componentRefs,
-      getComponentRef,
+      getComponentRef
     };
   },
   methods: {
     onRowHandle(context) {
       this.$emit("row-handle", context);
-    },
+    }
   },
   render() {
     if (this.show === false) {
@@ -58,15 +52,13 @@ export default {
     const tableColumnCI = proxy.$fsui.tableColumn;
     if (templateMode) {
       const tableColumnComp = resolveDynamicComponent(tableColumnCI.name);
-      const tableColumnGroupComp = resolveDynamicComponent(
-        proxy.$fsui.tableColumnGroup.name
-      );
+      const tableColumnGroupComp = resolveDynamicComponent(proxy.$fsui.tableColumnGroup.name);
 
       const getContextFn = (item, scope) => {
         const row = scope[tableColumnCI.row];
         const form = row;
         const getComponentRef = (key) => {
-          const index = scope.index;
+          const index = scope[ui.tableColumn.index];
           return this.getComponentRef(index, key);
         };
         return {
@@ -75,7 +67,7 @@ export default {
           value: row[item.key],
           row,
           form,
-          getComponentRef,
+          getComponentRef
         };
       };
 
@@ -123,10 +115,10 @@ export default {
                       break;
                     }
                   }
-                },
+                }
               };
               const setRef = (el) => {
-                const index = scope.index;
+                const index = scope[ui.tableColumn.index];
                 const key = item.key;
                 let row = this.componentRefs[index];
                 if (row == null) {
@@ -134,14 +126,7 @@ export default {
                 }
                 row[key] = el;
               };
-              return (
-                <fs-cell
-                  ref={setRef}
-                  component={item.component}
-                  getScope={getScopeFn}
-                  {...vModel}
-                />
-              );
+              return <fs-cell ref={setRef} component={item.component} getScope={getScopeFn} {...vModel} />;
             };
           } else if (item.formatter) {
             cellSlots.default = (scope) => {
@@ -176,14 +161,8 @@ export default {
         if (this.rowHandle && this.rowHandle.show !== false) {
           const rowHandleSlots = {
             default: (scope) => {
-              return (
-                <fs-row-handle
-                  {...this.rowHandle}
-                  scope={scope}
-                  onHandle={this.onRowHandle}
-                />
-              );
-            },
+              return <fs-row-handle {...this.rowHandle} scope={scope} onHandle={this.onRowHandle} />;
+            }
           };
           children.push(
             <tableColumnComp
@@ -199,21 +178,14 @@ export default {
       };
     }
     const dataSource = {
-      [proxy.$fsui.table.data]: this.data,
+      [proxy.$fsui.table.data]: this.data
     };
 
-    const tableRender = (
-      <tableComp
-        ref={"tableRef"}
-        {...this.$attrs}
-        {...dataSource}
-        v-slots={tableSlots}
-      />
-    );
+    const tableRender = <tableComp ref={"tableRef"} {...this.$attrs} {...dataSource} v-slots={tableSlots} />;
     if (proxy.$fsui.table.vLoading) {
       const loading = resolveDirective(proxy.$fsui.table.vLoading);
       return withDirectives(tableRender, [[loading, this.$attrs.loading]]);
     }
     return tableRender;
-  },
+  }
 };

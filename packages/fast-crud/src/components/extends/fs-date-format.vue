@@ -13,11 +13,11 @@ export default {
     // 输入格式化，不传则由dayjs自动转化
     valueFormat: { required: false },
     // 输出格式化
-    format: { default: "YYYY-MM-DD HH:mm:ss", required: false },
+    format: { default: "YYYY-MM-DD HH:mm:ss", required: false }
   },
   data() {
     return {
-      item: {},
+      item: {}
     };
   },
   computed: {
@@ -32,9 +32,9 @@ export default {
         date = dayjs(this.modelValue);
       }
       return date.format(this.format);
-    },
+    }
   },
   created() {},
-  methods: {},
+  methods: {}
 };
 </script>

@@ -23,10 +23,10 @@ export default function ({ crudRef }) {
         pageRequest,
         addRequest,
         editRequest,
-        delRequest,
+        delRequest
       },
       table: {
-        scroll: { x: 1700 },
+        scroll: { x: 1700 }
       },
       rowHandle: { fixed: "right" },
       columns: {
@@ -35,11 +35,11 @@ export default function ({ crudRef }) {
           key: "id",
           type: "number",
           column: {
-            width: 50,
+            width: 50
           },
           form: {
-            show: false,
-          },
+            show: false
+          }
         },
         timestamp: {
           title: "时间戳",
@@ -54,7 +54,7 @@ export default function ({ crudRef }) {
             if (value != null) {
               row[key] = value.unix();
             }
-          },
+          }
         },
         datetime: {
           title: "日期时间",
@@ -63,7 +63,7 @@ export default function ({ crudRef }) {
             if (value != null) {
               row[key] = moment(value);
             }
-          },
+          }
         },
         format: {
           title: "格式化",
@@ -71,16 +71,16 @@ export default function ({ crudRef }) {
           form: {
             component: {
               format: "YYYY年MM月DD日 HH:mm",
-              valueFormat: "YYYY年MM月DD日 HH:mm",
-            },
+              valueFormat: "YYYY年MM月DD日 HH:mm"
+            }
           },
           column: {
             width: 180,
             component: {
               // 行展示组件使用的dayjs，
-              format: "YYYY年MM月DD日 HH:mm",
-            },
-          },
+              format: "YYYY年MM月DD日 HH:mm"
+            }
+          }
         },
         date: {
           title: "仅日期",
@@ -90,15 +90,15 @@ export default function ({ crudRef }) {
               events: {
                 onChange(context) {
                   console.log("change", context);
-                },
-              },
-            },
+                }
+              }
+            }
           },
           valueBuilder({ value, row, key }) {
             if (value != null) {
               row[key] = moment(value);
             }
-          },
+          }
         },
         disabledDate: {
           title: "禁用日期",
@@ -113,10 +113,10 @@ export default function ({ crudRef }) {
               "picker-options": {
                 disabledDate(time) {
                   return time.getTime() < Date.now();
-                },
-              },
-            },
-          },
+                }
+              }
+            }
+          }
         },
         time: {
           title: "仅时间",
@@ -129,8 +129,8 @@ export default function ({ crudRef }) {
             },
             valueResolve({ value }) {
               console.log("resolve:", value);
-            },
-          },
+            }
+          }
         },
         daterange: {
           title: "日期范围",
@@ -140,22 +140,14 @@ export default function ({ crudRef }) {
             if (!utils.strings.hasEmpty(row.daterangeStart, row.daterangeEnd)) {
               row[key] = [moment(row.daterangeStart), moment(row.daterangeEnd)];
             }
-          },
+          }
         },
         datetimerange: {
           title: "日期时间范围",
           type: "datetimerange",
           valueBuilder({ row, key }) {
-            if (
-              !utils.strings.hasEmpty(
-                row.datetimerangeStart,
-                row.datetimerangeEnd
-              )
-            ) {
-              row[key] = [
-                moment(row.datetimerangeStart),
-                moment(row.datetimerangeEnd),
-              ];
+            if (!utils.strings.hasEmpty(row.datetimerangeStart, row.datetimerangeEnd)) {
+              row[key] = [moment(row.datetimerangeStart), moment(row.datetimerangeEnd)];
             }
           },
           valueResolve({ form, key }) {
@@ -167,9 +159,9 @@ export default function ({ crudRef }) {
               row.datetimerangeStart = null;
               row.datetimerangeEnd = null;
             }
-          },
-        },
-      },
-    },
+          }
+        }
+      }
+    }
   };
 }

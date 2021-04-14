@@ -23,11 +23,11 @@ export default function ({ expose }) {
         pageRequest,
         addRequest,
         editRequest,
-        delRequest,
+        delRequest
       },
       form: {
         //配置表单label的宽度
-        labelCol: { span: 6 },
+        labelCol: { span: 6 }
       },
       columns: {
         id: {
@@ -35,11 +35,11 @@ export default function ({ expose }) {
           key: "id",
           type: "number",
           column: {
-            width: 50,
+            width: 50
           },
           form: {
-            show: false,
-          },
+            show: false
+          }
         },
         button: {
           title: "按钮",
@@ -54,10 +54,10 @@ export default function ({ expose }) {
               on: {
                 onClick({ row }) {
                   message.success("按钮点击:" + row.button);
-                },
-              },
-            },
-          },
+                }
+              }
+            }
+          }
         },
         link: {
           title: "链接",
@@ -70,10 +70,10 @@ export default function ({ expose }) {
                   if (row.url) {
                     window.open(row.url);
                   }
-                },
-              },
-            },
-          },
+                }
+              }
+            }
+          }
         },
         link2: {
           title: "手写link配置",
@@ -90,12 +90,12 @@ export default function ({ expose }) {
                   if (row.url) {
                     window.open(row.url);
                   }
-                },
-              },
-            },
-          },
-        },
-      },
-    },
+                }
+              }
+            }
+          }
+        }
+      }
+    }
   };
 }

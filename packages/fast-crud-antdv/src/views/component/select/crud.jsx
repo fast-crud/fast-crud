@@ -22,13 +22,13 @@ export default function ({ expose }) {
         pageRequest,
         addRequest,
         editRequest,
-        delRequest,
+        delRequest
       },
       form: {
         // 单列布局
         col: { span: 24 },
         labelCol: { span: 4 },
-        wrapperCol: { span: 18 },
+        wrapperCol: { span: 18 }
       },
       columns: {
         id: {
@@ -36,11 +36,11 @@ export default function ({ expose }) {
           key: "id",
           type: "number",
           column: {
-            width: 50,
+            width: 50
           },
           form: {
-            show: false,
-          },
+            show: false
+          }
         },
         statusLocal: {
           title: "单选本地",
@@ -53,9 +53,9 @@ export default function ({ expose }) {
               { id: "gz", text: "广州", color: "blue" },
               { id: "bj", text: "北京" },
               { id: "wh", text: "武汉" },
-              { id: "sh", text: "上海" },
-            ],
-          }),
+              { id: "sh", text: "上海" }
+            ]
+          })
         },
         statusRemote: {
           title: "单选远程",
@@ -63,16 +63,16 @@ export default function ({ expose }) {
             show: true,
             rules: null,
             component: {
-              style: { width: "100px" },
-            },
+              style: { width: "100px" }
+            }
           },
           type: "dict-select",
           dict: dict({
-            url: "/dicts/OpenStatusEnum?simple",
+            url: "/dicts/OpenStatusEnum?simple"
           }),
           form: {
-            rules: [{ required: true, message: "请选择一个选项" }],
-          },
+            rules: [{ required: true, message: "请选择一个选项" }]
+          }
         },
         customDictGetData: {
           title: "自定义字典请求",
@@ -86,22 +86,22 @@ export default function ({ expose }) {
               console.log(`我是从自定义的getData方法中加载的数据字典`, dict);
               return requestForMock({
                 url: "/dicts/OpenStatusEnum?cache",
-                method: "get",
+                method: "get"
               });
-            },
+            }
           }),
           form: {
             value: "2",
             component: {
-              value: "2", // 默认值
+              value: "2" // 默认值
             },
-            helper: "dict.getData可以覆盖全局配置的getRemoteDictFunc",
+            helper: "dict.getData可以覆盖全局配置的getRemoteDictFunc"
           },
           component: {
             props: {
-              type: "text", // 不使用tab，纯文本展示
-            },
-          },
+              type: "text" // 不使用tab，纯文本展示
+            }
+          }
         },
         disabledOptions: {
           title: "禁用某个选项",
@@ -109,7 +109,7 @@ export default function ({ expose }) {
           type: "dict-select",
           dict: dict({
             cloneable: true,
-            url: "/dicts/OpenStatusEnum?disabledOptions",
+            url: "/dicts/OpenStatusEnum?disabledOptions"
           }),
           form: {
             component: {
@@ -119,11 +119,11 @@ export default function ({ expose }) {
                 onReady({ dict }) {
                   console.log("字典请求ready", dict);
                   dict.data[0].disabled = true; // 禁用某个选项， 还可以自己修改选项
-                },
-              },
+                }
+              }
             },
-            helper: "禁用字典选项",
-          },
+            helper: "禁用字典选项"
+          }
         },
         multiple: {
           title: "多选自动染色",
@@ -133,8 +133,8 @@ export default function ({ expose }) {
           form: {
             title: "多选本地",
             component: {
-              mode: "multiple",
-            },
+              mode: "multiple"
+            }
           },
           dict: dict({
             data: [
@@ -143,12 +143,12 @@ export default function ({ expose }) {
               { value: "wh", label: "武汉" },
               { value: "sh", label: "上海" },
               { value: "hz", label: "杭州" },
-              { value: "bj", label: "北京", color: "red" },
-            ],
+              { value: "bj", label: "北京", color: "red" }
+            ]
           }),
           column: {
-            component: { color: "auto" }, // 自动染色
-          },
+            component: { color: "auto" } // 自动染色
+          }
         },
         statusSimple: {
           title: "普通选择",
@@ -161,12 +161,12 @@ export default function ({ expose }) {
                 { value: "gz", label: "广州", color: "blue" },
                 { value: "bj", label: "北京" },
                 { value: "wh", label: "武汉" },
-                { value: "sh", label: "上海" },
-              ],
-            },
-          },
-        },
-      },
-    },
+                { value: "sh", label: "上海" }
+              ]
+            }
+          }
+        }
+      }
+    }
   };
 }

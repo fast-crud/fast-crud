@@ -142,6 +142,6 @@ export function useCompute() {
     compute,
     AsyncComputeValue,
     asyncCompute,
-    doComputed,
+    doComputed
   };
 }

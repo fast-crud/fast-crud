@@ -4,5 +4,5 @@ import trace from "./util.trace";
 export default {
   logger,
   strings,
-  trace,
+  trace
 };

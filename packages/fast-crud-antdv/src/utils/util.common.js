@@ -1,33 +1,33 @@
-import _ from 'lodash-es'
+import _ from "lodash-es";
 export default {
-  arrayToMap (array) {
+  arrayToMap(array) {
     if (!array) {
-      return {}
+      return {};
     }
     if (!_.isArray(array)) {
-      return array
+      return array;
     }
-    const map = {}
+    const map = {};
     for (const item of array) {
       if (item.key) {
-        map[item.key] = item
+        map[item.key] = item;
       }
     }
-    return map
+    return map;
   },
-  mapToArray (map) {
+  mapToArray(map) {
     if (!map) {
-      return []
+      return [];
     }
     if (_.isArray(map)) {
-      return map
+      return map;
     }
-    const array = []
+    const array = [];
     for (const key in map) {
-      const item = map[key]
-      item.key = key
-      array.push(item)
+      const item = map[key];
+      item.key = key;
+      array.push(item);
     }
-    return array
+    return array;
   }
-}
+};

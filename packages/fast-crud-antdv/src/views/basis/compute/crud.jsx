@@ -25,11 +25,11 @@ export default function ({ expose }) {
         pageRequest,
         addRequest,
         editRequest,
-        delRequest,
+        delRequest
       },
       form: {
         labelCol: { span: 8 },
-        wrapperCol: { span: 16 },
+        wrapperCol: { span: 16 }
       },
       columns: {
         id: {
@@ -37,11 +37,11 @@ export default function ({ expose }) {
           key: "id",
           type: "number",
           column: {
-            width: 50,
+            width: 50
           },
           form: {
-            show: false,
-          },
+            show: false
+          }
         },
         compute: {
           title: "compute",
@@ -50,16 +50,16 @@ export default function ({ expose }) {
           column: {
             component: {
               name: "a-switch",
-              vModel: "checked",
-            },
+              vModel: "checked"
+            }
           },
           form: {
             component: {
               name: "a-switch",
-              vModel: "checked",
+              vModel: "checked"
             },
-            helper: "点我触发动态计算",
-          },
+            helper: "点我触发动态计算"
+          }
         },
         shower: {
           title: "根据compute显示",
@@ -69,9 +69,9 @@ export default function ({ expose }) {
             component: {
               show: compute(({ form }) => {
                 return form.compute;
-              }),
-            },
-          },
+              })
+            }
+          }
         },
         remote: {
           title: "asyncCompute",
@@ -86,11 +86,11 @@ export default function ({ expose }) {
                 async asyncFn(watchValue, context) {
                   const url = "/dicts/OpenStatusEnum?remote";
                   return await requestForMock({ url });
-                },
-              }),
+                }
+              })
             },
-            helper: "我的options是异步计算远程获取的",
-          },
+            helper: "我的options是异步计算远程获取的"
+          }
         },
         remote2: {
           title: "监听switch触发异步计算",
@@ -107,17 +107,15 @@ export default function ({ expose }) {
                 },
                 async asyncFn(watchValue) {
                   message.info("监听switch,触发远程获取options");
-                  const url = watchValue
-                    ? "/dicts/OpenStatusEnum?remote"
-                    : "/dicts/moreOpenStatusEnum?remote";
+                  const url = watchValue ? "/dicts/OpenStatusEnum?remote" : "/dicts/moreOpenStatusEnum?remote";
                   return await requestForMock({ url });
-                },
-              }),
+                }
+              })
             },
-            helper: "监听其他属性修改后，触发重新计算",
-          },
-        },
-      },
-    },
+            helper: "监听其他属性修改后，触发重新计算"
+          }
+        }
+      }
+    }
   };
 }

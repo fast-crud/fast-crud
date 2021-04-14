@@ -42,5 +42,5 @@ export default {
   debug,
   info,
   error,
-  warn,
+  warn
 };

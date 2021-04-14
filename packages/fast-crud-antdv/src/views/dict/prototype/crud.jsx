@@ -18,7 +18,7 @@ export default function ({ expose }) {
 
   const remoteDict = dict({
     prototype: true, //这个dict只是一个原型，引用它的dict组件初始化时都会把此dict对象clone一份
-    url: "/dicts/OpenStatusEnum",
+    url: "/dicts/OpenStatusEnum"
   });
 
   return {
@@ -27,7 +27,7 @@ export default function ({ expose }) {
         pageRequest,
         addRequest,
         editRequest,
-        delRequest,
+        delRequest
       },
       columns: {
         id: {
@@ -35,17 +35,17 @@ export default function ({ expose }) {
           key: "id",
           type: "number",
           column: {
-            width: 50,
+            width: 50
           },
           form: {
-            show: false,
-          },
+            show: false
+          }
         },
         remote: {
           title: "远程字典",
           search: { show: true },
           dict: remoteDict,
-          type: "dict-select",
+          type: "dict-select"
         },
         modifyDict: {
           title: "动态修改字典",
@@ -54,33 +54,29 @@ export default function ({ expose }) {
           form: {
             component: {
               name: "a-switch",
-              vModel: "checked",
+              vModel: "checked"
             },
             valueChange({ form, value, getComponentRef }) {
               console.log("form", value);
               const targetDict = getComponentRef("remote").getDict();
-              targetDict.url = form.modifyDict
-                ? "/dicts/moreOpenStatusEnum?remote"
-                : "/dicts/OpenStatusEnum?remote";
+              targetDict.url = form.modifyDict ? "/dicts/moreOpenStatusEnum?remote" : "/dicts/OpenStatusEnum?remote";
               targetDict.reloadDict();
-            },
+            }
           },
           column: {
             component: {
               name: "a-switch",
-              vModel: "checked",
+              vModel: "checked"
             },
             valueChange({ value, getComponentRef }) {
               console.log("value", value);
               const targetDict = getComponentRef("remote").getDict();
-              targetDict.url = value
-                ? "/dicts/moreOpenStatusEnum?remote"
-                : "/dicts/OpenStatusEnum?remote";
+              targetDict.url = value ? "/dicts/moreOpenStatusEnum?remote" : "/dicts/OpenStatusEnum?remote";
               targetDict.reloadDict();
-            },
-          },
-        },
-      },
-    },
+            }
+          }
+        }
+      }
+    }
   };
 }

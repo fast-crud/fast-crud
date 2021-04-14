@@ -6,10 +6,10 @@ export default {
     text: {
       type: String,
       default: "",
-      required: false,
+      required: false
     },
     icon: {},
-    circle: {},
+    circle: {}
   },
   render() {
     let icon = this.icon;
@@ -32,7 +32,7 @@ export default {
           children.push(this.text);
         }
         return children;
-      },
+      }
     };
 
     const isCircle = this.circle ? this.$fsui.icon.circle : {};
@@ -47,10 +47,10 @@ export default {
         icon,
         class: {
           "fs-button": true,
-          "is-thin": !this.text && !this.$slots.default,
-        },
+          "is-thin": !this.text && !this.$slots.default
+        }
       },
       slots
     );
-  },
+  }
 };

@@ -4,16 +4,16 @@ export default {
   functional: true,
   props: {
     renderFunc: {
-      type: Function,
+      type: Function
     },
     scope: {
-      type: Object,
-    },
+      type: Object
+    }
   },
   setup() {
     traceUtil.trace("fs-render");
   },
   render() {
     return this.renderFunc(this.scope);
-  },
+  }
 };

@@ -1,12 +1,13 @@
 {
   "name": "@fast-crud/fast-crud-extends",
-  "version": "0.2.1",
+  "version": "0.3.1",
   "private": false,
   "main": "./dist/fast-crud-extends.umd.js",
   "module": "./src/index.js",
   "scripts": {
     "build": "vite build",
-    "copy-local": "copyfiles -f ./src/local/lang/* ./dist/lang"
+    "copy-local": "copyfiles -f ./src/local/lang/* ./dist/lang",
+    "lint-fix": "eslint --fix --ext .js --ext .jsx --ext .vue src/"
   },
   "author": "Greper",
   "license": "MIT",
@@ -49,7 +50,6 @@
     "eslint-plugin-node": "^11.1.0",
     "eslint-plugin-prettier": "^3.3.1",
     "eslint-plugin-promise": "^4.2.1",
-    "eslint-plugin-standard": "^4.0.0",
     "eslint-plugin-vue": "^7.6.0",
     "esno": "^0.4.5",
     "less": "^4.1.1",

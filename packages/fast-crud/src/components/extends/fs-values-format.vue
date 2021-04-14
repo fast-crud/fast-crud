@@ -1,24 +1,19 @@
 <template>
   <span class="fs-values-format">
     <template v-if="type === 'text'">
-      <span
-        v-for="item in computedValueItems"
-        :key="item.value"
-        @click="doClick(item)"
-        >{{ item.label }}</span
-      >
+      <span v-for="item in computedValueItems" :key="getValue(item)" @click="doClick(item)">{{ getLabel(item) }}</span>
     </template>
     <template v-else>
       <component
         :is="$fsui.tag.name"
-        class="fs-tag"
         v-for="item in computedValueItems"
         v-bind="item"
-        :key="item.value"
+        :key="getValue(item)"
+        class="fs-tag"
         size="small"
-        :[$fsui.tag.type]="item.color || 'default'"
-        @click="doClick(item)"
+        :[$fsui.tag.type]="getColor(item) || 'default'"
         :effect="item.effect"
+        @click="doClick(item)"
       >
         {{ item.label }}
       </component>
@@ -53,12 +48,7 @@ function getHashCode(str) {
 
 function buildArrayValue(props) {
   let valueArr = [];
-  if (
-    typeof props.modelValue === "string" &&
-    props.multiple &&
-    props.separator != null &&
-    props.separator !== ""
-  ) {
+  if (typeof props.modelValue === "string" && props.multiple && props.separator != null && props.separator !== "") {
     valueArr = props.modelValue.split(props.separator);
   } else if (props.modelValue instanceof Array) {
     // 本来就是数组的
@@ -75,7 +65,7 @@ export default {
   props: {
     // 值
     modelValue: {
-      require: false,
+      require: false
     },
     dict: {},
     // 是否多选
@@ -87,24 +77,24 @@ export default {
     // 颜色，【auto, primary, success, warning, danger ,info】
     // 配置auto，则自动根据value值hashcode分配颜色值
     color: {
-      require: false,
+      require: false
     },
     effect: {
-      require: false,
+      require: false
     },
 
     // 自动颜色列表，【 primary, success, warning, danger 】
     autoColors: {
-      type: Array,
+      type: Array
     },
     // 自动主题列表，【 light, plain 】
     autoEffects: {
-      type: Array,
+      type: Array
     },
     // 展示类型【text, tag】
     type: {
-      default: "tag", // 可选【text,tag】
-    },
+      default: "tag" // 可选【text,tag】
+    }
   },
   emits: ["click"],
   setup(props, ctx) {
@@ -114,7 +104,7 @@ export default {
     const EFFECT_LIST = ["plain", "light"];
 
     const usedDict = useDict(props, ctx);
-
+    const { getColor, getValue } = usedDict;
     usedDict.watchValue(() => {
       return props.modelValue;
     });
@@ -122,18 +112,18 @@ export default {
       if (!item.effect && props.effect) {
         item.effect = props.effect;
       }
-      if (item.color != null) {
+      if (getColor(item) != null) {
         return;
       }
+      const colorProp = props.dict?.color || "color";
       if (props.color === "auto") {
-        const hashcode = getHashCode(item.value);
+        const hashcode = getHashCode(getValue(item));
         const colors = props.autoColors ? props.autoColors : COLOR_LIST;
-        item.color = colors[hashcode % colors.length];
+        item[colorProp] = colors[hashcode % colors.length];
         const effects = props.autoEffects ? props.autoEffects : EFFECT_LIST;
-        item.effect =
-          effects[Math.floor(hashcode / colors.length) % effects.length];
+        item.effect = effects[Math.floor(hashcode / colors.length) % effects.length];
       } else {
-        item.color = props.color;
+        item[colorProp] = props.color;
       }
     }
 
@@ -146,8 +136,11 @@ export default {
 
       let options = [];
 
+      const valueProp = props.dict?.value || "value";
+      const labelProp = props.dict?.label || "label";
+
       if (dict) {
-        options = dict.getNodesByValues(valueArr);
+        options = dict.getNodesFromDataMap(valueArr);
       } else {
         options = [];
         _.forEach(valueArr, (item) => {
@@ -155,8 +148,8 @@ export default {
             options.push(item);
           } else {
             options.push({
-              value: item,
-              label: item,
+              [valueProp]: item,
+              [labelProp]: item
             });
           }
         });
@@ -176,9 +169,9 @@ export default {
     return {
       ...usedDict,
       doClick,
-      computedValueItems,
+      computedValueItems
     };
-  },
+  }
 };
 </script>
 <style>

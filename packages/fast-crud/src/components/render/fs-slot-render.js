@@ -5,16 +5,16 @@ export default {
   inheritAttrs: false,
   props: {
     slots: {
-      type: Function,
+      type: Function
     },
     scope: {
-      type: Object,
-    },
+      type: Object
+    }
   },
   setup(props) {
     traceUtil.trace("fs-slot-render");
     return () => {
       return props.slots(props.scope);
     };
-  },
+  }
 };

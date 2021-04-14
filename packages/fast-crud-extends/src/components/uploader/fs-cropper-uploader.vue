@@ -2,42 +2,25 @@
   <div class="fs-cropper-uploader" :class="{ 'is-disabled': disabled }">
     <div class="image-list">
       <component :is="$fsui.imageGroup.name">
-        <div class="image-item" v-for="(item, index) in list" :key="index">
-          <component
-            :is="$fsui.image.name"
-            class="image"
-            :src="item.dataUrl ? item.dataUrl : item.url"
-            v-bind="img"
-          >
+        <div v-for="(item, index) in list" :key="index" class="image-item">
+          <component :is="$fsui.image.name" class="image" :src="item.dataUrl ? item.dataUrl : item.url" v-bind="img">
             <template #placeholder>
               <div class="image-slot">
                 <fs-loading :loading="true" />
               </div>
             </template>
           </component>
-          <div class="delete" v-if="!disabled">
-            <fs-icon
-              :icon="$fsui.icons.remove"
-              @click="removeImage(index, item)"
-            />
+          <div v-if="!disabled" class="delete">
+            <fs-icon :icon="$fsui.icons.remove" @click="removeImage(index, item)" />
           </div>
-          <div class="status-uploading" v-if="item.status === 'uploading'">
-            <component
-              :is="$fsui.progress.name"
-              type="circle"
-              :percentage="item.progress"
-              :width="70"
-            />
+          <div v-if="item.status === 'uploading'" class="status-uploading">
+            <component :is="$fsui.progress.name" type="circle" :percentage="item.progress" :width="70" />
           </div>
-          <div class="status-done" v-else-if="item.status === 'done'">
+          <div v-else-if="item.status === 'done'" class="status-done">
             <fs-icon :icon="$fsui.icons.check" class="status-down-icon" />
           </div>
         </div>
-        <div
-          v-if="limit <= 0 || limit > list.length"
-          class="image-item image-plus"
-          @click="addNewImage"
-        >
+        <div v-if="limit <= 0 || limit > list.length" class="image-item image-plus" @click="addNewImage">
           <fs-icon :icon="$fsui.icons.plus" class="cropper-uploader-icon" />
         </div>
       </component>
@@ -45,11 +28,11 @@
     <fs-cropper
       ref="cropperRef"
       :title="title"
-      :cropperHeight="cropperHeight"
-      :dialogWidth="dialogWidth"
+      :cropper-height="cropperHeight"
+      :dialog-width="dialogWidth"
       :accept="accept"
-      :uploadTip="uploadTip"
-      :maxSize="maxSize"
+      :upload-tip="uploadTip"
+      :max-size="maxSize"
       :cropper="cropper"
       output="all"
       @done="cropComplete"
@@ -75,70 +58,70 @@ export default {
     disabled: {},
     // 初始图片url,或者是数组
     modelValue: {
-      type: [String, Array],
+      type: [String, Array]
     },
     img: {},
     // 上传后端类型，[form, cos, qiniu , alioss]
     type: {
-      type: String,
+      type: String
     },
     // 上传提示
     uploadTip: {
-      type: String,
+      type: String
     },
     // 对话框标题
     title: String,
     // cropper的高度，默认为浏览器可视窗口高度的40%，最小270
     cropperHeight: {
-      type: [String, Number],
+      type: [String, Number]
     },
     // 对话框宽度，默认50%
     dialogWidth: {
       type: [String, Number],
-      default: "50%",
+      default: "50%"
     },
     // 图片大小限制，单位MB
     maxSize: {
       type: Number,
-      default: 5,
+      default: 5
     },
     // 图片数量限制,0为不限制
     limit: {
       type: Number,
-      default: 1,
+      default: 1
     },
     // 可接收的文件后缀
     accept: {
       type: String,
-      default: ".jpg, .jpeg, .png, .gif, .webp",
+      default: ".jpg, .jpeg, .png, .gif, .webp"
     },
     // [cropperjs的参数](https://github.com/fengyuanchen/cropperjs)
     cropper: {
-      type: Object,
+      type: Object
     },
     // 上传参数，会临时覆盖全局上传配置参数[d2p-uploader](/guide/extends/uploader.html)
     uploader: {
-      type: Object,
+      type: Object
     },
     // 构建下载url方法,不影响提交的value
     buildUrl: {
       type: Function,
       default: function (value, item) {
         return typeof value === "object" ? item.url : value;
-      },
-    },
+      }
+    }
   },
   emits: ["update:modelValue", "change"],
   setup() {
     const cropperRef = ref();
     return {
-      cropperRef,
+      cropperRef
     };
   },
   data() {
     return {
       index: undefined,
-      list: [],
+      list: []
     };
   },
   computed: {
@@ -158,7 +141,7 @@ export default {
         }
       }
       return urlList;
-    },
+    }
   },
   watch: {
     modelValue(val) {
@@ -167,7 +150,7 @@ export default {
         return;
       }
       this.initValue(val);
-    },
+    }
   },
   created() {
     this.emitValue = this.modelValue;
@@ -221,7 +204,7 @@ export default {
         url: undefined,
         dataUrl: dataUrl,
         status: "uploading",
-        progress: 0,
+        progress: 0
       });
       const onProgress = (e) => {
         item.progress = e.percent;
@@ -236,7 +219,7 @@ export default {
         file: blob,
         fileName: file.name,
         onProgress,
-        onError,
+        onError
       };
       console.log("item", item, this.list);
       this.list.push(item);
@@ -270,8 +253,8 @@ export default {
       }
       this.emitValue = ret;
       this.$emit("update:modelValue", ret);
-    },
-  },
+    }
+  }
 };
 </script>
 

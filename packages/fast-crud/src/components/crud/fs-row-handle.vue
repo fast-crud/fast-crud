@@ -1,29 +1,15 @@
 <template>
   <div class="fs-row-handle">
     <template v-for="(item, index) in computedHandleBtns" :key="index">
-      <fs-button
-        v-if="item.show !== false"
-        class="row-handle-btn"
-        @click.stop="doClick(item)"
-        v-bind="item"
-      />
+      <fs-button v-if="item.show !== false" class="row-handle-btn" v-bind="item" @click.stop="doClick(item)" />
     </template>
     <!-- 下拉按钮菜单 -->
-    <span class="fs-handle-row-dropdown" v-if="computedDropdownBtns.length > 0">
-      <component
-        :is="$fsui.dropdown.name"
-        v-bind="$fsui.dropdown.command(doDropdownItemClick)"
-      >
+    <span v-if="computedDropdownBtns.length > 0" class="fs-handle-row-dropdown">
+      <component :is="$fsui.dropdown.name" v-bind="$fsui.dropdown.command(doDropdownItemClick)">
         <fs-button v-bind="dropdown" />
         <template #[$fsui.dropdown.slotName]>
-          <component
-            :is="$fsui.dropdownMenu.name"
-            v-bind="$fsui.dropdownMenu.command(doDropdownItemClick)"
-          >
-            <template
-              v-for="(item, index) in computedDropdownBtns"
-              :key="index"
-            >
+          <component :is="$fsui.dropdownMenu.name" v-bind="$fsui.dropdownMenu.command(doDropdownItemClick)">
+            <template v-for="(item, index) in computedDropdownBtns" :key="index">
               <component
                 :is="$fsui.dropdownItem.name"
                 v-if="item.show !== false"
@@ -50,23 +36,23 @@ export default defineComponent({
   name: "FsRowHandle",
   components: {
     // eslint-disable-next-line vue/no-unused-components
-    FsButton,
+    FsButton
   },
   props: {
     dropdown: {},
     view: {
-      type: Object,
+      type: Object
     },
     edit: {
-      type: Object,
+      type: Object
     },
     remove: {
-      type: Object,
+      type: Object
     },
     custom: {
-      type: Array,
+      type: Array
     },
-    scope: {},
+    scope: {}
   },
   emits: ["handle"],
   setup(props, ctx) {
@@ -84,25 +70,25 @@ export default defineComponent({
         view: {
           key: "view",
           order: 1,
-          text: t("fs.rowHandle.view.text"),
+          text: t("fs.rowHandle.view.text")
         },
         edit: {
           key: "edit",
           type: "primary",
           order: 2,
-          text: t("fs.rowHandle.edit.text"),
+          text: t("fs.rowHandle.edit.text")
         },
         remove: {
           key: "remove",
           type: "danger",
           order: 3,
-          text: t("fs.rowHandle.remove.text"),
-        },
+          text: t("fs.rowHandle.remove.text")
+        }
       };
       const mergedBtns = _.merge(defBtns, {
         view: props.view,
         edit: props.edit,
-        remove: props.remove,
+        remove: props.remove
       });
       const btns = [mergedBtns.view, mergedBtns.edit, mergedBtns.remove];
 
@@ -110,7 +96,7 @@ export default defineComponent({
         for (const item of props.custom) {
           btns.push({
             order: 4,
-            ...item,
+            ...item
           });
         }
       }
@@ -135,19 +121,14 @@ export default defineComponent({
       if (computedDropdownAtLeast.value <= 0) {
         return computedAllHandleBtns.value;
       }
-      const handleBtns = computedAllHandleBtns.value.slice(
-        0,
-        computedDropdownAtLeast.value
-      );
+      const handleBtns = computedAllHandleBtns.value.slice(0, computedDropdownAtLeast.value);
       return handleBtns;
     });
     const computedDropdownBtns = computed(() => {
       if (computedDropdownAtLeast.value <= 0) {
         return [];
       }
-      const dropdownBtns = computedAllHandleBtns.value.slice(
-        computedDropdownAtLeast.value
-      );
+      const dropdownBtns = computedAllHandleBtns.value.slice(computedDropdownAtLeast.value);
       return dropdownBtns;
     });
 
@@ -166,9 +147,9 @@ export default defineComponent({
       computedDropdownBtns,
       doDropdownItemClick,
       computedDropdownAtLeast,
-      doClick,
+      doClick
     };
-  },
+  }
 });
 </script>
 

@@ -3,7 +3,7 @@ import { useMerge } from "./use-merge";
 import logger from "../utils/util.log";
 import { reactive } from "vue";
 import LRU from "lru-cache";
-const DictGlobalCache = new LRU(50); // sets just the max size
+const DictGlobalCache = new LRU(100); //全局cache， sets just the max size
 
 const { UnMergeable } = useMerge();
 
@@ -13,9 +13,7 @@ function setDictRequest(request) {
 
 // eslint-disable-next-line @typescript-eslint/no-unused-vars,no-unused-vars
 let dictRequest = async ({ url, dict }) => {
-  logger.warn(
-    "请配置 app.use(FsCrud,{dictRequest:(context)=>{ 你的字典请求方法 }})"
-  );
+  logger.warn("请配置 app.use(FsCrud,{dictRequest:(context)=>{ 你的字典请求方法 }})");
   return [];
 };
 
@@ -41,16 +39,16 @@ class Dict extends UnMergeable {
   dataMap = {};
   loading = false;
   custom = {};
-  getNodes: undefined | Function = undefined;
+  getNodesByValues: undefined | Function = undefined;
   cacheNodes = {};
   onReady: undefined | Function = undefined;
   constructor(dict) {
     super();
 
-    // 设置为不可枚举
+    // 设置为不可枚举,就不会在clone的时候复制值，导致不会loadDict的bug
     Object.defineProperty(this, "loading", {
       value: false,
-      enumerable: false,
+      enumerable: false
     });
     this.loading = false;
     _.merge(this, dict);
@@ -58,49 +56,14 @@ class Dict extends UnMergeable {
       this.originalData = dict.data;
       this.setData(dict.data);
     }
-
-    // if (this.immediate && !this.prototype) {
-    //   console.log(" immediate load dict");
-    //   this.loadDict();
-    // }
   }
 
   isDynamic() {
-    return (
-      this.url instanceof Function ||
-      this.getData instanceof Function ||
-      this.prototype
-    );
-  }
-
-  _pickItemProp(item, key) {
-    if (key instanceof Function) {
-      return key(item);
-    }
-    return _.get(item, key);
+    return this.url instanceof Function || this.getData instanceof Function || this.prototype;
   }
 
   setData(data) {
-    const formatData: Array<any> = [];
-    data = _.cloneDeep(data);
-    _.forEach(data, (item) => {
-      const value = this._pickItemProp(item, this.value);
-      const label = this._pickItemProp(item, this.label);
-      const children = this._pickItemProp(item, this.children);
-      const color = this._pickItemProp(item, this.color);
-
-      item.value = value;
-      item.label = label;
-      if (children) {
-        item.children = children;
-      }
-
-      if (color) {
-        item.color = color;
-      }
-      formatData.push(item);
-    });
-    this.data = formatData;
+    this.data = data;
     this.toMap();
   }
 
@@ -111,8 +74,28 @@ class Dict extends UnMergeable {
     if (this.data) {
       return;
     }
-    let data: Array<any>;
-    if (this.originalData) {
+    let data: Array<any> = [];
+    if (this.getNodesByValues) {
+      if (context.value) {
+        let cacheKey = null;
+        if (this.cache && this.url) {
+          cacheKey = this.url + context.value;
+        }
+        let cached = null;
+
+        if (cacheKey) {
+          cached = DictGlobalCache.get(cacheKey);
+        }
+        if (cached) {
+          data = cached;
+        } else {
+          data = await this.getNodesByValues(context.value, context);
+          if (cacheKey) {
+            DictGlobalCache.set(cacheKey, data);
+          }
+        }
+      }
+    } else if (this.originalData) {
       data = this.originalData;
     } else {
       this.loading = true;
@@ -170,7 +153,7 @@ class Dict extends UnMergeable {
           loaded: false,
           loading: true,
           data: undefined,
-          callback: [],
+          callback: []
         };
         DictGlobalCache.set(cacheKey, cached);
       } else if (cached.loaded) {
@@ -211,17 +194,32 @@ class Dict extends UnMergeable {
     if (this.data) {
       this.buildMap(map, this.data);
     }
+    // if (this.getNodesByValues) {
+    //   _.merge(this.dataMap, map);
+    // }
     this.dataMap = map;
   }
   buildMap(map, list) {
     _.forEach(list, (item) => {
-      map[item.value] = item;
-      if (this.isTree && item.children) {
-        this.buildMap(map, item.children);
+      map[this.getValue(item)] = item;
+      if (this.isTree && this.getChildren(item)) {
+        this.buildMap(map, this.getChildren(item));
       }
     });
   }
 
+  getValue(item) {
+    return item[this.value];
+  }
+  getLabel(item) {
+    return item[this.label];
+  }
+  getChildren(item) {
+    return item[this.children];
+  }
+  getColor(item) {
+    return item[this.color];
+  }
   getDictData() {
     return this.data;
   }
@@ -234,26 +232,13 @@ class Dict extends UnMergeable {
     return this.dataMap[value];
   }
 
-  getNodesByValues(value, context) {
+  getNodesFromDataMap(value) {
     if (value == null) {
       return [];
     }
     if (!_.isArray(value)) {
       value = [value];
     }
-
-    if (this.getNodes) {
-      const valueKey = value.toString();
-      const cached = this.cacheNodes[valueKey];
-      //要远程获取
-      if (cached) {
-        return cached;
-      }
-      const nodes = this.getNodes(value, context);
-      this.cacheNodes[valueKey] = cached;
-      return nodes;
-    }
-
     //本地获取
     const nodes: Array<any> = [];
     _.forEach(value, (item) => {
@@ -277,6 +262,6 @@ export function useDictDefine() {
   return {
     dict,
     setDictRequest,
-    Dict,
+    Dict
   };
 }

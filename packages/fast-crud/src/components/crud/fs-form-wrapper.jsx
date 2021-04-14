@@ -1,10 +1,4 @@
-import {
-  ref,
-  resolveDynamicComponent,
-  computed,
-  nextTick,
-  onMounted,
-} from "vue";
+import { ref, resolveDynamicComponent, computed, nextTick, onMounted } from "vue";
 import FsButton from "../basic/fs-button";
 import traceUtil from "../../utils/util.trace";
 import _ from "lodash-es";
@@ -18,17 +12,9 @@ export default {
   props: {
     //默认打开配置，如果配置了options，则默认根据options自动打开
     options: {},
-    slots: {},
+    slots: {}
   },
-  emits: [
-    "reset",
-    "submit",
-    "validationError",
-    "value-change",
-    "open",
-    "opened",
-    "closed",
-  ],
+  emits: ["reset", "submit", "validationError", "value-change", "open", "opened", "closed"],
   setup(props, ctx) {
     traceUtil.trace("fs-form-wrapper");
     const { t } = useI18n();
@@ -49,12 +35,12 @@ export default {
       }
       title.value = wrapper.title;
       formWrapper.value = {
-        ..._.omit(wrapper, "title", "onOpen", "onClosed", "onOpened"),
+        ..._.omit(wrapper, "title", "onOpen", "onClosed", "onOpened")
       };
       delete formWrapper.value.is;
       formWrapperIs.value = opts.wrapper.is;
       formOptions.value = {
-        ..._.omit(opts, "wrapper"),
+        ..._.omit(opts, "wrapper")
       };
 
       // 打开表单对话框
@@ -65,7 +51,7 @@ export default {
         return {
           wrapper: formWrapper.value,
           options: formOptions.value,
-          formRef: formRef.value,
+          formRef: formRef.value
         };
       }
 
@@ -130,7 +116,7 @@ export default {
           text: t("fs.form.cancel"),
           onClick: () => {
             close();
-          },
+          }
         },
         ok: {
           text: t("fs.form.ok"),
@@ -138,8 +124,8 @@ export default {
           onClick: () => {
             submit();
           },
-          loading: loading.value,
-        },
+          loading: loading.value
+        }
       };
       return _.merge(defBtns, formWrapper.value.buttons);
     });
@@ -173,7 +159,7 @@ export default {
       loading,
       getFormData,
       setFormData,
-      onValueChange,
+      onValueChange
     };
   },
   render() {
@@ -223,11 +209,7 @@ export default {
             <div class={"fs-form-wrapper-body"}>
               <div class={"fs-form-body"}>
                 {slotsRender("form-body-top", scope)}
-                <fs-form
-                  ref="formRef"
-                  {...this.formOptions}
-                  onValueChange={this.onValueChange}
-                />
+                <fs-form ref="formRef" {...this.formOptions} onValueChange={this.onValueChange} />
                 {slotsRender("form-body-bottom", scope)}
               </div>
               <div className="fs-form-footer-btns">
@@ -237,7 +219,7 @@ export default {
               </div>
             </div>
           );
-        },
+        }
       };
     }
 
@@ -248,24 +230,16 @@ export default {
       [visible]: this.formWrapperOpen,
       ["onUpdate:" + visible]: (value) => {
         this.formWrapperOpen = value;
-      },
+      }
     };
     const vClosed = this.$fsui.formWrapper.buildOnClosedBind(is, this.onClosed);
     const vCustomClass = {
-      [this.$fsui.formWrapper.customClass]: `fs-form-wrapper ${
-        this.formWrapper.customClass || ""
-      }  ${this.fullscreen ? "fs-fullscreen" : ""}`,
+      [this.$fsui.formWrapper.customClass]: `fs-form-wrapper ${this.formWrapper.customClass || ""}  ${
+        this.fullscreen ? "fs-fullscreen" : ""
+      }`
     };
 
     const formWrapperComp = resolveDynamicComponent(is);
-    return (
-      <formWrapperComp
-        {...vCustomClass}
-        {...this.formWrapper}
-        {...vModel}
-        {...vClosed}
-        v-slots={children}
-      />
-    );
-  },
+    return <formWrapperComp {...vCustomClass} {...this.formWrapper} {...vModel} {...vClosed} v-slots={children} />;
+  }
 };

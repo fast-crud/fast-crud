@@ -1,11 +1,4 @@
-import {
-  h,
-  resolveDynamicComponent,
-  getCurrentInstance,
-  computed,
-  mergeProps,
-  onMounted,
-} from "vue";
+import { h, resolveDynamicComponent, getCurrentInstance, computed, mergeProps, onMounted } from "vue";
 import _ from "lodash-es";
 import traceUtil from "../../utils/util.trace";
 
@@ -26,25 +19,25 @@ export default {
   props: {
     modelValue: {},
     name: {
-      type: String,
+      type: String
     },
     children: {
-      type: Object,
+      type: Object
     },
     on: {
-      type: Object,
+      type: Object
     },
     events: {
-      type: Object,
+      type: Object
     },
     scope: {
-      type: Object,
+      type: Object
     },
     vModel: {
       type: String,
-      Object,
+      Object
     },
-    props: {},
+    props: {}
   },
   emits: ["update:dict", "update:modelValue"],
   setup(props, ctx) {
@@ -53,7 +46,7 @@ export default {
 
     const newScope = computed(() => {
       return {
-        ...props.scope,
+        ...props.scope
       };
     });
 
@@ -68,9 +61,9 @@ export default {
       const vModel = props.vModel || "modelValue";
       const attrs = {
         ref: "targetRef",
-        scope: props.scope,
+        // scope: props.scope,
         [vModel]: props.modelValue,
-        ...props.props,
+        ...props.props
       };
       attrs["onUpdate:" + vModel] = (value) => {
         ctx.emit("update:modelValue", value);
@@ -117,6 +110,6 @@ export default {
   methods: {
     getTargetRef() {
       return this.$refs.targetRef;
-    },
-  },
+    }
+  }
 };

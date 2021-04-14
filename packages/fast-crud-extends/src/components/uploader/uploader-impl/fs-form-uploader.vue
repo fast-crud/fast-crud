@@ -24,7 +24,7 @@ async function doUpload({ file, fileName, onProgress, options }) {
   const ajaxOptions = {
     file,
     onProgress,
-    ...options,
+    ...options
   };
   logger.debug("upload ajaxOptions ", key, ajaxOptions);
   return new Promise((resolve, reject) => {
@@ -60,6 +60,6 @@ export default {
       return await doUpload(context);
     }
     return { upload };
-  },
+  }
 };
 </script>

@@ -1,18 +1,14 @@
 <template>
   <div class="fs-toolbar">
     <template v-for="(item, key) of computedButtons" :key="key">
-      <fs-button
-        v-if="item.show !== false"
-        v-bind="item"
-        @click="item.click()"
-      />
+      <fs-button v-if="item.show !== false" v-bind="item" @click="item.click()" />
     </template>
     <fs-table-columns-filter
       v-if="columns"
       ref="columnsFilterRef"
       :columns="columns"
-      @update:columns="$emit('update:columns', $event)"
       :storage="storage"
+      @update:columns="$emit('update:columns', $event)"
     />
   </div>
 </template>
@@ -31,14 +27,14 @@ export default {
   components: { FsTableColumnsFilter, FsButton, FsSlotRender },
   props: {
     buttons: {
-      type: Object,
+      type: Object
     },
     /**
      * 是否显示查询
      * 传null，则不显示按钮
      */
     search: {
-      type: Boolean,
+      type: Boolean
     },
     /**
      * 紧凑模式按钮
@@ -46,14 +42,14 @@ export default {
      */
     compact: {
       type: Boolean,
-      default: true,
+      default: true
     },
     /**
      * 列配置
      */
     columns: {
       type: Array,
-      default: undefined,
+      default: undefined
     },
     /**
      * 是否保存用户列设置
@@ -61,17 +57,11 @@ export default {
      */
     storage: {
       type: [String, Boolean],
-      default: true,
+      default: true
     },
-    slots: {},
+    slots: {}
   },
-  emits: [
-    "refresh",
-    "update:search",
-    "update:compact",
-    "update:columns",
-    "export",
-  ],
+  emits: ["refresh", "update:search", "update:compact", "update:columns", "export"],
   setup(props, ctx) {
     const { t } = useI18n();
     const columnsFilterRef = ref();
@@ -86,7 +76,7 @@ export default {
           circle: true,
           click: () => {
             ctx.emit("refresh");
-          },
+          }
         },
         search: {
           type: "primary",
@@ -95,7 +85,7 @@ export default {
           circle: true,
           click: () => {
             ctx.emit("update:search", !props.search);
-          },
+          }
         },
         compact: {
           type: "primary",
@@ -104,7 +94,7 @@ export default {
           circle: true,
           click: () => {
             ctx.emit("update:compact", !props.compact);
-          },
+          }
         },
         export: {
           type: "primary",
@@ -113,7 +103,7 @@ export default {
           circle: true,
           click: () => {
             ctx.emit("export");
-          },
+          }
         },
         columns: {
           type: "primary",
@@ -122,8 +112,8 @@ export default {
           circle: true,
           click: () => {
             columnsFilterRef.value.start();
-          },
-        },
+          }
+        }
       };
 
       _.merge(defaultButtons, props.buttons);
@@ -137,9 +127,9 @@ export default {
     });
     return {
       columnsFilterRef,
-      computedButtons,
+      computedButtons
     };
-  },
+  }
 };
 </script>
 <style lang="less">

@@ -14,5 +14,5 @@ export default {
     // onRenderTriggered((event) => {
     //   console.log('状态触发trigger--------------->', name, event.key, event.target, event.type, event)
     // })
-  },
+  }
 };

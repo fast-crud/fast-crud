@@ -2,16 +2,16 @@
   <span>
     <template v-if="multiple">
       <div v-for="(Labels, Index) in multipleLabels" :key="Index">
-        <span v-for="(label, index) in Labels" :key="index">
+        <span v-for="(item, index) in Labels" :key="index">
           <span v-if="index !== 0"> / </span>
-          <span>{{ label.label }}</span>
+          <span>{{ getLabel(item) }}</span>
         </span>
       </div>
     </template>
     <template v-else>
-      <span v-for="(label, index) in labels" :key="index">
+      <span v-for="(item, index) in labels" :key="index">
         <span v-if="index !== 0"> / </span>
-        <span>{{ label.label }}</span>
+        <span>{{ getLabel(item) }}</span>
       </span>
     </template>
   </span>
@@ -28,7 +28,7 @@ export default {
     // 多选[[1,2,3],[4,5,6]]<br/>
     modelValue: {
       type: [String, Array],
-      require: true,
+      require: true
     },
     // value的分隔符<br/>
     // 多选时，如果value为string，则以该分隔符分割成多个展示<br/>
@@ -40,13 +40,17 @@ export default {
     // 示例：{url:'xxx',data:[],value:'',label:'',children:''}
     dict: {
       type: Object,
-      require: false,
-    },
+      require: false
+    }
   },
   setup(props, ctx) {
     const dict = useDict(props, ctx);
+    if (props.dict?.getNodesByValues) {
+      dict.watchValue();
+    }
+
     return {
-      ...dict,
+      ...dict
     };
   },
   data() {
@@ -68,7 +72,7 @@ export default {
         arr.push(this.buildValueItem(item));
       }
       return arr;
-    },
+    }
   },
   methods: {
     getValueArr(values) {
@@ -88,12 +92,7 @@ export default {
         return [];
       }
       let arr = null;
-      if (
-        typeof values === "string" &&
-        !this.multiple &&
-        this.separator != null &&
-        this.separator !== ""
-      ) {
+      if (typeof values === "string" && !this.multiple && this.separator != null && this.separator !== "") {
         arr = values.split(this.separator);
       } else if (values instanceof Array) {
         arr = values;
@@ -107,9 +106,9 @@ export default {
 
       const dict = this.getDict();
       if (dict) {
-        return dict.getNodesByValues(arr);
+        return dict.getNodesFromDataMap(arr);
       }
-    },
-  },
+    }
+  }
 };
 </script>

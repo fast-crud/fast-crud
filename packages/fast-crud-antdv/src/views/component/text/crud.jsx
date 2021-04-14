@@ -20,7 +20,7 @@ export default function ({ expose }) {
         pageRequest,
         addRequest,
         editRequest,
-        delRequest,
+        delRequest
       },
       columns: {
         name: {
@@ -29,9 +29,9 @@ export default function ({ expose }) {
           search: { show: true },
           form: {
             component: {
-              maxlength: 20,
-            },
-          },
+              maxlength: 20
+            }
+          }
         },
 
         search: {
@@ -44,28 +44,28 @@ export default function ({ expose }) {
               children: {
                 addonBefore() {
                   return <SearchOutlined />;
-                },
-              },
-            },
-          },
+                }
+              }
+            }
+          }
         },
         password: {
           title: "密码",
           type: "password",
           column: {
             //一般密码不显示在列里面
-            show: false,
-          },
+            show: false
+          }
         },
         intro: {
           title: "简介",
           type: "textarea",
           form: {
-            component: { showCount: true, maxlength: 200 },
+            component: { showCount: true, maxlength: 200 }
           },
           column: {
-            ellipsis: true,
-          },
+            ellipsis: true
+          }
         },
         render: {
           title: "复杂输入(render)",
@@ -88,20 +88,20 @@ export default function ({ expose }) {
                     />
                   </a-input-group>
                 );
-              },
-            },
-          },
+              }
+            }
+          }
         },
         render2: {
           title: "我的值是由复杂输入列输入的",
           column: {
-            width: "300px",
+            width: "300px"
           },
           form: {
-            show: false,
-          },
-        },
-      },
-    },
+            show: false
+          }
+        }
+      }
+    }
   };
 }

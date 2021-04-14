@@ -23,6 +23,6 @@ export function useUploader(vm) {
   return {
     getConfig,
     getDefaultType,
-    getUploaderImpl,
+    getUploaderImpl
   };
 }

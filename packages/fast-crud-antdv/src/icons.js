@@ -58,7 +58,7 @@ const icons = {
   RedoOutlined,
   LikeOutlined
 };
-export default function(app) {
+export default function (app) {
   _.forEach(icons, (item, key) => {
     app.component(key, item);
   });

@@ -3,10 +3,11 @@
     <component
       :is="$fsui.radio.name"
       v-for="item of computedOptions"
-      :key="item.value"
-      :[$fsui.radio.value]="item.value"
-      >{{ item.label }}</component
+      :key="getValue(item)"
+      :[$fsui.radio.value]="getValue(item)"
     >
+      {{ getLabel(item) }}
+    </component>
   </component>
 </template>
 <script>
@@ -18,14 +19,14 @@ export default {
   props: {
     dict: {},
     //选项，比dict.data优先级高
-    options: { type: Array },
+    options: { type: Array }
   },
   setup(props, ctx) {
     const ui = uiContext.get();
 
     return {
-      ...useDict(props, ctx, ui.radioGroup.modelValue),
+      ...useDict(props, ctx, ui.radioGroup.modelValue)
     };
-  },
+  }
 };
 </script>

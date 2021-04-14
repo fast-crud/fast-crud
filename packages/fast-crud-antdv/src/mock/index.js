@@ -5,25 +5,22 @@ const commonMocks = import.meta.globEager("./common/mock.*.js");
 const viewMocks = import.meta.globEager("../views/**/mock.js");
 
 const list = [];
-_.forEach(commonMocks, value => {
+_.forEach(commonMocks, (value) => {
   list.push(value.default);
 });
-_.forEach(viewMocks, value => {
+_.forEach(viewMocks, (value) => {
   list.push(value.default);
 });
 
 console.log("mocks", list);
 
-list.forEach(apiFile => {
+list.forEach((apiFile) => {
   for (const item of apiFile) {
-    mock.onAny(new RegExp("/api" + item.path)).reply(async config => {
+    mock.onAny(new RegExp("/api" + item.path)).reply(async (config) => {
       console.log("------------fake request start -------------");
       console.log("request:", config);
       const data = config.data ? JSON.parse(config.data) : {};
-      const query =
-        config.url.indexOf("?") >= 0
-          ? config.url.substring(config.url.indexOf("?") + 1)
-          : undefined;
+      const query = config.url.indexOf("?") >= 0 ? config.url.substring(config.url.indexOf("?") + 1) : undefined;
       const params = config.params || {};
       if (query) {
         const arr = query.split("&");

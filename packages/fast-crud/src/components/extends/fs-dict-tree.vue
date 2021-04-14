@@ -1,9 +1,5 @@
 <template>
-  <component
-    :is="$fsui.treeSelect.name"
-    :treeData="computedOptions"
-    :placeholder="computedPlaceholder"
-  />
+  <component :is="$fsui.treeSelect.name" :tree-data="computedOptions" :placeholder="computedPlaceholder" />
 </template>
 <script>
 import { computed } from "vue";
@@ -15,7 +11,7 @@ export default {
     dict: {},
     //选项，比dict.data优先级高
     options: { type: Array },
-    placeholder: { type: String },
+    placeholder: { type: String }
   },
   // render () {
   //   return this.renderFunc({ data: this.data, dataMap: this.dataMap, scope: this.scope, attrs: this.$attrs })
@@ -28,8 +24,8 @@ export default {
 
     return {
       computedPlaceholder,
-      ...useDict(props, ctx),
+      ...useDict(props, ctx)
     };
-  },
+  }
 };
 </script>

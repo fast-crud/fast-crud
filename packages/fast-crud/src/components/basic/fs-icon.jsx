@@ -2,7 +2,7 @@ import { resolveDynamicComponent } from "vue";
 export default {
   name: "FsIcon",
   props: {
-    icon: { require: true },
+    icon: { require: true }
   },
   render() {
     if (this.$fsui.icon.isComponent) {
@@ -10,5 +10,5 @@ export default {
       return <IconComp />;
     }
     return <i class={this.icon} />;
-  },
+  }
 };

@@ -7,23 +7,23 @@ export default {
     return {
       search: {
         options: {
-          layout: "inline",
+          layout: "inline"
         },
         show: true,
         buttons: {
           search: {
-            icon: ui.icons.search,
+            icon: ui.icons.search
           },
           reset: {
-            icon: ui.icons.refresh,
-          },
-        },
+            icon: ui.icons.refresh
+          }
+        }
       },
       form: {
         labelPosition: "right",
         labelWidth: "80px",
         style: {
-          "grid-template-columns": "50% 50%", // grid布局，默认两列
+          "grid-template-columns": "50% 50%" // grid布局，默认两列
         },
         col: { span: 12 },
         labelAlign: "right", // antdv
@@ -33,23 +33,23 @@ export default {
           is: ui.dialog.name,
           width: "960px",
           destroyOnClose: true, // antdv
-          ...ui.dialog.footer(), // antdv
-        },
+          ...ui.dialog.footer() // antdv
+        }
       },
       addForm: {
         wrapper: {
-          title: t("fs.addForm.title"),
-        },
+          title: t("fs.addForm.title")
+        }
       },
       editForm: {
         wrapper: {
-          title: t("fs.editForm.title"),
-        },
+          title: t("fs.editForm.title")
+        }
       },
       viewForm: {
         wrapper: {
-          title: t("fs.viewForm.title"),
-        },
+          title: t("fs.viewForm.title")
+        }
       },
       rowHandle: {
         width: "250px",
@@ -58,8 +58,8 @@ export default {
           // 操作列折叠
           text: null, // dropdown按钮文字
           type: "primary",
-          icon: ui.icons.more,
-        },
+          icon: ui.icons.more
+        }
       },
       pagination: {
         background: true,
@@ -68,26 +68,26 @@ export default {
         layout: "total, sizes, prev, pager, next, jumper",
         showSizeChanger: true, // antdv
         showQuickJumper: true, // antdv
-        showTotal: (total) => tc("fs.pagination.showTotal", total), //antdv
+        showTotal: (total) => tc("fs.pagination.showTotal", total) //antdv
       },
       table: {
         height: "100%",
         rowKey: "id",
         stripe: true,
         border: true,
-        bordered: true,
+        bordered: true
       },
       toolbar: {
-        compact: true,
+        compact: true
       },
       actionbar: {
         buttons: {
           add: {
             type: "primary",
-            text: t("fs.actionbar.add"),
-          },
-        },
-      },
+            text: t("fs.actionbar.add")
+          }
+        }
+      }
     };
-  },
+  }
 };

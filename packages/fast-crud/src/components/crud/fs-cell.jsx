@@ -4,8 +4,8 @@ export default {
   props: {
     component: {},
     getScope: {
-      type: Function,
-    },
+      type: Function
+    }
   },
   setup(props) {
     const { doComputed } = useCompute();
@@ -19,19 +19,13 @@ export default {
       if (computedComponent.value.render) {
         return computedComponent.value.render(newScope);
       } else {
-        return (
-          <fs-component-render
-            ref={"targetRef"}
-            {...computedComponent.value}
-            scope={newScope}
-          />
-        );
+        return <fs-component-render ref={"targetRef"} {...computedComponent.value} scope={newScope} />;
       }
     };
   },
   methods: {
     getTargetRef() {
       return this.$refs.targetRef?.getTargetRef();
-    },
-  },
+    }
+  }
 };

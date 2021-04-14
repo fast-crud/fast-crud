@@ -1,22 +1,18 @@
 <template>
   <component :is="$fsui.collapseTransition.name">
-    <div class="fs-search" v-if="show !== false">
+    <div v-if="show !== false" class="fs-search">
       <component
         :is="$fsui.form.name"
+        ref="searchFormRef"
         :inline="true"
         :model="form"
-        ref="searchFormRef"
         v-bind="options"
         class="search-form"
         @compositionstart="changeInputEventDisabled(true)"
         @compositionend="changeInputEventDisabled(false)"
       >
         <component :is="$fsui.formItem.name">
-          <fs-slot-render
-            v-if="slots['search-left']"
-            :slots="slots['search-left']"
-            :scope="{ form }"
-          />
+          <fs-slot-render v-if="slots['search-left']" :slots="slots['search-left']" :scope="{ form }" />
         </component>
         <template v-for="(item, key) in computedColumns" :key="key">
           <component
@@ -27,10 +23,7 @@
             :label="item.title"
           >
             <template v-if="slots['search_' + key]">
-              <fs-slot-render
-                :slots="slots['search_' + key]"
-                :scope="{ form, key }"
-              />
+              <fs-slot-render :slots="slots['search_' + key]" :scope="{ form, key }" />
             </template>
             <template v-else>
               <fs-component-render
@@ -42,33 +35,25 @@
                     }
                   }
                 "
-                :modelValue="get(form, key)"
-                @update:modelValue="onValueChanged($event, item)"
-                @input="onInput(item)"
+                :model-value="get(form, key)"
                 v-bind="item.component"
                 :scope="{ form }"
+                @update:modelValue="onValueChanged($event, item)"
+                @input="onInput(item)"
               />
             </template>
           </component>
         </template>
         <component :is="$fsui.formItem.name">
-          <fs-slot-render
-            v-if="slots['search-middle']"
-            :slots="slots['search-middle']"
-            :scope="{ form }"
-          />
+          <fs-slot-render v-if="slots['search-middle']" :slots="slots['search-middle']" :scope="{ form }" />
         </component>
         <component :is="$fsui.formItem.name" class="search-btns">
           <template v-for="(item, index) in computedButtons" :key="index">
-            <fs-button v-if="item.show" @click="item.doClick()" v-bind="item" />
+            <fs-button v-if="item.show" v-bind="item" @click="item.doClick()" />
           </template>
         </component>
         <component :is="$fsui.formItem.name">
-          <fs-slot-render
-            v-if="slots['search-right']"
-            :slots="slots['search-right']"
-            :scope="{ form }"
-          />
+          <fs-slot-render v-if="slots['search-right']" :slots="slots['search-right']" :scope="{ form }" />
         </component>
       </component>
     </div>
@@ -95,43 +80,43 @@ export default {
   props: {
     /* 初始查询条件，点击重置，会重置成该条件 */
     initialForm: {
-      type: Object,
+      type: Object
     },
     // 表单options
     options: {
-      type: Object,
+      type: Object
     },
     // 查询字段配置
     columns: {
-      type: Object,
+      type: Object
     },
     // 按钮配置 {search, rest}
     buttons: {
-      type: Object,
+      type: Object
     },
     // 点击重置后是否查询
     searchAfterReset: {
       type: Boolean,
-      default: true,
+      default: true
     },
     // 是否自动查询
     autoSearch: {
       type: Boolean,
-      default: true,
+      default: true
     },
     // 自动查询，防抖设置
     debounce: {
-      type: Object,
+      type: Object
     },
     slots: {
       default() {
         return {};
-      },
+      }
     },
     show: {
       type: Boolean,
-      default: true,
-    },
+      default: true
+    }
   },
   emits: ["search", "reset"],
   setup(props, ctx) {
@@ -167,7 +152,7 @@ export default {
         ctx.emit("search", { form: form.value });
       } else {
         ui.message.error({
-          message: t("fs.search.error.message"),
+          message: t("fs.search.error.message")
         });
         return false;
       }
@@ -202,7 +187,7 @@ export default {
           },
           order: 1,
           text: t("fs.search.search.text"), // '查询',
-          ...defBtnOptions.search,
+          ...defBtnOptions.search
         });
       }
       if (defBtnOptions.reset) {
@@ -214,7 +199,7 @@ export default {
           },
           text: t("fs.search.reset.text"), // '重置',
           order: 2,
-          ...defBtnOptions.reset,
+          ...defBtnOptions.reset
         });
       }
       btns.sort((a, b) => {
@@ -262,10 +247,7 @@ export default {
     };
 
     const onInput = (item) => {
-      if (
-        item.autoSearchTrigger == null ||
-        item.autoSearchTrigger === "input"
-      ) {
+      if (item.autoSearchTrigger == null || item.autoSearchTrigger === "input") {
         doAutoSearch();
       }
     };
@@ -306,9 +288,9 @@ export default {
       inputEventDisabled,
       changeInputEventDisabled,
       computedColumns,
-      computedButtons,
+      computedButtons
     };
-  },
+  }
 };
 </script>
 <style lang="less">

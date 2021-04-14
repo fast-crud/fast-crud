@@ -20,14 +20,14 @@ export default function ({ expose }) {
     data: [
       { value: "1", label: "开启", color: "success" },
       { value: "2", label: "停止", color: "blue" },
-      { value: "0", label: "关闭", color: "blue" },
-    ],
+      { value: "0", label: "关闭", color: "blue" }
+    ]
   });
 
   const remoteDict = dict({
     cloneable: false, // 关闭cloneable，任何情况下，都使用同一个dict
     url: "/dicts/OpenStatusEnum",
-    immediate: false,
+    immediate: false
   });
   // remoteDict.loadDict();
 
@@ -38,7 +38,7 @@ export default function ({ expose }) {
         pageRequest,
         addRequest,
         editRequest,
-        delRequest,
+        delRequest
       },
       columns: {
         id: {
@@ -46,23 +46,23 @@ export default function ({ expose }) {
           key: "id",
           type: "number",
           column: {
-            width: 50,
+            width: 50
           },
           form: {
-            show: false,
-          },
+            show: false
+          }
         },
         status: {
           title: "本地字典",
           search: { show: false },
           dict: statusDict,
-          type: "dict-select",
+          type: "dict-select"
         },
         remote: {
           title: "远程字典",
           search: { show: true },
           dict: remoteDict,
-          type: "dict-select",
+          type: "dict-select"
         },
         modifyDict: {
           title: "动态修改字典",
@@ -71,16 +71,14 @@ export default function ({ expose }) {
           form: {
             component: {
               name: "a-switch",
-              vModel: "checked",
+              vModel: "checked"
             },
             valueChange({ form }) {
               console.log("changed", form.modifyDict);
-              remoteDict.url = form.modifyDict
-                ? "/dicts/moreOpenStatusEnum?remote"
-                : "/dicts/OpenStatusEnum?remote";
+              remoteDict.url = form.modifyDict ? "/dicts/moreOpenStatusEnum?remote" : "/dicts/OpenStatusEnum?remote";
               // 由于remoteDict.cloneable =false,所以全局公用一个实例，修改会影响全部地方
               remoteDict.reloadDict();
-            },
+            }
           },
           column: {
             component: {
@@ -88,16 +86,14 @@ export default function ({ expose }) {
               vModel: "checked",
               on: {
                 onChange({ $event }) {
-                  remoteDict.url = $event
-                    ? "/dicts/moreOpenStatusEnum?remote"
-                    : "/dicts/OpenStatusEnum?remote";
+                  remoteDict.url = $event ? "/dicts/moreOpenStatusEnum?remote" : "/dicts/OpenStatusEnum?remote";
                   remoteDict.reloadDict();
-                },
-              },
-            },
-          },
-        },
-      },
-    },
+                }
+              }
+            }
+          }
+        }
+      }
+    }
   };
 }

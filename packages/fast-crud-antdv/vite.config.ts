@@ -25,13 +25,13 @@ export default ({ command, mode }) => {
         "../fast-crud-extends/src"
       ),
       "@fast-crud/fast-crud": path.resolve("../fast-crud/src"),
-      "@fast-crud/fast-crud-extends": path.resolve("../fast-crud-extends/src")
+      "@fast-crud/fast-crud-extends": path.resolve("../fast-crud-extends/src"),
     };
   }
 
   console.log("devAlias", devAlias);
   return {
-    base: "antdv",
+    base: "/antdv/",
     plugins: [
       vueJsx({
         // options are passed on to @vue/babel-plugin-jsx
@@ -43,34 +43,34 @@ export default ({ command, mode }) => {
       //   //exclude: ["node_modules/foo/**", "node_modules/bar/**"] // Default: undefined
       // }),
       // commonjs(),
-      vue()
+      vue(),
     ],
     // optimizeDeps: {
     //   exclude: ["@fast-crud/fast-crud-extends"],
     // },
     esbuild: {
       jsxFactory: "h",
-      jsxFragment: "Fragment"
+      jsxFragment: "Fragment",
     },
     resolve: {
       alias: {
         ...devAlias,
-        "/@": path.resolve("./src")
+        "/@": path.resolve("./src"),
       },
-      dedupe: ["vue"]
+      dedupe: ["vue"],
     },
     build: {
       rollupOptions: {
-        plugins: [visualizer()]
-      }
+        plugins: [visualizer()],
+      },
     },
     server: {
       proxy: {
         // with options
         "/api": {
-          target: "http://www.docmirror.cn:7070"
-        }
-      }
-    }
+          target: "http://www.docmirror.cn:7070",
+        },
+      },
+    },
   };
 };

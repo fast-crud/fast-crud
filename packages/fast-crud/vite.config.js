@@ -5,20 +5,15 @@ import visualizer from "rollup-plugin-visualizer";
 const { resolve } = path;
 // https://vitejs.dev/config/
 export default {
-  plugins: [
-    vueJsx({
-      // options are passed on to @vue/babel-plugin-jsx
-    }),
-    vue(),
-  ],
+  plugins: [vueJsx(), vue()],
   esbuild: {
     jsxFactory: "h",
-    jsxFragment: "Fragment",
+    jsxFragment: "Fragment"
   },
   build: {
     lib: {
-      entry: path.resolve(__dirname, "src/index.js"),
-      name: "fast-crud",
+      entry: resolve(__dirname, "src/index.js"),
+      name: "fast-crud"
     },
     // cssCodeSplit: true,
     sourcemap: true,
@@ -40,9 +35,9 @@ export default {
           "lodash-es": "_",
           dayjs: "dayjs",
           "vue-i18n": "VueI18n",
-          vuedraggable: "vuedraggable",
-        },
-      },
-    },
-  },
+          vuedraggable: "vuedraggable"
+        }
+      }
+    }
+  }
 };

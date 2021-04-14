@@ -1,25 +1,21 @@
 <template>
   <component
     :is="$fsui.form.name"
+    ref="formRef"
     class="fs-form"
     :class="{
       'fs-form-grid': display === 'grid',
-      'fs-form-flex': display === 'flex',
+      'fs-form-flex': display === 'flex'
     }"
-    ref="formRef"
     :model="form"
   >
     <!-- row -->
     <component :is="$fsui.row.name" class="fs-row" v-bind="row">
       <!-- col -->
       <template v-for="item in computedDefaultColumns" :key="item.key">
-        <component
-          :is="$fsui.col.name"
-          v-if="item.show !== false"
-          class="fs-col"
-          v-bind="mergeCol(item.col)"
-        >
+        <component :is="$fsui.col.name" v-if="item.show !== false" class="fs-col" v-bind="mergeCol(item.col)">
           <fs-form-item
+            v-if="item.show !== false"
             :ref="
               (el) => {
                 if (el) {
@@ -28,35 +24,30 @@
               }
             "
             :item="item"
-            v-if="item.show !== false"
-            :modelValue="get(form, item.key)"
-            @update:modelValue="set(form, item.key, $event)"
+            :model-value="get(form, item.key)"
             :slots="slots['form_' + item.key]"
             :get-context-fn="getContextFn"
+            @update:modelValue="set(form, item.key, $event)"
           />
         </component>
       </template>
     </component>
     <component
-      style="width: 100%"
-      v-if="computedGroup.wrapper"
       :is="computedGroup.wrapper.parent"
+      v-if="computedGroup.wrapper"
       v-model:activeKey="groupActiveKey"
+      style="width: 100%"
       v-bind="computedGroup"
     >
       <component
+        :is="computedGroup.wrapper.child"
         v-for="(groupItem, groupKey) of computedGroup.groups"
         :key="groupKey"
-        :is="computedGroup.wrapper.child"
         v-bind="groupItem"
       >
         <!-- tabPane的slots -->
-        <template
-          v-for="(item, slotName) of groupItem.slots"
-          :key="slotName"
-          #[slotName]="scope"
-        >
-          <fs-render :renderFunc="item" :scope="scope" />
+        <template v-for="(item, slotName) of groupItem.slots" :key="slotName" #[slotName]="scope">
+          <fs-render :render-func="item" :scope="scope" />
         </template>
         <!-- row -->
         <component :is="$fsui.row.name" class="fs-row" v-bind="row">
@@ -78,10 +69,10 @@
                   }
                 "
                 :item="computedColumns[key]"
-                :modelValue="get(form, key)"
-                @update:modelValue="set(form, key, $event)"
+                :model-value="get(form, key)"
                 :slots="slots['form_' + key]"
                 :get-context-fn="getContextFn"
+                @update:modelValue="set(form, key, $event)"
               />
             </component>
           </template>
@@ -109,7 +100,7 @@ export default {
     initialForm: {
       default() {
         return {};
-      },
+      }
     },
     // 字段模版
     columns: {},
@@ -125,20 +116,20 @@ export default {
      */
     group: {},
     doSubmit: {
-      type: Function,
+      type: Function
     },
     slots: {
-      default: {},
+      default: {}
     },
     display: {
       type: String,
-      default: "grid", // flex
+      default: "grid" // flex
     },
     index: {},
     // mode: add,edit,view,自定义
     mode: {},
     row: {},
-    col: {},
+    col: {}
   },
   emits: ["reset", "submit", "validationError", "value-change"],
   setup(props, ctx) {
@@ -149,7 +140,7 @@ export default {
     const formRef = ref();
 
     const form = reactive({});
-
+    const { proxy } = getCurrentInstance();
     const initialForm = _.cloneDeep(props.initialForm);
     // 初始数据赋值
     _.each(props.columns, (item, key) => {
@@ -165,7 +156,7 @@ export default {
           row: form,
           form,
           index: props.index,
-          mode: props.mode,
+          mode: props.mode
         });
       }
     });
@@ -176,7 +167,7 @@ export default {
       index: props.index,
       mode: props.mode,
       attrs: ctx.attrs,
-      getComponentRef,
+      getComponentRef
     });
 
     const formItemRefs = ref({});
@@ -203,47 +194,41 @@ export default {
       }
     });
     if (props.group?.groupType === "tabs") {
-      groupActiveKey.value =
-        groupActiveKey.value.length > 0 ? groupActiveKey.value[0] : null;
+      groupActiveKey.value = groupActiveKey.value.length > 0 ? groupActiveKey.value[0] : null;
     }
 
     //构建分组数据
-    const computedGroup = doComputed(
-      props.group,
-      getContextFn(),
-      null,
-      (group) => {
-        if (!group) {
-          return {};
-        }
-        //找出没有添加进分组的字段
-        const groupedKeys = new Set();
-        _.forEach(group?.groups, (groupItem) => {
-          _.forEach(groupItem.columns, (item) => {
-            groupedKeys.add(item);
-          });
-        });
-
-        const type = group.groupType;
-        let wrapper = {
-          parent: ui.collapse.name,
-          child: ui.collapseItem.name,
-        };
-        if (type === "tabs") {
-          wrapper.parent = ui.tabs.name;
-          wrapper.child = ui.tabPane.name;
-        }
-        const merged = merge(
-          {
-            wrapper,
-            groupedKeys,
-          },
-          group
-        );
-        console.log("merged", merged);
-        return merged;
+    const computedGroup = doComputed(props.group, getContextFn(), null, (group) => {
+      if (!group) {
+        return {};
       }
-    );
+      //找出没有添加进分组的字段
+      const groupedKeys = new Set();
+      _.forEach(group?.groups, (groupItem) => {
+        _.forEach(groupItem.columns, (item) => {
+          groupedKeys.add(item);
+        });
+      });
+
+      const type = group.groupType;
+      let wrapper = {
+        parent: ui.collapse.name,
+        child: ui.collapseItem.name
+      };
+      if (type === "tabs") {
+        wrapper.parent = ui.tabs.name;
+        wrapper.child = ui.tabPane.name;
+      }
+      const merged = merge(
+        {
+          wrapper,
+          groupedKeys
+        },
+        group
+      );
+      console.log("merged", merged);
+      return merged;
+    });
 
     const computedDefaultColumns = computed(() => {
       const columns = [];
@@ -295,7 +280,7 @@ export default {
           item.valueResolve({
             value,
             key,
-            ...submitScope,
+            ...submitScope
           });
         }
       });
@@ -316,8 +301,6 @@ export default {
     function mergeCol(col) {
       return _.merge({}, props.col, col);
     }
-
-    const { proxy } = getCurrentInstance();
 
     function buildItemScope(item) {
       return { key: item.key, ...scope.value };
@@ -348,9 +331,9 @@ export default {
       getComponentRef,
       mergeCol,
       computedGroup,
-      getContextFn,
+      getContextFn
     };
-  },
+  }
 };
 </script>
 
