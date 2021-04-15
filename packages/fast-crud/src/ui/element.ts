@@ -97,10 +97,10 @@ export class Element implements UiInterface {
       this.message.get.error(msg);
     },
     warn: (msg) => {
-      this.message.get.warn(msg);
+      this.message.get.warning(msg);
     },
     info: (msg) => {
-      this.message.get.success(msg);
+      this.message.get(msg);
     }
   };
 
@@ -361,7 +361,17 @@ export class Element implements UiInterface {
   };
   upload: UploadCI = {
     name: "el-upload",
-    type: ""
+    type: "",
+    getStatusFromEvent(event) {
+      return event?.status;
+    },
+    getFileListFromEvent(response, file, fileList) {
+      return fileList;
+    },
+    status: {
+      success: "success",
+      uploading: "uploading"
+    }
   };
   tabs: TabsCI = {
     name: "el-tabs"

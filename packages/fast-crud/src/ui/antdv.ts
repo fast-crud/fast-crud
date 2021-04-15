@@ -186,8 +186,8 @@ export class Antdv implements UiInterface {
     name: "a-modal",
     visible: "visible",
     customClass: "wrapClassName",
-    footer() {
-      return { footer: null };
+    footer(footer = null) {
+      return { footer };
     },
     buildOnClosedBind(onClosed: Function): {} {
       return { afterClose: onClosed };
@@ -415,7 +415,17 @@ export class Antdv implements UiInterface {
   };
   upload: UploadCI = {
     name: "a-upload",
-    type: ""
+    type: "",
+    getStatusFromEvent(event) {
+      return event?.file?.status;
+    },
+    getFileListFromEvent(event) {
+      return event?.fileList;
+    },
+    status: {
+      success: "done",
+      uploading: "uploading"
+    }
   };
   tabs: TabsCI = {
     name: "a-tabs"

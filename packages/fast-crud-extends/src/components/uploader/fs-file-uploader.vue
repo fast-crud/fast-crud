@@ -1,19 +1,10 @@
 <template>
   <div class="fs-file-uploader" :class="{ 'fs-file-uploader-limit': computedOnLimit }">
-    <component
-      :is="$fsui.upload.name"
-      v-model:fileList="fileList"
-      :custom-request="customRequest"
-      :before-upload="onBeforeUpload"
-      :list-type="listType"
-      v-bind="$attrs"
-      @change="handleChange"
-      @preview="handlePreview"
-    >
+    <component :is="$fsui.upload.name" v-model:fileList="fileList" v-bind="computedBinding">
       <component :is="computedFileSelectBtn.is" v-bind="computedFileSelectBtn" />
     </component>
     <component :is="computedUploaderImpl" ref="uploaderImplRef" />
-    <component :is="$fsui.dialog.name" v-model:[$fsui.dialog.visible]="previewVisible" :footer="null" v-bind="preview">
+    <component :is="$fsui.dialog.name" v-model:[$fsui.dialog.visible]="previewVisible" v-bind="computedPreview">
       <img style="width: 100%" :src="previewImage" />
     </component>
   </div>
@@ -83,6 +74,7 @@ export default {
       return file[props.valueType];
     }
     function initValue(value) {
+      console.log("init value", value);
       const array = [];
       if (value == null || value.length === 0) {
         fileList.value = array;
@@ -99,7 +91,7 @@ export default {
     initValue(props.modelValue);
 
     function onChange(value) {
-      ctx.emit("change", value);
+      // ctx.emit("change", value);
     }
     function onInput(value) {
       currentValue.value = value;
@@ -120,31 +112,24 @@ export default {
       }
     );
 
-    function buildEmitValue(fileList) {
+    function buildEmitValue(fList) {
       if (props.limit === 1) {
         //单个文件
-        return buildOneToFile(fileList[0]);
+        return buildOneToFile(fList[0]);
       }
       const array = [];
-      _.forEach(fileList, (item) => {
+      _.forEach(fList, (item) => {
         array.push(buildOneToValue(item));
       });
       return array;
     }
-    function isUploadSuccess(change) {
-      return change.file.status === "done";
-    }
     function hasUploading() {
       const uploading = fileList.value.filter((item) => {
-        return item.status === "uploading";
+        return item.status === ui.upload.status.uploading;
       });
       return uploading.length > 0;
     }
-    function handleChange(change) {
-      if (!isUploadSuccess(change)) {
-        return;
-      }
-      const { fileList } = change;
+    function handleSuccess(fileList) {
       onInput(buildEmitValue(fileList));
     }
 
@@ -174,12 +159,14 @@ export default {
 
     function checkLimit() {
       if (computedOnLimit.value) {
+        console.log("文件数量超限");
         ui.message.warn(t("fs.extends.fileUploader.limitTip", [props.limit]));
         throw new Error("文件数量超限");
       }
     }
 
-    async function onBeforeUpload(file) {
+    async function handleBeforeUpload(file) {
+      console.log("on before upload", file);
       checkLimit();
       if (props.sizeLimit != null) {
         let limit = props.sizeLimit;
@@ -206,7 +193,9 @@ export default {
       option.options = props.uploader;
       return await uploaderImplRef.value.upload(option);
     }
-    async function customRequest({ file, onProgress, onSuccess, onError }) {
+    async function customRequest(context) {
+      console.log("upload request", context);
+      const { file, onProgress, onSuccess, onError } = context;
       const option = {
         file,
         fileName: file.name,
@@ -214,6 +203,7 @@ export default {
       };
       try {
         const ret = await doUpload(option);
+        console.log("upload success", ret);
         onSuccess(ret);
       } catch (e) {
         logger.error("上传失败", e);
@@ -237,6 +227,12 @@ export default {
 
     const previewVisible = ref(false);
     const previewImage = ref();
+    const computedPreview = computed(() => {
+      return {
+        ...ui.dialog.footer(),
+        ...props.preview
+      };
+    });
     function getBase64(file) {
       return new Promise((resolve, reject) => {
         const reader = new FileReader();
@@ -252,32 +248,94 @@ export default {
       previewImage.value = file.url || file.preview;
       previewVisible.value = true;
     };
+
+    function buildAntdvBinding() {
+      return {
+        customRequest: customRequest,
+        beforeUpload: handleBeforeUpload,
+        listType: props.listType,
+        onChange: (change) => {
+          console.log("change", change);
+          let status = change.file?.status;
+          if (status !== "done" && status !== "removed") {
+            return;
+          }
+          const { fileList } = change;
+          handleSuccess(fileList);
+        },
+        onPreview: handlePreview
+      };
+    }
+
+    function buildElementBinding() {
+      return {
+        action: "",
+        "list-type": props.listType,
+        "before-upload": handleBeforeUpload,
+        "http-request": customRequest,
+        // "on-exceed": "onExceed",
+        "on-remove": (file, fileList) => {
+          handleSuccess(fileList);
+        },
+        "on-success": (res, file, fileList) => {
+          if (res == null) {
+            return;
+          }
+          console.log("on success", res, file, fileList);
+          file.response = res;
+          handleSuccess(fileList);
+        },
+        // "on-error": "handleUploadFileError",
+        // "on-progress": "handleUploadProgress"
+        onPreview: handlePreview
+      };
+    }
+
+    const computedBinding = computed(() => {
+      const binding = ui.type === "antdv" ? buildAntdvBinding() : buildElementBinding();
+      return {
+        ...binding,
+        ...ctx.attrs
+      };
+    });
+
     return {
       fileList,
       initValue,
       onChange,
       onInput,
-      handleChange,
       hasUploading,
       computedUploaderImpl,
       uploaderImplRef,
-      customRequest,
-      onBeforeUpload,
       computedFileSelectBtn,
       previewVisible,
       previewImage,
-      handlePreview,
-      computedOnLimit
+      computedPreview,
+      computedOnLimit,
+      computedBinding
     };
   }
 };
 </script>
 <style lang="less">
 .fs-file-uploader {
+  // antdv
   &.fs-file-uploader-limit {
     .ant-upload-select-picture-card {
       display: none;
     }
+  }
+
+  // element
+  .el-upload-list--picture-card .el-upload-list__item {
+    width: 100px;
+    height: 100px;
+    //line-height: 100px;
+  }
+  .el-upload--picture-card {
+    width: 100px;
+    height: 100px;
+    line-height: 100px;
   }
 }
 </style>

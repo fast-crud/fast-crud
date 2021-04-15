@@ -159,6 +159,9 @@ export interface LoadingCI extends CI {
 export interface UploadCI extends CI {
   name;
   type;
+  getStatusFromEvent;
+  getFileListFromEvent;
+  status;
 }
 export interface ButtonCI extends CI {
   name;
