@@ -207,7 +207,6 @@ export default {
       return await uploaderImplRef.value.upload(option);
     }
     async function customRequest({ file, onProgress, onSuccess, onError }) {
-      console.log("customReq", file);
       const option = {
         file,
         fileName: file.name,

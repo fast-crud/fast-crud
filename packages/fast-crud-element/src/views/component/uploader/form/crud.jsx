@@ -22,6 +22,11 @@ export default function ({ expose }) {
         editRequest,
         delRequest
       },
+      form: {
+        wrapper: {
+          width: 1000
+        }
+      },
       columns: {
         id: {
           title: "ID",

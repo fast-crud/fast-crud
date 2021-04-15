@@ -38,7 +38,8 @@ import {
   TabsCI,
   TabPaneCI,
   CollapseCI,
-  CollapseItemCI
+  CollapseItemCI,
+  ButtonCI
 } from "./ui-interface";
 export class Antdv implements UiInterface {
   constructor(target) {
@@ -193,8 +194,9 @@ export class Antdv implements UiInterface {
     }
   };
 
-  button: CI = {
-    name: "a-button"
+  button: ButtonCI = {
+    name: "a-button",
+    text: "link"
   };
 
   buttonGroup: CI = {

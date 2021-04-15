@@ -24,6 +24,9 @@ export default function ({ expose }) {
         editRequest,
         delRequest
       },
+      form: {
+        width: "900px"
+      },
       columns: {
         id: {
           title: "ID",

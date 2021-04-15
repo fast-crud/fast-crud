@@ -38,7 +38,8 @@ import {
   TabsCI,
   TabPaneCI,
   CollapseCI,
-  CollapseItemCI
+  CollapseItemCI,
+  ButtonCI
 } from "./ui-interface";
 export class Element implements UiInterface {
   constructor(target) {
@@ -247,8 +248,9 @@ export class Element implements UiInterface {
     label: "label"
   };
 
-  button: CI = {
-    name: "el-button"
+  button: ButtonCI = {
+    name: "el-button",
+    text: "text"
   };
 
   pagination: CI = {

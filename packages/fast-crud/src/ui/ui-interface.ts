@@ -97,9 +97,7 @@ export type MessageBoxContextType = {
   cancelButtonText?;
   type?;
 };
-export type MessageBoxOpenType = (
-  context: MessageBoxContextType
-) => Promise<void>;
+export type MessageBoxOpenType = (context: MessageBoxContextType) => Promise<void>;
 export interface MessageBoxCI extends CI {
   get;
   open: MessageBoxOpenType;
@@ -162,6 +160,10 @@ export interface UploadCI extends CI {
   name;
   type;
 }
+export interface ButtonCI extends CI {
+  name;
+  text;
+}
 export interface Icons {
   refresh;
   search;
@@ -198,7 +200,7 @@ export interface UiInterface {
   tableColumn: TableColumnCI;
   tableColumnGroup: TableColumnCI;
   pagination: CI;
-  button: CI;
+  button: ButtonCI;
   form: CI;
   formItem: FormItemCI;
   radioGroup: RadioGroupCI;

@@ -4,6 +4,7 @@
   "private": false,
   "scripts": {
     "dev": "vite --force",
+    "demo": "vite --force --mode demo",
     "build": "vite build",
     "lint": "vite lint"
   },

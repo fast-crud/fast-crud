@@ -443,7 +443,7 @@ export default {
 };
 </script>
 <style lang="less">
-.d2p-file-uploader {
+.fs-el-file-uploader {
   &.is-disabled {
     .avatar-item-wrapper {
       background-color: #f5f7fa;

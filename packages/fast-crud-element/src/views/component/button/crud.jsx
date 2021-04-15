@@ -42,7 +42,6 @@ export default function ({ expose }) {
         },
         button: {
           title: "按钮",
-          search: { show: true },
           type: "button",
           column: {
             component: {
@@ -58,12 +57,22 @@ export default function ({ expose }) {
             }
           }
         },
-        link: {
-          title: "链接",
+        url: {
+          title: "url",
           search: { show: true },
+          type: "text",
+          column: {
+            show: false
+          }
+        },
+        link: {
+          title: "链接按钮",
           type: "link",
           column: {
             component: {
+              show: compute(({ value }) => {
+                return value != null;
+              }),
               on: {
                 onClick({ row }) {
                   if (row.url) {
@@ -72,17 +81,22 @@ export default function ({ expose }) {
                 }
               }
             }
+          },
+          form: {
+            title: "按钮文字"
           }
         },
         link2: {
-          title: "手写link配置",
-          search: { show: true },
+          title: "手写link配置", //下面的配置相当于上面的type:link
           type: "text", //form组件用input
           column: {
             component: {
+              show: compute(({ value }) => {
+                return value != null;
+              }),
               name: "fs-button", //列展示组件为button
               vModel: "text", // 将row.link2的值赋值给text属性
-              type: "link", // 按钮展示为链接样式
+              type: "text", // 按钮展示为链接样式
               on: {
                 //注册点击事件
                 onClick({ row }) {

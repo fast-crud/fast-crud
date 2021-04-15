@@ -59,6 +59,14 @@ export default function ({ expose }) {
             }
           }
         },
+        url: {
+          title: "url",
+          search: { show: true },
+          type: "text",
+          column: {
+            show: false
+          }
+        },
         link: {
           title: "链接",
           search: { show: true },
@@ -73,6 +81,9 @@ export default function ({ expose }) {
                 }
               }
             }
+          },
+          form: {
+            title: "按钮文字"
           }
         },
         link2: {

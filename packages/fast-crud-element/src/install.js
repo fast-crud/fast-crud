@@ -3,8 +3,8 @@ import "@fast-crud/fast-crud/dist/style.css";
 import { ElMessage, ElNotification, ElMessageBox } from "element-plus";
 import { request, requestForMock } from "./api/service";
 import "./mock";
-import { FsUploader } from "@fast-crud/fast-crud-extends";
-import FsExtendComponentInstall from "@fast-crud/fast-crud-extends/src/install";
+import { FsUploader, FsExtends } from "@fast-crud/fast-crud-extends";
+//import FsExtendComponentInstall from "@fast-crud/fast-crud-extends/src/install";
 export default function (app) {
   app.use(FastCrud, {
     async dictRequest({ url }) {
@@ -39,9 +39,7 @@ export default function (app) {
       }
     }
   });
-
-  //安装extends component
-  FsExtendComponentInstall.install(app);
+  app.use(FsExtends);
   //配置uploader 公共参数
   app.use(FsUploader, {
     defaultType: "cos",

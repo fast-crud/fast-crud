@@ -9,7 +9,7 @@ export default function () {
         }
       },
       column: {
-        component: { name: "fs-images-format", width: "30px" }
+        component: { name: "fs-images-format", style: "width:30px" }
       },
       viewForm: {
         component: { height: 100, width: 100 }
@@ -27,7 +27,7 @@ export default function () {
       },
       column: {
         align: "center",
-        component: { name: "fs-images-format", width: "30px" }
+        component: { name: "fs-images-format", style: "width:30px" }
       },
       viewForm: {
         component: { height: 100, width: 100 }
@@ -51,7 +51,7 @@ export default function () {
         }
       },
       column: {
-        component: { name: "fs-images-format", width: "30px" }
+        component: { name: "fs-images-format", style: "width:30px" }
       }
     },
     "cropper-uploader": {
@@ -64,7 +64,7 @@ export default function () {
       },
       column: {
         align: "center",
-        component: { name: "fs-images-format", width: "30px" }
+        component: { name: "fs-images-format", style: "width:30px" }
       },
       viewForm: {
         component: { height: 100, width: 100 }

@@ -1,5 +1,7 @@
 <template>
-  <slot></slot>
+  <div class="fs-box">
+    <slot></slot>
+  </div>
 </template>
 <script>
 export default {
