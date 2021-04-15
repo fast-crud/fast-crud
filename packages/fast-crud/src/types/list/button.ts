@@ -8,31 +8,31 @@ export default function () {
         component: {
           name: ui.input.name,
           vModel: ui.input.modelValue,
-          [ui.input.clearable]: true,
-        },
+          [ui.input.clearable]: true
+        }
       },
       column: {
         component: {
           name: "fs-button",
-          vModel: "text",
-        },
-      },
+          vModel: "text"
+        }
+      }
     },
     link: {
       form: {
         component: {
           name: ui.input.name,
           vModel: ui.input.modelValue,
-          [ui.input.clearable]: true,
-        },
+          [ui.input.clearable]: true
+        }
       },
       column: {
         component: {
           name: "fs-button",
           vModel: "text",
-          type: "link",
-        },
-      },
-    },
+          type: "link"
+        }
+      }
+    }
   };
 }

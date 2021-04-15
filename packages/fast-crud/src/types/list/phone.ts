@@ -3,8 +3,8 @@ export default function () {
     "phone-number": {
       form: {
         component: {
-          name: "el-phone-number-input",
-        },
+          name: "el-phone-number-input"
+        }
       },
       column: {
         formatter(row, column, value) {
@@ -20,8 +20,8 @@ export default function () {
             }
           }
           return ret;
-        },
-      },
-    },
+        }
+      }
+    }
   };
 }

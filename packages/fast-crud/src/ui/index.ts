@@ -14,7 +14,7 @@ export class UiContext {
   get() {
     if (this.ref == null) {
       throw new Error(
-        '您还未设置ui,请在use(FastCrud)时,传入如下参数：app.use(FastCrud, {ui: { name: "antdv|element", target: Antd|ElementPlus}})'
+        '您还未设置ui,请在use(FastCrud)时,传入如下参数：app.use(FastCrud, {ui: { name: "antdv或element"}})'
       );
     }
     return this.ref;

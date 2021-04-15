@@ -312,7 +312,7 @@ export class Element implements UiInterface {
     name: "el-date-picker",
     modelValue: "modelValue",
     buildDateType(type) {
-      return { type };
+      return { name: "el-date-picker", type };
     }
   };
   timePicker: TimePickerCI = {

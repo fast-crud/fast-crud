@@ -7,9 +7,9 @@ export default function () {
       form: {
         component: {
           name: ui.select.name,
-          [ui.select.clearable]: true,
-        },
-      },
+          [ui.select.clearable]: true
+        }
+      }
     },
     "dict-select": {
       search: { autoSearchTrigger: "change" },
@@ -18,54 +18,54 @@ export default function () {
         component: {
           name: "fs-dict-select",
           vModel: ui.select.modelValue,
-          [ui.select.clearable]: true,
-        },
-      },
+          [ui.select.clearable]: true
+        }
+      }
     },
     "dict-radio": {
       search: {
         component: {
           name: "fs-dict-select",
           vModel: ui.select.modelValue,
-          autoSearchTrigger: "change",
-        },
+          autoSearchTrigger: "change"
+        }
       },
       form: {
         component: {
           name: "fs-dict-radio",
           vModel: ui.radioGroup.modelValue,
-          [ui.select.clearable]: true,
-        },
+          [ui.select.clearable]: true
+        }
       },
-      column: { component: { name: "fs-values-format" } },
+      column: { component: { name: "fs-values-format" } }
     },
     "dict-checkbox": {
       search: {
         component: { name: "fs-dict-select" },
-        autoSearchTrigger: "change",
+        autoSearchTrigger: "change"
       },
       form: {
         component: {
           name: "fs-dict-checkbox",
           vModel: ui.radioGroup.modelValue,
-          [ui.select.clearable]: true,
-        },
+          [ui.select.clearable]: true
+        }
       },
-      column: { component: { name: "fs-values-format" } },
+      column: { component: { name: "fs-values-format" } }
     },
     "dict-switch": {
       search: {
-        component: { name: "fs-dict-select", [ui.select.clearable]: true },
-        autoSearchTrigger: "change",
+        component: { name: "fs-dict-switch", vModel: ui.switch.modelValue, [ui.select.clearable]: true },
+        autoSearchTrigger: "change"
       },
       form: {
         component: {
           name: "fs-dict-switch",
           vModel: ui.switch.modelValue,
-          [ui.select.clearable]: true,
-        },
+          [ui.select.clearable]: true
+        }
       },
-      column: { component: { name: "fs-values-format" } },
-    },
+      column: { component: { name: "fs-values-format" } }
+    }
   };
 }

@@ -9,9 +9,9 @@ export default function () {
         component: {
           name: "fs-dict-tree",
           vModel: ui.treeSelect.modelValue,
-          [ui.treeSelect.clearable]: true,
-        },
-      },
-    },
+          [ui.treeSelect.clearable]: true
+        }
+      }
+    }
   };
 }

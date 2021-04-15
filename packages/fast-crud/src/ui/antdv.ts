@@ -38,7 +38,7 @@ import {
   TabsCI,
   TabPaneCI,
   CollapseCI,
-  CollapseItemCI,
+  CollapseItemCI
 } from "./ui-interface";
 export class Antdv implements UiInterface {
   constructor(target) {
@@ -62,12 +62,12 @@ export class Antdv implements UiInterface {
             if (visible === false) {
               onClosed(visible);
             }
-          },
+          }
         };
       }
       return {};
     },
-    name: "fs-form-wrapper",
+    name: "fs-form-wrapper"
   };
 
   messageBox: MessageBoxCI = {
@@ -89,11 +89,11 @@ export class Antdv implements UiInterface {
           ...context,
           content: context.message,
           onOk,
-          onCancel,
+          onCancel
         };
         this.messageBox.get.confirm(newContext);
       });
-    },
+    }
   };
 
   message: MessageCI = {
@@ -117,7 +117,7 @@ export class Antdv implements UiInterface {
     },
     info: (context) => {
       this.message.open("info", context);
-    },
+    }
   };
 
   notification: NotificationCI = {
@@ -126,7 +126,7 @@ export class Antdv implements UiInterface {
     open: (type, context) => {
       if (typeof context === "string") {
         context = {
-          message: context,
+          message: context
         };
       }
       type = type || context.type;
@@ -147,13 +147,13 @@ export class Antdv implements UiInterface {
     },
     info: (context) => {
       this.notification.open("info", context);
-    },
+    }
   };
 
   icon: IconCI = {
     name: "",
     isComponent: true,
-    circle: { shape: "circle" },
+    circle: { shape: "circle" }
   };
 
   icons: Icons = {
@@ -178,7 +178,7 @@ export class Antdv implements UiInterface {
     zoomOut: "ZoomOutOutlined",
     refreshLeft: "UndoOutlined",
     refreshRight: "RedoOutlined",
-    upload: "UploadOutlined",
+    upload: "UploadOutlined"
   };
 
   dialog: DialogCI = {
@@ -190,102 +190,102 @@ export class Antdv implements UiInterface {
     },
     buildOnClosedBind(onClosed: Function): {} {
       return { afterClose: onClosed };
-    },
+    }
   };
 
   button: CI = {
-    name: "a-button",
+    name: "a-button"
   };
 
   buttonGroup: CI = {
-    name: "a-button-group",
+    name: "a-button-group"
   };
 
   card: CI = {
-    name: "a-card",
+    name: "a-card"
   };
 
   cascader: CascaderCI = {
     name: "a-cascader",
     modelValue: "value",
-    clearable: "allowClear",
+    clearable: "allowClear"
   };
 
   checkboxGroup: CheckboxGroupCI = {
     name: "a-checkbox-group",
-    modelValue: "value",
+    modelValue: "value"
   };
   checkbox: CheckboxCI = {
     name: "a-checkbox",
     resolveEvent(e) {
       return e.target.checked;
     },
-    value: "value",
+    value: "value"
   };
 
   col: CI = {
-    name: "a-col",
+    name: "a-col"
   };
 
   collapseTransition: CI = {
-    name: "div",
+    name: "div"
   };
 
   drawer: DrawerCI = {
     name: "a-drawer",
     visible: "visible",
     customClass: "wrapClassName",
-    width: "width",
+    width: "width"
   };
 
   form: CI = {
-    name: "a-form",
+    name: "a-form"
   };
 
   formItem: FormItemCI = {
     name: "a-form-item",
     prop: "name",
-    label: "label",
+    label: "label"
   };
 
   option: CI = {
-    name: "a-select-option",
+    name: "a-select-option"
   };
 
   pagination: CI = {
-    name: "a-pagination",
+    name: "a-pagination"
   };
 
   radio: RadioCI = {
     name: "a-radio",
-    value: "value",
+    value: "value"
   };
 
   radioGroup: RadioGroupCI = {
     name: "a-radio-group",
-    modelValue: "value",
+    modelValue: "value"
   };
 
   row: CI = {
-    name: "a-row",
+    name: "a-row"
   };
 
   select: SelectCI = {
     name: "a-select",
     modelValue: "value",
-    clearable: "allowClear",
+    clearable: "allowClear"
   };
 
   treeSelect: TreeSelectCI = {
     name: "a-tree-select",
     modelValue: "value",
-    clearable: "allowClear",
+    clearable: "allowClear"
   };
   table: TableCI = {
     name: "a-table",
     data: "data-source",
     fixedHeaderNeedComputeBodyHeight: true,
-    vLoading: false,
+    vLoading: false
   };
 
   tableColumn: TableColumnCI = {
@@ -293,7 +293,7 @@ export class Antdv implements UiInterface {
     label: "title",
     prop: "key",
     row: "record",
-    index: "index",
+    index: "index"
   };
 
   tableColumnGroup: TableColumnCI = {
@@ -301,38 +301,38 @@ export class Antdv implements UiInterface {
     label: "title",
     prop: "key",
     row: "record",
-    index: "index",
+    index: "index"
   };
 
   textArea: TextAreaCI = {
     name: "a-textarea",
     type: undefined,
     modelValue: "value",
-    clearable: "allowClear",
+    clearable: "allowClear"
   };
 
   tag: TagCI = {
     name: "a-tag",
     type: "color",
-    colors: ["blue", "green", "orange", "red", "cyan", "purple"],
+    colors: ["blue", "green", "orange", "red", "cyan", "purple"]
   };
 
   inputGroup: InputGroupCI = {
-    name: "a-input",
+    name: "a-input"
   };
   input: InputCI = {
     name: "a-input",
     clearable: "allowClear",
-    modelValue: "value",
+    modelValue: "value"
   };
   inputPassword: InputPasswordCI = {
     name: "a-input-password",
     clearable: "allowClear",
     modelValue: "value",
-    showPassword: "showPassword",
+    showPassword: "showPassword"
   };
   number: CI = {
-    name: "a-input-number",
+    name: "a-input-number"
   };
   switch: SwitchCI = {
     activeColor: "active-color",
@@ -342,7 +342,7 @@ export class Antdv implements UiInterface {
     inactiveText: "unCheckedChildren",
     inactiveValue: "inactive-value",
     modelValue: "checked",
-    name: "a-switch",
+    name: "a-switch"
   };
   datePicker: DatePickerCI = {
     name: "a-date-picker",
@@ -368,18 +368,18 @@ export class Antdv implements UiInterface {
         return { name: "a-week-picker" };
       }
       return { name: "a-date-picker" };
-    },
+    }
   };
   timePicker: TimePickerCI = {
     name: "a-time-picker",
-    modelValue: "value",
+    modelValue: "value"
   };
   dropdown: DropdownCI = {
     name: "a-dropdown",
     command: () => {
       return {};
     },
-    slotName: "overlay",
+    slotName: "overlay"
   };
   dropdownMenu: DropdownMenuCI = {
     name: "a-menu",
@@ -387,44 +387,44 @@ export class Antdv implements UiInterface {
       return {
         onClick($event) {
           callback($event.key);
-        },
+        }
       };
-    },
+    }
   };
   dropdownItem: DropdownItemCI = {
     name: "a-menu-item",
-    command: "key",
+    command: "key"
   };
   imageGroup: ImageGroupCI = {
-    name: "a-image-preview-group",
+    name: "a-image-preview-group"
   };
   image: ImageCI = {
     name: "a-image",
     buildPreviewList: () => {
       return {};
-    },
+    }
   };
   progress: ProgressCI = {
-    name: "a-progress",
+    name: "a-progress"
   };
   loading: LoadingCI = {
     name: "a-spin",
-    type: "component",
+    type: "component"
   };
   upload: UploadCI = {
     name: "a-upload",
-    type: "",
+    type: ""
   };
   tabs: TabsCI = {
-    name: "a-tabs",
+    name: "a-tabs"
   };
   tabPane: TabPaneCI = {
-    name: "a-tab-pane",
+    name: "a-tab-pane"
   };
   collapse: CollapseCI = {
-    name: "a-collapse",
+    name: "a-collapse"
   };
   collapseItem: CollapseItemCI = {
-    name: "a-collapse-panel",
+    name: "a-collapse-panel"
   };
 }

@@ -6,9 +6,9 @@ export default function () {
       form: {
         component: {
           name: ui.number.name,
-          vModel: ui.modelValue,
-        },
-      },
-    },
+          vModel: ui.modelValue
+        }
+      }
+    }
   };
 }

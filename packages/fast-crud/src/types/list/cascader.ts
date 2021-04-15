@@ -7,19 +7,19 @@ export default function () {
     "dict-cascader": {
       search: {
         component: {
-          clearable: true,
-        },
+          clearable: true
+        }
       },
       form: {
         component: {
           name: "fs-dict-cascader",
           vModel: ui.cascader.modelValue,
-          [ui.cascader.clearable]: true,
-        },
+          [ui.cascader.clearable]: true
+        }
       },
       column: {
-        component: { name: "fs-dict-cascader-format" },
-      },
-    },
+        component: { name: "fs-dict-cascader-format" }
+      }
+    }
   };
 }
