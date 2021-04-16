@@ -1,4 +1,7 @@
+import { AllSuccessValidator } from "./validators";
+import { useI18n } from "@fast-crud/fast-crud";
 export default function () {
+  const { t } = useI18n();
   return {
     "image-uploader": {
       form: {
@@ -6,7 +9,13 @@ export default function () {
           name: "fs-file-uploader",
           listType: "picture-card",
           accept: ".png,.jpeg,.jpg,.ico,.bmp,.gif,.webp,.svg"
-        }
+        },
+        rules: [
+          {
+            validator: AllSuccessValidator(),
+            message: t("fs.extends.fileUploader.hasUploading")
+          }
+        ]
       },
       column: {
         component: { name: "fs-images-format", style: "width:30px" }
@@ -17,10 +26,16 @@ export default function () {
     },
     "avatar-uploader": {
       form: {
+        rules: [
+          {
+            validator: AllSuccessValidator(),
+            message: t("fs.extends.fileUploader.hasUploading")
+          }
+        ],
         component: {
-          name: "fs-el-file-uploader",
+          name: "fs-file-uploader",
           limit: 1,
-          listType: "avatar",
+          listType: "picture-card",
           accept: ".png,.jpeg,.jpg,.ico,.bmp,.gif,.webp,.svg",
           showFileList: false
         }
@@ -48,10 +63,16 @@ export default function () {
         component: {
           name: "fs-file-uploader",
           listType: "text"
-        }
+        },
+        rules: [
+          {
+            validator: AllSuccessValidator(),
+            message: t("fs.extends.fileUploader.hasUploading")
+          }
+        ]
       },
       column: {
-        component: { name: "fs-images-format", style: "width:30px" }
+        component: { name: "fs-files-format" }
       }
     },
     "cropper-uploader": {
@@ -60,7 +81,13 @@ export default function () {
           name: "fs-cropper-uploader",
           accept: ".png,.jpeg,.jpg,.ico,.bmp,.gif,.svg,.webp",
           cropper: { viewMode: 1 }
-        }
+        },
+        rules: [
+          {
+            validator: AllSuccessValidator(),
+            message: t("fs.extends.fileUploader.hasUploading")
+          }
+        ]
       },
       column: {
         align: "center",

@@ -184,7 +184,7 @@ export default {
       this.list.splice(index, 1);
       this.emit();
     },
-    isHasUploadingItem() {
+    hasUploading() {
       const fileList = this.list;
       if (fileList && fileList.length > 0) {
         for (const item of fileList) {

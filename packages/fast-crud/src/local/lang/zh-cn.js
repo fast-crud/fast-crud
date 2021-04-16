@@ -67,7 +67,8 @@ export default {
       fileUploader: {
         text: "文件上传",
         limitTip: "文件数量不能超过 {0}",
-        sizeLimitTip: "文件大小不能超过 {0},当前大小：{1}"
+        sizeLimitTip: "文件大小不能超过 {0},当前大小：{1}",
+        hasUploading: "还有文件正在上传，请等待上传完成，或删除它"
       }
     }
   }

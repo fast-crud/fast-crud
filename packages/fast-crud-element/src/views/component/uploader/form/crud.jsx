@@ -1,4 +1,5 @@
 import * as api from "./api";
+import { FsUploader } from "@fast-crud/fast-crud-extends";
 export default function ({ expose }) {
   const pageRequest = async (query) => {
     return await api.GetList(query);
@@ -55,12 +56,12 @@ export default function ({ expose }) {
           type: "image-uploader",
           form: {
             component: {
-              limit: 2,
+              limit: 1,
               uploader: {
                 type: "form"
               }
             },
-            helper: "最大可上传2个文件"
+            helper: "最大可上传1个文件"
           }
         },
         cropper: {
@@ -104,7 +105,13 @@ export default function ({ expose }) {
           title: "校验",
           type: "file-uploader",
           form: {
-            rules: [],
+            rules: [
+              { required: true, message: "此项必传" },
+              {
+                validator: FsUploader.AllSuccessValidator(),
+                message: "还有文件正在上传，请稍候"
+              }
+            ],
             component: {
               uploader: {
                 type: "form"

@@ -1,6 +1,6 @@
 <template>
   <component :is="$fsui.imageGroup.name" class="fs-image-format" v-bind="wrapper">
-    <component :is="$fsui.image.name" v-for="url in computedUrls" :key="url" :src="url" v-bind="$attrs">
+    <component :is="$fsui.image.name" v-for="url in computedUrls" :key="url" :src="url" v-bind="binding">
       <template #placeholder>
         <div class="fs-image-slot">
           <fs-loading :loading="true" />
@@ -80,7 +80,7 @@ export default {
     binding() {
       const preview = this.$fsui.image.buildPreviewList(this.computedUrls);
       return {
-        ...$attrs,
+        ...this.$attrs,
         ...preview
       };
     }
@@ -94,6 +94,9 @@ export default {
 </script>
 <style lang="less">
 .fs-image-format {
+  display: flex;
+  margin: 1px;
+  flex-wrap: wrap;
   .image-slot {
     display: flex;
     align-items: center;

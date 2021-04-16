@@ -94,6 +94,15 @@ export default {
 </script>
 <style lang="less">
 .fs-file-format {
+  display: flex;
+  flex-wrap: wrap;
+  .fs-form-item,
+  .fs-tag-item {
+    margin: 1px;
+    a {
+      text-decoration: none;
+    }
+  }
   .d2-mb-2 {
     margin-bottom: 2px;
   }

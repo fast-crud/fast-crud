@@ -4,7 +4,12 @@
       <component :is="computedFileSelectBtn.is" v-bind="computedFileSelectBtn" />
     </component>
     <component :is="computedUploaderImpl" ref="uploaderImplRef" />
-    <component :is="$fsui.dialog.name" v-model:[$fsui.dialog.visible]="previewVisible" v-bind="computedPreview">
+    <component
+      :is="$fsui.dialog.name"
+      v-if="listType === 'picture-card'"
+      v-model:[$fsui.dialog.visible]="previewVisible"
+      v-bind="computedPreview"
+    >
       <img style="width: 100%" :src="previewImage" />
     </component>
   </div>
@@ -30,11 +35,17 @@ export default {
         };
       }
     },
+    /**
+     * FsButton
+     */
     button: {},
     listType: {},
     beforeUpload: {},
     uploader: {},
     preview: {},
+    /**
+     * 返回值类型
+     */
     valueType: {
       type: String, // url ,key, object
       default: "object"
@@ -46,6 +57,7 @@ export default {
     const { t } = useI18n();
     const fileList = ref([]);
     const currentValue = ref();
+    const fileListLocal = ref([]);
     function pickFileName(url) {
       return url.substring(url.lastIndexOf("/") + 1);
     }
@@ -74,7 +86,6 @@ export default {
       return file[props.valueType];
     }
     function initValue(value) {
-      console.log("init value", value);
       const array = [];
       if (value == null || value.length === 0) {
         fileList.value = array;
@@ -89,13 +100,14 @@ export default {
     }
 
     initValue(props.modelValue);
+    fileListLocal.value = fileList.value;
 
     function onChange(value) {
-      // ctx.emit("change", value);
+      ctx.emit("change", value);
     }
     function onInput(value) {
       currentValue.value = value;
-      console.log("emit value", value);
+      // fileList.value = value;
       ctx.emit("update:modelValue", value);
     }
 
@@ -124,13 +136,19 @@ export default {
       return array;
     }
     function hasUploading() {
-      const uploading = fileList.value.filter((item) => {
+      console.log("hasUploading", fileListLocal.value);
+      const uploading = fileListLocal.value.filter((item) => {
         return item.status === ui.upload.status.uploading;
       });
       return uploading.length > 0;
     }
-    function handleSuccess(fileList) {
-      onInput(buildEmitValue(fileList));
+    function handleSuccess(list) {
+      onInput(buildEmitValue(list));
+    }
+
+    function handleChange(list) {
+      console.log("handleChange", list);
+      fileListLocal.value = list;
     }
 
     const uploaderImplRef = ref();
@@ -154,19 +172,17 @@ export default {
     }
 
     const computedOnLimit = computed(() => {
-      return props.limit > 0 && fileList.value.length >= props.limit;
+      return props.limit > 0 && fileListLocal.value.length >= props.limit;
     });
 
     function checkLimit() {
       if (computedOnLimit.value) {
-        console.log("文件数量超限");
         ui.message.warn(t("fs.extends.fileUploader.limitTip", [props.limit]));
         throw new Error("文件数量超限");
       }
     }
 
     async function handleBeforeUpload(file) {
-      console.log("on before upload", file);
       checkLimit();
       if (props.sizeLimit != null) {
         let limit = props.sizeLimit;
@@ -194,7 +210,6 @@ export default {
       return await uploaderImplRef.value.upload(option);
     }
     async function customRequest(context) {
-      console.log("upload request", context);
       const { file, onProgress, onSuccess, onError } = context;
       const option = {
         file,
@@ -203,7 +218,6 @@ export default {
       };
       try {
         const ret = await doUpload(option);
-        console.log("upload success", ret);
         onSuccess(ret);
       } catch (e) {
         logger.error("上传失败", e);
@@ -212,7 +226,7 @@ export default {
     }
 
     const computedFileSelectBtn = computed(() => {
-      if (props.listType === "picture-card") {
+      if (isPicture()) {
         return {
           is: "FsIcon",
           icon: ui.icons.plus
@@ -221,7 +235,8 @@ export default {
       return {
         is: "FsButton",
         icon: ui.icons.upload,
-        text: t("fs.extends.fileUploader.text")
+        text: t("fs.extends.fileUploader.text"),
+        ...props.button
       };
     });
 
@@ -241,7 +256,13 @@ export default {
         reader.onerror = (error) => reject(error);
       });
     }
+    function isPicture() {
+      return props.listType === "picture-card";
+    }
     const handlePreview = async (file) => {
+      if (!isPicture()) {
+        window.open(file.url);
+      }
       if (!file.url && !file.preview && file.originFileObj) {
         file.preview = await getBase64(file.originFileObj);
       }
@@ -255,12 +276,13 @@ export default {
         beforeUpload: handleBeforeUpload,
         listType: props.listType,
         onChange: (change) => {
+          const { fileList } = change;
+          handleChange(fileList);
           console.log("change", change);
           let status = change.file?.status;
           if (status !== "done" && status !== "removed") {
             return;
           }
-          const { fileList } = change;
           handleSuccess(fileList);
         },
         onPreview: handlePreview
@@ -277,6 +299,10 @@ export default {
         "on-remove": (file, fileList) => {
           handleSuccess(fileList);
         },
+        "on-change": (file, fileList) => {
+          console.log("on change", file, fileList);
+          handleChange(fileList);
+        },
         "on-success": (res, file, fileList) => {
           if (res == null) {
             return;
@@ -287,7 +313,7 @@ export default {
         },
         // "on-error": "handleUploadFileError",
         // "on-progress": "handleUploadProgress"
-        onPreview: handlePreview
+        "on-preview": handlePreview
       };
     }
 
@@ -336,6 +362,11 @@ export default {
     width: 100px;
     height: 100px;
     line-height: 100px;
+  }
+  &.fs-file-uploader-limit {
+    .el-upload--picture-card {
+      display: none;
+    }
   }
 }
 </style>
