@@ -48,7 +48,7 @@ export default {
      */
     valueType: {
       type: String, // url ,key, object
-      default: "object"
+      default: "url"
     } //''
   },
   emits: ["change", "update:modelValue"],
@@ -83,7 +83,7 @@ export default {
       if (props.valueType === "object") {
         return value;
       }
-      return file[props.valueType];
+      return value[props.valueType];
     }
     function initValue(value) {
       const array = [];
@@ -95,6 +95,8 @@ export default {
         _.forEach(value, (item) => {
           array.push(buildOneToFile(item));
         });
+      } else {
+        array.push(buildOneToFile(value));
       }
       fileList.value = array;
     }
@@ -127,7 +129,7 @@ export default {
     function buildEmitValue(fList) {
       if (props.limit === 1) {
         //单个文件
-        return buildOneToFile(fList[0]);
+        return buildOneToValue(fList[0]);
       }
       const array = [];
       _.forEach(fList, (item) => {
@@ -272,7 +274,7 @@ export default {
     }
     const handlePreview = async (file) => {
       if (!isPicture()) {
-        window.open(file.url);
+        window.open(file.url, "_blank");
       }
       if (!file.url && !file.preview && file.originFileObj) {
         file.preview = await getBase64(file.originFileObj);
