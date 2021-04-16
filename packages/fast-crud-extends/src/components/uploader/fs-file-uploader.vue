@@ -234,7 +234,7 @@ export default {
     }
 
     const computedFileSelectBtn = computed(() => {
-      if (isPicture()) {
+      if (isPictureCard()) {
         return {
           is: "FsIcon",
           icon: ui.icons.plus
@@ -265,6 +265,9 @@ export default {
       });
     }
     function isPicture() {
+      return props.listType === "picture-card" || props.listType === "picture";
+    }
+    function isPictureCard() {
       return props.listType === "picture-card";
     }
     const handlePreview = async (file) => {
@@ -380,6 +383,25 @@ export default {
   &.fs-file-uploader-limit {
     .el-upload--picture-card {
       display: none;
+    }
+  }
+  .el-upload--text {
+    width: 100%;
+    text-align: left;
+    .el-upload-dragger {
+      width: 100%;
+      .el-button {
+        width: 100%;
+        height: 100%;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        .el-icon-upload {
+          margin: 0;
+          margin-bottom: 10px;
+        }
+      }
     }
   }
 }

@@ -64,6 +64,33 @@ export default function ({ expose }) {
             helper: "最大可上传1个文件"
           }
         },
+        picture: {
+          title: "缩略图",
+          type: "image-uploader",
+          form: {
+            component: {
+              listType: "picture",
+              uploader: {
+                type: "form"
+              }
+            }
+          }
+        },
+        drag: {
+          title: "拖动上传",
+          type: "file-uploader",
+          form: {
+            component: {
+              button: {
+                text: "将文件拖动到此处，或点击上传"
+              },
+              drag: true,
+              uploader: {
+                type: "form"
+              }
+            }
+          }
+        },
         cropper: {
           title: "裁剪",
           type: "cropper-uploader",
