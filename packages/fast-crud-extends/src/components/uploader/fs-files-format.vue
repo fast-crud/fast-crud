@@ -76,7 +76,8 @@ export default {
   created() {},
   methods: {
     getFileName(url) {
-      if (url.lastIndexOf("/") >= 0) {
+      console.log("getFileName", url);
+      if (url?.lastIndexOf("/") >= 0) {
         return url.substring(url.lastIndexOf("/") + 1);
       }
       return url;

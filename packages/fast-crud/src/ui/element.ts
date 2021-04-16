@@ -371,7 +371,8 @@ export class Element implements UiInterface {
     status: {
       success: "success",
       uploading: "uploading"
-    }
+    },
+    limitAdd: 1
   };
   tabs: TabsCI = {
     name: "el-tabs"

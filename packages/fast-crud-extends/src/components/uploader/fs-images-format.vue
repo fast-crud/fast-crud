@@ -80,6 +80,7 @@ export default {
     binding() {
       const preview = this.$fsui.image.buildPreviewList(this.computedUrls);
       return {
+        fit: "contain",
         ...this.$attrs,
         ...preview
       };

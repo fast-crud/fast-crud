@@ -162,6 +162,7 @@ export interface UploadCI extends CI {
   getStatusFromEvent;
   getFileListFromEvent;
   status;
+  limitAdd;
 }
 export interface ButtonCI extends CI {
   name;

@@ -1,12 +1,12 @@
 <template>
-  <div class="fs-file-uploader" :class="{ 'fs-file-uploader-limit': computedOnLimit }">
+  <div class="fs-file-uploader" :class="{ 'fs-file-uploader-limit': computedOnLimit() }">
     <component :is="$fsui.upload.name" v-model:fileList="fileList" v-bind="computedBinding">
       <component :is="computedFileSelectBtn.is" v-bind="computedFileSelectBtn" />
     </component>
     <component :is="computedUploaderImpl" ref="uploaderImplRef" />
     <component
       :is="$fsui.dialog.name"
-      v-if="listType === 'picture-card'"
+      v-if="isPicture()"
       v-model:[$fsui.dialog.visible]="previewVisible"
       v-bind="computedPreview"
     >
@@ -36,7 +36,7 @@ export default {
       }
     },
     /**
-     * FsButton
+     * 上传按钮配置，参考FsButton参数
      */
     button: {},
     listType: {},
@@ -171,19 +171,22 @@ export default {
       return sizeTip;
     }
 
-    const computedOnLimit = computed(() => {
-      return props.limit > 0 && fileListLocal.value.length >= props.limit;
-    });
+    const computedOnLimit = (isCheck = false) => {
+      const add = isCheck ? ui.upload.limitAdd : 0;
+      return props.limit > 0 && fileListLocal.value.length >= props.limit + add;
+    };
 
+    function showLimitTip() {
+      ui.message.warn(t("fs.extends.fileUploader.limitTip", [props.limit]));
+    }
     function checkLimit() {
-      if (computedOnLimit.value) {
-        ui.message.warn(t("fs.extends.fileUploader.limitTip", [props.limit]));
+      if (computedOnLimit(true)) {
+        showLimitTip();
         throw new Error("文件数量超限");
       }
     }
 
-    async function handleBeforeUpload(file) {
-      checkLimit();
+    function checkSizeLimit(file) {
       if (props.sizeLimit != null) {
         let limit = props.sizeLimit;
         let showMessage = null;
@@ -204,6 +207,11 @@ export default {
         }
       }
     }
+
+    const beforeUpload = async (file) => {
+      checkLimit();
+      checkSizeLimit(file);
+    };
 
     async function doUpload(option) {
       option.options = props.uploader;
@@ -273,7 +281,7 @@ export default {
     function buildAntdvBinding() {
       return {
         customRequest: customRequest,
-        beforeUpload: handleBeforeUpload,
+        beforeUpload,
         listType: props.listType,
         onChange: (change) => {
           const { fileList } = change;
@@ -293,10 +301,14 @@ export default {
       return {
         action: "",
         "list-type": props.listType,
-        "before-upload": handleBeforeUpload,
+        "before-upload": beforeUpload,
         "http-request": customRequest,
-        // "on-exceed": "onExceed",
+        "on-exceed": () => {
+          console.log("on exceed");
+          checkLimit();
+        },
         "on-remove": (file, fileList) => {
+          handleChange(fileList);
           handleSuccess(fileList);
         },
         "on-change": (file, fileList) => {
@@ -327,10 +339,12 @@ export default {
 
     return {
       fileList,
+      fileListLocal,
       initValue,
       onChange,
       onInput,
       hasUploading,
+      isPicture,
       computedUploaderImpl,
       uploaderImplRef,
       computedFileSelectBtn,

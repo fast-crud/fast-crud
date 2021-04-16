@@ -425,7 +425,8 @@ export class Antdv implements UiInterface {
     status: {
       success: "done",
       uploading: "uploading"
-    }
+    },
+    limitAdd: 0
   };
   tabs: TabsCI = {
     name: "a-tabs"

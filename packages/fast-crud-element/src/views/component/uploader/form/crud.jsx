@@ -108,6 +108,7 @@ export default function ({ expose }) {
             rules: [
               { required: true, message: "此项必传" },
               {
+                //自定义rule之后，要带上这个
                 validator: FsUploader.AllSuccessValidator(),
                 message: "还有文件正在上传，请稍候"
               }
