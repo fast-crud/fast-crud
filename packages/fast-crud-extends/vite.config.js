@@ -13,7 +13,8 @@ export default {
   build: {
     lib: {
       entry: resolve(__dirname, "src/index.js"),
-      name: "fast-crud-extends"
+      name: "fast-crud-extends",
+      formats: ["es"]
     },
     // cssCodeSplit: true,
     sourcemap: true,
@@ -34,6 +35,14 @@ export default {
         "@fast-crud/fast-crud"
       ],
       output: {
+        manualChunks(id) {
+          if (id.includes("src/components") && id.lastIndexOf(".vue") > 0) {
+            console.log(id);
+            let name = id.substring(id.lastIndexOf("/") + 1);
+            name = name.substring(0, name.indexOf("."));
+            return "components/" + name;
+          }
+        },
         // Provide global variables to use in the UMD build
         // for externalized deps
         globals: {
