@@ -1,4 +1,4 @@
-import { useTypes, compute } from "@fast-crud/fast-crud";
+import { useTypes } from "@fast-crud/fast-crud";
 import types from "./types";
 import _ from "lodash-es";
 import defaultConfig from "./config";

@@ -8,6 +8,7 @@ import { buildKey } from "./lib/utils";
 import { useUploader } from "./index";
 import { utils } from "@fast-crud/fast-crud";
 import COS from "cos-js-sdk-v5";
+import dayjs from "dayjs";
 const logger = utils.logger;
 function newClient(options) {
   let client = null;
@@ -20,6 +21,9 @@ function newClient(options) {
       getAuthorization(options, callback) {
         // 不传secretKey代表使用临时签名模式,此时此参数必传（安全，生产环境推荐）
         getAuthorization(options).then((data) => {
+          if (data.ExpiredTime && typeof data.ExpiredTime === "string") {
+            data.ExpiredTime = dayjs(data.ExpiredTime).unix();
+          }
           callback(data);
         });
       }

@@ -19,10 +19,6 @@ export default {
     sourcemap: true,
     // minify: false,
     rollupOptions: {
-      // input: {
-      //   main: resolve(__dirname, "src/index.js"),
-      //   en: resolve(__dirname, "src/local/lang/en.js"),
-      // },
       plugins: [visualizer()],
       // make sure to externalize deps that shouldn't be bundled
       // into your library

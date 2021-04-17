@@ -1,6 +1,7 @@
 import vue from "@vitejs/plugin-vue";
 import vueJsx from "@vitejs/plugin-vue-jsx";
 import visualizer from "rollup-plugin-visualizer";
+import commonjs from "@rollup/plugin-commonjs";
 import path from "path";
 import dayjs from "dayjs";
 // https://vitejs.dev/config/
@@ -19,6 +20,7 @@ export default ({ command, mode }) => {
     devAlias = {
       "@fast-crud/fast-crud/dist/lang": path.resolve("../fast-crud/src/local/lang"),
       "@fast-crud/fast-crud/dist": path.resolve("../fast-crud/src"),
+      "@fast-crud/fast-crud-extends/dist": path.resolve("../fast-crud-extends/src"),
       "@fast-crud/fast-crud/src": path.resolve("../fast-crud/src"),
       "@fast-crud/fast-crud-extends/src": path.resolve("../fast-crud-extends/src"),
       "@fast-crud/fast-crud": path.resolve("../fast-crud/src"),
@@ -58,7 +60,7 @@ export default ({ command, mode }) => {
     },
     build: {
       rollupOptions: {
-        plugins: [visualizer()]
+        plugins: [commonjs(), visualizer()]
       }
     },
     server: {
