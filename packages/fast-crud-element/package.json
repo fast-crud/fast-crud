@@ -1,6 +1,6 @@
 {
   "name": "@fast-crud/fast-crud-element",
-  "version": "0.4.0",
+  "version": "0.4.1",
   "private": false,
   "scripts": {
     "dev": "vite --force",
@@ -12,23 +12,23 @@
   "license": "MIT",
   "dependencies": {
     "@fast-crud/fast-crud": "^0.4.0",
-    "@fast-crud/fast-crud-extends": "^0.4.0",
+    "@fast-crud/fast-crud-extends": "^0.4.1",
+    "ali-oss": "^6.13.2",
     "axios": "^0.21.1",
     "axios-mock-adapter": "^1.19.0",
     "china-division": "^2.3.1",
     "core-js": "^3.6.5",
+    "cos-js-sdk-v5": "^0.5.27",
     "dayjs": "^1.10.4",
     "deepdash-es": "^5.3.5",
     "element-plus": "latest",
     "highlight.js": "^10.7.2",
     "lodash-es": "^4.17.20",
+    "qiniu-js": "^2.5.4",
     "vue": "^3.0.7",
     "vue-i18n": "^9.0.0-rc.2",
     "vue-router": "^4.0.1",
-    "vuedraggable": "^4.0.1",
-    "ali-oss": "^6.13.2",
-    "cos-js-sdk-v5": "^0.5.27",
-    "qiniu-js": "^2.5.4"
+    "vuedraggable": "^4.0.1"
   },
   "devDependencies": {
     "@babel/plugin-proposal-optional-chaining": "^7.13.8",
