@@ -26,7 +26,17 @@ export default {
       plugins: [visualizer()],
       // make sure to externalize deps that shouldn't be bundled
       // into your library
-      external: ["vue", "lodash-es", "dayjs", "vue-i18n", "vuedraggable", "@fast-crud/fast-crud"],
+      external: [
+        "vue",
+        "lodash-es",
+        "dayjs",
+        "vue-i18n",
+        "vuedraggable",
+        "ali-oss",
+        "cos-js-sdk-v5",
+        "qiniu-js",
+        "@fast-crud/fast-crud"
+      ],
       output: {
         // Provide global variables to use in the UMD build
         // for externalized deps
@@ -36,7 +46,10 @@ export default {
           dayjs: "dayjs",
           "vue-i18n": "VueI18n",
           vuedraggable: "vuedraggable",
-          "@fast-crud/fast-crud": "FastCrud"
+          "@fast-crud/fast-crud": "FastCrud",
+          "ali-oss": "OSS",
+          "cos-js-sdk-v5": "COS",
+          "qiniu-js": "qiniu"
         }
       }
     }

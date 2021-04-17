@@ -4,7 +4,7 @@ import { ElMessage, ElNotification, ElMessageBox } from "element-plus";
 import { request, requestForMock } from "./api/service";
 import "./mock";
 import { FsUploader, FsExtends } from "@fast-crud/fast-crud-extends";
-//import FsExtendComponentInstall from "@fast-crud/fast-crud-extends/src/install";
+import "@fast-crud/fast-crud-extends/dist/style.css";
 export default function (app) {
   app.use(FastCrud, {
     async dictRequest({ url }) {
