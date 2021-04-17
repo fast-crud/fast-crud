@@ -24,8 +24,7 @@
               <div class="component--list-item" flex="main:justify cross:center">
                 <component
                   :is="$fsui.checkbox.name"
-                  v-model="element.show"
-                  v-model:checked="element.show"
+                  v-model:[$fsui.checkbox.modelValue]="element.show"
                   class="item-label"
                   @change="showChange(index, $event)"
                 >
@@ -191,8 +190,8 @@ export default {
         const column = {
           key: item.key,
           title: item.title,
-          show: !!item.show,
-          fixed: !!item.fixed
+          show: item.show ?? true,
+          fixed: item.fixed ?? false
         };
         columns.push(column);
       });

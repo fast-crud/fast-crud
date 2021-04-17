@@ -4,7 +4,7 @@
       <fs-button v-if="item.show !== false" class="row-handle-btn" v-bind="item" @click.stop="doClick(item)" />
     </template>
     <!-- 下拉按钮菜单 -->
-    <span v-if="computedDropdownBtns.length > 0" class="fs-handle-row-dropdown">
+    <span v-if="computedDropdownBtns.length > 0" class="row-handle-btn fs-handle-row-dropdown">
       <component :is="$fsui.dropdown.name" v-bind="$fsui.dropdown.command(doDropdownItemClick)">
         <fs-button v-bind="dropdown" />
         <template #[$fsui.dropdown.slotName]>
@@ -155,9 +155,13 @@ export default defineComponent({
 
 <style lang="less">
 .fs-row-handle {
+  display: flex;
+  flex-wrap: wrap;
   .row-handle-btn {
-    margin-top: 2px;
-    margin-bottom: 2px;
+    margin: 2px;
+    &.el-button {
+      margin: 2px;
+    }
   }
   .ant-btn {
     margin-left: 2px;

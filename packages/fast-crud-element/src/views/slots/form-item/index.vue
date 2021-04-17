@@ -1,25 +1,26 @@
 <template>
   <fs-crud ref="crudRef" v-bind="crudBinding">
     <template #actionbar-right>
-      <span class="ml-10">form表单字段插槽，可以做一些很复杂的输入</span>
+      <el-alert type="warning" class="ml-10" title="form表单字段插槽，可以做一些很复杂的输入" />
     </template>
 
     <template #form_topics="scope">
-      <a-input-search
+      <el-input
         v-for="(item, index) in scope.form.topics"
         :key="index"
-        v-model:value="scope.form.topics[index]"
+        v-model="scope.form.topics[index]"
         :disabled="scope.mode === 'view'"
-        class="d2-mb-5"
-        @search="removeTopic(index, scope.form, scope.key)"
+        class="mb-5"
       >
-        <template #enterButton>
-          <a-button :disabled="scope.mode === 'view'">
-            <DeleteOutlined />
-          </a-button>
+        <template #append>
+          <el-button
+            :disabled="scope.mode === 'view'"
+            icon="el-icon-delete"
+            @click="removeTopic(index, scope.form, scope.key)"
+          />
         </template>
-      </a-input-search>
-      <a-button :disabled="scope.mode === 'view'" @click="addTopic(scope.form, scope.key)">添加主题</a-button>
+      </el-input>
+      <el-button :disabled="scope.mode === 'view'" @click="addTopic(scope.form, scope.key)">添加主题</el-button>
     </template>
   </fs-crud>
 </template>

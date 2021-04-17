@@ -1,40 +1,40 @@
 <template>
   <fs-crud ref="crudRef" v-bind="crudBinding">
-    <template #header-top> <a-alert type="warning" message="header-top 插槽" /></template>
-    <template #header-bottom><a-alert type="warning" message="header-bottom 插槽" /></template>
-    <template #header-middle> <a-alert type="warning" message="header-middle 插槽" /></template>
-    <template #footer-top> <a-alert type="warning" message="footer-top 插槽" /></template>
-    <template #footer-bottom> <a-alert type="warning" message="footer-bottom 插槽" /></template>
+    <template #header-top> <el-alert type="warning" title="header-top 插槽" /></template>
+    <template #header-bottom><el-alert type="warning" title="header-bottom 插槽" /></template>
+    <template #header-middle> <el-alert type="warning" title="header-middle 插槽" /></template>
+    <template #footer-top> <el-alert type="warning" title="footer-top 插槽" /></template>
+    <template #footer-bottom> <el-alert type="warning" title="footer-bottom 插槽" /></template>
 
     <template #pagination-left>
-      <a-button type="danger">pagination-left插槽</a-button>
+      <el-button type="danger">pagination-left插槽</el-button>
     </template>
     <template #pagination-right>
-      <a-button type="danger">pagination-right插槽</a-button>
+      <el-button type="danger">pagination-right插槽</el-button>
     </template>
 
     <template #search-left>
-      <a-button type="danger">search-left插槽</a-button>
+      <el-button type="danger">search-left插槽</el-button>
     </template>
     <template #search-middle>
-      <a-button type="danger">search-middle</a-button>
+      <el-button type="danger">search-middle</el-button>
     </template>
     <template #search-right>
-      <a-button type="danger">search-right插槽</a-button>
+      <el-button type="danger">search-right插槽</el-button>
     </template>
 
     <template #actionbar-left>
-      <a-button type="danger">actionbar-left插槽</a-button>
+      <el-button type="danger">actionbar-left插槽</el-button>
     </template>
     <template #actionbar-right>
-      <a-button type="danger">actionbar-right插槽</a-button>
+      <el-button type="danger">actionbar-right插槽</el-button>
     </template>
 
     <template #toolbar-left>
-      <a-button type="danger">toolbar-left插槽</a-button>
+      <el-button type="danger">toolbar-left插槽</el-button>
     </template>
     <template #toolbar-right>
-      <a-button type="danger">toolbar-right插槽</a-button>
+      <el-button type="danger">toolbar-right插槽</el-button>
     </template>
   </fs-crud>
 </template>

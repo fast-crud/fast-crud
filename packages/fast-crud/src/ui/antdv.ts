@@ -179,7 +179,9 @@ export class Antdv implements UiInterface {
     zoomOut: "ZoomOutOutlined",
     refreshLeft: "UndoOutlined",
     refreshRight: "RedoOutlined",
-    upload: "UploadOutlined"
+    upload: "UploadOutlined",
+    fullScreen: "CompressOutlined",
+    unFullScreen: "ExpandOutlined"
   };
 
   dialog: DialogCI = {
@@ -222,7 +224,8 @@ export class Antdv implements UiInterface {
     resolveEvent(e) {
       return e.target.checked;
     },
-    value: "value"
+    value: "value",
+    modelValue: "checked"
   };
 
   col: CI = {

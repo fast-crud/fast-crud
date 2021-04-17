@@ -5,6 +5,7 @@ import _ from "lodash-es";
 import { useI18n } from "../../local";
 import "./fs-form-wrapper.less";
 import logger from "../../utils/util.log";
+import { uiContext } from "../../ui";
 export default {
   name: "FsFormWrapper",
   // eslint-disable-next-line vue/no-unused-components
@@ -166,6 +167,7 @@ export default {
     if (!this.formWrapper) {
       return null;
     }
+    const ui = uiContext.get();
     logger.debug("formWrapper", this.formWrapper);
     let children = {};
     const _slots = { ...this.$slots, ...this.slots };
@@ -190,7 +192,7 @@ export default {
                 {slotsRender("form-header-action-left", scope)}
                 <fs-icon
                   onClick={this.toggleFullscreen}
-                  icon={this.fullscreen ? "CompressOutlined" : "ExpandOutlined"}
+                  icon={this.fullscreen ? ui.icons.fullScreen : ui.icons.unFullScreen}
                 />
                 {slotsRender("form-header-action-right", scope)}
               </div>
@@ -239,7 +241,20 @@ export default {
       }`
     };
 
+    const vFullScreen = {
+      fullscreen: this.fullscreen
+    };
+
     const formWrapperComp = resolveDynamicComponent(is);
-    return <formWrapperComp {...vCustomClass} {...this.formWrapper} {...vModel} {...vClosed} v-slots={children} />;
+    return (
+      <formWrapperComp
+        {...vCustomClass}
+        {...this.formWrapper}
+        {...vModel}
+        {...vClosed}
+        {...vFullScreen}
+        v-slots={children}
+      />
+    );
   }
 };

@@ -152,7 +152,9 @@ export class Element implements UiInterface {
     zoomOut: "el-icon-zoom-out",
     refreshLeft: "el-icon-refresh-left",
     refreshRight: "el-icon-refresh-right",
-    upload: "el-icon-upload"
+    upload: "el-icon-upload",
+    fullScreen: "el-icon-full-screen",
+    unFullScreen: "el-icon-full-screen"
   };
 
   dialog: DialogCI = {
@@ -192,6 +194,7 @@ export class Element implements UiInterface {
     resolveEvent(e) {
       return e;
     },
+    modelValue: "modelValue",
     value: "label"
   };
 

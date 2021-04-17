@@ -48,10 +48,11 @@ export default function ({ expose }) {
             cache: true
           }),
           form: {
-            valueChange({ form, value, getComponentRef }) {
+            valueChange({ form, key, value, getComponentRef }) {
+              console.log("valueChanged", key, value);
               form.city = undefined; // 将“city”的值置空
               form.county = undefined; // 将“county”的值置空
-              if (value) {
+              if (value != null) {
                 getComponentRef("city").reloadDict(); // 执行city的select组件的reloadDict()方法，触发“city”重新加载字典
               }
             }

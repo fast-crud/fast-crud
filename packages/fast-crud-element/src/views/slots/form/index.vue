@@ -5,29 +5,29 @@
     </template>
 
     <template #form-header-left>
-      <a-tag color="red">form-header-left插槽</a-tag>
+      <el-tag type="danger">form-header-left插槽</el-tag>
     </template>
     <template #form-header-right>
-      <a-tag color="red">form-header-right插槽</a-tag>
+      <el-tag type="danger">form-header-right插槽</el-tag>
     </template>
     <template #form-header-action-left>
-      <a-tag color="red">form-header-action-left插槽</a-tag>
+      <el-tag type="danger">form-header-action-left插槽</el-tag>
     </template>
     <template #form-header-action-right>
-      <a-tag color="red">form-header-action-right插槽</a-tag>
+      <el-tag type="danger">form-header-action-right插槽</el-tag>
     </template>
     <template #form-body-top>
-      <a-alert type="warning" message="form-body-top 插槽" />
+      <el-alert type="warning" title="form-body-top 插槽" />
     </template>
     <template #form-body-bottom>
-      <a-alert type="warning" message="form-body-bottom 插槽" />
+      <el-alert type="warning" title="form-body-bottom 插槽" />
     </template>
 
     <template #form-footer-left>
-      <a-button type="danger">form-footer-left 插槽</a-button>
+      <el-button type="danger">form-footer-left 插槽</el-button>
     </template>
     <template #form-footer-right>
-      <a-button type="danger">form-footer-right 插槽</a-button>
+      <el-button type="danger">form-footer-right 插槽</el-button>
     </template>
   </fs-crud>
 </template>

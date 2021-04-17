@@ -146,7 +146,8 @@ function useFormWrapper() {
   }
   return {
     formWrapperRef,
-    openFormWrapper
+    openFormWrapper,
+    formWrapperOptions
   };
 }
 export default defineComponent({

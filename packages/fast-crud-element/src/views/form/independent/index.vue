@@ -1,24 +1,27 @@
 <template>
-  <el-row :gutter="10">
-    <el-col :span="12">
-      <el-card header="直接显示表单">
-        <fs-form ref="formRef" v-bind="formOptions" />
-        <div style="margin-top: 10px">
-          <el-button @click="formSubmit">提交表单</el-button>
-        </div>
-      </el-card>
-    </el-col>
-    <a-col span="12">
-      <a-card header="打开表单对话框">
-        <el-button @click="openFormWrapper">打开表单对话框</el-button>
-        <fs-form-wrapper ref="formWrapperRef" v-bind="formWrapperOptions" />
-      </a-card>
-    </a-col>
-  </el-row>
+  <div style="padding: 20px">独立使用表单</div>
+  <div style="width: 100%">
+    <el-row :gutter="10" style="padding: 0; margin: 0">
+      <el-col :span="12">
+        <el-card header="直接显示表单">
+          <fs-form ref="formRef" v-bind="formOptions" />
+          <div style="margin-top: 10px">
+            <el-button @click="formSubmit">提交表单</el-button>
+          </div>
+        </el-card>
+      </el-col>
+      <el-col :span="12">
+        <el-card header="打开表单对话框">
+          <el-button @click="openFormWrapper">打开表单对话框</el-button>
+          <fs-form-wrapper ref="formWrapperRef" v-bind="formWrapperOptions" />
+        </el-card>
+      </el-col>
+    </el-row>
+  </div>
 </template>
 
 <script>
-import { defineComponent, ref } from "vue";
+import { defineComponent, ref, nextTick } from "vue";
 import { ElMessage } from "element-plus";
 
 function useFormDirect() {
@@ -49,7 +52,7 @@ function useFormDirect() {
     group: {
       groups: {
         testGroupName: {
-          header: "分组测试",
+          title: "分组测试",
           columns: ["groupField"]
         }
       }
@@ -57,7 +60,9 @@ function useFormDirect() {
     doSubmit({ form }) {
       console.log("form submit:", form);
       ElMessage.info("自定义表单提交:" + JSON.stringify(form));
-      ElMessage.success("保存成功");
+      nextTick(() => {
+        ElMessage.success("保存成功");
+      });
     }
   });
 
@@ -74,22 +79,12 @@ function useFormWrapper() {
   const formWrapperRef = ref();
   const formWrapperOptions = ref({
     labelPosition: "right",
-    labelWidth: "80px",
-    style: {
-      "grid-template-columns": "50% 50%"
-    },
+    labelWidth: "100px",
     col: {
       span: 12
     },
-    labelAlign: "right",
-    labelCol: {
-      span: 6
-    },
-    wrapperCol: {
-      span: 16
-    },
     wrapper: {
-      is: "a-modal",
+      is: "el-dialog",
       width: "960px",
       destroyOnClose: true,
       footer: null,
@@ -100,16 +95,14 @@ function useFormWrapper() {
       customField: {
         title: "新表单字段",
         component: {
-          name: "a-input",
-          vModel: "value",
+          name: "el-input",
           allowClear: true
         }
       },
       groupField: {
         title: "分组字段",
         component: {
-          name: "a-input",
-          vModel: "value",
+          name: "el-input",
           allowClear: true
         }
       }
@@ -117,15 +110,18 @@ function useFormWrapper() {
     group: {
       groups: {
         testGroupName: {
-          header: "分组测试",
+          title: "分组测试",
           columns: ["groupField"]
         }
       }
     },
     doSubmit({ form }) {
       console.log("form submit:", form);
-      message.info("自定义表单提交:" + JSON.stringify(form));
-      message.warn("抛出异常可以阻止表单关闭");
+      ElMessage.info("自定义表单提交:" + JSON.stringify(form));
+      nextTick(() => {
+        ElMessage.warn("抛出异常可以阻止表单关闭");
+      });
+
       throw new Error("抛出异常可以阻止表单关闭");
     }
   });
@@ -134,7 +130,8 @@ function useFormWrapper() {
   }
   return {
     formWrapperRef,
-    openFormWrapper
+    openFormWrapper,
+    formWrapperOptions
   };
 }
 export default defineComponent({

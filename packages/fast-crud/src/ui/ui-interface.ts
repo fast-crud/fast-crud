@@ -61,6 +61,7 @@ export interface CheckboxGroupCI extends CI {
 export interface CheckboxCI extends CI {
   resolveEvent: Function;
   value;
+  modelValue;
 }
 
 export interface CascaderCI extends CI {
@@ -194,6 +195,8 @@ export interface Icons {
   refreshLeft;
   refreshRight;
   upload;
+  fullScreen;
+  unFullScreen;
 }
 export interface UiInterface {
   modelValue: string;

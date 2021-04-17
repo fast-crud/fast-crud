@@ -1,4 +1,4 @@
-import { h, resolveDynamicComponent, getCurrentInstance, computed, mergeProps, onMounted } from "vue";
+import { h, resolveDynamicComponent, getCurrentInstance, computed, mergeProps, onMounted, provide } from "vue";
 import _ from "lodash-es";
 import traceUtil from "../../utils/util.trace";
 
@@ -44,15 +44,13 @@ export default {
     traceUtil.trace("fs-component-render");
     const { proxy } = getCurrentInstance();
 
-    const newScope = computed(() => {
-      return {
-        ...props.scope
-      };
+    provide("get:scope", () => {
+      return props.scope;
     });
 
     if (props.onMounted) {
       onMounted(() => {
-        props.onMounted(newScope.value);
+        props.onMounted(props.scope);
       });
     }
 
@@ -73,7 +71,7 @@ export default {
       _.forEach(events, (value, key) => {
         const handler = value;
         attrs[key] = ($event) => {
-          return handler({ ...newScope.value, $event });
+          return handler({ ...props.scope, $event });
         };
       });
       return attrs;
@@ -84,7 +82,7 @@ export default {
       _.forEach(props.children, (item, key) => {
         if (item instanceof Function) {
           children[key] = (scope) => {
-            return item({ ...newScope.value, scope });
+            return item({ ...props.scope, scope });
           };
         } else {
           children[key] = () => {

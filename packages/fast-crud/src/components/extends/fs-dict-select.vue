@@ -1,7 +1,7 @@
 <template>
   <component :is="$fsui.select.name" :placeholder="computedPlaceholder">
     <template v-for="item of computedOptions" :key="getValue(item)">
-      <component :is="$fsui.option.name" v-bind="item" :[$fsui.option.value]="getValue(item)" :title="getLabel(item)">
+      <component :is="$fsui.option.name" v-bind="item" :value="getValue(item)" :label="getLabel(item)">
         {{ getLabel(item) }}
       </component>
     </template>

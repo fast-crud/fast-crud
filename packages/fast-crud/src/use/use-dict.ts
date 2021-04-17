@@ -1,4 +1,4 @@
-import { getCurrentInstance, computed, reactive, watch } from "vue";
+import { getCurrentInstance, computed, reactive, watch, inject } from "vue";
 import _ from "lodash-es";
 export function useDict(props, ctx, vModel = "modelValue") {
   let dict = props.dict;
@@ -22,6 +22,7 @@ export function useDict(props, ctx, vModel = "modelValue") {
   function getDict() {
     return dict;
   }
+  const getScope: Function = inject("get:scope") || function () {};
   // @ts-ignore
   const { proxy } = getCurrentInstance();
   const loadDict = async (reload = false) => {
@@ -32,9 +33,9 @@ export function useDict(props, ctx, vModel = "modelValue") {
       return;
     }
     const value = props[vModel];
+
     const scope = {
-      ...props.scope,
-      ...ctx.attrs.scope,
+      ...getScope(),
       componentRef: proxy,
       value
     };

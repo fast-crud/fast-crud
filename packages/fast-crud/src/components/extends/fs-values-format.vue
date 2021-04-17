@@ -15,7 +15,7 @@
         :effect="item.effect"
         @click="doClick(item)"
       >
-        {{ item.label }}
+        {{ getLabel(item) }}
       </component>
     </template>
   </span>
