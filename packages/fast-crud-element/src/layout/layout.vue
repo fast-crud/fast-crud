@@ -5,7 +5,7 @@
       其他菜单
     </el-header>
     <el-container>
-      <el-aside width="200px">
+      <el-aside width="200px" style="border-right: 1px solid #eee">
         <aside-menu />
       </el-aside>
       <el-container>
@@ -21,7 +21,7 @@
 <script>
 import AsideMenu from "./aside-menu";
 export default {
-  components: { AsideMenu },
+  components: { AsideMenu }
 };
 </script>
 <style lang="less">
@@ -41,7 +41,9 @@ export default {
   }
 
   .el-aside {
+    // border-right: 1px solid #eee;
     .el-menu {
+      border-right: 0;
       height: 100%;
     }
   }

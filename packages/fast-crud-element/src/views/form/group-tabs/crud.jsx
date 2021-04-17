@@ -58,7 +58,8 @@ export default function ({ expose }) {
           title: "简介",
           type: "text-area",
           column: {
-            ellipsis: true
+            minWidth: "200px",
+            "show-overflow-tooltip": true
           }
         },
         content: {
@@ -76,10 +77,10 @@ export default function ({ expose }) {
           groups: {
             base: {
               slots: {
-                tab: () => {
+                label: () => {
                   return (
                     <span style={"color:green"}>
-                      <CheckOutlined />
+                      <fs-icon icon={"el-icon-check"} />
                       商品基础
                     </span>
                   );
@@ -89,12 +90,12 @@ export default function ({ expose }) {
               columns: ["code", "title", "images"]
             },
             price: {
-              tab: "库存价格",
+              label: "库存价格",
               icon: "el-icon-price-tag",
               columns: ["store", "price"]
             },
             info: {
-              tab: "详情",
+              label: "详情",
               collapsed: true, //默认折叠
               icon: "el-icon-warning-outline",
               columns: ["intro", "content"]

@@ -25,11 +25,11 @@ export default function ({ expose }) {
       },
       form: {
         // 具体可配置请参考 grid 布局： http://www.ruanyifeng.com/blog/2019/03/grid-layout-tutorial.html
-        display: "grid",
-        wrapper: {
-          //grid模式下，labelWidth需要靠样式控制
-          customClass: "page-layout"
-        }
+        display: "grid"
+        // wrapper: {
+        //   //grid模式下，labelWidth需要靠样式控制
+        //   customClass: "page-layout"
+        // }
       },
       columns: {
         name: {
@@ -41,7 +41,8 @@ export default function ({ expose }) {
           title: "字段排序",
           type: "text",
           form: {
-            order: 0
+            order: 0,
+            helper: "我在编辑的时候会排到第一个"
           }
         },
         intro: {

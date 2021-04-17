@@ -1,8 +1,7 @@
 <template>
   <fs-crud ref="crudRef" v-bind="crudBinding">
     <template #actionbar-right>
-      <a-divider type="vertical" />
-      <a-button @click="openCustomForm">打开自定义表单对话框</a-button>
+      <el-button style="margin-left: 10px" @click="openCustomForm">打开自定义表单对话框</el-button>
     </template>
   </fs-crud>
 </template>
@@ -43,16 +42,14 @@ export default defineComponent({
           customField: {
             title: "新表单字段",
             component: {
-              name: "a-input",
-              vModel: "value",
+              name: "el-input",
               allowClear: true
             }
           },
           groupField: {
             title: "分组字段",
             component: {
-              name: "a-input",
-              vModel: "value",
+              name: "el-input",
               allowClear: true
             }
           }

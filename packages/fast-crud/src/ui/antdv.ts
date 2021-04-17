@@ -435,7 +435,9 @@ export class Antdv implements UiInterface {
     name: "a-tab-pane"
   };
   collapse: CollapseCI = {
-    name: "a-collapse"
+    name: "a-collapse",
+    modelValue: "activeKey",
+    keyName: "key"
   };
   collapseItem: CollapseItemCI = {
     name: "a-collapse-panel"

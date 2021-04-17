@@ -70,7 +70,10 @@ export interface CascaderCI extends CI {
 
 export type TabsCI = CI;
 export type TabPaneCI = CI;
-export type CollapseCI = CI;
+export interface CollapseCI extends CI {
+  modelValue;
+  keyName;
+}
 export type CollapseItemCI = CI;
 export interface SwitchCI extends CI {
   modelValue;

@@ -24,7 +24,7 @@ import FsDictCheckbox from "./extends/fs-dict-checkbox.vue";
 import FsDictSwitch from "./extends/fs-dict-switch.vue";
 import FsDateFormat from "./extends/fs-date-format.vue";
 import FsDictTree from "./extends/fs-dict-tree.vue";
-
+import ElTreeSelect from "./extends/el-tree-select/index.vue";
 export {
   FsContainer,
   FsComponentRender,
@@ -50,5 +50,6 @@ export {
   FsDictSwitch,
   FsDateFormat,
   FsBox,
-  FsDictTree
+  FsDictTree,
+  ElTreeSelect
 };

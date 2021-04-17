@@ -35,7 +35,7 @@
     <component
       :is="computedGroup.wrapper.parent"
       v-if="computedGroup.wrapper"
-      v-model:activeKey="groupActiveKey"
+      v-model:[$fsui.collapse.modelValue]="groupActiveKey"
       style="width: 100%"
       v-bind="computedGroup"
     >
@@ -43,6 +43,7 @@
         :is="computedGroup.wrapper.child"
         v-for="(groupItem, groupKey) of computedGroup.groups"
         :key="groupKey"
+        :[$fsui.collapse.keyName]="groupKey"
         v-bind="groupItem"
       >
         <!-- tabPane的slots -->
@@ -338,11 +339,23 @@ export default {
 </script>
 
 <style lang="less">
+.fs-form {
+  .el-collapse-item__content {
+    margin-top: 10px;
+    padding-left: 30px;
+    padding-right: 30px;
+  }
+}
 .fs-form-grid {
   .fs-row {
     display: grid;
     grid-template-columns: 50% 50%;
     // gap: 0 20px; //列间距 20px
+    .fs-col {
+      max-width: 100%;
+    }
+
+    // antdv
     .ant-form-item-label {
       width: 100px;
       flex: none;
@@ -352,9 +365,12 @@ export default {
       flex: 1;
       max-width: none;
     }
-    .fs-col {
-      max-width: 100%;
-    }
+  }
+
+  // element
+  .el-row::after,
+  .el-row::before {
+    display: none;
   }
 }
 .fs-form-flex {

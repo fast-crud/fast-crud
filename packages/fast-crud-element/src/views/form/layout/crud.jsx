@@ -32,7 +32,6 @@ export default function ({ expose }) {
          */
         display: "flex",
         wrapper: {
-          customClass: "page-layout",
           onOpened(context) {
             getFormWrapperRef().formOptions.display = context.options.initial?.display;
             console.log("form opened", context, getFormData());
@@ -45,8 +44,8 @@ export default function ({ expose }) {
           type: "dict-radio",
           dict: dict({
             data: [
-              { value: "flex", label: "flex", color: "blue" },
-              { value: "grid", label: "grid", color: "green" }
+              { value: "flex", label: "flex", color: "primary" },
+              { value: "grid", label: "grid", color: "success" }
             ]
           }),
           search: { show: true, valueChange: null },

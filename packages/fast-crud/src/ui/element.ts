@@ -218,7 +218,7 @@ export class Element implements UiInterface {
 
   treeSelect: TreeSelectCI = {
     name: "el-tree-select",
-    modelValue: "modelValue",
+    modelValue: "value",
     clearable: "clearable"
   };
 
@@ -381,7 +381,9 @@ export class Element implements UiInterface {
     name: "el-tab-pane"
   };
   collapse: CollapseCI = {
-    name: "el-collapse"
+    name: "el-collapse",
+    modelValue: "modelValue",
+    keyName: "name"
   };
   collapseItem: CollapseItemCI = {
     name: "el-collapse-item"

@@ -56,7 +56,7 @@ export default function ({ expose }) {
           title: "简介",
           type: "text-area",
           column: {
-            ellipsis: true
+            "show-overflow-tooltip": true
           }
         },
         content: {
@@ -68,6 +68,7 @@ export default function ({ expose }) {
         }
       },
       form: {
+        labelWidth: "90px",
         group: {
           type: "collapse", // tab
           accordion: true, //手风琴模式
@@ -75,11 +76,11 @@ export default function ({ expose }) {
             base: {
               slots: {
                 //自定义header
-                header: () => {
+                title: () => {
                   return (
-                    <span style={"color:green"}>
+                    <span style={"color:green;"}>
                       商品基础
-                      <CheckOutlined style={"margin-left:10px;"} />
+                      <fs-icon icon={"el-icon-check"} style={"margin-left:10px;"} />
                     </span>
                   );
                 }
@@ -87,11 +88,11 @@ export default function ({ expose }) {
               columns: ["code", "title", "images"]
             },
             price: {
-              header: "库存价格",
+              title: "库存价格",
               columns: ["store", "price"]
             },
             info: {
-              header: "详情",
+              title: "详情",
               collapsed: true, //默认折叠
               columns: ["intro", "content"]
             }

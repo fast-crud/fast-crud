@@ -98,11 +98,11 @@ const resources = [
         path: "/component/number",
         component: "/component/number/index.vue"
       },
-      {
-        title: "树形选择",
-        path: "/component/tree",
-        component: "/component/tree/index.vue"
-      },
+      // {
+      //   title: "树形选择",
+      //   path: "/component/tree",
+      //   component: "/component/tree/index.vue"
+      // },
       {
         title: "图片裁剪上传",
         path: "/component/uploader/cropper",

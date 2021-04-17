@@ -46,7 +46,7 @@ export default function ({ expose }) {
           type: "number",
           form: {
             component: {
-              step: "0.1"
+              step: 0.1
             }
           }
         },

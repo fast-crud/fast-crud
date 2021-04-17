@@ -285,7 +285,7 @@ function transformOneResource(resource) {
   };
 }
 
-const buildMenusAndRouters = (resources) => {
+const buildMenusAndRouters = resources => {
   const routes = [];
   const menus = [];
 

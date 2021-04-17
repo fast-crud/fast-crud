@@ -1,20 +1,20 @@
 <template>
-  <a-row :gutter="10">
-    <a-col :span="12">
-      <a-card title="直接显示表单">
+  <el-row :gutter="10">
+    <el-col :span="12">
+      <el-card header="直接显示表单">
         <fs-form ref="formRef" v-bind="formOptions" />
         <div style="margin-top: 10px">
-          <a-button @click="formSubmit">提交表单</a-button>
+          <el-button @click="formSubmit">提交表单</el-button>
         </div>
-      </a-card>
-    </a-col>
+      </el-card>
+    </el-col>
     <a-col span="12">
-      <a-card title="打开表单对话框">
-        <a-button @click="openFormWrapper">打开表单对话框</a-button>
+      <a-card header="打开表单对话框">
+        <el-button @click="openFormWrapper">打开表单对话框</el-button>
         <fs-form-wrapper ref="formWrapperRef" v-bind="formWrapperOptions" />
       </a-card>
     </a-col>
-  </a-row>
+  </el-row>
 </template>
 
 <script>
@@ -25,35 +25,23 @@ function useFormDirect() {
   const formRef = ref();
   const formOptions = ref({
     labelPosition: "right",
-    labelWidth: "80px",
-    style: {
-      "grid-template-columns": "50% 50%"
-    },
+    labelWidth: "100px",
     col: {
       span: 12
-    },
-    labelAlign: "right",
-    labelCol: {
-      span: 8
-    },
-    wrapperCol: {
-      span: 14
     },
     display: "flex",
     columns: {
       customField: {
         title: "新表单字段",
         component: {
-          name: "a-input",
-          vModel: "value",
+          name: "el-input",
           allowClear: true
         }
       },
       groupField: {
         title: "分组字段",
         component: {
-          name: "a-input",
-          vModel: "value",
+          name: "el-input",
           allowClear: true
         }
       }
