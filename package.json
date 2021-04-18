@@ -9,7 +9,7 @@
     "docgen:crud": "vue-docgen -c docgen/crud.config.js",
     "docgen:extends": "vue-docgen -c docgen/extends.config.js",
     "docs:all": "npm run docgen:crud && npm run docgen:extends && npm run docs:build",
-    "publish:pre": "cd ./packages/fast-crud && npm run build && cd ../fast-crud-extends && npm run build  && cd ../../ ",
+    "publish:pre": "lerna run build",
     "publish": "lerna publish"
   },
   "author": "Greper",

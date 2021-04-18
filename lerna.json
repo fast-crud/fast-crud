@@ -1,6 +1,6 @@
 {
   "packages": [
-    "packages/*",
+    "packages/fast-crud",
     "packages/extends/*"
   ],
   "version": "0.4.1"
