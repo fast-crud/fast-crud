@@ -10,12 +10,12 @@ export default ({ command, mode }) => {
   console.log("args", command, mode);
 
   let build = {};
-  if (mode === "lazy") {
+  if (mode === "components") {
     build = {
       build: {
         emptyOutDir: false,
         lib: {
-          entry: resolve(__dirname, "src/type/index.js"),
+          entry: resolve(__dirname, "src/index.components.js"),
           name: "extends-uploader-type",
           formats: ["es"]
         },

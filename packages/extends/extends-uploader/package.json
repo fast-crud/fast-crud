@@ -6,7 +6,7 @@
   "module": "./dist/extends-uploader.es.js",
   "scripts": {
     "build": "vite build",
-    "build:lazy": "vite build --mode lazy",
+    "build:components": "vite build --mode components",
     "copy-local": "copyfiles -f ./src/local/lang/* ./dist/lang",
     "lint-fix": "eslint --fix --ext .js --ext .jsx --ext .vue src/"
   },

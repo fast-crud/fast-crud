@@ -2,7 +2,9 @@ import { defineAsyncComponent } from "vue";
 import _ from "lodash-es";
 
 function installAsyncComponent(app, name, es, options) {
-  const asyncComponent = defineAsyncComponent(es);
+  const asyncComponent = defineAsyncComponent({
+    loader: es
+  });
   app.component(name, asyncComponent, options);
 }
 

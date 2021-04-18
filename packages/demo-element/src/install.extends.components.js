@@ -1,8 +1,18 @@
 import viteUtils from "./util.vite";
+
 const FsUploaderComponents = {
   "fs-file-uploader": () => import("../node_modules/@fast-crud/extends-uploader/dist/components/fs-file-uploader.js"),
-  FsImagesFormat: () => import("../node_modules/@fast-crud/extends-uploader/dist/components/fs-images-format.js"),
-  FsFileFormat: () => import("../node_modules/@fast-crud/extends-uploader/dist/components/fs-files-format.js"),
+  FsImagesFormat: () => {
+    return import("../node_modules/@fast-crud/extends-uploader/dist/components/fs-images-format.js").then((ret) => {
+      console.log("ret", ret);
+      return ret._;
+    });
+  },
+  FsFilesFormat: () => {
+    return import("../node_modules/@fast-crud/extends-uploader/dist/components/fs-files-format.js").then((ret) => {
+      return ret._;
+    });
+  },
   FsCropper: () => import("../node_modules/@fast-crud/extends-uploader/dist/components/fs-cropper.js"),
   FsCropperUploader: () => import("../node_modules/@fast-crud/extends-uploader/dist/components/fs-cropper-uploader.js"),
   FsUploaderAlioss: () => import("../node_modules/@fast-crud/extends-uploader/dist/components/fs-uploader-alioss.js"),
