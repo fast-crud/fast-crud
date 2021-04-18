@@ -53,8 +53,7 @@
 import { ref, computed } from "vue";
 import VueCropper from "vue-cropperjs";
 import "cropperjs/dist/cropper.css";
-import { uiContext, utils, useI18n } from "@fast-crud/fast-crud";
-const logger = utils.logger;
+import { uiContext, useI18n } from "@fast-crud/fast-crud";
 // 图片裁剪对话框，封装cropperjs
 export default {
   name: "FsCropper",
@@ -154,7 +153,7 @@ export default {
     }
 
     function ready(event) {
-      logger.debug("cropper ready:", event);
+      console.info("cropper ready:", event);
       // this.zoom(-0.3)
       ctx.emit("ready");
     }
@@ -223,11 +222,11 @@ export default {
       return cropperRef.value.getCroppedCanvas().toBlob(callback, type, quality);
     }
     function emit(result) {
-      logger.debug("crop done:", result);
+      console.info("crop done:", result);
       ctx.emit("done", result);
     }
     function doOutput(file) {
-      logger.debug("output this:", this);
+      console.info("output this:", this);
       const ret = { file };
       if (props.output === "all") {
         getCropImageBlob((blob) => {
@@ -436,7 +435,7 @@ export default {
         return def;
       }
       const assign = Object.assign(def, this.cropper);
-      logger.debug("cropper options:", assign);
+      console.info("cropper options:", assign);
       return assign;
     },
     _cropperHeight() {

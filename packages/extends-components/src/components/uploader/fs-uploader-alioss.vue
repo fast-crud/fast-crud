@@ -1,14 +1,11 @@
 <template>
-  <span class="fs-alioss-uploader"></span>
+  <span class="fs-uploader-alioss"></span>
 </template>
 <script>
 import _ from "lodash-es";
-import { buildKey } from "./lib/utils";
-import { useUploader } from "./index";
-import { utils } from "@fast-crud/fast-crud";
+import { useUploader, buildKey } from "./utils/index";
 import OSS from "ali-oss";
 import { getCurrentInstance } from "vue";
-const logger = utils.logger;
 let sts = null;
 async function getSts(config) {
   if (sts != null && sts.expiresTime > new Date().getTime()) {
@@ -37,7 +34,6 @@ async function getSts(config) {
  */
 async function doUpload({ file, fileName, onProgress, options }) {
   const key = await buildKey(file, fileName, options);
-  logger.debug("-----------开始上传----------", fileName, options);
   let sts = null;
   if (options.getAuthorization !== null) {
     sts = await getSts({
@@ -46,7 +42,7 @@ async function doUpload({ file, fileName, onProgress, options }) {
       ...options
     });
   } else {
-    logger.warn("您还未配置getAuthorization，将使用accessKeySecret作为授权进行上传");
+    console.warn("您还未配置getAuthorization，将使用accessKeySecret作为授权进行上传");
   }
   let client = null;
   if (sts != null) {
@@ -69,7 +65,6 @@ async function doUpload({ file, fileName, onProgress, options }) {
   }
   await client.put(key, file);
   let result = { url: options.domain + "/" + key, key: key };
-  logger.debug("alioss success", result);
   if (options.successHandle) {
     result = await options.successHandle(result);
     return result;
@@ -88,7 +83,7 @@ async function doUpload({ file, fileName, onProgress, options }) {
    */
 }
 export default {
-  name: "FsAliossUploader",
+  name: "FsUploaderAlioss",
   setup() {
     const { proxy } = getCurrentInstance();
     const { getConfig } = useUploader(proxy);

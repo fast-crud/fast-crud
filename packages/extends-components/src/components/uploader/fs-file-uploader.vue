@@ -17,10 +17,9 @@
 
 <script>
 import { computed, ref, watch, getCurrentInstance } from "vue";
-import { useUploader } from "./uploader-impl";
-import { uiContext, utils, useI18n } from "@fast-crud/fast-crud";
+import { useUploader } from "./utils";
+import { uiContext, useI18n } from "@fast-crud/fast-crud";
 import _ from "lodash-es";
-const logger = utils.logger;
 export default {
   name: "FsFileUploader",
   inheritAttrs: false,
@@ -203,7 +202,7 @@ export default {
           showMessage = props.sizeLimit.tip;
         }
         if (file.size > limit) {
-          logger.debug("文件大小超过限制：", file.size);
+          console.log("文件大小超过限制：", file.size);
           showMessage(file.size, limit);
           throw new Error("文件大小超过限制：" + file.size);
         }
@@ -230,7 +229,7 @@ export default {
         const ret = await doUpload(option);
         onSuccess(ret);
       } catch (e) {
-        logger.error("上传失败", e);
+        console.error("上传失败", e);
         onError(e);
       }
     }

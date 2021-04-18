@@ -43,10 +43,8 @@
 
 <script>
 import { reactive, ref, getCurrentInstance } from "vue";
-import { utils } from "@fast-crud/fast-crud";
-import { useUploader } from "./uploader-impl";
+import { useUploader } from "./utils";
 
-const logger = utils.logger;
 /**
  * 图片裁剪上传组件,封装了fs-cropper, fs-cropper内部封装了cropperjs
  */
@@ -212,9 +210,9 @@ export default {
       const onError = (e) => {
         item.status = "error";
         item.message = "文件上传出错:" + e.message;
-        logger.debug(e);
+        console.error(e);
       };
-      logger.debug("blob:", blob);
+      console.log("blob:", blob);
       const option = {
         file: blob,
         fileName: file.name,
