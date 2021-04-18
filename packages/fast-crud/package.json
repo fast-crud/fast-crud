@@ -6,7 +6,7 @@
   "module": "./dist/fast-crud.es.js",
   "scripts": {
     "build": "vite build && npm run copy-local",
-    "copy-local": "copyfiles -f ./src/local/lang/* ./dist/lang",
+    "copy-local": "copyfiles -f ./src/local/lang/* ./dist/local/lang",
     "test": "jest",
     "lint-fix": "eslint --fix --ext .js --ext .jsx --ext .vue src/"
   },
