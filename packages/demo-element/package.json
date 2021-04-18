@@ -1,6 +1,6 @@
 {
   "name": "@fast-crud/demo-element",
-  "version": "0.4.1",
+  "version": "0.4.2",
   "private": false,
   "scripts": {
     "dev": "vite --force",
@@ -12,8 +12,8 @@
   "author": "Greper",
   "license": "MIT",
   "dependencies": {
-    "@fast-crud/fast-crud": "^0.4.0",
-    "@fast-crud/extends-uploader": "^0.4.1",
+    "@fast-crud/fast-crud": "^0.4.2",
+    "@fast-crud/extends-uploader": "^0.4.2",
     "ali-oss": "^6.13.2",
     "axios": "^0.21.1",
     "axios-mock-adapter": "^1.19.0",
