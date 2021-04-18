@@ -1,14 +1,11 @@
 <template>
-  <span class="fs-qiniu-uploader"></span>
+  <span class="fs-uploader-qiniu"></span>
 </template>
 <script>
 import _ from "lodash-es";
-import { buildKey } from "./lib/utils";
-import { useUploader } from "./index";
+import { useUploader, buildKey } from "./utils/index";
 import * as qiniu from "qiniu-js";
-import { utils } from "@fast-crud/fast-crud";
 import { getCurrentInstance } from "vue";
-const logger = utils.logger;
 async function getToken(file, fileName, key, config) {
   const ret = await config.getToken({
     fileName,
@@ -29,7 +26,6 @@ async function getToken(file, fileName, key, config) {
 
 async function doUpload({ file, fileName, onProgress, options }) {
   const key = await buildKey(file, fileName, options);
-  logger.debug("-----------开始上传----------", fileName, options);
   const token = await getToken(file, fileName, key, options);
 
   return new Promise((resolve, reject) => {
@@ -60,7 +56,7 @@ async function doUpload({ file, fileName, onProgress, options }) {
   });
 }
 export default {
-  name: "FsQiniuUploader",
+  name: "FsUploaderQiniu",
   setup() {
     const { proxy } = getCurrentInstance();
     const { getConfig } = useUploader(proxy);

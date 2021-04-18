@@ -1,15 +1,12 @@
 <template>
-  <span class="fs-cos-uploader"></span>
+  <span class="fs-uploader-cos"></span>
 </template>
 <script>
 import _ from "lodash-es";
 import { getCurrentInstance } from "vue";
-import { buildKey } from "./lib/utils";
-import { useUploader } from "./index";
-import { utils } from "@fast-crud/fast-crud";
+import { buildKey, useUploader } from "./utils";
 import COS from "cos-js-sdk-v5";
 import dayjs from "dayjs";
-const logger = utils.logger;
 function newClient(options) {
   let client = null;
   const secretId = options.secretId;
@@ -29,7 +26,7 @@ function newClient(options) {
       }
     });
   } else {
-    logger.warn("您还未配置getAuthorization，将使用SecretKey授权进行上传");
+    console.warn("您还未配置getAuthorization，将使用SecretKey授权进行上传");
     client = new COS({
       SecretId: secretId,
       SecretKey: secretKey
@@ -41,7 +38,6 @@ function newClient(options) {
 async function doUpload({ file, fileName, onProgress, options }) {
   const key = await buildKey(file, fileName, options);
   const config = options;
-  logger.debug("-----------开始上传----------", fileName, options);
   // TODO 大文件需要分片上传
   const cos = newClient(options);
   return new Promise((resolve, reject) => {
@@ -69,7 +65,6 @@ async function doUpload({ file, fileName, onProgress, options }) {
           reject(err);
           return;
         }
-        logger.debug("上传成功", data);
         let result = { url: config.domain + "/" + key, key: key };
         if (config.successHandle) {
           result = await config.successHandle(result);
@@ -82,7 +77,7 @@ async function doUpload({ file, fileName, onProgress, options }) {
   });
 }
 export default {
-  name: "FsCosUploader",
+  name: "FsUploaderCos",
   setup() {
     const { proxy } = getCurrentInstance();
     const { getConfig } = useUploader(proxy);

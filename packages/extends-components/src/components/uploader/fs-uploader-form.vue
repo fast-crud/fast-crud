@@ -1,14 +1,11 @@
 <template>
-  <span class="fs-form-uploader"></span>
+  <span class="fs-uploader-form"></span>
 </template>
 <script>
 import _ from "lodash-es";
-import ajax from "./lib/ajax";
-import { buildKey } from "./lib/utils";
-import { useUploader } from "./index";
+import ajax from "./utils/ajax";
+import { useUploader, buildKey } from "./utils/index";
 import { getCurrentInstance } from "vue";
-import { utils } from "@fast-crud/fast-crud";
-const logger = utils.logger;
 /**
  *
  * @param option {file,filename,action,data,headers}
@@ -48,7 +45,7 @@ async function doUpload({ file, fileName, onProgress, options }) {
   });
 }
 export default {
-  name: "FsFormUploader",
+  name: "FsUploaderForm",
   setup() {
     const { proxy } = getCurrentInstance();
     const { getConfig } = useUploader(proxy);
