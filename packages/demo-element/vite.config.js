@@ -16,7 +16,7 @@ export default ({ command, mode }) => {
   console.log("args", command, mode);
 
   let devAlias = [];
-  if (mode === "development") {
+  if (mode === "development1") {
     devAlias = [
       { find: /@fast-crud\/fast-crud\/dist/, replacement: path.resolve("../fast-crud/src/") },
       { find: /@fast-crud\/fast-crud$/, replacement: path.resolve("../fast-crud/src/") },
@@ -32,6 +32,9 @@ export default ({ command, mode }) => {
     // optimizeDeps: {
     //   exclude: ["@fast-crud/fast-crud-extends"],
     // },
+    optimizeDeps: {
+      include: ["vuedraggable"]
+    },
     esbuild: {
       jsxFactory: "h",
       jsxFragment: "Fragment"
@@ -42,7 +45,7 @@ export default ({ command, mode }) => {
     },
     build: {
       rollupOptions: {
-        plugins: [visualizer()]
+        plugins: [commonjs(), visualizer()]
       }
     },
     server: {

@@ -51,7 +51,7 @@
 
 <script>
 import { ref, computed } from "vue";
-import VueCropper from "vue-cropperjs";
+import VueCropper from "./utils/vue-cropperjs.js";
 import "cropperjs/dist/cropper.css";
 import { uiContext, useI18n } from "@fast-crud/fast-crud";
 // 图片裁剪对话框，封装cropperjs

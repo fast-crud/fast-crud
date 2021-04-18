@@ -1,13 +1,11 @@
 import { ElMessage, ElNotification, ElMessageBox } from "element-plus";
 import { request, requestForMock } from "./api/service";
 import "./mock";
-
 import { FastCrud } from "@fast-crud/fast-crud";
 import "@fast-crud/fast-crud/dist/style.css";
-
-import FsUploader from "@fast-crud/extends-uploader";
+import FsUploaderType from "@fast-crud/extends-uploader";
+import { FsUploaderComponent } from "./install.extends.components";
 import "@fast-crud/extends-uploader/dist/style.css";
-
 export default function (app) {
   app.use(FastCrud, {
     async dictRequest({ url }) {
@@ -43,8 +41,9 @@ export default function (app) {
     }
   });
 
+  app.use(FsUploaderComponent);
   //配置uploader 公共参数
-  app.use(FsUploader, {
+  app.use(FsUploaderType, {
     defaultType: "cos",
     cos: {
       domain: "https://d2p-demo-1251260344.cos.ap-guangzhou.myqcloud.com",

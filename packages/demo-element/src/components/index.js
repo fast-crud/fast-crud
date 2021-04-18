@@ -1,6 +1,10 @@
-import D2Highlight from "./d2-highlight/index.vue";
+import { defineAsyncComponent } from "vue";
+function installAsyncComponent(app, name, es, options) {
+  const asyncComponent = defineAsyncComponent(es);
+  app.component(name, asyncComponent, options);
+}
 export default {
   install(app) {
-    app.component("D2Highlight", D2Highlight);
+    installAsyncComponent(app, "D2Highlight", () => import("./d2-highlight/index.vue"));
   }
 };

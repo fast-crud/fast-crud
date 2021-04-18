@@ -1,11 +1,12 @@
 {
-  "name": "@fast-crud/extend-uploader",
+  "name": "@fast-crud/extends-uploader",
   "version": "0.4.2",
   "private": false,
   "main": "./dist/extends-uploader.umd.js",
   "module": "./dist/extends-uploader.es.js",
   "scripts": {
     "build": "vite build",
+    "build:lazy": "vite build --mode lazy",
     "copy-local": "copyfiles -f ./src/local/lang/* ./dist/lang",
     "lint-fix": "eslint --fix --ext .js --ext .jsx --ext .vue src/"
   },
