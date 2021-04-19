@@ -1,6 +1,7 @@
 {
   "name": "@fast-crud/demo-antdv",
   "version": "0.4.1",
+  "private": true,
   "scripts": {
     "dev": "vite --force",
     "build": "vite build",

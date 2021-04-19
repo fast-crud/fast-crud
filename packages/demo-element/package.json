@@ -1,7 +1,7 @@
 {
   "name": "@fast-crud/demo-element",
   "version": "0.4.2",
-  "private": false,
+  "private": true,
   "scripts": {
     "dev": "vite --force",
     "demo": "vite --force --mode demo",
