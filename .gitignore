@@ -110,3 +110,4 @@ packages/vben-admin-thin-next
 
 *.lock
 **/*.lock
+**/stats.html

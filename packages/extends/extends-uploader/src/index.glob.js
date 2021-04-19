@@ -3,6 +3,6 @@ const modules = import.meta.glob("./components/*.vue");
 export default {
   install(app) {
     const imports = utils.vite.transformFromGlob(modules);
-    utils.vite.installImportComponents(app, imports);
+    utils.vite.installAsyncComponents(app, imports);
   }
 };

@@ -1,5 +1,5 @@
 import * as api from "./api";
-import { FsUploaderType } from "@fast-crud/extends-uploader";
+import { AllSuccessValidator } from "@fast-crud/extends-uploader";
 export default function ({ expose }) {
   const pageRequest = async (query) => {
     return await api.GetList(query);
@@ -103,7 +103,7 @@ export default function ({ expose }) {
             rules: [
               { required: true, message: "此项必传" },
               {
-                validator: FsUploaderType.AllSuccessValidator(),
+                validator: AllSuccessValidator(),
                 message: "还有文件正在上传，请稍候"
               }
             ],
