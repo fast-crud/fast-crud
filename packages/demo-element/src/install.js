@@ -4,7 +4,7 @@ import "./mock";
 import { FastCrud } from "@fast-crud/fast-crud";
 import "@fast-crud/fast-crud/dist/style.css";
 import FsUploader from "@fast-crud/extends-uploader";
-//import "@fast-crud/extends-uploader/dist/style.css";
+import "@fast-crud/extends-uploader/dist/style.css";
 export default function (app) {
   app.use(FastCrud, {
     async dictRequest({ url }) {
