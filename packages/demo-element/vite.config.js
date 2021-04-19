@@ -16,7 +16,7 @@ export default ({ command, mode }) => {
   console.log("args", command, mode);
 
   let devAlias = [];
-  if (mode === "development") {
+  if (mode === "development1") {
     devAlias = [
       { find: /@fast-crud\/fast-crud\/dist/, replacement: path.resolve("../fast-crud/src/") },
       { find: /@fast-crud\/fast-crud$/, replacement: path.resolve("../fast-crud/src/") },
@@ -44,6 +44,7 @@ export default ({ command, mode }) => {
       dedupe: ["vue"]
     },
     build: {
+      minify: false,
       rollupOptions: {
         plugins: [commonjs(), visualizer()]
       }

@@ -14,6 +14,5 @@ export default {
     const { addTypes } = useTypes();
     addTypes(newTypes);
     setConfig(app, options);
-  },
-  AllSuccessValidator
+  }
 };

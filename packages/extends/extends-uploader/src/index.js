@@ -1,5 +1,5 @@
 import FsUploaderType from "./type";
-export { FsUploaderType };
+export * from "./type";
 import Components from "./index.glob";
 export default {
   install(app, options) {

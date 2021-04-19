@@ -26,6 +26,13 @@ function installAsyncComponents(app, modules) {
     installAsyncComponent(app, name, item);
   });
 }
+
+function installImportComponents(app, modules) {
+  console.log("install names ", modules);
+  _.forEach(modules, (item, name) => {
+    app.component(name, item);
+  });
+}
 function transformFromGlob(modules, nameSuffix = ".vue", transform) {
   const components = {};
   _.forEach(modules, (item, key) => {
@@ -40,5 +47,6 @@ function transformFromGlob(modules, nameSuffix = ".vue", transform) {
 }
 export default {
   transformFromGlob,
-  installAsyncComponents
+  installAsyncComponents,
+  installImportComponents
 };

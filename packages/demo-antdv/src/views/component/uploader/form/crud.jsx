@@ -1,14 +1,14 @@
 import * as api from "./api";
-import { FsUploader } from "@fast-crud/fast-crud-extends";
-export default function({ expose }) {
-  const pageRequest = async query => {
+import { FsUploaderType } from "@fast-crud/extends-uploader";
+export default function ({ expose }) {
+  const pageRequest = async (query) => {
     return await api.GetList(query);
   };
   const editRequest = async ({ form, row }) => {
     form.id = row.id;
     return await api.UpdateObj(form);
   };
-  const delRequest = async id => {
+  const delRequest = async (id) => {
     return await api.DelObj(id);
   };
 
@@ -103,7 +103,7 @@ export default function({ expose }) {
             rules: [
               { required: true, message: "此项必传" },
               {
-                validator: FsUploader.AllSuccessValidator(),
+                validator: FsUploaderType.AllSuccessValidator(),
                 message: "还有文件正在上传，请稍候"
               }
             ],
