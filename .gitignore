@@ -109,4 +109,4 @@ packages/vben-admin-thin-next
 /packages/fast-crud-element/stats.html
 
 *.lock
-*/*.lock
+**/*.lock
