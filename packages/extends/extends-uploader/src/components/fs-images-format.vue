@@ -102,10 +102,16 @@ export default {
     display: flex;
     align-items: center;
     justify-content: center;
-    height: 100%;
+    //  height: 100%;
   }
   .el-image-viewer__close {
     color: #fff;
+  }
+
+  .el-image__error,
+  .el-image__inner,
+  .el-image__placeholder {
+    height: auto;
   }
 }
 </style>

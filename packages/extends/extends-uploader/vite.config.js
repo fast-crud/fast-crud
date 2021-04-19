@@ -10,18 +10,17 @@ export default ({ command, mode }) => {
   console.log("args", command, mode);
 
   let build = {};
-  if (mode === "components") {
+  if (mode === "umd") {
     build = {
       build: {
-        emptyOutDir: false,
+        emptyOutDir: true,
         lib: {
-          entry: resolve(__dirname, "src/index.components.js"),
-          name: "extends-uploader-type",
-          formats: ["es"]
+          entry: resolve(__dirname, "src/index.umd.js"),
+          formats: ["umd"]
         },
         rollupOptions: {
           output: {
-            name: "extends-uploader-type"
+            manualChunks: null
           }
         }
       }

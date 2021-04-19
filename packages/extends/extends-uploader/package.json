@@ -5,9 +5,13 @@
   "main": "./dist/extends-uploader.umd.js",
   "module": "./dist/extends-uploader.es.js",
   "scripts": {
-    "build": "vite build",
-    "build:components": "vite build --mode components",
-    "copy-local": "copyfiles -f ./src/local/lang/* ./dist/lang",
+    "build:all": "npm run build:type && npm run build && npm run copy:index",
+    "build": " npm run build:umd && npm run build:es",
+    "build:es": "vite build",
+    "build:type": "vite build --mode type && npm run copy:type",
+    "build:umd": "vite build --mode umd",
+    "copy:type": "copyfiles -f ./dist/extends-uploader.es.js ./dist/index.type.js",
+    "copy:index": "copyfiles -f ./src/index.vite.es.js ./dist/",
     "lint-fix": "eslint --fix --ext .js --ext .jsx --ext .vue src/"
   },
   "author": "Greper",

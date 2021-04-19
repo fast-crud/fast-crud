@@ -19,12 +19,26 @@ function installAsyncComponent(app, name, es, options) {
   app.component(name, asyncComponent, options);
 }
 
+function installAsyncComponents(app, modules) {
+  console.log("install names ", modules);
+  _.forEach(modules, (item, name) => {
+    console.log("name", name, item);
+    installAsyncComponent(app, name, item);
+  });
+}
+function transformFromGlob(modules, nameSuffix = ".vue", transform) {
+  const components = {};
+  _.forEach(modules, (item, key) => {
+    let name = key.substring(key.lastIndexOf("/") + 1);
+    name = name.replace(nameSuffix, "");
+    if (transform) {
+      item = transform(item);
+    }
+    components[name] = item;
+  });
+  return components;
+}
 export default {
-  installAsyncComponents(app, modules) {
-    console.log("install names ", modules);
-    _.forEach(modules, (item, name) => {
-      console.log("name", name, item);
-      installAsyncComponent(app, name, item);
-    });
-  }
+  transformFromGlob,
+  installAsyncComponents
 };

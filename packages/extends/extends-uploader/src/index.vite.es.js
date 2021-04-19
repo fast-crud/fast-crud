@@ -1,7 +1,6 @@
-import { defineAsyncComponent } from "vue";
-import _ from "lodash-es";
+import { utils } from "@fast-crud/fast-crud";
 const modules = {
-  "fs-file-uploader": () => import("./components/fs-file-uploader.js"),
+  FsFileUploader: () => import("./components/fs-file-uploader.js"),
   FsImagesFormat: () => import("./components/fs-images-format.js"),
   FsFileFormat: () => import("./components/fs-files-format.js"),
   FsCropper: () => import("./components/fs-cropper.js"),
@@ -12,38 +11,13 @@ const modules = {
   FsUploaderForm: () => import("./components/fs-uploader-form.js")
 };
 
-const components = {};
-_.forEach(modules, (item, key) => {
-  debugger;
-  let name = key.substring(key.lastIndexOf("/") + 1);
-  name = name.replace(".js", "");
-  components[name] = item;
-});
-console.log("lazy load components es,", modules, components);
-function installAsyncComponent(app, name, es, options) {
-  const asyncComponent = defineAsyncComponent({
-    loader: es,
-    onError(error, retry, fail, attempts) {
-      console.error("load error", error);
-      if (error.message.match(/fetch/) && attempts <= 3) {
-        // 请求发生错误时重试，最多可尝试 3 次
-        retry();
-      } else {
-        // 注意，retry/fail 就像 promise 的 resolve/reject 一样：
-        // 必须调用其中一个才能继续错误处理。
-        fail();
-      }
-    }
-  });
-  app.component(name, asyncComponent, options);
-}
-
 export default {
   install(app) {
-    console.log("install names ", components);
-    _.forEach(components, (item, name) => {
-      console.log("name", name, item);
-      installAsyncComponent(app, name, item);
+    const imports = utils.vite.transformFromGlob(modules, ".js", (item) => {
+      return item.then((module) => {
+        return module._;
+      });
     });
+    utils.vite.installAsyncComponents(app, imports);
   }
 };
