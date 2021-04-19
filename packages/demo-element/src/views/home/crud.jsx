@@ -1,4 +1,4 @@
-import { compute, dict } from "@fast-crud/fast-crud/src";
+import { compute, dict } from "@fast-crud/fast-crud";
 import * as api from "/src/views/home/api";
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 export default function ({ crudRef }) {
@@ -18,7 +18,7 @@ export default function ({ crudRef }) {
   };
   return {
     table: {
-      show: true,
+      show: true
     },
     options: {},
     request: {
@@ -31,27 +31,27 @@ export default function ({ crudRef }) {
       },
       transformRes: ({ res }) => {
         return { currentPage: res.current, pageSize: res.size, ...res };
-      },
+      }
     },
     actionbar: {
       buttons: {
         add: {
           type: "primary",
-          text: "添加",
-        },
+          text: "添加"
+        }
       },
-      show: true,
+      show: true
     },
     form: {
       wrapper: {},
-      options: {},
+      options: {}
     },
     columns: {
       date: {
         title: "日期",
         column: {
-          sortable: true,
-        },
+          sortable: true
+        }
       },
       name: {
         title: "姓名",
@@ -63,24 +63,23 @@ export default function ({ crudRef }) {
             children: {
               default: (scope) => {
                 return <div>{scope.row.name}</div>;
-              },
+              }
             },
             style: "width:100px",
             events: {
               onClick: (context) => {
                 console.log("clicked", context);
-                context.row.name =
-                  context.row.name === "李四" ? "王小虎" : "李四";
+                context.row.name = context.row.name === "李四" ? "王小虎" : "李四";
               },
               onChange(context) {
                 console.log("on change", context);
               },
               onInput(context) {
                 console.log("on input", context);
-              },
-            },
-          },
-        },
+              }
+            }
+          }
+        }
       },
       avatar: {
         title: "头像",
@@ -105,24 +104,24 @@ export default function ({ crudRef }) {
                     <i class="el-icon-picture-outline" />
                   </div>
                 );
-              },
-            },
-          },
+              }
+            }
+          }
         },
         form: {
           component: {
             name: "el-image",
             vModel: "src",
-            style: "width:70px",
+            style: "width:70px"
           },
           style: {
-            "grid-column": "span 2", // 跨2列
+            "grid-column": "span 2" // 跨2列
           },
           show: compute((context) => {
             console.log("show context", context);
             return context.form.show === false;
-          }),
-        },
+          })
+        }
       },
       show: {
         title: "显隐",
@@ -132,9 +131,9 @@ export default function ({ crudRef }) {
             events: {
               onChange(context) {
                 console.log("switch context", context);
-              },
-            },
-          },
+              }
+            }
+          }
         },
         form: {
           title: compute((context) => {
@@ -142,12 +141,12 @@ export default function ({ crudRef }) {
             return context.form.show ? "隐藏头像" : "显示头像";
           }),
           component: {
-            name: "el-switch",
+            name: "el-switch"
           },
           style: {
-            "grid-column": "span 2", // 跨2列
-          },
-        },
+            "grid-column": "span 2" // 跨2列
+          }
+        }
       },
       addressGroup: {
         title: "地址",
@@ -157,45 +156,45 @@ export default function ({ crudRef }) {
             type: "select",
             search: { show: true },
             dict: dict({
-              url: "/dicts/OpenStatusEnum",
-            }),
+              url: "/dicts/OpenStatusEnum"
+            })
           },
           city: {
             title: "城市",
             type: "select",
             dict: dict({
-              url: "/dicts/OpenStatusEnum",
-            }),
+              url: "/dicts/OpenStatusEnum"
+            })
           },
           address: {
             title: "地址",
             search: {
-              show: true,
+              show: true
             },
-            type: "text-area",
-          },
-        },
+            type: "text-area"
+          }
+        }
       },
       zip: {
-        title: "邮编",
-      },
+        title: "邮编"
+      }
     },
     rowHandle: {
       title: "操作",
       width: "300px",
       edit: {
         icon: "el-icon-edit",
-        text: null,
+        text: null
       },
       custom: [
         {
           text: "custom",
           click() {
             console.log("1111");
-          },
-        },
-      ],
+          }
+        }
+      ]
     },
-    data: [],
+    data: []
   };
 }

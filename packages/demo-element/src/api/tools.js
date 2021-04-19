@@ -3,7 +3,7 @@
  * @param {String} jsonString 需要解析的 json 字符串
  * @param {String} defaultValue 默认值
  */
-import { uiContext } from "@fast-crud/fast-crud/src";
+import { uiContext } from "@fast-crud/fast-crud";
 
 export function parse(jsonString = "{}", defaultValue = {}) {
   let result = defaultValue;

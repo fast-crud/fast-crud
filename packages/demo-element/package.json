@@ -5,7 +5,7 @@
   "scripts": {
     "dev": "vite --force",
     "demo": "vite --force --mode demo",
-    "preview": "vite preview",
+    "serve": "vite preview",
     "build": "vite build",
     "lint": "vite lint"
   },
