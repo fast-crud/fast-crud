@@ -25,7 +25,7 @@ export default ({ command, mode }) => {
   console.log("devAlias", devAlias);
   return {
     base: "/antdv/",
-    plugins: [vueJsx(), vue()],
+    plugins: [vueJsx(), vue(), viteCompression()],
     // optimizeDeps: {
     //   exclude: ["@fast-crud/fast-crud-extends"],
     // },
