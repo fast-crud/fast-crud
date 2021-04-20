@@ -6,25 +6,25 @@ export default {
     },
     status: {
       title: '状态',
-      type: 'select', //选择框，默认单选
+      type: 'dict-select', //选择框，默认单选
       dict: dict({ url: '/dicts/OpenStatusEnum' })//远程数据字典
     },
     province: {
       title: '地区',
-      type: 'select', //选择框
+      type: 'dict-select', //选择框
       form: { //表单组件自定义配置，此处配置选择框为多选
         component: { //支持任何v-model组件
            filterable: true, multiple: true, clearable: true
         }
       },
-      dict: {
+      dict: dict({
         data: [ //本地数据字典
           { value: 'sz', label: '深圳' },
           { value: 'gz', label: '广州' },
           { value: 'wh', label: '武汉' },
           { value: 'sh', label: '上海' }
         ]
-      }
+      })
     }
   ]
   `

@@ -1,6 +1,6 @@
 ---
 home: true
-heroImage: ./images/logo.svg
+heroImage: /images/logo.svg
 heroAlt: FastCrud
 heroText: FastCrud
 tagline: 面向配置的crud编程，快速开发crud功能，低代码开发基础框架

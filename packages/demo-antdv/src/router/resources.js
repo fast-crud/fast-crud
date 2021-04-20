@@ -193,6 +193,11 @@ const resources = [
         component: "/feature/dropdown/index.vue"
       },
       {
+        title: "部件显隐",
+        path: "/feature/hide",
+        component: "/feature/hide/index.vue"
+      },
+      {
         title: "可选择",
         path: "/feature/checkable",
         component: "/feature/checkable/index.vue"
@@ -285,7 +290,7 @@ function transformOneResource(resource) {
   };
 }
 
-const buildMenusAndRouters = resources => {
+const buildMenusAndRouters = (resources) => {
   const routes = [];
   const menus = [];
 

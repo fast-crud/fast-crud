@@ -50,7 +50,4 @@ Github: <https://github.com/vueComponent/ant-design-vue>
 文档：<https://2x.antdv.com/components/overview/>
 
 
-# demo
-[demoe](./start/first.md)
 
-[[toc]]

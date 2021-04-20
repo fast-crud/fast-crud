@@ -4,12 +4,13 @@
 ## 在demo里面开发一个crud
 
 
-进入到demo目录下`packages/fast-crud-antdv` 或 `packages/fast-crud-element`
+进入到demo目录下`packages/demo-antdv` 或 `packages/demo-element`
 
 一个crud主要分为3个部分
 * crud.js：     crud配置
 * index.vue：   页面组件
 * api.js：      接口
+* mock.js：     接口mock数据，可选
 
 ### 1. crud.js
 crud配置，每个crud最大的不同就在于此文件。     

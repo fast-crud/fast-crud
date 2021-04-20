@@ -193,6 +193,11 @@ const resources = [
         component: "/feature/dropdown/index.vue"
       },
       {
+        title: "隐藏",
+        path: "/feature/hide",
+        component: "/feature/hide/index.vue"
+      },
+      {
         title: "可选择",
         path: "/feature/checkable",
         component: "/feature/checkable/index.vue"
@@ -243,6 +248,11 @@ const resources = [
         title: "选择联动",
         path: "/advanced/linkage",
         component: "/advanced/linkage/index.vue"
+      },
+      {
+        title: "后台加载crud",
+        path: "/advanced/from-backend",
+        component: "/advanced/from-backend/index.vue"
       },
       {
         title: "嵌套子表格",

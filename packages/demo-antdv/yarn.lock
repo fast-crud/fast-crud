@@ -368,10 +368,10 @@
     minimatch "^3.0.4"
     strip-json-comments "^3.1.1"
 
-"@fast-crud/extends-uploader@^0.5.0":
-  version "0.5.0"
-  resolved "https://registry.yarnpkg.com/@fast-crud/extends-uploader/-/extends-uploader-0.5.0.tgz#5b1560a635061559bdf1d8833e64eb97126bae24"
-  integrity sha512-pgqGVOvGF+BEZQ1zt7QkZbHi6T0+yQZKW/dIwNAdeGbsgZiXg0gCLrjoBGYoCmHv1XaeJKBLmfhmkJbkTSRrHA==
+"@fast-crud/extends-uploader@^0.5.1":
+  version "0.5.1"
+  resolved "https://registry.yarnpkg.com/@fast-crud/extends-uploader/-/extends-uploader-0.5.1.tgz#2e685f4ea1c491f60577767f2f499d764635b25e"
+  integrity sha512-ZsOr59ZxGUXRTKKwrGVanqnli3ULa8kclvibhlQfZ2wQ7DJX1NxI0nX3FtxzCJuu8WFa/yUI7655V6lv/7z3Bw==
   dependencies:
     ali-oss "^6.13.2"
     cos-js-sdk-v5 "^1.2.9"
@@ -383,10 +383,10 @@
     vue "^3.0.7"
     vue-cropperjs "^5.0.0"
 
-"@fast-crud/fast-crud@^0.5.0":
-  version "0.5.0"
-  resolved "https://registry.yarnpkg.com/@fast-crud/fast-crud/-/fast-crud-0.5.0.tgz#fe36f08d1698464495e085f364cfa639b38ddebf"
-  integrity sha512-MVxrIx5EDsGAnqG17Luv6hrPt2FC/PzEq+AtbEsDYl6vTvHY/4rWkwGhf+OFeGHQOZPxCEpzTbFiy5Tm9a4tSA==
+"@fast-crud/fast-crud@^0.5.1":
+  version "0.5.1"
+  resolved "https://registry.yarnpkg.com/@fast-crud/fast-crud/-/fast-crud-0.5.1.tgz#82a85486215f404982fcd5a48562d1c1fb979e3b"
+  integrity sha512-sqZS+lpotRJZjsGJCQA3v1ZCH39BM/bNib9b86NQ/8H4PpdCv9kwM29iEyIALSNEJSjzXJpI60i1AGiw4KZTyA==
   dependencies:
     dayjs "^1.10.4"
     deepdash-es "^5.3.5"

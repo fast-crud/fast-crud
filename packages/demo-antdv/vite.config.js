@@ -34,10 +34,8 @@ export default ({ command, mode }) => {
       jsxFragment: "Fragment"
     },
     resolve: {
-      resolve: {
-        alias: [...devAlias, { find: "/@", replacement: path.resolve("./src") }],
-        dedupe: ["vue"]
-      }
+      alias: [...devAlias, { find: "/@", replacement: path.resolve("./src") }],
+      dedupe: ["vue"]
     },
     build: {
       rollupOptions: {

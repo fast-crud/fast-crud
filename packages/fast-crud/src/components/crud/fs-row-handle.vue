@@ -40,18 +40,7 @@ export default defineComponent({
   },
   props: {
     dropdown: {},
-    view: {
-      type: Object
-    },
-    edit: {
-      type: Object
-    },
-    remove: {
-      type: Object
-    },
-    custom: {
-      type: Array
-    },
+    buttons: {},
     scope: {}
   },
   emits: ["handle"],
@@ -85,21 +74,13 @@ export default defineComponent({
           text: t("fs.rowHandle.remove.text")
         }
       };
-      const mergedBtns = _.merge(defBtns, {
-        view: props.view,
-        edit: props.edit,
-        remove: props.remove
+      const mergedBtns = _.merge(defBtns, props.buttons);
+      const btns = [];
+      _.forEach(mergedBtns, (item, key) => {
+        item.key = key;
+        btns.push(item);
       });
-      const btns = [mergedBtns.view, mergedBtns.edit, mergedBtns.remove];
 
-      if (props.custom && props.custom.length > 0) {
-        for (const item of props.custom) {
-          btns.push({
-            order: 4,
-            ...item
-          });
-        }
-      }
       btns.sort((a, b) => {
         return a.order - b.order;
       });

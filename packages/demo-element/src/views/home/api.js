@@ -40,18 +40,3 @@ export function GetObj(id) {
     params: { id },
   });
 }
-export function GetRoleList() {
-  return request({
-    url: apiPrefix + "/getAllRole",
-    method: "get",
-  });
-}
-
-export function DoAuthz(userId, roleIds) {
-  return request({
-    url: apiPrefix + "/authz",
-    method: "post",
-    params: { userId },
-    data: roleIds,
-  });
-}

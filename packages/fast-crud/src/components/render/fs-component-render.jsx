@@ -88,6 +88,7 @@ export default {
           children[key] = () => {
             return item;
           };
+
         }
       });
       return children;
