@@ -250,6 +250,11 @@ const resources = [
         component: "/advanced/linkage/index.vue"
       },
       {
+        title: "后台加载crud",
+        path: "/advanced/from-backend",
+        component: "/advanced/from-backend/index.vue"
+      },
+      {
         title: "嵌套子表格",
         path: "/advanced/nest",
         component: "/advanced/nest/index.vue"

@@ -27,7 +27,7 @@ export default function ({ expose }) {
         show: true
       },
       pagination: {
-        show: false
+        show: true
       },
       table: {
         show: true

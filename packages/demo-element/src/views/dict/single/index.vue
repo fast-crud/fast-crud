@@ -1,7 +1,7 @@
 <template>
   <fs-crud ref="crudRef" v-bind="crudBinding">
     <template #actionbar-right>
-      <div style="margin-left: 10px">单例dict，修改一个，影响全部</div>
+      <el-alert type="warning" class="ml-10" title="单例dict，修改一个，影响全部" />
     </template>
   </fs-crud>
 </template>
