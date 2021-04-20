@@ -2,6 +2,7 @@ import vue from "@vitejs/plugin-vue";
 import vueJsx from "@vitejs/plugin-vue-jsx";
 import path from "path";
 import visualizer from "rollup-plugin-visualizer";
+import strip from "@rollup/plugin-strip";
 const { resolve } = path;
 // https://vitejs.dev/config/
 export default {
@@ -23,7 +24,7 @@ export default {
       //   main: resolve(__dirname, "src/index.js"),
       //   en: resolve(__dirname, "src/local/lang/en.js"),
       // },
-      plugins: [visualizer()],
+      plugins: [strip(), visualizer()],
       // make sure to externalize deps that shouldn't be bundled
       // into your library
       external: ["vue", "lodash-es", "dayjs", "vue-i18n", "vuedraggable"],

@@ -29,6 +29,7 @@
     "@commitlint/config-conventional": "^12.0.1",
     "@iconify/json": "^1.1.310",
     "@ls-lint/ls-lint": "^1.9.2",
+    "@rollup/plugin-strip": "^2.0.0",
     "@types/chai": "^4.2.11",
     "@types/jest": "^26.0.21",
     "@types/mocha": "^8.2.2",
