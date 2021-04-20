@@ -17,7 +17,7 @@ features:
   details: 再困难的需求，也能实现。
 - title: 权限管理
   details: RBAC权限管理示例。
-- title: 代码生成
-  details: 根据数据表生成前后端代码，一气呵成。 
+- title: 扩展组件懒加载
+  details: 组件体积再大，也不影响首页加载。 
 footer: MIT Licensed | Copyright © 2021 Greper
 ---
