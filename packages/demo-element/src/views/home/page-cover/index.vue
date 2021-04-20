@@ -96,7 +96,7 @@ export default defineComponent({
   .exampleBox {
     display: flex;
     align-items: center;
-    height: 480px;
+    height: 380px;
     width: 96%;
     padding: 5px;
     margin: auto;

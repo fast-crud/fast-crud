@@ -51,7 +51,7 @@ module.exports = {
             '/api/': [
                 {
                     text: 'options',
-                    link: '/api/options'
+                    link: '/api/options/index'
                 },
                 {
                     text: '组件',
