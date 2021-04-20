@@ -1,8 +1,10 @@
 import vue from "@vitejs/plugin-vue";
 import vueJsx from "@vitejs/plugin-vue-jsx";
+
 import path from "path";
 import _ from "lodash";
 import visualizer from "rollup-plugin-visualizer";
+import strip from "@rollup/plugin-strip";
 const { resolve } = path;
 
 // https://vitejs.dev/config/
@@ -59,7 +61,7 @@ export default ({ command, mode }) => {
       sourcemap: true,
       // minify: false,
       rollupOptions: {
-        plugins: [visualizer()],
+        plugins: [strip(), visualizer()],
         // make sure to externalize deps that shouldn't be bundled
         // into your library
         external: [
