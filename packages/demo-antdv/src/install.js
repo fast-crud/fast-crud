@@ -1,10 +1,11 @@
-import { FastCrud } from "@fast-crud/fast-crud";
-import "@fast-crud/fast-crud/dist/style.css";
 import { message, notification, Modal } from "ant-design-vue";
 import { request, requestForMock } from "./api/service";
 import "./mock";
+import { FastCrud } from "@fast-crud/fast-crud";
+import "@fast-crud/fast-crud/dist/style.css";
 import FsUploader from "@fast-crud/extends-uploader";
-export default function(app) {
+import "@fast-crud/extends-uploader/dist/style.css";
+export default function (app) {
   app.use(FastCrud, {
     async dictRequest({ url }) {
       return await requestForMock({ url });
@@ -52,7 +53,7 @@ export default function(app) {
         return request({
           url: "/upload/cos/getAuthorization",
           method: "get"
-        }).then(ret => {
+        }).then((ret) => {
           // 返回结构如下
           // ret.data:{
           //   TmpSecretId,
@@ -80,7 +81,7 @@ export default function(app) {
         return request({
           url: "/upload/alioss/getAuthorization",
           method: "get"
-        }).then(ret => {
+        }).then((ret) => {
           console.log("ret", ret);
           return ret;
         });
@@ -101,7 +102,7 @@ export default function(app) {
         return request({
           url: "/upload/qiniu/getToken",
           method: "get"
-        }).then(ret => {
+        }).then((ret) => {
           return ret; // {token:xxx,expires:xxx}
         });
       },
