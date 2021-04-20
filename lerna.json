@@ -3,5 +3,6 @@
     "packages/*",
     "packages/extends/*"
   ],
+  "npmClient": "yarn",
   "version": "0.5.0"
 }
