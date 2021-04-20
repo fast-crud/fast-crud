@@ -12,7 +12,7 @@ export function useUploader(vm) {
     return config?.defaultType;
   }
   function getUploaderImpl(type) {
-    return `FsUploader${_.capitalize(type)}`;
+    return `fs-uploader-${type}`;
   }
   function getConfig(type) {
     if (type == null) {

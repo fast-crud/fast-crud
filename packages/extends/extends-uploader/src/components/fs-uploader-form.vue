@@ -23,7 +23,7 @@ async function doUpload({ file, fileName, onProgress, options }) {
     onProgress,
     ...options
   };
-  logger.debug("upload ajaxOptions ", key, ajaxOptions);
+  console.info("upload ajaxOptions ", key, ajaxOptions);
   return new Promise((resolve, reject) => {
     ajax(
       ajaxOptions,

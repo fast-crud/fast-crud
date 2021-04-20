@@ -25,6 +25,21 @@ export default ({ command, mode }) => {
         }
       }
     };
+  } else if (mode === "umd") {
+    build = {
+      build: {
+        emptyOutDir: true,
+        lib: {
+          entry: resolve(__dirname, "src/index.umd.js"),
+          formats: ["umd"]
+        },
+        rollupOptions: {
+          output: {
+            manualChunks: null
+          }
+        }
+      }
+    };
   }
 
   const options = {
