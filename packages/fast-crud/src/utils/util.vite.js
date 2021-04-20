@@ -36,8 +36,14 @@ function installImportComponents(app, modules) {
 function transformFromGlob(modules, nameSuffix = ".vue", transform) {
   const components = {};
   _.forEach(modules, (item, key) => {
+    // 从路径提取组件名称
     let name = key.substring(key.lastIndexOf("/") + 1);
     name = name.replace(nameSuffix, "");
+
+    //将组件名称从 fs-uploader-form 转换为 FsUploaderForm
+    name = _.camelCase(name);
+    name = _.upperFirst(name);
+
     if (transform) {
       item = transform(item);
     }
