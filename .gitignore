@@ -108,6 +108,8 @@ packages/vben-admin-thin-next
 /packages/fast-crud-antdv/stats.html
 /packages/fast-crud-element/stats.html
 
-*.lock
-**/*.lock
-**/stats.html
+/*.lock
+/**/*.lock
+/**/stats.html
+/*-lock.json
+/**/package-lock.json
