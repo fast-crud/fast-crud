@@ -9,7 +9,7 @@ export default function({ expose }) {
     return await api.UpdateObj(form);
   };
   const delRequest = async id => {
-    return await api.DelObj(id);
+    return await api.DelObj(row.id);
   };
 
   const addRequest = async ({ form }) => {

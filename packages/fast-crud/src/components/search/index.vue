@@ -49,7 +49,7 @@
         </component>
         <component :is="$fsui.formItem.name" class="search-btns">
           <template v-for="(item, index) in computedButtons" :key="index">
-            <fs-button v-if="item.show" v-bind="item" @click="item.doClick()" />
+            <fs-button v-if="item.show" v-bind="item" @click="item.click()" />
           </template>
         </component>
         <component :is="$fsui.formItem.name">
@@ -72,53 +72,88 @@ import { uiContext } from "../../ui";
 import { useI18n } from "../../local";
 import logger from "../../utils/util.log";
 
+/**
+ * 查询框组件
+ */
 export default {
   name: "FsSearch",
   // eslint-disable-next-line vue/no-unused-components
   components: { FsComponentRender, FsSlotRender, fsButton },
   inheritAttrs: false,
   props: {
-    /* 初始查询条件，点击重置，会重置成该条件 */
+    /**
+     * 初始查询条件
+     * 点击重置，会重置成该条件
+     */
     initialForm: {
       type: Object
     },
-    // 表单options
+    /**
+     * 表单参数
+     * 支持el-form|a-form的属性
+     */
     options: {
       type: Object
     },
-    // 查询字段配置
+    /**
+     * 查询字段配置
+     */
     columns: {
       type: Object
     },
-    // 按钮配置 {search, rest}
+    /**
+     * 按钮配置
+     * {search:{...FsButton},reset:{...FsButton}}
+     */
     buttons: {
       type: Object
     },
-    // 点击重置后是否查询
+    /**
+     * 点击重置后是否立即触发查询
+     */
     searchAfterReset: {
       type: Boolean,
       default: true
     },
-    // 是否自动查询
+    /**
+     * 是否开启自动查询
+     */
     autoSearch: {
       type: Boolean,
       default: true
     },
-    // 自动查询，防抖设置
+    /**
+     * 自动查询，防抖设置
+     */
     debounce: {
       type: Object
     },
+    /**
+     * 插槽
+     */
     slots: {
       default() {
         return {};
       }
     },
+    /**
+     * 是否显示查询框
+     */
     show: {
       type: Boolean,
       default: true
     }
   },
-  emits: ["search", "reset"],
+  emits: [
+    /**
+     * 查询事件
+     **/
+    "search",
+    /**
+     * 重置事件
+     **/
+    "reset"
+  ],
   setup(props, ctx) {
     const ui = uiContext.get();
     traceUtil.trace("fs-search");
@@ -182,7 +217,7 @@ export default {
           show: true,
           type: "primary",
           disabled: false,
-          doClick: () => {
+          click: () => {
             doSearch();
           },
           order: 1,
@@ -194,7 +229,7 @@ export default {
         btns.push({
           show: true,
           disabled: false,
-          doClick: () => {
+          click: () => {
             doReset();
           },
           text: t("fs.search.reset.text"), // '重置',

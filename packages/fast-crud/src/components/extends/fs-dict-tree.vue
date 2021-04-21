@@ -5,12 +5,25 @@
 import { computed } from "vue";
 import { useDict } from "../../use/use-dict";
 import { useI18n } from "../../local";
+
+/**
+ * 字典树选择组件
+ * 支持 a-tree-select 参数
+ */
 export default {
   name: "FsDictTree",
   props: {
+    /**
+     * 数据字典
+     */
     dict: {},
-    //选项，比dict.data优先级高
+    /**
+     * 可选项，比dict.data优先级高
+     */
     options: { type: Array },
+    /**
+     * placeholder
+     */
     placeholder: { type: String }
   },
   // render () {

@@ -10,8 +10,8 @@ export default function ({ crudRef }) {
     form.id = row.id;
     return await api.UpdateObj(form);
   };
-  const delRequest = async (id) => {
-    return await api.DelObj(id);
+  const delRequest = async ({ row }) => {
+    return await api.DelObj(row.id);
   };
 
   const addRequest = async ({ form }) => {

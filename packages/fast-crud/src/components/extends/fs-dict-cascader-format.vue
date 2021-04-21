@@ -19,27 +19,38 @@
 
 <script>
 import { useDict } from "../../use/use-dict";
-// 级联数据格式化组件
+/**
+ * 级联数据格式化展示组件
+ */
 export default {
   name: "FsDictCascaderFormat",
   props: {
-    // 值<br/>
-    // 单选时 '1,2,3' 或 [1,2,3]<br/>
-    // 多选[[1,2,3],[4,5,6]]<br/>
+    /**
+     *   值<br/>
+     *   单选时 '1,2,3' 或 [1,2,3]<br/>
+     *   多选[[1,2,3],[4,5,6]]<br/>
+     */
     modelValue: {
       type: [String, Array],
+      default: undefined,
       require: true
     },
-    // value的分隔符<br/>
-    // 多选时，如果value为string，则以该分隔符分割成多个展示<br/>
-    // 传入空字符串，表示不分割<br/>
-    separator: { default: ",", require: false },
-    // 是否多选
+    /**
+     *  value的分隔符<br/>
+     *  多选时，如果value为string，则以该分隔符分割成多个展示<br/>
+     *  传入空字符串，表示不分割<br/>
+     */
+    separator: { type: String, default: ",", require: false },
+    /**
+     * 是否多选
+     */
     multiple: { type: Boolean, default: false },
-    // 数据字典<br/>
-    // 示例：{url:'xxx',data:[],value:'',label:'',children:''}
+    /**
+     * 数据字典
+     */
     dict: {
       type: Object,
+      default: undefined,
       require: false
     }
   },

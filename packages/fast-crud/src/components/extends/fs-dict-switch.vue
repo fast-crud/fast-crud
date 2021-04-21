@@ -5,6 +5,10 @@
 import { useDict } from "../../use/use-dict";
 import { uiContext } from "../../ui";
 
+/**
+ * 字典开关
+ * 支持el-switch|a-switch的属性
+ */
 export default {
   name: "FsDictSwitch",
   props: {

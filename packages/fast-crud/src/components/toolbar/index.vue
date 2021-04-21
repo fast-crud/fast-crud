@@ -21,11 +21,25 @@ import { ref, computed, getCurrentInstance } from "vue";
 import traceUtil from "../../utils/util.trace";
 import { useI18n } from "../../local";
 import FsSlotRender from "../render/fs-slot-render";
+
+/**
+ * 工具条
+ */
 export default {
   name: "FsToolbar",
   // eslint-disable-next-line vue/no-unused-components
   components: { FsTableColumnsFilter, FsButton, FsSlotRender },
   props: {
+    /**
+     * 按钮配置
+     *{
+     *   search:{}, 查询
+     *   refresh:{}, 刷新
+     *   compact:{}, 紧凑模式
+     *   export:{}, 导出
+     *   columns:{} 列设置
+     *}
+     **/
     buttons: {
       type: Object
     },
@@ -59,6 +73,9 @@ export default {
       type: [String, Boolean],
       default: true
     },
+    /**
+     * 插槽
+     */
     slots: {}
   },
   emits: ["refresh", "update:search", "update:compact", "update:columns", "export"],

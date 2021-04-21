@@ -300,6 +300,9 @@ function useTable(props, ctx) {
   };
 }
 
+/**
+ * fs-crud
+ */
 export default defineComponent({
   name: "FsCrud",
   components: {
@@ -312,21 +315,51 @@ export default defineComponent({
   },
   inheritAttrs: false,
   props: {
+    /**
+     * 表格配置，见FsTable
+     */
     table: {},
-    //原始column配置
-    columns: {},
+    /**
+     * 表格数据
+     */
     data: {
       type: Array
     },
+    /**
+     * 操作列配置，见FsRowHandle
+     */
     rowHandle: {},
+    /**
+     * 查询框配置，见FsSearch
+     */
     search: {},
+    /**
+     * 工具条配置，见FsToolbar
+     */
     toolbar: {},
+    /**
+     * 动作条配置，见FsActionbar
+     */
     actionbar: {},
+    /**
+     * 添加表单对话框配置，见FsFormWrapper
+     */
     addForm: {},
+    /**
+     * 编辑表单对话框配置，见FsFormWrapper
+     */
     editForm: {},
+    /**
+     * 查看表单对话框配置，见FsFormWrapper
+     */
     viewForm: {},
+    /**
+     * 翻页配置,支持el-pagination|a-pagination配置
+     */
     pagination: {},
-    request: {},
+    /**
+     * 容器配置，见FsContainer
+     */
     container: {}
   },
   emits: [

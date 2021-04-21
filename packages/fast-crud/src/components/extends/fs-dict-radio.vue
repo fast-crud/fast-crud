@@ -14,11 +14,21 @@
 import { useDict } from "../../use/use-dict";
 import { uiContext } from "../../ui";
 
+/**
+ * 字典单选框
+ * 支持el-radio-group|a-radio-group的参数
+ *
+ */
 export default {
   name: "FsDictRadio",
   props: {
+    /**
+     * 数据字典配置
+     */
     dict: {},
-    //选项，比dict.data优先级高
+    /**
+     * 可选项，比dict.data优先级高
+     */
     options: { type: Array }
   },
   setup(props, ctx) {

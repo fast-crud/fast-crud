@@ -6,13 +6,30 @@ import { useI18n } from "../../local";
 import "./fs-form-wrapper.less";
 import logger from "../../utils/util.log";
 import { uiContext } from "../../ui";
+
+/**
+ * 表单对话框|抽屉
+ * 暴露方法：
+ * open(options)
+ */
 export default {
   name: "FsFormWrapper",
   // eslint-disable-next-line vue/no-unused-components
   components: { FsButton },
   props: {
-    //默认打开配置，如果配置了options，则默认根据options自动打开
+    /**
+     * 表单配置
+     * {
+     *     wrapper:{ //表单包装配置
+     *         is: 'el-dialog'//el-dialog|a-modal|el-drawer|a-drawer
+     *     }
+     *     ...FsForm配置
+     * }
+     */
     options: {},
+    /**
+     * 插槽
+     */
     slots: {}
   },
   emits: ["reset", "submit", "validationError", "value-change", "open", "opened", "closed"],

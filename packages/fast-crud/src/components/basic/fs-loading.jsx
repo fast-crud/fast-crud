@@ -1,7 +1,14 @@
 import { resolveDynamicComponent, withDirectives } from "vue";
+
+/**
+ * loading包装
+ */
 export default {
   name: "FsLoading",
   props: {
+    /**
+     * 是否loading中
+     */
     loading: { require: false }
   },
   render() {

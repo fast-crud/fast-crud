@@ -32,6 +32,10 @@ import _ from "lodash-es";
 import traceUtil from "../../utils/util.trace";
 import { useI18n } from "../../local";
 import logger from "../../utils/util.log";
+
+/**
+ * 操作列配置
+ */
 export default defineComponent({
   name: "FsRowHandle",
   components: {
@@ -39,8 +43,23 @@ export default defineComponent({
     FsButton
   },
   props: {
+    /**
+     * 按钮折叠
+     */
     dropdown: {},
+    /**
+     * 按钮配置
+     * {
+     *   view:{...FsButton,click:Function,order:1},
+     *   edit:{...FsButton,click:Function,order:2},
+     *   remove:{...FsButton,click:Function,order:3},
+     *   ...自定义
+     * }
+     */
     buttons: {},
+    /**
+     * scope
+     */
     scope: {}
   },
   emits: ["handle"],

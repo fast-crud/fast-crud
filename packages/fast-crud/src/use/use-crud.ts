@@ -88,8 +88,8 @@ export default function (ctx) {
         onShowSizeChange(current, size) {
           crudBinding.value.pagination.pageSize = size;
           doRefresh();
-        },
-      },
+        }
+      }
     };
   }
 
@@ -100,15 +100,15 @@ export default function (ctx) {
           doValueResolve(context);
           await crudBinding.value.request.editRequest(context);
           doRefresh();
-        },
+        }
       },
       addForm: {
         async doSubmit(context) {
           doValueResolve(context);
           await crudBinding.value.request.addRequest(context);
           doRefresh();
-        },
-      },
+        }
+      }
     };
   }
 
@@ -122,27 +122,27 @@ export default function (ctx) {
               await ui.messageBox.confirm({
                 title: t("fs.rowHandle.remove.confirmTitle"), // '提示',
                 message: t("fs.rowHandle.remove.confirmMessage"), // '确定要删除此记录吗?',
-                type: "warn",
+                type: "warn"
               });
             } catch (e) {
               logger.info("delete canceled", e.message);
               return;
             }
             context.row = context[ui.tableColumn.row];
-            await crudBinding.value.request.delRequest(context.row.id);
+            await crudBinding.value.request.delRequest(context);
             ui.notification.success(t("fs.rowHandle.remove.success"));
             await doRefresh();
-          },
-        },
-      },
+          }
+        }
+      }
     };
   }
 
   function useSearch() {
     return {
       search: {
-        doSearch,
-      },
+        doSearch
+      }
     };
   }
 
@@ -169,7 +169,7 @@ export default function (ctx) {
       },
       onRefresh() {
         doRefresh();
-      },
+      }
     };
   }
 
@@ -193,13 +193,7 @@ export default function (ctx) {
     const viewFormColumns = {};
     const searchColumns = {};
 
-    function mergeFromForm(
-      targetColumns,
-      item,
-      key,
-      mergeSrc,
-      addLabel = false
-    ) {
+    function mergeFromForm(targetColumns, item, key, mergeSrc, addLabel = false) {
       const formColumn = cloneDeep(item[mergeSrc]) || {};
       if (addLabel) {
         if (formColumn.title == null) {
@@ -209,10 +203,7 @@ export default function (ctx) {
       formColumn.key = key;
       targetColumns[key] = formColumn;
     }
-    function eachColumns(
-      columns,
-      tableParentColumns: Array<any> = tableColumns
-    ) {
+    function eachColumns(columns, tableParentColumns: Array<any> = tableColumns) {
       _.forEach(columns, (item, key) => {
         item.key = key;
         //执行mergePlugin，复制type，复制dict
@@ -243,28 +234,12 @@ export default function (ctx) {
 
     // 分置合并
     userOptions.form = merge(cloneDeep(userOptions.form), {
-      columns: formColumns,
+      columns: formColumns
     });
-    userOptions.editForm = merge(
-      cloneDeep(userOptions.form),
-      { columns: editFormColumns },
-      userOptions.editForm
-    );
-    userOptions.addForm = merge(
-      cloneDeep(userOptions.form),
-      { columns: addFormColumns },
-      userOptions.addForm
-    );
-    userOptions.viewForm = merge(
-      cloneDeep(userOptions.form),
-      { columns: viewFormColumns },
-      userOptions.viewForm
-    );
-    userOptions.search = merge(
-      { columns: userOptions.form.columns },
-      { columns: searchColumns },
-      userOptions.search
-    );
+    userOptions.editForm = merge(cloneDeep(userOptions.form), { columns: editFormColumns }, userOptions.editForm);
+    userOptions.addForm = merge(cloneDeep(userOptions.form), { columns: addFormColumns }, userOptions.addForm);
+    userOptions.viewForm = merge(cloneDeep(userOptions.form), { columns: viewFormColumns }, userOptions.viewForm);
+    userOptions.search = merge({ columns: userOptions.form.columns }, { columns: searchColumns }, userOptions.search);
     userOptions.table.columns = tableColumns;
     const tableColumnsMap = {};
     _.forEach(tableColumns, (item) => {
@@ -286,6 +261,6 @@ export default function (ctx) {
   resetCrudOptions(options);
 
   return {
-    resetCrudOptions,
+    resetCrudOptions
   };
 }

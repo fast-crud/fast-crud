@@ -3,11 +3,21 @@
 </template>
 <script>
 import { useDict } from "../../use/use-dict";
+
+/**
+ * 字典级联组件
+ * 支持el-cascader|a-cascader组件的参数
+ */
 export default {
   name: "FsDictCascader",
   props: {
+    /**
+     * 字典配置
+     */
     dict: {},
-    //选项，比dict.data优先级高
+    /**
+     * 选项，比dict.data优先级高
+     */
     options: { type: Array }
   },
   setup(props, ctx) {

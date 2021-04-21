@@ -1,8 +1,18 @@
 import { useCompute } from "../../use/use-compute";
+
+/**
+ * 单元格显示组件
+ */
 export default {
   name: "FsCell",
   props: {
+    /**
+     * 组件配置
+     */
     component: {},
+    /**
+     * 获取scope参数方法
+     */
     getScope: {
       type: Function
     }

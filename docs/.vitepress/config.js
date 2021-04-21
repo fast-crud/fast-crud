@@ -50,8 +50,17 @@ module.exports = {
             ],
             '/api/': [
                 {
-                    text: 'options',
-                    link: '/api/options/index'
+                    text: "options",
+                    children: [
+                        {
+                            text: 'useOptions',
+                            link: '/api/use-options'
+                        },
+                        {
+                            text: 'crudOptions',
+                            link: '/api/crud-options'
+                        },
+                    ]
                 },
                 {
                     text: '组件',
@@ -63,9 +72,25 @@ module.exports = {
                                 {text: 'fs-actionbar', link: "/api/components/crud/actionbar/index"},
                                 {text: 'fs-search', link: "/api/components/crud/search/index"},
                                 {text: 'fs-toolbar', link: "/api/components/crud/toolbar/index"},
+                                {text: 'fs-form', link: "/api/components/crud/crud/fs-form"},
+                                {text: 'fs-form-item', link: "/api/components/crud/crud/fs-form-item"},
+                                {text: 'fs-row-handle', link: "/api/components/crud/crud/fs-row-handle"},
+                                {text: 'fs-container', link: "/api/components/crud/container/fs-container"},
                             ]
                         },
-                        {text: '基础组件', link: '/api/components/basic'},
+                        {
+                            text: '基础组件', children: [
+                                {text: 'fs-date-format', link: "/api/components/crud/extends/fs-date-format"},
+                                {text: 'fs-dict-cascader', link: "/api/components/crud/extends/fs-dict-cascader"},
+                                {text: 'fs-dict-cascader-format', link: "/api/components/crud/extends/fs-dict-cascader-format"},
+                                {text: 'fs-dict-checkbox', link: "/api/components/crud/extends/fs-dict-checkbox"},
+                                {text: 'fs-dict-radio', link: "/api/components/crud/extends/fs-dict-radio"},
+                                {text: 'fs-dict-select', link: "/api/components/crud/extends/fs-dict-select"},
+                                {text: 'fs-dict-switch', link: "/api/components/crud/extends/fs-dict-switch"},
+                                {text: 'fs-dict-tree', link: "/api/components/crud/extends/fs-dict-tree"},
+                                {text: 'fs-values-format', link: "/api/components/crud/extends/fs-values-format"},
+                            ]
+                        },
                         {text: '扩展组件', link: '/api/components/extends'},
                     ],
                 }

@@ -1,14 +1,27 @@
 import { resolveDynamicComponent, h } from "vue";
 import "./style.less";
+
+/**
+ * 按钮，支持el-button/a-button的配置
+ */
 export default {
   name: "FsButton",
   props: {
+    /**
+     * 文字
+     */
     text: {
       type: String,
       default: "",
       required: false
     },
+    /**
+     * 图标
+     */
     icon: {},
+    /**
+     * 是否圆形按钮，text需配置为null
+     */
     circle: {}
   },
   render() {

@@ -59,41 +59,66 @@ function buildArrayValue(props) {
   return valueArr;
 }
 
-// value格式化展示组件
+/**
+ * value格式化展示组件
+ */
 export default {
   name: "FsValuesFormat",
   props: {
-    // 值
+    /**
+     * 值
+     */
     modelValue: {
       require: false
     },
+    /**
+     * 字典配置
+     */
     dict: {},
-    // 是否多选
+    /**
+     * 是否多选
+     */
     multiple: { default: true, require: false },
-    // value的分隔符<br/>
-    // 多选时，如果value为string，则以该分隔符分割成多个展示<br/>
-    // 传入空字符串，表示不分割<br/>
+    /**
+     * 分隔符<br/>
+     * 多选时，如果value为string，则以该分隔符分割成多个展示<br/>
+     * 传入空字符串，表示不分割<br/>
+     */
     separator: { default: ",", require: false },
-    // 颜色，【auto, primary, success, warning, danger ,info】
-    // 配置auto，则自动根据value值hashcode分配颜色值
+
+    /**
+     * 颜色
+     * element=【auto, primary, success, warning, danger ,info】
+     * antdv=【auto, primary, success, blue,red,...】
+     * 配置auto，则自动根据value值hashcode分配颜色值
+     */
     color: {
       require: false
     },
+    /**
+     * 效果（仅element）
+     **/
     effect: {
       require: false
     },
-
-    // 自动颜色列表，【 primary, success, warning, danger 】
+    /**
+     * 自动染色颜色值列表
+     */
     autoColors: {
       type: Array
     },
-    // 自动主题列表，【 light, plain 】
+    /**
+     * 自动主题列表（仅element）
+     * 【 light, plain 】
+     */
     autoEffects: {
       type: Array
     },
-    // 展示类型【text, tag】
+    /**
+     * 显示类型：【text, tag】
+     */
     type: {
-      default: "tag" // 可选【text,tag】
+      default: "tag"
     }
   },
   emits: ["click"],

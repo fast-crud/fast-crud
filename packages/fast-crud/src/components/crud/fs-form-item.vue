@@ -32,14 +32,39 @@
 import traceUtil from "../../utils/util.trace";
 import FsRender from "../render/fs-render";
 import { ref } from "vue";
+
+/**
+ * form-item组件封装
+ */
 export default {
   name: "FsFormItem",
   components: { FsRender },
   props: {
+    /**
+     * 表单字段值(v-model)
+     */
     modelValue: {},
-    item: {},
-    slots: {},
-    getContextFn: {}
+    /**
+     * 字段配置
+     */
+    item: {
+      type: Object,
+      default: undefined
+    },
+    /**
+     * 插槽
+     */
+    slots: {
+      type: Object,
+      default: undefined
+    },
+    /**
+     * 获取上下文方法
+     */
+    getContextFn: {
+      type: Function,
+      default: undefined
+    }
   },
   emits: ["update:modelValue"],
   setup(props, ctx) {

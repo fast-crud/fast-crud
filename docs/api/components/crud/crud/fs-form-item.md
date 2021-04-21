@@ -1,13 +1,15 @@
 # FsFormItem
 
+> form-item 组件封装
+
 ## Props
 
-| Prop name    | Description | Type | Values | Default |
-| ------------ | ----------- | ---- | ------ | ------- |
-| modelValue   |             |      | -      |         |
-| item         |             |      | -      |         |
-| slots        |             |      | -      |         |
-| getContextFn |             |      | -      |         |
+| Prop name    | Description         | Type   | Values | Default   |
+| ------------ | ------------------- | ------ | ------ | --------- |
+| modelValue   | 表单字段值(v-model) |        | -      |           |
+| item         | 字段配置            | object | -      | undefined |
+| slots        | 插槽                | object | -      | undefined |
+| getContextFn | 获取上下文方法      | func   | -      | undefined |
 
 ## Events
 

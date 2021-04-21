@@ -13,6 +13,9 @@ export default defineComponent({
   name: "FsActionbar",
   components: { FsButton },
   props: {
+    /**
+     * 按钮配置，示例{add:{FsButton配置},custom:{...}}
+     */
     buttons: {}
   },
   emits: ["action"],

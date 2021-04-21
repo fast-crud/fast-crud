@@ -93,44 +93,104 @@ import logger from "../../utils/util.log";
 import { uiContext } from "../../ui";
 import { useMerge } from "../../use/use-merge";
 import FsFormItem from "./fs-form-item.vue";
+
+/**
+ * 配置化的表单组件
+ * 暴露的方法：
+ * ref.submit() = 提交表单
+ * ref.reset() = 重置表单
+ */
 export default {
   name: "FsForm",
   components: { FsFormItem, FsRender },
   props: {
-    // 初始表单数据
+    /**
+     * 初始表单数据
+     **/
     initialForm: {
+      type: Object,
       default() {
         return {};
       }
     },
-    // 字段模版
-    columns: {},
-    // 字段分组
+    /**
+     * 字段模版
+     * {
+     *   key:{
+     *     title: "字段名称",
+     *     component:{
+     *       name:"组件名称"
+     *       ...组件参数
+     *     }
+     *   }
+     * }
+     * */
+    columns: {
+      type: Object,
+      default: undefined
+    },
     /**
      * 字段分组
      * {
-     *   type:'xxx',
-     *   groups:{
-     *     groupKey:{ title:'xxx',columns:[]}
+     *   type:'xxx', //分组展示类型
+     *   groups:{ //分组数据
+     *     groupKey:{ title:'xxx',columns:['fieldKey','fieldKey']}
      *   }
      * }
      */
-    group: {},
+    group: {
+      type: Object,
+      default: undefined
+    },
+    /**
+     * 点击保存按钮时执行方法
+     */
     doSubmit: {
-      type: Function
+      type: Function,
+      default: undefined
     },
+    /**
+     * 插槽内容
+     */
     slots: {
-      default: {}
+      type: Object,
+      default: undefined
     },
+    /**
+     * 布局方式【flex|grid】
+     */
     display: {
       type: String,
-      default: "grid" // flex
+      default: "flex" // flex
     },
-    index: {},
-    // mode: add,edit,view,自定义
-    mode: {},
-    row: {},
-    col: {}
+    /**
+     * 序号，编辑时会传入
+     */
+    index: {
+      type: Number,
+      default: undefined
+    },
+    /**
+     * 模式 [add,edit,view,自定义]
+     */
+    mode: {
+      type: String,
+      default: undefined
+    },
+    /**
+     * 原始行数据
+     */
+    row: {
+      type: Object,
+      default: undefined
+    },
+    /**
+     * el-col|a-col配置，可配置跨列
+     */
+    col: {
+      type: Object,
+      default: undefined
+    }
   },
   emits: ["reset", "submit", "validationError", "value-change"],
   setup(props, ctx) {

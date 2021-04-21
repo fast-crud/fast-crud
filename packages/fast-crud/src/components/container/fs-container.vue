@@ -3,12 +3,15 @@
     <div class="box">
       <div class="inner">
         <div class="header">
+          <!-- header -->
           <slot name="header"></slot>
         </div>
         <div class="body">
+          <!-- body, 高度自适应 -->
           <slot></slot>
         </div>
         <div class="footer">
+          <!-- footer -->
           <slot name="footer"></slot>
         </div>
       </div>
@@ -19,6 +22,10 @@
 <script>
 import traceUtil from "../../utils/util.trace";
 import { defineComponent } from "vue";
+
+/**
+ * crud的容器，根据外部高度自适应
+ */
 export default defineComponent({
   name: "FsContainer",
   setup() {

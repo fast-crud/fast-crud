@@ -11,12 +11,25 @@
 import { computed } from "vue";
 import { useDict } from "../../use/use-dict";
 import { useI18n } from "../../local";
+
+/**
+ * 字典选择框
+ * 支持el-select|a-select的属性配置
+ */
 export default {
   name: "FsDictSelect",
   props: {
+    /**
+     * 字典
+     */
     dict: {},
-    //选项，比dict.data优先级高
+    /**
+     * 可选项，比dict.data优先级高
+     */
     options: { type: Array },
+    /**
+     * placeholder
+     */
     placeholder: { type: String }
   },
   // render () {

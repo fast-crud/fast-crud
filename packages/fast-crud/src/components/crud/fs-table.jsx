@@ -5,14 +5,33 @@ import FsComponentRender from "../render/fs-component-render";
 import "./fs-table.less";
 import { uiContext } from "../../ui";
 
+/**
+ * table封装
+ * 支持el-table/a-table的参数
+ */
 export default {
   name: "FsTable",
   components: { FsComponentRender, FsRowHandle },
   props: {
+    /**
+     * 插槽
+     */
     slots: {},
+    /**
+     * 列配置，支持el-table-column|a-table-column配置
+     */
     columns: {},
+    /**
+     * 操作列
+     */
     rowHandle: {},
+    /**
+     * 是否显示表格
+     */
     show: {},
+    /**
+     * 表格数据
+     */
     data: {}
   },
   emits: ["row-handle", "value-change"],

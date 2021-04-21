@@ -1,6 +1,4 @@
 import * as api from "./api";
-import { requestForMock } from "/src/api/service";
-import { dict } from "/src/fs";
 export default function ({ expose }) {
   const pageRequest = async (query) => {
     return await api.GetList(query);
@@ -9,8 +7,8 @@ export default function ({ expose }) {
     form.id = row.id;
     return await api.UpdateObj(form);
   };
-  const delRequest = async (id) => {
-    return await api.DelObj(id);
+  const delRequest = async ({ row }) => {
+    return await api.DelObj(row.id);
   };
 
   const addRequest = async ({ form }) => {
