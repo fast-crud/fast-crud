@@ -20,7 +20,10 @@ export default {
     /**
      * 列配置，支持el-table-column|a-table-column配置
      */
-    columns: {},
+    columns: {
+      type: Array,
+      default: undefined
+    },
     /**
      * 操作列
      */

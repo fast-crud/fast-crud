@@ -128,3 +128,156 @@ const crudOptions ={
 * 说明：显示或隐藏查询框
 * 类型：Boolean
 * 默认：`true`
+
+### buttons
+* 说明：按钮配置
+* 类型：Object
+* 默认： {search:{},reset:{}}
+* 示例：
+```
+{
+    search:{
+        ...FsButton, //fs-button组件的参数
+        order:1, //排序，越小越靠前
+        show:true,//是否显示此按钮
+        click(){} //点击事件，默认触发查询
+    },
+    reset:{...同上},// 重置按钮
+    custom:{...同上}//可以自定义
+}
+```
+
+## actionbar 【动作条】
+
+更多参数见：[FsActionbar](./components/crud/actionbar/index.md)
+
+### show
+* 说明：显示或隐藏查询框
+* 类型：Boolean
+* 默认：`true`
+
+### buttons
+
+* 说明：按钮配置
+* 类型：Object
+* 默认： {add:{...FsButton}}
+* 示例：
+```
+{
+    add:{
+        ...FsButton, //fs-button组件的参数
+        show:true,//是否显示此按钮
+        click(){} //点击事件，默认打开添加对话框
+    },
+}
+```
+
+## toolbar 工具条
+
+更多参数见：[FsToolbar](./components/crud/actionbar/index.md)
+
+### show
+* 说明：显示或隐藏查询框
+* 类型：Boolean
+* 默认：`true`
+
+### buttons
+
+* 说明：按钮配置
+* 类型：Object
+* 默认：[buttons](#buttons)
+```
+{
+    search:{
+        ...FsButton,
+        order:1,
+        show:true,
+        click:()=>{} //点击事件，默认开启隐藏查询框
+    },
+    refresh:{},
+    compact:{},
+    export:{},
+    columns:{}
+}
+```
+
+
+## table【表格配置】
+
+更多参数见：[FsTable](./components/crud/actionbar/index.md)
+支持 el-table | a-table的配置
+
+### show
+* 说明：显示或隐藏table
+* 类型：Boolean
+* 默认：`true`
+
+### columns
+* 说明：列配置
+* 类型：Array
+* 示例：
+```
+[
+    {
+        title:"列名",
+        key:"列key",
+        component:{}
+    }
+]
+```
+
+
+
+## component【组件配置】
+
+
+### component.name
+* 说明：组件名
+* 类型：String | 组件
+* 示例：`a-select`
+
+### component.[xxx]
+* 说明：组件的属性
+* 示例：`options:[]`
+
+### component.onXxx
+* 说明：组件的事件监听（没有context）
+* 类型：Function(event)
+* 示例：
+```js
+component:{
+    onClick:(event)=>{
+        console.log('点击事件',event)
+    }
+}
+```
+
+### component.on
+* 说明：组件的事件监听（参数为context,可以获取表单或行数据）
+* 类型：Function(context)
+* 示例：
+```js
+component:{
+    on:{
+        onClick({value,key,row,form}){
+            console.log('点击事件',key,value,row,form)
+        }
+    }
+}
+```
+
+
+## buttons【按钮组配置】
+* 说明：按钮配置
+* 类型：Object
+* 示例：
+```
+{
+    buttonKey:{
+        ...FsButton, //fs-button组件的参数
+        show:true,//是否显示此按钮
+        click:()=>{}//点击事件
+        order:1 //排序，越小越靠前
+    },
+}
+```

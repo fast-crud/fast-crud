@@ -14,7 +14,14 @@ export default defineComponent({
   components: { FsButton },
   props: {
     /**
-     * 按钮配置，示例{add:{FsButton配置},custom:{...}}
+     * 按钮配置
+     * {
+     *  add:{
+     *    ...FsButton,
+     *    show:true
+     *  },
+     *  custom:{...}
+     * }
      */
     buttons: {}
   },
