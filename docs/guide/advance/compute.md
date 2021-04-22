@@ -1,14 +1,17 @@
 # 动态计算
  
 这里的动态计算是基于`vue`的`computed`的，但又有所不同。      
-主要用于解决某些配置项需要根据当前上下文数据动态变化的问题。
+主要用于解决某些配置项需要根据当前上下文数据动态变化的问题。    
 
+动态计算demo：
+[antdv版](http://fast-crud.docmirror.cn/antdv/#/basis/compute)  | 
+[element版](http://fast-crud.docmirror.cn/antdv/#/basis/compute)
 
 ## compute 【同步计算】
-> 注意后面没有`d`，跟`vue`的`computed`不一样
+> 注意后面没有`d`，基于`vue`的`computed`，与之用法类似，但不是同一个东西
 
-* 方法：compute(context)
-* context： `上下文`，
+* 方法：compute(Function(context))
+* context： [上下文](#context【上下文】)，一般包含`row`/`form`/`index`/`getComponentRef`
 * return: 返回计算后的配置值
 
 示例：
@@ -73,9 +76,9 @@ const crudOptions = {
 ## asyncCompute 【异步计算】
 当我们要计算的值需要从网络请求或者从其他地方异步获取时可以使用此方法配置
 
-* 方法参数：asyncCompute({watch?:Function(context),asyncFn:Function(watchValue,context)})
-* 参数1： watch，可为空，监听一个值，当这个返回值有变化时，触发asyncFn。不传则asyncFn只会触发一次
-* 参数2： asyncFn，异步获取值
+* 方法：asyncCompute({watch?,asyncFn})
+* 参数`watch`：Function(context) ,可为空，监听一个值，当这个返回值有变化时，触发asyncFn。不传则asyncFn只会触发一次
+* 参数`asyncFn`：asyncFn:Function(watchValue`watch的返回值`,context) ,异步获取值
 
 例如：年级班级选择联动
 ```js
@@ -107,11 +110,11 @@ const crudOptions = {
                     name:'a-select',
                     //配置异步获取选择框的options
                     options: asyncCompute({
-                        //先监听form.grade的值
+                        //监听form.grade的值
                         watch((context)=>{
                             return context.form.grade
                         }),
-                        //触发watch的值有变化时，触发asyncFn,获取班级列表
+                        //当watch的值有变化时，触发asyncFn,获取班级列表
                         asyncFn: async (watchValue,context)=>{
                             return request({"/getClassList?grade=" + watchValue})
                         }
@@ -125,18 +128,18 @@ const crudOptions = {
 ```
 
 ## context【上下文】
-上下文会出现在几个不同的地方(对应columns下的几个配置)
+在如下三个位置会具有上下文。(对应字段下的几个配置)
 * `表格的每一行所有列`是一个上下文范围
-* `表单里的所有字段`是一个上下文范围
+* `表单里的所有字段`是一个上下文范围（表单里又分为addForm、editForm、viewForm）
 * `搜索框的所有字段`是一个上下文范围
 
-包含的内容，里面的内容根据所处的位置不同，包含的内容不同,比如在表格行的上下文里面就没有form
+`context`里面的内容根据所处的位置不同，包含的内容不同,比如在表格行的上下文里面就没有form
 ```js
 context = {
     row:Object, 
     form:Object, //表格行的context里没有
-    index:number, //添加表格的context里没有
-    getComponentRef:Function
+    index:number, //addForm和search的context里没有
+    getComponentRef:Function(columnKey) //获取上下文范围内的组件ref实例
 }
 ```
 
