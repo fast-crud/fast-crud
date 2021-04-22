@@ -1,14 +1,15 @@
 # 启动DEMO
-在开始集成fast-crud到你的项目之前，强烈建议先从运行demo开始，在demo里面先写一个crud来感受一下
+在开始集成fast-crud到你的项目之前，强烈建议先从运行demo体验一下。
 
 ## 目录结构
 ```
 src
   |--packages    
     |-- fast-crud                  //核心工程
-    |-- fast-crud-extends          //扩展组件
-    |-- fast-crud-antdv            //Antdv版示例工程
-    |-- fast-crud-element          //Element版示例工程
+    |-- extends                    //扩展组件
+        |-- extends-uploader       //上传组件扩展
+    |-- demo-antdv                 //Antdv版示例工程
+    |-- demo-element               //Element版示例工程
 
 ```
 
@@ -19,9 +20,9 @@ src
 ```shell script
 git clone https://gitee.com/fast-crud/fast-crud.git
 # 运行 antdv版示例
-cd fast-crud/packages/fast-crud-antdv  
+cd fast-crud/packages/demo-antdv  
 # 运行 element版示例
-cd fast-crud/packages/fast-crud-element  
+cd fast-crud/packages/demo-element  
 
 npm install  #或者yarn install
 
@@ -39,28 +40,18 @@ npm run dev:pm
 
 
 ### 调试运行
-如果想要修改`fast-crud`或者`fast-crud-extends`代码后在示例中热加载  
+如果想要修改`fast-crud`或者`extends-uploader`代码后在示例中热加载  
 需要安装`lerna`，执行如下命令
 ```shell script
 git clone https://gitee.com/fast-crud/fast-crud.git
 cd fast-crud
 npm install lerna -g
-lerna bootstrap #link
+lerna bootstrap 
 
 # 运行 antdv版示例
-cd fast-crud/packages/fast-crud-antdv  
+cd fast-crud/packages/demo-antdv  
 # 运行 element版示例
-cd fast-crud/packages/fast-crud-element  
+cd fast-crud/packages/demo-element  
 npm install  #或者yarn install
 npm run dev
 ```
-
-::: tip
-可以脱离d2-admin使用在其他项目中
-运行以下命令可以启动一个无其他依赖示例
-```
-cd /src/packages/d2-crud-plus
-npm install
-npm run dev
-```
-:::

@@ -8,7 +8,7 @@ actionText: Get Started
 actionLink: /guide/
 features:
 - title: 快
-  details: 开发crud，快的不可思议！！！
+  details: 开发crud，快如闪电！！！
 - title: 字段类型
   details: 丰富的字段类型，大幅减少代码量。
 - title: 多UI支持

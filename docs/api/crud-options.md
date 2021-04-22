@@ -4,6 +4,7 @@ crud配置
 ```js
 const crudOptions ={
     request:{},     //http请求
+    columns:{},     //列配置
     search:{},      //查询框配置
     actionbar:{},   //动作条(添加按钮)
     toolbar:{},     //工具条
@@ -13,13 +14,14 @@ const crudOptions ={
     viewForm:{},    //查看表单的独立配置
     editForm:{},    //编辑表单的独立配置
     addForm:{},     //添加表单的独立配置
-    columns:{},     //列配置
     pagination:{},  //分页配置
     container:{},   //容器配置
     data:[]         //列表数据
 }
 
 ```
+
+
 ## request 【请求】
 请求相关配置
 
@@ -119,6 +121,56 @@ const crudOptions ={
 }
 ```
 
+## columns【字段配置】
+
+* 说明：字段配置
+* 类型：[key]:Object
+* 示例：
+```js
+const crudOptions = {
+    columns:{
+        key:{ //字段key名称
+            title: '字段名',
+            type: 'text'
+        }
+    }
+}
+```
+### [key].title
+
+* 说明：字段名称
+* 类型：String
+
+可以通过如下配置在不同的位置覆盖这里配置的字段名称
+```js
+const crudOptions = {
+    columns:{
+        testKey:{
+            title: "字段名",
+            form:{ //会覆盖 testKey.title
+                title:"显示在表单上的字段名"
+            },
+            addForm:{ //会覆盖form.title
+                title:"显示在添加表单上的字段名"
+            },
+            viewForm:{//会覆盖form.title
+                title:"显示在查看表单上的字段名"
+            },
+            editForm:{//会覆盖form.title
+                title:"显示在编辑表单上的字段名"
+            },
+            search:{//会覆盖form.title
+                title:"显示在查询框上的字段名"
+            },
+            column:{//会覆盖testKey.title
+                title:"显示在列上的字段名"
+            }
+        }
+    }
+}
+```
+
+
 
 ## search【查询框】
 
@@ -174,7 +226,7 @@ const crudOptions ={
 
 ## toolbar 工具条
 
-更多参数见：[FsToolbar](./components/crud/actionbar/index.md)
+更多参数见：[FsToolbar](./components/crud/toolbar/index.md)
 
 ### show
 * 说明：显示或隐藏查询框
@@ -204,7 +256,7 @@ const crudOptions ={
 
 ## table【表格配置】
 
-更多参数见：[FsTable](./components/crud/actionbar/index.md)
+更多参数见：[FsTable](./components/crud/crud/fs-table.md)
 支持 el-table | a-table的配置
 
 ### show
@@ -212,21 +264,16 @@ const crudOptions ={
 * 类型：Boolean
 * 默认：`true`
 
-### columns
-* 说明：列配置
-* 类型：Array
-* 示例：
-```
-[
-    {
-        title:"列名",
-        key:"列key",
-        component:{}
-    }
-]
-```
 
+##  rowHandle【操作列配置】
 
+## form:{},        //表单的公共配置
+## viewForm:{},    //查看表单的独立配置
+## editForm:{},    //编辑表单的独立配置
+## addForm:{},     //添加表单的独立配置
+## pagination:{},  //分页配置
+## container:{},   //容器配置
+## data:[]         //列表数据
 
 ## component【组件配置】
 

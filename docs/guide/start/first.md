@@ -1,6 +1,6 @@
 # 第一个CRUD
 接下来介绍如何开发你的第一个CRUD     
-强烈建议先从运行demo开始，在demo里面写一个crud来感受一下
+强烈建议您先从运行demo开始，然后在demo里面写一个crud来感受一下
 ## 在demo里面开发一个crud
 
 
