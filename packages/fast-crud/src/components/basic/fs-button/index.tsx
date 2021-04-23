@@ -1,10 +1,11 @@
-import { resolveDynamicComponent, h } from "vue";
+import { resolveDynamicComponent, defineComponent, h } from "vue";
 import "./style.less";
+import { useUi } from "../../../use";
 
 /**
  * 按钮，支持el-button/a-button的配置
  */
-export default {
+export default defineComponent({
   name: "FsButton",
   props: {
     /**
@@ -18,23 +19,24 @@ export default {
     /**
      * 图标
      */
-    icon: {},
+    icon: { type: String, default: "", required: false },
     /**
      * 是否圆形按钮，text需配置为null
      */
-    circle: {}
+    circle: { type: Boolean, default: false, required: false }
   },
   render() {
-    let icon = this.icon;
-    let IconComp = null;
-    if (icon && this.$fsui.icon.isComponent) {
+    const { ui } = useUi();
+    let icon: string | null | undefined = this.icon;
+    let IconComp: any = null;
+    if (icon && ui.icon.isComponent) {
       IconComp = resolveDynamicComponent(icon);
       icon = null;
     }
     const slots = {
       ...this.$slots,
       default: () => {
-        const children = [];
+        const children: any = [];
         if (IconComp) {
           children.push(h(IconComp));
         }
@@ -48,9 +50,9 @@ export default {
       }
     };
 
-    const isCircle = this.circle ? this.$fsui.icon.circle : {};
+    const isCircle = this.circle ? ui.icon.circle : {};
 
-    const buttonComp = resolveDynamicComponent(this.$fsui.button.name);
+    const buttonComp: any = resolveDynamicComponent(ui.button.name);
 
     return h(
       buttonComp,
@@ -66,4 +68,4 @@ export default {
       slots
     );
   }
-};
+});

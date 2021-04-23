@@ -4,7 +4,7 @@ import logger from "../utils/util.log";
 import { useMerge } from "../use/use-merge";
 const { merge } = useMerge();
 
-export default function ({ crudRef, crudBinding }) {
+export function useExpose({ crudRef, crudBinding }) {
   const expose = {
     crudRef,
     crudBinding,
@@ -39,7 +39,7 @@ export default function ({ crudRef, crudBinding }) {
             row,
             index,
             key: builder.key,
-            column: builder.column,
+            column: builder.column
           });
         });
       });
@@ -54,7 +54,7 @@ export default function ({ crudRef, crudBinding }) {
             row: form,
             form,
             key,
-            column,
+            column
           });
         }
       });
@@ -65,7 +65,7 @@ export default function ({ crudRef, crudBinding }) {
       if (crudBinding.value.pagination) {
         page = {
           currentPage: crudBinding.value.pagination.currentPage,
-          pageSize: crudBinding.value.pagination.pageSize,
+          pageSize: crudBinding.value.pagination.pageSize
         };
       }
       let searchFormData = {};
@@ -92,14 +92,10 @@ export default function ({ crudRef, crudBinding }) {
       if (crudBinding.value.request.transformRes) {
         pageRes = crudBinding.value.request.transformRes({
           res: pageRes,
-          query,
+          query
         });
       }
-      const {
-        currentPage = page.currentPage,
-        pageSize = page.pageSize,
-        total,
-      } = pageRes;
+      const { currentPage = page.currentPage, pageSize = page.pageSize, total } = pageRes;
       const { records } = pageRes;
       if (records == null) {
         logger.warn(
@@ -141,7 +137,7 @@ export default function ({ crudRef, crudBinding }) {
       }
 
       await expose.doRefresh();
-    },
+    }
   };
 
   return expose;

@@ -57,7 +57,7 @@ registerMergeColumnPlugin(mergeColumnType);
 registerMergeColumnPlugin(mergeColumnDict);
 
 // 导出useCrud
-export default function (ctx) {
+export function useCrud(ctx) {
   const ui = uiContext.get();
   const { t, tc } = useI18n(); // call `useI18n`, and spread `t` from  `useI18n` returning
 

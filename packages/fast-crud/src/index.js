@@ -1,33 +1,14 @@
-import useCrud from "./use/use-crud.ts";
 import defaultCrudOptions from "./use/default-crud-options.js";
 import utils from "./utils/index.js";
-import { useCompute } from "./use/use-compute.js";
-import { useDict } from "./use/use-dict.ts";
-import { useDictDefine } from "./use/use-dict-define.ts";
-import { uiContext } from "./ui/index.ts";
-import { useTypes } from "./use/use-types.ts";
+export * from "./use";
 import types from "./types/index.ts";
 import * as components from "./components/index.js";
 import { i18n, useI18n } from "./local/index.ts";
-import useExpose from "./use/use-expose.ts";
-
+import { uiContext } from "./ui/index.ts";
+import { useDictDefine, useCompute } from "./use";
 const { dict, setDictRequest } = useDictDefine();
 const { ComputeValue, compute } = useCompute();
-export {
-  useCompute,
-  ComputeValue,
-  compute,
-  dict,
-  useDict,
-  useCrud,
-  utils,
-  useI18n,
-  uiContext,
-  useExpose,
-  useTypes,
-  useDictDefine
-};
-// export * from './components'
+export { ComputeValue, compute, dict, utils, useI18n, uiContext };
 export const FastCrud = {
   install(app, options) {
     if (options?.ui) {

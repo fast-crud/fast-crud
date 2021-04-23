@@ -4,7 +4,7 @@
       <el-aside width="200px">fast-crud</el-aside>
       其他菜单
     </el-header>
-    <el-container>
+    <el-container class="layout-body">
       <el-aside width="200px" style="border-right: 1px solid #eee">
         <aside-menu />
       </el-aside>
@@ -26,12 +26,16 @@ export default {
 </script>
 <style lang="less">
 .layout {
+  height: 100%;
   .layout-header {
     height: 64px;
     padding: 0 50px;
     line-height: 64px;
     background: #001529;
     color: #fff;
+  }
+  .layout-body {
+    overflow: hidden;
   }
   .layout-footer {
     padding: 24px 50px;
@@ -42,6 +46,8 @@ export default {
 
   .el-aside {
     // border-right: 1px solid #eee;
+    overflow: hidden;
+    overflow-y: scroll;
     .el-menu {
       border-right: 0;
       height: 100%;
