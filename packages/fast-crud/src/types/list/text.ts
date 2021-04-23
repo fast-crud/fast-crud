@@ -5,6 +5,7 @@ export default function () {
     text: {
       form: {
         component: {
+          // el-input, a-input
           name: ui.input.name,
           vModel: ui.textArea.modelValue,
           [ui.input.clearable]: true
@@ -14,6 +15,7 @@ export default function () {
     password: {
       form: {
         component: {
+          // el-input / a-input-password
           name: ui.inputPassword.name,
           vModel: ui.textArea.modelValue,
           [ui.input.clearable]: true,
@@ -24,6 +26,7 @@ export default function () {
     textarea: {
       search: {
         component: {
+          // el-input / a-input
           name: ui.input.name,
           type: "text",
           [ui.input.clearable]: true
@@ -31,6 +34,7 @@ export default function () {
       },
       form: {
         component: {
+          // el-input / a-textarea
           name: ui.textArea.name,
           type: ui.textArea.type,
           vModel: ui.textArea.modelValue,

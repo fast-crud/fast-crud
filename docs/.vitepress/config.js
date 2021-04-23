@@ -33,7 +33,8 @@ module.exports = {
                         {text: '组件配置', link: '/guide/advance/component'},
                         {text: '数据字典', link: '/guide/advance/dict'},
                         {text: '动态计算', link: '/guide/advance/compute'},
-                        {text: '字段类型', link: '/guide/advance/types'},
+                        {text: '字段类型', link: '/guide/advance/column-type'},
+                        {text: '字段类型列表', link: '/guide/advance/types'},
                         {text: '插槽', link: '/guide/advance/slots'},
                         {text: '多级数据', link: '/guide/advance/nest-data'},
                     ],
@@ -53,12 +54,16 @@ module.exports = {
                     text: "options",
                     children: [
                         {
-                            text: 'useOptions',
+                            text: 'InstallOptions',
                             link: '/api/use-options'
                         },
                         {
-                            text: 'crudOptions',
+                            text: 'CrudOptions',
                             link: '/api/crud-options'
+                        },
+                        {
+                            text: 'Dict数据字典',
+                            link: '/api/dict'
                         },
                     ]
                 },

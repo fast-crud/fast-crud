@@ -1,11 +1,25 @@
 
-# 数据字典
+# dict【数据字典】
 
-配置数据字典之后， type=【dict-select/dict-cascader/dict-tree/dict-radio/dict-switch/dict-checkbox】
-这些字段类型就可以通过数据字典获取label及其选项，无需自己写各种options
+`dict组件`配合`dict`，可以通过数据字典获取label及其选项，而无需自己写各种options
+> dict组件指`fs-dict-` [开头的组件](../../api/components/crud/extends/fs-dict-select.md)
+
+引用了`dict组件`字段类型：
+* dict-select
+* dict-cascader
+* dict-tree
+* dict-radio
+* dict-switch
+* dict-checkbox
+
 
 ## 用法
-给需要dict作为参数的component配置dict实例对象参数
+给需要dict作为参数的`dict组件`配置dict实例对象参数
+
+* 方法：dict(opts)
+* 参数：opts= {url:"",data:[]}  [更多参数](../../api/dict)
+* 返回：实例化的`Dict`对象
+* 示例：以下示例相当于写了一个select组件，并且可以异步远程获取options。
 ```js
 import {dict} from '@fast-crud/fast-crud'
 const crudOptions = {
@@ -13,6 +27,7 @@ const crudOptions = {
         key:{
             form:{
                 component:{
+                    name:'fs-dict-select', //fs-dict-select组件，它有一个dict参数
                     dict: dict({url:'/dict/getOptions'})
                 }   
             }   
@@ -21,6 +36,49 @@ const crudOptions = {
 
 }
 ```
+## 字典复制
+你可以将字典配置在columns.key.dict     
+`useCrud`初始化时将会分别复制到form.component、search.component、column.component下。    
+所以一般你只需要写一个dict配置即可
+```js
+import {dict} from "@fast-crud/fast-crud"
+const crudOptions = {
+    columns:{
+        key: { 
+            dict: dict({...opts}),// <---你一般只需写这一个字典配置
+            form:{ component:{ dict:{} } }, // <--从上面自动复制到这里作为component的参数传入
+            search:{ component:{ dict:{} } },// <--从上面自动复制到这里作为component的参数传入
+            column:{ component:{ dict:{} } }// <--从上面自动复制到这里作为component的参数传入
+        }
+    }
+}
+```
+
+#### 单例模式
+* dict.cloneable=false     
+此模式下，全局只有一个dict实例，初始化复制时仅仅只是复制同一个实例的引用。     
+所以你可以保留这个dict实例的引用，修改这个实例的data，会影响页面内的所有使用这个dict的组件的显示
+
+#### 分发复制模式
+* dict.cloneable=true
+此模式下载初始化复制时，会clone多个实例到`search.component`、`form.component`（实际上是`addForm`、`editForm`、`viewForm`）、`column.component` 下            
+如果需要search、form、column分别有不同的表现，可以配置这些位置下的dict属性，会覆盖默认的dict属性           
+通过初始dict的引用，无法修改到分发后的dict实例引用。
+在此模式下如果你想手动修改字典，可通过如下方式获取到字典实例
+```js
+// 获取字典实例（仅编辑对话框打开的状态下可获取）
+const dict = expose.getFormComponentRef(columnKey).getDict() 
+const options =dict.data;
+
+// 获取组件实例，调用其reloadDict方法重新加载字典
+expose.getFormComponentRef(columnKey).reloadDict()
+
+```
+#### 原型模式
+* dict.prototype=true      
+此模式下，dict仅作为配置原型，在组件实例化时，会新new一个dict对象出来，重新加载字典。
+所以也只能采用`分发时复制`中的方式获取字典实例
+
 
 ## 字典远程请求方法
 在注册`FastCrud`时，需要传入一个`dictRequest`的配置，此配置就是字典的默认请求方法
@@ -44,89 +102,8 @@ dict:dict({
 
 ```
 
-## 字典配置复制
-```js
-import {dict} from "@fast-crud/fast-crud"
-const crudOptions = {
-    columns:{
-        key: { 
-            dict: dict({...opts}),
-            form:{ component:{ dict:{} } },
-            search:{ component:{ dict:{} } },
-            column:{ component:{ dict:{} } }
-        }
-    }
-}
-```
-#### 单例模式
-* dict.cloneable=false
-此模式下，全局只有一个dict实例
-通过这个dict实例操作dict.data数据，会影响页面内的所有使用到dict的组件的显示
 
-#### 分发复制模式
-* dict.cloneable=true
-字段下配置的dict会在页面初始化后复制到`search.component`、`form.component`、`column.component` 下     
-如果需要search、form、column有不同的表现，直接配置对应位置的dict即可覆盖字段下的dict配置即可     
-通过初始dict的引用，无法修改到分发后的dict实例引用。
-
-#### 原型模式
-* dict.prototype=true
-当配置dict.cloneable=true时，
-
-## 数据字典的配置   
-通常配置在column下,然后被分别赋值到component.dict和form.component.dict
-```js
-export const crudOptions = {
-  columns: { //字段配置
-    key:{
-      dict: dict({
-         cloneable:false, //是否分发复制
-         prototype:false, //
-         // 这里配置远程获取字典数据的请求地址
-         url:'remote/dict/url', 
-         // 或者配置一个方法，动态构建url
-         url: (dict,context)=>{ 
-           return 'newUrl'
-         }, 
-         data: [//[Array]，如果数据无需远程获取，可以直接将字典数组写在这里
-            {
-             value:1,
-             label:'开启', 
-             color:'primary', //颜色 【primary，success，danger，warning，info】
-             disabled:false //是否禁用
-             }
-         ], 
-         getData:(url,dict,context)=>{ //配置此参数会覆盖全局的getRemoteDictFunc
-           return request().then(ret=>{return ret.data})
-         },
-         cache:true, //默认开启缓存
-         value: 'value', // 数据字典中value字段的属性名
-         label: 'label', // 数据字典中label字段的属性名
-         children: 'children', // 数据字典中children字段的属性名
-         isTree: false, // 此数据字典是否是树形的，通常用于级联组件、地区选择组件等处
-         clone: false, // 是否在获取到字典数据之后clone一份,clone之后不影响全局缓存，可以随意修改
-         getNodesByValues(values){return nodeArr}, //根据value数组，返回节点数据，用于懒加载时，行展示组件的label显示
-         transfer:(data,options)=>{return data},// 可以修改获取到的远程数据，比如将字典的id字段转成字符串形式（缓存开启时只会执行一次）
-         onReady(data, dict, context){
-           //远程数据字典加载完成事件，每个引用该字典的组件都会触发一次
-         }   
-       })   
-    }
-  }
-}
-```
-注意：dict会以url作为缓存key，使得该字典只会远程获取一次。
-```js
-dict:{
-    cache:false //可以禁用缓存
-}
-```
-    
-注意： `getData()` 会覆盖全局的getRemoteDictFunc   
-* `getData()` ：如果配置相同的url，即便getData不一样，还是会获取到相同的字典数据，可以通过url单独清理缓存   
-
-
-## 页面中获取数据字典数据
+## 从数据字典实例中获取字典数据
 ```js
 const dict = dict({...opts})
 await dict.loadDict()
@@ -145,14 +122,12 @@ const dictMap = dict.dataMap
 当dict获取到远程数据之后，会触发onReady事件
 ```js
 dict:dict({
-    onReady: (data, dict,context) => {
+    onReady: ({dict,...context}) => {
         //可以在此处进行一些字典数据的处理，比如设置为禁用
     }
 })
 ``` 
 
+## API
 
-## 动态修改字典数据
-只要能获取到dict实例的引用，修改其data数据即可需改字典数据。
-
-## 字典重载
+[数据字典API](../../api/dict)

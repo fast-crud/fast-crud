@@ -11,6 +11,7 @@ import "./mock";
 import components from "./components";
 import fsInstall from "./install";
 
+// @ts-ignore
 const app = createApp(App);
 app.use(ElementPlus, { size: "small", zIndex: 3000, i18n: i18n.global.t });
 app.use(router);

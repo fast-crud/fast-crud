@@ -7,6 +7,7 @@ export default function () {
     datetime: {
       form: {
         component: {
+          //el-date-picker,a-date-picker
           ...ui.datePicker.buildDateType("datetime"),
           vModel: ui.datePicker.modelValue
         }
@@ -19,6 +20,7 @@ export default function () {
     date: {
       form: {
         component: {
+          //el-date-picker,a-date-picker
           ...ui.datePicker.buildDateType("date"),
           vModel: ui.datePicker.modelValue
         }
@@ -32,6 +34,7 @@ export default function () {
     daterange: {
       form: {
         component: {
+          //el-date-picker,a-date-picker
           ...ui.datePicker.buildDateType("daterange"),
           vModel: ui.datePicker.modelValue
         }
@@ -53,6 +56,7 @@ export default function () {
     time: {
       form: {
         component: {
+          //el-time-picker,a-time-picker
           name: ui.timePicker.name,
           vModel: ui.timePicker.modelValue
         }

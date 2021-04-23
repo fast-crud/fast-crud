@@ -14,7 +14,6 @@
     "sourceMap": true,
     "outDir": "./dist/ts",
     "types": [
-      "webpack-env",
       "mocha",
       "chai"
     ],

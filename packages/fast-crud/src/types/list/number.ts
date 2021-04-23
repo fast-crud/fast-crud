@@ -5,6 +5,7 @@ export default function () {
     number: {
       form: {
         component: {
+          // el-input-number,a-input-number
           name: ui.number.name,
           vModel: ui.modelValue
         }

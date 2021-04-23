@@ -15,7 +15,6 @@
     "baseUrl": ".",
     "outDir": "./dist/ts",
     "types": [
-      "webpack-env",
       "mocha",
       "chai"
     ],

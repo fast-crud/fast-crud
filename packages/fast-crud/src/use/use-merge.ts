@@ -38,7 +38,7 @@ function cloneDeep(target) {
   return _.cloneDeepWith(target, customizer);
 }
 class UnMergeable {
-  cloneable = true;
+  cloneable = false;
 
   setCloneable(cloneable) {
     this.cloneable = cloneable;
@@ -49,6 +49,6 @@ export function useMerge() {
   return {
     merge,
     cloneDeep,
-    UnMergeable,
+    UnMergeable
   };
 }

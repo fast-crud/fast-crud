@@ -6,7 +6,7 @@ export default function () {
     button: {
       form: {
         component: {
-          name: ui.input.name,
+          name: ui.input.name, //el-button,a-button
           vModel: ui.input.modelValue,
           [ui.input.clearable]: true
         }
@@ -21,7 +21,7 @@ export default function () {
     link: {
       form: {
         component: {
-          name: ui.input.name,
+          name: ui.input.name, //el-input,a-input
           vModel: ui.input.modelValue,
           [ui.input.clearable]: true
         }
