@@ -1,4 +1,4 @@
-export type ValueChangeScope = {
+export type ScopeContext = {
   key;
   value;
   form;

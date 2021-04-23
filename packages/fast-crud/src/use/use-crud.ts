@@ -7,6 +7,7 @@ import types from "../types";
 import { uiContext } from "../ui";
 import { useI18n } from "../local";
 import { useMerge } from "../use/use-merge";
+import { CrudExpose } from "../use/use-expose";
 export interface CrudOptions {
   table?: {};
   columns?: [];
@@ -22,7 +23,10 @@ export interface CrudOptions {
   pagination?: {};
   request?: {};
 }
-
+export type UseCrudProps = {
+  crudOptions: CrudOptions;
+  expose: CrudExpose;
+};
 const { merge, cloneDeep } = useMerge();
 
 // mergeColumnPlugin 注册
@@ -57,7 +61,7 @@ registerMergeColumnPlugin(mergeColumnType);
 registerMergeColumnPlugin(mergeColumnDict);
 
 // 导出useCrud
-export function useCrud(ctx) {
+export function useCrud(ctx: UseCrudProps) {
   const ui = uiContext.get();
   const { t, tc } = useI18n(); // call `useI18n`, and spread `t` from  `useI18n` returning
 

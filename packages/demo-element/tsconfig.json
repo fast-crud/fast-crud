@@ -12,15 +12,15 @@
     "esModuleInterop": true,
     "allowSyntheticDefaultImports": true,
     "sourceMap": true,
-    "baseUrl": ".",
     "outDir": "./dist/ts",
     "types": [
       "webpack-env",
       "mocha",
       "chai"
     ],
+    "baseUrl": "./",
     "paths": {
-      "@/*": [
+      "/@/*": [
         "src/*"
       ]
     },

@@ -154,7 +154,9 @@ export default {
      */
     slots: {
       type: Object,
-      default: undefined
+      default: () => {
+        return {};
+      }
     },
     /**
      * 布局方式【flex|grid】

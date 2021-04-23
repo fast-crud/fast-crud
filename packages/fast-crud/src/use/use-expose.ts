@@ -3,8 +3,25 @@ import _ from "lodash-es";
 import logger from "../utils/util.log";
 import { useMerge } from "../use/use-merge";
 const { merge } = useMerge();
-
-export function useExpose({ crudRef, crudBinding }) {
+export type UseExposeProps = {
+  crudRef;
+  crudBinding;
+};
+export type CrudExpose = {
+  crudRef;
+  crudBinding;
+  getFormWrapperRef;
+  getFormRef;
+  getFormData;
+  getFormComponentRef;
+  doValueBuilder;
+  doValueResolve;
+  doRefresh;
+  doPageTurn;
+  doSearch;
+};
+export function useExpose(props: UseExposeProps): CrudExpose {
+  const { crudRef, crudBinding } = props;
   const expose = {
     crudRef,
     crudBinding,
