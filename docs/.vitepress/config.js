@@ -29,11 +29,9 @@ module.exports = {
                 {
                     text: '进阶',
                     children: [
-                        //{text: '基于配置', link: '/guide/advance/options'},
-                        {text: '组件配置', link: '/guide/advance/component'},
+                        {text: '基于配置', link: '/guide/advance/options'},
+                        {text: '字段配置', link: '/guide/advance/component'},
                         {text: '字段类型', link: '/guide/advance/column-type'},
-                        {text: '字段类型列表', link: '/guide/advance/types'},
-                        {text: '字段类型自定义', link: '/guide/advance/custom-type'},
                         {text: '数据字典', link: '/guide/advance/dict'},
                         {text: '动态计算', link: '/guide/advance/compute'},
                         {text: '插槽', link: '/guide/advance/slots'},
@@ -52,11 +50,11 @@ module.exports = {
             ],
             '/api/': [
                 {
-                    text: "options",
+                    text: "配置",
                     children: [
                         {
                             text: 'InstallOptions',
-                            link: '/api/use-options'
+                            link: '/api/install-options'
                         },
                         {
                             text: 'CrudOptions',
@@ -65,6 +63,10 @@ module.exports = {
                         {
                             text: 'Dict数据字典',
                             link: '/api/dict'
+                        },
+                        {
+                            text: '官方字段类型列表',
+                            link: '/api/types'
                         },
                     ]
                 },

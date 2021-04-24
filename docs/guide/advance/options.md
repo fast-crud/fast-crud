@@ -1,68 +1,26 @@
+
 # 基于配置
+本章节主要了解`FastCrud`是如何通过配置驱动出一个完整的`crud`的。
+## FastCrud运行过程
+构建`crudOptions` --> 调用`useCrud` --> 获得`crudBinding` --> 传入`fs-crud`组件    
 
-本章主要介绍`fast-crud`的初始化过程（将简单配置初始化为fs-crud组件所需要的配置）
+### crudOptions
+使用`fast-crud`，你只需要掌握如何构建正确的`crudOptions`，即可完成一个`crud`的开发工作。   
+当你不知道怎么配置`crudOptions`时，请参考 [CrudOptionsAPI文档](../../api/crud-options.md) 
 
-## fs-crud组件
+### useCrud
+主要作用是初始化crud，将`crudOptions`转化为`expose.crudBinding`   
 
-在开发CRUD时，我们页面里面用的组件是`fs-crud`，`crudBinding`就是传入的全部参数
+### crudBinding
+在开发`crud`时，我们页面里面用的组件是`fs-crud`，`crudBinding`就是传入的全部参数
 
 ```html
-
 <template>
     <fs-crud ref="crudRef" v-bind="crudBinding"/>
 </template>
 ```
 
-具体`fs-crud`需要哪些参数，请查看[fs-crud组件的参数](/api/components/crud/fs-crud)
+### fs-crud组件
+其他的都交给`fs-crud`吧     
+具体`fs-crud`需要哪些参数，请查看[fs-crud组件的参数](/api/components/crud/fs-crud)文档
 
-所以我们主要看怎么由`crudOptions`转变成`crudBinding`的
-
-### 1.crudBinding 包含哪些配置
-
-下面以仅有一个`status`字段的`crud`举例    
-如下是`fs-crud`需要的最终配置，将如下配置传入`fs-crud`就可以渲染出一套crud页面来
-
-```js
-const crudBinding = {
-    columns: { //单元格的配置
-        status: {//配置单元格用values-format显示
-            title: '状态',
-            key: 'status',
-            component: {
-                name: 'fs-values-format',
-                dict: dict({url: 'dicts/statusEnums'})
-            }
-        }
-    },
-    addForm: {
-        columns: {
-            status: {
-                title: '状态', //【与单元格的title重复，可简化】
-                compnent: {
-                    name: 'fs-dict-select', //添加时使用选择框
-                    dict: dict({url: 'dicts/statusEnums'})
-                }
-            }
-        },
-        rules: {...}
-    },
-    editForm: {
-        columns: {
-            status: {...}
-        },
-        rules: {status: {...}}
-    },
-    viewForm: {
-        columns: {
-            status: {...}
-        },
-        rules: {status: {...}}
-    },
-    search: {
-        columns: {
-            status: {...}
-        },
-    },
-    
-}
-```

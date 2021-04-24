@@ -74,6 +74,7 @@ type = dict-cascader
 
 ### 数字输入
 * type = number
+
 <<< @/../packages/fast-crud/src/types/list/number.ts
 
 * 表单组件：
