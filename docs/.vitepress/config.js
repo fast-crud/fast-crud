@@ -29,7 +29,7 @@ module.exports = {
                 {
                     text: '进阶',
                     children: [
-                        {text: '基于配置', link: '/guide/advance/options'},
+                        //{text: '基于配置', link: '/guide/advance/options'},
                         {text: '组件配置', link: '/guide/advance/component'},
                         {text: '字段类型', link: '/guide/advance/column-type'},
                         {text: '字段类型列表', link: '/guide/advance/types'},
