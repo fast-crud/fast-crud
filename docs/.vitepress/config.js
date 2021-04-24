@@ -31,10 +31,11 @@ module.exports = {
                     children: [
                         {text: '基于配置', link: '/guide/advance/options'},
                         {text: '组件配置', link: '/guide/advance/component'},
-                        {text: '数据字典', link: '/guide/advance/dict'},
-                        {text: '动态计算', link: '/guide/advance/compute'},
                         {text: '字段类型', link: '/guide/advance/column-type'},
                         {text: '字段类型列表', link: '/guide/advance/types'},
+                        {text: '字段类型自定义', link: '/guide/advance/custom-type'},
+                        {text: '数据字典', link: '/guide/advance/dict'},
+                        {text: '动态计算', link: '/guide/advance/compute'},
                         {text: '插槽', link: '/guide/advance/slots'},
                         {text: '多级数据', link: '/guide/advance/nest-data'},
                     ],
@@ -87,7 +88,10 @@ module.exports = {
                             text: '基础组件', children: [
                                 {text: 'fs-date-format', link: "/api/components/crud/extends/fs-date-format"},
                                 {text: 'fs-dict-cascader', link: "/api/components/crud/extends/fs-dict-cascader"},
-                                {text: 'fs-dict-cascader-format', link: "/api/components/crud/extends/fs-dict-cascader-format"},
+                                {
+                                    text: 'fs-dict-cascader-format',
+                                    link: "/api/components/crud/extends/fs-dict-cascader-format"
+                                },
                                 {text: 'fs-dict-checkbox', link: "/api/components/crud/extends/fs-dict-checkbox"},
                                 {text: 'fs-dict-radio', link: "/api/components/crud/extends/fs-dict-radio"},
                                 {text: 'fs-dict-select', link: "/api/components/crud/extends/fs-dict-select"},
