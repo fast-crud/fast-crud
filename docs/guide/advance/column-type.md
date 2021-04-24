@@ -6,27 +6,30 @@
 
 例如：当没有字段类型时，你需要写如下这一大段字段配置
 ```js
-columns:[
-    {
-      title:'状态',
-      key:'status',
-      dict:{url:'/dict/status'},
-      search:{
-        compnent:{  //查询 使用选择框组件，并且是可以清除的
-          name:'fs-dict-select',
-          clearable:true
+const crudOptions = {
+    columns:{
+        status:{
+            title:'状态',
+            dict:{url:'/dict/status'},
+            search:{
+                compnent:{  //查询 使用选择框组件，并且是可以清除的
+                    name:'fs-dict-select',
+                    clearable:true
+                }
+            },
+            form:{  //添加和编辑表单 使用选择框组件
+                compnent:{
+                    name:'fs-dict-select'
+                }
+            },
+            column:{
+                component:{ //单元格 使用value格式化组件，展示为tag
+                    name:'fs-values-format'
+                }
+            }
         }
-      },
-      form:{  //添加和编辑表单 使用选择框组件
-        compnent:{
-          name:'fs-dict-select'
-        }
-      },
-      component:{ //单元格 使用value格式化组件，展示为tag
-        name:'fs-values-format'
-      }
-    }
-]
+    }   
+}
     
 
 ```

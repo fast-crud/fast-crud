@@ -83,9 +83,11 @@ component:{ //组件配置
 所以先去[字段类型列表](../../api/types)，查找`type=date`里面用的是什么组件   
 在[日期时间选择](../../api/types#日期时间选择)这一条中我们找到了`type=date`的配置
 ```js
-date: {
-    form: { component: { name: 'el-date-picker' } },
-    component: { name: 'date-format', props: { format: 'YYYY-MM-DD' } }
+const types ={
+    date: { // <----字段类型名
+        form: { component: { name: 'el-date-picker' } },
+        column: { component: { name: 'date-format', format: 'YYYY-MM-DD' } }
+    }
 }
 ```
 从这里知道`type=date`使用的`el-date-picker`组件
@@ -106,22 +108,22 @@ date: {
 ### 3.给component添加参数
 ```js
 export default ({expose}) => {
-  return {
-     crudOptions:{
-         columns: {
-             createDate:{
-                 title: '日期',
-                 type:'date',
-                 form:{
-                   component:{
-                     disabledDate: time => {  // <----禁用日期的配置
-                       return time.getTime() < Date.now()
-                     }
-                   }
-                 }
-             }
-         }
-     }
-  }
+    return {
+        crudOptions:{
+            columns: {
+                createDate:{
+                    title: '日期',
+                    type:'date',
+                    form:{
+                        component:{
+                            disabledDate: time => {  // <----禁用日期的配置
+                                return time.getTime() < Date.now()
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
 }
 ```
