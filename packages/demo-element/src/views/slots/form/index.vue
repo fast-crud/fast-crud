@@ -4,8 +4,8 @@
       <span class="ml-10">在表单的各个位置都可以插入自定义内容</span>
     </template>
 
-    <template #form-header-left>
-      <el-tag type="danger">form-header-left插槽</el-tag>
+    <template #form-header-left="scope">
+      <el-tag type="danger" @click="logScope(scope)">form-header-left插槽</el-tag>
     </template>
     <template #form-header-right>
       <el-tag type="danger">form-header-right插槽</el-tag>
@@ -60,7 +60,10 @@ export default defineComponent({
 
     return {
       crudBinding,
-      crudRef
+      crudRef,
+      logScope(scope) {
+        console.log("插槽", scope);
+      }
     };
   }
 });
