@@ -180,7 +180,7 @@ export default {
       default: undefined
     },
     /**
-     * 原始行数据
+     * 行数据
      */
     row: {
       type: Object,
@@ -216,7 +216,7 @@ export default {
         item.valueBuilder({
           value,
           key,
-          row: form,
+          row: props.initialForm,
           form,
           index: props.index,
           mode: props.mode

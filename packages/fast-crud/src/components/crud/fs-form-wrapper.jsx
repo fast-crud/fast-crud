@@ -121,7 +121,7 @@ export default {
     }
 
     function getFormData() {
-      return formRef.value.getFormData();
+      return formRef.value?.getFormData();
     }
     function setFormData(form) {
       formRef.value = form;
@@ -194,8 +194,10 @@ export default {
       }
       return slots[key](scope);
     };
-    const scope = { _self: this, ...this.formOptions };
+
     if (this.formOptions) {
+      const { index, mode } = this.formOptions || {};
+      const scope = { _self: this, index, mode, getFormData: this.getFormData };
       children = {
         title: () => {
           return (

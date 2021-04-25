@@ -5,6 +5,7 @@
     </template>
 
     <template #form_topics="scope">
+      {{ scope }}
       <el-input
         v-for="(item, index) in scope.form.topics"
         :key="index"

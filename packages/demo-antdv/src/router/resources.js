@@ -214,9 +214,14 @@ const resources = [
     path: "slots",
     children: [
       {
-        title: "布局插槽",
+        title: "页面占位插槽",
         path: "/slots/layout",
         component: "/slots/layout/index.vue"
+      },
+      {
+        title: "表单占位插槽",
+        path: "/slots/form",
+        component: "/slots/form/index.vue"
       },
       {
         title: "查询字段插槽",
@@ -232,11 +237,6 @@ const resources = [
         title: "表单字段插槽",
         path: "/slots/form-item",
         component: "/slots/form-item/index.vue"
-      },
-      {
-        title: "表单插槽",
-        path: "/slots/form",
-        component: "/slots/form/index.vue"
       }
     ]
   },

@@ -7,27 +7,27 @@
     <template #form-header-left="scope">
       <el-tag type="danger" @click="logScope(scope)">form-header-left插槽</el-tag>
     </template>
-    <template #form-header-right>
-      <el-tag type="danger">form-header-right插槽</el-tag>
+    <template #form-header-right="scope">
+      <el-tag type="danger" @click="logScope(scope)">form-header-right插槽</el-tag>
     </template>
-    <template #form-header-action-left>
-      <el-tag type="danger">form-header-action-left插槽</el-tag>
+    <template #form-header-action-left="scope">
+      <el-tag type="danger" @click="logScope(scope)">form-header-action-left插槽</el-tag>
     </template>
-    <template #form-header-action-right>
-      <el-tag type="danger">form-header-action-right插槽</el-tag>
+    <template #form-header-action-right="scope">
+      <el-tag type="danger" @click="logScope(scope)">form-header-action-right插槽</el-tag>
     </template>
-    <template #form-body-top>
-      <el-alert type="warning" title="form-body-top 插槽" />
+    <template #form-body-top="scope">
+      <el-alert type="warning" @click="logScope(scope)" title="form-body-top 插槽" />
     </template>
-    <template #form-body-bottom>
-      <el-alert type="warning" title="form-body-bottom 插槽" />
+    <template #form-body-bottom="scope">
+      <el-alert type="warning" @click="logScope(scope)" title="form-body-bottom 插槽" />
     </template>
 
-    <template #form-footer-left>
-      <el-button type="danger">form-footer-left 插槽</el-button>
+    <template #form-footer-left="scope">
+      <el-button type="danger" @click="logScope(scope)">form-footer-left 插槽</el-button>
     </template>
-    <template #form-footer-right>
-      <el-button type="danger">form-footer-right 插槽</el-button>
+    <template #form-footer-right="scope">
+      <el-button type="danger" @click="logScope(scope)">form-footer-right 插槽</el-button>
     </template>
   </fs-crud>
 </template>

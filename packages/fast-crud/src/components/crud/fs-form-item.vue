@@ -55,7 +55,7 @@ export default {
      * 插槽
      */
     slots: {
-      type: Object,
+      type: Function,
       default: undefined
     },
     /**
