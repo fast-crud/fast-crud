@@ -35,16 +35,16 @@ module.exports = {
                         {text: '数据字典', link: '/guide/advance/dict'},
                         {text: '动态计算', link: '/guide/advance/compute'},
                         {text: '插槽', link: '/guide/advance/slots'},
-                        {text: '多级数据', link: '/guide/advance/nest-data'},
+                      //  {text: '多级数据', link: '/guide/advance/nest-data'},
                     ],
                 },
                 {
                     text: '其他',
                     children: [
-                        {text: '升级', link: '/guide/upgrade'},
-                        {text: '常见问题', link: '/guide/questions'},
-                        {text: '联系作者', link: '/guide/contact'},
-                        {text: '捐赠', link: '/guide/donate'},
+                        {text: '升级', link: '/guide/other/upgrade'},
+                        {text: 'changelog', link: '/guide/other/changelog'},
+                        {text: '常见问题', link: '/guide/other/questions'},
+                        {text: '联系作者', link: '/guide/other/contact'}
                     ],
                 },
             ],
@@ -58,7 +58,24 @@ module.exports = {
                         },
                         {
                             text: 'CrudOptions',
-                            link: '/api/crud-options'
+                            children:[
+                                {text: '概览', link: '/api/crud-options/index'},
+                                {text: 'request', link: '/api/crud-options/request'},
+                                {text: 'columns', link: '/api/crud-options/columns'},
+                                {text: 'form', link: '/api/crud-options/form'},
+                                {text: 'search', link: '/api/crud-options/search'},
+                                {text: 'viewForm', link: '/api/crud-options/viewForm'},
+                                {text: 'addForm', link: '/api/crud-options/addForm'},
+                                {text: 'editForm', link: '/api/crud-options/editForm'},
+                                {text: 'table', link: '/api/crud-options/table'},
+                                {text: 'rowHandle', link: '/api/crud-options/rowHandle'},
+                                {text: 'pagination', link: '/api/crud-options/pagination'},
+                                {text: 'container', link: '/api/crud-options/container'},
+                            ]
+                        },
+                        {
+                            text: 'CommonOptions',
+                            link: '/api/common-options',
                         },
                         {
                             text: 'Dict数据字典',
