@@ -78,19 +78,49 @@ const crudOptions = {
 ## [key].form
 * 说明：该字段在表单里面的配置
 * 类型：Object
+* 支持：el-form-item
+* 示例：
+```json5
+{ // crudOptions.columns
+  key: { //字段key
+    form: {
+      title: '字段在表单里的label',
+      component: {}, //组件配置
+      rules: [], //校验规则
+      col: {span: 12} //分栏配置
+      //此处支持 el-form-item / a-form-item的配置
+    } 
+  }
+}
+```
+
+### [key].form.component
+参考组件配置[component](../common-options.md)
 
 ## [key].addForm
-* 说明：该字段在添加表单里面的配置，会与`[key].form`合并
+* 说明：该字段在添加表单里面的配置
 * 类型：Object
+* 配置同`[key].form`  
+
+>初始化时会与`[key].form`合并，然后放入`crudOptions.addForm.columns[key]`
+
 
 ## [key].viewForm
-* 说明：该字段在查看表单里面的配置，会与`[key].form`合并
+* 说明：该字段在查看表单里面的配置
 * 类型：Object
+* 配置同`[key].form`   
+
+>初始化时会与`[key].form`合并，然后放入`crudOptions.viewForm.columns[key]`
+
 
 ## [key].editForm
-* 说明：该字段在编辑表单里面的配置，会与`[key].form`合并
+* 说明：该字段在编辑表单里面的配置
 * 类型：Object
+* 配置同`[key].form`
+>初始化时会与`[key].form`合并，然后放入`crudOptions.editForm.columns[key]`
 
 ## [key].search
-* 说明：该字段在查询框表单里面的配置，会与`[key].form`合并
+* 说明：该字段在查询框表单里面的配置
 * 类型：Object
+* 配置同`[key].form`
+>初始化时会与`[key].form`合并，然后放入`crudOptions.search.columns[key]`

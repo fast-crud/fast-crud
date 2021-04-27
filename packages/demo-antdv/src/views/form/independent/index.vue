@@ -24,11 +24,6 @@ import { message } from "ant-design-vue";
 function useFormDirect() {
   const formRef = ref();
   const formOptions = ref({
-    labelPosition: "right",
-    labelWidth: "80px",
-    style: {
-      "grid-template-columns": "50% 50%"
-    },
     col: {
       span: 12
     },
@@ -87,9 +82,6 @@ function useFormWrapper() {
   const formWrapperOptions = ref({
     labelPosition: "right",
     labelWidth: "80px",
-    style: {
-      "grid-template-columns": "50% 50%"
-    },
     col: {
       span: 12
     },

@@ -70,7 +70,7 @@ export default function ({ expose }) {
       form: {
         labelWidth: "90px",
         group: {
-          type: "collapse", // tab
+          type: "collapse", // tabs
           accordion: true, //手风琴模式
           groups: {
             base: {
