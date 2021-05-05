@@ -113,3 +113,4 @@ packages/vben-admin-thin-next
 /**/stats.html
 /*-lock.json
 /**/package-lock.json
+/**/.DS_Store
