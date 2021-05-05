@@ -94,17 +94,11 @@ const types ={
 从这里知道`type=date`使用的`el-date-picker`组件
 
 ### 2.查找该组件的文档，确定参数
-在[日期时间选择](../../api/types#日期时间选择) 拉到下方   
-可以看到相关组件的文档链接（如果没有文档链接，请告诉我，我会尽快加上的）
- 
-![](./images/type-date-picker.jpg)  
+在[日期时间选择](../../api/types#日期时间选择), 可以看到它使用的是什么组件。
 
-点击[el-date-picker](https://element-plus.gitee.io/#/zh-CN/component/date-picker)
-跳转到elementUI的文档页面，找到禁用日期相关参数
+这里它使用了这个`el-date-picker`组件，找到它的文档，然后找到禁用日期相关参数
 
-![](../../images/date-picker-1.jpg)
-
-![](../../images/date-picker.jpg)
+![](../../images/date-picker.png)
 
 ### 3.给component添加参数
 ```js
