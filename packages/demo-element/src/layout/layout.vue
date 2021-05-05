@@ -31,7 +31,7 @@
 
 <script>
 import AsideMenu from "./aside-menu";
-import router from "../../../demo-antdv/src/router";
+import router from "../router";
 export default {
   components: { AsideMenu },
   setup() {
