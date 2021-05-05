@@ -19,30 +19,22 @@ npm i  @fast-crud/fast-crud
  ```javascript
 // 引入fast-crud
 import {FastCrud} from "@fast-crud/fast-crud";
+import "@fast-crud/fast-crud/dist/style.css";
 
-// 引入ui的通知方法
-//如果使用antdvue
-import {message, notification, Modal} from "ant-design-vue";
+// 请选择ui: element 或 antdv。二选一，不支持动态切换
+// element 
+import ui from "@fast-crud/ui-element";
+// antdv 
+import ui from "@fast-crud/ui-antdv";
 
-//如果使用element
-import {ElMessage, ElNotification, ElMessageBox,} from "element-plus";
-
+// 先安装ui
+app.use(ui); 
+// 然后安装FastCrud
 app.use(FastCrud, {
-    i18n,
-    // 此处配置公共的dictRequest
+    i18n, //i18n配置，可选，默认使用中文，具体用法请看demo里的 src/i18n/index.js 文件
+    // 此处配置公共的dictRequest（字典请求）
     async dictRequest({ dict }) {
-        const res = await requestForMock({ url: dict.url });
-        console.log("get dict", res);
-        return res;
-    },
-    // 使用哪套ui
-    ui: {
-        name: "element",
-        target: {
-            Message: ElMessage,
-            Notification: ElNotification,
-            MessageBox: ElMessageBox,
-        },
+        return await request({ url: dict.url }); //根据dict的url，异步返回一个字典数组
     },
     //公共crud配置
     commonOptions() {
@@ -69,91 +61,14 @@ import { FsUploader } from "@fast-crud/extends-uploader";
 import "@fast-crud/extends-uploader/dist/style.css";
 app.use(FsUploader, {
     defaultType: "cos",
-    cos: {
-        domain: "https://d2p-demo-1251260344.cos.ap-guangzhou.myqcloud.com",
-        bucket: "d2p-demo-1251260344",
-        region: "ap-guangzhou",
-        secretId: "", //
-        secretKey: "", // 传了secretKey 和secretId 代表使用本地签名模式（不安全，生产环境不推荐）
-        getAuthorization(custom) {
-            // 不传secretKey代表使用临时签名模式,此时此参数必传（安全，生产环境推荐）
-            return request({
-                url: "/upload/cos/getAuthorization",
-                method: "get",
-            }).then((ret) => {
-                // 返回结构如下
-                // ret.data:{
-                //   TmpSecretId,
-                //   TmpSecretKey,
-                //   XCosSecurityToken,
-                //   ExpiredTime, // SDK 在 ExpiredTime 时间前，不会再次调用 getAuthorization
-                // }
-                return ret;
-            });
-        },
-        successHandle(ret) {
-            // 上传完成后可以在此处处理结果，修改url什么的
-            console.log("success handle:", ret);
-            return ret;
-        },
-    },
-    alioss: {
-        domain: "https://d2p-demo.oss-cn-shenzhen.aliyuncs.com",
-        bucket: "d2p-demo",
-        region: "oss-cn-shenzhen",
-        accessKeyId: "",
-        accessKeySecret: "",
-        getAuthorization(custom, context) {
-            // 不传accessKeySecret代表使用临时签名模式,此时此参数必传（安全，生产环境推荐）
-            return request({
-                url: "/upload/alioss/getAuthorization",
-                method: "get",
-            }).then((ret) => {
-                console.log("ret", ret);
-                return ret;
-            });
-        },
-        sdkOpts: {
-            // sdk配置
-            secure: true, // 默认为非https上传,为了安全，设置为true
-        },
-        successHandle(ret) {
-            // 上传完成后可以在此处处理结果，修改url什么的
-            console.log("success handle:", ret);
-            return ret;
-        },
-    },
-    qiniu: {
-        bucket: "d2p-demo",
-        getToken(options) {
-            return request({
-                url: "/upload/qiniu/getToken",
-                method: "get",
-            }).then((ret) => {
-                return ret; // {token:xxx,expires:xxx}
-            });
-        },
-        successHandle(ret) {
-            // 上传完成后可以在此处处理结果，修改url什么的
-            console.log("success handle:", ret);
-            return ret;
-        },
-        domain: "http://d2p.file.veryreader.com",
-    },
-    form: {
-        action: "/api/upload/form/upload",
-        name: "file",
-        withCredentials: false,
-        successHandle(ret) {
-            // 上传完成后的结果处理， 此处后台返回的结果应该为 ret = {code:0,msg:'',data:fileUrl}
-            if (!ret.data) {
-                throw new Error("上传失败");
-            }
-            return { url: ret.data };
-        },
-    },
+    // 上传实现的配置，你使用哪一个就配置哪一个即可
+    cos: {},
+    alioss: {},
+    qiniu: {},
+    form: {},
 });
 ```
+扩展组件文档请参考[extends-uploader](../advance/extends.md)
 
 ### 4. 完成
 现在`fast-crud`已经集成到你的项目中，你可以按照上一节学习的，在你的实际项目里开始你的crud开发了。

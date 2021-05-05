@@ -35,3 +35,4 @@ const crudOptions = {
 [组件配置参数](../../api/components/extends/uploader/fs-file-uploader.md)
 ## 参数参考
 
+<<<@/../packages/extends/extends-uploader/src/type/config.js

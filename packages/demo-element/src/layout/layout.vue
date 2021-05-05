@@ -1,8 +1,19 @@
 <template>
   <el-container class="layout">
     <el-header class="layout-header">
-      <el-aside width="200px">fast-crud</el-aside>
-      其他菜单
+      <div class="logo">fast-crud</div>
+      <el-menu
+        class="el-menu-demo"
+        mode="horizontal"
+        background-color="#001529"
+        text-color="#fff"
+        active-text-color="#fff"
+        @select="handleNavMenuClick"
+      >
+        <el-menu-item index="http://fast-crud.docmirror.cn/">文档</el-menu-item>
+        <el-menu-item index="https://gitee.com/fast-crud/fast-crud/">gitee</el-menu-item>
+        <el-menu-item index="https://github.com/fast-crud/fast-crud/">github</el-menu-item>
+      </el-menu>
     </el-header>
     <el-container class="layout-body">
       <el-aside width="200px" style="border-right: 1px solid #eee">
@@ -20,8 +31,21 @@
 
 <script>
 import AsideMenu from "./aside-menu";
+import router from "../../../demo-antdv/src/router";
 export default {
-  components: { AsideMenu }
+  components: { AsideMenu },
+  setup() {
+    const handleNavMenuClick = (key) => {
+      if (key.startsWith("http")) {
+        window.open(key);
+      } else {
+        router.push(key);
+      }
+    };
+    return {
+      handleNavMenuClick
+    };
+  }
 };
 </script>
 <style lang="less">
@@ -29,10 +53,15 @@ export default {
   height: 100%;
   .layout-header {
     height: 64px;
-    padding: 0 50px;
     line-height: 64px;
+    padding: 0px;
     background: #001529;
     color: #fff;
+    display: flex;
+    .logo {
+      width: 100px;
+      padding: 0 50px;
+    }
   }
   .layout-body {
     overflow: hidden;

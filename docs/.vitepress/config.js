@@ -130,12 +130,7 @@ module.exports = {
             {text: '首页', link: '/'},
             {text: '指南', link: '/guide/'},
             {text: 'API', link: '/api/'},
-            {
-                text: '示例', children: [
-                    {text: 'element-plus版', link: "http://fast-crud.docmirror.cn/element/"},
-                    {text: 'antdv版', link: "http://fast-crud.docmirror.cn/antdv/"}
-                ]
-            },
+            {text: '示例', link:'/demo/'},
             {text: 'github', link: 'https://github.com/fast-crud/fast-crud'},
             {text: 'gitee', link: 'https://gitee.com/fast-crud/fast-crud'},
         ],
