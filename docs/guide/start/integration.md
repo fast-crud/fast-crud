@@ -74,5 +74,6 @@ app.use(FsUploader, {
 现在`fast-crud`已经集成到你的项目中，你可以按照上一节学习的，在你的实际项目里开始你的crud开发了。
 
 ## starter
-自己手动集成挺麻烦的？以下提供了当下流行的`admin`框架的集成好的`starter`，开箱即用
-### vben
+自己手动集成挺麻烦的？以下提供了当下流行的`admin`框架集成好的`starter`，开箱即用
+
+* [vben](http://fast-crud.docmirror.cn/vben/)

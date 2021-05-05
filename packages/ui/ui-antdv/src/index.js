@@ -1,8 +1,8 @@
 import {message, notification, Modal} from "ant-design-vue";
 import {uiContext} from "@fast-crud/fast-crud";
-
+import setupIcons from './icons'
 export default {
-    install() {
+    install(app) {
         const ui = {
             name: "antdv",
             target: {
@@ -12,6 +12,8 @@ export default {
             }
         }
         uiContext.set(ui)
+
+        setupIcons(app)
         console.log('antdv installed')
     }
 }

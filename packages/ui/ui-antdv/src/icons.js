@@ -1,4 +1,3 @@
-import _ from "lodash";
 import {
   PlusCircleOutlined,
   PlusOutlined,
@@ -59,7 +58,7 @@ const icons = {
   LikeOutlined
 };
 export default function (app) {
-  _.forEach(icons, (item, key) => {
-    app.component(key, item);
-  });
+  for (let key in icons) {
+    app.component(key, icons[key]);
+  }
 }
