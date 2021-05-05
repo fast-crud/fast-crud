@@ -34,6 +34,56 @@ FastCrud 是基于Vue3的面向配置的crud开发框架，快速开发crud功�
 ### 5. 多UI支持
 支持Antdv、Element，你喜欢哪个就用哪个
 
+## 开发crud，就是这么快
+1、只需简单编写crud配置
+```js
+const crudOptions= {
+      columns: { //字段配置
+        id: {// id字段
+          title: "ID",
+          type: "number", //字段类型
+          column: {
+            width: 50
+          },
+          form: {
+            show: false
+          }
+        },
+        name: { // 姓名字段
+          title: "姓名",
+          type: "text", //文本类型字段
+          search: { show: true } //显示查询
+        },
+        city: { //城市字段
+          title: "城市",
+          type: "dict-select", //选择类型字段
+          search: { show: true }, //显示查询
+          dict: dict({ //本地数据字典
+            value: "id",
+            label: "text",
+            data: [
+              { id: "sz", text: "深圳", color: "success" },
+              { id: "gz", text: "广州", color: "primary" },
+              { id: "bj", text: "北京" },
+              { id: "wh", text: "武汉" },
+              { id: "sh", text: "上海" }
+            ]
+          })
+        },
+        radio: {
+          title: "状态",
+          search: { show: true }, //显示查询
+          type: "dict-radio", //单选类型字段
+          dict: dict({ //远程数据字典
+            url: "/dicts/OpenStatusEnum?single"
+          })
+        }
+      }
+    }
+```
+
+2、 一个完全体crud就出来了
+![](../images/crud.png)
 
 ## 请先了解
 本文档假设您已熟悉Vue3、antdvue或elementplus的基础知识
