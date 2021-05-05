@@ -69,7 +69,7 @@
             <slot name="pagination-left"></slot>
           </div>
           <div class="fs-pagination">
-            <component :is="$fsui.pagination.name" v-if="pagination.show" v-bind="pagination" />
+            <component :is="$fsui.pagination.name" v-if="pagination.show !== false" v-bind="pagination" />
           </div>
           <div class="fs-pagination-right">
             <slot name="pagination-right"></slot>
