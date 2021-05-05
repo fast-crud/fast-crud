@@ -1,6 +1,19 @@
 <template>
   <a-layout>
-    <a-layout-header>fast-crud</a-layout-header>
+    <a-layout-header>
+      <div class="logo">fast-crud</div>
+      <a-menu
+        theme="dark"
+        mode="horizontal"
+        :style="{ lineHeight: '64px' }"
+        :selectable="false"
+        @click="handleNavMenuClick"
+      >
+        <a-menu-item key="http://fast-crud.docmirror.cn/">文档</a-menu-item>
+        <a-menu-item key="https://github.com/fast-crud/fast-crud">gitee</a-menu-item>
+        <a-menu-item key="https://gitee.com/fast-crud/fast-crud">github</a-menu-item>
+      </a-menu>
+    </a-layout-header>
     <a-layout class="layout-body">
       <a-layout-sider style="overflow-y: scroll">
         <aside-menu />
@@ -13,9 +26,22 @@
 
 <script>
 import AsideMenu from "./aside-menu.jsx";
+import router from "../router";
 export default {
   // eslint-disable-next-line vue/no-unused-components
-  components: { AsideMenu }
+  components: { AsideMenu },
+  setup() {
+    const handleNavMenuClick = ({ key }) => {
+      if (key.startsWith("http")) {
+        window.open(key);
+      } else {
+        router.push(key);
+      }
+    };
+    return {
+      handleNavMenuClick
+    };
+  }
 };
 </script>
 <style lang="less">
@@ -27,6 +53,12 @@ export default {
     line-height: 64px;
     background: #001529;
     color: #fff;
+    .logo {
+      float: left;
+      width: 150px;
+      // margin: 16px 24px 16px 0;
+      //background: rgba(255, 255, 255, 0.3);
+    }
   }
   .ant-layout-footer {
     padding: 24px 50px;
