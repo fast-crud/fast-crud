@@ -42,10 +42,10 @@ FastCrud 是基于Vue3的面向配置的crud开发框架，快速开发crud功�
 1、只需简单编写crud配置
 ```js
 const crudOptions= {
-      columns: {
-        id: {
+      columns: { //字段配置
+        id: {// id字段
           title: "ID",
-          type: "number",
+          type: "number", //字段类型
           column: {
             width: 50
           },
@@ -53,16 +53,16 @@ const crudOptions= {
             show: false
           }
         },
-        name: {
+        name: { // 姓名字段
           title: "姓名",
-          type: "text",
-          search: { show: true }
+          type: "text", //文本类型字段
+          search: { show: true } //显示查询
         },
-        city: {
+        city: { //城市字段
           title: "城市",
-          type: "dict-select",
-          search: { show: true },
-          dict: dict({
+          type: "dict-select", //选择类型字段
+          search: { show: true }, //显示查询
+          dict: dict({ //本地数据字典
             value: "id",
             label: "text",
             data: [
@@ -76,9 +76,9 @@ const crudOptions= {
         },
         radio: {
           title: "状态",
-          search: { show: true },
-          type: "dict-radio",
-          dict: dict({
+          search: { show: true }, //显示查询
+          type: "dict-radio", //单选类型字段
+          dict: dict({ //远程数据字典
             url: "/dicts/OpenStatusEnum?single"
           })
         }
