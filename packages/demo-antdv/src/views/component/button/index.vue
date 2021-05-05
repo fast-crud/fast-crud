@@ -1,5 +1,5 @@
 <template>
-  <fs-crud ref="crudRef" v-bind="crudBinding" />
+  <fs-crud ref="crudRef" custom-class="demo-button" v-bind="crudBinding" />
 </template>
 
 <script>
@@ -36,3 +36,18 @@ export default defineComponent({
   }
 });
 </script>
+
+<style lang="less">
+.demo-button {
+  .fs-search {
+    .ant-form-item-label {
+      width: 90px;
+    }
+
+    .search-btns {
+      width: 100%;
+      text-align: center;
+    }
+  }
+}
+</style>

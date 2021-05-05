@@ -1,5 +1,4 @@
 import * as api from "./api";
-import { requestForMock } from "/src/api/service";
 import { dict } from "/src/fs";
 export default function ({ expose }) {
   const pageRequest = async (query) => {
@@ -50,6 +49,7 @@ export default function ({ expose }) {
           search: { show: true },
           type: "dict-tree",
           dict: dict({
+            cloneable: false,
             isTree: true,
             url: "/dicts/cascaderData?single"
           }),

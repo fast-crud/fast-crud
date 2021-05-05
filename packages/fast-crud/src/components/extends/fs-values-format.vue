@@ -183,6 +183,7 @@ export default {
       const colorfulOptions = _.cloneDeep(options);
       _.forEach(colorfulOptions, (item) => {
         setColor(props, item);
+        delete item.children;
       });
       return colorfulOptions;
     });

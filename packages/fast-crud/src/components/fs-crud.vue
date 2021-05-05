@@ -1,10 +1,5 @@
 <template>
-  <fs-container
-    ref="containerRef"
-    v-bind="container"
-    class="fs-crud-container"
-    :class="{ compact: toolbar.compact !== false }"
-  >
+  <fs-container ref="containerRef" v-bind="container" class="fs-crud-container" :class="computedClass">
     <template #header>
       <div class="fs-crud-header">
         <div class="fs-header-top"><slot name="header-top"></slot></div>
@@ -283,6 +278,14 @@ function useTable(props, ctx) {
     logger.debug("toolbar handle", e);
   };
 
+  const computedClass = computed(() => {
+    const clazz = { compact: toolbar.compact !== false };
+    if (props.customClass) {
+      clazz[props.customClass] = true;
+    }
+    return clazz;
+  });
+
   return {
     tableRef,
     containerRef,
@@ -296,7 +299,8 @@ function useTable(props, ctx) {
     computedFormSlots,
     computedSearchSlots,
     computedToolbarSlots,
-    computeBodyHeight: fixedHeightRet.computeBodyHeight
+    computeBodyHeight: fixedHeightRet.computeBodyHeight,
+    computedClass
   };
 }
 
@@ -360,7 +364,12 @@ export default defineComponent({
     /**
      * 容器配置，见FsContainer
      */
-    container: {}
+    container: {},
+
+    /**
+     * crud包裹容器的class
+     */
+    customClass: {}
   },
   emits: [
     "search-submit",

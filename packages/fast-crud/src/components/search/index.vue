@@ -11,8 +11,8 @@
         @compositionstart="changeInputEventDisabled(true)"
         @compositionend="changeInputEventDisabled(false)"
       >
-        <component :is="$fsui.formItem.name">
-          <fs-slot-render v-if="slots['search-left']" :slots="slots['search-left']" :scope="{ form }" />
+        <component :is="$fsui.formItem.name" v-if="slots['search-left']">
+          <fs-slot-render :slots="slots['search-left']" :scope="{ form }" />
         </component>
         <template v-for="(item, key) in computedColumns" :key="key">
           <component
@@ -44,16 +44,16 @@
             </template>
           </component>
         </template>
-        <component :is="$fsui.formItem.name">
-          <fs-slot-render v-if="slots['search-middle']" :slots="slots['search-middle']" :scope="{ form }" />
+        <component :is="$fsui.formItem.name" v-if="slots['search-middle']">
+          <fs-slot-render :slots="slots['search-middle']" :scope="{ form }" />
         </component>
         <component :is="$fsui.formItem.name" class="search-btns">
           <template v-for="(item, index) in computedButtons" :key="index">
             <fs-button v-if="item.show" v-bind="item" @click="item.click()" />
           </template>
         </component>
-        <component :is="$fsui.formItem.name">
-          <fs-slot-render v-if="slots['search-right']" :slots="slots['search-right']" :scope="{ form }" />
+        <component :is="$fsui.formItem.name" v-if="slots['search-right']">
+          <fs-slot-render :slots="slots['search-right']" :scope="{ form }" />
         </component>
       </component>
     </div>
@@ -330,6 +330,16 @@ export default {
 </script>
 <style lang="less">
 .fs-search {
+  display: flex;
+  flex-wrap: nowrap;
+  .search-left {
+  }
+  .search-right {
+    flex: 1;
+  }
+  .ant-form-inline {
+    flex-wrap: wrap;
+  }
   .search-form {
     display: flex;
     align-items: center;

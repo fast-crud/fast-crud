@@ -47,6 +47,7 @@ export default function ({ crudRef }) {
           search: { show: true },
           type: "dict-cascader",
           dict: dict({
+            cloneable: false,
             isTree: true,
             url: "/dicts/cascaderData?single"
           })
