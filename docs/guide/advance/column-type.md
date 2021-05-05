@@ -184,6 +184,7 @@ const selectType = getType('dict-select')
 selectType.component.color='auto'  //修改官方的字段类型，设置为支持自动染色
 ```
 
+## 字段类型列表
 [官方字段类型列表](../../api/types.md)
 
 
