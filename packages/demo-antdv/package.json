@@ -16,6 +16,7 @@
     "@ant-design/icons-vue": "^6.0.1",
     "@fast-crud/extends-uploader": "^0.5.1",
     "@fast-crud/fast-crud": "^0.5.1",
+    "@fast-crud/ui-antdv": "^0.5.1",
     "ant-design-vue": "^2.1.2",
     "axios": "^0.21.1",
     "axios-mock-adapter": "^1.19.0",
