@@ -10,4 +10,4 @@
 
 ## admin脚手架starter
 
-* [vben-admin-starter](http://fast-crud.docmirror.cn/vben/)
+* [vben-admin](http://fast-crud.docmirror.cn/vben/)

@@ -25,14 +25,6 @@ export default function ({ expose }) {
         delRequest
       },
       columns: {
-        product: {
-          title: "未分组字段",
-          type: "text",
-          form: {
-            col: { span: 24 },
-            helper: "未分组的字段会显示在这里，一般来说你应该把所有字段都编入分组内"
-          }
-        },
         title: {
           title: "商品标题",
           type: "text"
