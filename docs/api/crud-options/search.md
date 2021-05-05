@@ -12,8 +12,8 @@
 * 类型：Object
 * 默认： {search:{},reset:{}}
 * 示例：
-```
-{
+```json5
+{//search.buttons
     search:{
         ...FsButton, //fs-button组件的参数
         order:1, //排序，越小越靠前
@@ -25,3 +25,25 @@
 }
 ```
 [FsButton](../common-options)
+
+
+## columns
+* 说明：查询字段配置
+* 类型：Object
+* 默认： {}
+* 示例：
+
+### columns[key].component
+* 说明：查询字段组件配置
+* 类型：Object
+参考组件配置[component](../common-options.md)
+
+## doSearch
+* 说明：触发查询
+* 类型：async Function(context)
+* 
+
+## options
+* 说明：表单参数
+* 类型：Object
+* 支持：el-form,a-form的参数

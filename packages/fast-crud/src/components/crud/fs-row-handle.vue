@@ -5,8 +5,8 @@
     </template>
     <!-- 下拉按钮菜单 -->
     <span v-if="computedDropdownBtns.length > 0" class="row-handle-btn fs-handle-row-dropdown">
-      <component :is="$fsui.dropdown.name" v-bind="$fsui.dropdown.command(doDropdownItemClick)">
-        <fs-button v-bind="dropdown" />
+      <component :is="$fsui.dropdown.name" v-bind="computedDropdownBinding">
+        <fs-button v-bind="dropdown.more" />
         <template #[$fsui.dropdown.slotName]>
           <component :is="$fsui.dropdownMenu.name" v-bind="$fsui.dropdownMenu.command(doDropdownItemClick)">
             <template v-for="(item, index) in computedDropdownBtns" :key="index">
@@ -31,7 +31,7 @@ import FsButton from "../basic/fs-button";
 import _ from "lodash-es";
 import traceUtil from "../../utils/util.trace";
 import { useI18n } from "../../local";
-import logger from "../../utils/util.log";
+import { useUi } from "../../use/use-ui";
 
 /**
  * 操作列配置
@@ -64,6 +64,8 @@ export default defineComponent({
   },
   emits: ["handle"],
   setup(props, ctx) {
+    const { ui } = useUi();
+
     traceUtil.trace("fs-row-handler");
     const { t } = useI18n();
     const doClick = (item) => {
@@ -141,13 +143,21 @@ export default defineComponent({
       }
     }
 
+    const computedDropdownBinding = computed(() => {
+      return {
+        ..._.omit(props.dropdown, "more", "atLeast"),
+        ...ui.dropdown.command(doDropdownItemClick)
+      };
+    });
+
     return {
       computedAllHandleBtns,
       computedHandleBtns,
       computedDropdownBtns,
       doDropdownItemClick,
       computedDropdownAtLeast,
-      doClick
+      doClick,
+      computedDropdownBinding
     };
   }
 });

@@ -185,3 +185,7 @@ selectType.component.color='auto'  //修改官方的字段类型，设置为支�
 ```
 
 [官方字段类型列表](../../api/types.md)
+
+
+## 更多
+你可能还想了解 [扩展](./extends.md)

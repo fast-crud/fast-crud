@@ -13,7 +13,7 @@
 * 说明：按钮配置
 * 类型：Object
 * 默认：[buttons](#buttons)
-```
+```json5
 {
     search:{
         ...FsButton,
@@ -27,3 +27,7 @@
     columns:{}
 }
 ```
+## show
+* 说明：显示或隐藏查询框
+* 类型：Boolean
+* 默认：`true`

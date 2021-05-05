@@ -5,8 +5,9 @@
 构建`crudOptions` --> 调用`useCrud` --> 获得`crudBinding` --> 传入`fs-crud`组件    
 
 ### crudOptions
-使用`fast-crud`，你只需要掌握如何构建正确的`crudOptions`，即可完成一个`crud`的开发工作。   
-当你不知道怎么配置`crudOptions`时，请参考 [CrudOptionsAPI文档](../../api/crud-options.md) 
+使用`fast-crud`，你只需要掌握如何配置正确的`crudOptions`，即可完成一个`crud`的开发工作。       
+其中  [**字段配置**](./component.md)  是重点，它就在下一章节，一定要看    
+当你不知道`crudOptions`有什么参数时，请参考 [CrudOptionsAPI文档](../../api/crud-options/index.md) 
 
 ### useCrud
 主要作用是初始化crud，将`crudOptions`转化为`expose.crudBinding`   

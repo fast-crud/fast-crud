@@ -117,25 +117,28 @@ export function useCrud(ctx: UseCrudProps) {
   }
 
   function useRemove() {
+    const doRemove = async function (context) {
+      // TODO i18n
+      try {
+        await ui.messageBox.confirm({
+          title: t("fs.rowHandle.remove.confirmTitle"), // '提示',
+          message: t("fs.rowHandle.remove.confirmMessage"), // '确定要删除此记录吗?',
+          type: "warn"
+        });
+      } catch (e) {
+        logger.info("delete canceled", e.message);
+        return;
+      }
+      context.row = context[ui.tableColumn.row];
+      await crudBinding.value.request.delRequest(context);
+      ui.notification.success(t("fs.rowHandle.remove.success"));
+      await doRefresh();
+    };
     return {
       rowHandle: {
-        remove: {
-          click: async function (context) {
-            // TODO i18n
-            try {
-              await ui.messageBox.confirm({
-                title: t("fs.rowHandle.remove.confirmTitle"), // '提示',
-                message: t("fs.rowHandle.remove.confirmMessage"), // '确定要删除此记录吗?',
-                type: "warn"
-              });
-            } catch (e) {
-              logger.info("delete canceled", e.message);
-              return;
-            }
-            context.row = context[ui.tableColumn.row];
-            await crudBinding.value.request.delRequest(context);
-            ui.notification.success(t("fs.rowHandle.remove.success"));
-            await doRefresh();
+        buttons: {
+          remove: {
+            click: doRemove
           }
         }
       }

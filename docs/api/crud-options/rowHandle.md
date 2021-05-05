@@ -31,3 +31,16 @@
   }
 }
 ```
+
+## dropdown
+* 说明：按钮折叠配置，当按钮数多于`dropdown.atLeast`的个数时，将会被折叠
+* 类型：Object
+```json5
+{ // rowHandle.dropdown
+  dropdown: {
+    atLeast: 2, //当按钮大于2个时，多余的按钮将会被折叠
+    more: {...FsButton}//'更多'按钮的配置
+    //此处支持el-dropdown,a-dropdown的配置
+  }
+}
+```

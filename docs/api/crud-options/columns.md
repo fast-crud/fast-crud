@@ -71,14 +71,18 @@ const crudOptions = {
         }
     }
 }
-
-
 ```
+
+### [key].column.component
+* 说明：单元格组件配置
+* 类型：Object
+参考组件配置[component](../common-options.md)
+
 
 ## [key].form
 * 说明：该字段在表单里面的配置
 * 类型：Object
-* 支持：el-form-item
+* 支持：el-form-item，a-for-item
 * 示例：
 ```json5
 { // crudOptions.columns
@@ -95,7 +99,17 @@ const crudOptions = {
 ```
 
 ### [key].form.component
+* 说明：表单输入组件配置
+* 类型：Object
 参考组件配置[component](../common-options.md)
+
+
+### [key].form.col
+* 说明：表单字段col配置
+* 类型：Object
+* 默认：{span:12}
+* 同[form.col](form#col)
+
 
 ## [key].addForm
 * 说明：该字段在添加表单里面的配置
@@ -124,3 +138,8 @@ const crudOptions = {
 * 类型：Object
 * 配置同`[key].form`
 >初始化时会与`[key].form`合并，然后放入`crudOptions.search.columns[key]`
+
+### [key].search.component
+* 说明：查询框字段组件配置
+* 类型：Object
+参考组件配置[component](../common-options.md)

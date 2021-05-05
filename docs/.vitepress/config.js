@@ -35,7 +35,8 @@ module.exports = {
                         {text: '数据字典', link: '/guide/advance/dict'},
                         {text: '动态计算', link: '/guide/advance/compute'},
                         {text: '插槽', link: '/guide/advance/slots'},
-                      //  {text: '多级数据', link: '/guide/advance/nest-data'},
+                        {text: '扩展', link: '/guide/advance/extends'},
+                        //  {text: '多级数据', link: '/guide/advance/nest-data'},
                     ],
                 },
                 {

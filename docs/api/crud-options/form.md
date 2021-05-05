@@ -126,7 +126,11 @@
         //插槽，可以自定义标题
       }, 
       columns: [ 'columnKey1', 'columnKey2'], //该分组包含的字段keys
-     
   }
 }
 ```
+
+## doSubmit
+* 说明: 提交表单时执行的方法（独立使用表单时，通过`formRef.submit()`可触发此方法）
+* 类型：async Function(context)
+* 默认：默认无需配置，通过`useCrud`自动生成
