@@ -16,8 +16,8 @@ installOptions = {
 
 ## commonOptions
 * 说明：公共CrudOptions,运行时将于页面的crudOptions合并
-* 类型：Function():[CrudOptions](./crud-options.md)
-* 返回：Object:[CrudOptions](./crud-options.md)
+* 类型：Function():[CrudOptions](./crud-options/)
+* 返回：Object:[CrudOptions](./crud-options/)
 * 示例：
 ```js
 const installOptions = {

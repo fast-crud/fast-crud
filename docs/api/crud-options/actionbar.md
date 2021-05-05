@@ -2,7 +2,7 @@
 # actionbar
 * 说明: 动作条配置
 * 类型： Object
-* 更多参数： [FsActionbar](./components/crud/actionbar/index.md)
+* 更多参数： [FsActionbar](/api/components/crud/actionbar/index.md)
 
 ## show
 * 说明：显示或隐藏查询框

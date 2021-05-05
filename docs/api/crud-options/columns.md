@@ -52,7 +52,7 @@ const crudOptions = {
 * 说明：字段类型，初始化时，将会使用type代表的字段配置与用户的配置合并。
 * 类型：String
 
-更多帮助，请参考[字段类型](../guide/advance/column-type.md)
+更多帮助，请参考[字段类型](/guide/advance/column-type.md)
 
 
 

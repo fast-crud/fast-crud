@@ -1,7 +1,7 @@
 
 # toolbar 工具条
 
-更多参数见：[FsToolbar](./components/crud/toolbar/index.md)
+更多参数见：[FsToolbar](/api/components/crud/toolbar/index.md)
 
 ## show
 * 说明：显示或隐藏查询框

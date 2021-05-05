@@ -1,6 +1,6 @@
 
 # search【查询框】
-更多参数见：[FsSearch](./components/crud/search/index.md)
+更多参数见：[FsSearch](/api/components/crud/search/index.md)
 
 ## show
 * 说明：显示或隐藏查询框

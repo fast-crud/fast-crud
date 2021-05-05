@@ -1,7 +1,7 @@
 
 ## table【表格配置】
 
-更多参数见：[FsTable](./components/crud/crud/fs-table.md)
+更多参数见：[FsTable](/api/components/crud/crud/fs-table.md)
 支持 el-table | a-table的配置
 
 ## show
