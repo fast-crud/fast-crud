@@ -9,8 +9,15 @@
 ### 1.安装
 
 ```shell script
-#使用npm
+#安装fast-crud
 npm i  @fast-crud/fast-crud
+
+#安装ui，根据你选择的基础组件
+# element
+npm i  @fast-crud/ui-element
+# or antdv
+npm i  @fast-crud/ui-antdv
+
 
 ```
 

@@ -5,3 +5,7 @@
     font-size: 0.8rem;
     font-weight: 400;
 }
+
+.image {
+    max-height: 200px !important;
+}
