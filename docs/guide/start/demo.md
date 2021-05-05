@@ -19,39 +19,45 @@ src
 执行如下命令即可运行示例项目
 ```shell script
 git clone https://gitee.com/fast-crud/fast-crud.git
-# 运行 antdv版示例
+# 运行 antdv版示例,进入demo-antdv目录
 cd fast-crud/packages/demo-antdv  
-# 运行 element版示例
+# 运行 element版示例，进入demo-element目录
 cd fast-crud/packages/demo-element  
 
+# 启动demo
 npm install  #或者yarn install
-
-npm run dev
+npm run demo
 ```
-
-
-
-### 权限管理示例运行
-如果想要运行权限管理示例，执行如下命令
-```shell script
-npm run dev:pm
-```
-注意：权限管理需要先运行后台，请查看权限管理帮助文档获取更多信息
-
 
 ### 调试运行
-如果想要修改`fast-crud`或者`extends-uploader`代码后在示例中热加载  
-需要安装`lerna`，执行如下命令
+如果你想要贡献代码，那你肯定想要在修改`fast-crud`源码后立即在示例中看到效果。    
+
+请按如下步骤启动：    
+1、 需要先将所有子项目都执行`npm install` 
 ```shell script
 git clone https://gitee.com/fast-crud/fast-crud.git
 cd fast-crud
+# 可以通过lerna bootstrap命令一次性全部install
+# 安装lerna
 npm install lerna -g
-lerna bootstrap 
+# 通过bootstrap命令将fast-crud和extends-uploader
+lerna bootstrap
 
+# 也可以手动进入fast-crud和extends-xxx目录，一个个单独install
+cd ./packages/fast-crud
+npm install
+
+cd ./packages/extends/extends-uploader
+npm install
+
+```
+
+2、 然后开发模式启动
+```
 # 运行 antdv版示例
 cd fast-crud/packages/demo-antdv  
 # 运行 element版示例
 cd fast-crud/packages/demo-element  
-npm install  #或者yarn install
+npm install  #第一步执行过，就无需再执行
 npm run dev
 ```

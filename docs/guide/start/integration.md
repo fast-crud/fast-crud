@@ -10,7 +10,7 @@
 
 ```shell script
 #使用npm
-npm i  @fast-crud/fast-crud @fast-crud/fast-crud-extends
+npm i  @fast-crud/fast-crud
 
 ```
 
@@ -61,9 +61,12 @@ app.use(FastCrud, {
 那么你还需要安装对应的扩展插件。
 
 以下为文件上传、图片裁剪扩展组件安装示例
+```
+npm install @fast-crud/extends-uploader
+```
 ```js
-import { FsUploader } from "@fast-crud/fast-crud-extends";
-
+import { FsUploader } from "@fast-crud/extends-uploader";
+import "@fast-crud/extends-uploader/dist/style.css";
 app.use(FsUploader, {
     defaultType: "cos",
     cos: {
@@ -154,3 +157,7 @@ app.use(FsUploader, {
 
 ### 4. 完成
 现在`fast-crud`已经集成到你的项目中，你可以按照上一节学习的，在你的实际项目里开始你的crud开发了。
+
+## starter
+自己手动集成挺麻烦的？以下提供了当下流行的`admin`框架的集成好的`starter`，开箱即用
+### vben
