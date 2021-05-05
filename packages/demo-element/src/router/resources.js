@@ -12,6 +12,19 @@ const resources = [
     component: "/home/index.vue"
   },
   {
+    title: "Demo",
+    name: "demo",
+    path: "/demo",
+    redirect: "/demo/test",
+    children: [
+      {
+        title: "Test",
+        path: "/demo/test",
+        component: "/demo/test/index.vue"
+      }
+    ]
+  },
+  {
     title: "核心特性",
     name: "basis",
     path: "/basis",
