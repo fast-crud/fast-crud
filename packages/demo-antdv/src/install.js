@@ -1,11 +1,12 @@
-import { message, notification, Modal } from "ant-design-vue";
 import { request, requestForMock } from "./api/service";
 import "./mock";
 import { FastCrud } from "@fast-crud/fast-crud";
 import "@fast-crud/fast-crud/dist/style.css";
 import FsUploader from "@fast-crud/extends-uploader";
 import "@fast-crud/extends-uploader/dist/style.css";
+import UiAntdv from "@fast-crud/ui-antdv";
 export default function (app) {
+  app.use(UiAntdv);
   app.use(FastCrud, {
     async dictRequest({ url }) {
       return await requestForMock({ url });
@@ -28,14 +29,6 @@ export default function (app) {
           display: "flex"
         }
       };
-    },
-    ui: {
-      name: "antdv",
-      target: {
-        Message: message,
-        Notification: notification,
-        MessageBox: Modal
-      }
     }
   });
 

@@ -22,7 +22,8 @@ export default ({ command, mode }) => {
       { find: /@fast-crud\/fast-crud\/dist/, replacement: path.resolve("../fast-crud/src/") },
       { find: /@fast-crud\/fast-crud$/, replacement: path.resolve("../fast-crud/src/") },
       { find: /@fast-crud\/extends-uploader\/dist/, replacement: path.resolve("../extends/extends-uploader/src/") },
-      { find: /@fast-crud\/extends-uploader$/, replacement: path.resolve("../extends/extends-uploader/src/") }
+      { find: /@fast-crud\/extends-uploader$/, replacement: path.resolve("../extends/extends-uploader/src/") },
+      { find: /@fast-crud\/ui-element$/, replacement: path.resolve("../ui/ui-element/src/") }
     ];
   }
 

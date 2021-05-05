@@ -1,11 +1,12 @@
-import { ElMessage, ElNotification, ElMessageBox } from "element-plus";
 import { request, requestForMock } from "./api/service";
 import "./mock";
 import { FastCrud } from "@fast-crud/fast-crud";
 import "@fast-crud/fast-crud/dist/style.css";
 import FsUploader from "@fast-crud/extends-uploader";
 import "@fast-crud/extends-uploader/dist/style.css";
+import UiElement from "@fast-crud/ui-element";
 export default function (app) {
+  app.use(UiElement); // 先安装ui
   app.use(FastCrud, {
     async dictRequest({ url }) {
       return await requestForMock({ url });
@@ -29,14 +30,6 @@ export default function (app) {
           labelWidth: "150px"
         }
       };
-    },
-    ui: {
-      name: "element",
-      target: {
-        Message: ElMessage,
-        Notification: ElNotification,
-        MessageBox: ElMessageBox
-      }
     }
   });
 

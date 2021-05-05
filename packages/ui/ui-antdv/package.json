@@ -1,0 +1,12 @@
+{
+  "name": "@fast-crud/ui-antdv",
+  "version": "0.5.1",
+  "description": "",
+  "main": "index.js",
+  "module": "./src/index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Greper",
+  "license": "MIT"
+}
