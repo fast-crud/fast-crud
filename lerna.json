@@ -4,6 +4,11 @@
     "packages/extends/*",
     "packages/ui/*"
   ],
+  "command": {
+    "bootstrap": {
+      "npmClientArgs": ["--no-package-lock"]
+    }
+  },
   "npmClient": "yarn",
   "version": "0.5.1"
 }
