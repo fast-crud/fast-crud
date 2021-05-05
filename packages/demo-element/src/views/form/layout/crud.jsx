@@ -1,5 +1,5 @@
 import * as api from "./api";
-import { dict, compute } from "/src/fs";
+import { dict, compute } from "@fast-crud/fast-crud";
 export default function ({ expose }) {
   const pageRequest = async (query) => {
     return await api.GetList(query);

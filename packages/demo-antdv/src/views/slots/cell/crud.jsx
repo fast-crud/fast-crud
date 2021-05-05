@@ -1,5 +1,5 @@
 import * as api from "./api";
-import { dict } from "/src/fs";
+import { dict } from "@fast-crud/fast-crud";
 import moment from "moment";
 export default function ({ expose }) {
   const pageRequest = async (query) => {

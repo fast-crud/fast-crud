@@ -1,5 +1,5 @@
 import * as api from "./api";
-import { utils } from "/src/fs";
+import { utils } from "@fast-crud/fast-crud";
 import dayjs from "dayjs";
 export default function ({ crudRef }) {
   const pageRequest = async (query) => {

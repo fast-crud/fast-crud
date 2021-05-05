@@ -8,7 +8,7 @@
 
 <script>
 import { defineComponent, ref, onMounted } from "vue";
-import { useCrud, useExpose } from "/src/fs";
+import { useCrud, useExpose } from "@fast-crud/fast-crud";
 import createCrudOptions from "./crud";
 import _ from "lodash-es";
 import { ElMessage } from "element-plus";

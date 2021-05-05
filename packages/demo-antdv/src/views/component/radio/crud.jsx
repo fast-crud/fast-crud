@@ -1,6 +1,5 @@
 import * as api from "./api";
-import { requestForMock } from "/src/api/service";
-import { dict } from "/src/fs";
+import { dict } from "@fast-crud/fast-crud";
 export default function ({ expose }) {
   const pageRequest = async (query) => {
     return await api.GetList(query);

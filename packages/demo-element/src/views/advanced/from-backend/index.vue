@@ -4,7 +4,7 @@
 
 <script>
 import { defineComponent, ref, onMounted } from "vue";
-import { useCrud, dict, useExpose } from "/src/fs";
+import { useCrud, dict, useExpose } from "@fast-crud/fast-crud";
 import createCrudOptions from "./crud";
 import { GetCrud } from "./api";
 import _ from "lodash-es";

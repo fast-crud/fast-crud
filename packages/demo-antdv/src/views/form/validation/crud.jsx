@@ -1,5 +1,5 @@
 import * as api from "./api";
-import { dict, useExpose } from "/src/fs";
+import { dict, useExpose } from "@fast-crud/fast-crud";
 export default function ({ expose }) {
   const { getFormRef, getFormData } = expose;
   const validatePass1 = async (rule, value) => {

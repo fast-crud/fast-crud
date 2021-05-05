@@ -1,5 +1,5 @@
 import * as api from "./api";
-import { compute } from "/src/fs";
+import { compute } from "@fast-crud/fast-crud";
 import { ElMessage } from "element-plus";
 export default function ({ expose }) {
   const pageRequest = async (query) => {
