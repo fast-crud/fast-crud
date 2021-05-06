@@ -279,7 +279,7 @@ function useTable(props, ctx) {
   };
 
   const computedClass = computed(() => {
-    const clazz = { compact: toolbar.compact !== false };
+    const clazz = { compact: props.toolbar.compact !== false };
     if (props.customClass) {
       clazz[props.customClass] = true;
     }

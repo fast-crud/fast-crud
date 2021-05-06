@@ -10,6 +10,7 @@
         @click="handleNavMenuClick"
       >
         <a-menu-item key="http://fast-crud.docmirror.cn/">文档</a-menu-item>
+        <a-menu-item key="http://fast-crud.docmirror.cn/element/">element版</a-menu-item>
         <a-menu-item key="https://github.com/fast-crud/fast-crud">gitee</a-menu-item>
         <a-menu-item key="https://gitee.com/fast-crud/fast-crud">github</a-menu-item>
       </a-menu>

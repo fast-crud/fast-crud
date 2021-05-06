@@ -15,7 +15,7 @@
         <fs-icon :icon="$fsui.icons.arrowRight" />
       </div>
       <div class="right">
-        <img src="./image/gif.webp" />
+        <img style="border: 1px solid #eee" src="./image/crud.png" />
       </div>
     </div>
     <div class="footer_box">

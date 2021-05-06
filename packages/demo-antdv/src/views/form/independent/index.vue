@@ -42,7 +42,8 @@ function useFormDirect() {
           name: "a-input",
           vModel: "value",
           allowClear: true
-        }
+        },
+        rules: [{ required: true, message: "此项必填" }]
       },
       groupField: {
         title: "分组字段",
@@ -50,7 +51,8 @@ function useFormDirect() {
           name: "a-input",
           vModel: "value",
           allowClear: true
-        }
+        },
+        rules: [{ required: true, message: "此项必填" }]
       }
     },
     group: {
@@ -107,7 +109,8 @@ function useFormWrapper() {
           name: "a-input",
           vModel: "value",
           allowClear: true
-        }
+        },
+        rules: [{ required: true, message: "此项必填" }]
       },
       groupField: {
         title: "分组字段",
@@ -115,7 +118,8 @@ function useFormWrapper() {
           name: "a-input",
           vModel: "value",
           allowClear: true
-        }
+        },
+        rules: [{ required: true, message: "此项必填" }]
       }
     },
     group: {

@@ -39,14 +39,16 @@ function useFormDirect() {
         component: {
           name: "el-input",
           allowClear: true
-        }
+        },
+        rules: [{ required: true, message: "此项必填" }]
       },
       groupField: {
         title: "分组字段",
         component: {
           name: "el-input",
           allowClear: true
-        }
+        },
+        rules: [{ required: true, message: "此项必填" }]
       }
     },
     group: {
@@ -97,14 +99,16 @@ function useFormWrapper() {
         component: {
           name: "el-input",
           allowClear: true
-        }
+        },
+        rules: [{ required: true, message: "此项必填" }]
       },
       groupField: {
         title: "分组字段",
         component: {
           name: "el-input",
           allowClear: true
-        }
+        },
+        rules: [{ required: true, message: "此项必填" }]
       }
     },
     group: {

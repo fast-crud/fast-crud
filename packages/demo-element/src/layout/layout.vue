@@ -11,6 +11,7 @@
         @select="handleNavMenuClick"
       >
         <el-menu-item index="http://fast-crud.docmirror.cn/">文档</el-menu-item>
+        <el-menu-item index="http://fast-crud.docmirror.cn/antdv/">antdv版</el-menu-item>
         <el-menu-item index="https://gitee.com/fast-crud/fast-crud/">gitee</el-menu-item>
         <el-menu-item index="https://github.com/fast-crud/fast-crud/">github</el-menu-item>
       </el-menu>
