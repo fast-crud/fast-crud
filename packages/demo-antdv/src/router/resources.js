@@ -206,11 +206,6 @@ const resources = [
         title: "表头过滤",
         path: "/feature/filter",
         component: "/feature/filter/index.vue"
-      },
-      {
-        title: "批量删除",
-        path: "/feature/batch-delete",
-        component: "/feature/batch-delete/index.vue"
       }
     ]
   },

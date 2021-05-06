@@ -49,13 +49,10 @@ export default function ({ expose }) {
               { text: "关", value: "0" },
               { text: "停", value: "2" }
             ],
-            // specify the condition of filtering result
-            // here is that finding the name started with `value`
-            onFilter: (value, record) => {
-              return record.radio === value;
+            filterMethod: (value, row) => {
+              return row.radio === value;
             },
-            sorter: (a, b) => a.radio - b.radio,
-            sortDirections: ["descend"]
+            sortable: true
           }
         }
       }

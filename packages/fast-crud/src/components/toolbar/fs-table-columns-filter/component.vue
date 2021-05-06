@@ -25,6 +25,7 @@
                 <component
                   :is="$fsui.checkbox.name"
                   v-model:[$fsui.checkbox.modelValue]="element.show"
+                  :disabled="element.disabled"
                   class="item-label"
                   @change="showChange(index, $event)"
                 >
@@ -191,7 +192,8 @@ export default {
           key: item.key,
           title: item.title,
           show: item.show ?? true,
-          fixed: item.fixed ?? false
+          fixed: item.fixed ?? false,
+          disabled: item.disabledColumnsFilter ?? false
         };
         columns.push(column);
       });

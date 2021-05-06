@@ -1,6 +1,7 @@
 import * as api from "./api";
 import { dict } from "@fast-crud/fast-crud";
 import { ref } from "vue";
+import { compute } from "../../../../../fast-crud/src";
 export default function ({ expose }) {
   const pageRequest = async (query) => {
     return await api.GetList(query);
@@ -16,7 +17,15 @@ export default function ({ expose }) {
   const addRequest = async ({ form }) => {
     return await api.AddObj(form);
   };
+
+  const selectedIds = ref([]);
+
+  const onSelectionChange = (changed) => {
+    console.log("selection", changed);
+    selectedIds.value = changed.map((item) => item.id);
+  };
   return {
+    selectedIds,
     crudOptions: {
       request: {
         pageRequest,
@@ -24,7 +33,20 @@ export default function ({ expose }) {
         editRequest,
         delRequest
       },
+      table: {
+        onSelectionChange
+      },
       columns: {
+        _checked: {
+          title: "选择",
+          form: { show: false },
+          column: {
+            type: "selection",
+            align: "center",
+            width: "55px",
+            disabledColumnsFilter: true //禁止在列设置中选择
+          }
+        },
         id: {
           title: "ID",
           key: "id",
@@ -42,21 +64,7 @@ export default function ({ expose }) {
           type: "dict-radio",
           dict: dict({
             url: "/dicts/OpenStatusEnum?single"
-          }),
-          column: {
-            filters: [
-              { text: "开", value: "1" },
-              { text: "关", value: "0" },
-              { text: "停", value: "2" }
-            ],
-            // specify the condition of filtering result
-            // here is that finding the name started with `value`
-            onFilter: (value, record) => {
-              return record.radio === value;
-            },
-            sorter: (a, b) => a.radio - b.radio,
-            sortDirections: ["descend"]
-          }
+          })
         }
       }
     }

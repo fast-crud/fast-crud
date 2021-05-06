@@ -5,13 +5,13 @@ const options = {
 };
 const list = [
   {
-    radio: 1
+    radio: "1"
   },
   {
-    radio: 2
+    radio: "2"
   },
   {
-    radio: 0
+    radio: "0"
   }
 ];
 options.list = list;

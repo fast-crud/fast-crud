@@ -12,10 +12,10 @@ const list = [
     validation: ["http://greper.veryreader.com/extends/avatar.jpg"]
   },
   {
-    radio: 2
+    radio: "2"
   },
   {
-    radio: 0
+    radio: "0"
   }
 ];
 options.list = list;

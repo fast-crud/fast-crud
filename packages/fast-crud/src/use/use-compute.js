@@ -17,10 +17,18 @@ function findComputeValues(target, excludes, isAsync) {
   eachDeep(target, (value, key, parent, context) => {
     if (checkFunc(value)) {
       const path = context.path;
+      console.log("path", path);
       if (excludes) {
         for (const exclude of excludes) {
-          if (path.startsWith(exclude)) {
-            return false;
+          if (typeof exclude === "string") {
+            if (path.startsWith(exclude)) {
+              return false;
+            }
+          } else if (exclude instanceof RegExp) {
+            debugger;
+            if (exclude.test(path)) {
+              return true;
+            }
           }
         }
       }
@@ -45,12 +53,14 @@ function doAsyncCompute(dependAsyncValues, getContextFn) {
 }
 
 function setAsyncComputeValue(target, asyncValuesMap) {
+  debugger;
   if (asyncValuesMap == null || Object.keys(asyncValuesMap).length <= 0) {
     return;
   }
   _.forEach(asyncValuesMap, (valueRef, key) => {
     _.set(target, key, valueRef.value == null ? null : valueRef.value);
   });
+  console.log("set async value", target);
 }
 
 function doComputed(target, getContextFn, excludes, userComputedFn) {
@@ -58,6 +68,7 @@ function doComputed(target, getContextFn, excludes, userComputedFn) {
   const dependValues = findComputeValues(raw, excludes, false);
 
   const dependAsyncValues = findComputeValues(raw, excludes, true);
+  debugger;
   const asyncValuesMap = doAsyncCompute(dependAsyncValues, getContextFn);
 
   if (Object.keys(dependValues).length <= 0) {
@@ -107,13 +118,15 @@ function compute(computeFn) {
 }
 
 export class AsyncComputeValue {
-  constructor({ watch, asyncFn }) {
+  constructor({ watch, asyncFn, defaultValue }) {
     this.watch = watch;
     this.asyncFn = asyncFn;
+    this.defaultValue = defaultValue;
   }
 
   buildAsyncRef(getContextFn) {
-    const asyncRef = ref();
+    getContextFn = getContextFn || function () {};
+    const asyncRef = ref(this.defaultValue);
     const computedValue = computed(() => {
       if (this.watch) {
         return this.watch(getContextFn());
@@ -124,6 +137,7 @@ export class AsyncComputeValue {
     watch(
       () => computedValue.value,
       async (value) => {
+        console.log("async fnc exec");
         //执行异步方法
         asyncRef.value = await this.asyncFn(value, getContextFn());
       },

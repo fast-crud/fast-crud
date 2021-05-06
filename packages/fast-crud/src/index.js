@@ -7,8 +7,8 @@ import { i18n, useI18n } from "./local/index.ts";
 import { uiContext } from "./ui/index.ts";
 import { useDictDefine, useCompute } from "./use";
 const { dict, setDictRequest } = useDictDefine();
-const { ComputeValue, compute } = useCompute();
-export { ComputeValue, compute, dict, utils, useI18n, uiContext };
+const { ComputeValue, compute, asyncCompute } = useCompute();
+export { ComputeValue, compute, asyncCompute, dict, utils, useI18n, uiContext };
 export const FastCrud = {
   install(app, options) {
     if (options?.ui) {

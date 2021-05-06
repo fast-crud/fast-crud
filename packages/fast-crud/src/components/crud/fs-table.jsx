@@ -4,6 +4,7 @@ import FsRowHandle from "./fs-row-handle.vue";
 import FsComponentRender from "../render/fs-component-render";
 import "./fs-table.less";
 import { uiContext } from "../../ui";
+import { useCompute } from "../../use/use-compute";
 
 /**
  * table封装
@@ -42,7 +43,7 @@ export default {
     data: {}
   },
   emits: ["row-handle", "value-change"],
-  setup() {
+  setup(props) {
     const tableRef = ref();
     const componentRefs = ref([]);
     const getComponentRef = (index, key) => {
@@ -53,10 +54,14 @@ export default {
       const cellRef = row[key];
       return cellRef.getTargetRef();
     };
+
+    const { doComputed } = useCompute();
+    const computedColumns = doComputed(props.columns, null, [/\[.+\]component/]);
     return {
       tableRef,
       componentRefs,
-      getComponentRef
+      getComponentRef,
+      computedColumns
     };
   },
   methods: {
