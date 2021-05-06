@@ -17,26 +17,56 @@ export default {
   name: "FsComponentRender",
   inheritAttrs: false,
   props: {
+    /**
+     * modelValue
+     */
     modelValue: {},
+    /**
+     * 组件名称
+     */
     name: {
       type: String
     },
+    /**
+     * 插槽
+     */
+    slots: {
+      type: Object
+    },
+    /**
+     * 子元素，同slots
+     */
     children: {
       type: Object
     },
+    /**
+     * 事件监听
+     */
     on: {
       type: Object
     },
+    /**
+     * 同 on
+     */
     events: {
       type: Object
     },
+    /**
+     * 上下文scope
+     */
     scope: {
       type: Object
     },
+    /**
+     * modelValue的属性名
+     */
     vModel: {
       type: String,
       Object
     },
+    /**
+     * 组件参数，会与attrs合并
+     */
     props: {}
   },
   emits: ["update:dict", "update:modelValue"],
@@ -79,7 +109,7 @@ export default {
 
     const childrenRender = () => {
       const children = {};
-      _.forEach(props.children, (item, key) => {
+      let createChildren = (item, key) => {
         if (item instanceof Function) {
           children[key] = (scope) => {
             return item({ ...props.scope, scope });
@@ -88,9 +118,10 @@ export default {
           children[key] = () => {
             return item;
           };
-
         }
-      });
+      };
+      _.forEach(props.children, createChildren);
+      _.forEach(props.slots, createChildren);
       return children;
     };
     // eslint-disable-next-line vue/no-setup-props-destructure

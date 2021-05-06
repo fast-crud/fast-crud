@@ -51,7 +51,7 @@
       :columns="computedTable.columns"
       :row-handle="rowHandle"
       :data="data"
-      :slots="computedCellSlots"
+      :cell-slots="computedCellSlots"
       @row-handle="onRowHandle"
     />
     <!-- 编辑对话框 -->

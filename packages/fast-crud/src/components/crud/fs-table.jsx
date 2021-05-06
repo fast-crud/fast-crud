@@ -14,9 +14,13 @@ export default {
   components: { FsComponentRender, FsRowHandle },
   props: {
     /**
-     * 插槽
+     * table插槽
      */
     slots: {},
+    /**
+     * 单元格插槽
+     */
+    cellSlots: {},
     /**
      * 列配置，支持el-table-column|a-table-column配置
      */
@@ -111,10 +115,10 @@ export default {
               return subColumns;
             };
             currentTableColumnComp = tableColumnGroupComp;
-          } else if (this.slots && this.slots[cellSlotName]) {
+          } else if (this.cellSlots && this.cellSlots[cellSlotName]) {
             cellSlots.default = (scope) => {
               scope.row = scope[tableColumnCI.row];
-              return this.slots[cellSlotName](scope);
+              return this.cellSlots[cellSlotName](scope);
             };
           } else if (item.component) {
             cellSlots.default = (scope) => {
@@ -202,6 +206,12 @@ export default {
     const dataSource = {
       [proxy.$fsui.table.data]: this.data
     };
+
+    if (this.slots) {
+      _.forEach(this.slots, (item, key) => {
+        tableSlots[key] = item;
+      });
+    }
 
     const tableRender = <tableComp ref={"tableRef"} {...this.$attrs} {...dataSource} v-slots={tableSlots} />;
     if (proxy.$fsui.table.vLoading) {

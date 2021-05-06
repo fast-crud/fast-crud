@@ -198,9 +198,14 @@ const resources = [
         component: "/feature/hide/index.vue"
       },
       {
-        title: "可选择",
-        path: "/feature/checkable",
-        component: "/feature/checkable/index.vue"
+        title: "多选&批量删除",
+        path: "/feature/selection",
+        component: "/feature/selection/index.vue"
+      },
+      {
+        title: "表头过滤",
+        path: "/feature/filter",
+        component: "/feature/filter/index.vue"
       },
       {
         title: "批量删除",
