@@ -1,7 +1,6 @@
 import * as api from "./api";
 import { dict } from "@fast-crud/fast-crud";
 import { ref } from "vue";
-import { compute } from "../../../../../fast-crud/src";
 export default function ({ expose }) {
   const pageRequest = async (query) => {
     return await api.GetList(query);
