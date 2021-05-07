@@ -1,6 +1,6 @@
 import { requestForMock } from "../../../api/service";
 const request = requestForMock;
-const apiPrefix = "/FeatureDropdown";
+const apiPrefix = "/FeatureHeaderGroup";
 export function GetList(query) {
   return request({
     url: apiPrefix + "/page",

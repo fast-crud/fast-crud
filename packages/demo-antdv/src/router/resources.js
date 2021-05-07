@@ -184,7 +184,7 @@ const resources = [
     ]
   },
   {
-    title: "特性示例",
+    title: "表格特性",
     path: "feature",
     children: [
       {
@@ -206,6 +206,21 @@ const resources = [
         title: "表头过滤",
         path: "/feature/filter",
         component: "/feature/filter/index.vue"
+      },
+      {
+        title: "行展开",
+        path: "/feature/expand",
+        component: "/feature/expand/index.vue"
+      },
+      {
+        title: "树形表格",
+        path: "/feature/tree",
+        component: "/feature/tree/index.vue"
+      },
+      {
+        title: "多级表头",
+        path: "/feature/header-group",
+        component: "/feature/header-group/index.vue"
       }
     ]
   },

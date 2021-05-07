@@ -25,7 +25,6 @@ function findComputeValues(target, excludes, isAsync) {
               return false;
             }
           } else if (exclude instanceof RegExp) {
-            debugger;
             if (exclude.test(path)) {
               return true;
             }
@@ -53,7 +52,6 @@ function doAsyncCompute(dependAsyncValues, getContextFn) {
 }
 
 function setAsyncComputeValue(target, asyncValuesMap) {
-  debugger;
   if (asyncValuesMap == null || Object.keys(asyncValuesMap).length <= 0) {
     return;
   }
@@ -68,7 +66,6 @@ function doComputed(target, getContextFn, excludes, userComputedFn) {
   const dependValues = findComputeValues(raw, excludes, false);
 
   const dependAsyncValues = findComputeValues(raw, excludes, true);
-  debugger;
   const asyncValuesMap = doAsyncCompute(dependAsyncValues, getContextFn);
 
   if (Object.keys(dependValues).length <= 0) {

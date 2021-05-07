@@ -16,14 +16,7 @@ export default function ({ expose }) {
   const addRequest = async ({ form }) => {
     return await api.AddObj(form);
   };
-  const selectedRowKeys = ref([]);
-
-  const onSelectChange = (changed) => {
-    console.log("selection", changed);
-    selectedRowKeys.value = changed;
-  };
   return {
-    selectedRowKeys, //返回给index.vue去使用
     crudOptions: {
       request: {
         pageRequest,
@@ -32,12 +25,14 @@ export default function ({ expose }) {
         delRequest
       },
       table: {
-        rowSelection: {
-          selectedRowKeys: selectedRowKeys,
-          onChange: onSelectChange,
-          getCheckboxProps: (record) => ({
-            disabled: record.id === 1 // 此处演示第一行禁用
-          })
+        slots: {
+          expandedRowRender: (scope) => {
+            return (
+              <div>
+                index: {scope.index} ; row: {JSON.stringify(scope.record)}
+              </div>
+            );
+          }
         }
       },
       columns: {

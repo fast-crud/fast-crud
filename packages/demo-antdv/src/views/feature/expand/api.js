@@ -1,6 +1,6 @@
 import { requestForMock } from "../../../api/service";
 const request = requestForMock;
-const apiPrefix = "/FeatureDropdown";
+const apiPrefix = "/FeatureExpand";
 export function GetList(query) {
   return request({
     url: apiPrefix + "/page",
@@ -38,5 +38,13 @@ export function GetObj(id) {
     url: apiPrefix + "/info",
     method: "get",
     params: { id }
+  });
+}
+
+export function BatchDelete(ids) {
+  return request({
+    url: apiPrefix + "/batchDelete",
+    method: "post",
+    data: { ids }
   });
 }

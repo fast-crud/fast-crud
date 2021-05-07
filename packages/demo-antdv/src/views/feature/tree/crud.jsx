@@ -1,6 +1,7 @@
 import * as api from "./api";
 import { dict } from "@fast-crud/fast-crud";
 import { ref } from "vue";
+
 export default function ({ expose }) {
   const pageRequest = async (query) => {
     return await api.GetList(query);
@@ -32,13 +33,7 @@ export default function ({ expose }) {
         delRequest
       },
       table: {
-        rowSelection: {
-          selectedRowKeys: selectedRowKeys,
-          onChange: onSelectChange,
-          getCheckboxProps: (record) => ({
-            disabled: record.id === 1 // 此处演示第一行禁用
-          })
-        }
+        rowSelection: { selectedRowKeys: selectedRowKeys, onChange: onSelectChange }
       },
       columns: {
         id: {
@@ -46,11 +41,41 @@ export default function ({ expose }) {
           key: "id",
           type: "number",
           column: {
-            width: 50
+            width: 100
           },
           form: {
             show: false
           }
+        },
+        time: {
+          title: "时间",
+          type: "datetime",
+          column: {
+            width: 180
+          }
+        },
+        province: {
+          title: "地区",
+          type: "dict-select",
+          search: { show: true },
+          form: {
+            component: { filterable: true, multiple: true }
+          },
+          dict: dict({
+            data: [
+              { value: "sz", label: "深圳" },
+              { value: "gz", label: "广州" },
+              { value: "wh", label: "武汉" },
+              { value: "sh", label: "上海" }
+            ]
+          }),
+          column: {
+            width: 300
+          }
+        },
+        amount: {
+          title: "金额(元)",
+          key: "amount"
         },
         radio: {
           title: "状态",
