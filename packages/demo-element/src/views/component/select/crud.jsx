@@ -43,6 +43,7 @@ export default function ({ expose }) {
         statusLocal: {
           title: "单选本地",
           type: "dict-select",
+          search: { show: true },
           dict: dict({
             value: "id",
             label: "text",
@@ -125,9 +126,8 @@ export default function ({ expose }) {
         },
         multiple: {
           title: "多选自动染色",
-          sortable: true,
-          width: 180,
           type: "dict-select",
+          search: { show: false },
           form: {
             title: "多选本地",
             component: {
@@ -145,6 +145,8 @@ export default function ({ expose }) {
             ]
           }),
           column: {
+            sortable: true,
+            width: 180,
             component: { color: "auto" } // 自动染色
           }
         }

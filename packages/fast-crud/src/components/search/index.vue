@@ -268,8 +268,6 @@ export default {
      * 设置form值
      */
     function setForm(newForm) {
-      debugger;
-      console.log("formref", newForm);
       _.merge(form, newForm);
     }
 
