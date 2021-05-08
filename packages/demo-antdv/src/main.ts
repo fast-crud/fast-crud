@@ -14,6 +14,7 @@ const app = createApp(App);
 app.use(Antd);
 app.use(router);
 app.use(i18n);
+console.log("i18n", i18n);
 app.use(components);
-FsCrudInstall(app);
+FsCrudInstall(app, i18n);
 app.mount("#app");

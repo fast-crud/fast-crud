@@ -2,7 +2,7 @@ import { uiContext } from "../ui";
 export default {
   // eslint-disable-next-line @typescript-eslint/no-empty-function,@typescript-eslint/no-unused-vars
   commonOptions() {},
-  defaultOptions({ t, tc }) {
+  defaultOptions({ t }) {
     const ui = uiContext.get();
     return {
       search: {
@@ -71,7 +71,7 @@ export default {
         layout: "total, sizes, prev, pager, next, jumper",
         showSizeChanger: true, // antdv
         showQuickJumper: true, // antdv
-        showTotal: (total) => tc("fs.pagination.showTotal", total) //antdv
+        showTotal: (total) => t("fs.pagination.showTotal", [total]) //antdv
       },
       table: {
         height: "100%",

@@ -34,7 +34,7 @@ export function useI18n() {
       // @ts-ignore
       t: i18n.vueI18nInstance.global.t,
       // @ts-ignore
-      tc: i18n.vueI18nInstance.global.tc,
+      tc: i18n.vueI18nInstance.global.tc
     };
   }
 
