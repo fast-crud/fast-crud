@@ -4,10 +4,9 @@
       <component
         :is="$fsui.form.name"
         ref="searchFormRef"
-        :inline="true"
         :model="form"
         v-bind="options"
-        class="search-form"
+        class="fs-search-form"
         @compositionstart="changeInputEventDisabled(true)"
         @compositionend="changeInputEventDisabled(false)"
       >
@@ -47,7 +46,7 @@
         <component :is="$fsui.formItem.name" v-if="slots['search-middle']">
           <fs-slot-render :slots="slots['search-middle']" :scope="{ form }" />
         </component>
-        <component :is="$fsui.formItem.name" class="search-btns">
+        <component :is="$fsui.formItem.name" class="fs-search-btns">
           <template v-for="(item, index) in computedButtons" :key="index">
             <fs-button v-if="item.show" v-bind="item" @click="item.click()" />
           </template>
@@ -340,7 +339,7 @@ export default {
   .ant-form-inline {
     flex-wrap: wrap;
   }
-  .search-form {
+  .fs-search-form {
     display: flex;
     align-items: center;
 
@@ -368,7 +367,7 @@ export default {
     }
   }
 
-  .search-btns {
+  .fs-search-btns {
     .fs-button {
       margin-right: 5px;
     }

@@ -40,13 +40,18 @@ export default defineComponent({
 <style lang="less">
 .demo-button {
   .fs-search {
+    .ant-form-item {
+      width: 23%;
+    }
     .ant-form-item-label {
       width: 90px;
     }
 
-    .search-btns {
+    .fs-search-btns {
       width: 100%;
-      text-align: center;
+      display: flex;
+      align-items: center;
+      justify-content: center;
     }
   }
 }

@@ -8,6 +8,7 @@ import { uiContext } from "../ui";
 import { useI18n } from "../local";
 import { useMerge } from "../use/use-merge";
 import { CrudExpose } from "../use/use-expose";
+import crud from "../../../demo-element/src/views/basis/compute/crud";
 export interface CrudOptions {
   table?: {};
   columns?: [];
@@ -67,7 +68,7 @@ export function useCrud(ctx: UseCrudProps) {
 
   const options: CrudOptions = ctx.crudOptions;
   const expose = ctx.expose;
-  const crudBinding = expose.crudBinding;
+  const { crudBinding } = expose;
 
   const { doRefresh, doValueResolve, doSearch } = expose;
 
@@ -180,14 +181,37 @@ export function useCrud(ctx: UseCrudProps) {
     };
   }
 
+  function useTable() {
+    return {
+      table: {
+        //监听el-table的服务端排序
+        onSortChange({ column, prop, order }) {
+          console.log("sort change", column, prop, order);
+          crudBinding.value.sort =
+            prop && column.sortable === "custom" ? { prop, order, asc: order === "ascending" } : null;
+          expose.doRefresh();
+        },
+        // 监听a-table的服务端排序
+        onChange(pagination, filters, sorter, { currentDataSource }) {
+          console.log("table change", sorter);
+          const { column, field, order } = sorter;
+          crudBinding.value.sort =
+            order && column.sorter === true ? { prop: field, order, asc: order === "ascend" } : null;
+          expose.doRefresh();
+        }
+      }
+    };
+  }
+
   function resetCrudOptions(options) {
     const userOptions = merge(
-      defaultCrudOptions.defaultOptions({ t, tc }),
+      defaultCrudOptions.defaultOptions({ t, tc, expose }),
       usePagination(),
       useFormSubmit(),
       useRemove(),
       useSearch(),
       useEvent(),
+      useTable(),
       defaultCrudOptions.commonOptions(ctx),
       options
     );

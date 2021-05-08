@@ -18,8 +18,9 @@ export default function (app) {
           pagination: false
         },
         request: {
-          transformQuery: ({ page, form }) => {
-            return { current: page.currentPage, size: page.pageSize, ...form };
+          transformQuery: ({ page, form, sort }) => {
+            let order = sort == null ? {} : { orderProp: sort.prop, orderAsc: sort.asc };
+            return { current: page.currentPage, size: page.pageSize, ...form, ...order };
           },
           transformRes: ({ res }) => {
             return { currentPage: res.current, pageSize: res.size, ...res };

@@ -7,7 +7,8 @@ export default {
     return {
       search: {
         options: {
-          layout: "inline"
+          layout: "inline",
+          inline: true
         },
         show: true,
         buttons: {

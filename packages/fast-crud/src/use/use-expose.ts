@@ -89,7 +89,9 @@ export function useExpose(props: UseExposeProps): CrudExpose {
       if (crudRef.value) {
         searchFormData = crudRef.value.getSearchFormData();
       }
-      let query = { page, form: searchFormData };
+
+      const sort = crudBinding.value.sort || {};
+      let query = { page, form: searchFormData, sort };
       if (crudBinding.value.request.transformQuery) {
         query = crudBinding.value.request.transformQuery(query);
       }

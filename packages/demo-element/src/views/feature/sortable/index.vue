@@ -7,7 +7,7 @@ import { defineComponent, ref, onMounted } from "vue";
 import createCrudOptions from "./crud";
 import { useExpose, useCrud } from "@fast-crud/fast-crud";
 export default defineComponent({
-  name: "FeatureIndex",
+  name: "FeatureSortable",
   setup() {
     // crud组件的ref
     const crudRef = ref();

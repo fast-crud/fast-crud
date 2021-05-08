@@ -78,6 +78,33 @@ const crudOptions = {
 * 类型：Object
 参考组件配置[component](../common-options.md)
 
+### [key].column.disabledColumnsFilter
+* 说明：在列设置中禁用改字段的勾选
+* 类型：Boolean
+
+### [key].column.formatter
+* 说明：格式化显示
+* 类型：Function(context):String
+
+### [key].column.[el-table-column | a-table-column的配置]
+* 说明：column下支持 el-table-column 或 a-table-column的全部配置
+* 文档： [el-table-column](https://element-plus.gitee.io/#/zh-CN/component/table#table-column-attributes) | [a-table-column](https://2x.antdv.com/components/table-cn#API)
+* 示例：
+```js
+{ //crudOptions
+    columns:{
+       key:{
+            column:{
+                width: 200, //列宽
+                minWidth: 100 //最小列宽
+                align：'center', //对齐方式
+                fixed: 'left' //固定列
+            }
+       }
+    }   
+}
+
+```
 
 ## [key].form
 * 说明：该字段在表单里面的配置
