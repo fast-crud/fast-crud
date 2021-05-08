@@ -19,6 +19,8 @@ export type CrudExpose = {
   doRefresh;
   doPageTurn;
   doSearch;
+  getSearchFormData;
+  setSearchFormData;
 };
 export function useExpose(props: UseExposeProps): CrudExpose {
   const { crudRef, crudBinding } = props;
@@ -77,6 +79,15 @@ export function useExpose(props: UseExposeProps): CrudExpose {
       });
       logger.debug("valueResolve success:", form);
     },
+    getSearchFormData() {
+      return crudRef.value.getSearchFormData();
+    },
+    /**
+     * {form,mergeForm}
+     */
+    setSearchFormData({ form, mergeForm }) {
+      crudRef.value.setSearchFormData({ form, mergeForm });
+    },
     async doRefresh() {
       let page;
       if (crudBinding.value.pagination) {
@@ -87,7 +98,7 @@ export function useExpose(props: UseExposeProps): CrudExpose {
       }
       let searchFormData = {};
       if (crudRef.value) {
-        searchFormData = crudRef.value.getSearchFormData();
+        searchFormData = expose.getSearchFormData();
       }
 
       const sort = crudBinding.value.sort || {};
