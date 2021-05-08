@@ -10,7 +10,7 @@
     "docgen:extends": "vue-docgen -c docgen/extends.config.js",
     "docs:all": "npm run docgen:crud && npm run docgen:extends && npm run docs:build",
     "prepublish": "lerna run build --scope @fast-crud/fast-crud --scope */extends-*",
-    "publish": "lerna publish"
+    "publish": "lerna publish --conventional-commits"
   },
   "author": "Greper",
   "license": "MIT",
