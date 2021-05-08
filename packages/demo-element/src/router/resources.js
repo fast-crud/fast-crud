@@ -197,7 +197,7 @@ const resources = [
     ]
   },
   {
-    title: "特性示例",
+    title: "表格特性",
     path: "feature",
     children: [
       {
@@ -234,6 +234,11 @@ const resources = [
         title: "多级表头",
         path: "/feature/header-group",
         component: "/feature/header-group/index.vue"
+      },
+      {
+        title: "序号",
+        path: "/feature/index",
+        component: "/feature/index/index.vue"
       }
     ]
   },
