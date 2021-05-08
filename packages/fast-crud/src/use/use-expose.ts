@@ -22,7 +22,7 @@ export type CrudExpose = {
   getSearchFormData;
   setSearchFormData;
 };
-export function useExpose(props: UseExposeProps): CrudExpose {
+export function useExpose(props: UseExposeProps): { expose: CrudExpose } {
   const { crudRef, crudBinding } = props;
   const expose = {
     crudRef,
@@ -170,5 +170,5 @@ export function useExpose(props: UseExposeProps): CrudExpose {
     }
   };
 
-  return expose;
+  return { expose };
 }

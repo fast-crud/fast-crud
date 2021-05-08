@@ -25,7 +25,7 @@ export default defineComponent({
     // crud 配置的ref
     const crudBinding = ref();
     // 暴露的方法
-    const expose = useExpose({ crudRef, crudBinding });
+    const { expose } = useExpose({ crudRef, crudBinding });
     // 你的crud配置
     const asideTableRef = ref();
     const { crudOptions } = createCrudOptions({ expose, asideTableRef });

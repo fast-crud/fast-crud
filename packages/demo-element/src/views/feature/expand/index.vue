@@ -18,7 +18,7 @@ export default defineComponent({
     // crud 配置的ref
     const crudBinding = ref();
     // 暴露的方法
-    const expose = useExpose({ crudRef, crudBinding });
+    const { expose } = useExpose({ crudRef, crudBinding });
     // 你的crud配置
     const { crudOptions, selectedIds } = createCrudOptions({ expose });
     // 初始化crud配置
