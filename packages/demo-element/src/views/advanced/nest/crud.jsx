@@ -2,6 +2,7 @@ import * as api from "./api";
 import { shallowRef } from "vue";
 import SubTable from "./sub-table/index.vue";
 export default function ({ expose, asideTableRef }) {
+  const pageRequest = api.GetList;
   const editRequest = async ({ form, row }) => {
     form.id = row.id;
     return await api.UpdateObj(form);
@@ -16,7 +17,7 @@ export default function ({ expose, asideTableRef }) {
   return {
     crudOptions: {
       request: {
-        pageRequest: api.GetList,
+        pageRequest,
         addRequest,
         editRequest,
         delRequest
