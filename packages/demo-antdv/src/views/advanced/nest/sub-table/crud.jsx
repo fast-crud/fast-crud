@@ -1,6 +1,5 @@
 import * as api from "./api";
-import { dict } from "@fast-crud/fast-crud";
-export default function ({ expose }) {
+export default function ({ expose, props, ctx }) {
   const editRequest = async ({ form, row }) => {
     form.id = row.id;
     return await api.UpdateObj(form);
@@ -14,8 +13,16 @@ export default function ({ expose }) {
 
   return {
     crudOptions: {
-      pagination: {
-        layout: "total,  prev, pager, next"
+      table: {
+        customRow(record, index) {
+          const clazz = record.id === props.modelValue ? "fs-current-row" : "";
+          return {
+            onClick() {
+              ctx.emit("update:modelValue", record.id);
+            },
+            class: clazz
+          };
+        }
       },
       request: {
         pageRequest: api.GetList,
@@ -23,27 +30,22 @@ export default function ({ expose }) {
         editRequest,
         delRequest
       },
-      toolbar: {
-        compact: false
-      },
-      rowHandle: {
-        width: "210px"
-      },
-      table: {},
+      search: { show: false },
       columns: {
-        gradeId: {
-          title: "年级Id",
-          search: { show: true },
+        id: {
+          title: "ID",
+          key: "id",
           type: "number",
           column: {
-            width: 80,
-            align: "center",
-            sortable: true
+            width: 50
+          },
+          form: {
+            show: false
           }
         },
-        class: {
-          title: "班级",
-          search: { show: false },
+        name: {
+          title: "用户姓名",
+          search: { show: true },
           type: "text",
           column: {
             sortable: true

@@ -1,5 +1,5 @@
 import * as api from "./api";
-import { shallowRef } from "vue";
+import { ref, shallowRef } from "vue";
 import SubTable from "./sub-table/index.vue";
 export default function ({ expose, asideTableRef }) {
   const editRequest = async ({ form, row }) => {
@@ -12,32 +12,41 @@ export default function ({ expose, asideTableRef }) {
   const addRequest = async ({ form }) => {
     return await api.AddObj(form);
   };
+  const currentRow = ref();
 
+  const onCurrentRowChange = (id) => {
+    currentRow.value = id;
+    asideTableRef.value.setSearchFormData({ form: { gradeId: id } });
+    asideTableRef.value.doRefresh();
+  };
   return {
     crudOptions: {
+      table: {
+        customRow(record, index) {
+          const clazz = record.id === currentRow.value ? "fs-current-row" : "";
+          return {
+            onClick() {
+              onCurrentRowChange(record.id);
+            },
+            class: clazz
+          };
+        }
+      },
+      pagination: {
+        showSizeChanger: false, // antdv
+        showQuickJumper: false // antdv
+      },
       request: {
         pageRequest: api.GetList,
         addRequest,
         editRequest,
         delRequest
       },
-      pagination: {
-        layout: "total,  prev, pager, next"
-      },
       rowHandle: {
-        width: "210px"
+        width: "240px"
       },
       toolbar: {
         compact: false
-      },
-      table: {
-        "highlight-current-row": true,
-        // 监听 el-table的单行选中事件
-        onCurrentChange(currentRow) {
-          console.log("选中行", currentRow);
-          asideTableRef.value.setSearchFormData({ form: { gradeId: currentRow.id } });
-          asideTableRef.value.doRefresh();
-        }
       },
       columns: {
         id: {
@@ -65,9 +74,12 @@ export default function ({ expose, asideTableRef }) {
             // 嵌套表格字段
             rules: [{ required: true, message: "请选择用户" }],
             component: {
-              name: shallowRef(SubTable) //需要shallowRef包裹，否则会有一个性能开销的警告
+              name: shallowRef(SubTable)
             },
-            col: { span: 24 }
+            // antdv 的跨列配置，需要配置如下三个
+            col: { span: 24 },
+            labelCol: { span: 2 },
+            wrapperCol: { span: 21 }
           }
         }
       }

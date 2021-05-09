@@ -167,6 +167,14 @@ export function useExpose(props: UseExposeProps): { expose: CrudExpose } {
       }
 
       await expose.doRefresh();
+    },
+    getTableRef() {
+      return crudRef.value?.tableRef;
+    },
+    doSelectCurrentRow({ index, row }) {
+      const tableRef = expose.getTableRef();
+      console.log("tableRef", tableRef);
+      tableRef.value.setCurrentRow(row);
     }
   };
 

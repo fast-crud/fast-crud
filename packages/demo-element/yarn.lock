@@ -324,10 +324,10 @@
     minimatch "^3.0.4"
     strip-json-comments "^3.1.1"
 
-"@fast-crud/extends-uploader@^0.6.0":
-  version "0.6.0"
-  resolved "https://registry.npmjs.org/@fast-crud/extends-uploader/-/extends-uploader-0.6.0.tgz#f759877e7eaafece3b6d98649d1170a18ca4bca6"
-  integrity sha512-YLfYoNzk1Imh8nfmyGK9cdaJI/eyMnNvg3fIK1YNK8e6sZUBzMsbvZQZGBRNlbnvjefH9hVZuErhY+yVQplzAw==
+"@fast-crud/extends-uploader@^0.7.0":
+  version "0.7.0"
+  resolved "https://registry.npmjs.org/@fast-crud/extends-uploader/-/extends-uploader-0.7.0.tgz#b1e008a6c5b2adb5228d4fb5862f8d0d0e45e36b"
+  integrity sha512-8jDwDT3wai+viJ7vzsKgxVWh5vDMaU3c7j7XiJ3ta9m38alJfpS+5pRY7bqY/JeC6irBm5ehuET6eeAQnYOpaw==
   dependencies:
     ali-oss "^6.13.2"
     cos-js-sdk-v5 "^1.2.9"
@@ -339,10 +339,10 @@
     vue "^3.0.7"
     vue-cropperjs "^5.0.0"
 
-"@fast-crud/fast-crud@^0.6.0":
-  version "0.6.0"
-  resolved "https://registry.npmjs.org/@fast-crud/fast-crud/-/fast-crud-0.6.0.tgz#2c49f40ae9a5e82b72cc236cd9720e6f882867b2"
-  integrity sha512-Kq49IP2PsHpjBb6aQ4+8iAmtTlYfd95a8C8eVsKyZdCtCBBOVcqITmMnaYKUZ8E4wY65M+kRbjolKc/uX3Pdyg==
+"@fast-crud/fast-crud@^0.7.1":
+  version "0.7.1"
+  resolved "https://registry.npmjs.org/@fast-crud/fast-crud/-/fast-crud-0.7.1.tgz#b9585b3924bb4471c7fcd43f61d5eca4e2d40b3a"
+  integrity sha512-AAgAy4ieOnrj2PfSb62Sc8tw8vI+on76NwcSXXhQBT5k0vfT0mUO7B671dqneVGVmNkEGUlAuJqgdpHHKx++oA==
   dependencies:
     dayjs "^1.10.4"
     deepdash-es "^5.3.5"
@@ -351,10 +351,10 @@
     vue "^3.0.7"
     vuedraggable "^4.0.1"
 
-"@fast-crud/ui-element@^0.6.0":
-  version "0.6.0"
-  resolved "https://registry.npmjs.org/@fast-crud/ui-element/-/ui-element-0.6.0.tgz#6235188bfd2edf36a183e53de00fb65d1be7d2f5"
-  integrity sha512-eZ9Aqo01N/Pe2JJ/DdasaGedTWH3m3G2665vZPIhVLwms67ddFGfCpV1k9f+PCfdvm4XSQyONEIJdQtkk/8o+A==
+"@fast-crud/ui-element@^0.7.0":
+  version "0.7.0"
+  resolved "https://registry.npmjs.org/@fast-crud/ui-element/-/ui-element-0.7.0.tgz#c7318c9d9c274338e8eea9ef3e3e09d3ca0ce05a"
+  integrity sha512-9KaIespFEtoph3CoSvPIdVy6Cw6dLN1sbJ2dgLuKmX3qkRM2iwmQwW6kLFMiUiMJ4/RMLfMaN7SmTKedeRSRVw==
 
 "@intlify/core-base@9.1.6":
   version "9.1.6"
@@ -717,6 +717,17 @@
     estree-walker "^2.0.1"
     source-map "^0.6.1"
 
+"@vue/compiler-core@3.1.0-beta.2":
+  version "3.1.0-beta.2"
+  resolved "https://registry.npmjs.org/@vue/compiler-core/-/compiler-core-3.1.0-beta.2.tgz#fa66626d621801676d11fd28e05ca43f88c67b2f"
+  integrity sha512-HLd5kCiZojcbcu4+PqD22XKkmqvo3XuM7xRAst3y0KXMlmCnkHIK7Z5mmogPjf/xBBZllWl2CIy9+bR7wrdDSA==
+  dependencies:
+    "@babel/parser" "^7.12.0"
+    "@babel/types" "^7.12.0"
+    "@vue/shared" "3.1.0-beta.2"
+    estree-walker "^2.0.1"
+    source-map "^0.6.1"
+
 "@vue/compiler-dom@3.0.11":
   version "3.0.11"
   resolved "https://registry.yarnpkg.com/@vue/compiler-dom/-/compiler-dom-3.0.11.tgz#b15fc1c909371fd671746020ba55b5dab4a730ee"
@@ -724,6 +735,14 @@
   dependencies:
     "@vue/compiler-core" "3.0.11"
     "@vue/shared" "3.0.11"
+
+"@vue/compiler-dom@3.1.0-beta.2":
+  version "3.1.0-beta.2"
+  resolved "https://registry.npmjs.org/@vue/compiler-dom/-/compiler-dom-3.1.0-beta.2.tgz#4c415102e20b3f54f733dd47d299f396bd0026ca"
+  integrity sha512-FgGCZyaJZ81eCydc6IY0u79DVt09vURYKj95bgQJo07doHW0tHptz9N3zRudfhA0VjoXuRMeDoKHMHuxI1rVHA==
+  dependencies:
+    "@vue/compiler-core" "3.1.0-beta.2"
+    "@vue/shared" "3.1.0-beta.2"
 
 "@vue/compiler-sfc@^3.0.7":
   version "3.0.11"
@@ -774,6 +793,13 @@
   dependencies:
     "@vue/shared" "3.0.11"
 
+"@vue/reactivity@3.1.0-beta.2":
+  version "3.1.0-beta.2"
+  resolved "https://registry.npmjs.org/@vue/reactivity/-/reactivity-3.1.0-beta.2.tgz#fd4acc6b65e7ed1aa28dc85a78a67389c396c616"
+  integrity sha512-vyP7sZZguSSDXdJ+rK/4+JNBHbmoPkmfQAPmIq1IGEfoA0SHuG4Rd8Ehtrm2LDtMSh2a1gPNjRQrmMffFddhsQ==
+  dependencies:
+    "@vue/shared" "3.1.0-beta.2"
+
 "@vue/runtime-core@3.0.11":
   version "3.0.11"
   resolved "https://registry.yarnpkg.com/@vue/runtime-core/-/runtime-core-3.0.11.tgz#c52dfc6acf3215493623552c1c2919080c562e44"
@@ -781,6 +807,14 @@
   dependencies:
     "@vue/reactivity" "3.0.11"
     "@vue/shared" "3.0.11"
+
+"@vue/runtime-core@3.1.0-beta.2":
+  version "3.1.0-beta.2"
+  resolved "https://registry.npmjs.org/@vue/runtime-core/-/runtime-core-3.1.0-beta.2.tgz#abb1c0e606002fc6ac08cc1af8eaf17ebd9caa2b"
+  integrity sha512-adcboyG3NJEMgf3TBKYWAwTkN4UyMHJI1TRbUkh60t9m0QOH7cuNIDKtrEoy4XTCtH0mVfJ0P7Vob+axOMKB/A==
+  dependencies:
+    "@vue/reactivity" "3.1.0-beta.2"
+    "@vue/shared" "3.1.0-beta.2"
 
 "@vue/runtime-dom@3.0.11":
   version "3.0.11"
@@ -791,10 +825,24 @@
     "@vue/shared" "3.0.11"
     csstype "^2.6.8"
 
+"@vue/runtime-dom@3.1.0-beta.2":
+  version "3.1.0-beta.2"
+  resolved "https://registry.npmjs.org/@vue/runtime-dom/-/runtime-dom-3.1.0-beta.2.tgz#ddace09673677db312b09aa099a876b1d76bd9e9"
+  integrity sha512-LIJEJ/tR5l0bJwyPrbo7c/VFk9lVYkm0X7NowfWHL12aJfdigLNlu1t+jzUvZSt3noQdz8yKYP/zWrjOoLHvqg==
+  dependencies:
+    "@vue/runtime-core" "3.1.0-beta.2"
+    "@vue/shared" "3.1.0-beta.2"
+    csstype "^2.6.8"
+
 "@vue/shared@3.0.11":
   version "3.0.11"
   resolved "https://registry.yarnpkg.com/@vue/shared/-/shared-3.0.11.tgz#20d22dd0da7d358bb21c17f9bde8628152642c77"
   integrity sha512-b+zB8A2so8eCE0JsxjL24J7vdGl8rzPQ09hZNhystm+KqSbKcAej1A+Hbva1rCMmTTqA+hFnUSDc5kouEo0JzA==
+
+"@vue/shared@3.1.0-beta.2":
+  version "3.1.0-beta.2"
+  resolved "https://registry.npmjs.org/@vue/shared/-/shared-3.1.0-beta.2.tgz#1189078bbf081c3f19e98709c27cbbafbfcdc6f7"
+  integrity sha512-PZNk03DalUOn3f5Egf/pcaINPLwpcwshjo4PuMXV/76PBfHvKxvkVhCL+aYDfY/9ZeKH+H0hQ00otuAFRLjlKw==
 
 "@vue/test-utils@^2.0.0-0":
   version "2.0.0-rc.6"
@@ -5344,6 +5392,15 @@ vue@^3.0.7:
     "@vue/compiler-dom" "3.0.11"
     "@vue/runtime-dom" "3.0.11"
     "@vue/shared" "3.0.11"
+
+vue@^3.1.0-beta.2:
+  version "3.1.0-beta.2"
+  resolved "https://registry.npmjs.org/vue/-/vue-3.1.0-beta.2.tgz#5d9a67c41e75d45cc1facea096d1a2f8483d024c"
+  integrity sha512-kjvIWSiB4TVujOho/dQEwcOuZNtdw+pk/qF9qGpzJ9EoSq2TlF5FvUCCX8ZGslM1iQperlYftRWmiNrPUJCDYA==
+  dependencies:
+    "@vue/compiler-dom" "3.1.0-beta.2"
+    "@vue/runtime-dom" "3.1.0-beta.2"
+    "@vue/shared" "3.1.0-beta.2"
 
 vuedraggable@^4.0.1:
   version "4.0.1"

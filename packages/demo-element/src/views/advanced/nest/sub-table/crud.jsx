@@ -20,6 +20,7 @@ export default function ({ expose }) {
         editRequest,
         delRequest
       },
+      search: { show: false },
       columns: {
         id: {
           title: "ID",
@@ -32,16 +33,8 @@ export default function ({ expose }) {
             show: false
           }
         },
-        gradeId: {
-          title: "年级Id",
-          search: { show: true },
-          type: "text",
-          column: {
-            sortable: true
-          }
-        },
-        class: {
-          title: "班级",
+        name: {
+          title: "用户姓名",
           search: { show: true },
           type: "text",
           column: {

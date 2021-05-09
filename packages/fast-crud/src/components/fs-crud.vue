@@ -146,7 +146,6 @@ function useSearch(props, ctx) {
       _.merge(baseForm, form);
     }
     searchFormData.value = baseForm;
-    debugger;
     if (searchRef.value) {
       searchRef.value.setForm(form);
     }

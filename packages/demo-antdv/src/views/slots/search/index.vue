@@ -1,5 +1,8 @@
 <template>
   <fs-crud ref="crudRef" v-bind="crudBinding">
+    <template #actionbar-right>
+      <a-alert class="ml-10" type="info" message=" ↑↑↑ 这里演示查询字段通过插槽自定义" />
+    </template>
     <template #search_radio="scope">
       <a-input-number v-model:value="scope.form.radio" style="width: 200px" placeholder="字段插槽自定义" />
     </template>

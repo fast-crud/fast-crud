@@ -15,7 +15,8 @@ export default function ({ expose }) {
   return {
     crudOptions: {
       pagination: {
-        layout: "total,  prev, pager, next"
+        showSizeChanger: false, // antdv
+        showQuickJumper: false // antdv
       },
       request: {
         pageRequest: api.GetList,
@@ -27,7 +28,7 @@ export default function ({ expose }) {
         compact: false
       },
       rowHandle: {
-        width: "210px"
+        width: "230px"
       },
       table: {},
       columns: {

@@ -1,23 +1,29 @@
 <template>
-  <fs-crud ref="crudRef" v-bind="crudBinding" />
+  <div>当前选中值：{{ modelValue }}</div>
+  <div style="height: 400px">
+    <fs-crud ref="crudRef" v-bind="crudBinding" />
+  </div>
 </template>
 
-<script lang="ts">
-import { defineComponent, ref, onMounted } from "vue";
+<script>
+import { defineComponent, ref, onMounted, watch } from "vue";
 import createCrudOptions from "./crud";
 import { useExpose, useCrud } from "@fast-crud/fast-crud";
-import { CrudExpose } from "../../../../../../fast-crud/src/use";
 export default defineComponent({
   name: "SubTable",
-  setup() {
+  props: {
+    modelValue: {}
+  },
+  emits: ["update:modelValue"],
+  setup(props, ctx) {
     // crud组件的ref
     const crudRef = ref();
     // crud 配置的ref
     const crudBinding = ref();
     // 暴露的方法
-    const expose: CrudExpose = useExpose({ crudRef, crudBinding });
+    const { expose } = useExpose({ crudRef, crudBinding });
     // 你的crud配置
-    const { crudOptions, selectedIds } = createCrudOptions({ expose });
+    const { crudOptions } = createCrudOptions({ expose });
     // 初始化crud配置
     // eslint-disable-next-line @typescript-eslint/no-unused-vars,no-unused-vars
     const { resetCrudOptions } = useCrud({ expose, crudOptions });
@@ -29,6 +35,21 @@ export default defineComponent({
       expose.doRefresh();
     });
 
+    //你的业务代码
+    watch(
+      () => {
+        return props.modelValue;
+      },
+      (value) => {
+        console.log("modelValue changed", value);
+      }
+    );
+
+    crudBinding.value.table.highlightCurrentRow = true;
+    crudBinding.value.table.onCurrentChange = (currentRow) => {
+      ctx.emit("update:modelValue", currentRow.id);
+    };
+
     return {
       crudBinding,
       crudRef
@@ -36,3 +57,8 @@ export default defineComponent({
   }
 });
 </script>
+<style lang="less" scoped>
+/deep/.fs-crud-container.compact .el-table--border {
+  border-left: 1px solid #eee;
+}
+</style>

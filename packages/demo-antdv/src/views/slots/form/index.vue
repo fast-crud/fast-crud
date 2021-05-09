@@ -1,7 +1,7 @@
 <template>
   <fs-crud ref="crudRef" v-bind="crudBinding">
     <template #actionbar-right>
-      <span class="ml-10">在表单的各个位置都可以插入自定义内容</span>
+      <a-alert class="ml-10" type="info" message=" ← 在表单的各个位置都可以插入自定义内容" />
     </template>
 
     <template #form-header-left>

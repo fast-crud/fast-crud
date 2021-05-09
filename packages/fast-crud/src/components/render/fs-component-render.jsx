@@ -1,4 +1,14 @@
-import { h, resolveDynamicComponent, getCurrentInstance, computed, mergeProps, onMounted, provide } from "vue";
+import {
+  h,
+  resolveDynamicComponent,
+  resolveComponent,
+  getCurrentInstance,
+  computed,
+  mergeProps,
+  onMounted,
+  provide,
+  markRaw
+} from "vue";
 import _ from "lodash-es";
 import traceUtil from "../../utils/util.trace";
 
@@ -24,9 +34,7 @@ export default {
     /**
      * 组件名称
      */
-    name: {
-      type: String
-    },
+    name: {},
     /**
      * 插槽
      */
@@ -126,9 +134,15 @@ export default {
     };
     // eslint-disable-next-line vue/no-setup-props-destructure
     let inputComp = props.name || proxy.$fsui.input.name;
+
     if (!htmlTags.includes(inputComp)) {
       inputComp = resolveDynamicComponent(inputComp);
+      if (typeof inputComp === "string") {
+        inputComp = resolveComponent(inputComp);
+      }
     }
+
+    console.log("input render component:", props.name, inputComp);
     const children = childrenRender();
     return () => {
       const props = mergeProps(allAttrs.value, ctx.attrs);

@@ -1,20 +1,24 @@
 import mockUtil from "/src/mock/base";
 const options = {
-  name: "AdvancedNest",
+  name: "AdvancedAside",
   idGenerator: 0
 };
 const list = [
   {
-    grade: "一年级",
-    nestId: 1
+    class: "一班",
+    gradeId: 1
   },
   {
-    grade: "二年级",
-    nestId: 2
+    class: "二班",
+    gradeId: 1
   },
   {
-    grade: "三年级",
-    nestId: 3
+    class: "三班",
+    gradeId: 2
+  },
+  {
+    class: "四班",
+    gradeId: 2
   }
 ];
 options.list = list;

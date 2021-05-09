@@ -1,22 +1,17 @@
 <template>
   <fs-crud ref="crudRef" v-bind="crudBinding">
     <template #actionbar-right>
-      <a-alert
-        class="ml-10"
-        type="warning"
-        message="分发时复制，当columns[x].dict分发到addForm、editForm、viewForm、search、table.columns时将会clone一份"
-      />
+      <a-alert type="warning" class="ml-10" message="左侧表格点击行可以触发这里的查询" />
     </template>
   </fs-crud>
 </template>
 
 <script>
 import { defineComponent, ref, onMounted } from "vue";
-import { useCrud } from "@fast-crud/fast-crud";
 import createCrudOptions from "./crud";
-import { useExpose } from "@fast-crud/fast-crud";
+import { useExpose, useCrud } from "@fast-crud/fast-crud";
 export default defineComponent({
-  name: "DictCloneable",
+  name: "AsideTable",
   setup() {
     // crud组件的ref
     const crudRef = ref();
@@ -25,7 +20,7 @@ export default defineComponent({
     // 暴露的方法
     const { expose } = useExpose({ crudRef, crudBinding });
     // 你的crud配置
-    const { crudOptions } = createCrudOptions({ expose });
+    const { crudOptions, selectedIds } = createCrudOptions({ expose });
     // 初始化crud配置
     // eslint-disable-next-line @typescript-eslint/no-unused-vars,no-unused-vars
     const { resetCrudOptions } = useCrud({ expose, crudOptions });
@@ -39,7 +34,9 @@ export default defineComponent({
 
     return {
       crudBinding,
-      crudRef
+      crudRef,
+      setSearchFormData: expose.setSearchFormData,
+      doRefresh: expose.doRefresh
     };
   }
 });
