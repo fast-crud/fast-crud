@@ -82,41 +82,6 @@ type = dict-cascader
 * 示例：[antdv](http://fast-crud.docmirror.cn/antdv/#/component/number) | [element](http://fast-crud.docmirror.cn/element/#/component/number)
  
 
-## 其他el组件
-### 开关
-* type = switch
-* 相关组件：
-    * [el-switch](https://element-plus.gitee.io/#/zh-CN/component/switch)
-* 示例：
-    * <http://preview.d2-crud-plus.docmirror.cn/D2CrudPlusExample/index.html#/demo/form/el>  
-### 滑动条
-* type = slider
-* 相关组件：
-    * [el-slider](https://element-plus.gitee.io/#/zh-CN/component/slider)  
-* 示例：
-    * <http://preview.d2-crud-plus.docmirror.cn/D2CrudPlusExample/index.html#/demo/form/el>
-### 评分
-* type = rate
-* 相关组件：
-    * [el-rate](https://element-plus.gitee.io/#/zh-CN/component/rate)  
-* 示例：
-    * <http://preview.d2-crud-plus.docmirror.cn/D2CrudPlusExample/index.html#/demo/form/el>
-### 颜色
-* type = color-picker
-* 相关组件：
-    * [el-color-picker](https://element-plus.gitee.io/#/zh-CN/component/color-picker)  
-* 示例：
-    * <http://preview.d2-crud-plus.docmirror.cn/D2CrudPlusExample/index.html#/demo/form/el>
-    
-### 穿梭框
-* type = transfer 
-* 相关组件:
-    * [el-transfer](https://element-plus.gitee.io/2.0/#/zh-CN/component/transfer)  
-* 示例：
-    * <http://preview.d2-crud-plus.docmirror.cn/D2CrudPlusExample/index.html#/demo/form/el>
-
-
-
 ## 扩展组件
 
 ### 文件上传，裁剪上传
@@ -133,4 +98,9 @@ type = dict-cascader
     * [fs-cropper](/api/components/extends/uploader/fs-cropper.md)  
     * [fs-images-format](/api/components/extends/uploader/fs-images-format.md)
     * [fs-files-format](/api/components/extends/uploader/fs-files-format.md)
+
+
+## 辅助类型
+
+<<< @/../packages/fast-crud/src/types/list/assist.ts
 
