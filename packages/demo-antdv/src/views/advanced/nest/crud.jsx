@@ -70,16 +70,17 @@ export default function ({ expose, asideTableRef }) {
         },
         nestId: {
           title: "嵌套表格",
+          type: ["number", "colspan"],
           form: {
             // 嵌套表格字段
             rules: [{ required: true, message: "请选择用户" }],
             component: {
               name: shallowRef(SubTable)
-            },
-            // antdv 的跨列配置，需要配置如下三个
-            col: { span: 24 },
-            labelCol: { span: 2 },
-            wrapperCol: { span: 21 }
+            }
+            // antdv 的跨列配置，需要配置如下三个, 可以通过colspan简化
+            // col: { span: 24 },
+            // labelCol: { span: 2 },
+            // wrapperCol: { span: 21 }
           }
         }
       }

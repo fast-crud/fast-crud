@@ -13,9 +13,7 @@ function dateFormatter(value, format = "YYYY-MM-DD HH:mm:ss") {
       return undefined;
     }
     const { t } = useI18n();
-    return `${doFormat(value[0], format)} ${t(
-      "fs.date.formatter.to"
-    )} ${doFormat(value[1], format)}`;
+    return `${doFormat(value[0], format)} ${t("fs.date.formatter.to")} ${doFormat(value[1], format)}`;
   }
   return doFormat(value, format);
 }
@@ -35,7 +33,7 @@ const shortcuts = [
       const start = new Date();
       start.setTime(start.getTime() - 3600 * 1000 * 24 * 7);
       picker.$emit("pick", [start, end]);
-    },
+    }
   },
   {
     text: "最近一个月",
@@ -44,7 +42,7 @@ const shortcuts = [
       const start = new Date();
       start.setTime(start.getTime() - 3600 * 1000 * 24 * 30);
       picker.$emit("pick", [start, end]);
-    },
+    }
   },
   {
     text: "最近三个月",
@@ -53,14 +51,8 @@ const shortcuts = [
       const start = new Date();
       start.setTime(start.getTime() - 3600 * 1000 * 24 * 90);
       picker.$emit("pick", [start, end]);
-    },
-  },
+    }
+  }
 ];
 
-export {
-  daterangeFormatter,
-  datetimerangeFormatter,
-  dateFormatter,
-  doFormat,
-  shortcuts,
-};
+export { daterangeFormatter, datetimerangeFormatter, dateFormatter, doFormat, shortcuts };

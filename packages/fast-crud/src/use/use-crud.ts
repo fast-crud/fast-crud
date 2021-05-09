@@ -8,7 +8,6 @@ import { uiContext } from "../ui";
 import { useI18n } from "../local";
 import { useMerge } from "../use/use-merge";
 import { CrudExpose } from "../use/use-expose";
-import crud from "../../../demo-element/src/views/basis/compute/crud";
 export interface CrudOptions {
   table?: {};
   columns?: [];
@@ -50,12 +49,23 @@ function mergeColumnDict(item) {
   return item;
 }
 function mergeColumnType(item) {
-  if (item.type) {
-    const typeOptions = types.getType(item.type);
+  if (!item.type) {
+    return item;
+  }
+  let typeChain: any = [];
+  if (typeof item.type === "string") {
+    typeChain = [item.type];
+  } else if (item.type instanceof Array) {
+    typeChain = item.type;
+  }
+  const base = {};
+  for (const type of typeChain) {
+    const typeOptions = types.getType(type);
     if (typeOptions) {
-      item = merge({}, typeOptions, item);
+      merge(base, typeOptions);
     }
   }
+  item = merge(base, item);
   return item;
 }
 registerMergeColumnPlugin(mergeColumnType);
@@ -192,7 +202,7 @@ export function useCrud(ctx: UseCrudProps) {
           expose.doRefresh();
         },
         // 监听a-table的服务端排序
-        onChange(pagination, filters, sorter, { currentDataSource }) {
+        onChange(pagination, filters, sorter) {
           console.log("table change", sorter);
           const { column, field, order } = sorter;
           crudBinding.value.sort =
