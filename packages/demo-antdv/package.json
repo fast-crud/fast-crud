@@ -1,6 +1,6 @@
 {
   "name": "@fast-crud/demo-antdv",
-  "version": "0.7.1",
+  "version": "0.8.0",
   "private": true,
   "scripts": {
     "dev": "vite --force",
@@ -14,9 +14,9 @@
   "license": "MIT",
   "dependencies": {
     "@ant-design/icons-vue": "^6.0.1",
-    "@fast-crud/extends-uploader": "^0.7.0",
-    "@fast-crud/fast-crud": "^0.7.1",
-    "@fast-crud/ui-antdv": "^0.7.0",
+    "@fast-crud/extends-uploader": "^0.8.0",
+    "@fast-crud/fast-crud": "^0.8.0",
+    "@fast-crud/ui-antdv": "^0.8.0",
     "ant-design-vue": "^2.1.2",
     "axios": "^0.21.1",
     "axios-mock-adapter": "^1.19.0",
