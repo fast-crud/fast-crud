@@ -49,6 +49,30 @@ columns:{
 你可以通过[字段类型列表](/api/types.md)查看字段类型包含了哪些具体配置
 :::
 
+
+## 字段类型组合使用
+字段类型支持配置多个（数组），运行时继承合并，可以使配置更简洁    
+
+比如`antdv`的字段跨列配置需要配置三条，就相当繁琐    
+```js
+{ //key.column
+    type:"text-area"
+    form:{
+        col:{span:24}, //配置在表单中此字段独占整行,
+        // 由于antdv的label也是通过row,col来配置的
+        // 跨列之后，此时label会没有对齐，需要通过如下配置让它能够对齐
+        labelCol: { span: 2 }, 
+        wrapperCol: { span: 21 }
+    }   
+}
+```
+以上配置可以如下写法进行简化，`colspan`背后就是上面的配置
+```js
+{ //key.column
+    type:["text-area","colspan"]
+}
+```
+
 ## 字段类型配置合并过程
 
 #### 1.‘dict-select’类型的默认配置
@@ -148,8 +172,9 @@ this.crud= {
 
 fs-crud有哪些配置项，请参考[fs-crud组件文档](../../api/components/crud/fs-crud.md)
 
+
 ## 自定义字段类型
-通过自定义字段类型，可以帮助你省略column的通用配置
+通过自定义字段类型，同时配合上面的组合功能，可以让你开发crud更爽更快
 
 ### 添加自定义字段类型
 通常在你有相同类型的字段，都要写相同的配置的时候，为了避免`copy your self`，你可以建立自定义字段类型。

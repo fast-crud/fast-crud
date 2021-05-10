@@ -25,7 +25,8 @@ const messages = {
 };
 
 export default createI18n({
-  locale: "en",
-  fallbackLocale: "en",
+  legacy: false,
+  locale: "zh-cn",
+  fallbackLocale: "zh-cn",
   messages
 });

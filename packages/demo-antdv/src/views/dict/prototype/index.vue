@@ -1,7 +1,7 @@
 <template>
   <fs-crud ref="crudRef" v-bind="crudBinding">
     <template #actionbar-right>
-      <span class="ml-10"> dict配置作为原型，任何用到的地方都复制一份</span>
+      <a-alert class="ml-10" type="warning" message="dict配置作为原型，任何用到的地方都复制一份" />
     </template>
   </fs-crud>
 </template>
@@ -19,7 +19,7 @@ export default defineComponent({
     // crud 配置的ref
     const crudBinding = ref();
     // 暴露的方法
-    const expose = useExpose({ crudRef, crudBinding });
+    const { expose } = useExpose({ crudRef, crudBinding });
     // 你的crud配置
     const { crudOptions } = createCrudOptions({ expose });
     // 初始化crud配置

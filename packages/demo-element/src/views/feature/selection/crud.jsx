@@ -43,7 +43,10 @@ export default function ({ expose }) {
             type: "selection",
             align: "center",
             width: "55px",
-            disabledColumnsFilter: true //禁止在列设置中选择
+            disabledColumnsFilter: true, //禁止在列设置中选择
+            selectable(row, index) {
+              return index !== 0; //设置第一行不允许选择
+            }
           }
         },
         id: {

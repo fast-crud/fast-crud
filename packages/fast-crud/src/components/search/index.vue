@@ -4,10 +4,9 @@
       <component
         :is="$fsui.form.name"
         ref="searchFormRef"
-        :inline="true"
         :model="form"
         v-bind="options"
-        class="search-form"
+        class="fs-search-form"
         @compositionstart="changeInputEventDisabled(true)"
         @compositionend="changeInputEventDisabled(false)"
       >
@@ -47,7 +46,7 @@
         <component :is="$fsui.formItem.name" v-if="slots['search-middle']">
           <fs-slot-render :slots="slots['search-middle']" :scope="{ form }" />
         </component>
-        <component :is="$fsui.formItem.name" class="search-btns">
+        <component :is="$fsui.formItem.name" class="fs-search-btns">
           <template v-for="(item, index) in computedButtons" :key="index">
             <fs-button v-if="item.show" v-bind="item" @click="item.click()" />
           </template>
@@ -61,7 +60,7 @@
 </template>
 
 <script>
-import { computed, ref, nextTick } from "vue";
+import { computed, ref, reactive, nextTick } from "vue";
 import _ from "lodash-es";
 import fsButton from "../basic/fs-button";
 import FsComponentRender from "../../components/render/fs-component-render";
@@ -158,7 +157,7 @@ export default {
     const ui = uiContext.get();
     traceUtil.trace("fs-search");
     let autoSearch = ref(null);
-    const form = ref(_.cloneDeep(props.initialForm || {}));
+    const form = reactive(_.cloneDeep(props.initialForm || {}));
     const searchFormRef = ref();
     const { t } = useI18n();
     const { doComputed } = useCompute();
@@ -173,7 +172,7 @@ export default {
     }
 
     function getContextFn() {
-      return { form: form.value, getComponentRef };
+      return { form, getComponentRef };
     }
 
     async function doSearch() {
@@ -184,7 +183,7 @@ export default {
       const valid = await searchFormRef.value.validate();
       logger.debug("valid", valid);
       if (valid) {
-        ctx.emit("search", { form: form.value });
+        ctx.emit("search", { form });
       } else {
         ui.message.error({
           message: t("fs.search.error.message")
@@ -197,7 +196,7 @@ export default {
       searchFormRef.value.resetFields();
 
       if (props.reset) {
-        props.reset({ form: form.value });
+        props.reset({ form });
       }
       // 表单重置事件
       ctx.emit("reset", getContextFn());
@@ -262,14 +261,14 @@ export default {
     initAutoSearch();
 
     function getForm() {
-      return form.value;
+      return form;
     }
 
     /**
      * 设置form值
      */
-    function setForm(form) {
-      form.value = form;
+    function setForm(newForm) {
+      _.merge(form, newForm);
     }
 
     const inputEventDisabled = ref(false);
@@ -294,10 +293,10 @@ export default {
 
     function onValueChanged(value, item) {
       const key = item.key;
-      _.set(form.value, key, value);
+      _.set(form, key, value);
       if (item.valueChange) {
         const key = item.key;
-        const value = form.value[key];
+        const value = form[key];
         const componentRef = getComponentRef(key);
         item.valueChange({ key, value, componentRef, ...getContextFn() });
       }
@@ -340,10 +339,10 @@ export default {
   .ant-form-inline {
     flex-wrap: wrap;
   }
-  .search-form {
+  .fs-search-form {
     display: flex;
     align-items: center;
-
+    flex-wrap: wrap;
     & > * {
       margin-bottom: 4px;
       margin-top: 4px;
@@ -368,7 +367,7 @@ export default {
     }
   }
 
-  .search-btns {
+  .fs-search-btns {
     .fs-button {
       margin-right: 5px;
     }

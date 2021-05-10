@@ -239,6 +239,11 @@ const resources = [
         title: "序号",
         path: "/feature/index",
         component: "/feature/index/index.vue"
+      },
+      {
+        title: "排序",
+        path: "/feature/sortable",
+        component: "/feature/sortable/index.vue"
       }
     ]
   },

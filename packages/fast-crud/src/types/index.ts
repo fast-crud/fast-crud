@@ -33,5 +33,5 @@ export default {
       });
     }
     logger.debug("types installed:", defaultTypes);
-  },
+  }
 };

@@ -19,8 +19,10 @@ export type CrudExpose = {
   doRefresh;
   doPageTurn;
   doSearch;
+  getSearchFormData;
+  setSearchFormData;
 };
-export function useExpose(props: UseExposeProps): CrudExpose {
+export function useExpose(props: UseExposeProps): { expose: CrudExpose } {
   const { crudRef, crudBinding } = props;
   const expose = {
     crudRef,
@@ -77,6 +79,15 @@ export function useExpose(props: UseExposeProps): CrudExpose {
       });
       logger.debug("valueResolve success:", form);
     },
+    getSearchFormData() {
+      return crudRef.value.getSearchFormData();
+    },
+    /**
+     * {form,mergeForm}
+     */
+    setSearchFormData({ form, mergeForm }) {
+      crudRef.value.setSearchFormData({ form, mergeForm });
+    },
     async doRefresh() {
       let page;
       if (crudBinding.value.pagination) {
@@ -87,9 +98,11 @@ export function useExpose(props: UseExposeProps): CrudExpose {
       }
       let searchFormData = {};
       if (crudRef.value) {
-        searchFormData = crudRef.value.getSearchFormData();
+        searchFormData = expose.getSearchFormData();
       }
-      let query = { page, form: searchFormData };
+
+      const sort = crudBinding.value.sort || {};
+      let query = { page, form: searchFormData, sort };
       if (crudBinding.value.request.transformQuery) {
         query = crudBinding.value.request.transformQuery(query);
       }
@@ -154,8 +167,16 @@ export function useExpose(props: UseExposeProps): CrudExpose {
       }
 
       await expose.doRefresh();
+    },
+    getTableRef() {
+      return crudRef.value?.tableRef;
+    },
+    doSelectCurrentRow({ index, row }) {
+      const tableRef = expose.getTableRef();
+      console.log("tableRef", tableRef);
+      tableRef.value.setCurrentRow(row);
     }
   };
 
-  return expose;
+  return { expose };
 }

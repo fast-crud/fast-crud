@@ -221,6 +221,16 @@ const resources = [
         title: "多级表头",
         path: "/feature/header-group",
         component: "/feature/header-group/index.vue"
+      },
+      {
+        title: "序号",
+        path: "/feature/index",
+        component: "/feature/index/index.vue"
+      },
+      {
+        title: "排序",
+        path: "/feature/sortable",
+        component: "/feature/sortable/index.vue"
       }
     ]
   },

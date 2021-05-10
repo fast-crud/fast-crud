@@ -1,6 +1,6 @@
 {
   "name": "@fast-crud/demo-element",
-  "version": "0.6.0",
+  "version": "0.8.0",
   "private": true,
   "scripts": {
     "dev": "vite --force",
@@ -12,9 +12,9 @@
   "author": "Greper",
   "license": "MIT",
   "dependencies": {
-    "@fast-crud/extends-uploader": "^0.6.0",
-    "@fast-crud/fast-crud": "^0.6.0",
-    "@fast-crud/ui-element": "^0.6.0",
+    "@fast-crud/extends-uploader": "^0.8.0",
+    "@fast-crud/fast-crud": "^0.8.0",
+    "@fast-crud/ui-element": "^0.8.0",
     "ali-oss": "^6.13.2",
     "axios": "^0.21.1",
     "axios-mock-adapter": "^1.19.0",
@@ -27,7 +27,7 @@
     "highlight.js": "^10.7.2",
     "lodash-es": "^4.17.20",
     "qiniu-js": "^3.1.2",
-    "vue": "^3.0.7",
+    "vue": "^3.1.0-beta.2",
     "vue-i18n": "^9.1.6",
     "vue-router": "^4.0.1",
     "vuedraggable": "^4.0.1"

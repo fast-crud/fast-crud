@@ -49,12 +49,23 @@ function mergeColumnDict(item) {
   return item;
 }
 function mergeColumnType(item) {
-  if (item.type) {
-    const typeOptions = types.getType(item.type);
+  if (!item.type) {
+    return item;
+  }
+  let typeChain: any = [];
+  if (typeof item.type === "string") {
+    typeChain = [item.type];
+  } else if (item.type instanceof Array) {
+    typeChain = item.type;
+  }
+  const base = {};
+  for (const type of typeChain) {
+    const typeOptions = types.getType(type);
     if (typeOptions) {
-      item = merge({}, typeOptions, item);
+      merge(base, typeOptions);
     }
   }
+  item = merge(base, item);
   return item;
 }
 registerMergeColumnPlugin(mergeColumnType);
@@ -67,7 +78,7 @@ export function useCrud(ctx: UseCrudProps) {
 
   const options: CrudOptions = ctx.crudOptions;
   const expose = ctx.expose;
-  const crudBinding = expose.crudBinding;
+  const { crudBinding } = expose;
 
   const { doRefresh, doValueResolve, doSearch } = expose;
 
@@ -180,14 +191,37 @@ export function useCrud(ctx: UseCrudProps) {
     };
   }
 
+  function useTable() {
+    return {
+      table: {
+        //监听el-table的服务端排序
+        onSortChange({ column, prop, order }) {
+          console.log("sort change", column, prop, order);
+          crudBinding.value.sort =
+            prop && column.sortable === "custom" ? { prop, order, asc: order === "ascending" } : null;
+          expose.doRefresh();
+        },
+        // 监听a-table的服务端排序
+        onChange(pagination, filters, sorter) {
+          console.log("table change", sorter);
+          const { column, field, order } = sorter;
+          crudBinding.value.sort =
+            order && column.sorter === true ? { prop: field, order, asc: order === "ascend" } : null;
+          expose.doRefresh();
+        }
+      }
+    };
+  }
+
   function resetCrudOptions(options) {
     const userOptions = merge(
-      defaultCrudOptions.defaultOptions({ t, tc }),
+      defaultCrudOptions.defaultOptions({ t, tc, expose }),
       usePagination(),
       useFormSubmit(),
       useRemove(),
       useSearch(),
       useEvent(),
+      useTable(),
       defaultCrudOptions.commonOptions(ctx),
       options
     );

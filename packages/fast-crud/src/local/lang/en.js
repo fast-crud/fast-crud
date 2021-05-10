@@ -52,7 +52,7 @@ export default {
       }
     },
     pagination: {
-      showTotal: "Total {n} items"
+      showTotal: "Total {0} items"
     },
     date: { formatter: { to: "to" } },
     extends: {

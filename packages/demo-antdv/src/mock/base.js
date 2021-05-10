@@ -55,7 +55,7 @@ export default {
         path: "/" + name + "/page",
         method: "get",
         handle(req) {
-          let data = list;
+          let data = [...list];
           let size = 20;
           let current = 1;
           for (const item of list) {
@@ -64,6 +64,7 @@ export default {
               item.lazy = false;
             }
           }
+          let orderProp, orderAsc;
           if (req != null && req.body != null) {
             if (req.body.size != null) {
               size = parseInt(req.body.size);
@@ -71,9 +72,14 @@ export default {
             if (req.body.current != null) {
               current = parseInt(req.body.current);
             }
+            orderProp = req.body.orderProp;
+            orderAsc = req.body.orderAsc;
             const query = { ...req.body };
             delete query.current;
             delete query.size;
+            delete query.orderProp;
+            delete query.orderAsc;
+
             if (Object.keys(query).length > 0) {
               data = list.filter((item) => {
                 let allFound = true; // 是否所有条件都符合
@@ -132,6 +138,20 @@ export default {
           if (data.length < end) {
             end = data.length;
           }
+
+          if (orderProp) {
+            // 排序
+            data.sort((a, b) => {
+              let ret = 0;
+              if (a[orderProp] > b[orderProp]) {
+                ret = 1;
+              } else {
+                ret = -1;
+              }
+              return orderAsc ? ret : -ret;
+            });
+          }
+
           const records = data.slice(start, end);
           const maxPage = data.length % size === 0 ? data.length / size : Math.floor(data.length / size) + 1;
           if (current > maxPage) {

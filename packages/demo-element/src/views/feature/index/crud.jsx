@@ -1,6 +1,5 @@
 import * as api from "./api";
 import { dict } from "@fast-crud/fast-crud";
-import { ref } from "vue";
 export default function ({ expose }) {
   const pageRequest = async (query) => {
     return await api.GetList(query);
@@ -36,6 +35,8 @@ export default function ({ expose }) {
             width: "55px",
             disabledColumnsFilter: true, //禁止在列设置中选择
             index: (index) => {
+              // 自定义序号索引,全局计算序号，见el-table文档
+              // 不传本方法则默认每页序号从1开始
               let pagination = expose.crudBinding.value.pagination;
               return ((pagination.currentPage ?? 1) - 1) * pagination.pageSize + index + 1;
             }

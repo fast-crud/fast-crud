@@ -1,6 +1,6 @@
 {
   "name": "@fast-crud/extends-uploader",
-  "version": "0.6.0",
+  "version": "0.8.0",
   "private": false,
   "main": "./dist/extends-uploader.umd.js",
   "module": "./dist/extends-uploader.es.js",

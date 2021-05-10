@@ -25,12 +25,6 @@ export default function ({ expose }) {
   return {
     selectedRowKeys, //返回给index.vue去使用
     crudOptions: {
-      request: {
-        pageRequest,
-        addRequest,
-        editRequest,
-        delRequest
-      },
       table: {
         rowSelection: {
           selectedRowKeys: selectedRowKeys,
@@ -39,6 +33,12 @@ export default function ({ expose }) {
             disabled: record.id === 1 // 此处演示第一行禁用
           })
         }
+      },
+      request: {
+        pageRequest,
+        addRequest,
+        editRequest,
+        delRequest
       },
       columns: {
         id: {

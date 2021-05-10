@@ -29,3 +29,29 @@
 ## loading
 * 说明：当前是否加载中
 * 类型：Boolean
+
+## slots
+* 说明：table插槽
+* 类型：{ slotName: Function(scope){ return jsx } }
+* 示例：
+```js
+{ //crudOptions
+  table: {
+    slots: {
+       // el-table的append插槽
+       //https://element-plus.gitee.io/#/zh-CN/component/table#table-slot
+       append(scope){
+         // 注意，这里使用了jsx，所以crud.js文件后缀名要改成crud.jsx
+         return <div>{scope}</div>
+       },
+       // a-table的expandedRowRender插槽
+       //https://2x.antdv.com/components/table-cn#components-table-demo-expand
+       expandedRowRender(scope){
+        // 注意，这里使用了jsx，所以crud.js文件后缀名要改成crud.jsx
+         return <div>行展开数据</div>
+       }
+
+    }
+  }
+}
+```

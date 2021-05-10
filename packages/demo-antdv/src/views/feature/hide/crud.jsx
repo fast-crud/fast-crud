@@ -59,7 +59,7 @@ export default function ({ expose }) {
       },
       rowHandle: {
         show: true,
-        width: 300,
+        width: 330,
         buttons: {
           view: { show: true },
           edit: { show: true },

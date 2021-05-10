@@ -52,7 +52,7 @@ export default {
       }
     },
     pagination: {
-      showTotal: "共 {n} 条"
+      showTotal: "共 {0} 条"
     },
     date: {
       formatter: { to: "至" }

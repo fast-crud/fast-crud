@@ -5,9 +5,10 @@ import "@fast-crud/fast-crud/dist/style.css";
 import FsUploader from "@fast-crud/extends-uploader";
 import "@fast-crud/extends-uploader/dist/style.css";
 import UiAntdv from "@fast-crud/ui-antdv";
-export default function (app) {
+export default function (app, i18n) {
   app.use(UiAntdv);
   app.use(FastCrud, {
+    i18n,
     async dictRequest({ url }) {
       return await requestForMock({ url });
     },
@@ -18,8 +19,9 @@ export default function (app) {
           pagination: false
         },
         request: {
-          transformQuery: ({ page, form }) => {
-            return { current: page.currentPage, size: page.pageSize, ...form };
+          transformQuery: ({ page, form, sort }) => {
+            const order = sort == null ? {} : { orderProp: sort.prop, orderAsc: sort.asc };
+            return { current: page.currentPage, size: page.pageSize, ...form, ...order };
           },
           transformRes: ({ res }) => {
             return { currentPage: res.current, pageSize: res.size, ...res };

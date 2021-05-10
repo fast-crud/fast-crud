@@ -1,4 +1,4 @@
-import { requestForMock } from "../../../api/service";
+import { requestForMock } from "/src/api/service";
 const request = requestForMock;
 const apiPrefix = "/DictCloneable";
 export function GetList(query) {
