@@ -19,26 +19,7 @@ FastCrud 是基于Vue3的面向配置的crud开发框架，快速开发crud功�
 > fast-crud目前处于alpha版，api可能还会有变化   
 > d2-crud-plus基于vue3的完全重做版
 
-## 特性
-### 1. 面向配置的crud编程
-* 根据crud配置快速开发crud功能,可作为低代码平台基础框架
-
-### 2. 数据字典
-* 支持本地和远程获取
-* 配合select，轻松实现数据存的是value值，需要对应字典的label来展示的需求
-
-### 3. 丰富的字段类型
-* 通过配置字段类型“column.type”来简化配置
-* 根据字段类型不同，自动生成不同的表单组件
-* 支持自定义字段类型
-
-### 4. 扩展组件
-通过扩展自定义组件，扩展自定义类型
-
-### 5. 多UI支持
-支持Antdv、Element，你喜欢哪个就用哪个
-
-## 开发crud，就是这么快
+## 开发crud，快如闪电
 1、只需简单编写crud配置
 ```js
 const crudOptions= {
@@ -46,12 +27,8 @@ const crudOptions= {
         id: {// id字段
           title: "ID",
           type: "number", //字段类型
-          column: {
-            width: 50
-          },
-          form: {
-            show: false
-          }
+          column: { width: 50},
+          form: { show: false }
         },
         name: { // 姓名字段
           title: "姓名",
@@ -89,9 +66,34 @@ const crudOptions= {
 2、 一个完全体crud就出来了
 ![](./docs/images/crud.png)
 
+
+
+
+## 特性
+### 1. 面向配置的crud编程
+* 根据crud配置快速开发crud功能,可作为低代码平台基础框架
+
+### 2. 数据字典
+* 支持本地和远程获取
+* 配合select，轻松实现数据存的是value值，需要对应字典的label来展示的需求
+
+### 3. 丰富的字段类型
+* 通过配置字段类型“column.type”来简化配置
+* 根据字段类型不同，自动生成不同的表单组件
+* 支持自定义字段类型
+
+### 4. 扩展组件
+通过扩展自定义组件，扩展自定义类型
+
+### 5. 多UI支持
+支持Antdv、Element，你喜欢哪个就用哪个
+
+
 ## 依赖
 ### ui组件库
 [Antdv](https://github.com/vueComponent/ant-design-vue) 、[Element-Plus](https://github.com/element-plus/element-plus) 二选一
 
 ### monorepo
 [![lerna](https://img.shields.io/badge/maintained%20with-lerna-cc00ff.svg)](https://lerna.js.org/)
+
+
