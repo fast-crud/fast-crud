@@ -1,4 +1,13 @@
-import { getCurrentInstance, ref, resolveDirective, resolveDynamicComponent, withDirectives } from "vue";
+import {
+  getCurrentInstance,
+  ref,
+  computed,
+  reactive,
+  provide,
+  resolveDirective,
+  resolveDynamicComponent,
+  withDirectives
+} from "vue";
 import _ from "lodash-es";
 import FsRowHandle from "./fs-row-handle.vue";
 import FsComponentRender from "../render/fs-component-render";
@@ -6,6 +15,79 @@ import "./fs-table.less";
 import { uiContext } from "../../ui";
 import { useCompute } from "../../use/use-compute";
 
+function useEditable(props, ctx) {
+  // editable
+  const computedEditable = computed(() => {
+    return _.merge(
+      {
+        enabled: false,
+        form: {},
+        mode: "", //模式，add,edit
+        editType: "" // row,col,cell,all
+      },
+      props.editable
+    );
+  });
+
+  const cells = reactive({});
+  function getValue(index, key) {
+    const data = ctx.attrs.data;
+    if (data && data.length > index) {
+      return data[index][key];
+    }
+    return null;
+  }
+
+  function inActiveAll() {
+    _.forEach(cells, (item) => {
+      if (item.isEditing) {
+        item.inActiveEditMode();
+      }
+    });
+  }
+  function getEditableCell(index, key) {
+    if (key == null) {
+      return {};
+    }
+    let name = index + "_" + key;
+    debugger;
+    let cell = (cells[name] = reactive({
+      isEditing: false
+    }));
+
+    cell.getForm = () => {
+      return computedEditable.value.form[key];
+    };
+    cell.activeEditMode = () => {
+      if (computedEditable.value.editType === "all") {
+        inActiveAll();
+      }
+      cell.isEditing = true;
+      if (cell.originValue === undefined) {
+        cell.originValue = getValue(index, key);
+      }
+    };
+    cell.inActiveEditMode = () => {
+      cell.isEditing = false;
+      cell.newValue = getValue(index, key);
+    };
+    return cell;
+  }
+
+  provide("get:editable", (index, key) => {
+    if (!computedEditable.value || !computedEditable.value.enabled) {
+      return false;
+    }
+    return getEditableCell(index, key);
+  });
+
+  return {
+    editable: {
+      cells,
+      inActiveAll
+    }
+  };
+}
 /**
  * table封装
  * 支持el-table/a-table的参数
@@ -40,10 +122,15 @@ export default {
     /**
      * 表格数据
      */
-    data: {}
+    data: {},
+
+    /**
+     * 行编辑，批量编辑
+     */
+    editable: {}
   },
   emits: ["row-handle", "value-change"],
-  setup(props) {
+  setup(props, ctx) {
     const tableRef = ref();
     const componentRefs = ref([]);
     const getComponentRef = (index, key) => {
@@ -57,11 +144,13 @@ export default {
 
     const { doComputed } = useCompute();
     const computedColumns = doComputed(props.columns, null, [/\[.+\]component/]);
+
     return {
       tableRef,
       componentRefs,
       getComponentRef,
-      computedColumns
+      computedColumns,
+      ...useEditable(props, ctx)
     };
   },
   methods: {
@@ -151,13 +240,28 @@ export default {
               const setRef = (el) => {
                 const index = scope[ui.tableColumn.index];
                 const key = item.key;
-                let row = this.componentRefs[index];
-                if (row == null) {
-                  this.componentRefs[index] = row = {};
+                let rowRefs = this.componentRefs[index];
+                if (rowRefs == null) {
+                  this.componentRefs[index] = rowRefs = {};
                 }
-                row[key] = el;
+                rowRefs[key] = el;
               };
-              return <fs-cell ref={setRef} component={item.component} getScope={getScopeFn} {...vModel} />;
+
+              const index = scope[ui.tableColumn.index];
+              if (this.editable) {
+                return (
+                  <fs-editable-cell
+                    ref={setRef}
+                    key={item.key}
+                    index={index}
+                    component={item.component}
+                    getScope={getScopeFn}
+                    {...vModel}
+                  ></fs-editable-cell>
+                );
+              } else {
+                return <fs-cell ref={setRef} component={item.component} getScope={getScopeFn} {...vModel} />;
+              }
             };
           } else if (item.formatter) {
             cellSlots.default = (scope) => {

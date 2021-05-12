@@ -2,6 +2,7 @@ import { toRaw } from "vue";
 import _ from "lodash-es";
 import logger from "../utils/util.log";
 import { useMerge } from "../use/use-merge";
+
 const { merge } = useMerge();
 export type UseExposeProps = {
   crudRef;
@@ -21,12 +22,59 @@ export type CrudExpose = {
   doSearch;
   getSearchFormData;
   setSearchFormData;
+  getTableRef;
+  doSelectCurrentRow;
+  editable: any;
 };
+
+function useEditable({ expose }) {
+  const { crudBinding } = expose;
+  const editable = {
+    addRow() {
+      editable.active({ mode: "add" });
+    },
+    editAll() {
+      editable.active({ mode: "edit", editType: "all" });
+    },
+    editRow() {
+      editable.active({ mode: "edit", editType: "row" });
+    },
+    /**
+     * 激活编辑
+     * @param opts
+     */
+    active(opts) {
+      const { mode, editType } = opts;
+      const form = opts.form || mode === "add" ? crudBinding.value.addForm.columns : crudBinding.value.editForm.columns;
+
+      crudBinding.value.table.editable = {
+        enabled: true,
+        form,
+        mode,
+        editType
+      };
+    },
+    /**
+     * 禁用编辑
+     */
+    inActive() {
+      crudBinding.value.table.editable.enabled = false;
+    },
+    /**
+     * 退出编辑
+     */
+    quit() {
+      expose.getTableRef().editable.inActiveAll();
+    }
+  };
+  return editable;
+}
 export function useExpose(props: UseExposeProps): { expose: CrudExpose } {
   const { crudRef, crudBinding } = props;
-  const expose = {
+  const expose: CrudExpose = {
     crudRef,
     crudBinding,
+
     getFormWrapperRef() {
       return crudRef.value.formWrapperRef;
     },
@@ -175,8 +223,9 @@ export function useExpose(props: UseExposeProps): { expose: CrudExpose } {
       const tableRef = expose.getTableRef();
       console.log("tableRef", tableRef);
       tableRef.value.setCurrentRow(row);
-    }
+    },
+    editable: undefined
   };
-
+  expose.editable = useEditable({ expose });
   return { expose };
 }
