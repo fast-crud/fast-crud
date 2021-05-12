@@ -28,7 +28,7 @@ export default {
         return <fs-component-render ref={"targetInputRef"} {...editable.getForm().component} {...ctx.attrs} />;
       }
       return (
-        <div onClick={editable.activeEditMode}>
+        <div class={"fs-editable-cell"} onClick={editable.activeEditMode}>
           <fs-cell ref={"targetRef"} component={props.component} getScope={props.getScope} {...ctx.attrs} />
         </div>
       );

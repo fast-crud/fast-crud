@@ -12,6 +12,7 @@
 import { defineComponent, ref, onMounted } from "vue";
 import createCrudOptions from "./crud";
 import { useExpose, useCrud } from "@fast-crud/fast-crud";
+import { ElMessage } from "element-plus";
 export default defineComponent({
   name: "FeatureEditable",
   setup() {
@@ -44,6 +45,7 @@ export default defineComponent({
       save() {
         expose.getTableRef().editable.submit((changed) => {
           console.log("changed", changed);
+          ElMessage("保存修改：" + JSON.stringify(changed));
         });
       },
       cancel() {
