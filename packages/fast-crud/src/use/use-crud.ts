@@ -203,11 +203,13 @@ export function useCrud(ctx: UseCrudProps) {
         },
         // 监听a-table的服务端排序
         onChange(pagination, filters, sorter) {
-          console.log("table change", sorter);
-          const { column, field, order } = sorter;
-          crudBinding.value.sort =
-            order && column.sorter === true ? { prop: field, order, asc: order === "ascend" } : null;
-          expose.doRefresh();
+          console.log("table change", pagination, filters, sorter);
+          if (sorter) {
+            const { column, field, order } = sorter;
+            crudBinding.value.sort =
+              order && column.sorter === true ? { prop: field, order, asc: order === "ascend" } : null;
+            expose.doRefresh();
+          }
         }
       }
     };

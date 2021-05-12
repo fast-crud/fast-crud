@@ -15,11 +15,14 @@ import "./fs-table.less";
 import { uiContext } from "../../ui";
 import { useCompute } from "../../use/use-compute";
 
-function useEditable(props, ctx) {
+function useEditable(props, ctx, tableRef) {
   // editable
+  const editableRows = reactive({});
+
   const computedEditable = computed(() => {
     return _.merge(
       {
+        rowKey: "id",
         enabled: false,
         form: {},
         mode: "", //模式，add,edit
@@ -29,32 +32,34 @@ function useEditable(props, ctx) {
     );
   });
 
-  const cells = reactive({});
   function getValue(index, key) {
-    const data = ctx.attrs.data;
+    const data = tableRef.value.data;
     if (data && data.length > index) {
       return data[index][key];
     }
     return null;
   }
-
-  function inActiveAll() {
-    _.forEach(cells, (item) => {
-      if (item.isEditing) {
-        item.inActiveEditMode();
-      }
-    });
+  function setValue(index, key, value) {
+    const data = tableRef.value.data;
+    if (data && data.length > index) {
+      data[index][key] = value;
+    }
   }
   function getEditableCell(index, key) {
-    if (key == null) {
+    if (key == null || index < 0) {
       return {};
     }
-    let name = index + "_" + key;
-    debugger;
-    let cell = (cells[name] = reactive({
+    const row = (editableRows[index] = editableRows[index] || reactive({}));
+    const cell = (row[key] = reactive({
       isEditing: false
     }));
 
+    cell.isChanged = () => {
+      if (cell.newValue !== cell.oldValue) {
+        return true;
+      }
+      return false;
+    };
     cell.getForm = () => {
       return computedEditable.value.form[key];
     };
@@ -63,8 +68,8 @@ function useEditable(props, ctx) {
         inActiveAll();
       }
       cell.isEditing = true;
-      if (cell.originValue === undefined) {
-        cell.originValue = getValue(index, key);
+      if (cell.oldValue === undefined) {
+        cell.oldValue = getValue(index, key);
       }
     };
     cell.inActiveEditMode = () => {
@@ -81,10 +86,73 @@ function useEditable(props, ctx) {
     return getEditableCell(index, key);
   });
 
+  function inActiveAll() {
+    _.forEach(editableRows, (row) => {
+      _.forEach(row, (cell) => {
+        if (cell.isEditing) {
+          cell.inActiveEditMode();
+        }
+      });
+    });
+  }
+
+  function getChangedData() {
+    const changedRows = [];
+    _.forEach(editableRows, (row, index) => {
+      const id = getValue(index, computedEditable.value.rowKey);
+      const changed = { [computedEditable.value.rowKey]: id };
+      let hasChange = false;
+      _.forEach(row, (cell, key) => {
+        if (cell.isChanged()) {
+          changed[key] = cell.newValue;
+          hasChange = true;
+        }
+      });
+      if (hasChange) {
+        changedRows.push(changed);
+      }
+    });
+    return changedRows;
+  }
+
+  function persist() {
+    inActiveAll();
+    _.forEach(editableRows, (row, index) => {
+      _.forEach(row, (cell, key) => {
+        // setValue(index, key, cell.newValue);
+        delete cell.newValue;
+        delete cell.oldValue;
+      });
+    });
+  }
+
+  function resume() {
+    inActiveAll();
+    _.forEach(editableRows, (row, index) => {
+      _.forEach(row, (cell, key) => {
+        if (cell.isChanged()) {
+          setValue(index, key, cell.oldValue);
+          delete cell.newValue;
+          delete cell.oldValue;
+        }
+      });
+    });
+  }
+  async function submit(call) {
+    inActiveAll();
+    const changed = getChangedData();
+    await call(changed);
+    persist();
+  }
+
   return {
     editable: {
-      cells,
-      inActiveAll
+      editableRows,
+      inActiveAll,
+      getChangedData,
+      persist,
+      submit,
+      resume
     }
   };
 }
@@ -150,7 +218,7 @@ export default {
       componentRefs,
       getComponentRef,
       computedColumns,
-      ...useEditable(props, ctx)
+      ...useEditable(props, ctx, tableRef)
     };
   },
   methods: {
@@ -252,7 +320,7 @@ export default {
                 return (
                   <fs-editable-cell
                     ref={setRef}
-                    key={item.key}
+                    columnKey={item.key}
                     index={index}
                     component={item.component}
                     getScope={getScopeFn}

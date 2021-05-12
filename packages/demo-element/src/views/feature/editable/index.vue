@@ -1,7 +1,9 @@
 <template>
   <fs-crud ref="crudRef" v-bind="crudBinding">
     <template #actionbar-right>
-      <fs-button class="ml-10" @click="quitEdit">退出编辑</fs-button>
+      <fs-button class="ml-10" @click="quit">退出编辑</fs-button>
+      <fs-button class="ml-10" @click="save">保存</fs-button>
+      <fs-button class="ml-10" @click="cancel">取消</fs-button>
     </template>
   </fs-crud>
 </template>
@@ -36,8 +38,16 @@ export default defineComponent({
     return {
       crudBinding,
       crudRef,
-      quitEdit() {
+      quit() {
         expose.editable.quit();
+      },
+      save() {
+        expose.getTableRef().editable.submit((changed) => {
+          console.log("changed", changed);
+        });
+      },
+      cancel() {
+        expose.getTableRef().editable.resume();
       }
     };
   }

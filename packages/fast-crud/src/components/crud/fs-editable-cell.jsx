@@ -17,13 +17,12 @@ export default {
       type: Function
     },
     index: {},
-    key: {}
+    columnKey: {}
   },
   setup(props, ctx) {
     const getEditable = inject("get:editable");
-    let editable = getEditable(props.index, props.key);
+    let editable = getEditable(props.index, props.columnKey);
 
-    console.log("cell editable", editable);
     return () => {
       if (editable.isEditing) {
         return <fs-component-render ref={"targetInputRef"} {...editable.getForm().component} {...ctx.attrs} />;
