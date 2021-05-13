@@ -307,7 +307,10 @@ export default {
     }
 
     return {
-      get: _.get,
+      get: (form, key) => {
+        const ret = _.get(form, key);
+        return ret || null;
+      },
       onValueChanged,
       doSearch,
       doReset,

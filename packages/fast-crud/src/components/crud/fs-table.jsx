@@ -149,7 +149,7 @@ export default {
                 return getContextFn(item, scope);
               };
               const vModel = {
-                modelValue: scope[tableColumnCI.row][item.key],
+                modelValue: scope[tableColumnCI.row][item.key] || null,
                 "onUpdate:modelValue": (value) => {
                   scope[tableColumnCI.row][item.key] = value;
                   const newScope = getContextFn(item, scope);
@@ -178,16 +178,14 @@ export default {
               const index = scope[ui.tableColumn.index];
               if (this.editable) {
                 return (
-                  <div class={"fs-editable-cell"}>
-                    <fs-editable-cell
-                      ref={setRef}
-                      columnKey={item.key}
-                      index={index}
-                      component={item.component}
-                      getScope={getScopeFn}
-                      {...vModel}
-                    />
-                  </div>
+                  <fs-editable-cell
+                    ref={setRef}
+                    columnKey={item.key}
+                    index={index}
+                    component={item.component}
+                    getScope={getScopeFn}
+                    {...vModel}
+                  />
                 );
               } else {
                 return <fs-cell ref={setRef} component={item.component} getScope={getScopeFn} {...vModel} />;

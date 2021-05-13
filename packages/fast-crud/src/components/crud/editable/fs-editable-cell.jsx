@@ -34,7 +34,7 @@ export default {
               <fs-component-render ref={"targetInputRef"} {...editable.getForm().component} {...ctx.attrs} />
             </div>
             <div class={"fs-cell-edit-action"}>
-              <fs-button size={"mini"} icon={ui.icons.check} onClick={editable.inActiveEditMode} />
+              <fs-button size={"mini"} icon={ui.icons.check} onClick={editable.inActive} />
               <fs-button size={"mini"} icon={ui.icons.close} onClick={editable.resume} />
             </div>
           </div>
@@ -45,7 +45,7 @@ export default {
         dirty = <div class={"fs-cell-edit-dirty"} />;
       }
       return (
-        <div class={"fs-cell-format"} onClick={editable.activeEditMode}>
+        <div class={"fs-cell-format"} onClick={editable.active}>
           {dirty}
           <fs-cell ref={"targetRef"} component={props.component} getScope={props.getScope} {...ctx.attrs} />
         </div>

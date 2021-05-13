@@ -31,19 +31,20 @@ function useEditable({ expose }) {
   const { crudBinding } = expose;
   const editable = {
     addRow() {
-      editable.active({ mode: "add" });
+      editable.enable({ mode: "add" });
+      expose.getTableRef().editable.addRow();
     },
     editAll() {
-      editable.active({ mode: "edit", editType: "all" });
+      editable.enable({ mode: "edit", editType: "all" });
     },
     editRow() {
-      editable.active({ mode: "edit", editType: "row" });
+      editable.enable({ mode: "edit", editType: "row" });
     },
     /**
-     * 激活编辑
+     * 启用编辑
      * @param opts
      */
-    active(opts) {
+    enable(opts) {
       const { mode, editType } = opts;
       const form = opts.form || mode === "add" ? crudBinding.value.addForm.columns : crudBinding.value.editForm.columns;
 
@@ -57,14 +58,27 @@ function useEditable({ expose }) {
     /**
      * 禁用编辑
      */
-    inActive() {
+    disable() {
       crudBinding.value.table.editable.enabled = false;
+    },
+    /**
+     * 回到默认编辑模式
+     */
+    quit() {},
+    /**
+     * 激活所有编辑
+     */
+    active() {
+      expose.getTableRef().editable.active();
     },
     /**
      * 退出编辑
      */
-    quit() {
-      expose.getTableRef().editable.inActiveAll();
+    inActive() {
+      expose.getTableRef().editable.inActive();
+    },
+    getInstance() {
+      expose.getTableRef().editable;
     }
   };
   return editable;

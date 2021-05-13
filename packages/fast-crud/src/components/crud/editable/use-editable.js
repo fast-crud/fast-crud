@@ -10,8 +10,15 @@ export function useEditable(props, ctx, tableRef) {
         rowKey: "id",
         enabled: false,
         form: {},
-        mode: "", //模式，add,edit
-        editType: "" // row,col,cell,all
+        mode: "edit", //模式，add,edit
+        editType: "all", // row,col,cell,all
+        activeMode: "click", //激活模式,click,dbclick,auto
+        editScope: {
+          //可编辑范围
+          row: "*",
+          col: "*",
+          isDisabled: false
+        }
       },
       props.editable
     );
@@ -45,16 +52,16 @@ export function useEditable(props, ctx, tableRef) {
     cell.getForm = () => {
       return computedEditable.value.form[key];
     };
-    cell.activeEditMode = () => {
+    cell.active = () => {
       if (computedEditable.value.editType === "all") {
-        inActiveAll();
+        inActive();
       }
       cell.isEditing = true;
       if (cell.oldValue === undefined) {
-        cell.oldValue = getValue(index, key);
+        cell.oldValue = getValue(index, key) || null;
       }
     };
-    cell.inActiveEditMode = () => {
+    cell.inActive = () => {
       cell.isEditing = false;
       cell.newValue = getValue(index, key);
     };
@@ -76,16 +83,33 @@ export function useEditable(props, ctx, tableRef) {
     return getEditableCell(index, key);
   });
 
-  function inActiveAll() {
+  /**
+   * 全部进入编辑状态
+   */
+  function active() {
+    _.forEach(editableRows, (row) => {
+      _.forEach(row, (cell) => {
+        cell.active();
+      });
+    });
+  }
+  /**
+   * 全部取消编辑状态
+   */
+  function inActive() {
     _.forEach(editableRows, (row) => {
       _.forEach(row, (cell) => {
         if (cell.isEditing) {
-          cell.inActiveEditMode();
+          cell.inActive();
         }
       });
     });
   }
 
+  /**
+   * 获取改变的数据
+   * @returns {[]}
+   */
   function getChangedData() {
     const changedRows = [];
     _.forEach(editableRows, (row, index) => {
@@ -105,8 +129,11 @@ export function useEditable(props, ctx, tableRef) {
     return changedRows;
   }
 
+  /**
+   * 固化
+   */
   function persist() {
-    inActiveAll();
+    inActive();
     _.forEach(editableRows, (row, index) => {
       _.forEach(row, (cell, key) => {
         // setValue(index, key, cell.newValue);
@@ -116,16 +143,19 @@ export function useEditable(props, ctx, tableRef) {
     });
   }
 
+  /**
+   * 还原
+   */
   function resume() {
-    inActiveAll();
-    _.forEach(editableRows, (row, index) => {
-      _.forEach(row, (cell, key) => {
+    inActive();
+    _.forEach(editableRows, (row) => {
+      _.forEach(row, (cell) => {
         cell.resume();
       });
     });
   }
   async function submit(call) {
-    inActiveAll();
+    inActive();
     const changed = getChangedData();
     await call(changed);
     persist();
@@ -134,7 +164,8 @@ export function useEditable(props, ctx, tableRef) {
   return {
     editable: {
       editableRows,
-      inActiveAll,
+      inActive,
+      active,
       getChangedData,
       persist,
       submit,

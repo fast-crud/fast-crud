@@ -1,24 +1,30 @@
 
 .fs-crud-table{
-  .fs-editable-cell {
     .fs-cell-edit{
       display: flex;
       width:100%;
+      align-items: baseline;
       .fs-cell-edit-input{
-        flex:1
+        flex:1;
       }
       .fs-cell-edit-action{
         justify-content: flex-end;
         align-items: baseline;
+        margin-left:10px;
       }
     }
 
-    .fs-cell-edit-dirty{
-      border-radius: 100px;
-      width:5px;
-      height:5px;
-      margin-left:-5px;
-      background: red;
+    .fs-cell-format{
+      width: 100%;
+      min-height: 23px;
+      .fs-cell-edit-dirty{
+        border-radius: 100px;
+        width:5px;
+        height:5px;
+        margin-left:-5px;
+        background: red;
+      }
     }
-  }
+
+
 }

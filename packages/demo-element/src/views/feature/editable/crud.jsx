@@ -32,6 +32,11 @@ export default function ({ expose }) {
         }
       },
       columns: {
+        id: {
+          title: "ID",
+          type: "number",
+          column: { width: 80, align: "center" }
+        },
         radio: {
           title: "状态",
           search: { show: true },
@@ -39,6 +44,10 @@ export default function ({ expose }) {
           dict: dict({
             url: "/dicts/OpenStatusEnum?single"
           })
+        },
+        name: {
+          title: "姓名",
+          type: "text"
         },
         province: {
           title: "省份",

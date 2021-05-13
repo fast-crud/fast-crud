@@ -369,7 +369,9 @@ export default {
       return { key: item.key, ...scope.value };
     }
     return {
-      get: _.get,
+      get: (form, key) => {
+        return _.get(form, key) || null;
+      },
       set: (form, key, value) => {
         _.set(form, key, value);
         const event = { key, value, formRef: proxy, ...scope.value };
