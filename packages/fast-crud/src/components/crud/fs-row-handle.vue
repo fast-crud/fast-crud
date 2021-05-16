@@ -58,6 +58,19 @@ export default defineComponent({
      */
     buttons: {},
     /**
+     * 按钮分组,上面的buttons为默认分组
+     *  {
+     *    groupKey:{buttonKey:{},buttonKey2:{}}
+     *  }
+     */
+    group: {},
+    /**
+     * 当前激活分组
+     */
+    active: {
+      default: "default"
+    },
+    /**
      * scope
      */
     scope: {}

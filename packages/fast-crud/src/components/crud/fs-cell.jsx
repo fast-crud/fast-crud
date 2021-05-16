@@ -6,30 +6,33 @@ import { useCompute } from "../../use/use-compute";
 export default {
   name: "FsCell",
   props: {
-    /**
-     * 组件配置
-     */
-    component: {},
+    item: {},
     /**
      * 获取scope参数方法
      */
     getScope: {
       type: Function
-    }
+    },
+    slots: {}
   },
   setup(props) {
     const { doComputed } = useCompute();
-    const computedComponent = doComputed(props.component, props.getScope);
+    const computedComponent = doComputed(props.item.component, props.getScope);
 
-    return () => {
-      if (computedComponent.value.show === false) {
-        return;
-      }
-      const newScope = props.getScope();
-      if (computedComponent.value.render) {
-        return computedComponent.value.render(newScope);
+    return (props, ctx) => {
+      if (props.slots) {
+        return <span class={"fs-cell"}>{props.slots(props.getScope())}</span>;
+      } else if (props.item.formatter) {
+        return <span class={"fs-cell"}>{props.item.formatter(props.getScope())}</span>;
+      } else if (props.item.render) {
+        return <span class={"fs-cell"}>{props.item.render(props.getScope())}</span>;
+      } else if (props.item.component) {
+        if (computedComponent.value?.show === false) {
+          return;
+        }
+        return <fs-component-render ref={"targetRef"} {...computedComponent.value} scope={props.getScope()} />;
       } else {
-        return <fs-component-render ref={"targetRef"} {...computedComponent.value} scope={newScope} />;
+        return <span class={"fs-cell"}> {props.getScope().value}</span>;
       }
     };
   },

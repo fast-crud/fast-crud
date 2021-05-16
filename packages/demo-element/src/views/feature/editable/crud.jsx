@@ -35,6 +35,9 @@ export default function ({ expose }) {
         id: {
           title: "ID",
           type: "number",
+          form: {
+            show: false
+          },
           column: { width: 80, align: "center" }
         },
         radio: {

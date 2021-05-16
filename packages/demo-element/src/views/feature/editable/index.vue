@@ -1,6 +1,7 @@
 <template>
   <fs-crud ref="crudRef" v-bind="crudBinding">
     <template #actionbar-right>
+      <fs-button class="ml-10" @click="addRow">添加行</fs-button>
       <fs-button class="ml-10" @click="quit">退出编辑</fs-button>
       <fs-button class="ml-10" @click="save">保存</fs-button>
       <fs-button class="ml-10" @click="cancel">取消</fs-button>
@@ -33,7 +34,7 @@ export default defineComponent({
     // 页面打开后获取列表数据
     onMounted(() => {
       expose.doRefresh();
-      expose.editable.editAll();
+      expose.editable.enable({ mode: "free" });
     });
 
     return {
@@ -50,6 +51,9 @@ export default defineComponent({
       },
       cancel() {
         expose.getTableRef().editable.resume();
+      },
+      addRow() {
+        expose.editable.addRow();
       }
     };
   }

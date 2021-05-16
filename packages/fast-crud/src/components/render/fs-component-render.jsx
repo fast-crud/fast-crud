@@ -142,7 +142,6 @@ export default {
       }
     }
 
-    console.log("input render component:", props.name, inputComp);
     const children = childrenRender();
     return () => {
       const props = mergeProps(allAttrs.value, ctx.attrs);

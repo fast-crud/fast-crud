@@ -1,74 +1,96 @@
 import _ from "lodash-es";
-import { reactive, computed, provide } from "vue";
+import { reactive, computed, provide, nextTick, ref, watch } from "vue";
 export function useEditable(props, ctx, tableRef) {
+  const editableRows = reactive([]);
+  function getEditableRow(index) {
+    return editableRows[index];
+  }
+  function editableRowsEach(call) {
+    for (let i = 0; i < editableRows.length; i++) {
+      const row = editableRows[i];
+      const rowData = tableRef.value.data[i];
+      const res = call({ rowData, row, index: i });
+      if (res === "break") {
+        return;
+      }
+    }
+  }
+  function editableEach(call) {
+    editableRowsEach(({ rowData, row, index }) => {
+      _.forEach(row, (cell, key) => {
+        call({ rowData, row, cell, index, key });
+      });
+    });
+  }
   // editable
-  const editableRows = reactive({});
-
-  const computedEditable = computed(() => {
+  const options = computed(() => {
     return _.merge(
       {
         rowKey: "id",
         enabled: false,
-        form: {},
-        mode: "edit", //模式，add,edit
-        editType: "all", // row,col,cell,all
+        addForm: {},
+        editForm: {},
+        mode: "free", //模式，free，row，col
+        inactiveOther: true, //独占模式
         activeMode: "click", //激活模式,click,dbclick,auto
         editScope: {
           //可编辑范围
           row: "*",
           col: "*",
           isDisabled: false
+        },
+        cell: {
+          check: {},
+          cancel: {},
+          edit: {}
         }
       },
       props.editable
     );
   });
 
-  function getValue(index, key) {
-    const data = tableRef.value.data;
-    if (data && data.length > index) {
-      return data[index][key];
-    }
-    return null;
+  function getTableRow(index) {
+    return tableRef.value.data[index];
   }
-  function setValue(index, key, value) {
-    const data = tableRef.value.data;
-    if (data && data.length > index) {
-      data[index][key] = value;
-    }
-  }
-  function getEditableCell(index, key) {
-    if (key == null || index < 0) {
-      return {};
-    }
-    const row = (editableRows[index] = editableRows[index] || reactive({}));
-    const cell = (row[key] = reactive({
-      isEditing: false
-    }));
 
+  function buildEditableCell(tableRow, key) {
+    function getValue(key) {
+      return tableRow[key];
+    }
+    function setValue(key, value) {
+      tableRow[key] = value;
+    }
+    const cell = reactive({
+      isEditing: false
+    });
     cell.isChanged = () => {
       return cell.newValue !== cell.oldValue;
     };
     cell.getForm = () => {
-      return computedEditable.value.form[key];
+      let form = options.value[cell.mode + "Form"];
+      if (form == null) {
+        form = options.value.editForm;
+      }
+      return form[key];
     };
-    cell.active = () => {
-      if (computedEditable.value.editType === "all") {
-        inActive();
+    cell.active = (opts = {}) => {
+      const inactiveOther = opts.inactiveOther ?? options.value.inactiveOther;
+      if (inactiveOther) {
+        inactive();
       }
       cell.isEditing = true;
       if (cell.oldValue === undefined) {
-        cell.oldValue = getValue(index, key) || null;
+        cell.oldValue = getValue(key);
       }
     };
-    cell.inActive = () => {
+    cell.inactive = () => {
       cell.isEditing = false;
-      cell.newValue = getValue(index, key);
+      cell.newValue = getValue(key);
     };
     cell.resume = () => {
       cell.isEditing = false;
       if (cell.isChanged()) {
-        setValue(index, key, cell.oldValue);
+        setValue(key, cell.oldValue);
         delete cell.newValue;
         delete cell.oldValue;
       }
@@ -76,8 +98,43 @@ export function useEditable(props, ctx, tableRef) {
     return cell;
   }
 
+  function setEditableRow(index, rowData) {
+    const row = {};
+    _.forEach(props.columns, (item) => {
+      row[item.key] = buildEditableCell(rowData, item.key);
+    });
+    editableRows[index] = reactive(row);
+    return editableRows[index];
+  }
+  function unshiftEditableRow(rowData) {
+    editableRows.unshift({});
+    return setEditableRow(0, rowData);
+  }
+  function setupEditable(data) {
+    _.forEach(data, (rowData, index) => {
+      setEditableRow(index, rowData);
+    });
+  }
+  watch(
+    () => {
+      return tableRef.value?.data;
+    },
+    (data) => {
+      setupEditable(data);
+    },
+    {
+      immediate: true
+    }
+  );
+  function getEditableCell(index, key) {
+    if (key == null || index < 0) {
+      return {};
+    }
+    return editableRows[index][key];
+  }
+
   provide("get:editable", (index, key) => {
-    if (!computedEditable.value || !computedEditable.value.enabled) {
+    if (!options.value || !options.value.enabled) {
       return false;
     }
     return getEditableCell(index, key);
@@ -87,22 +144,18 @@ export function useEditable(props, ctx, tableRef) {
    * 全部进入编辑状态
    */
   function active() {
-    _.forEach(editableRows, (row) => {
-      _.forEach(row, (cell) => {
-        cell.active();
-      });
+    editableEach(({ cell }) => {
+      cell.active();
     });
   }
   /**
    * 全部取消编辑状态
    */
-  function inActive() {
-    _.forEach(editableRows, (row) => {
-      _.forEach(row, (cell) => {
-        if (cell.isEditing) {
-          cell.inActive();
-        }
-      });
+  function inactive() {
+    editableEach(({ cell }) => {
+      if (cell.isEditing) {
+        cell.inactive();
+      }
     });
   }
 
@@ -112,9 +165,9 @@ export function useEditable(props, ctx, tableRef) {
    */
   function getChangedData() {
     const changedRows = [];
-    _.forEach(editableRows, (row, index) => {
-      const id = getValue(index, computedEditable.value.rowKey);
-      const changed = { [computedEditable.value.rowKey]: id };
+    editableRowsEach(({ rowData, row }) => {
+      const id = rowData[options.value.rowKey];
+      const changed = { [options.value.rowKey]: id };
       let hasChange = false;
       _.forEach(row, (cell, key) => {
         if (cell.isChanged()) {
@@ -133,13 +186,13 @@ export function useEditable(props, ctx, tableRef) {
    * 固化
    */
   function persist() {
-    inActive();
-    _.forEach(editableRows, (row, index) => {
-      _.forEach(row, (cell, key) => {
-        // setValue(index, key, cell.newValue);
-        delete cell.newValue;
-        delete cell.oldValue;
-      });
+    inactive();
+    editableRowsEach(({ row }) => {
+      delete row.isAdd;
+    });
+    editableEach(({ cell }) => {
+      delete cell.newValue;
+      delete cell.oldValue;
     });
   }
 
@@ -147,29 +200,67 @@ export function useEditable(props, ctx, tableRef) {
    * 还原
    */
   function resume() {
-    inActive();
-    _.forEach(editableRows, (row) => {
-      _.forEach(row, (cell) => {
-        cell.resume();
-      });
+    options.value.isRowMode = false;
+    inactive();
+    const willRemoveIndies = [];
+    _.forEachRight(editableRows, (item, index) => {
+      if (item.isAdd) {
+        willRemoveIndies.push(index);
+      }
+    });
+    _.forEach(willRemoveIndies, (index) => {
+      removeRow(index);
+    });
+    editableEach(({ cell }) => {
+      cell.resume();
     });
   }
   async function submit(call) {
-    inActive();
+    options.value.isRowMode = false;
+    inactive();
     const changed = getChangedData();
     await call(changed);
     persist();
   }
 
+  function hasDirty() {
+    let dirty = false;
+    editableRowsEach(({ row }) => {
+      _.forEach(row, (cell) => {
+        if (cell.isChanged()) {
+          dirty = true;
+          return "break";
+        }
+      });
+    });
+    return dirty;
+  }
+  function addRow(opts = {}) {
+    const row = opts.row || {};
+    tableRef.value.data.unshift(row);
+    const editRow = unshiftEditableRow(row);
+    editRow.isAdd = true;
+    const firstRow = getEditableRow(0);
+    _.forEach(firstRow, (cell, key) => {
+      cell.active({ inactiveOther: false });
+    });
+  }
+  function removeRow(index) {
+    tableRef.value.data.splice(index, 1);
+    editableRows.splice(index, 1);
+  }
+
   return {
     editable: {
-      editableRows,
-      inActive,
+      options,
+      inactive,
       active,
       getChangedData,
       persist,
       submit,
-      resume
+      resume,
+      addRow,
+      getEditableCell
     }
   };
 }

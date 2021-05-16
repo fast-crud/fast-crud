@@ -207,7 +207,7 @@ export default {
     const initialForm = _.cloneDeep(props.initialForm);
     // 初始数据赋值
     _.each(props.columns, (item, key) => {
-      form[key] = initialForm[key] || null;
+      form[key] = initialForm[key];
     });
     //form.valueBuilder
     _.each(props.columns, (item, key) => {
@@ -370,7 +370,7 @@ export default {
     }
     return {
       get: (form, key) => {
-        return _.get(form, key) || null;
+        return _.get(form, key);
       },
       set: (form, key, value) => {
         _.set(form, key, value);

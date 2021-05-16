@@ -124,7 +124,6 @@ export default {
         const buildColumn = (item) => {
           let cellSlots = {};
           let currentTableColumnComp = tableColumnComp;
-          const cellSlotName = "cell_" + item.key;
           if (item.children && item.children.length > 0) {
             cellSlots.default = () => {
               const subColumns = [];
@@ -137,19 +136,16 @@ export default {
               return subColumns;
             };
             currentTableColumnComp = tableColumnGroupComp;
-          } else if (this.cellSlots && this.cellSlots[cellSlotName]) {
-            cellSlots.default = (scope) => {
-              scope.row = scope[tableColumnCI.row];
-              return this.cellSlots[cellSlotName](scope);
-            };
-          } else if (item.component) {
+          } else if (item.type != null) {
+            // do nothing
+          } else {
             cellSlots.default = (scope) => {
               scope.row = scope[tableColumnCI.row];
               const getScopeFn = () => {
                 return getContextFn(item, scope);
               };
               const vModel = {
-                modelValue: scope[tableColumnCI.row][item.key] || null,
+                modelValue: scope[tableColumnCI.row][item.key],
                 "onUpdate:modelValue": (value) => {
                   scope[tableColumnCI.row][item.key] = value;
                   const newScope = getContextFn(item, scope);
@@ -176,28 +172,26 @@ export default {
               };
 
               const index = scope[ui.tableColumn.index];
-              if (this.editable) {
+              const cellSlotName = "cell_" + item.key;
+              const slots = this.cellSlots && this.cellSlots[cellSlotName];
+              if (this.editable?.options.value.enabled === true) {
+                const editable = this.editable.getEditableCell(index, item.key);
                 return (
                   <fs-editable-cell
                     ref={setRef}
                     columnKey={item.key}
                     index={index}
-                    component={item.component}
+                    item={item}
+                    editable={editable}
                     getScope={getScopeFn}
+                    slots={slots}
                     {...vModel}
                   />
                 );
               } else {
-                return <fs-cell ref={setRef} component={item.component} getScope={getScopeFn} {...vModel} />;
+                return <fs-cell ref={setRef} item={item} getScope={getScopeFn} slots={slots} {...vModel} />;
               }
             };
-          } else if (item.formatter) {
-            cellSlots.default = (scope) => {
-              const newScope = getContextFn(item, scope);
-              return item.formatter(newScope);
-            };
-          } else {
-            cellSlots = null;
           }
           const newItem = { ...item };
           delete newItem.children;

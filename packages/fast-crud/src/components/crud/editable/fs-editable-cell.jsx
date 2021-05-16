@@ -1,6 +1,7 @@
-import { inject } from "vue";
+import { computed } from "vue";
 import "./fs-editable-cell.less";
 import { uiContext } from "../../../ui";
+import { useCompute } from "../../../use/use-compute";
 /**
  * 可编辑单元格组件
  */
@@ -11,7 +12,7 @@ export default {
     /**
      * 组件配置
      */
-    component: {},
+    item: {},
     /**
      * 获取scope参数方法
      */
@@ -19,35 +20,58 @@ export default {
       type: Function
     },
     index: {},
-    columnKey: {}
+    columnKey: {},
+    editable: {}
   },
   setup(props, ctx) {
     const ui = uiContext.get();
-    const getEditable = inject("get:editable");
-    let editable = getEditable(props.index, props.columnKey);
+    // const getEditable = inject("get:editable");
+    const { doComputed } = useCompute();
 
+    // let editable = getEditable(props.index, props.columnKey);
+    if (props.index === -1) {
+      return () => {};
+    }
+    let computedForm = doComputed(props.editable?.getForm(), props.getScope);
+
+    let computedIsEditable = computed(() => {
+      return computedForm.value.show !== false;
+    });
+    function active() {
+      if (computedIsEditable.value) {
+        props.editable.active();
+      }
+    }
     return () => {
-      if (editable.isEditing) {
+      const editable = props.editable;
+      if (computedIsEditable.value && editable.isEditing) {
         return (
           <div class={"fs-cell-edit"}>
             <div class={"fs-cell-edit-input"}>
-              <fs-component-render ref={"targetInputRef"} {...editable.getForm().component} {...ctx.attrs} />
+              <fs-component-render ref={"targetInputRef"} {...computedForm.value.component} {...ctx.attrs} />
             </div>
             <div class={"fs-cell-edit-action"}>
-              <fs-button size={"mini"} icon={ui.icons.check} onClick={editable.inActive} />
-              <fs-button size={"mini"} icon={ui.icons.close} onClick={editable.resume} />
+              <fs-icon size={"mini"} icon={ui.icons.check} onClick={editable.inactive} />
+              <fs-icon size={"mini"} icon={ui.icons.close} onClick={editable.resume} />
             </div>
           </div>
         );
       }
       let dirty = null;
-      if (editable.isChanged && editable.isChanged()) {
+      if (computedIsEditable.value && editable.isChanged && editable.isChanged()) {
         dirty = <div class={"fs-cell-edit-dirty"} />;
       }
+      let editIcon = null;
+      if (computedIsEditable.value) {
+        editIcon = <fs-icon icon={ui.icons.edit} />;
+      }
       return (
-        <div class={"fs-cell-format"} onClick={editable.active}>
-          {dirty}
-          <fs-cell ref={"targetRef"} component={props.component} getScope={props.getScope} {...ctx.attrs} />
+        <div class={"fs-cell-edit"} onClick={active}>
+          <div class={"fs-cell-edit-input"}>
+            {dirty}
+            <fs-cell ref={"targetRef"} item={props.item} getScope={props.getScope} {...ctx.attrs} />
+          </div>
+          <div class={"fs-cell-edit-action fs-cell-edit-icon"}>{editIcon}</div>
         </div>
       );
     };

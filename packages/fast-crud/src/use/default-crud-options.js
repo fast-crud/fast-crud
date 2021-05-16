@@ -78,7 +78,8 @@ export default {
         rowKey: "id",
         stripe: true,
         border: true,
-        bordered: true
+        bordered: true,
+        editable: { enabled: false }
       },
       toolbar: {
         compact: true

@@ -58,7 +58,7 @@
 </template>
 
 <script>
-import draggable from "vuedraggable";
+import draggable from "vuedraggable/src/vuedraggable";
 import _ from "lodash-es";
 import FsButton from "../../basic/fs-button";
 import FsTableColumnsFixedController from "../fs-table-columns-fixed-controller/component.vue";

@@ -30,15 +30,11 @@ export type CrudExpose = {
 function useEditable({ expose }) {
   const { crudBinding } = expose;
   const editable = {
-    addRow() {
-      editable.enable({ mode: "add" });
-      expose.getTableRef().editable.addRow();
-    },
-    editAll() {
-      editable.enable({ mode: "edit", editType: "all" });
-    },
-    editRow() {
-      editable.enable({ mode: "edit", editType: "row" });
+    /**
+     * 添加行
+     */
+    addRow(opts) {
+      expose.getTableRef().editable.addRow(opts);
     },
     /**
      * 启用编辑
@@ -46,11 +42,13 @@ function useEditable({ expose }) {
      */
     enable(opts) {
       const { mode, editType } = opts;
-      const form = opts.form || mode === "add" ? crudBinding.value.addForm.columns : crudBinding.value.editForm.columns;
+      const addForm = crudBinding.value.addForm.columns;
+      const editForm = crudBinding.value.editForm.columns;
 
       crudBinding.value.table.editable = {
         enabled: true,
-        form,
+        addForm,
+        editForm,
         mode,
         editType
       };
