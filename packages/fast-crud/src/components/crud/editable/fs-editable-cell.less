@@ -3,7 +3,7 @@
     .fs-cell-edit{
       display: flex;
       width:100%;
-      align-items: baseline;
+      align-items: center;
       min-height: 23px;
       .fs-cell-edit-dirty{
         border-radius: 100px;
@@ -16,22 +16,23 @@
         flex:1;
       }
       .fs-cell-edit-action{
+        display: flex;
         justify-content: flex-end;
-        align-items: baseline;
+        align-items: center;
         margin-left:10px;
         i{
           width:20px;
           text-align: center;
-          font-size:14px;
+          font-size:16px;
           cursor: pointer;
         }
       }
 
       .fs-cell-edit-icon{
-        display: none;
+        visibility: hidden;
       }
       &:hover .fs-cell-edit-icon{
-        display: block;
+        visibility: visible;
       }
 
 

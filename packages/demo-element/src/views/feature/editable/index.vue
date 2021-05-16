@@ -5,6 +5,7 @@
       <fs-button class="ml-10" @click="quit">退出编辑</fs-button>
       <fs-button class="ml-10" @click="save">保存</fs-button>
       <fs-button class="ml-10" @click="cancel">取消</fs-button>
+      <fs-button class="ml-10" @click="editCol">编辑列</fs-button>
     </template>
   </fs-crud>
 </template>
@@ -44,16 +45,20 @@ export default defineComponent({
         expose.editable.quit();
       },
       save() {
-        expose.getTableRef().editable.submit((changed) => {
+        expose.getTableRef().editable.submit(({ changed, setData }) => {
           console.log("changed", changed);
+          // setData({ 0: {id:1} }); //设置data
           ElMessage("保存修改：" + JSON.stringify(changed));
         });
       },
       cancel() {
-        expose.getTableRef().editable.resume();
+        expose.editable.resume();
       },
       addRow() {
         expose.editable.addRow();
+      },
+      editCol() {
+        expose.editable.editCol({ cols: ["radio"] });
       }
     };
   }

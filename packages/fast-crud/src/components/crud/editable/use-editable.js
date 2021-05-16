@@ -2,23 +2,21 @@ import _ from "lodash-es";
 import { reactive, computed, provide, nextTick, ref, watch } from "vue";
 export function useEditable(props, ctx, tableRef) {
   const editableRows = reactive([]);
-  function getEditableRow(index) {
-    return editableRows[index];
-  }
   function editableRowsEach(call) {
     for (let i = 0; i < editableRows.length; i++) {
       const row = editableRows[i];
+      const cells = row.cells;
       const rowData = tableRef.value.data[i];
-      const res = call({ rowData, row, index: i });
+      const res = call({ rowData, row, cells, index: i });
       if (res === "break") {
         return;
       }
     }
   }
   function editableEach(call) {
-    editableRowsEach(({ rowData, row, index }) => {
-      _.forEach(row, (cell, key) => {
-        call({ rowData, row, cell, index, key });
+    editableRowsEach(({ rowData, row, cells, index }) => {
+      _.forEach(cells, (cell, key) => {
+        call({ rowData, row, cells, cell, index, key });
       });
     });
   }
@@ -31,13 +29,11 @@ export function useEditable(props, ctx, tableRef) {
         addForm: {},
         editForm: {},
         mode: "free", //模式，free，row，col
-        inactiveOther: true, //独占模式
-        activeMode: "click", //激活模式,click,dbclick,auto
-        editScope: {
-          //可编辑范围
-          row: "*",
-          col: "*",
-          isDisabled: false
+        exclusive: true, //是否排他式激活，激活一个，关闭其他
+        activeMode: "click", //激活触发方式,click,dbclick
+        activeDefault: false,
+        isEditable({ index, key, row }) {
+          return true;
         },
         cell: {
           check: {},
@@ -53,7 +49,7 @@ export function useEditable(props, ctx, tableRef) {
     return tableRef.value.data[index];
   }
 
-  function buildEditableCell(tableRow, key) {
+  function buildEditableCell(tableRow, key, index) {
     function getValue(key) {
       return tableRow[key];
     }
@@ -61,8 +57,11 @@ export function useEditable(props, ctx, tableRef) {
       tableRow[key] = value;
     }
     const cell = reactive({
-      isEditing: false
+      isEditing: options.value.activeDefault
     });
+    cell.isEditable = () => {
+      return options.value.isEditable({ index, key, row: tableRow });
+    };
     cell.isChanged = () => {
       return cell.newValue !== cell.oldValue;
     };
@@ -74,8 +73,8 @@ export function useEditable(props, ctx, tableRef) {
       return form[key];
     };
     cell.active = (opts = {}) => {
-      const inactiveOther = opts.inactiveOther ?? options.value.inactiveOther;
-      if (inactiveOther) {
+      const exclusive = opts.exclusive ?? options.value.exclusive;
+      if (exclusive) {
         inactive();
       }
       cell.isEditing = true;
@@ -99,22 +98,33 @@ export function useEditable(props, ctx, tableRef) {
   }
 
   function setEditableRow(index, rowData) {
-    const row = {};
+    const cells = {};
     _.forEach(props.columns, (item) => {
-      row[item.key] = buildEditableCell(rowData, item.key);
+      cells[item.key] = buildEditableCell(rowData, item.key, index);
     });
-    editableRows[index] = reactive(row);
+    editableRows[index] = reactive({ cells });
     return editableRows[index];
   }
   function unshiftEditableRow(rowData) {
-    editableRows.unshift({});
+    editableRows.unshift({ cells: {} });
     return setEditableRow(0, rowData);
   }
   function setupEditable(data) {
     _.forEach(data, (rowData, index) => {
       setEditableRow(index, rowData);
     });
+    //setupRowHandle();
   }
+  // function setupRowHandle() {
+  //   const editableButtons = {
+  //     save: {
+  //       text: "保存",
+  //       click(scope) {}
+  //     },
+  //     remove: {}
+  //   };
+  //   _.merge(tableRef.value.rowHandle, { active: "editable", group: { buttons: editableButtons } });
+  // }
   watch(
     () => {
       return tableRef.value?.data;
@@ -130,7 +140,7 @@ export function useEditable(props, ctx, tableRef) {
     if (key == null || index < 0) {
       return {};
     }
-    return editableRows[index][key];
+    return editableRows[index]?.cells[key];
   }
 
   provide("get:editable", (index, key) => {
@@ -165,11 +175,11 @@ export function useEditable(props, ctx, tableRef) {
    */
   function getChangedData() {
     const changedRows = [];
-    editableRowsEach(({ rowData, row }) => {
+    editableRowsEach(({ rowData, cells }) => {
       const id = rowData[options.value.rowKey];
       const changed = { [options.value.rowKey]: id };
       let hasChange = false;
-      _.forEach(row, (cell, key) => {
+      _.forEach(cells, (cell, key) => {
         if (cell.isChanged()) {
           changed[key] = cell.newValue;
           hasChange = true;
@@ -219,14 +229,19 @@ export function useEditable(props, ctx, tableRef) {
     options.value.isRowMode = false;
     inactive();
     const changed = getChangedData();
-    await call(changed);
+    function setData(data) {
+      _.forEach(data, (row, index) => {
+        _.merge(tableRef.value.data[index], row);
+      });
+    }
+    await call({ changed, setData });
     persist();
   }
 
   function hasDirty() {
     let dirty = false;
-    editableRowsEach(({ row }) => {
-      _.forEach(row, (cell) => {
+    editableRowsEach(({ cells }) => {
+      _.forEach(cells, (cell) => {
         if (cell.isChanged()) {
           dirty = true;
           return "break";
@@ -238,16 +253,23 @@ export function useEditable(props, ctx, tableRef) {
   function addRow(opts = {}) {
     const row = opts.row || {};
     tableRef.value.data.unshift(row);
-    const editRow = unshiftEditableRow(row);
-    editRow.isAdd = true;
-    const firstRow = getEditableRow(0);
-    _.forEach(firstRow, (cell, key) => {
-      cell.active({ inactiveOther: false });
+    const firstRow = unshiftEditableRow(row);
+    firstRow.isAdd = true;
+    _.forEach(firstRow.cells, (cell, key) => {
+      cell.active({ exclusive: false });
     });
   }
   function removeRow(index) {
     tableRef.value.data.splice(index, 1);
     editableRows.splice(index, 1);
+  }
+
+  function editCol({ cols }) {
+    editableRowsEach(({ cells }) => {
+      _.forEach(cols, (key) => {
+        cells[key].active({ exclusive: false });
+      });
+    });
   }
 
   return {
@@ -260,6 +282,8 @@ export function useEditable(props, ctx, tableRef) {
       submit,
       resume,
       addRow,
+      editCol,
+      hasDirty,
       getEditableCell
     }
   };

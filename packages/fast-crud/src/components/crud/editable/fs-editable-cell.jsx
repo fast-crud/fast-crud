@@ -35,7 +35,7 @@ export default {
     let computedForm = doComputed(props.editable?.getForm(), props.getScope);
 
     let computedIsEditable = computed(() => {
-      return computedForm.value.show !== false;
+      return computedForm.value.show !== false && props.editable?.isEditable();
     });
     function active() {
       if (computedIsEditable.value) {
@@ -43,8 +43,12 @@ export default {
       }
     }
     return () => {
+      if (!computedIsEditable.value) {
+        return <fs-cell ref={"targetRef"} item={props.item} getScope={props.getScope} {...ctx.attrs} />;
+      }
       const editable = props.editable;
-      if (computedIsEditable.value && editable.isEditing) {
+
+      if (editable.isEditing) {
         return (
           <div class={"fs-cell-edit"}>
             <div class={"fs-cell-edit-input"}>
@@ -57,21 +61,22 @@ export default {
           </div>
         );
       }
+
       let dirty = null;
-      if (computedIsEditable.value && editable.isChanged && editable.isChanged()) {
+      if (editable.isChanged && editable.isChanged()) {
         dirty = <div class={"fs-cell-edit-dirty"} />;
       }
-      let editIcon = null;
-      if (computedIsEditable.value) {
-        editIcon = <fs-icon icon={ui.icons.edit} />;
-      }
+
       return (
         <div class={"fs-cell-edit"} onClick={active}>
           <div class={"fs-cell-edit-input"}>
             {dirty}
             <fs-cell ref={"targetRef"} item={props.item} getScope={props.getScope} {...ctx.attrs} />
           </div>
-          <div class={"fs-cell-edit-action fs-cell-edit-icon"}>{editIcon}</div>
+
+          <div class={"fs-cell-edit-action fs-cell-edit-icon"}>
+            <fs-icon icon={ui.icons.edit} />
+          </div>
         </div>
       );
     };
