@@ -166,13 +166,6 @@ export function useEditable(props, ctx, tableRef) {
     return editableRows[index]?.cells[key];
   }
 
-  provide("get:editable", (index, key) => {
-    if (!options.value || !options.value.enabled) {
-      return false;
-    }
-    return getEditableCell(index, key);
-  });
-
   /**
    * 全部进入编辑状态
    */
@@ -198,6 +191,7 @@ export function useEditable(props, ctx, tableRef) {
    */
   function getChangedData() {
     const changedRows = [];
+    const removedRows = [];
     editableRowsEach(({ rowData, row, cells }) => {
       const id = rowData[options.value.rowKey];
       const changed = { [options.value.rowKey]: id };
@@ -212,7 +206,16 @@ export function useEditable(props, ctx, tableRef) {
         changedRows.push(changed);
       }
     });
-    return changedRows;
+    _.forEach(actionHistory, (item) => {
+      if (item.type === "add" || item.editableRow?.isAdd) {
+        return;
+      }
+      removedRows.push(item.dataRow);
+    });
+    return {
+      changed: changedRows,
+      removed: removedRows
+    };
   }
 
   /**
@@ -268,7 +271,7 @@ export function useEditable(props, ctx, tableRef) {
         _.merge(tableData.get(index), row);
       });
     }
-    await call({ changed, setData });
+    await call({ ...changed, setData });
     persist();
   }
 

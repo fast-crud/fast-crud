@@ -50,10 +50,11 @@ export default defineComponent({
         expose.editable.inactive();
       },
       save() {
-        expose.getTableRef().editable.submit(({ changed, setData }) => {
+        expose.getTableRef().editable.submit(({ changed, removed, setData }) => {
           console.log("changed", changed);
+          console.log("removed", removed);
           // setData({ 0: {id:1} }); //设置data
-          ElMessage("保存修改：" + JSON.stringify(changed));
+          ElMessage("保存,修改行：" + JSON.stringify(changed) + "；删除行：" + JSON.stringify(removed));
         });
       },
       cancel() {
