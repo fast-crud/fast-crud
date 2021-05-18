@@ -77,6 +77,9 @@ function useEditable({ expose }) {
     resume() {
       expose.getTableRef().editable.resume();
     },
+    removeRow(index) {
+      expose.getTableRef().editable.removeRow(index);
+    },
     getInstance() {
       expose.getTableRef().editable;
     }

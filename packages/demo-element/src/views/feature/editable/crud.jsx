@@ -31,16 +31,6 @@ export default function ({ expose }) {
           activeScope: "all"
         }
       },
-      rowHandle: {
-        group: {
-          editable: {
-            save: {
-              click() {}
-            },
-            remove: {}
-          }
-        }
-      },
       columns: {
         id: {
           title: "ID",

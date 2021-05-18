@@ -215,6 +215,47 @@ export function useCrud(ctx: UseCrudProps) {
     };
   }
 
+  function useEditable() {
+    function doRemoveRow({ index }) {
+      expose.editable.removeRow(index);
+    }
+    function doSaveRow({ index, row }) {}
+    return {
+      table: {
+        editable: {
+          onEnabled(enabled) {
+            if (enabled) {
+              crudBinding.value.rowHandle.active = "editable";
+            } else {
+              crudBinding.value.rowHandle.active = "default";
+            }
+          }
+        }
+      },
+      rowHandle: {
+        group: {
+          editable: {
+            remove: {
+              text: "删除",
+              type: "danger",
+              click: doRemoveRow
+            }
+          },
+          rowEdit: {
+            save: {
+              text: "保存",
+              click: doSaveRow
+            },
+            remove: {
+              text: "删除",
+              click: doRemoveRow
+            }
+          }
+        }
+      }
+    };
+  }
+
   function resetCrudOptions(options) {
     const userOptions = merge(
       defaultCrudOptions.defaultOptions({ t, tc, expose }),
@@ -224,6 +265,7 @@ export function useCrud(ctx: UseCrudProps) {
       useSearch(),
       useEvent(),
       useTable(),
+      useEditable(),
       defaultCrudOptions.commonOptions(ctx),
       options
     );

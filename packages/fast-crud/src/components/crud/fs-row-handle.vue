@@ -32,6 +32,7 @@ import _ from "lodash-es";
 import traceUtil from "../../utils/util.trace";
 import { useI18n } from "../../local";
 import { useUi } from "../../use/use-ui";
+import { useCompute } from "../../use/use-compute";
 
 /**
  * 操作列配置
@@ -82,33 +83,47 @@ export default defineComponent({
     traceUtil.trace("fs-row-handler");
     const { t } = useI18n();
     const doClick = (item) => {
-      const e = { key: item.key, btn: item, ...props.scope };
+      const index = props.scope[ui.tableColumn.index];
+      const e = { key: item.key, btn: item, index, ...props.scope };
       if (item.click) {
         return item.click(e);
       }
       ctx.emit("handle", e);
     };
+    const pickedProps = computed(() => {
+      return _.omit(props, "scope");
+    });
+    const { doComputed } = useCompute();
+    const computeProps = doComputed(pickedProps.value, () => {
+      return props.scope;
+    });
     const computedAllHandleBtns = computed(() => {
-      const defBtns = {
-        view: {
-          key: "view",
-          order: 1,
-          text: t("fs.rowHandle.view.text")
-        },
-        edit: {
-          key: "edit",
-          type: "primary",
-          order: 2,
-          text: t("fs.rowHandle.edit.text")
-        },
-        remove: {
-          key: "remove",
-          type: "danger",
-          order: 3,
-          text: t("fs.rowHandle.remove.text")
-        }
-      };
-      const mergedBtns = _.merge(defBtns, props.buttons);
+      let mergedBtns = null;
+      if (computeProps.value.active == null || computeProps.value.active === "default") {
+        const defBtns = {
+          view: {
+            key: "view",
+            order: 1,
+            text: t("fs.rowHandle.view.text")
+          },
+          edit: {
+            key: "edit",
+            type: "primary",
+            order: 2,
+            text: t("fs.rowHandle.edit.text")
+          },
+          remove: {
+            key: "remove",
+            type: "danger",
+            order: 3,
+            text: t("fs.rowHandle.remove.text")
+          }
+        };
+        mergedBtns = _.merge(defBtns, computeProps.value.buttons);
+      } else {
+        mergedBtns = computeProps.value.group[computeProps.value.active];
+      }
+
       const btns = [];
       _.forEach(mergedBtns, (item, key) => {
         item.key = key;
@@ -123,28 +138,26 @@ export default defineComponent({
 
     const computedDropdownAtLeast = computed(() => {
       if (
-        props.dropdown == null ||
-        props.dropdown.atLeast == null ||
-        props.dropdown.atLeast <= 0 ||
-        computedAllHandleBtns.value.length <= props.dropdown.atLeast
+        computeProps.value.dropdown == null ||
+        computeProps.value.dropdown.atLeast == null ||
+        computeProps.value.dropdown.atLeast <= 0 ||
+        computedAllHandleBtns.value.length <= computeProps.value.dropdown.atLeast
       ) {
         return 0;
       }
-      return props.dropdown.atLeast || 0;
+      return computeProps.value.dropdown.atLeast || 0;
     });
     const computedHandleBtns = computed(() => {
       if (computedDropdownAtLeast.value <= 0) {
         return computedAllHandleBtns.value;
       }
-      const handleBtns = computedAllHandleBtns.value.slice(0, computedDropdownAtLeast.value);
-      return handleBtns;
+      return computedAllHandleBtns.value.slice(0, computedDropdownAtLeast.value);
     });
     const computedDropdownBtns = computed(() => {
       if (computedDropdownAtLeast.value <= 0) {
         return [];
       }
-      const dropdownBtns = computedAllHandleBtns.value.slice(computedDropdownAtLeast.value);
-      return dropdownBtns;
+      return computedAllHandleBtns.value.slice(computedDropdownAtLeast.value);
     });
 
     function doDropdownItemClick($event) {

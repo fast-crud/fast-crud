@@ -2,10 +2,12 @@
   <fs-crud ref="crudRef" v-bind="crudBinding">
     <template #actionbar-right>
       <fs-button class="ml-10" @click="addRow">添加行</fs-button>
-      <fs-button class="ml-10" @click="quit">退出编辑</fs-button>
-      <fs-button class="ml-10" @click="save">保存</fs-button>
-      <fs-button class="ml-10" @click="cancel">取消</fs-button>
+      <fs-button class="ml-10" @click="active">激活全部编辑</fs-button>
+
+      <fs-button class="ml-10" @click="quit">反激活全部</fs-button>
       <fs-button class="ml-10" @click="editCol">编辑列</fs-button>
+      <fs-button class="ml-10" @click="cancel">取消/恢复原状</fs-button>
+      <fs-button class="ml-10" @click="save">保存</fs-button>
     </template>
   </fs-crud>
 </template>
@@ -41,8 +43,11 @@ export default defineComponent({
     return {
       crudBinding,
       crudRef,
+      active() {
+        expose.editable.active();
+      },
       quit() {
-        expose.editable.quit();
+        expose.editable.inactive();
       },
       save() {
         expose.getTableRef().editable.submit(({ changed, setData }) => {

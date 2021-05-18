@@ -1,12 +1,33 @@
 import _ from "lodash-es";
 import { reactive, computed, provide, nextTick, ref, watch } from "vue";
+function useTableData(tableRef) {
+  return {
+    getData() {
+      return tableRef.value?.data;
+    },
+    insert(index, row) {
+      tableRef.value.data.splice(index, 0, row);
+    },
+    unshift(row) {
+      tableRef.value.data.unshift(row);
+    },
+    remove(index) {
+      tableRef.value.data.splice(index, 1);
+    },
+    get(index) {
+      return tableRef.value.data[index];
+    }
+  };
+}
 export function useEditable(props, ctx, tableRef) {
+  const tableData = useTableData(tableRef);
   const editableRows = reactive([]);
+  const actionHistory = reactive([]);
   function editableRowsEach(call) {
     for (let i = 0; i < editableRows.length; i++) {
       const row = editableRows[i];
       const cells = row.cells;
-      const rowData = tableRef.value.data[i];
+      const rowData = tableData.get(i);
       const res = call({ rowData, row, cells, index: i });
       if (res === "break") {
         return;
@@ -44,10 +65,6 @@ export function useEditable(props, ctx, tableRef) {
       props.editable
     );
   });
-
-  function getTableRow(index) {
-    return tableRef.value.data[index];
-  }
 
   function buildEditableCell(tableRow, key, index) {
     function getValue(key) {
@@ -113,24 +130,30 @@ export function useEditable(props, ctx, tableRef) {
     _.forEach(data, (rowData, index) => {
       setEditableRow(index, rowData);
     });
-    //setupRowHandle();
+    if (options.value.onSetup) {
+      options.value.onSetup();
+    }
   }
-  // function setupRowHandle() {
-  //   const editableButtons = {
-  //     save: {
-  //       text: "保存",
-  //       click(scope) {}
-  //     },
-  //     remove: {}
-  //   };
-  //   _.merge(tableRef.value.rowHandle, { active: "editable", group: { buttons: editableButtons } });
-  // }
+
   watch(
     () => {
-      return tableRef.value?.data;
+      return tableData.getData();
     },
     (data) => {
       setupEditable(data);
+    },
+    {
+      immediate: true
+    }
+  );
+  watch(
+    () => {
+      return options.value.enabled;
+    },
+    (enabled) => {
+      if (options.value.onEnabled) {
+        options.value.onEnabled({ enabled });
+      }
     },
     {
       immediate: true
@@ -155,7 +178,7 @@ export function useEditable(props, ctx, tableRef) {
    */
   function active() {
     editableEach(({ cell }) => {
-      cell.active();
+      cell.active({ exclusive: false });
     });
   }
   /**
@@ -175,10 +198,10 @@ export function useEditable(props, ctx, tableRef) {
    */
   function getChangedData() {
     const changedRows = [];
-    editableRowsEach(({ rowData, cells }) => {
+    editableRowsEach(({ rowData, row, cells }) => {
       const id = rowData[options.value.rowKey];
       const changed = { [options.value.rowKey]: id };
-      let hasChange = false;
+      let hasChange = row.isAdd || false;
       _.forEach(cells, (cell, key) => {
         if (cell.isChanged()) {
           changed[key] = cell.newValue;
@@ -204,34 +227,45 @@ export function useEditable(props, ctx, tableRef) {
       delete cell.newValue;
       delete cell.oldValue;
     });
+    actionHistory.length = 0;
   }
 
+  function resumeLast() {
+    const action = actionHistory.pop();
+    const type = action.type;
+    const index = action.index;
+    const dataRow = action.dataRow;
+    const editableRow = action.editableRow;
+    if (type === "add") {
+      editableRows.splice(index, 1);
+      tableData.remove(index);
+    } else {
+      editableRows.splice(index, 0, editableRow);
+      tableData.insert(index, dataRow);
+    }
+  }
   /**
    * 还原
    */
   function resume() {
-    options.value.isRowMode = false;
+    // 反激活所有cell
     inactive();
-    const willRemoveIndies = [];
-    _.forEachRight(editableRows, (item, index) => {
-      if (item.isAdd) {
-        willRemoveIndies.push(index);
-      }
-    });
-    _.forEach(willRemoveIndies, (index) => {
-      removeRow(index);
-    });
+
+    //根据操作记录恢复
+    while (actionHistory.length > 0) {
+      resumeLast();
+    }
+    // 恢复被修改过的数据
     editableEach(({ cell }) => {
       cell.resume();
     });
   }
   async function submit(call) {
-    options.value.isRowMode = false;
     inactive();
     const changed = getChangedData();
     function setData(data) {
       _.forEach(data, (row, index) => {
-        _.merge(tableRef.value.data[index], row);
+        _.merge(tableData.get(index), row);
       });
     }
     await call({ changed, setData });
@@ -252,16 +286,28 @@ export function useEditable(props, ctx, tableRef) {
   }
   function addRow(opts = {}) {
     const row = opts.row || {};
-    tableRef.value.data.unshift(row);
+    tableData.unshift(row);
     const firstRow = unshiftEditableRow(row);
     firstRow.isAdd = true;
     _.forEach(firstRow.cells, (cell, key) => {
       cell.active({ exclusive: false });
     });
+    actionHistory.push({
+      type: "add",
+      index: 0
+    });
   }
   function removeRow(index) {
-    tableRef.value.data.splice(index, 1);
+    const editableRow = editableRows[index];
+    //把删除部分的数据临时保存起来
+    actionHistory.push({
+      type: "remove",
+      index,
+      dataRow: tableData.get(index),
+      editableRow
+    });
     editableRows.splice(index, 1);
+    tableData.remove(index);
   }
 
   function editCol({ cols }) {
@@ -282,6 +328,7 @@ export function useEditable(props, ctx, tableRef) {
       submit,
       resume,
       addRow,
+      removeRow,
       editCol,
       hasDirty,
       getEditableCell
