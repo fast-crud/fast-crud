@@ -223,9 +223,13 @@ export function useCrud(ctx: UseCrudProps) {
     return {
       table: {
         editable: {
-          onEnabled(enabled) {
+          onEnabled({ enabled, mode }) {
             if (enabled) {
-              crudBinding.value.rowHandle.active = "editable";
+              if (mode === "row") {
+                crudBinding.value.rowHandle.active = "editRow";
+              } else {
+                crudBinding.value.rowHandle.active = "editable";
+              }
             } else {
               crudBinding.value.rowHandle.active = "default";
             }
@@ -241,7 +245,7 @@ export function useCrud(ctx: UseCrudProps) {
               click: doRemoveRow
             }
           },
-          rowEdit: {
+          editRow: {
             save: {
               text: "保存",
               click: doSaveRow

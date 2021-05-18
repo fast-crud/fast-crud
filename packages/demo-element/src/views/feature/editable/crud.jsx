@@ -24,10 +24,13 @@ export default function ({ expose }) {
         editRequest,
         delRequest
       },
+      actionbar: {
+        buttons: { add: { show: false } }
+      },
       table: {
         editable: {
           enabled: true,
-          mode: "edit",
+          mode: "free",
           activeScope: "all"
         }
       },

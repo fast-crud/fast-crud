@@ -150,13 +150,23 @@ export function useEditable(props, ctx, tableRef) {
     () => {
       return options.value.enabled;
     },
-    (enabled) => {
+    () => {
       if (options.value.onEnabled) {
-        options.value.onEnabled({ enabled });
+        options.value.onEnabled({ ...options.value });
       }
     },
     {
       immediate: true
+    }
+  );
+  watch(
+    () => {
+      return options.value.mode;
+    },
+    () => {
+      if (options.value.onEnabled) {
+        options.value.onEnabled({ ...options.value });
+      }
     }
   );
   function getEditableCell(index, key) {

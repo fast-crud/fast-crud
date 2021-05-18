@@ -35,11 +35,12 @@ function useEditable({ expose }) {
      * @param opts
      */
     enable(opts) {
-      if (!crudBinding.value.table.editable.addForm) {
-        crudBinding.value.table.editable.addForm = crudBinding.value.addForm.columns;
+      const editable = crudBinding.value.table.editable;
+      if (!editable.addForm) {
+        editable.addForm = crudBinding.value.addForm.columns;
       }
-      if (!crudBinding.value.table.editable.editForm) {
-        crudBinding.value.table.editable.editForm = crudBinding.value.editForm.columns;
+      if (!editable.editForm) {
+        editable.editForm = crudBinding.value.editForm.columns;
       }
 
       _.merge(crudBinding.value.table.editable, { enabled: true }, opts);
@@ -48,6 +49,7 @@ function useEditable({ expose }) {
      * 禁用编辑
      */
     disable() {
+      expose.getTableRef().editable.resume();
       crudBinding.value.table.editable.enabled = false;
     },
     /**

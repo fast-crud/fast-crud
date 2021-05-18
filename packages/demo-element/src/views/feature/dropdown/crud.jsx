@@ -1,5 +1,5 @@
 import * as api from "./api";
-import { dict } from "@fast-crud/fast-crud";
+import { dict, compute } from "@fast-crud/fast-crud";
 export default function ({ expose }) {
   const pageRequest = async (query) => {
     return await api.GetList(query);
@@ -27,6 +27,14 @@ export default function ({ expose }) {
         dropdown: {
           // 操作列折叠
           atLeast: 2 // 至少几个以上的按钮才会被折叠,注意show=false的按钮也会计算在内（行编辑按钮默认是隐藏的也会占一个位置）
+        },
+        buttons: {
+          edit: {
+            //编辑按钮条件显隐
+            show: compute(({ $index }) => {
+              return $index % 2 === 0;
+            })
+          }
         }
       },
       columns: {

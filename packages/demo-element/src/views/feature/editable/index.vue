@@ -1,10 +1,16 @@
 <template>
   <fs-crud ref="crudRef" v-bind="crudBinding">
     <template #actionbar-right>
+      <fs-button class="" @click="enable">启用编辑</fs-button>
+      <fs-button class="ml-10" @click="disable">退出编辑</fs-button>
+      <el-radio-group class="ml-10" v-model="crudBinding.table.editable.mode">
+        <el-radio-button label="free">自由模式</el-radio-button>
+        <el-radio-button label="row">行编辑模式</el-radio-button>
+      </el-radio-group>
       <fs-button class="ml-10" @click="addRow">添加行</fs-button>
       <fs-button class="ml-10" @click="active">激活全部编辑</fs-button>
 
-      <fs-button class="ml-10" @click="quit">反激活全部</fs-button>
+      <fs-button class="ml-10" @click="inactive">反激活全部</fs-button>
       <fs-button class="ml-10" @click="editCol">编辑列</fs-button>
       <fs-button class="ml-10" @click="cancel">取消/恢复原状</fs-button>
       <fs-button class="ml-10" @click="save">保存</fs-button>
@@ -43,10 +49,16 @@ export default defineComponent({
     return {
       crudBinding,
       crudRef,
+      enable() {
+        expose.editable.enable({ enabled: true });
+      },
+      disable() {
+        expose.editable.disable();
+      },
       active() {
         expose.editable.active();
       },
-      quit() {
+      inactive() {
         expose.editable.inactive();
       },
       save() {
