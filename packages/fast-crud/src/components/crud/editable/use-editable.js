@@ -111,6 +111,11 @@ export function useEditable(props, ctx, tableRef) {
         delete cell.oldValue;
       }
     };
+    cell.persist = () => {
+      cell.isEditing = false;
+      delete cell.newValue;
+      delete cell.oldValue;
+    };
     return cell;
   }
 
@@ -119,8 +124,67 @@ export function useEditable(props, ctx, tableRef) {
     _.forEach(props.columns, (item) => {
       cells[item.key] = buildEditableCell(rowData, item.key, index);
     });
-    editableRows[index] = reactive({ cells });
-    return editableRows[index];
+    const editableRow = (editableRows[index] = reactive({ cells }));
+
+    editableRow.inactive = () => {
+      editableRow.isEditing = false;
+      _.forEach(editableRow.cells, (cell) => {
+        if (cell.isEditing) {
+          cell.inactive();
+        }
+      });
+    };
+
+    editableRow.active = () => {
+      editableRow.isEditing = true;
+      _.forEach(editableRow.cells, (cell) => {
+        cell.active({ exclusive: false });
+      });
+    };
+
+    editableRow.persist = () => {
+      editableRow.inactive();
+      delete editableRow.isAdd;
+      _.forEach(editableRow.cells, (cell) => {
+        cell.persist();
+      });
+    };
+    editableRow.resume = () => {
+      _.forEach(editableRow.cells, (cell) => {
+        cell.resume();
+      });
+    };
+
+    editableRow.save = async ({ index, doSave }) => {
+      const changed = editableRow.getChangeData(index);
+      const row = tableData.get(index);
+      function setData(newRow) {
+        if (newRow) {
+          _.merge(row, newRow);
+        }
+      }
+      await doSave({ isAdd: editableRow.isAdd, index, changed, row, setData });
+      editableRow.persist();
+    };
+
+    editableRow.getChangeData = (index) => {
+      editableRow.inactive();
+      const row = editableRow;
+      const rowData = tableData.get(index);
+      if (row.isAdd) {
+        return rowData;
+      }
+      const id = rowData[options.value.rowKey];
+      const changed = { [options.value.rowKey]: id };
+      _.forEach(row.cells, (cell, key) => {
+        if (cell.isChanged()) {
+          changed[key] = cell.newValue;
+        }
+      });
+      return changed;
+    };
+
+    return editableRow;
   }
   function unshiftEditableRow(rowData) {
     editableRows.unshift({ cells: {} });
@@ -276,8 +340,8 @@ export function useEditable(props, ctx, tableRef) {
   async function submit(call) {
     inactive();
     const changed = getChangedData();
-    function setData(data) {
-      _.forEach(data, (row, index) => {
+    function setData(list) {
+      _.forEach(list, (row, index) => {
         _.merge(tableData.get(index), row);
       });
     }
@@ -297,19 +361,20 @@ export function useEditable(props, ctx, tableRef) {
     });
     return dirty;
   }
+
   function addRow(opts = {}) {
     const row = opts.row || {};
     tableData.unshift(row);
     const firstRow = unshiftEditableRow(row);
     firstRow.isAdd = true;
-    _.forEach(firstRow.cells, (cell, key) => {
-      cell.active({ exclusive: false });
-    });
+    firstRow.isEditing = true;
+    firstRow.active();
     actionHistory.push({
       type: "add",
       index: 0
     });
   }
+
   function removeRow(index) {
     const editableRow = editableRows[index];
     //把删除部分的数据临时保存起来
@@ -331,6 +396,10 @@ export function useEditable(props, ctx, tableRef) {
     });
   }
 
+  function getEditableRow(index) {
+    return editableRows[index];
+  }
+
   return {
     editable: {
       options,
@@ -342,6 +411,7 @@ export function useEditable(props, ctx, tableRef) {
       resume,
       addRow,
       removeRow,
+      getEditableRow,
       editCol,
       hasDirty,
       getEditableCell

@@ -82,6 +82,9 @@ function useEditable({ expose }) {
     removeRow(index) {
       expose.getTableRef().editable.removeRow(index);
     },
+    getEditableRow(index) {
+      return expose.getTableRef()?.editable?.getEditableRow(index);
+    },
     getInstance() {
       expose.getTableRef().editable;
     }

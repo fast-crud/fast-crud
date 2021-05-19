@@ -6,8 +6,9 @@ import logger from "../utils/util.log";
 import types from "../types";
 import { uiContext } from "../ui";
 import { useI18n } from "../local";
-import { useMerge } from "../use/use-merge";
-import { CrudExpose } from "../use/use-expose";
+import { useMerge } from "./use-merge";
+import { CrudExpose } from "./use-expose";
+import { useCompute } from "./use-compute";
 export interface CrudOptions {
   table?: {};
   columns?: [];
@@ -28,7 +29,6 @@ export type UseCrudProps = {
   expose: CrudExpose;
 };
 const { merge, cloneDeep } = useMerge();
-
 // mergeColumnPlugin 注册
 const mergeColumnPlugins: Array<Function> = [];
 export function registerMergeColumnPlugin(mergeFn) {
@@ -75,7 +75,6 @@ registerMergeColumnPlugin(mergeColumnDict);
 export function useCrud(ctx: UseCrudProps) {
   const ui = uiContext.get();
   const { t, tc } = useI18n(); // call `useI18n`, and spread `t` from  `useI18n` returning
-
   const options: CrudOptions = ctx.crudOptions;
   const expose = ctx.expose;
   const { crudBinding } = expose;
@@ -216,10 +215,8 @@ export function useCrud(ctx: UseCrudProps) {
   }
 
   function useEditable() {
-    function doRemoveRow({ index }) {
-      expose.editable.removeRow(index);
-    }
-    function doSaveRow({ index, row }) {}
+    const { compute } = useCompute();
+
     return {
       table: {
         editable: {
@@ -242,17 +239,54 @@ export function useCrud(ctx: UseCrudProps) {
             remove: {
               text: "删除",
               type: "danger",
-              click: doRemoveRow
+              click: ({ index }) => {
+                expose.editable.removeRow(index);
+              }
             }
           },
           editRow: {
+            edit: {
+              text: "编辑",
+              click: ({ index }) => {
+                expose.editable.getEditableRow(index)?.active();
+              },
+              show: compute(({ $index }) => {
+                const index = $index;
+                return !expose.editable?.getEditableRow(index)?.isEditing;
+              })
+            },
             save: {
               text: "保存",
-              click: doSaveRow
+              click: async ({ $index }) => {
+                const index = $index;
+                expose.editable.getEditableRow(index).save({
+                  index,
+                  async doSave({ isAdd, changed, row, setData }) {
+                    if (isAdd) {
+                      const ret = await crudBinding.value.request.addRequest({ form: changed });
+                      setData(ret);
+                    } else {
+                      debugger;
+                      await crudBinding.value.request.editRequest({ form: changed, row });
+                    }
+                  }
+                });
+              },
+              show: compute(({ $index }) => {
+                const index = $index;
+                return expose.editable?.getEditableRow(index)?.isEditing;
+              })
             },
             remove: {
               text: "删除",
-              click: doRemoveRow
+              click: async ({ index }) => {
+                const row = expose.editable.getEditableRow(index);
+                if (row.isAdd) {
+                  expose.editable.removeRow(index);
+                } else {
+                  await crudBinding.value.request.delRequest({ row });
+                }
+              }
             }
           }
         }
