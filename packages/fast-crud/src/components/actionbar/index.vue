@@ -1,6 +1,6 @@
 <template>
   <div class="fs-actionbar">
-    <template v-for="(value, key) in buttons" :key="key">
+    <template v-for="(value, key) in computedButtons" :key="key">
       <fs-button v-if="value.show !== false" v-bind="value" @click="onClick(key, value, $event)" />
     </template>
   </div>
@@ -9,6 +9,8 @@
 import { defineComponent } from "vue";
 import FsButton from "../basic/fs-button";
 import traceUtil from "../../utils/util.trace";
+import { useCompute } from "../../use/use-compute";
+
 export default defineComponent({
   name: "FsActionbar",
   components: { FsButton },
@@ -36,8 +38,14 @@ export default defineComponent({
       }
       ctx.emit("action", e);
     }
+    const { doComputed } = useCompute();
+    const getScopeFn = () => {
+      return {};
+    };
+    const computedButtons = doComputed(props.buttons, getScopeFn);
     return {
-      onClick
+      onClick,
+      computedButtons
     };
   }
 });

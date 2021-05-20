@@ -289,7 +289,6 @@ export default {
         },
         group
       );
-      console.log("merged", merged);
       return merged;
     });
 

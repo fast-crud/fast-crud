@@ -195,6 +195,10 @@ export function useEditable(props, ctx, tableRef) {
     return setEditableRow(0, rowData);
   }
   function setupEditable(data) {
+    if (data == null) {
+      data = tableData.getData();
+    }
+    editableRows.length = 0;
     _.forEach(data, (rowData, index) => {
       setEditableRow(index, rowData);
     });

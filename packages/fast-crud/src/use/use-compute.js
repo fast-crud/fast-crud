@@ -17,7 +17,6 @@ function findComputeValues(target, excludes, isAsync) {
   eachDeep(target, (value, key, parent, context) => {
     if (checkFunc(value)) {
       const path = context.path;
-      console.log("path", path);
       if (excludes) {
         for (const exclude of excludes) {
           if (typeof exclude === "string") {

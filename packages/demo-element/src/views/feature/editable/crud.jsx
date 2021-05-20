@@ -1,6 +1,7 @@
 import * as api from "./api";
-import { dict } from "@fast-crud/fast-crud";
+import { dict, compute } from "@fast-crud/fast-crud";
 export default function ({ expose }) {
+  const { crudBinding } = expose;
   const pageRequest = async (query) => {
     return await api.GetList(query);
   };
@@ -25,7 +26,24 @@ export default function ({ expose }) {
         delRequest
       },
       actionbar: {
-        buttons: { add: { show: false } }
+        buttons: {
+          add: {
+            show: compute(() => {
+              if (crudBinding.value) {
+                return !crudBinding.value?.table.editable.enabled;
+              }
+              return false;
+            })
+          },
+          addRow: {
+            show: compute(() => {
+              if (crudBinding.value) {
+                return crudBinding.value?.table.editable.enabled;
+              }
+              return false;
+            })
+          }
+        }
       },
       table: {
         editable: {

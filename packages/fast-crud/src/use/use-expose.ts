@@ -44,6 +44,9 @@ function useEditable({ expose }) {
       }
 
       _.merge(crudBinding.value.table.editable, { enabled: true }, opts);
+
+      debugger;
+      expose.getTableRef().editable.setupEditable();
     },
     /**
      * 禁用编辑
@@ -51,6 +54,8 @@ function useEditable({ expose }) {
     disable() {
       expose.getTableRef().editable.resume();
       crudBinding.value.table.editable.enabled = false;
+      expose.getTableRef().editable.setupEditable();
+      crudBinding.value.rowHandle.active = "default";
     },
     /**
      * 激活所有编辑

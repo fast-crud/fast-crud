@@ -124,7 +124,6 @@ export default defineComponent({
         mergedBtns = computeProps.value.group[computeProps.value.active];
       }
 
-      console.log("merged btns", mergedBtns);
       const btns = [];
       _.forEach(mergedBtns, (item, key) => {
         item.key = key;
