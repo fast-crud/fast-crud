@@ -35,13 +35,19 @@ export default {
     let computedForm = doComputed(props.editable?.getForm(), props.getScope);
 
     let computedIsEditable = computed(() => {
-      return computedForm.value.show !== false && props.editable?.isEditable();
+      return computedForm.value && computedForm.value.show !== false && props.editable?.isEditable();
     });
-    function active() {
-      if (computedIsEditable.value) {
-        props.editable.active();
-      }
+    let activeTrigger = {};
+    if (props.editable.activeTrigger) {
+      activeTrigger = {
+        [props.editable.activeTrigger]: () => {
+          if (computedIsEditable.value) {
+            props.editable.active();
+          }
+        }
+      };
     }
+
     return () => {
       if (!computedIsEditable.value) {
         return <fs-cell ref={"targetRef"} item={props.item} getScope={props.getScope} {...ctx.attrs} />;
@@ -49,15 +55,22 @@ export default {
       const editable = props.editable;
 
       if (editable.isEditing) {
+        let actions = null;
+        if (props.editable.activeTrigger) {
+          actions = (
+            <div className={"fs-cell-edit-action"}>
+              <fs-icon size={"mini"} icon={ui.icons.check} onClick={editable.inactive} />
+              <fs-icon size={"mini"} icon={ui.icons.close} onClick={editable.resume} />
+            </div>
+          );
+        }
+
         return (
           <div class={"fs-cell-edit"}>
             <div class={"fs-cell-edit-input"}>
               <fs-component-render ref={"targetInputRef"} {...computedForm.value.component} {...ctx.attrs} />
             </div>
-            <div class={"fs-cell-edit-action"}>
-              <fs-icon size={"mini"} icon={ui.icons.check} onClick={editable.inactive} />
-              <fs-icon size={"mini"} icon={ui.icons.close} onClick={editable.resume} />
-            </div>
+            {actions}
           </div>
         );
       }
@@ -67,16 +80,21 @@ export default {
         dirty = <div class={"fs-cell-edit-dirty"} />;
       }
 
+      let actions = null;
+      if (props.editable.activeTrigger) {
+        actions = (
+          <div className={"fs-cell-edit-action fs-cell-edit-icon"}>
+            <fs-icon icon={ui.icons.edit} />
+          </div>
+        );
+      }
       return (
-        <div class={"fs-cell-edit"} onClick={active}>
+        <div class={"fs-cell-edit"} {...activeTrigger}>
           <div class={"fs-cell-edit-input"}>
             {dirty}
             <fs-cell ref={"targetRef"} item={props.item} getScope={props.getScope} {...ctx.attrs} />
           </div>
-
-          <div class={"fs-cell-edit-action fs-cell-edit-icon"}>
-            <fs-icon icon={ui.icons.edit} />
-          </div>
+          {actions}
         </div>
       );
     };

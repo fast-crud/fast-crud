@@ -218,6 +218,21 @@ export function useCrud(ctx: UseCrudProps) {
     const { compute } = useCompute();
 
     return {
+      actionbar: {
+        buttons: {
+          add: {
+            show: false
+          },
+          addRow: {
+            show: true,
+            text: t("fs.actionbar.add"),
+            type: "primary",
+            click: () => {
+              expose.editable.addRow();
+            }
+          }
+        }
+      },
       table: {
         editable: {
           onEnabled({ enabled, mode }) {
@@ -247,45 +262,75 @@ export function useCrud(ctx: UseCrudProps) {
           editRow: {
             edit: {
               text: "编辑",
+              loading: compute(({ index }) => {
+                const editableRow = expose.editable.getEditableRow(index);
+                return !!editableRow?.isLoading;
+              }),
               click: ({ index }) => {
                 expose.editable.getEditableRow(index)?.active();
               },
-              show: compute(({ $index }) => {
-                const index = $index;
+              show: compute(({ index }) => {
                 return !expose.editable?.getEditableRow(index)?.isEditing;
               })
             },
             save: {
               text: "保存",
-              click: async ({ $index }) => {
-                const index = $index;
-                expose.editable.getEditableRow(index).save({
+              loading: false,
+              click: async ({ index }) => {
+                const editableRow = expose.editable.getEditableRow(index);
+                editableRow.save({
                   index,
                   async doSave({ isAdd, changed, row, setData }) {
-                    if (isAdd) {
-                      const ret = await crudBinding.value.request.addRequest({ form: changed });
-                      setData(ret);
-                    } else {
-                      debugger;
-                      await crudBinding.value.request.editRequest({ form: changed, row });
+                    try {
+                      editableRow.isLoading = true;
+                      if (isAdd) {
+                        const ret = await crudBinding.value.request.addRequest({ form: changed });
+                        setData(ret);
+                      } else {
+                        await crudBinding.value.request.editRequest({ form: changed, row });
+                      }
+                    } finally {
+                      editableRow.isLoading = false;
                     }
                   }
                 });
               },
-              show: compute(({ $index }) => {
-                const index = $index;
-                return expose.editable?.getEditableRow(index)?.isEditing;
+              show: compute(({ index }) => {
+                return !!expose.editable?.getEditableRow(index)?.isEditing;
+              })
+            },
+            cancel: {
+              text: "取消",
+              click: async ({ index }) => {
+                expose.editable.getEditableRow(index).inactive();
+              },
+              show: compute(({ index }) => {
+                return !!expose.editable?.getEditableRow(index)?.isEditing;
               })
             },
             remove: {
               text: "删除",
+              type: "danger",
               click: async ({ index }) => {
+                try {
+                  await ui.messageBox.confirm({
+                    title: t("fs.rowHandle.remove.confirmTitle"), // '提示',
+                    message: t("fs.rowHandle.remove.confirmMessage"), // '确定要删除此记录吗?',
+                    type: "warn"
+                  });
+                } catch (e) {
+                  logger.info("delete canceled", e.message);
+                  return;
+                }
                 const row = expose.editable.getEditableRow(index);
                 if (row.isAdd) {
                   expose.editable.removeRow(index);
                 } else {
-                  await crudBinding.value.request.delRequest({ row });
+                  const rowData = row.getRowData(index);
+                  await crudBinding.value.request.delRequest({ row: rowData });
+                  doRefresh();
                 }
+                ui.notification.success(t("fs.rowHandle.remove.success"));
               }
             }
           }

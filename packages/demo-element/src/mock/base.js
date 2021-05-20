@@ -13,7 +13,6 @@ function copyList(originList, newList, options, parentId) {
 function delById(req, list) {
   for (let i = 0; i < list.length; i++) {
     const item = list[i];
-    console.log("remove i", i, req, req.params.id, item.id);
     if (item.id === parseInt(req.params.id)) {
       console.log("remove i", i);
       list.splice(i, 1);

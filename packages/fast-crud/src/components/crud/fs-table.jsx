@@ -105,8 +105,9 @@ export default {
       const getContextFn = (item, scope) => {
         const row = scope[tableColumnCI.row];
         const form = row;
+        const index = scope[ui.tableColumn.index];
+        scope.index = index;
         const getComponentRef = (key) => {
-          const index = scope[ui.tableColumn.index];
           return this.getComponentRef(index, key);
         };
         return {
@@ -218,6 +219,7 @@ export default {
         if (this.rowHandle && this.rowHandle.show !== false) {
           const rowHandleSlots = {
             default: (scope) => {
+              scope.index = scope[ui.tableColumn.index];
               return <fs-row-handle {...this.rowHandle} scope={scope} onHandle={this.onRowHandle} />;
             }
           };

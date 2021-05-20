@@ -1,9 +1,5 @@
 <template>
-  <fs-crud ref="crudRef" v-bind="crudBinding">
-    <template #actionbar-right>
-      <fs-button class="ml-10" @click="addRow">添加行</fs-button>
-    </template>
-  </fs-crud>
+  <fs-crud ref="crudRef" v-bind="crudBinding" />
 </template>
 
 <script>
@@ -31,41 +27,13 @@ export default defineComponent({
     // 页面打开后获取列表数据
     onMounted(() => {
       expose.doRefresh();
+      //激活editable，必须在mounted中调用
       expose.editable.enable({ mode: "row" });
     });
 
     return {
       crudBinding,
-      crudRef,
-      enable() {
-        expose.editable.enable({ enabled: true });
-      },
-      disable() {
-        expose.editable.disable();
-      },
-      active() {
-        expose.editable.active();
-      },
-      inactive() {
-        expose.editable.inactive();
-      },
-      save() {
-        expose.getTableRef().editable.submit(({ changed, removed, setData }) => {
-          console.log("changed", changed);
-          console.log("removed", removed);
-          // setData({ 0: {id:1} }); //设置data
-          ElMessage("保存,修改行：" + JSON.stringify(changed) + "；删除行：" + JSON.stringify(removed));
-        });
-      },
-      cancel() {
-        expose.editable.resume();
-      },
-      addRow() {
-        expose.editable.addRow();
-      },
-      editCol() {
-        expose.editable.editCol({ cols: ["radio"] });
-      }
+      crudRef
     };
   }
 });

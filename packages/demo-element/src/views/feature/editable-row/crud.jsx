@@ -25,13 +25,11 @@ export default function ({ expose }) {
         editRequest,
         delRequest
       },
-      actionbar: {
-        buttons: { add: { show: false } }
-      },
       table: {
         editable: {
-          enabled: true,
-          mode: "row"
+          enabled: false,
+          mode: "row",
+          activeTrigger: false
         }
       },
       columns: {

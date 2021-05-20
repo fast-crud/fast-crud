@@ -51,7 +51,7 @@ export function useEditable(props, ctx, tableRef) {
         editForm: {},
         mode: "free", //模式，free，row，col
         exclusive: true, //是否排他式激活，激活一个，关闭其他
-        activeMode: "click", //激活触发方式,click,dbclick
+        activeTrigger: "onClick", //激活触发方式,onClick,onDbClick,false
         activeDefault: false,
         isEditable({ index, key, row }) {
           return true;
@@ -74,7 +74,8 @@ export function useEditable(props, ctx, tableRef) {
       tableRow[key] = value;
     }
     const cell = reactive({
-      isEditing: options.value.activeDefault
+      isEditing: options.value.activeDefault,
+      activeTrigger: options.value.activeTrigger
     });
     cell.isEditable = () => {
       return options.value.isEditable({ index, key, row: tableRow });
@@ -167,6 +168,9 @@ export function useEditable(props, ctx, tableRef) {
       editableRow.persist();
     };
 
+    editableRow.getRowData = (index) => {
+      return tableData.get(index);
+    };
     editableRow.getChangeData = (index) => {
       editableRow.inactive();
       const row = editableRow;
@@ -403,6 +407,7 @@ export function useEditable(props, ctx, tableRef) {
   return {
     editable: {
       options,
+      setupEditable,
       inactive,
       active,
       getChangedData,

@@ -103,11 +103,11 @@ function createRequestFunction(service) {
   return function (config) {
     const configDefault = {
       headers: {
-        "Content-Type": get(config, "headers.Content-Type", "application/json"),
+        "Content-Type": get(config, "headers.Content-Type", "application/json")
       },
       timeout: 5000,
       baseURL: "/api",
-      data: {},
+      data: {}
     };
     return service(Object.assign(configDefault, config));
   };
