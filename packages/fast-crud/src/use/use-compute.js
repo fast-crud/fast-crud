@@ -1,5 +1,5 @@
 import _ from "lodash-es";
-import { computed, ref, toRaw, watch } from "vue";
+import { computed, ref, toRaw, watch, isRef } from "vue";
 import getEachDeep from "deepdash-es/getEachDeep";
 import { useMerge } from "./use-merge";
 const { cloneDeep } = useMerge();
@@ -61,7 +61,14 @@ function setAsyncComputeValue(target, asyncValuesMap) {
 }
 
 function doComputed(target, getContextFn, excludes, userComputedFn) {
-  let raw = toRaw(target);
+  if (target && target instanceof Function) {
+    target = target();
+  }
+
+  if (!isRef(target)) {
+    target = ref(target);
+  }
+  let raw = toRaw(target.value);
   const dependValues = findComputeValues(raw, excludes, false);
 
   const dependAsyncValues = findComputeValues(raw, excludes, true);
@@ -72,30 +79,30 @@ function doComputed(target, getContextFn, excludes, userComputedFn) {
     return computed(() => {
       // 设置异步compute类型的value
       if (asyncValuesMap && Object.keys(asyncValuesMap).length <= 0) {
-        target = cloneDeep(target);
-        setAsyncComputeValue(target, asyncValuesMap);
+        target.value = cloneDeep(target.value);
+        setAsyncComputeValue(target.value, asyncValuesMap);
       }
 
       if (userComputedFn) {
-        return userComputedFn(target);
+        return userComputedFn(target.value);
       }
-      return target;
+      return target.value;
     });
   }
   // 有同步compute类型的配置
   return computed(() => {
-    target = _.cloneDeep(target);
+    const targetValue = _.cloneDeep(target.value);
     // console.log('function recomputed', target)
     _.forEach(dependValues, (value, key) => {
       const context = getContextFn ? getContextFn(key, value) : {};
-      _.set(target, key, value.computeFn(context));
+      _.set(targetValue, key, value.computeFn(context));
     });
 
-    setAsyncComputeValue(target, asyncValuesMap);
+    setAsyncComputeValue(targetValue, asyncValuesMap);
     if (userComputedFn) {
-      return userComputedFn(target);
+      return userComputedFn(targetValue);
     }
-    return target;
+    return targetValue;
   });
 }
 

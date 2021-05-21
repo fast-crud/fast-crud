@@ -1,21 +1,28 @@
 import _ from "lodash-es";
 import { reactive, computed, provide, nextTick, ref, watch } from "vue";
+import { uiContext } from "../../../ui";
 function useTableData(tableRef) {
+  const ui = uiContext.get();
+
+  function getData() {
+    if (tableRef.value) {
+      return tableRef.value[ui.table.data];
+    }
+    return [];
+  }
   return {
-    getData() {
-      return tableRef.value?.data;
-    },
+    getData,
     insert(index, row) {
-      tableRef.value.data.splice(index, 0, row);
+      getData().splice(index, 0, row);
     },
     unshift(row) {
-      tableRef.value.data.unshift(row);
+      getData().unshift(row);
     },
     remove(index) {
-      tableRef.value.data.splice(index, 1);
+      getData().splice(index, 1);
     },
     get(index) {
-      return tableRef.value.data[index];
+      return getData()[index];
     }
   };
 }
@@ -49,7 +56,7 @@ export function useEditable(props, ctx, tableRef) {
         enabled: false,
         addForm: {},
         editForm: {},
-        mode: "free", //模式，free，row，col
+        mode: "free", //模式，free，row
         exclusive: true, //是否排他式激活，激活一个，关闭其他
         activeTrigger: "onClick", //激活触发方式,onClick,onDbClick,false
         activeDefault: false,
@@ -202,6 +209,7 @@ export function useEditable(props, ctx, tableRef) {
     _.forEach(data, (rowData, index) => {
       setEditableRow(index, rowData);
     });
+    console.log("editable init", editableRows);
     if (options.value.onSetup) {
       options.value.onSetup();
     }
@@ -370,8 +378,9 @@ export function useEditable(props, ctx, tableRef) {
     return dirty;
   }
 
+  let addIndex = 0;
   function addRow(opts = {}) {
-    const row = opts.row || {};
+    const row = opts.row || { [options.value.rowKey]: --addIndex };
     tableData.unshift(row);
     const firstRow = unshiftEditableRow(row);
     firstRow.isAdd = true;

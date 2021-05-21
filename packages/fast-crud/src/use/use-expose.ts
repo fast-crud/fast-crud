@@ -35,26 +35,16 @@ function useEditable({ expose }) {
      * @param opts
      */
     enable(opts) {
-      const editable = crudBinding.value.table.editable;
-      if (!editable.addForm) {
-        editable.addForm = crudBinding.value.addForm.columns;
-      }
-      if (!editable.editForm) {
-        editable.editForm = crudBinding.value.editForm.columns;
-      }
-
       _.merge(crudBinding.value.table.editable, { enabled: true }, opts);
-
-      debugger;
-      expose.getTableRef().editable.setupEditable();
+      expose.getTableRef()?.editable.setupEditable();
     },
     /**
      * 禁用编辑
      */
     disable() {
-      expose.getTableRef().editable.resume();
+      expose.getTableRef()?.editable.resume();
       crudBinding.value.table.editable.enabled = false;
-      expose.getTableRef().editable.setupEditable();
+      //expose.getTableRef().editable.setupEditable();
       crudBinding.value.rowHandle.active = "default";
     },
     /**

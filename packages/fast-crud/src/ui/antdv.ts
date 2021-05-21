@@ -288,7 +288,7 @@ export class Antdv implements UiInterface {
   };
   table: TableCI = {
     name: "a-table",
-    data: "data-source",
+    data: "dataSource",
     fixedHeaderNeedComputeBodyHeight: true,
     vLoading: false
   };

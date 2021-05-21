@@ -90,13 +90,19 @@ export default defineComponent({
       }
       ctx.emit("handle", e);
     };
-    const pickedProps = computed(() => {
-      return _.omit(props, "scope");
-    });
     const { doComputed } = useCompute();
-    const computeProps = doComputed(pickedProps.value, () => {
+    const pickedProps = computed(() => {
+      return {
+        dropdown: props.dropdown,
+        buttons: props.buttons,
+        active: props.active,
+        group: props.group
+      };
+    });
+    const computeProps = doComputed(pickedProps, () => {
       return props.scope;
     });
+    //const computeProps = { value: props };
     const computedAllHandleBtns = computed(() => {
       let mergedBtns = null;
       if (computeProps.value.active == null || computeProps.value.active === "default") {

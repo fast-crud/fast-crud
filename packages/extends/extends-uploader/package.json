@@ -23,7 +23,7 @@
     "glob": "^7.1.6",
     "lodash-es": "^4.17.20",
     "object-assign": "^4.1.1",
-    "qiniu-js": "^3.1.2",
+    "qiniu-js": "3.1.2",
     "vue": "^3.0.7",
     "vue-cropperjs": "^5.0.0"
   },
@@ -68,11 +68,6 @@
     "typescript": "4.2.4",
     "vite": "^2.1.5",
     "vite-plugin-compression": "^0.2.3",
-    "vite-plugin-html": "^2.0.3",
-    "vite-plugin-mock": "^2.1.5",
-    "vite-plugin-style-import": "^0.9.2",
-    "vite-plugin-theme": "^0.7.1",
-    "vite-plugin-windicss": "0.14.6",
     "vue-eslint-parser": "^7.5.0"
   },
   "gitHead": "3f54bb2df51862c5079f9485931b14943c086937"

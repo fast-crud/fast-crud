@@ -244,6 +244,7 @@ export function useCrud(ctx: UseCrudProps) {
               }
             } else {
               crudBinding.value.rowHandle.active = "default";
+              expose.editable.disable();
             }
           }
         }
@@ -421,6 +422,12 @@ export function useCrud(ctx: UseCrudProps) {
       }
       value.component.disabled = true;
     });
+
+    //处理editable form
+    if (userOptions.table.editable) {
+      userOptions.table.editable.addForm = merge(userOptions.addForm.columns, userOptions.table.editable.addForm);
+      userOptions.table.editable.editForm = merge(userOptions.editForm.columns, userOptions.table.editable.editForm);
+    }
     // 设置crudOptions Ref
     crudBinding.value = userOptions;
     logger.info("fast-crud inited:", crudBinding.value);

@@ -37,16 +37,6 @@ export default {
     let computedIsEditable = computed(() => {
       return computedForm.value && computedForm.value.show !== false && props.editable?.isEditable();
     });
-    let activeTrigger = {};
-    if (props.editable.activeTrigger) {
-      activeTrigger = {
-        [props.editable.activeTrigger]: () => {
-          if (computedIsEditable.value) {
-            props.editable.active();
-          }
-        }
-      };
-    }
 
     return () => {
       if (!computedIsEditable.value) {
@@ -54,11 +44,11 @@ export default {
       }
       const editable = props.editable;
 
-      if (editable.isEditing) {
-        let actions = null;
-        if (props.editable.activeTrigger) {
-          actions = (
-            <div className={"fs-cell-edit-action"}>
+      if (editable?.isEditing) {
+        let editIcon = null;
+        if (props.editable?.activeTrigger) {
+          editIcon = (
+            <div key={0} class={"fs-cell-edit-action"}>
               <fs-icon size={"mini"} icon={ui.icons.check} onClick={editable.inactive} />
               <fs-icon size={"mini"} icon={ui.icons.close} onClick={editable.resume} />
             </div>
@@ -70,7 +60,7 @@ export default {
             <div class={"fs-cell-edit-input"}>
               <fs-component-render ref={"targetInputRef"} {...computedForm.value.component} {...ctx.attrs} />
             </div>
-            {actions}
+            {editIcon}
           </div>
         );
       }
@@ -80,10 +70,18 @@ export default {
         dirty = <div class={"fs-cell-edit-dirty"} />;
       }
 
+      let activeTrigger = {};
       let actions = null;
-      if (props.editable.activeTrigger) {
+      if (props.editable?.activeTrigger) {
+        activeTrigger = {
+          [props.editable?.activeTrigger]: () => {
+            if (computedIsEditable.value) {
+              props.editable.active();
+            }
+          }
+        };
         actions = (
-          <div className={"fs-cell-edit-action fs-cell-edit-icon"}>
+          <div key={1} class={"fs-cell-edit-action fs-cell-edit-icon"}>
             <fs-icon icon={ui.icons.edit} />
           </div>
         );

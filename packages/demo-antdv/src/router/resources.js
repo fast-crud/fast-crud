@@ -231,6 +231,16 @@ const resources = [
         title: "排序",
         path: "/feature/sortable",
         component: "/feature/sortable/index.vue"
+      },
+      {
+        title: "可编辑",
+        path: "/feature/editable",
+        component: "/feature/editable/index.vue"
+      },
+      {
+        title: "行编辑",
+        path: "/feature/editable-row",
+        component: "/feature/editable-row/index.vue"
       }
     ]
   },
