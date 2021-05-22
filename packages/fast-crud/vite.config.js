@@ -17,7 +17,7 @@ export default {
       name: "fast-crud"
     },
     // cssCodeSplit: true,
-    sourcemap: true,
+    sourcemap: "inline",
     // minify: false,
     rollupOptions: {
       // input: {
