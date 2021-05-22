@@ -2,8 +2,8 @@
   "name": "@fast-crud/ui-element",
   "version": "0.8.3",
   "description": "",
-  "main": "./dist/element.umd.js",
-  "module": "./dist/element.es.js",
+  "main": "./dist/ui-element.umd.js",
+  "module": "./dist/ui-element.es.js",
   "scripts": {
     "build": "vite build",
     "test": "jest",
