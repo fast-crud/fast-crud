@@ -326,10 +326,10 @@
     minimatch "^3.0.4"
     strip-json-comments "^3.1.1"
 
-"@fast-crud/extends-uploader@^0.8.0":
-  version "0.8.0"
-  resolved "https://registry.yarnpkg.com/@fast-crud/extends-uploader/-/extends-uploader-0.8.0.tgz#0dcb9a6d31880962d3973cebf0c37b3b1865de2a"
-  integrity sha512-ge9rIjtGWsy4VEhf+8j18JhnkiOis5e6cnknUEcWIeObITU3e31ff7KrUbWkpemC49V9o++8RSlbzkayKE5Llw==
+"@fast-crud/extends-uploader@^0.8.1":
+  version "0.8.1"
+  resolved "https://registry.yarnpkg.com/@fast-crud/extends-uploader/-/extends-uploader-0.8.1.tgz#f8842fce1b60f500f9ace68b4b6d1d2e3ecfda1e"
+  integrity sha512-+ols2SNY2YXEBRZG1/EhZ+B5oNaZr4+D+WICr+opg25rskfAQ1cF7mYzDSPd7uSDppfbvkknVHFLphEQ0OUIqw==
   dependencies:
     ali-oss "^6.13.2"
     cos-js-sdk-v5 "^1.2.9"
@@ -337,28 +337,45 @@
     glob "^7.1.6"
     lodash-es "^4.17.20"
     object-assign "^4.1.1"
-    qiniu-js "^3.1.2"
+    qiniu-js "3.1.2"
     vue "^3.0.7"
     vue-cropperjs "^5.0.0"
 
-"@fast-crud/fast-crud@^0.8.0":
-  version "0.8.0"
-  resolved "https://registry.yarnpkg.com/@fast-crud/fast-crud/-/fast-crud-0.8.0.tgz#c8fb49d45c3d573895f9770e507abee9ee742d82"
-  integrity sha512-IN/eJ2e3eNLf+JGsqj+0Jl1TJX/Y0tvPl9SgkbeeZt8p/vzv/L7ycrTucamwtm8H6IlJUZLuRW/1lxwtpz3fBg==
+"@fast-crud/fast-crud@^0.8.3":
+  version "0.8.3"
+  resolved "https://registry.yarnpkg.com/@fast-crud/fast-crud/-/fast-crud-0.8.3.tgz#4112e82856bab2e6b69a23ff8d65788e8ede4af1"
+  integrity sha512-tV4qfqc0s6igJdvsgYg4JLs/Ax7FfOq3SH1QtPDGRwvemQ9H4ixpGE4DbXGMIfG4LwXTUIiJpSbwsALScxJyEQ==
   dependencies:
     dayjs "^1.10.4"
-    deepdash-es "^5.3.5"
+    deepdash-es "5.3.5"
     lodash-es "^4.17.15"
     lru-cache "^6.0.0"
     vue "^3.0.7"
     vuedraggable "^4.0.1"
 
-"@fast-crud/ui-antdv@^0.8.0":
-  version "0.8.0"
-  resolved "https://registry.yarnpkg.com/@fast-crud/ui-antdv/-/ui-antdv-0.8.0.tgz#4c60ac440479822cada1ca84aab4eb5dfee1c8d9"
-  integrity sha512-2OZv95Pc2g/l62ktXuV+ZN/ZdknY+oJnHDdyp0aWzSskL/Nq03tf2hpKFQXAsogJO3s0DRINRveMOOOEDNid0w==
+"@fast-crud/ui-antdv@^0.8.4":
+  version "0.8.4"
+  resolved "https://registry.yarnpkg.com/@fast-crud/ui-antdv/-/ui-antdv-0.8.4.tgz#6c73f0a2e52360898a1224e09cbd002075ec8596"
+  integrity sha512-PNzDLOX+pFSm2E/C4UTs03BDTZNcd+iM5/HQCJ0G9owRTQfN3fS2jHVFCg1oV0ycrsHvKBlJKXdRiehX+SuTKg==
   dependencies:
     "@ant-design/icons-vue" "^6.0.1"
+    "@fast-crud/fast-crud" "^0.8.3"
+    ant-design-vue "^2.1.4"
+    vue "^3.0.7"
+
+"@iconify/iconify@2.0.0-rc.6":
+  version "2.0.0-rc.6"
+  resolved "https://registry.yarnpkg.com/@iconify/iconify/-/iconify-2.0.0-rc.6.tgz#e3f5376b63b441dcb3696317784b98e2e678cf46"
+  integrity sha512-pXvLXqLPQsjpDY4qbbyh5cPEtakTfWfQCAo6SdYNhYQzat+/0fbeEhScryqaketNAG0bT4/+deKezkJZTvbuSg==
+  dependencies:
+    cross-fetch "^3.0.6"
+
+"@iconify/iconify@>=2.0.0-rc.6", "@iconify/iconify@^2.0.1":
+  version "2.0.1"
+  resolved "https://registry.yarnpkg.com/@iconify/iconify/-/iconify-2.0.1.tgz#4927812922d50b378699694b5e72e22a1acc9d2f"
+  integrity sha512-heGCmdiRc58+TQjKPiem8cmNZj7YXDG3TphRVw0UGjsz8/OKgN2ncBPy1kfFIiv5aKhUsij6WVTfOMUS7YgTbA==
+  dependencies:
+    cross-fetch "^3.0.6"
 
 "@intlify/core-base@9.1.6":
   version "9.1.6"
@@ -436,6 +453,24 @@
   dependencies:
     "@nodelib/fs.scandir" "2.1.4"
     fastq "^1.6.0"
+
+"@purge-icons/core@^0.7.0":
+  version "0.7.0"
+  resolved "https://registry.yarnpkg.com/@purge-icons/core/-/core-0.7.0.tgz#097ba8d4d8b7e8d662df687bd2391eb8b83caba0"
+  integrity sha512-PaCeTFjkQUX+MzBsNg3L8x5aCZqXwaUSNw1FY3Jn7wlLqNqxRNoShw5P//a1DQAy7hLlUHvEL6IGeDoN/xf98A==
+  dependencies:
+    "@iconify/iconify" "2.0.0-rc.6"
+    axios "^0.21.1"
+    debug "^4.3.2"
+    fast-glob "^3.2.5"
+    fs-extra "^9.1.0"
+
+"@purge-icons/generated@^0.7.0":
+  version "0.7.0"
+  resolved "https://registry.yarnpkg.com/@purge-icons/generated/-/generated-0.7.0.tgz#d87dbb3145e8b9a64e2e12ff660aa3cb13cbeb56"
+  integrity sha512-4SHVpZnKaW5ekRTjhPY9b1pALVlF0pDuGIDRAlxAm0V+gQVOL0+Ghav6U9XqXFj2kiG1+eQ8swpvB+kd0a+tqg==
+  dependencies:
+    "@iconify/iconify" ">=2.0.0-rc.6"
 
 "@rollup/plugin-commonjs@^18.0.0":
   version "18.1.0"
@@ -1443,6 +1478,13 @@ cropperjs@^1.5.6:
   resolved "https://registry.yarnpkg.com/cropperjs/-/cropperjs-1.5.11.tgz#502ae6d8ca098b124de6813601cca70015879fc0"
   integrity sha512-SJUeBBhtNBnnn+UrLKluhFRIXLJn7XFPv8QN1j49X5t+BIMwkgvDev541f96bmu8Xe0TgCx3gON22KmY/VddaA==
 
+cross-fetch@^3.0.6:
+  version "3.1.4"
+  resolved "https://registry.yarnpkg.com/cross-fetch/-/cross-fetch-3.1.4.tgz#9723f3a3a247bf8b89039f3a380a9244e8fa2f39"
+  integrity sha512-1eAtFWdIubi6T4XPy6ei9iUFoKpUkIF971QLN8lIvvvwueI65+Nw5haMNKUwfJxabqlIIDODJKGrQ66gxC0PbQ==
+  dependencies:
+    node-fetch "2.6.1"
+
 cross-spawn@^7.0.0, cross-spawn@^7.0.2:
   version "7.0.3"
   resolved "https://registry.yarnpkg.com/cross-spawn/-/cross-spawn-7.0.3.tgz#f73a85b9d5d41d045551c177e2882d4ac85728a6"
@@ -1534,6 +1576,13 @@ deep-is@^0.1.3, deep-is@~0.1.3:
   version "0.1.3"
   resolved "https://registry.yarnpkg.com/deep-is/-/deep-is-0.1.3.tgz#b369d6fb5dbc13eecf524f91b070feedc357cf34"
   integrity sha1-s2nW+128E+7PUk+RsHD+7cNXzzQ=
+
+deepdash-es@5.3.5:
+  version "5.3.5"
+  resolved "https://registry.yarnpkg.com/deepdash-es/-/deepdash-es-5.3.5.tgz#1217365f6508bb47f1f90def6b4f1c4b5f4ff6eb"
+  integrity sha512-bezxT+LqAu1Ly8I2LAEFle3fdEAc/bHld9cMAbgYzY+69+P9qTkGtNvC2ZQJEP4C1C2Fx9gVn/TCoQlAivWPDA==
+  dependencies:
+    lodash-es "^4.17.15"
 
 deepdash-es@^5.3.5:
   version "5.3.7"
@@ -3341,6 +3390,11 @@ netmask@^2.0.1:
   resolved "https://registry.yarnpkg.com/netmask/-/netmask-2.0.2.tgz#8b01a07644065d536383835823bc52004ebac5e7"
   integrity sha512-dBpDMdxv9Irdq66304OLfEmQ9tbNRFnFTuZiLo+bD+r332bBmMJ8GBLXklIXXgxd3+v9+KUnZaUR5PJMa75Gsg==
 
+node-fetch@2.6.1:
+  version "2.6.1"
+  resolved "https://registry.yarnpkg.com/node-fetch/-/node-fetch-2.6.1.tgz#045bd323631f76ed2e2b55573394416b639a0052"
+  integrity sha512-V4aYg89jEoVRxRb2fJdAg8FHvI7cEyYdVAh94HH0UIK8oJxUfkjlDQN9RbMx+bEjP7+ggMiFRprSti032Oipxw==
+
 node-releases@^1.1.71:
   version "1.1.72"
   resolved "https://registry.yarnpkg.com/node-releases/-/node-releases-1.1.72.tgz#14802ab6b1039a79a0c7d662b610a5bbd76eacbe"
@@ -3922,19 +3976,19 @@ punycode@^2.1.0:
   resolved "https://registry.yarnpkg.com/punycode/-/punycode-2.1.1.tgz#b58b010ac40c22c5657616c8d2c2c02c7bf479ec"
   integrity sha512-XRsRjdf+j5ml+y/6GKHPZbrF/8p2Yga0JPtdqTIY2Xe5ohJPD9saDJJLPvp9+NSBprVvevdXZybnj2cv8OEd0A==
 
-qiniu-js@^2.5.4:
-  version "2.5.5"
-  resolved "https://registry.yarnpkg.com/qiniu-js/-/qiniu-js-2.5.5.tgz#77d295f222620f9377d6148f3f757d189a1e4977"
-  integrity sha512-cJcdZMCfU4OJirjCzKJwPXSgrXF0INB2qtqA6ImNBe2PJFqi8kWE7rp3qr1RKH0H4OTtPOXyBC2FVSl/zM7ERg==
-
-qiniu-js@^3.1.2:
-  version "3.2.0"
-  resolved "https://registry.yarnpkg.com/qiniu-js/-/qiniu-js-3.2.0.tgz#9600bb4ac821f92934943700e56f05afbaf7fce0"
-  integrity sha512-KMITrpg5wpshk2L0dR75uJVUFDLXkrJvMl0243SJVqWVycVcirz36RAZGEf51yj8A58wy2khdt4QIbgFXMcaSg==
+qiniu-js@3.1.2:
+  version "3.1.2"
+  resolved "https://registry.yarnpkg.com/qiniu-js/-/qiniu-js-3.1.2.tgz#b46e5e1ed806d757a81b542ac1342e04421d1d45"
+  integrity sha512-ZzSFNZXvhtbmvXvHlm8+umiKoGH+CxjuDPvl80sj1NzxLxvZ7SDn58jx65uXdOBhd+laNoqmKNBXCmw4QuQhuA==
   dependencies:
     "@babel/runtime-corejs2" "^7.10.2"
     exif-js "^2.3.0"
     spark-md5 "^3.0.0"
+
+qiniu-js@^2.5.4:
+  version "2.5.5"
+  resolved "https://registry.yarnpkg.com/qiniu-js/-/qiniu-js-2.5.5.tgz#77d295f222620f9377d6148f3f757d189a1e4977"
+  integrity sha512-cJcdZMCfU4OJirjCzKJwPXSgrXF0INB2qtqA6ImNBe2PJFqi8kWE7rp3qr1RKH0H4OTtPOXyBC2FVSl/zM7ERg==
 
 qs@^6.4.0:
   version "6.10.1"
@@ -4153,6 +4207,14 @@ rollup-plugin-commonjs@^10.1.0:
     resolve "^1.11.0"
     rollup-pluginutils "^2.8.1"
 
+rollup-plugin-purge-icons@^0.7.0:
+  version "0.7.0"
+  resolved "https://registry.yarnpkg.com/rollup-plugin-purge-icons/-/rollup-plugin-purge-icons-0.7.0.tgz#4419b810d5d75f1bba3af72a238e70b4a675f03c"
+  integrity sha512-zAff7SrjC2nA7TCm6gaOclh1cZ2IBupX1tnebn+sfvcvrezu+avS7k0BhhAC2pAtfhdOvD6G/2a+kkkm6hvpiw==
+  dependencies:
+    "@purge-icons/core" "^0.7.0"
+    "@purge-icons/generated" "^0.7.0"
+
 rollup-plugin-visualizer@^4.2.0:
   version "4.2.2"
   resolved "https://registry.yarnpkg.com/rollup-plugin-visualizer/-/rollup-plugin-visualizer-4.2.2.tgz#edeb8b3fc6f49b3c95f6cc668f4eba57c6112099"
@@ -4170,7 +4232,7 @@ rollup-pluginutils@^2.8.1:
   dependencies:
     estree-walker "^0.6.1"
 
-rollup@^2.38.5:
+rollup@^2.38.5, rollup@^2.48.0:
   version "2.48.0"
   resolved "https://registry.yarnpkg.com/rollup/-/rollup-2.48.0.tgz#fceb01ed771f991f29f7bd2ff7838146e55acb74"
   integrity sha512-wl9ZSSSsi5579oscSDYSzGn092tCS076YB+TQrzsGuSfYyJeep8eEWj0eaRjuC5McuMNmcnR8icBqiE/FWNB1A==
@@ -4947,6 +5009,15 @@ vite-plugin-compression@^0.2.4:
     chalk "^4.1.1"
     debug "^4.3.2"
     fs-extra "^9.1.0"
+
+vite-plugin-purge-icons@^0.7.0:
+  version "0.7.0"
+  resolved "https://registry.yarnpkg.com/vite-plugin-purge-icons/-/vite-plugin-purge-icons-0.7.0.tgz#c460037438fd71372153360ccb9e7d97b030fb58"
+  integrity sha512-oGZUKFAL4waIZIeiCPT5KZvGbBA500AO/03oxW+ODTKUMq+0jbh9s+T8NPzfJQFC1jtE7eUb2ium82IP/gxZjA==
+  dependencies:
+    "@purge-icons/core" "^0.7.0"
+    "@purge-icons/generated" "^0.7.0"
+    rollup-plugin-purge-icons "^0.7.0"
 
 vite@^2.0.4:
   version "2.3.3"

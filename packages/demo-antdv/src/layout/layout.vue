@@ -1,8 +1,9 @@
 <template>
   <a-layout>
-    <a-layout-header>
-      <div class="logo">fast-crud</div>
+    <a-layout-header class="header">
+      <div class="header-logo">fast-crud</div>
       <a-menu
+        class="header-menu"
         theme="dark"
         mode="horizontal"
         :style="{ lineHeight: '64px' }"
@@ -14,6 +15,10 @@
         <a-menu-item key="https://github.com/fast-crud/fast-crud">gitee</a-menu-item>
         <a-menu-item key="https://gitee.com/fast-crud/fast-crud">github</a-menu-item>
       </a-menu>
+      <div class="header-right">
+        <locale />
+        <div>你好，admin</div>
+      </div>
     </a-layout-header>
     <a-layout class="layout-body">
       <a-layout-sider style="overflow-y: scroll">
@@ -28,9 +33,10 @@
 <script>
 import AsideMenu from "./aside-menu.jsx";
 import router from "../router";
+import Locale from "./components/locale.vue";
 export default {
   // eslint-disable-next-line vue/no-unused-components
-  components: { AsideMenu },
+  components: { AsideMenu, Locale },
   setup() {
     const handleNavMenuClick = ({ key }) => {
       if (key.startsWith("http")) {
@@ -54,11 +60,26 @@ export default {
     line-height: 64px;
     background: #001529;
     color: #fff;
-    .logo {
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    .header-logo {
       float: left;
       width: 150px;
       // margin: 16px 24px 16px 0;
       //background: rgba(255, 255, 255, 0.3);
+    }
+    .header-menu {
+      flex: 1;
+    }
+    .header-right {
+      font-size: 14px;
+      justify-content: flex-end;
+      align-items: center;
+      display: flex;
+      > * {
+        margin: 0 5px;
+      }
     }
   }
   .ant-layout-footer {

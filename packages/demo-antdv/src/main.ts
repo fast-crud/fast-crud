@@ -4,7 +4,8 @@ import router from "./router";
 import Antd from "ant-design-vue";
 import "ant-design-vue/dist/antd.css";
 import "./style/common.less";
-
+import "@iconify/iconify";
+import "@purge-icons/generated";
 import "./mock";
 import i18n from "./i18n";
 import components from "./components";

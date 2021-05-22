@@ -27,7 +27,7 @@ export default {
       plugins: [strip(), visualizer()],
       // make sure to externalize deps that shouldn't be bundled
       // into your library
-      external: ["vue", "@fast-crud/fast-crud","element-plus"],
+      external: ["vue", "@fast-crud/fast-crud", "element-plus"],
       output: {
         // Provide global variables to use in the UMD build
         // for externalized deps

@@ -16,7 +16,7 @@
         <el-menu-item index="https://github.com/fast-crud/fast-crud/">github</el-menu-item>
       </el-menu>
       <div class="header-right">
-        <fs-button icon="" />
+        <locale />
         <div>你好，admin</div>
       </div>
     </el-header>
@@ -37,8 +37,9 @@
 <script>
 import AsideMenu from "./aside-menu";
 import router from "../router";
+import Locale from "./components/locale.vue";
 export default {
-  components: { AsideMenu },
+  components: { Locale, AsideMenu },
   setup() {
     const handleNavMenuClick = (key) => {
       if (key.startsWith("http")) {
@@ -63,9 +64,24 @@ export default {
     background: #001529;
     color: #fff;
     display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    padding-right: 20px;
     .header-logo {
       width: 100px;
       padding: 0 50px;
+    }
+    .header-menu {
+      flex: 1;
+    }
+    .header-right {
+      font-size: 14px;
+      justify-content: flex-end;
+      align-items: center;
+      display: flex;
+      > * {
+        margin: 0 5px;
+      }
     }
   }
   .layout-body {

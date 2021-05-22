@@ -2,7 +2,7 @@ import vue from "@vitejs/plugin-vue";
 import vueJsx from "@vitejs/plugin-vue-jsx";
 import visualizer from "rollup-plugin-visualizer";
 import viteCompression from "vite-plugin-compression";
-
+import PurgeIcons from "vite-plugin-purge-icons";
 import path from "path";
 // https://vitejs.dev/config/
 // 增加环境变量
@@ -26,7 +26,7 @@ export default ({ command, mode }) => {
   console.log("devAlias", devAlias);
   return {
     base: "/antdv/",
-    plugins: [vueJsx(), vue(), viteCompression()],
+    plugins: [vueJsx(), vue(), viteCompression(), PurgeIcons()],
     // optimizeDeps: {
     //   exclude: ["@fast-crud/fast-crud-extends"],
     // },
