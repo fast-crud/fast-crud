@@ -1,6 +1,6 @@
 {
   "name": "@fast-crud/demo-element",
-  "version": "0.8.1",
+  "version": "0.8.2",
   "private": true,
   "scripts": {
     "dev": "vite --force",
@@ -13,8 +13,8 @@
   "license": "MIT",
   "dependencies": {
     "@fast-crud/extends-uploader": "^0.8.1",
-    "@fast-crud/fast-crud": "^0.8.1",
-    "@fast-crud/ui-element": "^0.8.1",
+    "@fast-crud/fast-crud": "^0.8.2",
+    "@fast-crud/ui-element": "^0.8.2",
     "@iconify/iconify": "^2.0.1",
     "@purge-icons/generated": "^0.7.0",
     "ali-oss": "^6.13.2",

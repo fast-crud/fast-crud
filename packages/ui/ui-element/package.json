@@ -1,6 +1,6 @@
 {
   "name": "@fast-crud/ui-element",
-  "version": "0.8.1",
+  "version": "0.8.2",
   "description": "",
   "main": "index.js",
   "module": "./src/index.js",
