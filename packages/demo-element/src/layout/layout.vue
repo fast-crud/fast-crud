@@ -1,9 +1,9 @@
 <template>
   <el-container class="layout">
     <el-header class="layout-header">
-      <div class="logo">fast-crud</div>
+      <div class="header-logo">fast-crud</div>
       <el-menu
-        class="el-menu-demo"
+        class="header-menu"
         mode="horizontal"
         background-color="#001529"
         text-color="#fff"
@@ -15,6 +15,10 @@
         <el-menu-item index="https://gitee.com/fast-crud/fast-crud/">gitee</el-menu-item>
         <el-menu-item index="https://github.com/fast-crud/fast-crud/">github</el-menu-item>
       </el-menu>
+      <div class="header-right">
+        <fs-button icon="" />
+        <div>你好，admin</div>
+      </div>
     </el-header>
     <el-container class="layout-body">
       <el-aside width="200px" style="border-right: 1px solid #eee">
@@ -59,7 +63,7 @@ export default {
     background: #001529;
     color: #fff;
     display: flex;
-    .logo {
+    .header-logo {
       width: 100px;
       padding: 0 50px;
     }

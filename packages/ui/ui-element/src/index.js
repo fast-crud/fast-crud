@@ -1,16 +1,14 @@
 import { ElMessage, ElNotification, ElMessageBox } from "element-plus";
 import { uiContext } from "@fast-crud/fast-crud";
+import {Element} from './element'
 export default {
     install(){
-        const ui = {
-            name: "element",
-            target: {
-                Message: ElMessage,
-                Notification: ElNotification,
-                MessageBox: ElMessageBox
-            }
-        }
-        uiContext.set(ui)
+        const elementUi = new Element({
+            Message: ElMessage,
+            Notification: ElNotification,
+            MessageBox: ElMessageBox
+        })
+        uiContext.set(elementUi)
         console.log('element installed')
     }
 }

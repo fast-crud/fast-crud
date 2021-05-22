@@ -40,7 +40,7 @@ import {
   CollapseCI,
   CollapseItemCI,
   ButtonCI
-} from "./ui-interface";
+} from "@fast-crud/fast-crud";
 export class Element implements UiInterface {
   constructor(target) {
     if (target) {

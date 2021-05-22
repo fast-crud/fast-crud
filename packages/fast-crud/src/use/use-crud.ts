@@ -220,11 +220,8 @@ export function useCrud(ctx: UseCrudProps) {
     return {
       actionbar: {
         buttons: {
-          add: {
-            show: false
-          },
           addRow: {
-            show: true,
+            show: false, //默认不启用
             text: t("fs.actionbar.add"),
             type: "primary",
             click: () => {

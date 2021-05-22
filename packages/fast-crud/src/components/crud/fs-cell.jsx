@@ -26,7 +26,7 @@ export default {
         return <span class={"fs-cell"}>{props.item.formatter(props.getScope())}</span>;
       } else if (props.item.render) {
         return <span class={"fs-cell"}>{props.item.render(props.getScope())}</span>;
-      } else if (props.item.component) {
+      } else if (props.item.component?.name) {
         if (computedComponent.value?.show === false) {
           return;
         }

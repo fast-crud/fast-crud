@@ -12,11 +12,11 @@
   "author": "Greper",
   "license": "MIT",
   "dependencies": {
-    "@babel/helper-compilation-targets": "^7.13.13",
-    "@babel/plugin-transform-runtime": "^7.13.8",
     "@fast-crud/extends-uploader": "^0.8.1",
     "@fast-crud/fast-crud": "^0.8.1",
     "@fast-crud/ui-element": "^0.8.1",
+    "@iconify/iconify": "^2.0.1",
+    "@purge-icons/generated": "^0.7.0",
     "ali-oss": "^6.13.2",
     "axios": "^0.21.1",
     "axios-mock-adapter": "^1.19.0",
@@ -74,6 +74,7 @@
     "typescript": "4.2.4",
     "vite": "^2.0.4",
     "vite-plugin-compression": "^0.2.4",
+    "vite-plugin-purge-icons": "^0.7.0",
     "vue-eslint-parser": "^7.5.0"
   },
   "gitHooks": {

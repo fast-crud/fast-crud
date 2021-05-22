@@ -25,6 +25,7 @@ export default function ({ expose }) {
         editRequest,
         delRequest
       },
+      actionbar: { buttons: { add: { show: false }, addRow: { show: true } } },
       table: {
         editable: {
           enabled: false,

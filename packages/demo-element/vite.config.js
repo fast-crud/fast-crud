@@ -1,8 +1,8 @@
 import vue from "@vitejs/plugin-vue";
 import vueJsx from "@vitejs/plugin-vue-jsx";
 import visualizer from "rollup-plugin-visualizer";
-import commonjs from "@rollup/plugin-commonjs";
 import viteCompress from "vite-plugin-compression";
+import PurgeIcons from "vite-plugin-purge-icons";
 import path from "path";
 import dayjs from "dayjs";
 // https://vitejs.dev/config/
@@ -30,7 +30,7 @@ export default ({ command, mode }) => {
   console.log("devAlias", devAlias);
   return {
     base: "/element/",
-    plugins: [vueJsx(), vue(), viteCompress()],
+    plugins: [vueJsx(), vue(), viteCompress(), PurgeIcons()],
     // optimizeDeps: {
     //   exclude: ["@fast-crud/fast-crud-extends"],
     // },

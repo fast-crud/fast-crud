@@ -5,6 +5,7 @@ import types from "./types/index.ts";
 import * as components from "./components/index.js";
 import { i18n, useI18n } from "./local/index.ts";
 import { uiContext } from "./ui/index.ts";
+export * from "./ui";
 import { useDictDefine, useCompute } from "./use";
 const { dict, setDictRequest } = useDictDefine();
 const { ComputeValue, compute, asyncCompute } = useCompute();

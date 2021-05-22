@@ -1,13 +1,14 @@
-import { Element } from "./element";
-import { Antdv } from "./antdv";
 import { UiInterface } from "./ui-interface";
+export * from "./ui-interface";
+import { reactive } from "vue";
+import _ from "lodash-es";
 export class UiContext {
   ref?: UiInterface;
-  set(ui: { name; target }) {
-    if (ui.name === "antdv") {
-      this.ref = new Antdv(ui.target);
+  set(ui: UiInterface) {
+    if (this.ref == null) {
+      this.ref = reactive(ui);
     } else {
-      this.ref = new Element(ui.target);
+      _.merge(this.ref, ui);
     }
   }
 
