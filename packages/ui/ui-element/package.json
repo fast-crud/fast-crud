@@ -1,6 +1,6 @@
 {
   "name": "@fast-crud/ui-element",
-  "version": "0.8.4",
+  "version": "0.8.5",
   "description": "",
   "main": "./dist/ui-element.umd.js",
   "module": "./dist/ui-element.es.js",

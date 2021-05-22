@@ -3,6 +3,14 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.8.5](https://github.com/fast-crud/fast-crud/compare/v0.8.4...v0.8.5) (2021-05-22)
+
+**Note:** Version bump only for package fast-crud-root
+
+
+
+
+
 ## [0.8.4](https://github.com/fast-crud/fast-crud/compare/v0.8.3...v0.8.4) (2021-05-22)
 
 **Note:** Version bump only for package fast-crud-root
