@@ -1,6 +1,6 @@
 {
   "name": "@fast-crud/demo-antdv",
-  "version": "0.8.3",
+  "version": "0.8.4",
   "private": true,
   "scripts": {
     "dev": "vite --force",
@@ -16,7 +16,7 @@
     "@ant-design/icons-vue": "^6.0.1",
     "@fast-crud/extends-uploader": "^0.8.1",
     "@fast-crud/fast-crud": "^0.8.3",
-    "@fast-crud/ui-antdv": "^0.8.3",
+    "@fast-crud/ui-antdv": "^0.8.4",
     "ant-design-vue": "^2.1.4",
     "axios": "^0.21.1",
     "axios-mock-adapter": "^1.19.0",
