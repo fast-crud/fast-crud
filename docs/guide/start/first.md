@@ -112,6 +112,10 @@ export default function ({ expose }) {
     });
 </script>
 ``` 
+::: warning
+注意，由于`fs-crud`默认高度为`100%`,所以你必须让`<fs-crud></fs-crud>`的父容器具备高度，或者直接给`fs-crud`本身设置高度
+:::
+
 ### 3.  api.js
 实现添删改查请求接口，实际开发中，复制后修改url即可，你也可以根据实际业务需求增加和修改方法     
 将如下代码保存为`views/test/myFirstCrud/api.js`

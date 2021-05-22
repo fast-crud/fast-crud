@@ -80,6 +80,10 @@ app.use(FsUploader, {
 ### 4. 完成
 现在`fast-crud`已经集成到你的项目中，你可以按照上一节学习的，在你的实际项目里开始你的crud开发了。
 
+::: warning
+注意你必须让`<fs-crud></fs-crud>`外部容器具备高度
+:::
+
 ## starter
 自己手动集成挺麻烦的？以下提供了当下流行的`admin`框架与`fast-crud`集成好的`starter`，开箱即用
 

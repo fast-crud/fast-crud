@@ -128,7 +128,6 @@ export default {
     }
 
     const computedButtons = computed(() => {
-      // TODO i18n
       const defBtns = {
         cancel: {
           text: t("fs.form.cancel"),
@@ -145,7 +144,7 @@ export default {
           loading: loading.value
         }
       };
-      return _.merge(defBtns, formWrapper.value.buttons);
+      return _.merge(defBtns, formWrapper.value?.buttons);
     });
 
     onMounted(() => {
