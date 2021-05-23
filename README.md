@@ -2,7 +2,7 @@
 [English](./README.md) | [简体中文](./README_zhCN.md)
 
 Fastcrud is a options oriented crud development framework based on vue3. It can rapidly develop crud functions, and can be used as the basic framework of low code platform.    
-Inherits and optimizes the design idea of D2CrudPlus. It is easy to get started, has strong scalability, and has rich examples, so that you can quickly complete the task of moving bricks and spend more time rowing.
+It is easy to get started, has strong scalability, and has rich examples, so that you can quickly complete the task of moving bricks.
 
 source :[Github](https://github.com/fast-crud/fast-crud)  /  [Gitee](https://gitee.com/fast-crud/fast-crud)   
 demo:
