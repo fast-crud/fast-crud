@@ -4,7 +4,7 @@
 <script>
 import { computed } from "vue";
 import { useDict } from "../../use/use-dict";
-import { useI18n } from "../../local";
+import { useI18n } from "../../locale";
 
 /**
  * 字典树选择组件

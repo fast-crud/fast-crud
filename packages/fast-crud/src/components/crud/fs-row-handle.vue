@@ -30,7 +30,7 @@ import { computed, defineComponent } from "vue";
 import FsButton from "../basic/fs-button";
 import _ from "lodash-es";
 import traceUtil from "../../utils/util.trace";
-import { useI18n } from "../../local";
+import { useI18n } from "../../locale";
 import { useUi } from "../../use/use-ui";
 import { useCompute } from "../../use/use-compute";
 

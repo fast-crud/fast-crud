@@ -5,7 +5,7 @@ import { ref, reactive } from "vue";
 import logger from "../utils/util.log";
 import types from "../types";
 import { uiContext } from "../ui";
-import { useI18n } from "../local";
+import { useI18n } from "../locale";
 import { useMerge } from "./use-merge";
 import { CrudExpose } from "./use-expose";
 import { useCompute } from "./use-compute";
@@ -227,22 +227,6 @@ export function useCrud(ctx: UseCrudProps) {
             click: () => {
               expose.editable.addRow();
             }
-          }
-        }
-      },
-      table: {
-        editable: {
-          onEnabled({ enabled, mode }) {
-            // if (enabled) {
-            //   if (mode === "row") {
-            //     crudBinding.value.rowHandle.active = "editRow";
-            //   } else {
-            //     crudBinding.value.rowHandle.active = "editable";
-            //   }
-            // } else {
-            //   crudBinding.value.rowHandle.active = "default";
-            //   expose.editable.disable();
-            // }
           }
         }
       },

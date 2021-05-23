@@ -19,7 +19,7 @@ import FsButton from "../basic/fs-button";
 import _ from "lodash-es";
 import { ref, computed, getCurrentInstance } from "vue";
 import traceUtil from "../../utils/util.trace";
-import { useI18n } from "../../local";
+import { useI18n } from "../../locale";
 import FsSlotRender from "../render/fs-slot-render";
 
 /**

@@ -1,6 +1,8 @@
 import * as api from "./api";
 import { dict } from "@fast-crud/fast-crud";
+import { useI18n } from "vue-i18n";
 export default function ({ expose }) {
+  const { t } = useI18n();
   const pageRequest = async (query) => {
     return await api.GetList(query);
   };
@@ -36,12 +38,12 @@ export default function ({ expose }) {
           }
         },
         name: {
-          title: "姓名",
+          title: t("m.demo.i18n.name"),
           type: "text",
           search: { show: true }
         },
         city: {
-          title: "城市",
+          title: t("m.demo.i18n.city"),
           type: "dict-select",
           search: { show: true },
           dict: dict({
@@ -57,7 +59,7 @@ export default function ({ expose }) {
           })
         },
         radio: {
-          title: "状态",
+          title: t("m.demo.i18n.status"),
           search: { show: true },
           type: "dict-radio",
           dict: dict({

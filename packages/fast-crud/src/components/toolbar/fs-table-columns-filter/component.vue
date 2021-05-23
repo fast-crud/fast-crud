@@ -63,7 +63,7 @@ import _ from "lodash-es";
 import FsButton from "../../basic/fs-button";
 import FsTableColumnsFixedController from "../fs-table-columns-fixed-controller/component.vue";
 import TableStore from "../../../utils/util.store";
-import { useI18n } from "../../../local";
+import { useI18n } from "../../../locale";
 import { ref, computed } from "vue";
 import { uiContext } from "../../../ui";
 import { useMerge } from "../../../use/use-merge";

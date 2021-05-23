@@ -3,7 +3,7 @@ import utils from "./utils/index.js";
 export * from "./use";
 import types from "./types/index.ts";
 import * as components from "./components/index.js";
-import { i18n, useI18n } from "./local/index.ts";
+import { i18n, useI18n } from "./locale/index.ts";
 import { uiContext } from "./ui/index.ts";
 export * from "./ui";
 import { useDictDefine, useCompute } from "./use";

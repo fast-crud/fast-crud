@@ -2,7 +2,7 @@ import { ref, resolveDynamicComponent, computed, nextTick, onMounted } from "vue
 import FsButton from "../basic/fs-button";
 import traceUtil from "../../utils/util.trace";
 import _ from "lodash-es";
-import { useI18n } from "../../local";
+import { useI18n } from "../../locale";
 import "./fs-form-wrapper.less";
 import logger from "../../utils/util.log";
 import { uiContext } from "../../ui";

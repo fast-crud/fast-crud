@@ -8,7 +8,7 @@ import { useCrud } from "@fast-crud/fast-crud";
 import createCrudOptions from "./crud";
 import { useExpose } from "@fast-crud/fast-crud";
 export default defineComponent({
-  name: "DemoTest",
+  name: "BasisI18n",
   setup() {
     // crud组件的ref
     const crudRef = ref();

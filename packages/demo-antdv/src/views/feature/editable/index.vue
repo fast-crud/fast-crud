@@ -27,7 +27,6 @@ import { defineComponent, ref, onMounted } from "vue";
 import createCrudOptions from "./crud";
 import { useExpose, useCrud } from "@fast-crud/fast-crud";
 import { message } from "ant-design-vue";
-import en from "../../../../../fast-crud/src/local/lang/en";
 export default defineComponent({
   name: "FeatureEditable",
   setup() {

@@ -1,6 +1,6 @@
 import mockUtil from "/src/mock/base";
 const options = {
-  name: "DemoTest",
+  name: "BasisI18n",
   idGenerator: 0
 };
 const list = [

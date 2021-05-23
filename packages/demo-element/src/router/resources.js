@@ -11,21 +11,9 @@ const resources = [
     path: "/index",
     component: "/home/index.vue"
   },
+
   {
-    title: "Demo",
-    name: "demo",
-    path: "/demo",
-    redirect: "/demo/test",
-    children: [
-      {
-        title: "Test",
-        path: "/demo/test",
-        component: "/demo/test/index.vue"
-      }
-    ]
-  },
-  {
-    title: "核心特性",
+    title: "基本特性",
     name: "basis",
     path: "/basis",
     redirect: "/basis/dict",
@@ -34,6 +22,11 @@ const resources = [
         title: "动态计算",
         path: "/basis/compute",
         component: "/basis/compute/index.vue"
+      },
+      {
+        title: "国际化",
+        path: "/basis/i18n",
+        component: "/basis/i18n/index.vue"
       }
     ]
   },

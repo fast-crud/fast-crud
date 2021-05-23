@@ -68,7 +68,7 @@ import FsSlotRender from "../../components/render/fs-slot-render";
 import { useCompute } from "../../use/use-compute";
 import traceUtil from "../../utils/util.trace";
 import { uiContext } from "../../ui";
-import { useI18n } from "../../local";
+import { useI18n } from "../../locale";
 import logger from "../../utils/util.log";
 
 /**
