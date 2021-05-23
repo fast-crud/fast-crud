@@ -3,6 +3,19 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.9.0](https://github.com/fast-crud/fast-crud/compare/v0.8.5...v0.9.0) (2021-05-23)
+
+
+### Features
+
+* i18n ([b5a284e](https://github.com/fast-crud/fast-crud/commit/b5a284ee7dd60948255e2ccaf6972277ce21517a))
+* nprogress ([ce19154](https://github.com/fast-crud/fast-crud/commit/ce1915427c34b2473e9069eda3d129a282087707))
+* 修改locale单词 ([dc6e7e8](https://github.com/fast-crud/fast-crud/commit/dc6e7e82eb3f7e92dd2d658a2d773feaa996bc50))
+
+
+
+
+
 ## [0.8.5](https://github.com/fast-crud/fast-crud/compare/v0.8.4...v0.8.5) (2021-05-22)
 
 **Note:** Version bump only for package fast-crud-root
