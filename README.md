@@ -26,23 +26,23 @@ document：http://fast-crud.docmirror.cn/
 1、Just write the crud options
 ```js
 const crudOptions= {
-      columns: { //字段配置
-        id: {// id字段
+      columns: { //field conf
+        id: {// id
           title: "ID",
-          type: "number", //字段类型
+          type: "number", //field type
           column: { width: 50},
           form: { show: false }
         },
-        name: { // 姓名字段
+        name: { // name field
           title: "姓名",
-          type: "text", //文本类型字段
-          search: { show: true } //显示查询
+          type: "text", //text type field
+          search: { show: true } // show search
         },
-        city: { //城市字段
+        city: { // city field
           title: "城市",
-          type: "dict-select", //选择类型字段
-          search: { show: true }, //显示查询
-          dict: dict({ //本地数据字典
+          type: "dict-select", // select type field
+          search: { show: true }, // show search
+          dict: dict({ //local dict
             value: "id",
             label: "text",
             data: [
@@ -56,9 +56,9 @@ const crudOptions= {
         },
         radio: {
           title: "状态",
-          search: { show: true }, //显示查询
-          type: "dict-radio", //单选类型字段
-          dict: dict({ //远程数据字典
+          search: { show: true }, //show search
+          type: "dict-radio", //radio type field
+          dict: dict({ //remote dict
             url: "/dicts/OpenStatusEnum?single"
           })
         }
