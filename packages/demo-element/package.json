@@ -28,6 +28,7 @@
     "element-plus": "^1.0.2-beta.44",
     "highlight.js": "^10.7.2",
     "lodash-es": "^4.17.20",
+    "nprogress": "^0.2.0",
     "qiniu-js": "^3.1.2",
     "vue": "^3.1.0-beta.2",
     "vue-i18n": "^9.1.6",

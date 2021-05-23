@@ -297,10 +297,10 @@
     vue "^3.0.7"
     vue-cropperjs "^5.0.0"
 
-"@fast-crud/fast-crud@^0.8.1":
-  version "0.8.1"
-  resolved "https://registry.npmjs.org/@fast-crud/fast-crud/-/fast-crud-0.8.1.tgz"
-  integrity sha512-L2FuONkVpWac+5RHZWS6yH+7EbmuUv9serUo3fZIHS8EPGpUef4WUqFJ2NrrtaJBPEr4kcFa3F9KeOsx2KK7xA==
+"@fast-crud/fast-crud@^0.8.3":
+  version "0.8.3"
+  resolved "https://registry.yarnpkg.com/@fast-crud/fast-crud/-/fast-crud-0.8.3.tgz#4112e82856bab2e6b69a23ff8d65788e8ede4af1"
+  integrity sha512-tV4qfqc0s6igJdvsgYg4JLs/Ax7FfOq3SH1QtPDGRwvemQ9H4ixpGE4DbXGMIfG4LwXTUIiJpSbwsALScxJyEQ==
   dependencies:
     dayjs "^1.10.4"
     deepdash-es "5.3.5"
@@ -309,10 +309,14 @@
     vue "^3.0.7"
     vuedraggable "^4.0.1"
 
-"@fast-crud/ui-element@^0.8.1":
-  version "0.8.1"
-  resolved "https://registry.npmjs.org/@fast-crud/ui-element/-/ui-element-0.8.1.tgz"
-  integrity sha512-8zoEuUmDQREtllpK/Q5WlMpV77I68hFDe43yvwVPp9G4ECWHFXDjgjXVvTogBawW9q1tcSpsNjh1zezwQ2VpQg==
+"@fast-crud/ui-element@^0.8.5":
+  version "0.8.5"
+  resolved "https://registry.yarnpkg.com/@fast-crud/ui-element/-/ui-element-0.8.5.tgz#8268b89ae05049d1bc66fee87fec24a023f5f27f"
+  integrity sha512-xTg7flBoFCTL9fY392ifPQjCCac5NMF1cYp9uxahjxjXT3TFq3/W7QLUPwkJIgfucNm9YBSjFYiJ4Mt2+Po/sg==
+  dependencies:
+    "@fast-crud/fast-crud" "^0.8.3"
+    element-plus "^1.0.2-beta.44"
+    vue "^3.0.7"
 
 "@iconify/iconify@2.0.0-rc.6", "@iconify/iconify@>=2.0.0-rc.6":
   version "2.0.0-rc.6"
@@ -3379,6 +3383,11 @@ npm-run-path@^4.0.0:
   integrity sha512-S48WzZW777zhNIrn7gxOlISNAqi9ZC/uQFnRdbeIHhZhCA6UqpkOT8T1G7BvfdgP4Er8gF4sUbaS0i7QvIfCWw==
   dependencies:
     path-key "^3.0.0"
+
+nprogress@^0.2.0:
+  version "0.2.0"
+  resolved "https://registry.yarnpkg.com/nprogress/-/nprogress-0.2.0.tgz#cb8f34c53213d895723fcbab907e9422adbcafb1"
+  integrity sha1-y480xTIT2JVyP8urkH6UIq28r7E=
 
 num2fraction@^1.2.2:
   version "1.2.2"

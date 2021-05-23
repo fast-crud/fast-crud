@@ -1,5 +1,9 @@
 <template>
-  <fs-crud ref="crudRef" v-bind="crudBinding" />
+  <fs-crud ref="crudRef" v-bind="crudBinding">
+    <template #actionbar-right>
+      <a-alert class="ml-10" type="warning" message="右上角切换语言查看效果" />
+    </template>
+  </fs-crud>
 </template>
 
 <script>
