@@ -1,5 +1,7 @@
 import { menus } from "../router/resources";
 import router from "../router";
+import { useRouter, useRoute } from "vue-router";
+
 export default {
   name: "AsideMenu",
   setup(props, ctx) {
@@ -45,8 +47,10 @@ export default {
         return buildMenus(menus);
       }
     };
+
+    const route = useRoute();
     return () => {
-      return <el-menu v-slots={slots} onSelect={onSelect} />;
+      return <el-menu v-slots={slots} onSelect={onSelect} defaultActive={route.fullPath} />;
     };
   }
 };
