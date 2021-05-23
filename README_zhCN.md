@@ -1,14 +1,14 @@
 # fast-crud
 [English](./README.md) | [简体中文](./README_zhCN.md)
 
-Fastcrud is a configuration oriented crud development framework based on vue3. It can rapidly develop crud functions, and can be used as the basic framework of low code platform.    
-Inherits and optimizes the design idea of d2crudplus. It is easy to get started, has strong scalability, and has rich examples, so that you can quickly complete the task of moving bricks and spend more time rowing.
+FastCrud 是基于Vue3的面向配置的crud开发框架，快速开发crud功能，可作为低代码平台的基础框架。   
+继承并优化了D2CrudPlus的设计思想，入门简单，可扩展性强，丰富的示例，让你可以快速完成搬砖任务，更多的时间划水吹逼。
 
-source :[Github](https://github.com/fast-crud/fast-crud)  /  [Gitee](https://gitee.com/fast-crud/fast-crud)   
-demo:
-[antdv](http://fast-crud.docmirror.cn/antdv/)  /  [element](http://fast-crud.docmirror.cn/element/)
+源码地址:[Github](https://github.com/fast-crud/fast-crud)  /  [Gitee](https://gitee.com/fast-crud/fast-crud)   
+示例地址:
+[antdv版](http://fast-crud.docmirror.cn/antdv/)  /  [element版](http://fast-crud.docmirror.cn/element/)
 
-document：http://fast-crud.docmirror.cn/
+文档地址：http://fast-crud.docmirror.cn/
 
 <div style="display:flex;">
 <a href="https://gitee.com/fast-crud/fast-crud" target="_blank"
@@ -19,11 +19,11 @@ document：http://fast-crud.docmirror.cn/
 /></a>
 </div>
 
->Fast crud is currently in alpha, and the API may change
->The complete redo version of D2 crud plus based on vue3
+> fast-crud目前处于alpha版，api可能还会有变化   
+> d2-crud-plus基于vue3的完全重做版
 
-## Developing crud is as fast as lightning
-1、Just write the crud configuration
+## 开发crud，快如闪电
+1、只需简单编写crud配置
 ```js
 const crudOptions= {
       columns: { //字段配置
@@ -66,38 +66,35 @@ const crudOptions= {
     }
 ```
 
-2、 Get a complete crud
+2、 一个完全体crud就出来了
 ![](./docs/images/crud.png)
 
 
 
 
-## Feature
-### 1. Configuration oriented crud programming
-* According to the crud configuration, the crud function can be developed quickly
+## 特性
+### 1. 面向配置的crud编程
+* 根据crud配置快速开发crud功能,可作为低代码平台基础框架
 
-### 2. data dictionary
-* Support local and remote dict
-* With the help of select, it is easy to store the value value in the data, which needs the label of the corresponding dictionary to show the requirements
+### 2. 数据字典
+* 支持本地和远程获取
+* 配合select，轻松实现数据存的是value值，需要对应字典的label来展示的需求
 
-### 3. Rich field types
-* Simplify the configuration by configuring the field type `column.type`
-* Different form components are generated automatically according to different field types
-* Support custom field type
+### 3. 丰富的字段类型
+* 通过配置字段类型“column.type”来简化配置
+* 根据字段类型不同，自动生成不同的表单组件
+* 支持自定义字段类型
 
-### 4. Extends
-Extend the custom type by extending the custom component
+### 4. 扩展组件
+通过扩展自定义组件，扩展自定义类型
 
-### 5. Multi UI support
-Support antdv, element, you can use which you like
+### 5. 多UI支持
+支持Antdv、Element，你喜欢哪个就用哪个
 
 
-## dependence
-### UI library
-[Antdv](https://github.com/vueComponent/ant-design-vue)   
-[Element-Plus](https://github.com/element-plus/element-plus)     
-Choose one of them
-
+## 依赖
+### ui组件库
+[Antdv](https://github.com/vueComponent/ant-design-vue) 、[Element-Plus](https://github.com/element-plus/element-plus) 二选一
 
 ### monorepo
 [![lerna](https://img.shields.io/badge/maintained%20with-lerna-cc00ff.svg)](https://lerna.js.org/)
