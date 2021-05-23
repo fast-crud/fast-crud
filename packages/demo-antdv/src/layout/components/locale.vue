@@ -2,7 +2,6 @@
   <a-dropdown class="locale-picker">
     <a class="ant-dropdown-link" @click.prevent>
       <span class="iconify" data-icon="ion:language" data-inline="false"></span>
-      <DownOutlined />
     </a>
     <template #overlay>
       <a-menu @click="changeLocale">
