@@ -26,8 +26,6 @@ export default defineComponent({
     // 页面打开后获取列表数据
     onMounted(() => {
       expose.doRefresh();
-      //激活editable，必须在mounted中调用
-      expose.editable.enable({ mode: "row" });
     });
 
     return {

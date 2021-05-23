@@ -1,4 +1,4 @@
-import { toRaw } from "vue";
+import { toRaw, nextTick } from "vue";
 import _ from "lodash-es";
 import logger from "../utils/util.log";
 import { useMerge } from "../use/use-merge";
@@ -33,10 +33,20 @@ function useEditable({ expose }) {
     /**
      * 启用编辑
      * @param opts
+     * @param onEnabled 默认根据mode切换rowHandle.active,[editRow,editable]
      */
-    enable(opts) {
-      _.merge(crudBinding.value.table.editable, { enabled: true }, opts);
-      expose.getTableRef()?.editable.setupEditable();
+    async enable(opts, onEnabled: Function) {
+      const editable = crudBinding.value.table.editable;
+      _.merge(editable, { enabled: true }, opts);
+      if (onEnabled) {
+        onEnabled({ editable });
+      } else {
+        if (editable.mode === "row") {
+          crudBinding.value.rowHandle.active = "editRow";
+        } else {
+          crudBinding.value.rowHandle.active = "editable";
+        }
+      }
     },
     /**
      * 禁用编辑
@@ -44,7 +54,6 @@ function useEditable({ expose }) {
     disable() {
       expose.getTableRef()?.editable.resume();
       crudBinding.value.table.editable.enabled = false;
-      //expose.getTableRef().editable.setupEditable();
       crudBinding.value.rowHandle.active = "default";
     },
     /**

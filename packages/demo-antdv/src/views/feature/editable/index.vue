@@ -2,7 +2,7 @@
   <fs-crud ref="crudRef" v-bind="crudBinding">
     <template #actionbar-right>
       <!--      <fs-button class="ml-10" @click="addRow">添加行</fs-button>-->
-      <a-radio-group v-model:value="crudBinding.table.editable.enabled" class="ml-10">
+      <a-radio-group value="crudBinding.table.editable.enabled" class="ml-10" @update:value="enabledChanged">
         <a-radio-button :value="true">启用编辑</a-radio-button>
         <a-radio-button :value="false">退出编辑</a-radio-button>
       </a-radio-group>
@@ -27,6 +27,7 @@ import { defineComponent, ref, onMounted } from "vue";
 import createCrudOptions from "./crud";
 import { useExpose, useCrud } from "@fast-crud/fast-crud";
 import { message } from "ant-design-vue";
+import en from "../../../../../fast-crud/src/local/lang/en";
 export default defineComponent({
   name: "FeatureEditable",
   setup() {
@@ -47,18 +48,28 @@ export default defineComponent({
     // 页面打开后获取列表数据
     onMounted(() => {
       expose.doRefresh();
-      expose.editable.enable({ mode: "free" });
+      //expose.editable.enable({ mode: "free" });
     });
+
+    function enable() {
+      expose.editable.enable({ enabled: true, mode: "free" });
+    }
+    function disable() {
+      expose.editable.disable();
+    }
 
     return {
       crudBinding,
       crudRef,
-      enable() {
-        expose.editable.enable({ enabled: true, mode: "free" });
+      enabledChanged(event) {
+        if (event) {
+          enable();
+        } else {
+          disable();
+        }
       },
-      disable() {
-        expose.editable.disable();
-      },
+      enable,
+      disable,
       active() {
         expose.editable.active();
       },

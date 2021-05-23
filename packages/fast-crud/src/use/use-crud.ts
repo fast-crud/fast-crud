@@ -233,16 +233,16 @@ export function useCrud(ctx: UseCrudProps) {
       table: {
         editable: {
           onEnabled({ enabled, mode }) {
-            if (enabled) {
-              if (mode === "row") {
-                crudBinding.value.rowHandle.active = "editRow";
-              } else {
-                crudBinding.value.rowHandle.active = "editable";
-              }
-            } else {
-              crudBinding.value.rowHandle.active = "default";
-              expose.editable.disable();
-            }
+            // if (enabled) {
+            //   if (mode === "row") {
+            //     crudBinding.value.rowHandle.active = "editRow";
+            //   } else {
+            //     crudBinding.value.rowHandle.active = "editable";
+            //   }
+            // } else {
+            //   crudBinding.value.rowHandle.active = "default";
+            //   expose.editable.disable();
+            // }
           }
         }
       },

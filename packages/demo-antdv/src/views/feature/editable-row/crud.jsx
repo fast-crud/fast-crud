@@ -28,7 +28,7 @@ export default function ({ expose }) {
       actionbar: { buttons: { add: { show: false }, addRow: { show: true } } },
       table: {
         editable: {
-          enabled: false,
+          enabled: true,
           mode: "row",
           activeTrigger: false
         }
