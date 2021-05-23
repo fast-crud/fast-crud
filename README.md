@@ -1,7 +1,7 @@
 # fast-crud
 [English](./README.md) | [简体中文](./README_zhCN.md)
 
-Fastcrud is a configuration oriented crud development framework based on vue3. It can rapidly develop crud functions, and can be used as the basic framework of low code platform.    
+Fastcrud is a options oriented crud development framework based on vue3. It can rapidly develop crud functions, and can be used as the basic framework of low code platform.    
 Inherits and optimizes the design idea of D2CrudPlus. It is easy to get started, has strong scalability, and has rich examples, so that you can quickly complete the task of moving bricks and spend more time rowing.
 
 source :[Github](https://github.com/fast-crud/fast-crud)  /  [Gitee](https://gitee.com/fast-crud/fast-crud)   
@@ -73,15 +73,15 @@ const crudOptions= {
 
 
 ## Feature
-### 1. Configuration oriented crud programming
-* According to the crud configuration, the crud function can be developed quickly
+### 1. Options oriented crud programming
+* According to the crud options, the crud function can be developed quickly
 
 ### 2. data dictionary
 * Support local and remote dict
 * With the help of select, it is easy to store the value value in the data, which needs the label of the corresponding dictionary to show the requirements
 
 ### 3. Rich field types
-* Simplify the configuration by configuring the field type `column.type`
+* Simplify the options by configuring the field type `column.type`
 * Different form components are generated automatically according to different field types
 * Support custom field type
 
