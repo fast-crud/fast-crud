@@ -12,7 +12,7 @@ const resources = [
     component: "/home/index.vue"
   },
   {
-    title: "核心特性",
+    title: "基本特性",
     name: "basis",
     path: "/basis",
     redirect: "/basis/dict",
