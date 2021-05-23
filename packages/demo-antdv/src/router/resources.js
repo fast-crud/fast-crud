@@ -21,6 +21,11 @@ const resources = [
         title: "动态计算",
         path: "/basis/compute",
         component: "/basis/compute/index.vue"
+      },
+      {
+        title: "国际化",
+        path: "/basis/i18n",
+        component: "/basis/i18n/index.vue"
       }
     ]
   },

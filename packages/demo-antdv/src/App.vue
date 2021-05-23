@@ -1,16 +1,28 @@
 <template>
   <a-config-provider :locale="locale">
-    <router-view />
+    <router-view v-if="routerEnabled" />
   </a-config-provider>
 </template>
 
 <script>
 import { utils } from "@fast-crud/fast-crud";
 import zhCN from "ant-design-vue/es/locale/zh_CN";
+import { provide, ref, nextTick } from "vue";
 export default {
   name: "App",
   setup() {
     utils.trace.trace();
+    const routerEnabled = ref(true);
+    async function reload() {
+      routerEnabled.value = false;
+      await nextTick();
+      routerEnabled.value = true;
+    }
+    provide("fn:router.reload", reload);
+
+    return {
+      routerEnabled
+    };
   },
   data() {
     return {

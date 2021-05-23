@@ -24,7 +24,7 @@
 
 <script>
 import i18n from "../../i18n";
-import { computed } from "vue";
+import { computed, inject } from "vue";
 import _ from "lodash-es";
 export default {
   name: "Locale",
@@ -45,9 +45,12 @@ export default {
     const current = computed(() => {
       return i18n.global.locale.value;
     });
+
+    const routerReload = inject("fn:router.reload");
     const changeLocale = (change) => {
       console.log("change", change);
       i18n.global.locale.value = change.key;
+      routerReload();
     };
     return {
       languages,
