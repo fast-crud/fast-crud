@@ -98,7 +98,7 @@ Support antdv, element, you can use which you like
 git clone https://gitee.com/fast-crud/fast-crud.git
 # run antdv demo
 cd fast-crud/packages/demo-antdv
-# run element demo
+# or run element demo
 cd fast-crud/packages/demo-element
 
 # run 
