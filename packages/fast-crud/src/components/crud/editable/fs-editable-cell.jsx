@@ -32,7 +32,12 @@ export default {
     if (props.index === -1) {
       return () => {};
     }
-    let computedForm = doComputed(props.editable?.getForm(), props.getScope);
+
+    const refForm = computed(() => {
+      return props.editable?.getForm();
+    });
+
+    let computedForm = doComputed(refForm, props.getScope);
 
     let computedIsEditable = computed(() => {
       return computedForm.value && computedForm.value.show !== false && props.editable?.isEditable();

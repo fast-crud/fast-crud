@@ -6,7 +6,7 @@
   </div>
 </template>
 <script>
-import { defineComponent } from "vue";
+import { defineComponent, toRef } from "vue";
 import FsButton from "../basic/fs-button";
 import traceUtil from "../../utils/util.trace";
 import { useCompute } from "../../use/use-compute";
@@ -42,7 +42,8 @@ export default defineComponent({
     const getScopeFn = () => {
       return {};
     };
-    const computedButtons = doComputed(props.buttons, getScopeFn);
+    const refButtons = toRef(props, "buttons");
+    const computedButtons = doComputed(refButtons, getScopeFn);
     return {
       onClick,
       computedButtons
