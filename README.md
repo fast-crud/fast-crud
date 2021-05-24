@@ -91,7 +91,7 @@ Extend the custom type by extending the custom component
 Support antdv, element, you can use which you like
 
 
-## Get start
+## Getting start
 
 ### Run demo
 ```shell
