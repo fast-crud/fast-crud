@@ -34,28 +34,28 @@ const crudOptions= {
           form: { show: false }
         },
         name: { // name field
-          title: "姓名",
+          title: "name",
           type: "text", //text type field
           search: { show: true } // show search
         },
         city: { // city field
-          title: "城市",
+          title: "city",
           type: "dict-select", // select type field
           search: { show: true }, // show search
           dict: dict({ //local dict
             value: "id",
             label: "text",
             data: [
-              { id: "sz", text: "深圳", color: "success" },
-              { id: "gz", text: "广州", color: "primary" },
-              { id: "bj", text: "北京" },
-              { id: "wh", text: "武汉" },
-              { id: "sh", text: "上海" }
+              { id: "sz", text: "shenzhen", color: "success" },
+              { id: "gz", text: "guangzhou", color: "primary" },
+              { id: "bj", text: "beijing" },
+              { id: "wh", text: "wuhan" },
+              { id: "sh", text: "shanghai" }
             ]
           })
         },
         radio: {
-          title: "状态",
+          title: "status",
           search: { show: true }, //show search
           type: "dict-radio", //radio type field
           dict: dict({ //remote dict
@@ -67,7 +67,7 @@ const crudOptions= {
 ```
 
 2、 Get a complete crud
-![](./docs/images/crud.png)
+![](./docs/images/crud-en.png)
 
 
 
