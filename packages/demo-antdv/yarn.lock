@@ -377,6 +377,11 @@
   dependencies:
     cross-fetch "^3.0.6"
 
+"@iconify/json@^1.1.347":
+  version "1.1.347"
+  resolved "https://registry.npmjs.org/@iconify/json/-/json-1.1.347.tgz#88eb12657b005d59420dd0971e23ae409b0fa42f"
+  integrity sha512-tXd8zM1eczMJlQgR3CRVqIIgKJkV8MfMJh7qllOdoyHkDv3t6eeWxqc4ZTRMCgC6uF21lyPs5t2Gw3k4AMKAHQ==
+
 "@intlify/core-base@9.1.6":
   version "9.1.6"
   resolved "https://registry.yarnpkg.com/@intlify/core-base/-/core-base-9.1.6.tgz#887fbeafe37d955bac50318f30ac589839f0d9fb"

@@ -37,6 +37,7 @@
     "vue": "^3.0.7",
     "vue-cropperjs": "^5.0.0",
     "vue-i18n": "^9.0.0",
+    "@iconify/json": "^1.1.347",
     "vue-router": "^4.0.1",
     "vuedraggable": "^4.0.1"
   },

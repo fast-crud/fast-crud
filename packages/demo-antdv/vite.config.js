@@ -26,7 +26,16 @@ export default ({ command, mode }) => {
   console.log("devAlias", devAlias);
   return {
     base: "/antdv/",
-    plugins: [vueJsx(), vue(), viteCompression(), PurgeIcons()],
+    plugins: [
+      vueJsx(),
+      vue(),
+      viteCompression(),
+      PurgeIcons({
+        iconSource: "local",
+        remoteDataAPI: "https://gitee.com/fast-crud/collections-json/raw/master/json",
+        includedCollections: ["ion"]
+      })
+    ],
     // optimizeDeps: {
     //   exclude: ["@fast-crud/fast-crud-extends"],
     // },

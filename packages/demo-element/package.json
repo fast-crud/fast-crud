@@ -3,10 +3,8 @@
   "version": "0.9.0",
   "private": true,
   "scripts": {
-    "dev": "vite",
-    "demo": "vite --mode demo",
-    "dev:force": "vite --force",
-    "demo:force": "vite --force --mode demo",
+    "dev": "vite --force",
+    "demo": "vite --force --mode demo",
     "serve": "vite preview",
     "build": "vite build",
     "lint": "vite lint"
