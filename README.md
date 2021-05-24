@@ -73,7 +73,7 @@ const crudOptions= {
 
 
 ## Feature
-### 1. Options oriented crud programming
+### 1. Options-oriented crud programming
 * According to the crud options, the crud function can be developed quickly
 
 ### 2. data dictionary
