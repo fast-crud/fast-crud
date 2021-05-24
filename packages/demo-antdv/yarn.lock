@@ -326,10 +326,10 @@
     minimatch "^3.0.4"
     strip-json-comments "^3.1.1"
 
-"@fast-crud/extends-uploader@^0.8.1":
-  version "0.8.1"
-  resolved "https://registry.yarnpkg.com/@fast-crud/extends-uploader/-/extends-uploader-0.8.1.tgz#f8842fce1b60f500f9ace68b4b6d1d2e3ecfda1e"
-  integrity sha512-+ols2SNY2YXEBRZG1/EhZ+B5oNaZr4+D+WICr+opg25rskfAQ1cF7mYzDSPd7uSDppfbvkknVHFLphEQ0OUIqw==
+"@fast-crud/extends-uploader@^0.9.0":
+  version "0.9.0"
+  resolved "https://registry.yarnpkg.com/@fast-crud/extends-uploader/-/extends-uploader-0.9.0.tgz#acf7a58dd62dc4f1a6ee4ab983f5a5725853eaf6"
+  integrity sha512-7yGDA9ZWTYbwo+1kaGUD8tiFrzaOzfG2nHx+vCe/5K20Pn1b1OAQDwFmbBkqNbpY9kQGyCmGHKIjKDcxxeB6yw==
   dependencies:
     ali-oss "^6.13.2"
     cos-js-sdk-v5 "^1.2.9"
@@ -341,10 +341,10 @@
     vue "^3.0.7"
     vue-cropperjs "^5.0.0"
 
-"@fast-crud/fast-crud@^0.8.3":
-  version "0.8.3"
-  resolved "https://registry.yarnpkg.com/@fast-crud/fast-crud/-/fast-crud-0.8.3.tgz#4112e82856bab2e6b69a23ff8d65788e8ede4af1"
-  integrity sha512-tV4qfqc0s6igJdvsgYg4JLs/Ax7FfOq3SH1QtPDGRwvemQ9H4ixpGE4DbXGMIfG4LwXTUIiJpSbwsALScxJyEQ==
+"@fast-crud/fast-crud@^0.9.0":
+  version "0.9.0"
+  resolved "https://registry.yarnpkg.com/@fast-crud/fast-crud/-/fast-crud-0.9.0.tgz#852770de00b4e90661bbc86fcbaa442edbb738dc"
+  integrity sha512-eXV3mBaeA35J3ciMiODGJ0lj0W4qlIGjIxb5KgcklGa8gDw5jZc1s+4Zb7NgH604FcoZaPPzgNtFiYSrJTkcaQ==
   dependencies:
     dayjs "^1.10.4"
     deepdash-es "5.3.5"
@@ -353,13 +353,13 @@
     vue "^3.0.7"
     vuedraggable "^4.0.1"
 
-"@fast-crud/ui-antdv@^0.8.4":
-  version "0.8.4"
-  resolved "https://registry.yarnpkg.com/@fast-crud/ui-antdv/-/ui-antdv-0.8.4.tgz#6c73f0a2e52360898a1224e09cbd002075ec8596"
-  integrity sha512-PNzDLOX+pFSm2E/C4UTs03BDTZNcd+iM5/HQCJ0G9owRTQfN3fS2jHVFCg1oV0ycrsHvKBlJKXdRiehX+SuTKg==
+"@fast-crud/ui-antdv@^0.9.0":
+  version "0.9.0"
+  resolved "https://registry.yarnpkg.com/@fast-crud/ui-antdv/-/ui-antdv-0.9.0.tgz#eeae0794a26ff494bef9435daca28b33171b0694"
+  integrity sha512-5GwcW5HmcDCUabaArArBBDmnLt0db2VATKNYtRYfkyGSsJSQb375BW+Ei2fhpITaDir/UjB9+oRRCnmfRMB6AA==
   dependencies:
     "@ant-design/icons-vue" "^6.0.1"
-    "@fast-crud/fast-crud" "^0.8.3"
+    "@fast-crud/fast-crud" "^0.9.0"
     ant-design-vue "^2.1.4"
     vue "^3.0.7"
 
@@ -1583,13 +1583,6 @@ deepdash-es@5.3.5:
   integrity sha512-bezxT+LqAu1Ly8I2LAEFle3fdEAc/bHld9cMAbgYzY+69+P9qTkGtNvC2ZQJEP4C1C2Fx9gVn/TCoQlAivWPDA==
   dependencies:
     lodash-es "^4.17.15"
-
-deepdash-es@^5.3.5:
-  version "5.3.7"
-  resolved "https://registry.yarnpkg.com/deepdash-es/-/deepdash-es-5.3.7.tgz#11c93aecc4fc2dd34e313457594da6b1f95cac01"
-  integrity sha512-wjccL8tajQFzH54A428S/hxi29dKazD4RuFLwI+TLAbfcj/2PGOwJSQMWaztwnfRzxp7CgTLD9eQOuca+WZo1Q==
-  dependencies:
-    lodash-es "^4.17.21"
 
 deepmerge@^4.2.2:
   version "4.2.2"
@@ -3069,7 +3062,7 @@ locate-path@^5.0.0:
   dependencies:
     p-locate "^4.1.0"
 
-lodash-es@^4.17.15, lodash-es@^4.17.20, lodash-es@^4.17.21:
+lodash-es@^4.17.15, lodash-es@^4.17.20:
   version "4.17.21"
   resolved "https://registry.yarnpkg.com/lodash-es/-/lodash-es-4.17.21.tgz#43e626c46e6591b7750beb2b50117390c609e3ee"
   integrity sha512-mKnC+QJ9pWVzv+C4/U3rRsHapFfHvQFoFB92e52xeyGMcX6/OlIl78je1u8vePzYZSkkogMPJ2yjxxsb89cxyw==
