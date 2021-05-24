@@ -332,6 +332,11 @@
   dependencies:
     cross-fetch "^3.0.6"
 
+"@iconify/json@^1.1.347":
+  version "1.1.347"
+  resolved "https://registry.npmjs.org/@iconify/json/-/json-1.1.347.tgz#88eb12657b005d59420dd0971e23ae409b0fa42f"
+  integrity sha512-tXd8zM1eczMJlQgR3CRVqIIgKJkV8MfMJh7qllOdoyHkDv3t6eeWxqc4ZTRMCgC6uF21lyPs5t2Gw3k4AMKAHQ==
+
 "@intlify/core-base@9.1.6":
   version "9.1.6"
   resolved "https://registry.npmjs.org/@intlify/core-base/-/core-base-9.1.6.tgz"
@@ -1531,13 +1536,6 @@ deepdash-es@5.3.5:
   integrity sha512-bezxT+LqAu1Ly8I2LAEFle3fdEAc/bHld9cMAbgYzY+69+P9qTkGtNvC2ZQJEP4C1C2Fx9gVn/TCoQlAivWPDA==
   dependencies:
     lodash-es "^4.17.15"
-
-deepdash-es@^5.3.5:
-  version "5.3.7"
-  resolved "https://registry.npmjs.org/deepdash-es/-/deepdash-es-5.3.7.tgz"
-  integrity sha512-wjccL8tajQFzH54A428S/hxi29dKazD4RuFLwI+TLAbfcj/2PGOwJSQMWaztwnfRzxp7CgTLD9eQOuca+WZo1Q==
-  dependencies:
-    lodash-es "^4.17.21"
 
 deepmerge@^4.2.2:
   version "4.2.2"
@@ -3011,7 +3009,7 @@ locate-path@^5.0.0:
   dependencies:
     p-locate "^4.1.0"
 
-lodash-es@^4.17.15, lodash-es@^4.17.20, lodash-es@^4.17.21:
+lodash-es@^4.17.15, lodash-es@^4.17.20:
   version "4.17.21"
   resolved "https://registry.npmjs.org/lodash-es/-/lodash-es-4.17.21.tgz"
   integrity sha512-mKnC+QJ9pWVzv+C4/U3rRsHapFfHvQFoFB92e52xeyGMcX6/OlIl78je1u8vePzYZSkkogMPJ2yjxxsb89cxyw==

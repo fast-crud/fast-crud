@@ -30,7 +30,16 @@ export default ({ command, mode }) => {
   console.log("devAlias", devAlias);
   return {
     base: "/element/",
-    plugins: [vueJsx(), vue(), viteCompress(), PurgeIcons()],
+    plugins: [
+      vueJsx(),
+      vue(),
+      viteCompress(),
+      PurgeIcons({
+        iconSource: "local",
+        remoteDataAPI: "https://gitee.com/fast-crud/collections-json/raw/master/json",
+        includedCollections: ["ion"]
+      })
+    ],
     // optimizeDeps: {
     //   exclude: ["@fast-crud/fast-crud-extends"],
     // },

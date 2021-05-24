@@ -3,8 +3,10 @@
   "version": "0.9.0",
   "private": true,
   "scripts": {
-    "dev": "vite --force",
-    "demo": "vite --force --mode demo",
+    "dev": "vite",
+    "demo": "vite --mode demo",
+    "dev:force": "vite --force",
+    "demo:force": "vite --force --mode demo",
     "serve": "vite preview",
     "build": "vite build",
     "lint": "vite lint"
@@ -16,6 +18,7 @@
     "@fast-crud/fast-crud": "^0.9.0",
     "@fast-crud/ui-element": "^0.9.0",
     "@iconify/iconify": "^2.0.1",
+    "@iconify/json": "^1.1.347",
     "@purge-icons/generated": "^0.7.0",
     "ali-oss": "^6.13.2",
     "axios": "^0.21.1",
