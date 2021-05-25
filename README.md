@@ -108,9 +108,7 @@ npm run demo
 
 ## Dependence on
 
-### vitejs
-
-[vitejs](https://github.com/vitejs/vite)
+### [vitejs](https://github.com/vitejs/vite)
 
 Libaries and demos are build using vitejs    
 
