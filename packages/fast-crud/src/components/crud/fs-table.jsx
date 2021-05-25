@@ -6,7 +6,8 @@ import {
   provide,
   resolveDirective,
   resolveDynamicComponent,
-  withDirectives
+  withDirectives,
+  toRef
 } from "vue";
 import _ from "lodash-es";
 import FsRowHandle from "./fs-row-handle.vue";
@@ -71,7 +72,8 @@ export default {
     };
 
     const { doComputed } = useCompute();
-    const computedColumns = doComputed(props.columns, null, [/\[.+\]component/]);
+    const refColumns = toRef(props, "columns");
+    const computedColumns = doComputed(refColumns, null, [/\[.+\]component/]);
 
     return {
       tableRef,
