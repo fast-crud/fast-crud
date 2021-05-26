@@ -100,13 +100,14 @@ function createService() {
  * @param {Object} service axios 实例
  */
 function createRequestFunction(service) {
+  const ApiPath = import.meta.env.VITE_APP_API;
   return function (config) {
     const configDefault = {
       headers: {
         "Content-Type": get(config, "headers.Content-Type", "application/json")
       },
       timeout: 5000,
-      baseURL: "/api",
+      baseURL: ApiPath,
       data: {}
     };
     return service(Object.assign(configDefault, config));

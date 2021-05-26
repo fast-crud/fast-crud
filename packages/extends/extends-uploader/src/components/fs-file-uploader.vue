@@ -1,6 +1,6 @@
 <template>
   <div class="fs-file-uploader" :class="{ 'fs-file-uploader-limit': computedOnLimit() }">
-    <component :is="$fsui.upload.name" v-model:fileList="fileList" v-bind="computedBinding">
+    <component :is="$fsui.upload.name" ref="fileUploaderRef" v-model:fileList="fileList" v-bind="computedBinding">
       <component :is="computedFileSelectBtn.is" v-bind="computedFileSelectBtn" />
     </component>
     <component :is="computedUploaderImpl" ref="uploaderImplRef" />
@@ -57,6 +57,7 @@ export default {
     const fileList = ref([]);
     const currentValue = ref();
     const fileListLocal = ref([]);
+    const fileUploaderRef = ref();
     function pickFileName(url) {
       return url.substring(url.lastIndexOf("/") + 1);
     }
@@ -73,11 +74,12 @@ export default {
       return value;
     }
     function buildOneToValue(file) {
+      const res = file.response || file.fsRes;
       const value = {
         size: file.size,
         name: file.name,
         uid: file.uid,
-        ...(file.response ? file.response : file)
+        ...(res != null ? res : file)
       };
       if (props.valueType === "object") {
         return value;
@@ -109,6 +111,7 @@ export default {
     function onInput(value) {
       currentValue.value = value;
       // fileList.value = value;
+      console.log("file uploader value:", value);
       ctx.emit("update:modelValue", value);
     }
 
@@ -126,6 +129,7 @@ export default {
     );
 
     function buildEmitValue(fList) {
+      console.log("fileList before emit:", fList);
       if (props.limit === 1) {
         //单个文件
         return buildOneToValue(fList[0]);
@@ -325,6 +329,7 @@ export default {
           }
           console.log("on success", res, file, fileList);
           file.response = res;
+          file.fsRes = res;
           handleSuccess(fileList);
         },
         // "on-error": "handleUploadFileError",
@@ -344,6 +349,7 @@ export default {
     return {
       fileList,
       fileListLocal,
+      fileUploaderRef,
       initValue,
       onChange,
       onInput,
