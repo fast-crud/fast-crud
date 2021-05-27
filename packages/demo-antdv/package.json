@@ -1,6 +1,6 @@
 {
   "name": "@fast-crud/demo-antdv",
-  "version": "0.9.0",
+  "version": "0.9.1",
   "private": true,
   "scripts": {
     "dev": "vite --force",
@@ -14,10 +14,11 @@
   "license": "MIT",
   "dependencies": {
     "@ant-design/icons-vue": "^6.0.1",
-    "@fast-crud/extends-uploader": "^0.9.0",
-    "@fast-crud/fast-crud": "^0.9.0",
-    "@fast-crud/ui-antdv": "^0.9.0",
+    "@fast-crud/extends-uploader": "^0.9.1",
+    "@fast-crud/fast-crud": "^0.9.1",
+    "@fast-crud/ui-antdv": "^0.9.1",
     "@iconify/iconify": "^2.0.1",
+    "@iconify/json": "^1.1.347",
     "@purge-icons/generated": "^0.7.0",
     "ant-design-vue": "^2.1.4",
     "axios": "^0.21.1",
@@ -37,7 +38,6 @@
     "vue": "^3.0.7",
     "vue-cropperjs": "^5.0.0",
     "vue-i18n": "^9.0.0",
-    "@iconify/json": "^1.1.347",
     "vue-router": "^4.0.1",
     "vuedraggable": "^4.0.1"
   },
