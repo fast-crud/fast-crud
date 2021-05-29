@@ -29,11 +29,11 @@ async function doUpload({ file, fileName, onProgress, options }) {
       ajaxOptions,
       async (res) => {
         try {
-          const url = await options.successHandle(res, ajaxOptions);
-          if (url && typeof url === "object" && url.key == null) {
-            url.key = key;
+          const ret = await options.successHandle(res, ajaxOptions);
+          if (ret && typeof ret === "object" && ret.key == null) {
+            ret.key = key;
           }
-          resolve(url);
+          resolve(ret);
         } catch (e) {
           reject(e);
         }

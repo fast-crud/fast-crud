@@ -16,7 +16,7 @@ console.log("mocks", list);
 
 list.forEach((apiFile) => {
   for (const item of apiFile) {
-    mock.onAny(new RegExp("/api" + item.path)).reply(async (config) => {
+    mock.onAny(new RegExp(item.path)).reply(async (config) => {
       console.log("------------fake request start -------------");
       console.log("request:", config);
       const data = config.data ? JSON.parse(config.data) : {};

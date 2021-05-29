@@ -109,7 +109,7 @@ export default function (app, i18n) {
       domain: "http://d2p.file.veryreader.com"
     },
     form: {
-      action: "/api/upload/form/upload",
+      action: "http://www.docmirror.cn:7070/api/upload/form/upload",
       name: "file",
       withCredentials: false,
       successHandle(ret) {

@@ -107,6 +107,12 @@ npm run demo
 ```
 
 ## Dependence on
+
+### [vitejs](https://github.com/vitejs/vite)
+
+Libaries and demos are build using vitejs    
+
+
 ### UI library
 [Antdv](https://github.com/vueComponent/ant-design-vue)   
 [Element-Plus](https://github.com/element-plus/element-plus)     
