@@ -1,6 +1,8 @@
 import _ from "lodash-es";
 import { reactive, computed, provide, nextTick, ref, watch } from "vue";
 import { uiContext } from "../../../ui";
+// import { useValidation } from "./validation/use-validation";
+
 function useTableData(tableRef) {
   const ui = uiContext.get();
 
@@ -73,7 +75,7 @@ export function useEditable(props, ctx, tableRef) {
     );
   });
 
-  function buildEditableCell(tableRow, key, index) {
+  function createEditableCell(tableRow, key, index) {
     function getValue(key) {
       return tableRow[key];
     }
@@ -127,10 +129,10 @@ export function useEditable(props, ctx, tableRef) {
     return cell;
   }
 
-  function setEditableRow(index, rowData) {
+  function createEditableRow(index, rowData) {
     const cells = {};
     _.forEach(props.columns, (item) => {
-      cells[item.key] = buildEditableCell(rowData, item.key, index);
+      cells[item.key] = createEditableCell(rowData, item.key, index);
     });
     const editableRow = (editableRows[index] = reactive({ cells }));
 
@@ -199,7 +201,7 @@ export function useEditable(props, ctx, tableRef) {
   }
   function unshiftEditableRow(rowData) {
     editableRows.unshift({ cells: {} });
-    return setEditableRow(0, rowData);
+    return createEditableRow(0, rowData);
   }
   function setupEditable(data) {
     if (data == null) {
@@ -207,7 +209,7 @@ export function useEditable(props, ctx, tableRef) {
     }
     editableRows.length = 0;
     _.forEach(data, (rowData, index) => {
-      setEditableRow(index, rowData);
+      createEditableRow(index, rowData);
     });
     console.log("editable init", editableRows);
     if (options.value.onSetup) {

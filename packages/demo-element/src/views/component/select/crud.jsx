@@ -104,7 +104,6 @@ export default function ({ expose }) {
         },
         disabledOptions: {
           title: "禁用某个选项",
-          key: "disabledOptions",
           type: "dict-select",
           dict: dict({
             cloneable: true,
@@ -122,6 +121,39 @@ export default function ({ expose }) {
               }
             },
             helper: "禁用字典选项"
+          }
+        },
+        firstDefault: {
+          title: "第一个选项为默认值",
+          type: "dict-select",
+          dict: dict({
+            cloneable: true,
+            url: "/dicts/OpenStatusEnum?disabledOptions"
+          }),
+          form: {
+            component: {
+              //监听 dict-change事件
+              test: 111,
+              onDictChange({ dict, form, key }) {
+                console.log("dict changed", dict, key);
+                if (dict.data != null && form.firstDefault == null) {
+                  form.firstDefault = dict.data[0].value;
+                }
+              }
+              // 下面的方法也可以，注意要配置dict.prototype:true
+              // dict: {
+              //   // 此处dict配置会覆盖上面dict的属性
+              //   // form表单的dict设置为原型复制，每次初始化时都会重新loadDict
+              //   prototype: true,
+              //
+              //   onReady({ dict, form }) {
+              //     console.log("字典请求ready", dict, form, getComponentRef);
+              //     //  prototype= true 才能获取到form表单数据
+              //     form.firstDefault = dict.data[0].value;
+              //   }
+              // }
+            },
+            helper: "默认选择第一个选项"
           }
         },
         multiple: {

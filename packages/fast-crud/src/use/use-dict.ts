@@ -23,6 +23,14 @@ export function useDict(props, ctx, vModel = "modelValue") {
     return dict;
   }
   const getScope: Function = inject("get:scope") || function () {};
+  function getCurrentScope() {
+    const value = props[vModel];
+    return {
+      ...getScope(),
+      componentRef: proxy,
+      value
+    };
+  }
   // @ts-ignore
   const { proxy } = getCurrentInstance();
   const loadDict = async (reload = false) => {
@@ -32,13 +40,8 @@ export function useDict(props, ctx, vModel = "modelValue") {
     if (dict.loading) {
       return;
     }
-    const value = props[vModel];
 
-    const scope = {
-      ...getScope(),
-      componentRef: proxy,
-      value
-    };
+    const scope = getCurrentScope();
     if (reload) {
       await dict.reloadDict(scope);
       return;
@@ -61,6 +64,24 @@ export function useDict(props, ctx, vModel = "modelValue") {
       }
     );
   };
+
+  const watchDictData = () => {
+    watch(
+      () => {
+        return dict.data;
+      },
+      () => {
+        if (ctx.attrs.onDictChange) {
+          const scope = getCurrentScope();
+          ctx.attrs.onDictChange({ dict, ...scope });
+        }
+      },
+      {
+        immediate: true
+      }
+    );
+  };
+  watchDictData();
 
   const getDictData = () => {
     return getDict()?.data;

@@ -98,7 +98,8 @@ export default {
       const attrs = {
         ref: "targetRef",
         // scope: props.scope,
-        [vModel]: props.modelValue,
+        // fix element display false bug
+        [vModel]: props.modelValue || null,
         ...props.props
       };
       attrs["onUpdate:" + vModel] = (value) => {
@@ -112,7 +113,11 @@ export default {
           return handler({ ...props.scope, $event });
         };
       });
-      return attrs;
+
+      const merged = mergeProps(attrs, ctx.attrs);
+      mergeEventHandles(merged, "onChange");
+      mergeEventHandles(merged, "onBlur");
+      return merged;
     });
 
     const childrenRender = () => {
@@ -141,13 +146,9 @@ export default {
         inputComp = resolveComponent(inputComp);
       }
     }
-
     const children = childrenRender();
     return () => {
-      const props = mergeProps(allAttrs.value, ctx.attrs);
-      mergeEventHandles(props, "onChange");
-      mergeEventHandles(props, "onBlur");
-      return h(inputComp, props, children);
+      return <inputComp {...allAttrs.value}>{children}</inputComp>;
     };
   },
   methods: {

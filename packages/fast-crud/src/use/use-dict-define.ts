@@ -42,6 +42,7 @@ class Dict extends UnMergeable {
   getNodesByValues: undefined | Function = undefined;
   cacheNodes = {};
   onReady: undefined | Function = undefined;
+  notifies: Array<any> = []; //loadDict成功后的通知
   constructor(dict) {
     super();
 
@@ -50,11 +51,18 @@ class Dict extends UnMergeable {
       value: false,
       enumerable: false
     });
+    Object.defineProperty(this, "notifies", {
+      value: false,
+      enumerable: false
+    });
     this.loading = false;
     _.merge(this, dict);
     if (dict.data != null) {
       this.originalData = dict.data;
       this.setData(dict.data);
+    }
+    if (!this.prototype) {
+      this.loadDict();
     }
   }
 
@@ -67,12 +75,27 @@ class Dict extends UnMergeable {
     this.toMap();
   }
 
+  /**
+   * 加载字典
+   * @param context 当prototype=true时会传入
+   */
   async loadDict(context?) {
+    let notify: Function | null = null;
     if (this.loading) {
-      return;
+      //如果正在加载中，则等待加载完成
+      const ret = new Promise((resolve) => {
+        notify = (data) => {
+          resolve(data);
+        };
+      });
+      if (!this.notifies) {
+        this.notifies = [];
+      }
+      this.notifies.push(notify);
+      return ret;
     }
     if (this.data) {
-      return;
+      return this.data;
     }
     let data: Array<any> = [];
     if (this.getNodesByValues) {
@@ -108,6 +131,13 @@ class Dict extends UnMergeable {
     this.setData(data);
     if (this.onReady) {
       this.onReady({ dict: this, ...context });
+    }
+    // notify
+    if (this.notifies && this.notifies.length > 0) {
+      _.forEach(this.notifies, (call) => {
+        call(this.data);
+      });
+      this.notifies.length = 0;
     }
   }
 
