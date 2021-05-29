@@ -133,9 +133,8 @@ export default function ({ expose }) {
           form: {
             component: {
               //监听 dict-change事件
-              test: 111,
               onDictChange({ dict, form, key }) {
-                console.log("dict changed", dict, key);
+                console.log("dict data changed", dict, key);
                 if (dict.data != null && form.firstDefault == null) {
                   form.firstDefault = dict.data[0].value;
                 }

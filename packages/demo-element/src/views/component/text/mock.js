@@ -20,7 +20,8 @@ const list = [
     name: "张三",
     date: "2016-05-04",
     status: "1",
-    province: "2"
+    province: "2",
+    defValue: "非默认值文本"
   },
   {
     name: "李四",

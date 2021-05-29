@@ -33,7 +33,19 @@ export default function ({ expose }) {
             }
           }
         },
-
+        defValue: {
+          title: "默认值",
+          type: "text", //虽然不写也能正确显示组件，但不建议省略它
+          search: { show: true },
+          form: {
+            value: "这是默认值"
+          },
+          column: {
+            formatter({ value }) {
+              return value ?? "-";
+            }
+          }
+        },
         search: {
           title: "搜索",
           type: "text",
@@ -64,7 +76,7 @@ export default function ({ expose }) {
             component: { showCount: true, maxlength: 200 }
           },
           column: {
-            ellipsis: true
+            "show-overflow-tooltip": true
           }
         },
         render: {

@@ -207,7 +207,13 @@ export default {
     const initialForm = _.cloneDeep(props.initialForm);
     // 初始数据赋值
     _.each(props.columns, (item, key) => {
-      form[key] = initialForm[key];
+      form[key] = undefined;
+      if (item.value !== undefined) {
+        form[key] = item.value;
+      }
+      if (initialForm[key] !== undefined) {
+        form[key] = initialForm[key];
+      }
     });
     //form.valueBuilder
     _.each(props.columns, (item, key) => {
@@ -337,7 +343,7 @@ export default {
       const submitScope = { ...scope.value, form: formData };
       logger.debug("form submit", JSON.stringify(form));
       _.each(props.columns, (item, key) => {
-        let value = initialForm[key];
+        let value = formData[key];
         if (item.valueResolve) {
           item.valueResolve({
             value,
