@@ -44,5 +44,6 @@
     "vite": "^2.0.4",
     "vite-plugin-compression": "^0.2.3",
     "vue-eslint-parser": "^7.5.0"
-  }
+  },
+  "gitHead": "5242c4b1df24b522d6752ef6de975a9c231746a6"
 }

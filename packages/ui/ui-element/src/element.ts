@@ -39,7 +39,8 @@ import {
   TabPaneCI,
   CollapseCI,
   CollapseItemCI,
-  ButtonCI
+  ButtonCI,
+  PaginationCI
 } from "@fast-crud/fast-crud";
 export class Element implements UiInterface {
   constructor(target) {
@@ -76,10 +77,10 @@ export class Element implements UiInterface {
   messageBox: MessageBoxCI = {
     name: "el-message-box",
     get: undefined,
-    open: async (context) => {
+    open: async context => {
       return this.messageBox.get(context);
     },
-    confirm: async (context) => {
+    confirm: async context => {
       return this.messageBox.get(context);
     }
   };
@@ -87,19 +88,19 @@ export class Element implements UiInterface {
   message: MessageCI = {
     get: undefined,
     name: "el-message",
-    open: (context) => {
+    open: context => {
       this.message.get.open(context);
     },
-    success: (msg) => {
+    success: msg => {
       this.message.get.success(msg);
     },
-    error: (msg) => {
+    error: msg => {
       this.message.get.error(msg);
     },
-    warn: (msg) => {
+    warn: msg => {
       this.message.get.warning(msg);
     },
-    info: (msg) => {
+    info: msg => {
       this.message.get(msg);
     }
   };
@@ -107,19 +108,19 @@ export class Element implements UiInterface {
   notification: NotificationCI = {
     get: undefined,
     name: "el-notification",
-    open: (context) => {
+    open: context => {
       this.notification.get.open(context);
     },
-    success: (msg) => {
+    success: msg => {
       this.notification.get.success(msg);
     },
-    error: (msg) => {
+    error: msg => {
       this.notification.get.error(msg);
     },
-    warn: (msg) => {
+    warn: msg => {
       this.notification.get.warn(msg);
     },
-    info: (msg) => {
+    info: msg => {
       this.notification.get.success(msg);
     }
   };
@@ -256,8 +257,22 @@ export class Element implements UiInterface {
     text: "text"
   };
 
-  pagination: CI = {
-    name: "el-pagination"
+  pagination: PaginationCI = {
+    name: "el-pagination",
+    currentPage: "currentPage",
+    onChange({ setCurrentPage, setPageSize, doAfterChange }) {
+      return {
+        // element 页码改动回调
+        onCurrentChange(event) {
+          setCurrentPage(event);
+          doAfterChange();
+        },
+        onSizeChange(event) {
+          setPageSize(event);
+          doAfterChange();
+        }
+      };
+    }
   };
 
   tableColumn: TableColumnCI = {
@@ -351,7 +366,7 @@ export class Element implements UiInterface {
   };
   image: ImageCI = {
     name: "el-image",
-    buildPreviewList: (urls) => {
+    buildPreviewList: urls => {
       return { "preview-src-list": urls };
     }
   };

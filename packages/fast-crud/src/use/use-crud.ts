@@ -82,27 +82,21 @@ export function useCrud(ctx: UseCrudProps) {
   const { doRefresh, doValueResolve, doSearch } = expose;
 
   function usePagination() {
+    const events = ui.pagination.onChange({
+      setCurrentPage(current) {
+        crudBinding.value.pagination[ui.pagination.currentPage] = current;
+        crudBinding.value.pagination.currentPage = current;
+      },
+      setPageSize(pageSize) {
+        crudBinding.value.pagination.pageSize = pageSize;
+      },
+      doAfterChange() {
+        doRefresh();
+      }
+    });
     return {
       pagination: {
-        // element 页码改动回调
-        onCurrentChange(event) {
-          crudBinding.value.pagination.currentPage = event;
-          doRefresh();
-        },
-        onSizeChange(event) {
-          crudBinding.value.pagination.pageSize = event;
-          doRefresh();
-        },
-        // antd 页码改动回调
-        onChange(page) {
-          crudBinding.value.pagination.currentPage = page;
-          crudBinding.value.pagination.current = page;
-          doRefresh();
-        },
-        onShowSizeChange(current, size) {
-          crudBinding.value.pagination.pageSize = size;
-          doRefresh();
-        }
+        ...events
       }
     };
   }

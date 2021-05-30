@@ -39,7 +39,8 @@ import {
   TabPaneCI,
   CollapseCI,
   CollapseItemCI,
-  ButtonCI
+  ButtonCI,
+  PaginationCI
 } from "@fast-crud/fast-crud";
 export class Antdv implements UiInterface {
   constructor(target) {
@@ -59,7 +60,7 @@ export class Antdv implements UiInterface {
         return { afterClose: onClosed };
       } else if (is === "a-drawer") {
         return {
-          afterVisibleChange: (visible) => {
+          afterVisibleChange: visible => {
             if (visible === false) {
               onClosed(visible);
             }
@@ -74,11 +75,11 @@ export class Antdv implements UiInterface {
   messageBox: MessageBoxCI = {
     name: "a-model",
     get: undefined,
-    open: (context) => {
+    open: context => {
       return this.messageBox.confirm(context);
     },
-    confirm: (context) => {
-      return new Promise((resolve, reject) => {
+    confirm: context => {
+      return new Promise<void>((resolve, reject) => {
         function onOk() {
           resolve();
         }
@@ -107,16 +108,16 @@ export class Antdv implements UiInterface {
       }
       this.message.get[type](content);
     },
-    success: (context) => {
+    success: context => {
       this.message.open("success", context);
     },
-    error: (context) => {
+    error: context => {
       this.message.open("error", context);
     },
-    warn: (context) => {
+    warn: context => {
       this.message.open("warn", context);
     },
-    info: (context) => {
+    info: context => {
       this.message.open("info", context);
     }
   };
@@ -137,16 +138,16 @@ export class Antdv implements UiInterface {
         this.notification.get.open(context);
       }
     },
-    success: (context) => {
+    success: context => {
       this.notification.open("success", context);
     },
-    error: (context) => {
+    error: context => {
       this.notification.open("error", context);
     },
-    warn: (context) => {
+    warn: context => {
       this.notification.open("warn", context);
     },
-    info: (context) => {
+    info: context => {
       this.notification.open("info", context);
     }
   };
@@ -257,8 +258,22 @@ export class Antdv implements UiInterface {
     name: "a-select-option"
   };
 
-  pagination: CI = {
-    name: "a-pagination"
+  pagination: PaginationCI = {
+    name: "a-pagination",
+    currentPage: "current",
+    onChange({ setCurrentPage, setPageSize, doAfterChange }) {
+      return {
+        // antd 页码改动回调
+        onChange(page) {
+          setCurrentPage(page);
+          doAfterChange();
+        },
+        onShowSizeChange(current, size) {
+          setPageSize(size);
+          doAfterChange();
+        }
+      };
+    }
   };
 
   radio: RadioCI = {
@@ -388,7 +403,7 @@ export class Antdv implements UiInterface {
   };
   dropdownMenu: DropdownMenuCI = {
     name: "a-menu",
-    command: (callback) => {
+    command: callback => {
       return {
         onClick($event) {
           callback($event.key);

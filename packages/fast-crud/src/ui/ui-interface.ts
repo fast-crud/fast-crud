@@ -172,6 +172,11 @@ export interface ButtonCI extends CI {
   name;
   text;
 }
+export interface PaginationCI extends CI {
+  name;
+  currentPage;
+  onChange;
+}
 export interface Icons {
   refresh;
   search;
@@ -209,7 +214,7 @@ export interface UiInterface {
   table: TableCI;
   tableColumn: TableColumnCI;
   tableColumnGroup: TableColumnCI;
-  pagination: CI;
+  pagination: PaginationCI;
   button: ButtonCI;
   form: CI;
   formItem: FormItemCI;
