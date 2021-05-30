@@ -61,7 +61,7 @@ class Dict extends UnMergeable {
       this.originalData = dict.data;
       this.setData(dict.data);
     }
-    if (!this.prototype) {
+    if (!this.prototype && this.immediate) {
       this.loadDict();
     }
   }

@@ -68,7 +68,7 @@ export function useDict(props, ctx, vModel = "modelValue") {
   const watchDictData = () => {
     watch(
       () => {
-        return dict.data;
+        return dict?.data;
       },
       () => {
         if (ctx.attrs.onDictChange) {

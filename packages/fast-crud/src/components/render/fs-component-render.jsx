@@ -114,10 +114,7 @@ export default {
         };
       });
 
-      const merged = mergeProps(attrs, ctx.attrs);
-      mergeEventHandles(merged, "onChange");
-      mergeEventHandles(merged, "onBlur");
-      return merged;
+      return attrs;
     });
 
     const childrenRender = () => {
@@ -148,7 +145,10 @@ export default {
     }
     const children = childrenRender();
     return () => {
-      return <inputComp {...allAttrs.value}>{children}</inputComp>;
+      const merged = mergeProps(allAttrs.value, ctx.attrs);
+      mergeEventHandles(merged, "onChange");
+      mergeEventHandles(merged, "onBlur");
+      return <inputComp {...merged}>{children}</inputComp>;
     };
   },
   methods: {

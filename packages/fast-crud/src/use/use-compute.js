@@ -61,7 +61,16 @@ function setAsyncComputeValue(target, asyncValuesMap) {
 }
 
 function doComputed(target, getContextFn, excludes, userComputedFn) {
-  if (target && target instanceof Function) {
+  //console.assert(target != null, "doComputed:targetRef 不能为空");
+  if (target == null) {
+    return computed(() => {
+      if (userComputedFn) {
+        return userComputedFn(null);
+      }
+      return null;
+    });
+  }
+  if (target instanceof Function) {
     target = target();
   }
 
@@ -72,36 +81,30 @@ function doComputed(target, getContextFn, excludes, userComputedFn) {
   const dependValues = findComputeValues(raw, excludes, false);
 
   const dependAsyncValues = findComputeValues(raw, excludes, true);
+  const asyncCount = Object.keys(dependAsyncValues).length;
+  let syncCount = Object.keys(dependValues).length;
   const asyncValuesMap = doAsyncCompute(dependAsyncValues, getContextFn);
 
-  if (Object.keys(dependValues).length <= 0) {
-    // 没有同步compute类型的配置
-    return computed(() => {
-      // 设置异步compute类型的value
-      if (asyncValuesMap && Object.keys(asyncValuesMap).length <= 0) {
-        target.value = cloneDeep(target.value);
-        setAsyncComputeValue(target.value, asyncValuesMap);
-      }
-
-      if (userComputedFn) {
-        return userComputedFn(target.value);
-      }
-      return target.value;
-    });
-  }
-  // 有同步compute类型的配置
   return computed(() => {
-    const targetValue = _.cloneDeep(target.value);
-    // console.log('function recomputed', target)
-    _.forEach(dependValues, (value, key) => {
-      const context = getContextFn ? getContextFn(key, value) : {};
-      _.set(targetValue, key, value.computeFn(context));
-    });
+    let targetValue = target.value;
+    if (asyncCount > 0 || syncCount > 0) {
+      targetValue = _.cloneDeep(targetValue);
+      if (syncCount > 0) {
+        _.forEach(dependValues, (value, key) => {
+          const context = getContextFn ? getContextFn(key, value) : {};
+          _.set(targetValue, key, value.computeFn(context));
+        });
+      }
+      if (asyncCount > 0) {
+        setAsyncComputeValue(targetValue, asyncValuesMap);
+        console.log("async targetValue:", targetValue, asyncValuesMap);
+      }
+    }
 
-    setAsyncComputeValue(targetValue, asyncValuesMap);
     if (userComputedFn) {
       return userComputedFn(targetValue);
     }
+    console.log("doCompute:", targetValue);
     return targetValue;
   });
 }
@@ -140,9 +143,10 @@ export class AsyncComputeValue {
     watch(
       () => computedValue.value,
       async (value) => {
-        console.log("async fnc exec");
+        console.log("async fnc exec", value);
         //执行异步方法
         asyncRef.value = await this.asyncFn(value, getContextFn());
+        console.log("asyncRef.value geted", asyncRef.value);
       },
       { immediate: true }
     );

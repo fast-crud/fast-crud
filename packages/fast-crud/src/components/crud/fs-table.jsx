@@ -68,11 +68,12 @@ export default {
       }
       const row = componentRefs.value[index];
       const cellRef = row[key];
-      return cellRef.getTargetRef();
+      return cellRef?.getTargetRef();
     };
 
     const { doComputed } = useCompute();
     const refColumns = toRef(props, "columns");
+    console.log("refColumns", refColumns);
     const computedColumns = doComputed(refColumns, null, [/\[.+\]component/]);
 
     return {
