@@ -1,6 +1,6 @@
 {
   "name": "@fast-crud/fast-crud",
-  "version": "0.9.2",
+  "version": "0.9.3",
   "private": false,
   "main": "./dist/fast-crud.umd.js",
   "module": "./dist/fast-crud.es.js",
