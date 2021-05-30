@@ -295,7 +295,20 @@ export class Element implements UiInterface {
     name: "el-table",
     data: "data",
     fixedHeaderNeedComputeBodyHeight: false,
-    vLoading: "loading"
+    vLoading: "loading",
+    onSortChange({ emit }) {
+      return {
+        onSortChange({ column, prop, order }) {
+          console.log("sort change", column, prop, order);
+          emit({
+            isServerSort: prop && column.sortable === "custom",
+            prop,
+            order,
+            asc: order === "ascending"
+          });
+        }
+      };
+    }
   };
 
   textArea: TextAreaCI = {

@@ -305,7 +305,24 @@ export class Antdv implements UiInterface {
     name: "a-table",
     data: "dataSource",
     fixedHeaderNeedComputeBodyHeight: true,
-    vLoading: false
+    vLoading: false,
+    onSortChange({ emit }) {
+      return {
+        // 监听a-table的服务端排序
+        onChange(pagination, filters, sorter) {
+          console.log("table change", pagination, filters, sorter);
+          if (sorter) {
+            const { column, field, order } = sorter;
+            emit({
+              isServerSort: order && column.sorter === true,
+              prop: field,
+              order,
+              asc: order === "ascend"
+            });
+          }
+        }
+      };
+    }
   };
 
   tableColumn: TableColumnCI = {

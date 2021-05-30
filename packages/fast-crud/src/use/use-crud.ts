@@ -185,25 +185,15 @@ export function useCrud(ctx: UseCrudProps) {
   }
 
   function useTable() {
+    const events = ui.table.onSortChange({
+      emit({ isServerSort, prop, asc, order }) {
+        crudBinding.value.sort = isServerSort ? { prop, order, asc } : null;
+        expose.doRefresh();
+      }
+    });
     return {
       table: {
-        //监听el-table的服务端排序
-        onSortChange({ column, prop, order }) {
-          console.log("sort change", column, prop, order);
-          crudBinding.value.sort =
-            prop && column.sortable === "custom" ? { prop, order, asc: order === "ascending" } : null;
-          expose.doRefresh();
-        },
-        // 监听a-table的服务端排序
-        onChange(pagination, filters, sorter) {
-          console.log("table change", pagination, filters, sorter);
-          if (sorter) {
-            const { column, field, order } = sorter;
-            crudBinding.value.sort =
-              order && column.sorter === true ? { prop: field, order, asc: order === "ascend" } : null;
-            expose.doRefresh();
-          }
-        }
+        ...events
       }
     };
   }
