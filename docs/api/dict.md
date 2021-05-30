@@ -56,11 +56,15 @@
 * 类型：`async Function(Array<value>):Array<Options>`
 * 默认：undefined
 
-
 ### onReady
 * 说明：远程数据字典加载完成事件,可以在组件使用前修改字典数据
 * 类型：`async Function(Array<value>):Array<Options>`
 * 默认：undefined
+
+:::warning    
+多个组件引用同一个dict实例，也只会触发一次`onReady`。    
+如果多个组件引用同一个dict实例且需要每个都监听dict的变化，请参考下方`dict组件通用参数 onDictChange`    
+:::
 
 ## dict的方法
 获取到dict实例后，可以调用如下方法
@@ -75,15 +79,21 @@
 ### dict.getNodeByValue()
 根据value获取字典项
 
-## dict组件的方法
-获取到`dict组件`可以调用如下方法
+## dict组件
+dict组件包括：FsDictSelect/FsDictRadio/FsDictCascader/FsDictCheckbox/FsDictSwitch等
+### 组件的方法
+通过 `context.getComponentRef` 获取到`dict组件实例`后，可以调用如下方法
 
-### ref.getDict()
+#### ref.getDict()
 获取字典实例
 
-### ref.loadDict()
+#### ref.loadDict()
 加载数据字典
 
-### ref.reloadDict()
+#### ref.reloadDict()
 重新加载数据字典
+
+## dict组件的通用参数
+### onDictChange({dict, ...context})
+当组件引用的`dict`的`dict.data`改变后被触发，可以实现设置第一个选项为默认值之类的需求。
 

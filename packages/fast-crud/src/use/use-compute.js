@@ -104,7 +104,6 @@ function doComputed(target, getContextFn, excludes, userComputedFn) {
     if (userComputedFn) {
       return userComputedFn(targetValue);
     }
-    console.log("doCompute:", targetValue);
     return targetValue;
   });
 }

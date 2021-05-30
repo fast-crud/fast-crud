@@ -145,6 +145,7 @@ export default {
     }
     const children = childrenRender();
     return () => {
+      //merge 必须写在这里
       const merged = mergeProps(allAttrs.value, ctx.attrs);
       mergeEventHandles(merged, "onChange");
       mergeEventHandles(merged, "onBlur");
