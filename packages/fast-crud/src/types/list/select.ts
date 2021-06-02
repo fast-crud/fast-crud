@@ -55,7 +55,7 @@ export default function () {
     },
     "dict-switch": {
       search: {
-        component: { name: "fs-dict-switch", vModel: ui.switch.modelValue, [ui.select.clearable]: true },
+        component: { name: "fs-dict-select" },
         autoSearchTrigger: "change"
       },
       form: {
