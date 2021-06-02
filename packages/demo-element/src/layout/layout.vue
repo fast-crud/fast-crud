@@ -28,7 +28,10 @@
         <el-main>
           <router-view />
         </el-main>
-        <el-footer class="layout-footer">by fast-crud</el-footer>
+        <el-footer class="layout-footer">
+          by fast-crud
+          <source-link />
+        </el-footer>
       </el-container>
     </el-container>
   </el-container>
@@ -38,8 +41,9 @@
 import AsideMenu from "./aside-menu";
 import router from "../router";
 import Locale from "./components/locale.vue";
+import SourceLink from "./components/source-link/index.vue";
 export default {
-  components: { Locale, AsideMenu },
+  components: { Locale, AsideMenu, SourceLink },
   setup() {
     const handleNavMenuClick = (key) => {
       if (key.startsWith("http")) {
@@ -60,13 +64,12 @@ export default {
   .layout-header {
     height: 64px;
     line-height: 64px;
-    padding: 0px;
     background: #001529;
     color: #fff;
     display: flex;
     justify-content: flex-start;
     align-items: center;
-    padding-right: 20px;
+    padding: 0 20px 0 0;
     .header-logo {
       width: 100px;
       padding: 0 50px;

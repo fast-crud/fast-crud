@@ -26,7 +26,10 @@
       </a-layout-sider>
       <a-layout-content><router-view /></a-layout-content>
     </a-layout>
-    <a-layout-footer>by fast-crud</a-layout-footer>
+    <a-layout-footer
+      >by fast-crud
+      <source-link />
+    </a-layout-footer>
   </a-layout>
 </template>
 
@@ -34,9 +37,10 @@
 import AsideMenu from "./aside-menu.jsx";
 import router from "../router";
 import Locale from "./components/locale.vue";
+import SourceLink from "./components/source-link/index.vue";
 export default {
   // eslint-disable-next-line vue/no-unused-components
-  components: { AsideMenu, Locale },
+  components: { AsideMenu, Locale, SourceLink },
   setup() {
     const handleNavMenuClick = ({ key }) => {
       if (key.startsWith("http")) {
