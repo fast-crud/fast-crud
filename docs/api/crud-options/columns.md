@@ -61,7 +61,7 @@ const crudOptions = {
 * 类型：Object
 * 示例：
 ```json5
-{
+{//crudOptions
     columns: {
         key: {
             column: {

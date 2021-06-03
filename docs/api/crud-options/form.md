@@ -115,7 +115,7 @@
 * 说明: 分组配置
 * 类型：Object:{[groupKey]:Object}
 ```json5
-{  //group.groups
+{  //crudOptions.form.group.groups
   groupKey: { //分组key，可随意命名
      // 此处支持el-collapse-item，el-tab-pane，a-collapse-panel，a-tab-pane
       title: "标题",//el-collapse-item参数

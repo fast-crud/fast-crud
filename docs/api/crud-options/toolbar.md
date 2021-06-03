@@ -14,7 +14,7 @@
 * 类型：Object
 * 默认：[buttons](#buttons)
 ```json5
-{
+{ //crudOptions.toolbar.buttons
     search:{
         ...FsButton,
         order:1,

@@ -16,7 +16,7 @@
 * 默认： {add:{...FsButton}}
 * 示例：
 ```
-{
+{ //crudOptions.actionbar.buttons
     add:{
         ...FsButton, //fs-button组件的参数
         show:true,//是否显示此按钮

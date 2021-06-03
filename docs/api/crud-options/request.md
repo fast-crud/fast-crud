@@ -12,7 +12,7 @@
 * 返回：query：`pageRequest所需要的参数`
 * 示例：
 ```json5
-{
+{ //crudOptions
   request: {
     transformQuery: ({ page, form, sort }) => {
       const order = sort == null?{}:{orderProp:sort.prop,orderAsc:sort.asc}
