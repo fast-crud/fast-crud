@@ -23,7 +23,8 @@ module.exports = {
                         {text: '介绍', link: '/guide/'},
                         {text: '启动示例', link: '/guide/start/demo'},
                         {text: '第一个CRUD', link: '/guide/start/first'},
-                        {text: '集成到你的项目', link: '/guide/start/integration'}
+                        {text: '集成到你的项目', link: '/guide/start/integration'},
+                        {text: '国际化', link: '/guide/start/i18n'}
                     ],
                 },
                 {

@@ -1,7 +1,7 @@
 import Layout from "../layout/layout.vue";
 import LayoutPass from "../layout/layout-pass.vue";
 import _ from "lodash-es";
-
+import { headerMenus } from "./header";
 const modules = import.meta.glob("/src/views/**/*.vue");
 console.log(" modules", modules);
 const resources = [
@@ -316,7 +316,6 @@ function createRouters(adminRouters) {
   ];
 }
 
-let index = 0;
 function transformOneResource(resource) {
   const menu = _.cloneDeep(resource);
   let route;
@@ -359,9 +358,10 @@ const buildMenusAndRouters = (resources) => {
   };
 };
 
+let index = 0;
 function setIndex(menus) {
-  for (const menu of menus) {
-    menu.index = index;
+  for (let menu of menus) {
+    menu.index = menu.path || "index-" + index;
     index++;
     if (menu.children && menu.children.length > 0) {
       setIndex(menu.children);
@@ -370,11 +370,11 @@ function setIndex(menus) {
 }
 
 const ret = buildMenusAndRouters(resources);
-const adminRoutes = ret.routes;
-const adminMenus = ret.menus;
-setIndex(adminMenus);
-export const menus = adminMenus;
+const allRouters = ret.routes;
+const asideMenus = ret.menus;
 
-export const routes = createRouters(adminRoutes);
+setIndex(asideMenus);
+setIndex(headerMenus);
+export { asideMenus, headerMenus };
 
-console.log("menus:", menus, "routes", routes);
+export const routes = createRouters(allRouters);
