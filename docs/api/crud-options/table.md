@@ -12,13 +12,15 @@
 ## el-table,a-table参数
 * 说明：支持el-table，a-table参数
 ```json5
-{ // table
-  border: true,
-  bordered: true,
-  height: "100%",
-  rowKey: "id",
-  size: "small",
-  stripe: true
+{// crudOptions
+    table:{
+          border: true,
+          bordered: true,
+          height: "100%",
+          rowKey: "id",
+          size: "small",
+          stripe: true
+    }
 }
 ```
 

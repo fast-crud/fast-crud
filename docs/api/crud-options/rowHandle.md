@@ -14,7 +14,7 @@
 * 类型：Object
 * 默认：
 ```json5
-{
+{ //crudOptions
   rowHandle: {
     atLeast: 2, //按钮折叠配置，至少显示多少个按钮，多余的折叠
     buttons: {
