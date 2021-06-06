@@ -1,7 +1,7 @@
 import Layout from "../layout/layout.vue";
 import LayoutPass from "../layout/layout-pass.vue";
 import _ from "lodash-es";
-
+import { headerMenus } from "./header";
 const modules = import.meta.glob("/src/views/**/*.vue");
 console.log(" modules", modules);
 const resources = [
@@ -370,10 +370,8 @@ function setIndex(menus) {
 
 const ret = buildMenusAndRouters(resources);
 const adminRoutes = ret.routes;
-const adminMenus = ret.menus;
-setIndex(adminMenus);
-export const menus = adminMenus;
-
+const asideMenus = ret.menus;
+setIndex(asideMenus);
+setIndex(headerMenus);
+export { asideMenus, headerMenus };
 export const routes = createRouters(adminRoutes);
-
-console.log("menus:", menus, "routes", routes);

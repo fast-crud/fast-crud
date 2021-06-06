@@ -2,19 +2,15 @@
   <a-layout>
     <a-layout-header class="header">
       <div class="header-logo">fast-crud</div>
-      <a-menu
+      <fs-menu
         class="header-menu"
         theme="dark"
         mode="horizontal"
         :style="{ lineHeight: '64px' }"
         :selectable="false"
-        @click="handleNavMenuClick"
-      >
-        <a-menu-item key="http://fast-crud.docmirror.cn/">文档</a-menu-item>
-        <a-menu-item key="http://fast-crud.docmirror.cn/element/">element版</a-menu-item>
-        <a-menu-item key="https://github.com/fast-crud/fast-crud">github</a-menu-item>
-        <a-menu-item key="https://gitee.com/fast-crud/fast-crud">gitee</a-menu-item>
-      </a-menu>
+        ,@click="handleNavMenuClick"
+        :menus="headerMenuList"
+      />
       <div class="header-right">
         <locale />
         <div>你好，admin</div>
@@ -22,7 +18,7 @@
     </a-layout-header>
     <a-layout class="layout-body">
       <a-layout-sider style="overflow-y: scroll">
-        <aside-menu />
+        <fs-menu :menus="asideMenuList" />
       </a-layout-sider>
       <a-layout-content><router-view /></a-layout-content>
     </a-layout>
@@ -34,13 +30,16 @@
 </template>
 
 <script>
-import AsideMenu from "./aside-menu.jsx";
+import FsMenu from "./components/fs-menu.jsx";
 import router from "../router";
 import Locale from "./components/locale.vue";
 import SourceLink from "./components/source-link/index.vue";
+import { asideMenus, headerMenus } from "../router/resources";
+import { ref } from "vue";
 export default {
+  name: "Layout",
   // eslint-disable-next-line vue/no-unused-components
-  components: { AsideMenu, Locale, SourceLink },
+  components: { FsMenu, Locale, SourceLink },
   setup() {
     const handleNavMenuClick = ({ key }) => {
       if (key.startsWith("http")) {
@@ -49,8 +48,12 @@ export default {
         router.push(key);
       }
     };
+    const headerMenuList = ref(headerMenus);
+    const asideMenuList = ref(asideMenus);
     return {
-      handleNavMenuClick
+      handleNavMenuClick,
+      headerMenuList,
+      asideMenuList
     };
   }
 };
