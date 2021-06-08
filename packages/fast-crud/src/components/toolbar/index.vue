@@ -45,7 +45,6 @@ export default {
     },
     /**
      * 是否显示查询
-     * 传null，则不显示按钮
      */
     search: {
       type: Boolean
