@@ -13,7 +13,7 @@
 * 默认： {search:{},reset:{}}
 * 示例：
 ```json5
-{//search.buttons
+{//crudOptions.search.buttons
     search:{
         ...FsButton, //fs-button组件的参数
         order:1, //排序，越小越靠前
