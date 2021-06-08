@@ -26,6 +26,7 @@ export default defineComponent({
     // 页面打开后获取列表数据
     onMounted(() => {
       expose.doRefresh();
+      expose.editable.enable();
     });
 
     return {
