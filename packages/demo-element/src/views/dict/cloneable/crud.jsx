@@ -57,7 +57,6 @@ export default function ({ expose }) {
               name: "el-switch"
             },
             valueChange({ row, getComponentRef }) {
-              console.log("cell valueChanged", row);
               // 这里不能使用remoteDict,因为在分发时已经clone到form配置中了
               // 这里dict修改不会影响列里面的数据
               const targetDict = getComponentRef("remote")?.dict;

@@ -2,19 +2,14 @@
   <el-container class="layout">
     <el-header class="layout-header">
       <div class="header-logo">fast-crud</div>
-      <el-menu
+      <fs-menu
         class="header-menu"
         mode="horizontal"
         background-color="#001529"
         text-color="#fff"
         active-text-color="#fff"
-        @select="handleNavMenuClick"
-      >
-        <el-menu-item index="http://fast-crud.docmirror.cn/">文档</el-menu-item>
-        <el-menu-item index="http://fast-crud.docmirror.cn/antdv/">antdv版</el-menu-item>
-        <el-menu-item index="https://github.com/fast-crud/fast-crud/">github</el-menu-item>
-        <el-menu-item index="https://gitee.com/fast-crud/fast-crud/">gitee</el-menu-item>
-      </el-menu>
+        :menus="headerMenuList"
+      />
       <div class="header-right">
         <locale />
         <div>你好，admin</div>
@@ -22,7 +17,7 @@
     </el-header>
     <el-container class="layout-body">
       <el-aside width="200px" style="border-right: 1px solid #eee">
-        <aside-menu />
+        <fs-menu :menus="asideMenuList" />
       </el-aside>
       <el-container>
         <el-main>
@@ -38,12 +33,14 @@
 </template>
 
 <script>
-import AsideMenu from "./aside-menu";
+import { ref } from "vue";
+import { asideMenus, headerMenus } from "../router/resources";
+import FsMenu from "./components/fs-menu.jsx";
 import router from "../router";
 import Locale from "./components/locale.vue";
 import SourceLink from "./components/source-link/index.vue";
 export default {
-  components: { Locale, AsideMenu, SourceLink },
+  components: { Locale, FsMenu, SourceLink },
   setup() {
     const handleNavMenuClick = (key) => {
       if (key.startsWith("http")) {
@@ -52,8 +49,12 @@ export default {
         router.push(key);
       }
     };
+    const asideMenuList = ref(asideMenus);
+    const headerMenuList = ref(headerMenus);
     return {
-      handleNavMenuClick
+      handleNavMenuClick,
+      asideMenuList,
+      headerMenuList
     };
   }
 };

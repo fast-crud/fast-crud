@@ -1,24 +1,21 @@
-import { menus } from "../router/resources";
-import router from "../router";
 import { useRouter, useRoute } from "vue-router";
 
 export default {
-  name: "AsideMenu",
+  name: "FsMenu",
+  props: {
+    menus: {}
+  },
   setup(props, ctx) {
-    let index = 0;
-    function setIndex(menus) {
-      for (let menu of menus) {
-        menu.index = menu.path || "index-" + index;
-        index++;
-        if (menu.children && menu.children.length > 0) {
-          setIndex(menu.children);
-        }
-      }
-    }
-    setIndex(menus);
-
+    const router = useRouter();
     function onSelect(item) {
       console.log("select", item);
+      if (!item) {
+        return;
+      }
+      if (item.startsWith("http://") || item.startsWith("https://")) {
+        window.open(item);
+        return;
+      }
       router.push({ path: item });
     }
 
@@ -44,7 +41,7 @@ export default {
     };
     const slots = {
       default() {
-        return buildMenus(menus);
+        return buildMenus(props.menus);
       }
     };
 
