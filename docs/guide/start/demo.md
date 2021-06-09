@@ -26,7 +26,7 @@ cd fast-crud/packages/demo-element
 
 # 启动demo
 npm install  #或者yarn install
-npm run demo
+npm run dev
 ```
 
 ### 调试运行
@@ -52,12 +52,12 @@ npm install
 
 ```
 
-2、 然后开发模式启动
+2、 然后debug模式启动
 ```
 # 运行 antdv版示例
 cd fast-crud/packages/demo-antdv  
 # 运行 element版示例
 cd fast-crud/packages/demo-element  
 npm install  #第一步执行过，就无需再执行
-npm run dev
+npm run debug
 ```
