@@ -50,11 +50,13 @@ export default function ({ expose }) {
         statusRemote: {
           title: "单选远程",
           search: {
-            show: true
+            show: true,
+            value: []
           },
           type: "dict-select",
           dict: dict1,
           form: {
+            component: { mode: "multiple" },
             rules: [{ required: true, message: "请选择一个选项" }]
           }
         }

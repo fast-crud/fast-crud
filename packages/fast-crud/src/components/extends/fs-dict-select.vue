@@ -50,3 +50,8 @@ export default {
   }
 };
 </script>
+<style lang="less">
+.ant-select-multiple {
+  min-width: 100px;
+}
+</style>

@@ -11,6 +11,7 @@ import {
 } from "vue";
 import _ from "lodash-es";
 import traceUtil from "../../utils/util.trace";
+import { useUi } from "../../use";
 
 function mergeEventHandles(target, eventName) {
   if (target[eventName] instanceof Array) {
@@ -81,7 +82,7 @@ export default {
   setup(props, ctx) {
     traceUtil.trace("fs-component-render");
     const { proxy } = getCurrentInstance();
-
+    const { ui } = useUi();
     provide("get:scope", () => {
       return props.scope;
     });
@@ -95,11 +96,12 @@ export default {
     // 带事件的attrs
     const allAttrs = computed(() => {
       const vModel = props.vModel || "modelValue";
+      const modelValue = props.modelValue || (ui.type === "antdv" ? undefined : null);
       const attrs = {
         ref: "targetRef",
         // scope: props.scope,
         // fix element display false bug
-        [vModel]: props.modelValue || null,
+        [vModel]: modelValue,
         ...props.props
       };
       attrs["onUpdate:" + vModel] = (value) => {

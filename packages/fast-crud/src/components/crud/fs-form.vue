@@ -318,7 +318,6 @@ export default {
         return a.order - b.order;
       });
 
-      console.log("columns", columns, computedGroup.value?.defaultColumns);
       return columns;
     });
 

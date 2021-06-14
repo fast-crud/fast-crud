@@ -10,7 +10,6 @@ export function useDict(props, ctx, vModel = "modelValue") {
   }
 
   const computedOptions = computed(() => {
-    debugger;
     if (props.options) {
       return props.options;
     }
@@ -56,6 +55,10 @@ export function useDict(props, ctx, vModel = "modelValue") {
   };
 
   const watchValue = () => {
+    if (!dict.prototype && !dict.cloneable) {
+      //如果是单例，则不watch
+      return;
+    }
     //for values-format
     watch(
       () => {
@@ -73,7 +76,6 @@ export function useDict(props, ctx, vModel = "modelValue") {
         return dict?.data;
       },
       () => {
-        debugger;
         if (ctx.attrs.onDictChange) {
           const scope = getCurrentScope();
           ctx.attrs.onDictChange({ dict, ...scope });

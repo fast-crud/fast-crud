@@ -164,7 +164,13 @@ export default {
     const ui = uiContext.get();
     traceUtil.trace("fs-search");
     let autoSearch = ref(null);
-    const form = reactive(_.cloneDeep(props.initialForm || {}));
+    let initialForm = _.cloneDeep(props.initialForm || {});
+    _.forEach(props.columns, (column, key) => {
+      if (column.value !== undefined) {
+        initialForm[key] = column.value;
+      }
+    });
+    const form = reactive(initialForm);
     const searchFormRef = ref();
     const { t } = useI18n();
     const { doComputed } = useCompute();
