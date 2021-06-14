@@ -2,10 +2,10 @@
   "name": "@fast-crud/ui-interface",
   "version": "0.9.3",
   "description": "",
-  "main": "./dist/ui-interface.umd.js",
-  "module": "./dist/ui-interface.es.js",
+  "main": "./src/index.js",
+  "module": "./src/index.js",
   "scripts": {
-    "build": "vite build",
+    "build1": "vite build",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "Greper",
