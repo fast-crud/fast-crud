@@ -1,6 +1,6 @@
 {
   "name": "@fast-crud/fast-crud",
-  "version": "0.9.3",
+  "version": "0.10.0",
   "private": false,
   "main": "./dist/fast-crud.umd.js",
   "module": "./dist/fast-crud.es.js",
@@ -13,13 +13,13 @@
   "author": "Greper",
   "license": "MIT",
   "dependencies": {
+    "@fast-crud/ui-interface": "^0.10.0",
     "dayjs": "^1.10.4",
     "deepdash-es": "5.3.5",
     "lodash-es": "^4.17.15",
     "lru-cache": "^6.0.0",
     "vue": "^3.0.7",
-    "vuedraggable": "^4.0.1",
-    "@fast-crud/ui-interface": "^0.9.3"
+    "vuedraggable": "^4.0.1"
   },
   "devDependencies": {
     "@commitlint/cli": "^12.0.1",

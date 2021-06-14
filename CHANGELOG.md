@@ -3,6 +3,24 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.10.0](https://github.com/fast-crud/fast-crud/compare/v0.9.3...v0.10.0) (2021-06-14)
+
+
+### Bug Fixes
+
+* edit row mode ([c32aad7](https://github.com/fast-crud/fast-crud/commit/c32aad7d2418f32efd89e2b3f47cebbaf692c8ff))
+* fix index demo ([2a68af7](https://github.com/fast-crud/fast-crud/commit/2a68af76927538662fafcbe056607c1f33323dd7))
+* switch search ([4615fe2](https://github.com/fast-crud/fast-crud/commit/4615fe295c52240f69a07f444c982cdf97c5bb69))
+
+
+### Features
+
+* 将ui-interface单独抽出来 ([6bcc22a](https://github.com/fast-crud/fast-crud/commit/6bcc22a25b31e9644b1dd00badf2e5b01785b4aa))
+
+
+
+
+
 ## [0.9.3](https://github.com/fast-crud/fast-crud/compare/v0.9.2...v0.9.3) (2021-05-30)
 
 
