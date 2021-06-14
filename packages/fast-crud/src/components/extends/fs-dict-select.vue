@@ -11,6 +11,7 @@
 import { computed } from "vue";
 import { useDict } from "../../use/use-dict";
 import { useI18n } from "../../locale";
+import { useUi } from "../../use";
 
 /**
  * 字典选择框
@@ -41,9 +42,10 @@ export default {
       return props.placeholder || t("fs.component.select.placeholder");
     });
 
+    const { ui } = useUi();
     return {
       computedPlaceholder,
-      ...useDict(props, ctx)
+      ...useDict(props, ctx, ui.select.modelValue)
     };
   }
 };

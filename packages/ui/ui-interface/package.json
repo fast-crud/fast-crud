@@ -1,9 +1,9 @@
 {
-  "name": "@fast-crud/ui-antdv",
+  "name": "@fast-crud/ui-interface",
   "version": "0.9.3",
   "description": "",
-  "main": "./dist/ui-antdv.umd.js",
-  "module": "./dist/ui-antdv.es.js",
+  "main": "./dist/ui-interface.umd.js",
+  "module": "./dist/ui-interface.es.js",
   "scripts": {
     "build": "vite build",
     "test": "echo \"Error: no test specified\" && exit 1"
@@ -11,9 +11,6 @@
   "author": "Greper",
   "license": "MIT",
   "dependencies": {
-    "@ant-design/icons-vue": "^6.0.1",
-    "@fast-crud/ui-interface": "^0.9.3",
-    "ant-design-vue": "^2.1.4",
     "vue": "^3.0.7"
   },
   "devDependencies": {

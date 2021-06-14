@@ -34,7 +34,7 @@ class Dict extends UnMergeable {
   children = "children";
   color = "color";
   isTree = false;
-  data: undefined | Array<any> = undefined;
+  data: null | Array<any> = null;
   originalData: undefined | Array<any> = undefined;
   dataMap = {};
   loading = false;
@@ -60,9 +60,6 @@ class Dict extends UnMergeable {
     if (dict.data != null) {
       this.originalData = dict.data;
       this.setData(dict.data);
-    }
-    if (!this.prototype && this.immediate) {
-      this.loadDict();
     }
   }
 
@@ -147,7 +144,7 @@ class Dict extends UnMergeable {
   }
 
   clear() {
-    this.data = undefined;
+    this.data = null;
     this.dataMap = {};
   }
 
@@ -283,7 +280,7 @@ class Dict extends UnMergeable {
 
 function dict(config) {
   const ret = reactive(new Dict(config));
-  if (ret.immediate && !ret.prototype) {
+  if (!ret.prototype && ret.immediate) {
     ret.loadDict();
   }
   return ret;

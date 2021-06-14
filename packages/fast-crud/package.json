@@ -18,7 +18,8 @@
     "lodash-es": "^4.17.15",
     "lru-cache": "^6.0.0",
     "vue": "^3.0.7",
-    "vuedraggable": "^4.0.1"
+    "vuedraggable": "^4.0.1",
+    "@fast-crud/ui-interface": "^0.9.3"
   },
   "devDependencies": {
     "@commitlint/cli": "^12.0.1",

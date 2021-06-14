@@ -10,6 +10,7 @@ export function useDict(props, ctx, vModel = "modelValue") {
   }
 
   const computedOptions = computed(() => {
+    debugger;
     if (props.options) {
       return props.options;
     }
@@ -55,6 +56,7 @@ export function useDict(props, ctx, vModel = "modelValue") {
   };
 
   const watchValue = () => {
+    //for values-format
     watch(
       () => {
         return props[vModel];
@@ -71,6 +73,7 @@ export function useDict(props, ctx, vModel = "modelValue") {
         return dict?.data;
       },
       () => {
+        debugger;
         if (ctx.attrs.onDictChange) {
           const scope = getCurrentScope();
           ctx.attrs.onDictChange({ dict, ...scope });

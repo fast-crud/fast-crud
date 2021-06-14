@@ -1,5 +1,4 @@
-import { UiInterface } from "./ui-interface";
-export * from "./ui-interface";
+import { UiInterface } from "@fast-crud/ui-interface";
 import { reactive } from "vue";
 import _ from "lodash-es";
 export class UiContext {

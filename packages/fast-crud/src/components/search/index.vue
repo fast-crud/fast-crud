@@ -6,6 +6,7 @@
         ref="searchFormRef"
         :model="form"
         v-bind="options"
+        :rules="computedRules"
         class="fs-search-form"
         @compositionstart="changeInputEventDisabled(true)"
         @compositionend="changeInputEventDisabled(false)"
@@ -60,7 +61,7 @@
 </template>
 
 <script>
-import { computed, ref, reactive, nextTick } from "vue";
+import { computed, nextTick, reactive, ref } from "vue";
 import _ from "lodash-es";
 import fsButton from "../basic/fs-button";
 import FsComponentRender from "../../components/render/fs-component-render";
@@ -141,6 +142,12 @@ export default {
     show: {
       type: Boolean,
       default: true
+    },
+    /**
+     * 是否启用校验
+     */
+    validate: {
+      default: false
     }
   },
   emits: [
@@ -242,7 +249,15 @@ export default {
       return btns;
     });
 
-    const computedColumns = doComputed(props.columns, getContextFn);
+    const computedColumns = doComputed(props.columns, getContextFn, null, (value) => {
+      if (!props.validate) {
+        //去掉rules
+        _.forEach(value, (item) => {
+          delete item.rules;
+        });
+      }
+      return value;
+    });
 
     function initAutoSearch() {
       // 构建防抖查询函数
@@ -306,10 +321,16 @@ export default {
       doAutoSearch();
     }
 
+    const computedRules = computed(() => {
+      if (!props.validate) {
+        return [];
+      }
+      return props.options.rules;
+    });
+
     return {
       get: (form, key) => {
-        const ret = _.get(form, key);
-        return ret;
+        return _.get(form, key);
       },
       onValueChanged,
       doSearch,
@@ -325,7 +346,8 @@ export default {
       inputEventDisabled,
       changeInputEventDisabled,
       computedColumns,
-      computedButtons
+      computedButtons,
+      computedRules
     };
   }
 };
