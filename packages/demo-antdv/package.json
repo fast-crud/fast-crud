@@ -4,7 +4,8 @@
   "private": true,
   "scripts": {
     "dev": "vite --force",
-    "debug": "vite --force --mode debug",
+    "debug": "vite --mode debug",
+    "debug:force": "vite --force --mode debug",
     "build": "vite build",
     "serve": "vite preview",
     "pretty-quick": "pretty-quick",

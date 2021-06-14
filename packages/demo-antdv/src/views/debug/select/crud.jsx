@@ -16,10 +16,6 @@ export default function ({ expose }) {
   const addRequest = async ({ form }) => {
     return await api.AddObj(form);
   };
-  let dict1 = dict({
-    url: "/dicts/OpenStatusEnum?simple"
-  });
-  dict1.loadDict();
   return {
     crudOptions: {
       request: {
@@ -54,7 +50,11 @@ export default function ({ expose }) {
             value: []
           },
           type: "dict-select",
-          dict: dict1,
+          dict: dict({
+            url: "/dicts/_OpenStatusEnum2?simple",
+            value: "id",
+            label: "text"
+          }),
           form: {
             component: { mode: "multiple" },
             rules: [{ required: true, message: "请选择一个选项" }]
