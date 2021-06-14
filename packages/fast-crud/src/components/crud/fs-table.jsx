@@ -73,7 +73,6 @@ export default {
 
     const { doComputed } = useCompute();
     const refColumns = toRef(props, "columns");
-    console.log("refColumns", refColumns);
     const computedColumns = doComputed(refColumns, null, [/\[.+\]component/]);
 
     return {

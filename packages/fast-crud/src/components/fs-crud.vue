@@ -194,6 +194,7 @@ function useFixedHeight(props, ctx, { tableRef, containerRef }) {
     const tableHeight = tableDom.getBoundingClientRect().height;
     const headHeight = headDom.getBoundingClientRect().height;
     fixedOptions.scroll.y = tableHeight - headHeight - 2;
+    fixedOptions.scroll.x = tableDom.getBoundingClientRect().width;
   }
 
   function watchBodyHeightChange() {

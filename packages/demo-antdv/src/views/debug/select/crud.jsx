@@ -16,6 +16,7 @@ export default function ({ expose }) {
   const addRequest = async ({ form }) => {
     return await api.AddObj(form);
   };
+
   return {
     crudOptions: {
       request: {
@@ -29,6 +30,9 @@ export default function ({ expose }) {
         col: { span: 24 },
         labelCol: { span: 4 },
         wrapperCol: { span: 18 }
+      },
+      rowHandle: {
+        fixed: "right"
       },
       columns: {
         id: {
@@ -58,6 +62,42 @@ export default function ({ expose }) {
           form: {
             component: { mode: "multiple" },
             rules: [{ required: true, message: "请选择一个选项" }]
+          },
+          column: {
+            width: 200
+          }
+        },
+        id2: {
+          title: "ID",
+          key: "id",
+          type: "number",
+          column: {
+            width: 300
+          },
+          form: {
+            show: false
+          }
+        },
+        id3: {
+          title: "ID",
+          key: "id",
+          type: "number",
+          column: {
+            width: 300
+          },
+          form: {
+            show: false
+          }
+        },
+        id4: {
+          title: "ID",
+          key: "id",
+          type: "number",
+          column: {
+            width: 300
+          },
+          form: {
+            show: false
           }
         }
       }
