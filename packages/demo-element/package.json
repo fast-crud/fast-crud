@@ -3,8 +3,9 @@
   "version": "0.10.0",
   "private": true,
   "scripts": {
-    "dev": "vite --force",
-    "debug": "vite --force --mode debug",
+    "dev": "vite",
+    "debug": "vite --mode debug",
+    "debug:force": "vite --force --mode debug",
     "serve": "vite preview",
     "build": "vite build",
     "lint": "vite lint"
