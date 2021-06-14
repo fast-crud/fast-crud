@@ -26,12 +26,12 @@ const resources = [
         title: "国际化",
         path: "/basis/i18n",
         component: "/basis/i18n/index.vue"
-      },
-      {
-        title: "debug",
-        path: "/debug/select",
-        component: "/debug/select/index.vue"
       }
+      // {
+      //   title: "debug",
+      //   path: "/debug/select",
+      //   component: "/debug/select/index.vue"
+      // }
     ]
   },
   {
