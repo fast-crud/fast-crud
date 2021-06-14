@@ -3,6 +3,18 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.10.1](https://github.com/fast-crud/fast-crud/compare/v0.10.0...v0.10.1) (2021-06-14)
+
+
+### Bug Fixes
+
+* search增加默认值，columns[x].search.value ([3ce9d23](https://github.com/fast-crud/fast-crud/commit/3ce9d235762036097736cc23ce325ea8e25b7f79))
+* 修复a-table宽度拖动问题 ([944f4a5](https://github.com/fast-crud/fast-crud/commit/944f4a51af91016b2eb83f58bc787765f90ff512))
+
+
+
+
+
 # [0.10.0](https://github.com/fast-crud/fast-crud/compare/v0.9.3...v0.10.0) (2021-06-14)
 
 
