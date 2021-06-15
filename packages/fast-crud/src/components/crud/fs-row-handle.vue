@@ -84,7 +84,8 @@ export default defineComponent({
     const { t } = useI18n();
     const doClick = (item) => {
       const index = props.scope[ui.tableColumn.index];
-      const e = { key: item.key, btn: item, index, ...props.scope };
+      const row = props.scope[ui.tableColumn.row];
+      const e = { key: item.key, row, btn: item, index, ...props.scope };
       if (item.click) {
         return item.click(e);
       }
