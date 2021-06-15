@@ -194,7 +194,9 @@ function useFixedHeight(props, ctx, { tableRef, containerRef }) {
     const tableHeight = tableDom.getBoundingClientRect().height;
     const headHeight = headDom.getBoundingClientRect().height;
     fixedOptions.scroll.y = tableHeight - headHeight - 2;
-    fixedOptions.scroll.x = tableDom.getBoundingClientRect().width;
+    if (props.table?.scroll?.fixed) {
+      fixedOptions.scroll.x = tableDom.getBoundingClientRect().width;
+    }
   }
 
   function watchBodyHeightChange() {
@@ -228,8 +230,7 @@ function useTable(props, ctx) {
     const fixedHeight = merge({}, fixedHeightRet.fixedOptions, {
       scroll: props.table.scroll
     });
-    const table = { ...ctx.attrs, ...props.table, ...fixedHeight };
-    return table;
+    return { ...ctx.attrs, ...props.table, ...fixedHeight };
   });
 
   const computedToolbar = toRef(props, "toolbar");

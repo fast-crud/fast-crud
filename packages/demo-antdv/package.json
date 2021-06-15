@@ -3,7 +3,7 @@
   "version": "0.10.1",
   "private": true,
   "scripts": {
-    "dev": "vite --force",
+    "dev": "vite",
     "debug": "vite --mode debug",
     "debug:force": "vite --force --mode debug",
     "build": "vite build",

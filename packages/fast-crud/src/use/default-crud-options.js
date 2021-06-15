@@ -16,7 +16,7 @@ export default {
             icon: ui.icons.search
           },
           reset: {
-            icon: ui.icons.refresh
+            icon: ui.icons.refreshtable
           }
         }
       },

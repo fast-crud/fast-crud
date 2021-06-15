@@ -318,7 +318,6 @@ export function useCrud(ctx: UseCrudProps) {
       defaultCrudOptions.commonOptions(ctx),
       options
     );
-
     // 分散 合并到不同的维度
     const tableColumns: Array<any> = [];
     const formColumns = {};

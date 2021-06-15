@@ -243,6 +243,11 @@ const resources = [
         component: "/feature/sortable/index.vue"
       },
       {
+        title: "固定列",
+        path: "/feature/fixed",
+        component: "/feature/fixed/index.vue"
+      },
+      {
         title: "可编辑",
         path: "/feature/editable",
         component: "/feature/editable/index.vue"
