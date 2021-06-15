@@ -55,6 +55,9 @@ export function useDict(props, ctx, vModel = "modelValue") {
   };
 
   const watchValue = () => {
+    if (dict == null) {
+      return;
+    }
     if (!dict.prototype && !dict.cloneable) {
       //如果是单例，则不watch
       return;
