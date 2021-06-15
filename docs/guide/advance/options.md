@@ -9,6 +9,8 @@
 其中  [**字段配置**](./component.md)  是重点，它就在下一章节，一定要看    
 当你不知道`crudOptions`有什么参数时，请参考 [CrudOptionsAPI文档](../../api/crud-options/index.md) 
 
+
+
 ### useCrud
 主要作用是初始化crud，将`crudOptions`转化为`expose.crudBinding`   
 
@@ -20,6 +22,16 @@
     <fs-crud ref="crudRef" v-bind="crudBinding"/>
 </template>
 ```
+
+::: warning
+
+由于`fs-crud`实际参数是`crudBinding`。    
+所以动态修改`crudOptions`里面的属性时，你会发现并不会生效。      
+你只能通过动态修改`crudBinding`里面的属性来达到目的。   
+当你对于`crudBinding`的结构不熟悉时，去手动修改它可能不是很方便。     
+此时你可以使用[动态计算](./compute.md) ( 当然动态计算也有其局限性，详情请见[`动态计算->适用范围`](./compute.html#适用范围) )
+
+:::
 
 ### fs-crud组件
 其他的都交给`fs-crud`吧     
