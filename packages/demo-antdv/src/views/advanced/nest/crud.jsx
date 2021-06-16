@@ -70,12 +70,15 @@ export default function ({ expose, asideTableRef }) {
         },
         nestId: {
           title: "嵌套表格",
+          //复合字段类型
           type: ["number", "colspan"],
           form: {
             // 嵌套表格字段
             rules: [{ required: true, message: "请选择用户" }],
             component: {
-              name: shallowRef(SubTable)
+              //局部引用子表格，要用shallowRef包裹
+              name: shallowRef(SubTable),
+              vModel: "modelValue"
             }
             // antdv 的跨列配置，需要配置如下三个, 可以通过colspan简化
             // col: { span: 24 },

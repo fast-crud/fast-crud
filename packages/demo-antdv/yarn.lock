@@ -326,10 +326,10 @@
     minimatch "^3.0.4"
     strip-json-comments "^3.1.1"
 
-"@fast-crud/extends-uploader@^0.9.3":
-  version "0.9.3"
-  resolved "https://registry.npmjs.org/@fast-crud/extends-uploader/-/extends-uploader-0.9.3.tgz#77c268a33e55abbd21de4a66847f8ab9e11f8972"
-  integrity sha512-dhdT2WL6om9pmzatP3CspMin4T6rlOTSIwfF2uculQWyUedhcq2c2SFsutaQ+3M44+NYxo847jNnohibzXtoYw==
+"@fast-crud/extends-uploader@^0.10.1":
+  version "0.10.1"
+  resolved "https://registry.npmjs.org/@fast-crud/extends-uploader/-/extends-uploader-0.10.1.tgz#98859faf320c337dd52d4a523c5ba23eccda019d"
+  integrity sha512-Dcu7pzS0ECSuovRf/C0W7gLtVof5CPqmLSvqsmn0ELv4yuizHRiivndHqwr12IVqexKCHrik/FKie2Vf+5pyvg==
   dependencies:
     ali-oss "^6.13.2"
     cos-js-sdk-v5 "^1.2.9"
@@ -341,11 +341,12 @@
     vue "^3.0.7"
     vue-cropperjs "^5.0.0"
 
-"@fast-crud/fast-crud@^0.9.3":
-  version "0.9.3"
-  resolved "https://registry.npmjs.org/@fast-crud/fast-crud/-/fast-crud-0.9.3.tgz#3f924115264a5d72596269187c583dfb78c5f13d"
-  integrity sha512-PWwwb2mTbH7UYRrncH72MnRrNFqS5RH2iPIQSlMIdU8ailsJsnghPbKCZ+t4ydqHz+pDl5NrALDFEyjRxpR9mQ==
+"@fast-crud/fast-crud@^0.10.2":
+  version "0.10.2"
+  resolved "https://registry.npmjs.org/@fast-crud/fast-crud/-/fast-crud-0.10.2.tgz#b91470d8b5c9bb2bc31f4be3659202d25042563e"
+  integrity sha512-UfBp12AJENNxbFYtVp3rYvOMUZUx6fkoU2P0t2n92V3Yf0CPkzdgvKl7bcLU4gJEFT8kDTPLSbDWLj6c7+VS9Q==
   dependencies:
+    "@fast-crud/ui-interface" "^0.10.1"
     dayjs "^1.10.4"
     deepdash-es "5.3.5"
     lodash-es "^4.17.15"
@@ -353,14 +354,21 @@
     vue "^3.0.7"
     vuedraggable "^4.0.1"
 
-"@fast-crud/ui-antdv@^0.9.3":
-  version "0.9.3"
-  resolved "https://registry.npmjs.org/@fast-crud/ui-antdv/-/ui-antdv-0.9.3.tgz#ba99948fad24a591928972c971f54dc19ab0fc6d"
-  integrity sha512-jQYjAavFIQNaXX8WLerdCFLY9klUUL+IEUpINtaFIlCOq8S5VfnnPZSRnkRhJxqb1hdwdCz15o/7fKnB7OdAwA==
+"@fast-crud/ui-antdv@^0.10.1":
+  version "0.10.1"
+  resolved "https://registry.npmjs.org/@fast-crud/ui-antdv/-/ui-antdv-0.10.1.tgz#d2e17fd97761cf2edcd6462e7cef211d2147721b"
+  integrity sha512-MeGsKrzgwGU1QG6gRuuTISVL7wUnJ+5zH8rbDBjvwk5BO2l+6T1kmH9UE7YKmX+qX7ax/QDJ93pvdelCfEmfIw==
   dependencies:
     "@ant-design/icons-vue" "^6.0.1"
-    "@fast-crud/fast-crud" "^0.9.3"
+    "@fast-crud/ui-interface" "^0.10.1"
     ant-design-vue "^2.1.4"
+    vue "^3.0.7"
+
+"@fast-crud/ui-interface@^0.10.1":
+  version "0.10.1"
+  resolved "https://registry.npmjs.org/@fast-crud/ui-interface/-/ui-interface-0.10.1.tgz#3d04aeb68fd32bad9fb40b51f847365baabac731"
+  integrity sha512-WsMMnP+3strXDqZRVtczhn7g7LUd4MaBiWgDBOdRkRmXKv+skUecFQV/EslSv0e/jG2KtWW46uthVv4cU+FDFA==
+  dependencies:
     vue "^3.0.7"
 
 "@iconify/iconify@2.0.0-rc.6":

@@ -222,7 +222,9 @@ export function useEditable(props, ctx, tableRef) {
       return tableData.getData();
     },
     (data) => {
-      setupEditable(data);
+      if (options.value.enabled) {
+        setupEditable(data);
+      }
     },
     {
       immediate: true
