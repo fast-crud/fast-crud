@@ -361,14 +361,13 @@ export function useExpose(props: UseExposeProps): { expose: CrudExpose } {
     async openAdd(context) {
       const options = {
         mode: "add",
-        initialForm: {},
+        initialForm: context.row || {},
         ...crudBinding.value.addForm
       };
       _.merge(options, context);
       this.getFormWrapperRef().open(options);
     },
     async openEdit(context) {
-      debugger;
       let row = context.row || context[ui.tableColumn.row];
       if (row == null && context.index != null) {
         row = expose.getTableDataRow(context.index);

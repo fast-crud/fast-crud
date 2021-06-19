@@ -14,7 +14,7 @@ export default {
       remove: {
         text: "删除",
         confirmTitle: "删除提示",
-        confirmMessage: "您确定要删除改记录吗?",
+        confirmMessage: "您确定要删除该记录吗?",
         success: "删除成功!"
       },
       edit: {
