@@ -183,8 +183,8 @@ function useFixedHeight(props, ctx, { tableRef, containerRef }) {
   const fixedOptions = reactive({ scroll: {} });
 
   function computeBodyHeight() {
-    const tableDom = tableRef.value.$el;
-    if (tableDom == null) {
+    const tableDom = tableRef?.value?.$el;
+    if (tableDom == null || tableDom.querySelector == null) {
       return;
     }
     const headDom = tableDom.querySelector(".ant-table-thead");
