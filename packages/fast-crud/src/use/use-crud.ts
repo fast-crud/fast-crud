@@ -121,28 +121,32 @@ export function useCrud(ctx: UseCrudProps) {
   }
 
   function useRemove() {
-    const doRemove = async function (context) {
-      // TODO i18n
-      try {
-        await ui.messageBox.confirm({
-          title: t("fs.rowHandle.remove.confirmTitle"), // '提示',
-          message: t("fs.rowHandle.remove.confirmMessage"), // '确定要删除此记录吗?',
-          type: "warn"
-        });
-      } catch (e) {
-        logger.info("delete canceled", e.message);
-        return;
-      }
-      context.row = context[ui.tableColumn.row];
-      await crudBinding.value.request.delRequest(context);
-      ui.notification.success(t("fs.rowHandle.remove.success"));
-      await doRefresh();
-    };
     return {
       rowHandle: {
         buttons: {
           remove: {
-            click: doRemove
+            click: async (context) => {
+              context.row = context[ui.tableColumn.row];
+              await expose.doRemove(context);
+            }
+          },
+          edit: {
+            click: async (context) => {
+              context.row = context[ui.tableColumn.row];
+              await expose.openEdit({
+                row: context.row,
+                index: context.index
+              });
+            }
+          },
+          view: {
+            click: async (context) => {
+              context.row = context[ui.tableColumn.row];
+              await expose.openView({
+                row: context.row,
+                index: context.index
+              });
+            }
           }
         }
       }
@@ -198,6 +202,20 @@ export function useCrud(ctx: UseCrudProps) {
     };
   }
 
+  function useActionbar() {
+    return {
+      actionbar: {
+        buttons: {
+          add: {
+            click() {
+              expose.openAdd();
+            }
+          }
+        }
+      }
+    };
+  }
+
   function useEditable() {
     const { compute } = useCompute();
 
@@ -221,7 +239,7 @@ export function useCrud(ctx: UseCrudProps) {
               text: "删除",
               type: "danger",
               click: ({ index }) => {
-                expose.editable.removeRow(index);
+                expose.editable.doRemoveRow({ index });
               }
             }
           },
@@ -242,24 +260,8 @@ export function useCrud(ctx: UseCrudProps) {
             save: {
               text: "保存",
               loading: false,
-              click: async ({ index }) => {
-                const editableRow = expose.editable.getEditableRow(index);
-                editableRow.save({
-                  index,
-                  async doSave({ isAdd, changed, row, setData }) {
-                    try {
-                      editableRow.isLoading = true;
-                      if (isAdd) {
-                        const ret = await crudBinding.value.request.addRequest({ form: changed });
-                        setData(ret);
-                      } else {
-                        await crudBinding.value.request.editRequest({ form: changed, row });
-                      }
-                    } finally {
-                      editableRow.isLoading = false;
-                    }
-                  }
-                });
+              click: ({ index }) => {
+                expose.editable.doSaveRow({ index });
               },
               show: compute(({ index }) => {
                 return !!expose.editable?.getEditableRow(index)?.isEditing;
@@ -268,7 +270,7 @@ export function useCrud(ctx: UseCrudProps) {
             cancel: {
               text: "取消",
               click: async ({ index }) => {
-                expose.editable.getEditableRow(index).inactive();
+                await expose.editable?.doCancelRow({ index });
               },
               show: compute(({ index }) => {
                 return !!expose.editable?.getEditableRow(index)?.isEditing;
@@ -278,25 +280,7 @@ export function useCrud(ctx: UseCrudProps) {
               text: "删除",
               type: "danger",
               click: async ({ index }) => {
-                try {
-                  await ui.messageBox.confirm({
-                    title: t("fs.rowHandle.remove.confirmTitle"), // '提示',
-                    message: t("fs.rowHandle.remove.confirmMessage"), // '确定要删除此记录吗?',
-                    type: "warn"
-                  });
-                } catch (e) {
-                  logger.info("delete canceled", e.message);
-                  return;
-                }
-                const row = expose.editable.getEditableRow(index);
-                if (row.isAdd) {
-                  expose.editable.removeRow(index);
-                } else {
-                  const rowData = row.getRowData(index);
-                  await crudBinding.value.request.delRequest({ row: rowData });
-                  doRefresh();
-                }
-                ui.notification.success(t("fs.rowHandle.remove.success"));
+                expose.editable?.doRemoveRow({ index });
               }
             }
           }
@@ -314,6 +298,7 @@ export function useCrud(ctx: UseCrudProps) {
       useSearch(),
       useEvent(),
       useTable(),
+      useActionbar(),
       useEditable(),
       defaultCrudOptions.commonOptions(ctx),
       options

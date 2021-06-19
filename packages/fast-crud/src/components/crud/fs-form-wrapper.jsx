@@ -47,18 +47,20 @@ export default {
     const emitOnOpened = ref();
     const title = ref();
     const open = (opts) => {
+      //提取formrapper的配置
       const { wrapper } = opts;
       if (wrapper.onOpen) {
         wrapper.onOpen(opts);
       }
       title.value = wrapper.title;
-      formWrapper.value = {
-        ..._.omit(wrapper, "title", "onOpen", "onClosed", "onOpened")
-      };
-      delete formWrapper.value.is;
       formWrapperIs.value = opts.wrapper.is;
+      formWrapper.value = {
+        ..._.omit(wrapper, "title", "onOpen", "onClosed", "onOpened", "is")
+      };
+      //form的配置
       formOptions.value = {
-        ..._.omit(opts, "wrapper")
+        ..._.omit(opts, "wrapper"),
+        slots: props.slots
       };
 
       // 打开表单对话框

@@ -2,6 +2,8 @@ import { toRaw, nextTick } from "vue";
 import _ from "lodash-es";
 import logger from "../utils/util.log";
 import { useMerge } from "../use/use-merge";
+import { useUi } from "../use/use-ui";
+import { useI18n } from "../locale";
 
 const { merge } = useMerge();
 export type UseExposeProps = {
@@ -20,15 +22,24 @@ export type CrudExpose = {
   doRefresh;
   doPageTurn;
   doSearch;
+  doRemove;
+  openEdit;
+  openAdd;
+  openView;
+  openDialog;
   getSearchFormData;
   setSearchFormData;
   getTableRef;
+  getTableData;
+  getTableDataRow;
   doSelectCurrentRow;
   editable: any;
 };
 
 function useEditable({ expose }) {
   const { crudBinding } = expose;
+  const { ui } = useUi();
+  const { t } = useI18n();
   const editable = {
     /**
      * 启用编辑
@@ -36,12 +47,12 @@ function useEditable({ expose }) {
      * @param onEnabled 默认根据mode切换rowHandle.active,[editRow,editable]
      */
     async enable(opts, onEnabled: Function) {
-      const editable = crudBinding.value.table.editable;
-      _.merge(editable, { enabled: true }, opts);
+      const editableOpts = crudBinding.value.table.editable;
+      _.merge(editableOpts, { enabled: true }, opts);
       if (onEnabled) {
-        onEnabled({ editable });
+        onEnabled({ editable: editableOpts });
       } else {
-        if (editable.mode === "row") {
+        if (editableOpts.mode === "row") {
           crudBinding.value.rowHandle.active = "editRow";
         } else {
           crudBinding.value.rowHandle.active = "editable";
@@ -89,6 +100,50 @@ function useEditable({ expose }) {
     getEditableRow(index) {
       return expose.getTableRef()?.editable?.getEditableRow(index);
     },
+    async doSaveRow({ index }) {
+      const editableRow = editable.getEditableRow(index);
+      editableRow.save({
+        index,
+        async doSave({ isAdd, changed, row, setData }) {
+          try {
+            editableRow.isLoading = true;
+            if (isAdd) {
+              const ret = await crudBinding.value.request.addRequest({ form: changed });
+              setData(ret);
+            } else {
+              await crudBinding.value.request.editRequest({ form: changed, row });
+            }
+          } finally {
+            editableRow.isLoading = false;
+          }
+        }
+      });
+    },
+    async doCancelRow({ index }) {
+      const editableRow = editable.getEditableRow(index);
+      editableRow.inactive();
+    },
+    async doRemoveRow({ index }) {
+      try {
+        await ui.messageBox.confirm({
+          title: t("fs.rowHandle.remove.confirmTitle"), // '提示',
+          message: t("fs.rowHandle.remove.confirmMessage"), // '确定要删除此记录吗?',
+          type: "warn"
+        });
+      } catch (e) {
+        logger.info("delete canceled", e.message);
+        return;
+      }
+      const row = editable.getEditableRow(index);
+      if (row.isAdd) {
+        editable.removeRow(index);
+      } else {
+        const rowData = row.getRowData(index);
+        await crudBinding.value.request.delRequest({ row: rowData });
+        expose.doRefresh();
+      }
+      ui.notification.success(t("fs.rowHandle.remove.success"));
+    },
     getInstance() {
       expose.getTableRef().editable;
     }
@@ -97,6 +152,8 @@ function useEditable({ expose }) {
 }
 export function useExpose(props: UseExposeProps): { expose: CrudExpose } {
   const { crudRef, crudBinding } = props;
+  const { ui } = useUi();
+  const { t } = useI18n();
   const expose: CrudExpose = {
     crudRef,
     crudBinding,
@@ -242,13 +299,100 @@ export function useExpose(props: UseExposeProps): { expose: CrudExpose } {
 
       await expose.doRefresh();
     },
+    /**
+     * 获取表格实例
+     */
     getTableRef() {
       return crudRef.value?.tableRef;
     },
+    /**
+     * 获取表格数据
+     */
+    getTableData() {
+      const tableRef = expose.getTableRef();
+      return tableRef?.value[ui.table.data];
+    },
+    getTableDataRow(index) {
+      const data = expose.getTableData();
+      if (data == null) {
+        throw new Error("table data is not init");
+      }
+      if (data.length <= index) {
+        throw new Error("index over array length");
+      }
+      return data[index];
+    },
+    /**
+     * 选择某一行
+     * @param index
+     * @param row
+     */
     doSelectCurrentRow({ index, row }) {
       const tableRef = expose.getTableRef();
-      console.log("tableRef", tableRef);
       tableRef.value.setCurrentRow(row);
+    },
+    /**
+     * 删除行按钮
+     * @param context
+     */
+    async doRemove(context) {
+      try {
+        await ui.messageBox.confirm({
+          title: t("fs.rowHandle.remove.confirmTitle"), // '提示',
+          message: t("fs.rowHandle.remove.confirmMessage"), // '确定要删除此记录吗?',
+          type: "warn"
+        });
+      } catch (e) {
+        logger.info("delete canceled", e.message);
+        return;
+      }
+      await crudBinding.value.request.delRequest(context);
+      ui.notification.success(t("fs.rowHandle.remove.success"));
+      await expose.doRefresh();
+    },
+    /**
+     *
+     * 打开表单对话框
+     * @param context ={mode, initialForm: row, index,...formOptions}
+     */
+    async openDialog(context) {
+      this.getFormWrapperRef().open(context);
+    },
+    async openAdd(context) {
+      const options = {
+        mode: "add",
+        initialForm: {},
+        ...crudBinding.value.addForm
+      };
+      _.merge(options, context);
+      this.getFormWrapperRef().open(options);
+    },
+    async openEdit(context) {
+      debugger;
+      let row = context.row || context[ui.tableColumn.row];
+      if (row == null && context.index != null) {
+        row = expose.getTableDataRow(context.index);
+      }
+      const options = {
+        mode: "edit",
+        initialForm: row,
+        ...crudBinding.value.editForm
+      };
+      _.merge(options, context);
+      this.getFormWrapperRef().open(options);
+    },
+    async openView(context) {
+      let row = context.row || context[ui.tableColumn.row];
+      if (row == null && context.index != null) {
+        row = expose.getTableDataRow(context.index);
+      }
+      const options = {
+        mode: "view",
+        initialForm: row,
+        ...crudBinding.value.viewForm
+      };
+      _.merge(options, context);
+      this.getFormWrapperRef().open(options);
     },
     editable: undefined
   };

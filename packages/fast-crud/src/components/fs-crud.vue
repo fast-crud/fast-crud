@@ -16,7 +16,7 @@
 
         <div v-if="actionbar && actionbar.show !== false" class="fs-crud-actionbar">
           <slot name="actionbar-left"></slot>
-          <fs-actionbar v-bind="actionbar" @action="onActionHandle" />
+          <fs-actionbar v-bind="actionbar" />
           <slot name="actionbar-right"></slot>
         </div>
 
@@ -32,7 +32,6 @@
             @update:compact="$emit('update:compact', $event)"
             @update:columns="$emit('update:columns', $event)"
             @refresh="$emit('refresh')"
-            @action="onToolbarHandle"
           />
           <slot name="toolbar-right"></slot>
         </div>
@@ -52,7 +51,6 @@
       :row-handle="rowHandle"
       :data="data"
       :cell-slots="computedCellSlots"
-      @row-handle="onRowHandle"
     />
     <!-- 编辑对话框 -->
     <fs-form-wrapper
@@ -250,36 +248,6 @@ function useTable(props, ctx) {
   });
   const formWrapperRef = ref();
 
-  const { proxy } = getCurrentInstance();
-  const onRowHandle = (scope) => {
-    const { key } = scope;
-    const tableColumnCI = proxy.$fsui.tableColumn;
-    const index = scope[tableColumnCI.index];
-    const row = scope[tableColumnCI.row];
-
-    const e = { mode: key, initialForm: row, slots: ctx.slots, index };
-    if (key === "edit") {
-      formWrapperRef.value.open({ ...props.editForm, ...e });
-    } else if (key === "view") {
-      formWrapperRef.value.open({ ...props.viewForm, ...e });
-    }
-  };
-
-  const onActionHandle = (e) => {
-    if (e.key === "add") {
-      formWrapperRef.value.open({
-        ...props.addForm,
-        mode: "add",
-        initialForm: e.initialForm,
-        slots: ctx.slots
-      });
-    }
-  };
-
-  const onToolbarHandle = (e) => {
-    logger.debug("toolbar handle", e);
-  };
-
   const computedClass = computed(() => {
     const clazz = { compact: props.toolbar.compact !== false };
     if (props.customClass) {
@@ -294,9 +262,6 @@ function useTable(props, ctx) {
     computedTable,
     computedToolbar,
     computedCellSlots,
-    onRowHandle,
-    onActionHandle,
-    onToolbarHandle,
     formWrapperRef,
     computedFormSlots,
     computedSearchSlots,
