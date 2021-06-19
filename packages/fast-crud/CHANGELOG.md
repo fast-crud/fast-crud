@@ -3,6 +3,22 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.10.3](https://github.com/fast-crud/fast-crud/compare/v0.10.2...v0.10.3) (2021-06-19)
+
+
+### Bug Fixes
+
+* table hide error ([fb9c04f](https://github.com/fast-crud/fast-crud/commit/fb9c04f14b7c2321989e017ff429ae49b7a472bf))
+
+
+### Performance Improvements
+
+* 优化expose ([f1d75b5](https://github.com/fast-crud/fast-crud/commit/f1d75b5c5a2d0a3e88f517f5fdc01bd6d99a7914))
+
+
+
+
+
 ## [0.10.2](https://github.com/fast-crud/fast-crud/compare/v0.10.1...v0.10.2) (2021-06-15)
 
 
