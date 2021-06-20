@@ -38,12 +38,12 @@ export default function ({ expose }) {
           }
         },
         name: {
-          title: t("m.demo.i18n.name"),
+          title: t("app.i18n.name"),
           type: "text",
           search: { show: true }
         },
         city: {
-          title: t("m.demo.i18n.city"),
+          title: t("app.i18n.city"),
           type: "dict-select",
           search: { show: true },
           dict: dict({
@@ -59,7 +59,7 @@ export default function ({ expose }) {
           })
         },
         radio: {
-          title: t("m.demo.i18n.status"),
+          title: t("app.i18n.status"),
           search: { show: true },
           type: "dict-radio",
           dict: dict({

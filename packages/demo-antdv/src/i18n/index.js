@@ -9,13 +9,13 @@ const messages = {
     label: "English",
     // 定义您自己的字典，但是请不要和 `fs` 重复，这样会导致 fast-crud 内部组件的翻译失效.
     fs: enFsLocale.fs,
-    m: en
+    ...en
   },
   "zh-cn": {
     label: "简体中文",
     // 定义您自己的字典，但是请不要和 `fs` 重复，这样会导致 fast-crud  内部组件的翻译失效.
     fs: zhFsLocale.fs,
-    m: zh
+    ...zh
   }
 };
 
