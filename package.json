@@ -1,6 +1,6 @@
 {
   "name": "fast-crud-root",
-  "private": false,
+  "private": true,
   "scripts": {
     "bootstrap": "lerna bootstrap --hoist",
     "docs:dev": "vitepress dev docs",
