@@ -26,7 +26,8 @@ export default {
       // },
       plugins: [
         strip({
-          functions: ["console.log", "assert.*"]
+          //不移除console
+          functions: ["console.log1", "assert.*"]
         }),
         visualizer()
       ],
