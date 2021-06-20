@@ -51,3 +51,8 @@ export default defineComponent({
   }
 });
 </script>
+<style lang="less">
+.fs-actionbar {
+  min-width: 1px;
+}
+</style>

@@ -27,6 +27,11 @@ export interface CrudOptions {
 export type UseCrudProps = {
   crudOptions: CrudOptions;
   expose: CrudExpose;
+  /**
+   * 自定义参数
+   * common里面可以使用
+   */
+  extra?: any;
 };
 const { merge, cloneDeep } = useMerge();
 // mergeColumnPlugin 注册
@@ -384,7 +389,16 @@ export function useCrud(ctx: UseCrudProps) {
 
   resetCrudOptions(options);
 
+  /**
+   * 追加配置,注意是覆盖crudBinding的结构，而不是crudOptions的结构
+   * @param overOptions
+   */
+  function appendBindingOptions(overOptions) {
+    merge(crudBinding.value, overOptions);
+  }
+
   return {
-    resetCrudOptions
+    resetCrudOptions,
+    appendBindingOptions
   };
 }
