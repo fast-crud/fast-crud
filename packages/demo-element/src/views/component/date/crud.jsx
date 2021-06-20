@@ -43,7 +43,7 @@ export default function ({ crudRef }) {
         timestamp: {
           title: "时间戳",
           type: "datetime",
-          search: { show: true, width: 185 },
+          search: { show: false, width: 185 },
           valueBuilder({ value, row, key }) {
             if (value != null) {
               row[key] = dayjs(value);
@@ -79,6 +79,7 @@ export default function ({ crudRef }) {
         date: {
           title: "仅日期",
           type: "date",
+          search: { show: true, width: 185 },
           form: {
             component: {
               events: {
@@ -129,7 +130,7 @@ export default function ({ crudRef }) {
         daterange: {
           title: "日期范围",
           type: "daterange",
-          search: { show: true, width: 300 },
+          search: { show: false, width: 300 },
           valueBuilder({ row, key }) {
             if (!utils.strings.hasEmpty(row.daterangeStart, row.daterangeEnd)) {
               row[key] = [dayjs(row.daterangeStart), dayjs(row.daterangeEnd)];

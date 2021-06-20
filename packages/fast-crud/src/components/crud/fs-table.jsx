@@ -16,7 +16,7 @@ import "./fs-table.less";
 import { uiContext } from "../../ui";
 import { useCompute } from "../../use/use-compute";
 import { useEditable } from "./editable/use-editable";
-
+import logger from "../../utils/util.log";
 /**
  * table封装
  * 支持el-table/a-table的参数
@@ -126,6 +126,7 @@ export default {
         const children = [];
         const buildColumn = (item) => {
           let cellSlots = {};
+          const cellSlotName = "cell_" + item.key;
           let currentTableColumnComp = tableColumnComp;
           if (item.children && item.children.length > 0) {
             cellSlots.default = () => {
@@ -140,7 +141,11 @@ export default {
             };
             currentTableColumnComp = tableColumnGroupComp;
           } else if (item.type != null) {
-            // do nothing
+            logger.debug("cell render column.type:", item.type);
+            const slots = this.cellSlots && this.cellSlots[cellSlotName];
+            if (slots) {
+              cellSlots.default = slots;
+            }
           } else {
             cellSlots.default = (scope) => {
               scope.row = scope[tableColumnCI.row];
@@ -175,7 +180,7 @@ export default {
               };
 
               const index = scope[ui.tableColumn.index];
-              const cellSlotName = "cell_" + item.key;
+
               const slots = this.cellSlots && this.cellSlots[cellSlotName];
               if (this.editable?.options.value.enabled === true) {
                 const editable = this.editable.getEditableCell(index, item.key);

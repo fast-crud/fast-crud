@@ -1,10 +1,14 @@
 import { request, requestForMock } from "./api/service";
 import "./mock";
-import { FastCrud } from "@fast-crud/fast-crud";
+import { FastCrud, setLogger } from "@fast-crud/fast-crud";
 import "@fast-crud/fast-crud/dist/style.css";
 import FsUploader from "@fast-crud/extends-uploader";
 import "@fast-crud/extends-uploader/dist/style.css";
 import UiAntdv from "@fast-crud/ui-antdv";
+//设置crud log级别
+if (import.meta.env.mode !== "production") {
+  setLogger({ level: "debug" });
+}
 export default function (app, i18n) {
   app.use(UiAntdv);
   app.use(FastCrud, {

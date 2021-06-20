@@ -26,7 +26,7 @@ export default function ({ expose }) {
       },
       table: {},
       columns: {
-        _index: {
+        index: {
           title: "序号",
           form: { show: false },
           column: {

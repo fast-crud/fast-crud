@@ -22,7 +22,8 @@ export default function () {
         component: {
           //el-date-picker,a-date-picker
           ...ui.datePicker.buildDateType("date"),
-          vModel: ui.datePicker.modelValue
+          vModel: ui.datePicker.modelValue,
+          format: "YYYY-MM-DD"
         }
       },
       column: {

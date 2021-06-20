@@ -41,7 +41,7 @@ export default function ({ expose }) {
         },
         like: {
           title: "like",
-          type: "number",
+          type: "text",
           search: { show: true }
         },
         createDate: {

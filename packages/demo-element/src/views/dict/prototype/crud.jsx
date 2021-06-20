@@ -49,7 +49,16 @@ export default function ({ expose }) {
         },
         modifyDict: {
           title: "动态修改字典",
-          search: { show: true },
+          search: {
+            show: true,
+            component: {
+              name: "fs-dict-select",
+              options: [
+                { value: false, label: "false" },
+                { value: true, label: "选我会切换左边字段的字典" }
+              ]
+            }
+          },
           type: "switch",
           form: {
             valueChange({ form, value, getComponentRef }) {

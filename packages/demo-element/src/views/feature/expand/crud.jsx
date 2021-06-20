@@ -27,7 +27,7 @@ export default function ({ expose }) {
       },
       table: {},
       columns: {
-        _expand: {
+        expand: {
           title: "展开",
           form: { show: false },
           column: {

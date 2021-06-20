@@ -1,6 +1,6 @@
 <template>
   <fs-crud ref="crudRef" v-bind="crudBinding">
-    <template #cell__expand="scope">index: {{ scope.$index }} ; row: {{ scope.row }} </template>
+    <template #cell_expand="scope">index: {{ scope.$index }} ; row: {{ scope.row }} </template>
   </fs-crud>
 </template>
 
@@ -32,23 +32,9 @@ export default defineComponent({
       expose.doRefresh();
     });
 
-    const handleBatchDelete = () => {
-      if (selectedIds.value?.length > 0) {
-        ElMessageBox.confirm(`确定要批量删除这${selectedIds.value.length}条记录吗`, "确认").then(async () => {
-          await BatchDelete(selectedIds.value);
-          ElMessage.info("删除成功");
-          expose.doRefresh();
-          selectedIds.value = [];
-        });
-      } else {
-        ElMessage.error("请先勾选记录");
-      }
-    };
-
     return {
       crudBinding,
-      crudRef,
-      handleBatchDelete
+      crudRef
     };
   }
 });

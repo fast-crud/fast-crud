@@ -1,3 +1,4 @@
+const DEBUG_WITH_CALLER = true;
 function getCallerInfo() {
   const e = new Error();
   return e.stack.split("\n")[3];
@@ -16,7 +17,7 @@ const info = (...args) => {
 };
 const debug = (...args) => {
   const callerInfo = getCallerInfo();
-  if (VUE_APP_FS_LOG_WITH_CALLER === "true") {
+  if (DEBUG_WITH_CALLER) {
     console.log("[debug]", ...args, "\n", callerInfo);
   } else {
     console.log("[debug]", ...args);
