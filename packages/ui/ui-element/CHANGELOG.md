@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.10.4](https://github.com/fast-crud/fast-crud/compare/v0.10.3...v0.10.4) (2021-06-20)
+
+
+### Bug Fixes
+
+* 修复element expand不显示的bug ([0394626](https://github.com/fast-crud/fast-crud/commit/0394626ee9ccde0a0c981f4d494f0dfa8b82983c))
+
+
+
+
+
 ## [0.10.1](https://github.com/fast-crud/fast-crud/compare/v0.10.0...v0.10.1) (2021-06-14)
 
 

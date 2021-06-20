@@ -3,6 +3,23 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.10.4](https://github.com/fast-crud/fast-crud/compare/v0.10.3...v0.10.4) (2021-06-20)
+
+
+### Bug Fixes
+
+* 修复element expand不显示的bug ([0394626](https://github.com/fast-crud/fast-crud/commit/0394626ee9ccde0a0c981f4d494f0dfa8b82983c))
+
+
+### Performance Improvements
+
+* 优化logger ([97a0ca9](https://github.com/fast-crud/fast-crud/commit/97a0ca95732a14eef7d91b10f46acd994d0bce87))
+* 禁止在列设置中选择配置属性名称修改为columnSetDisabled ([8d6420a](https://github.com/fast-crud/fast-crud/commit/8d6420a23b9ae08fee769ce6d8ad65fb4d3dd55b))
+
+
+
+
+
 ## [0.10.3](https://github.com/fast-crud/fast-crud/compare/v0.10.2...v0.10.3) (2021-06-19)
 
 
