@@ -26,7 +26,7 @@ export default function ({ expose }) {
       },
       table: {},
       columns: {
-        index: {
+        $index: {
           title: "序号",
           form: { show: false },
           column: {
@@ -36,7 +36,7 @@ export default function ({ expose }) {
             columnSetDisabled: true, //禁止在列设置中选择
             index: (index) => {
               // 自定义序号索引,全局计算序号，见el-table文档
-              // 不传本方法则默认每页序号从1开始
+              // 不传本方法则显示el-table默认序号（每页序号从1开始）
               let pagination = expose.crudBinding.value.pagination;
               return ((pagination.currentPage ?? 1) - 1) * pagination.pageSize + index + 1;
             }

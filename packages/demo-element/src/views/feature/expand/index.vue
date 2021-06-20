@@ -1,6 +1,6 @@
 <template>
   <fs-crud ref="crudRef" v-bind="crudBinding">
-    <template #cell_expand="scope">index: {{ scope.$index }} ; row: {{ scope.row }} </template>
+    <template #cell_$expand="scope">index: {{ scope.$index }} ; row: {{ scope.row }} </template>
   </fs-crud>
 </template>
 

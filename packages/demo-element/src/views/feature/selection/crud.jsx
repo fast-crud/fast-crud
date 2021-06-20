@@ -36,7 +36,7 @@ export default function ({ expose }) {
         onSelectionChange
       },
       columns: {
-        _checked: {
+        $checked: {
           title: "选择",
           form: { show: false },
           column: {
