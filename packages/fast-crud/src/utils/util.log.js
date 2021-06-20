@@ -1,46 +1,46 @@
-// eslint-disable-next-line @typescript-eslint/no-empty-function
-let debug = () => {};
-// eslint-disable-next-line @typescript-eslint/no-empty-function
-let info = () => {};
-// eslint-disable-next-line @typescript-eslint/no-empty-function
-let error = () => {};
-// eslint-disable-next-line @typescript-eslint/no-empty-function
-let warn = () => {};
 function getCallerInfo() {
   const e = new Error();
   return e.stack.split("\n")[3];
 }
-const NODE_ENV = "development";
-const VUE_APP_FS_LOG_DEBUG = "true";
-const VUE_APP_FS_LOG_WITH_CALLER = "true";
-const VUE_APP_FS_LOG_INFO = "true";
-if (NODE_ENV !== "production") {
-  if (VUE_APP_FS_LOG_DEBUG === "true") {
-    debug = (...args) => {
-      const callerInfo = getCallerInfo();
-      if (VUE_APP_FS_LOG_WITH_CALLER === "true") {
-        console.log("[debug]", ...args, "\n", callerInfo);
-      } else {
-        console.log("[debug]", ...args);
-      }
-    };
-  }
-  if (VUE_APP_FS_LOG_INFO !== "false") {
-    info = (...args) => {
-      console.log("[info]", ...args);
-    };
-  }
-  warn = (...args) => {
-    console.warn("[warn]", ...args);
-  };
-  error = (...args) => {
-    console.error("[error]", ...args);
-  };
-}
 
-export default {
-  debug,
-  info,
-  error,
-  warn
+const blank = () => {};
+
+const error = (...args) => {
+  console.error("[error]", ...args);
 };
+const warn = (...args) => {
+  console.warn("[warn]", ...args);
+};
+const info = (...args) => {
+  console.log("[info]", ...args);
+};
+const debug = (...args) => {
+  const callerInfo = getCallerInfo();
+  if (VUE_APP_FS_LOG_WITH_CALLER === "true") {
+    console.log("[debug]", ...args, "\n", callerInfo);
+  } else {
+    console.log("[debug]", ...args);
+  }
+};
+const logger = {};
+
+export default logger;
+export function setLogger({ level = "info" }) {
+  logger.debug = blank;
+  logger.info = blank;
+  logger.warn = blank;
+  logger.error = blank;
+
+  switch (level) {
+    case "debug":
+      logger.debug = debug;
+    case "info":
+      logger.info = info;
+    case "warn":
+      logger.warn = warn;
+    case "error":
+      logger.error = error;
+      break;
+  }
+}
+setLogger();

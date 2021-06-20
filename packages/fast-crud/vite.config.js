@@ -24,7 +24,12 @@ export default {
       //   main: resolve(__dirname, "src/index.js"),
       //   en: resolve(__dirname, "src/local/lang/en.js"),
       // },
-      plugins: [strip(), visualizer()],
+      plugins: [
+        strip({
+          functions: ["console.log", "assert.*"]
+        }),
+        visualizer()
+      ],
       // make sure to externalize deps that shouldn't be bundled
       // into your library
       external: ["vue", "lodash-es", "dayjs", "vue-i18n", "vuedraggable"],
