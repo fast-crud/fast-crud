@@ -34,7 +34,7 @@ export default function ({ expose }) {
             type: "expand",
             align: "center",
             width: "55px",
-            disabledColumnsFilter: true //禁止在列设置中选择
+            columnSetDisabled: true //禁止在列设置中选择
           }
         },
         id: {

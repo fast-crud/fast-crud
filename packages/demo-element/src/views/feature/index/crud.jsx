@@ -33,7 +33,7 @@ export default function ({ expose }) {
             type: "index",
             align: "center",
             width: "55px",
-            disabledColumnsFilter: true, //禁止在列设置中选择
+            columnSetDisabled: true, //禁止在列设置中选择
             index: (index) => {
               // 自定义序号索引,全局计算序号，见el-table文档
               // 不传本方法则默认每页序号从1开始

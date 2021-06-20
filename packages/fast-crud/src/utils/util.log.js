@@ -25,12 +25,12 @@ const debug = (...args) => {
 const logger = {};
 
 export default logger;
-export function setLogger({ level = "info" }) {
+export function setLogger({ level } = {}) {
   logger.debug = blank;
   logger.info = blank;
   logger.warn = blank;
   logger.error = blank;
-
+  level = level || "info";
   switch (level) {
     case "debug":
       logger.debug = debug;

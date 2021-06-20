@@ -327,7 +327,7 @@ export function useExpose(props: UseExposeProps): { expose: CrudExpose } {
      * @param index
      * @param row
      */
-    doSelectCurrentRow({ index, row }) {
+    doSelectCurrentRow({ row }) {
       const tableRef = expose.getTableRef();
       tableRef.value.setCurrentRow(row);
     },
@@ -335,7 +335,7 @@ export function useExpose(props: UseExposeProps): { expose: CrudExpose } {
      * 删除行按钮
      * @param context
      */
-    async doRemove(context) {
+    async doRemove(context = {}) {
       try {
         await ui.messageBox.confirm({
           title: t("fs.rowHandle.remove.confirmTitle"), // '提示',
@@ -355,10 +355,10 @@ export function useExpose(props: UseExposeProps): { expose: CrudExpose } {
      * 打开表单对话框
      * @param context ={mode, initialForm: row, index,...formOptions}
      */
-    async openDialog(context) {
+    async openDialog(context = {}) {
       this.getFormWrapperRef().open(context);
     },
-    async openAdd(context) {
+    async openAdd(context: any = {}) {
       const options = {
         mode: "add",
         initialForm: context.row || {},

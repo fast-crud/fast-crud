@@ -78,7 +78,7 @@ const crudOptions = {
 * 类型：Object
 参考组件配置[component](../common-options.md)
 
-### [key].column.disabledColumnsFilter
+### [key].column.columnSetDisabled
 * 说明：在列设置中禁用改字段的勾选
 * 类型：Boolean
 

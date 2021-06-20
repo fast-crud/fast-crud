@@ -1,10 +1,11 @@
-import defaultCrudOptions from "./use/default-crud-options.js";
+import defaultCrudOptions from "./use/default-crud-options";
 import utils from "./utils/index.js";
+export * from "./utils/index";
 export * from "./use";
 import types from "./types/index.ts";
-import * as components from "./components/index.js";
-import { i18n, useI18n } from "./locale/index.ts";
-import { uiContext } from "./ui/index.ts";
+import * as components from "./components/index";
+import { i18n, useI18n } from "./locale/";
+import { uiContext } from "./ui";
 export * from "./ui";
 import { useDictDefine, useCompute } from "./use";
 const { dict, setDictRequest } = useDictDefine();

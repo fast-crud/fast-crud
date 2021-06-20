@@ -213,7 +213,7 @@ export function useCrud(ctx: UseCrudProps) {
         buttons: {
           add: {
             click() {
-              expose.openAdd();
+              expose.openAdd({});
             }
           }
         }

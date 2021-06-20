@@ -16,7 +16,8 @@ function findComputeValues(target, excludes, isAsync) {
   const checkFunc = isAsync ? isAsyncCompute : isSyncCompute;
   eachDeep(target, (value, key, parent, context) => {
     if (checkFunc(value)) {
-      const path = context.path;
+      // @ts-ignore
+      const path: string = context.path;
       if (excludes) {
         for (const exclude of excludes) {
           if (typeof exclude === "string") {
@@ -77,12 +78,12 @@ function doComputed(target, getContextFn, excludes, userComputedFn) {
   if (!isRef(target)) {
     target = ref(target);
   }
-  let raw = toRaw(target.value);
+  const raw = toRaw(target.value);
   const dependValues = findComputeValues(raw, excludes, false);
 
   const dependAsyncValues = findComputeValues(raw, excludes, true);
   const asyncCount = Object.keys(dependAsyncValues).length;
-  let syncCount = Object.keys(dependValues).length;
+  const syncCount = Object.keys(dependValues).length;
   const asyncValuesMap = doAsyncCompute(dependAsyncValues, getContextFn);
 
   return computed(() => {
@@ -109,6 +110,7 @@ function doComputed(target, getContextFn, excludes, userComputedFn) {
 }
 
 export class ComputeValue {
+  computeFn;
   constructor(computeFn) {
     this.computeFn = computeFn;
   }
@@ -123,7 +125,10 @@ function compute(computeFn) {
 }
 
 export class AsyncComputeValue {
-  constructor({ watch, asyncFn, defaultValue }) {
+  watch;
+  asyncFn;
+  defaultValue?;
+  constructor({ watch, asyncFn, defaultValue }: { watch; asyncFn; defaultValue? }) {
     this.watch = watch;
     this.asyncFn = asyncFn;
     this.defaultValue = defaultValue;

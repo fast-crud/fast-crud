@@ -193,7 +193,7 @@ export default {
           title: item.title,
           show: item.show ?? true,
           fixed: item.fixed ?? false,
-          disabled: item.disabledColumnsFilter ?? false
+          disabled: item.columnSetDisabled ?? false
         };
         columns.push(column);
       });

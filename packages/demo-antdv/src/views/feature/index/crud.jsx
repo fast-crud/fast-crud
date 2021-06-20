@@ -33,7 +33,7 @@ export default function ({ expose }) {
             // type: "index",
             align: "center",
             width: "55px",
-            disabledColumnsFilter: true, //禁止在列设置中选择
+            columnSetDisabled: true, //禁止在列设置中选择
             formatter: (context) => {
               //计算序号,你可以自定义计算规则，此处为翻页累加
               let index = context.index ?? 1;
