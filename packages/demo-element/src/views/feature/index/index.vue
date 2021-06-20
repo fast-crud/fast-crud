@@ -1,5 +1,11 @@
 <template>
-  <fs-crud ref="crudRef" v-bind="crudBinding" />
+  <fs-crud ref="crudRef" v-bind="crudBinding">
+    <template #actionbar-right>
+      <el-alert type="warning" class="ml-10">
+        目前index序号列有bug，建议自定义字段去显示序号，https://github.com/element-plus/element-plus/issues/2143
+      </el-alert>
+    </template>
+  </fs-crud>
 </template>
 
 <script>

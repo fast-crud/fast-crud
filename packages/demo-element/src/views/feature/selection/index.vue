@@ -1,5 +1,8 @@
 <template>
   <fs-crud ref="crudRef" v-bind="crudBinding">
+    <template #actionbar-right>
+      <el-alert type="warning" class="ml-10"> 勾选后，点左下角删除按钮批量删除，同时演示第一行不允许选择</el-alert>
+    </template>
     <template #pagination-left>
       <el-tooltip content="批量删除">
         <fs-button icon="el-icon-delete" @click="handleBatchDelete" />

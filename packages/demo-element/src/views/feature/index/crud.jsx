@@ -26,6 +26,8 @@ export default function ({ expose }) {
       },
       table: {},
       columns: {
+        // TODO https://github.com/element-plus/element-plus/issues/2143
+        // 目前序号有bug
         $index: {
           title: "序号",
           form: { show: false },

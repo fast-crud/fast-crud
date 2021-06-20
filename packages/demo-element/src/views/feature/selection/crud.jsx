@@ -45,7 +45,7 @@ export default function ({ expose }) {
             width: "55px",
             columnSetDisabled: true, //禁止在列设置中选择
             selectable(row, index) {
-              return index !== 0; //设置第一行不允许选择
+              return row.id !== 1; //设置第一行不允许选择
             }
           }
         },
