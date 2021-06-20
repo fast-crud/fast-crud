@@ -14,14 +14,14 @@ const messages = {
     el: enLocale.el,
     fs: enFsLocale.fs,
     // 定义您自己的字典，但是请不要和 `el` 、`fs` 重复，这样会导致 ElementPlus 内部组件的翻译失效.
-    m: en
+    ...en
   },
   [zhLocale.name]: {
     label: "简体中文",
     el: zhLocale.el,
     fs: zhFsLocale.fs,
     // 定义您自己的字典，但是请不要和 `el` 、`fs`重复，这样会导致 ElementPlus 内部组件的翻译失效.
-    m: zh
+    ...zh
   }
 };
 
