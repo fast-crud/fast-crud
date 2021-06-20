@@ -75,9 +75,6 @@ export default function ({ expose }) {
         },
         customDictGetData: {
           title: "自定义字典请求",
-          sortable: true,
-          search: {},
-          width: 120,
           type: "dict-select",
           dict: dict({
             getData({ dict }) {
@@ -90,14 +87,12 @@ export default function ({ expose }) {
             }
           }),
           form: {
-            value: "2",
-            component: {
-              value: "2" // 默认值
-            },
+            value: "2", //默认值
             helper: "dict.getData可以覆盖全局配置的getRemoteDictFunc"
           },
-          component: {
-            props: {
+          column: {
+            width: "130px",
+            component: {
               type: "text" // 不使用tab，纯文本展示
             }
           }
@@ -124,13 +119,15 @@ export default function ({ expose }) {
           }
         },
         firstDefault: {
-          title: "第一个选项为默认值",
+          title: "默认值",
           type: "dict-select",
           dict: dict({
             cloneable: true,
             url: "/dicts/OpenStatusEnum?disabledOptions"
           }),
           form: {
+            //value:'0',//如果知道选项value，配置此项即可设置默认值
+            // 下方演示获取远程的字典数据来设置第一个选项为默认值
             component: {
               //监听 dict-change事件
               onDictChange({ dict, form, key }) {

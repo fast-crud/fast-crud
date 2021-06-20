@@ -76,9 +76,7 @@ export default function ({ expose }) {
         },
         customDictGetData: {
           title: "自定义字典请求",
-          sortable: true,
           search: {},
-          width: 120,
           type: "dict-select",
           dict: dict({
             getData({ dict }) {
@@ -91,15 +89,13 @@ export default function ({ expose }) {
             }
           }),
           form: {
-            value: "2",
-            component: {
-              value: "2" // 默认值
-            },
+            value: "2", //默认值
             helper: "dict.getData可以覆盖全局配置的getRemoteDictFunc"
           },
-          component: {
-            props: {
-              type: "text" // 不使用tab，纯文本展示
+          column: {
+            width: 120,
+            component: {
+              type: "text" // 不使用tag，纯文本展示
             }
           }
         },
@@ -125,6 +121,38 @@ export default function ({ expose }) {
             helper: "禁用字典选项"
           }
         },
+        firstDefault: {
+          title: "默认值",
+          type: "dict-select",
+          dict: dict({
+            cloneable: true,
+            url: "/dicts/OpenStatusEnum?disabledOptions"
+          }),
+          form: {
+            component: {
+              //监听 dict-change事件
+              onDictChange({ dict, form, key }) {
+                console.log("dict data changed", dict, key);
+                if (dict.data != null && form.firstDefault == null) {
+                  form.firstDefault = dict.data[0].value;
+                }
+              }
+              // 下面的方法也可以，注意要配置dict.prototype:true
+              // dict: {
+              //   // 此处dict配置会覆盖上面dict的属性
+              //   // form表单的dict设置为原型复制，每次初始化时都会重新loadDict
+              //   prototype: true,
+              //
+              //   onReady({ dict, form }) {
+              //     console.log("字典请求ready", dict, form, getComponentRef);
+              //     //  prototype= true 才能获取到form表单数据
+              //     form.firstDefault = dict.data[0].value;
+              //   }
+              // }
+            },
+            helper: "默认选择第一个选项"
+          }
+        },
         multiple: {
           title: "多选自动染色",
           sortable: true,
@@ -147,6 +175,7 @@ export default function ({ expose }) {
             ]
           }),
           column: {
+            width: "200px",
             component: { color: "auto" } // 自动染色
           }
         },
