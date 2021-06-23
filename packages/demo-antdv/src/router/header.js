@@ -17,15 +17,15 @@ export const headerMenus = [
     ]
   },
   {
-    title: "Demo",
+    title: "其他Demo",
     children: [
-      {
-        title: "Antdv版",
-        path: "http://fast-crud.docmirror.cn/antdv/"
-      },
       {
         title: "element版",
         path: "http://fast-crud.docmirror.cn/element/"
+      },
+      {
+        title: "FsAdmin",
+        path: "http://fs-admin.docmirror.cn/antdv/"
       },
       {
         title: "VbenAdminStarter",
