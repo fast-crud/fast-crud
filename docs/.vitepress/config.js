@@ -132,6 +132,7 @@ module.exports = {
             {text: '指南', link: '/guide/'},
             {text: 'API', link: '/api/'},
             {text: '示例', link:'/demo/'},
+            {text: 'FsAdmin', link:'http://fs-admin.docmirror.cn/antdv/'},
             {text: 'github', link: 'https://github.com/fast-crud/fast-crud'},
             {text: 'gitee', link: 'https://gitee.com/fast-crud/fast-crud'},
         ],
