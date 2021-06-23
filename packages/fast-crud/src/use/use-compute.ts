@@ -58,7 +58,6 @@ function setAsyncComputeValue(target, asyncValuesMap) {
   _.forEach(asyncValuesMap, (valueRef, key) => {
     _.set(target, key, valueRef.value == null ? null : valueRef.value);
   });
-  console.log("set async value", target);
 }
 
 function doComputed(target, getContextFn, excludes, userComputedFn) {
@@ -98,7 +97,6 @@ function doComputed(target, getContextFn, excludes, userComputedFn) {
       }
       if (asyncCount > 0) {
         setAsyncComputeValue(targetValue, asyncValuesMap);
-        console.log("async targetValue:", targetValue, asyncValuesMap);
       }
     }
 
@@ -147,7 +145,6 @@ export class AsyncComputeValue {
     watch(
       () => computedValue.value,
       async (value) => {
-        console.log("async fnc exec", value);
         //执行异步方法
         asyncRef.value = await this.asyncFn(value, getContextFn());
         console.log("asyncRef.value geted", asyncRef.value);

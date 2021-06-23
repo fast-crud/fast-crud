@@ -211,7 +211,6 @@ export function useEditable(props, ctx, tableRef) {
     _.forEach(data, (rowData, index) => {
       createEditableRow(index, rowData);
     });
-    console.log("editable init", editableRows);
     if (options.value.onSetup) {
       options.value.onSetup();
     }

@@ -20,15 +20,12 @@ function installAsyncComponent(app, name, es, options) {
 }
 
 function installAsyncComponents(app, modules) {
-  console.log("install names ", modules);
   _.forEach(modules, (item, name) => {
-    console.log("name", name, item);
     installAsyncComponent(app, name, item);
   });
 }
 
 function installImportComponents(app, modules) {
-  console.log("install names ", modules);
   _.forEach(modules, (item, name) => {
     app.component(name, item);
   });

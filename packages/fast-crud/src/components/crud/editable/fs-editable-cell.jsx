@@ -44,7 +44,6 @@ export default {
     });
 
     return () => {
-      // console.log("test editable cell render");
       if (!computedIsEditable.value) {
         return <fs-cell ref={"targetRef"} item={props.item} getScope={props.getScope} {...ctx.attrs} />;
       }
