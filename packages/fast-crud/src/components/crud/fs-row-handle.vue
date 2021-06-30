@@ -200,6 +200,7 @@ export default defineComponent({
 .fs-row-handle {
   display: flex;
   flex-wrap: wrap;
+  align-items: center;
   .row-handle-btn {
     margin: 2px;
     &.el-button {
