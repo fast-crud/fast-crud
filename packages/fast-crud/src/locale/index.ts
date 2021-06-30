@@ -18,9 +18,6 @@ class I18n {
   t(key, args) {
     return t(key, args);
   }
-  tc(key, args) {
-    return t(key, args);
-  }
   setVueI18n(instance) {
     this.vueI18nInstance = instance;
   }
@@ -32,11 +29,9 @@ export function useI18n() {
   if (i18n.vueI18nInstance != null) {
     return {
       // @ts-ignore
-      t: i18n.vueI18nInstance.global.t,
-      // @ts-ignore
-      tc: i18n.vueI18nInstance.global.tc
+      t: i18n.vueI18nInstance.global.t
     };
   }
 
-  return { t: i18n.t, tc: i18n.tc };
+  return { t: i18n.t };
 }

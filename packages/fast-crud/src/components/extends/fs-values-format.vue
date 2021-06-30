@@ -26,6 +26,7 @@ import { uiContext } from "../../ui";
 import _ from "lodash-es";
 import { computed } from "vue";
 import { useDict } from "../../use/use-dict";
+import trace from "../../utils/util.trace";
 function getHashCode(str) {
   if (str == null) {
     return 0;
@@ -123,6 +124,8 @@ export default {
   },
   emits: ["click"],
   setup(props, ctx) {
+    trace.trace("values-format");
+    console.log("values-format init", props.modelValue);
     //const dict = useDict(props, ctx);
     const ui = uiContext.get();
     const COLOR_LIST = ui.tag.colors;
@@ -180,10 +183,12 @@ export default {
         });
       }
 
-      const colorfulOptions = _.cloneDeep(options);
+      const colorfulOptions = [];
+      _.forEach(options, (item) => {
+        colorfulOptions.push(_.omit(item, "children"));
+      });
       _.forEach(colorfulOptions, (item) => {
         setColor(props, item);
-        delete item.children;
       });
       return colorfulOptions;
     });
