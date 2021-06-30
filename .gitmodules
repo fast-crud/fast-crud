@@ -1,0 +1,3 @@
+[submodule "packages/fs-admin/fs-admin-antdv"]
+	path = packages/fs-admin/fs-admin-antdv
+	url = https://github.com/fast-crud/fs-admin-antdv
