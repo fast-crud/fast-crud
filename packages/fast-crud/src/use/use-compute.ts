@@ -88,7 +88,7 @@ function doComputed(target, getContextFn, excludes, userComputedFn) {
   return computed(() => {
     let targetValue = target.value;
     if (asyncCount > 0 || syncCount > 0) {
-      targetValue = _.cloneDeep(targetValue);
+      targetValue = cloneDeep(targetValue);
       if (syncCount > 0) {
         _.forEach(dependValues, (value, key) => {
           const context = getContextFn ? getContextFn(key, value) : {};

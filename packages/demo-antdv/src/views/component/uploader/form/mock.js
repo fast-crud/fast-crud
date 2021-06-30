@@ -8,7 +8,8 @@ const list = [
     avatar: "http://greper.veryreader.com/extends/avatar.jpg",
     file: ["http://greper.veryreader.com/extends/avatar.jpg", "https://www.baidu.com/img/bd_logo1.png"],
     pictureCard: ["http://greper.veryreader.com/extends/avatar.jpg", "https://www.baidu.com/img/bd_logo1.png"],
-    limit: ["http://greper.veryreader.com/extends/avatar.jpg", "https://www.baidu.com/img/bd_logo1.png"]
+    limit: ["http://greper.veryreader.com/extends/avatar.jpg", "https://www.baidu.com/img/bd_logo1.png"],
+    statusRemote: "0"
   },
   {
     radio: "2"
