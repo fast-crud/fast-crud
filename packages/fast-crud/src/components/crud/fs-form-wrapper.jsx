@@ -1,6 +1,5 @@
 import { ref, resolveDynamicComponent, computed, nextTick, onMounted } from "vue";
 import FsButton from "../basic/fs-button";
-import traceUtil from "../../utils/util.trace";
 import _ from "lodash-es";
 import { useI18n } from "../../locale";
 import "./fs-form-wrapper.less";
@@ -34,7 +33,6 @@ export default {
   },
   emits: ["reset", "submit", "validationError", "value-change", "open", "opened", "closed"],
   setup(props, ctx) {
-    traceUtil.trace("fs-form-wrapper");
     const { t } = useI18n();
     const formWrapperOpen = ref(false);
     const formWrapperIs = ref();
@@ -156,6 +154,9 @@ export default {
     });
 
     const fullscreen = ref(false);
+    const fullscreenEnabled = computed(() => {
+      return !formWrapperIs.value?.endsWith("drawer");
+    });
     function toggleFullscreen() {
       fullscreen.value = !fullscreen.value;
     }
@@ -166,6 +167,7 @@ export default {
       onOpened,
       open,
       title,
+      fullscreenEnabled,
       fullscreen,
       toggleFullscreen,
       formOptions,
@@ -201,6 +203,15 @@ export default {
       const scope = { _self: this, index, mode, getFormData: this.getFormData };
       children = {
         title: () => {
+          let fullScreenIcon = null;
+          if (this.fullscreenEnabled.value) {
+            fullScreenIcon = (
+              <fs-icon
+                onClick={this.toggleFullscreen}
+                icon={this.fullscreen ? ui.icons.fullScreen : ui.icons.unFullScreen}
+              />
+            );
+          }
           return (
             <div class={"fs-form-header"}>
               <div class={"fs-form-header-left"}>
@@ -210,10 +221,7 @@ export default {
               </div>
               <div class={"fs-form-header-action"}>
                 {slotsRender("form-header-action-left", scope)}
-                <fs-icon
-                  onClick={this.toggleFullscreen}
-                  icon={this.fullscreen ? ui.icons.fullScreen : ui.icons.unFullScreen}
-                />
+                {fullScreenIcon}
                 {slotsRender("form-header-action-right", scope)}
               </div>
             </div>
