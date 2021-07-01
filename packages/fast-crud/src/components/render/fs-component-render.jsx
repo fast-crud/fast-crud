@@ -96,7 +96,7 @@ export default {
     // 带事件的attrs
     const allAttrs = computed(() => {
       const vModel = props.vModel || "modelValue";
-      const modelValue = props.modelValue || (ui.type === "antdv" ? undefined : null);
+      const modelValue = props.modelValue ?? (ui.type === "antdv" ? undefined : null);
       const attrs = {
         ref: "targetRef",
         // scope: props.scope,

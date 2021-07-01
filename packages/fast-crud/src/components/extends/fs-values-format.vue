@@ -124,8 +124,8 @@ export default {
   },
   emits: ["click"],
   setup(props, ctx) {
-    trace.trace("values-format");
-    console.log("values-format init", props.modelValue);
+    // trace.trace("values-format");
+    // console.log("values-format init", props.modelValue);
     //const dict = useDict(props, ctx);
     const ui = uiContext.get();
     const COLOR_LIST = ui.tag.colors;
