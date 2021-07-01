@@ -94,9 +94,32 @@ const crudOptions= {
 
 ## 依赖
 ### ui组件库
-[Antdv](https://github.com/vueComponent/ant-design-vue) 、[Element-Plus](https://github.com/element-plus/element-plus) 二选一
+* [Antdv 2x](https://github.com/vueComponent/ant-design-vue) 、[Element-Plus](https://github.com/element-plus/element-plus) 二选一
+
+### 基于
+* [vue](https://github.com/vuejs/vue-next) 
+* [vitejs](https://github.com/vitejs/vite)
+
 
 ### monorepo
 [![lerna](https://img.shields.io/badge/maintained%20with-lerna-cc00ff.svg)](https://lerna.js.org/)
 
+
+## FsAdmin
+示例admin脚手架
+
+### 依赖
+* [vue](https://github.com/vuejs/vue-next) 
+* [vue-router](https://github.com/vuejs/vue-router-next)
+* [antdv 2x](https://github.com/vueComponent/ant-design-vue)
+* [vitejs](https://github.com/vitejs/vite)
+* [pinia](https://github.com/posva/pinia)
+* [purge-icons](https://github.com/antfu/purge-icons)
+
+### 参考如下项目
+* [d2-admin](https://github.com/d2-projects/d2-admin)
+* [antdv-pro](https://github.com/vueComponent/ant-design-vue-pro)
+* [vben-admin](https://github.com/anncwb/vue-vben-admin)
+
+感谢这些优秀的项目
 
