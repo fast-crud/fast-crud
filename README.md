@@ -18,9 +18,6 @@ document：http://fast-crud.docmirror.cn/
 /></a>
 </div>
 
->Fast crud is currently in alpha, and the API may change
->The complete redo version of D2CrudPlus based on vue3
-
 ## Developing crud is as fast as lightning
 1、Just write the crud options
 ```js
