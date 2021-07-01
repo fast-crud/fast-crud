@@ -2,8 +2,7 @@
   "packages": [
     "packages/*",
     "packages/extends/*",
-    "packages/ui/*",
-    "packages/fs-admin/*"
+    "packages/ui/*"
   ],
   "command": {
     "bootstrap": {
@@ -13,5 +12,5 @@
     }
   },
   "npmClient": "yarn",
-  "version": "0.10.4"
+  "version": "0.10.5"
 }

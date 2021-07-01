@@ -3,6 +3,23 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.10.5](https://github.com/fast-crud/fast-crud/compare/v0.10.4...v0.10.5) (2021-07-01)
+
+
+### Bug Fixes
+
+* 头像与搜索框冲突的bug https://github.com/fast-crud/fast-crud/issues/2 ([a118b91](https://github.com/fast-crud/fast-crud/commit/a118b91f8327980fe22b7254e11a30fce138b867))
+* https://github.com/fast-crud/fast-crud/issues/3 ([b617668](https://github.com/fast-crud/fast-crud/commit/b617668cf77d1d8ceab24a93c14821e75f085a97))
+
+
+### Performance Improvements
+
+* fs-admin 与crud demo ([4e6b20f](https://github.com/fast-crud/fast-crud/commit/4e6b20fe19434460853841f371b9fd5f16e5e2d3))
+
+
+
+
+
 ## [0.10.4](https://github.com/fast-crud/fast-crud/compare/v0.10.3...v0.10.4) (2021-06-20)
 
 
