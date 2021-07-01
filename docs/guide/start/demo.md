@@ -19,9 +19,13 @@ src
 执行如下命令即可运行示例项目
 ```shell script
 git clone https://gitee.com/fast-crud/fast-crud.git
-# 运行 antdv版示例,进入demo-antdv目录
-cd fast-crud/packages/demo-antdv  
-# 运行 element版示例，进入demo-element目录
+cd fast-crud
+# 更新fs-admin子模块
+npm run init
+
+# 运行 antdv版示例,请进入fs-admin-antdv 目录
+cd fast-crud/packages/fs-admin/fs-admin-antdv  
+# 运行 element版示例，请进入demo-element目录
 cd fast-crud/packages/demo-element  
 
 # 启动demo
@@ -53,11 +57,28 @@ npm install
 ```
 
 2、 然后debug模式启动
-```
+
+ * 运行 antdv版示例
+```shell script
 # 运行 antdv版示例
-cd fast-crud/packages/demo-antdv  
-# 运行 element版示例
-cd fast-crud/packages/demo-element  
-npm install  #第一步执行过，就无需再执行
+cd fast-crud/packages/fs-admin/fs-admin-antdv  
+#如果第一步执行过，就无需再执行
+npm install  
+#不启用权限模块
 npm run debug
+#启用权限
+npm run debug:pm
+
 ```
+* 运行 element版示例
+```shell script
+# 运行 antdv版示例
+cd fast-crud/packages/demo-element  
+#如果第一步执行过，就无需再执行
+npm install  
+npm run debug
+
+```
+
+
+

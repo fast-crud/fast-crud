@@ -12,6 +12,8 @@
 
 ### 基于antdv
 * [vben-admin](http://fast-crud.docmirror.cn/vben/)
+  
+* [fs-admin](https://github.com/fast-crud/fs-admin-antdv/)
 
 ### 基于element-plus
 * 暂时还没有找到比较好的admin框架

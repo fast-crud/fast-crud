@@ -4,7 +4,7 @@
 ## 在demo里面开发一个crud
 
 
-进入到demo目录下`packages/demo-antdv` 或 `packages/demo-element`
+进入到demo目录下`packages/fs-admin/fs-admin-antdv` 或 `packages/demo-element`
 
 一个crud主要分为3个部分
 * crud.js：     crud配置
