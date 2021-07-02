@@ -11,13 +11,15 @@
     "docs:all": "npm run docgen:crud && npm run docgen:extends && npm run docs:build",
     "prepublish": "lerna run build --scope */ui-* --scope @fast-crud/fast-crud --scope */extends-*",
     "publish": "lerna publish --conventional-commits",
+    "copylogs": "copyfiles ./packages/*/CHANGELOG.md  ./docs/guide/changelogs/ && copyfiles ./packages/*/*/CHANGELOG.md  ./docs/guide/changelogs/ && copyfiles ./packages/*/*/*/CHANGELOG.md  ./docs/guide/changelogs/ && copyfiles ./CHANGELOG.md  ./docs/guide/changelogs/",
     "init": "git submodule update --init --recursive"
   },
   "author": "Greper",
   "license": "MIT",
   "devDependencies": {
     "lerna": "^4.0.0",
-    "vitepress": "^0.13.0",
-    "vue-docgen-cli": "^4.37.0"
+    "vitepress": "^0.13.2",
+    "vue-docgen-cli": "^4.37.0",
+    "copyfiles": "^2.4.1"
   }
 }

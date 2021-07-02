@@ -10,7 +10,7 @@ module.exports = {
                     'width=device-width,initial-scale=1,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no',
             },
         ],
-        ['meta', {name: 'keywords', content: 'vite vui'}],
+        ['meta', {name: 'keywords', content: 'fast-crud、fs-admin'}],
         ['link', {rel: 'icon', href: '/favicon.ico'}],
     ],
     themeConfig: {

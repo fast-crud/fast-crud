@@ -9,8 +9,6 @@ const { resolve } = path;
 
 // https://vitejs.dev/config/
 export default ({ command, mode }) => {
-  console.log("args", command, mode);
-
   let build = {};
   if (mode === "umd") {
     build = {
@@ -78,7 +76,6 @@ export default ({ command, mode }) => {
         output: {
           manualChunks(id) {
             if (id.includes("src/components") && id.lastIndexOf(".vue") > 0) {
-              console.log(id);
               let name = id.substring(id.lastIndexOf("/") + 1);
               name = name.substring(0, name.indexOf("."));
               return "components/" + name;
@@ -103,6 +100,5 @@ export default ({ command, mode }) => {
   };
 
   _.merge(options, build);
-  console.log("options", options);
   return options;
 };

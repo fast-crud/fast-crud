@@ -128,7 +128,6 @@ export default {
       const { getDefaultType, getUploaderImpl } = useUploader(proxy);
       const type = this.uploader?.type || getDefaultType();
       const comp = getUploaderImpl(type);
-      console.log("comp", comp);
       return comp;
     },
     _urlList() {
@@ -212,21 +211,18 @@ export default {
         item.message = "文件上传出错:" + e.message;
         console.error(e);
       };
-      console.log("blob:", blob);
       const option = {
         file: blob,
         fileName: file.name,
         onProgress,
         onError
       };
-      console.log("item", item, this.list);
       this.list.push(item);
       try {
         const uploaded = await this.doUpload(option);
         item.url = this.buildUrl(uploaded.url);
         item.value = uploaded.url;
         item.status = "done";
-        console.log("item", uploaded, item, this.list);
         this.emit();
       } catch (e) {
         onError(e);
