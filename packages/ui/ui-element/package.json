@@ -1,6 +1,6 @@
 {
   "name": "@fast-crud/ui-element",
-  "version": "0.10.4",
+  "version": "0.11.0",
   "description": "",
   "main": "./dist/ui-element.umd.js",
   "module": "./dist/ui-element.es.js",
@@ -12,7 +12,7 @@
   "author": "Greper",
   "license": "MIT",
   "dependencies": {
-    "@fast-crud/ui-interface": "^0.10.1",
+    "@fast-crud/ui-interface": "^0.11.0",
     "element-plus": "^1.0.2-beta.48",
     "vue": "^3.0.7"
   },
