@@ -5,7 +5,9 @@
 2. `compute` 同步计算，基于`vue`的`computed`，但又有所不同。
 3. `asyncCompute`异步计算，基于`vue`的`watch 和 computed`实现。 
  
-动态计算主要用于解决配置需要动态变化的问题，其中2、3类更为强大，可以根据当前上下文（form和row数据）动态计算。    
+动态计算主要用于解决配置需要动态变化的问题.
+对于第1类：实际上修改`crudBinding.xx.xx.xx`相应的属性也能实现动态，并且更精准，而`ref或computed`方式更灵活
+其中2、3类更为强大，可以根据当前上下文（form和row数据）动态计算。    
 
 动态计算demo：
 [antdv版](http://fast-crud.docmirror.cn/antdv/#/basis/compute)  | 
