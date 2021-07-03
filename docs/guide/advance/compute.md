@@ -1,11 +1,41 @@
 # 动态计算
+
+动态计算分为三类
+1. `ref、computed`类,将配置传入一个`ref`或者`computed`，就能够动态变化。
+2. `compute` 同步计算，基于`vue`的`computed`，但又有所不同。
+3. `asyncCompute`异步计算，基于`vue`的`watch 和 computed`实现。 
  
-这里的动态计算是基于`vue`的`computed`的，但又有所不同。      
-主要用于解决某些配置项需要根据当前上下文数据动态变化的问题。    
+动态计算主要用于解决配置需要动态变化的问题，其中2、3类更为强大，可以根据当前上下文（form和row数据）动态计算。    
 
 动态计算demo：
 [antdv版](http://fast-crud.docmirror.cn/antdv/#/basis/compute)  | 
 [element版](http://fast-crud.docmirror.cn/antdv/#/basis/compute)
+
+## ref和computed【ref引用】
+可以给`crudOptions`里的属性配置`ref`即可实现全局动态变化。     
+你只需保存ref的引用，然后通过修改ref.value，达到动态修改的目的。
+```js
+//默认ref不显示table
+const showTableRef = ref(false)
+//或者使用computed计算出是否显示table
+const showTableComputed = computed(()=>{
+    return showTableRef.value
+})
+const crudOptions = {
+    table:{
+        show:showTableRef //换成showTableComputed是一样的效果
+    }
+}
+
+// 当修改showTableRef.value=true，可实现table的动态显隐
+showTableRef.value = true
+
+```
+:::warning
+某些配置可能不支持此方式进行动态，当出现问题时您可以提交issue，需要进行具体分析。
+实际上通过直接修改`crudBinding.xxx.xxx.xxx`也可以达到一样的效果             
+建议只将末端配置使用`ref或computed`    
+:::
 
 ## compute 【同步计算】
 > 注意后面没有`d`，基于`vue`的`computed`，与之用法类似，但不是同一个东西

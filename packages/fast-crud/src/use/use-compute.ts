@@ -147,7 +147,7 @@ export class AsyncComputeValue {
       async (value) => {
         //执行异步方法
         asyncRef.value = await this.asyncFn(value, getContextFn());
-        console.log("asyncRef.value geted", asyncRef.value);
+        console.log("asyncRef.value,get->", asyncRef.value);
       },
       { immediate: true }
     );

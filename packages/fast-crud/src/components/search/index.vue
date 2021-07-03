@@ -166,7 +166,8 @@ export default {
     let autoSearch = ref(null);
     let initialForm = _.cloneDeep(props.initialForm || {});
     _.forEach(props.columns, (column, key) => {
-      if (column.value !== undefined) {
+      if (column.value !== undefined && column.show !== false && column.component?.show !== false) {
+        //默认值
         initialForm[key] = column.value;
       }
     });
@@ -194,7 +195,6 @@ export default {
         autoSearch.value.cancel();
       }
       const valid = await searchFormRef.value.validate();
-      logger.debug("valid", valid);
       if (valid) {
         ctx.emit("search", { form });
       } else {
@@ -268,13 +268,7 @@ export default {
     function initAutoSearch() {
       // 构建防抖查询函数
       if (props.debounce !== false) {
-        let wait = null;
-        if (props.debounce) {
-          wait = props.debounce.wait;
-        }
-        if (wait == null) {
-          wait = 500;
-        }
+        let wait = props.debounce?.wait || 500;
         autoSearch = _.debounce(doSearch, wait, props.debounce);
       }
     }
@@ -321,10 +315,9 @@ export default {
         const componentRef = getComponentRef(key);
         item.valueChange({ key, value, componentRef, ...getContextFn() });
       }
-      if (item.autoSearchTrigger === "change") {
+      if (!item.autoSearchTrigger || item.autoSearchTrigger === "change") {
         doAutoSearch();
       }
-      doAutoSearch();
     }
 
     const computedRules = computed(() => {

@@ -1,7 +1,7 @@
 import { uiContext } from "../../ui";
 
-function antdvColspan(ui) {
-  return ui.type !== "antdv" ? {} : { labelCol: { span: 2 }, wrapperCol: { span: 21 } };
+function antdvColspan(ui, labelSpan) {
+  return ui.type !== "antdv" ? {} : { labelCol: { span: labelSpan }, wrapperCol: { span: 23 - labelSpan } };
 }
 
 /**
@@ -14,7 +14,21 @@ export default function () {
       //跨列
       form: {
         col: { span: 24 },
-        ...antdvColspan(ui)
+        ...antdvColspan(ui, 2)
+      }
+    },
+    colspan3: {
+      //跨列
+      form: {
+        col: { span: 24 },
+        ...antdvColspan(ui, 3)
+      }
+    },
+    colspan4: {
+      //跨列
+      form: {
+        col: { span: 24 },
+        ...antdvColspan(ui, 4)
       }
     }
   };

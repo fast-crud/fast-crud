@@ -137,6 +137,21 @@ const crudOptions = {
 * 默认：{span:12}
 * 同[form.col](form#col)
 
+### [key].form.value
+* 说明：该字段的默认值
+* 类型：any
+* 注意：此处配置了默认值，会被search复制过去，一般来说，search是不需要默认值的，此时需要配置search.value=null进行取消。
+```
+columns:{
+    fieldKey:{
+        form:{
+            value:2 //当此字段value为空时，将被设置为默认值2
+        }
+    }
+}
+
+```
+
 
 ## [key].addForm
 * 说明：该字段在添加表单里面的配置
