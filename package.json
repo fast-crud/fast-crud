@@ -12,7 +12,7 @@
     "prepublish": "lerna run build --scope */ui-* --scope @fast-crud/fast-crud --scope */extends-*",
     "publish": "lerna publish --conventional-commits",
     "afterpublish": "npm run copylogs",
-    "copylogs": "copyfiles ./packages/*/CHANGELOG.md  ./docs/guide/changelogs/ && copyfiles ./packages/*/*/CHANGELOG.md  ./docs/guide/changelogs/ && copyfiles ./packages/*/*/*/CHANGELOG.md  ./docs/guide/changelogs/ && copyfiles ./CHANGELOG.md  ./docs/guide/changelogs/",
+    "copylogs": "copyfiles \"packages/**/CHANGELOG.md\"  ./docs/guide/changelogs/ -e **/node_modules/**",
     "init": "git submodule update --init --recursive"
   },
   "author": "Greper",
