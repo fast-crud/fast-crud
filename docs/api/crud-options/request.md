@@ -57,6 +57,19 @@
 }
 ```
 
+::: tip
+你也可以直接在`pageRequest()`里面做处理也是可以的，不过不太推荐此方式
+```js
+async pageRequest(opts){
+   // 转化opts为你后台接口所需要的结构
+   //opts ={page,form,sort}
+   const ret = await api.request(newOpts)
+   // 转化ret 为 fast-crud所需要的结构
+   // newRet = {records,currentPage,pageSize,total}
+   return newRet;
+}
+:::
+
 ## editRequest
 * 说明：编辑对话框，点击保存后发出的保存修改的请求
 * 类型：async Function({ form, row })

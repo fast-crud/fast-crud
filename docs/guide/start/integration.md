@@ -46,12 +46,30 @@ app.use(FastCrud, {
     //公共crud配置
     commonOptions() {
         return {
-            ... //你可以在此处配置你的crud公共配置
+            request:{
+                //接口请求配置
+                //你项目后台接口大概率与fast-crud所需要的返回结构不一致，所以需要配置此项
+                //请参考文档http://fast-crud.docmirror.cn/api/crud-options/request.html
+                transformQuery: ({ page, form, sort }) => {
+                    //转换为你pageRequest所需要的请求参数结构
+                    return {page, form, sort};
+                },
+                transformRes: ({ res }) => {
+                    //将pageRequest的返回数据，转换为fast-crud所需要的格式
+                    //return {records,currentPage,pageSize,total};
+                    return  {...res}
+                }
+            },
+            ... //你可以在此处配置你的其他crudOptions公共配置
         };
     },
 });
  ```
 
+:::warning
+你后台接口返回的数据大概率与fast-crud所需要的数据结构是不一致的，所以你需要配置公共的`request`       
+具体请参考[request配置](/api/crud-options/request.html)    
+:::
 
 
 ### 3. 安装扩展组件
