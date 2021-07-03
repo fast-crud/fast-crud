@@ -138,8 +138,8 @@ export default {
         ok: {
           text: t("fs.form.ok"),
           type: "primary",
-          onClick: () => {
-            submit();
+          onClick: async () => {
+            await submit();
           },
           loading: loading.value
         }

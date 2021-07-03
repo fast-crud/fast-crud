@@ -15,11 +15,16 @@ const crudOptions ={
             addForm:{ component:{} },      //添加表单字段独立配置
             viewForm:{ component:{} },     //查看表单字段独立配置
             editForm:{ component:{} },     //编辑表单字段独立配置
-            search:{ component:{} }        //查询表单字段独立配置
+            search:{ component:{} },       //查询表单字段独立配置
+            valueBuilder(){},              //值构建，具体请参考api/crud-options/columns.html文档
+            valueResolve(){}               //值解析
         }
     }
 }
 ```
+
+更多帮助请参考[字段配置api文档](/api/crud-options/columns.md)
+
 ## 字段组件配置
 字段组件分为两种：
 * 一种展示组件，出现在表格单元格中。
@@ -35,25 +40,26 @@ const crudOptions ={
 
 ::: warning
 使用相关组件前，需要通过`app.use` 、 `app.component`全局引入组件    
-或者在页面中配置`components`局部注册组件
+或者在`component.name`直接引用组件
 :::
 ## 组件配置项
 以`fs-dcit-select`为例 
 ```js
 component:{ //组件配置
   name: 'fs-dict-select', //表单组件名称，支持任何v-model组件
-  
-  //v-model绑定，element一般为'modelValue'（可以不传）
+  //name: shallowRef(SubTable),局部引用组件，见嵌套表格示例
+
+  //v-model绑定属性名，element一般为'modelValue'（可以不传）
   //antdv一般为'value'，必须要传
-  vModel: '', 
+  vModel: 'modelValue', 
 
   disabled: false, //组件是否禁用
   readonly: false, //组件是否是只读
   show: true, //是否显示该组件
   on:{ //组件事件监听
-    onClick(context){console.log(context)} //监听表单组件的select事件
+    onClick(context){console.log(context)} //监听组件的事件
   },
-  children:{ //组件的插槽(jsx)
+  children:{ //组件的插槽(仅支持jsx)
      default:(scope)=>{  //默认插槽
         return (<div>{scope.data}</div>)
      },
@@ -68,12 +74,19 @@ component:{ //组件配置
 
   //还可以在此处配置组件的参数，具体参数请查看对应的组件文档，不同组件参数不同
   separator:",",        //这是fs-dict-select的参数
-
+    
   //fs-dict-select内部封装了el-select组件，所以此处还可以配置el-select的参数
   //如果ui用的是antdv，则支持a-select的参数
   filterable: true,     //可过滤选择项,
   multiple: true,       //支持多选
   clearable: true,      //可清除
+    
+  //如果组件的参数与上面的参数有冲突，则需要配置在props下。
+  props:{
+    //比如name、vModel、props、on、children等等
+    //如果你要用的组件里面需要配置以上这些名字的参数的话，可以配置在此处
+  }
+
 }
 ```
 

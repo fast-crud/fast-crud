@@ -170,3 +170,33 @@ const crudOptions = {
 * 说明：查询框字段组件配置
 * 类型：Object
 参考组件配置[component](../common-options.md)
+
+
+### valueBuilder与valueResolve
+* 说明： 后台值与前端值不一致时解决方案
+* 场景1： 比如图片展示组件和图片上传组件的value为数组类型，但是提交到后台需要的是逗号分割的字符串
+* 场景2： 又或者省市区级联选择：后台返回的数据是province、city、county三个字段，而前端则需要将这三个字段组成一个数组，传给级联组件。
+```
+columns:{
+    key:{
+        valueBuilder(context){
+            //value构建，就是把后台传过来的值转化为前端组件所需要的值
+            //在pageRequest之后执行转化，然后将转化后的数据放到table里面显示
+            context.row.imageUrl = context.row.imageUrl?.split(',')
+        }, 
+        valueResolve(context){
+            //value解析，就是把组件的值转化为后台所需要的值
+            //在form表单点击保存按钮后，提交到后台之前执行转化
+            context.form.imageUrl = context.form.imageUrl?.join(',')
+        }, 
+        form:{
+            //有时候，行展示组件的值与form表单所需要的值也是不一样的
+            valueBuilder(context){
+                //如果配置在form下，则表示将行数据的值转化为表单组件所需要的值 
+                //在点击编辑按钮之后，弹出表单对话框之前执行转化。
+            }, 
+            valueResolve(context){},
+        }
+    }
+}
+```

@@ -19,14 +19,16 @@
     atLeast: 2, //按钮折叠配置，至少显示多少个按钮，多余的折叠
     buttons: {
       view:{
-          ...FsButton,
-          order:1,
+          ...FsButton, // FsButton的配置，可以修改文本、颜色，也可以修改成图标按钮、纯文本按钮等
+          order:1, //排序号，越小则排前面
           show:true,
-          click:()=>{} //点击事件,默认打开查看对话框
+          //点击事件,点击此按钮会触发此方法
+          //此处的查看按钮如果不配置默认打开查看对话框
+          click:(context)=>{} 
       },
-      edit:{},
-      remove:{},
-      custom:{},
+      edit:{order:2}, //编辑按钮
+      remove:{order:3},//删除按钮
+      custom:{},//自定义按钮，可以任意命名,任意数量
     }
   }
 }
@@ -44,3 +46,24 @@
   }
 }
 ```
+
+
+## group
+* 说明：按钮分组配置
+* 类型：Object
+```json5
+{ // rowHandle.dropdown
+  group: {
+    yourGroupKey: {
+      buttonKey1: {}, //按钮配置
+      buttonKey2: {}
+    }
+  }
+}
+```
+
+## active
+* 说明：当前激活哪个分组，与上面的 `group`配合使用，切换一组按钮
+* 类型：string
+* 默认：'default'，代表当前激活的是`rowHandle.buttons`里面配置的按钮组
+

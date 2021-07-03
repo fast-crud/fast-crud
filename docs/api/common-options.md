@@ -24,10 +24,6 @@ const curdOptions = {
     }
 }
 ```
-### component.[xxx]
-* 说明：组件的属性
-* 示例：`options:[]`
-
 ### component.onXxx
 * 说明：组件的事件监听（没有context）
 * 类型：Function(event)
@@ -53,6 +49,14 @@ component:{
     }
 }
 ```
+
+### component.[xxx]
+* 说明：组件的属性
+* 示例：`options:[]`
+
+### component.props.[xxx]
+* 说明：组件的属性（同上）
+* 区别：当组件的属性与上面所列的属性名称（name、vModel、on、props等等）有冲突时，可以配置在`props`下
 
 
 ## buttons【按钮组配置】

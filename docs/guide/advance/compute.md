@@ -132,8 +132,7 @@ const crudOptions = {
 * `表格的每一行所有列`是一个上下文范围
 * `表单里的所有字段`是一个上下文范围（表单里又分为addForm、editForm、viewForm）
 * `搜索框的所有字段`是一个上下文范围
-
-`context`里面的内容根据所处的位置不同，包含的内容不同,比如在表格行的上下文里面就没有form
+`context`里面的内容根据所处的位置不同，包含的内容不同,比如在表格行的上下文里面就没有form,具体有什么你可以在实际使用过程中log出来看看
 ```js
 context = {
     row:Object, 
@@ -144,5 +143,5 @@ context = {
 ```
 
 ## 适用范围
-`columns.key.form`、`columns.key.xxxForm`、`columns.key.column`、`columns.key.search`下的所有属性均可以使用动态计算
+`columns.key.form`、`columns.key.xxxForm`、`columns.key.column`、`columns.key.search`、`rowHandle`下的所有属性均可以使用动态计算
 

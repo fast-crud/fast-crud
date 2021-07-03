@@ -37,7 +37,7 @@ module.exports = {
                         {text: '动态计算', link: '/guide/advance/compute'},
                         {text: '插槽', link: '/guide/advance/slots'},
                         {text: '扩展', link: '/guide/advance/extends'},
-                        //  {text: '多级数据', link: '/guide/advance/nest-data'},
+                        {text: '入门常见问题', link: '/guide/advance/improve'},
                     ],
                 },
                 {
@@ -45,7 +45,7 @@ module.exports = {
                     children: [
                         {text: '升级', link: '/guide/other/upgrade'},
                         {text: 'changelog', link: '/guide/other/changelog'},
-                        {text: '常见问题', link: '/guide/other/questions'},
+                        {text: '其他疑难问题', link: '/guide/other/questions'},
                         {text: '联系作者', link: '/guide/other/contact'}
                     ],
                 },
@@ -139,4 +139,4 @@ module.exports = {
         ],
     },
 }
-7
+
