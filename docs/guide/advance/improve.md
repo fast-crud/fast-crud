@@ -29,3 +29,22 @@ fast-crud文档里面不会包含底层ui组件的文档。当你要配置组件
  
 ## 后台接口参数和返回数据结构与fast-crud的数据结构不一致
 请参考文档[request请求配置](/api/crud-options/request.html#request-【请求】)
+
+
+## 关于rowKey
+`a-table`和`el-table`都有`rowKey`的设置。       
+默认情况下，`fast-crud` 将`rowKey`设置为`id`。      
+当你后台返回的列表数据主键列名称就是`id`，则无需关心此设置。  
+否则你需要修改rowKey的配置
+```js
+const crudOptions ={
+    table:{
+        rowKey:'yourIdName',
+        editable:{
+            //如果你启用了行编辑，那么还需要修改行编辑的rowKey
+            rowKey:'yourIdName',
+        }   
+    }
+}
+
+``` 
