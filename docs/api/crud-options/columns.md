@@ -172,7 +172,7 @@ const crudOptions = {
 参考组件配置[component](../common-options.md)
 
 
-### valueBuilder与valueResolve
+## valueBuilder与valueResolve
 * 说明： 后台值与前端值不一致时解决方案
 * 场景1： 比如图片展示组件和图片上传组件的value为数组类型，但是提交到后台需要的是逗号分割的字符串
 * 场景2： 又或者省市区级联选择：后台返回的数据是province、city、county三个字段，而前端则需要将这三个字段组成一个数组，传给级联组件。
