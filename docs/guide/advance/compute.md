@@ -16,6 +16,7 @@
 ## ref和computed【ref引用】
 可以给`crudOptions`里的属性配置`ref`即可实现全局动态变化。     
 你只需保存ref的引用，然后通过修改ref.value，达到动态修改的目的。
+实际上通过直接修改`crudBinding.xxx.xxx.xxx`也可以达到一样的效果，你可以根据实际情况酌情选用
 ```js
 //默认ref不显示table
 const showTableRef = ref(false)
@@ -34,8 +35,7 @@ showTableRef.value = true
 
 ```
 :::warning
-某些配置可能不支持此方式进行动态，当出现问题时您可以提交issue，需要进行具体分析。
-实际上通过直接修改`crudBinding.xxx.xxx.xxx`也可以达到一样的效果             
+某些配置可能不支持此方式进行动态，当出现问题时您可以提交issue，需要进行具体分析。             
 建议只将末端配置使用`ref或computed`    
 :::
 
