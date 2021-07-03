@@ -198,18 +198,11 @@ export default defineComponent({
 
 <style lang="less">
 .fs-row-handle {
-  display: flex;
-  flex-wrap: wrap;
-  align-items: center;
   .row-handle-btn {
     margin: 2px;
     &.el-button {
       margin: 2px;
     }
-  }
-  .ant-btn {
-    margin-left: 2px;
-    margin-right: 2px;
   }
 }
 </style>
