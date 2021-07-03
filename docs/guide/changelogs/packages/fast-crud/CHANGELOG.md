@@ -3,6 +3,22 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.12.0](https://github.com/fast-crud/fast-crud/compare/v0.11.0...v0.12.0) (2021-07-03)
+
+
+### Features
+
+* 动态计算支持ref和compImpl ([757edde](https://github.com/fast-crud/fast-crud/commit/757edde12c60b1e3722b02318fa6a82822cbce1d))
+
+
+### Performance Improvements
+
+* select 远程搜索演示 ([6c8b2cf](https://github.com/fast-crud/fast-crud/commit/6c8b2cf91bae18c50c8953be067e3b85b1cb042e))
+
+
+
+
+
 # [0.11.0](https://github.com/fast-crud/fast-crud/compare/v0.10.4...v0.11.0) (2021-07-02)
 
 

@@ -3,6 +3,29 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.12.0](https://github.com/fast-crud/fast-crud/compare/v0.11.0...v0.12.0) (2021-07-03)
+
+
+### Bug Fixes
+
+* 修复切换主题后，按钮text颜色变化的问题 ([8748e29](https://github.com/fast-crud/fast-crud/commit/8748e290deaf32c5ee44f9626d025ae270377e11))
+
+
+### Features
+
+* 动态计算支持ref和compImpl ([757edde](https://github.com/fast-crud/fast-crud/commit/757edde12c60b1e3722b02318fa6a82822cbce1d))
+
+
+### Performance Improvements
+
+* select 远程搜索演示 ([6c8b2cf](https://github.com/fast-crud/fast-crud/commit/6c8b2cf91bae18c50c8953be067e3b85b1cb042e))
+* 一些优化 ([563acdf](https://github.com/fast-crud/fast-crud/commit/563acdfdac70e1347a7edbac495933f96cfc5f9f))
+* 一些优化 ([590ed36](https://github.com/fast-crud/fast-crud/commit/590ed366e6ecc9725df7b05642a72f233264e116))
+
+
+
+
+
 # [0.11.0](https://github.com/fast-crud/fast-crud/compare/v0.10.4...v0.11.0) (2021-07-02)
 
 
