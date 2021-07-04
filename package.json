@@ -20,6 +20,7 @@
   "devDependencies": {
     "lerna": "^4.0.0",
     "vitepress": "^0.13.2",
+    "vite": "^2.2.3",
     "vue-docgen-cli": "^4.37.0",
     "copyfiles": "^2.4.1"
   }
