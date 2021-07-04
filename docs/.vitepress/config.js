@@ -44,7 +44,7 @@ module.exports = {
                     text: '其他',
                     children: [
                         {text: '升级', link: '/guide/other/upgrade'},
-                        {text: 'changelog', link: '/guide/other/changelog'},
+                        {text: 'changelog', link: '/guide/other/changelogs'},
                         {text: '其他疑难问题', link: '/guide/other/questions'},
                         {text: '联系作者', link: '/guide/other/contact'}
                     ],
