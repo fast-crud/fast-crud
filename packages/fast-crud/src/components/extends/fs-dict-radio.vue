@@ -5,7 +5,6 @@
       v-for="item of computedOptions"
       :key="getValue(item)"
       :[$fsui.radio.value]="getValue(item)"
-      v-bind="item"
     >
       {{ getLabel(item) }}
     </component>
