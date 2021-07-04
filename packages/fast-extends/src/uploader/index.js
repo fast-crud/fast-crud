@@ -11,7 +11,7 @@ const FsUploaderComponents = {
   }
 };
 
-export default {
+export const FsExtendsUploader = {
   install(app, options) {
     app.use(FsUploaderType, options);
     app.use(FsUploaderComponents);

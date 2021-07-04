@@ -7,7 +7,9 @@ import { AllUploadSuccessValidator } from "./validators";
 function setConfig(app, config) {
   app.config.globalProperties.$fs_uploader_config = _.merge(defaultConfig, config);
 }
-export { AllUploadSuccessValidator };
+//兼容旧版本
+const AllSuccessValidator = AllUploadSuccessValidator;
+export { AllUploadSuccessValidator, AllSuccessValidator };
 export default {
   install(app, options) {
     const newTypes = types();

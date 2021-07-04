@@ -13,7 +13,10 @@ module.exports = {
         ['meta', {name: 'keywords', content: 'fast-crud、fs-admin'}],
         ['link', {rel: 'icon', href: '/favicon.ico'}],
     ],
+
     themeConfig: {
+        // algolia: {
+        // },
         // search: true,
         sidebar: {
             '/guide/': [

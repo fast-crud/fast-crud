@@ -19,16 +19,22 @@ function installAsyncComponent(app, name, es, options) {
   app.component(name, asyncComponent, options);
 }
 
-function installAsyncComponents(app, modules, nameSuffix, transform) {
+function installAsyncComponents(app, modules, excludes, nameSuffix, transform) {
   const imports = transformFromGlob(modules, nameSuffix, transform);
   _.forEach(imports, (item, name) => {
+    if (excludes && excludes.indexOf(name)) {
+      return;
+    }
     installAsyncComponent(app, name, item);
   });
 }
 
-function installSyncComponents(app, modules, nameSuffix, transform) {
+function installSyncComponents(app, modules, excludes, nameSuffix, transform) {
   const imports = transformFromGlob(modules, nameSuffix, transform);
   _.forEach(imports, (item, name) => {
+    if (excludes && excludes.indexOf(name)) {
+      return;
+    }
     app.component(name, item);
   });
 }
