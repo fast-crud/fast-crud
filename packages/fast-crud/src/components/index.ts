@@ -1,6 +1,7 @@
 import FsContainer from "./container/fs-container.vue";
 import FsButton from "./basic/fs-button";
 import FsIcon from "./basic/fs-icon";
+import FsIconify from "./basic/fs-iconify.vue";
 import FsLoading from "./basic/fs-loading";
 import FsComponentRender from "./render/fs-component-render.jsx";
 import FsSlotRender from "./render/fs-slot-render";
@@ -32,6 +33,7 @@ export {
   FsButton,
   FsLoading,
   FsIcon,
+  FsIconify,
   FsForm,
   FsFormWrapper,
   FsCrud,

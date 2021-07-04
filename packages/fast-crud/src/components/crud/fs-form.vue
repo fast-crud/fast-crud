@@ -25,7 +25,7 @@
             "
             :item="item"
             :model-value="get(form, item.key)"
-            :slots="slots['form_' + item.key]"
+            :form-slot="slots['form_' + item.key]"
             :get-context-fn="getContextFn"
             @update:modelValue="set(form, item.key, $event)"
           />

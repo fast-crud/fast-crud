@@ -6,7 +6,7 @@
     :[$fsui.formItem.prop]="item.key"
     v-bind="item"
   >
-    <fs-slot-render v-if="slots" :slots="slots" :scope="buildItemScope(item)" />
+    <fs-slot-render v-if="formSlot" :slots="formSlot" :scope="buildItemScope(item)" />
     <template v-else-if="item.component?.show !== false">
       <fs-render v-if="item.component?.render" :render-func="item.component.render" :scope="buildItemScope(item)" />
       <fs-component-render
@@ -52,9 +52,9 @@ export default {
       default: undefined
     },
     /**
-     * 插槽
+     * 字段组件插槽
      */
-    slots: {
+    formSlot: {
       type: Function,
       default: undefined
     },
