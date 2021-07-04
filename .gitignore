@@ -109,6 +109,7 @@ packages/vben-admin-thin-next
 /packages/fast-crud-element/stats.html
 
 /*.lock
+!yarn.lock
 /**/*.lock
 /**/stats.html
 /*-lock.json
