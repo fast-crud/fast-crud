@@ -1,13 +1,11 @@
 import { resolveDynamicComponent, defineComponent, computed } from "vue";
 import { useUi } from "../../use/use-ui";
-import FsIconify from "./fs-iconify.vue";
 /**
  * icon组件
  * antdv的icon需要手动引入才能生效
  */
 export default defineComponent({
   name: "FsIcon",
-  components: { FsIconify },
   props: {
     /**
      * icon名称
