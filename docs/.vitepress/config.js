@@ -44,9 +44,19 @@ module.exports = {
                     text: '其他',
                     children: [
                         {text: '升级', link: '/guide/other/upgrade'},
-                        {text: 'changelog', link: '/guide/other/changelogs'},
+                        {text: 'changelogs', link: '/guide/other/changelogs/index'},
                         {text: '其他疑难问题', link: '/guide/other/questions'},
                         {text: '联系作者', link: '/guide/other/contact'}
+                    ],
+                },
+                {
+                    text: 'ChangeLogs',
+                    children: [
+                            {text: 'main', link: '/guide/other/changelogs/CHANGELOG'},
+                            {text: 'fast-crud', link: '/guide/other/changelogs/packages/fast-crud/CHANGELOG'},
+                            {text: 'extends-uploader', link: '/guide/other/changelogs/packages/extends/extends-uploader/CHANGELOG'},
+                            {text: 'ui-antdv', link: '/guide/other/changelogs/packages/ui/ui-antdv/CHANGELOG'},
+                            {text: 'ui-element', link: '/guide/other/changelogs/packages/ui/ui-element/CHANGELOG'},
                     ],
                 },
             ],
