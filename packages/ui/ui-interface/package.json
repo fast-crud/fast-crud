@@ -1,6 +1,6 @@
 {
   "name": "@fast-crud/ui-interface",
-  "version": "0.13.0",
+  "version": "0.14.0",
   "description": "",
   "main": "./src/index.js",
   "module": "./src/index.js",

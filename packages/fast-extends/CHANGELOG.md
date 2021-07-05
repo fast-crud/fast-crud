@@ -3,6 +3,19 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.14.0](https://github.com/fast-crud/fast-crud/compare/v0.13.0...v0.14.0) (2021-07-05)
+
+
+### Features
+
+* fast-extends,包含uploader、editors ([1b1becc](https://github.com/fast-crud/fast-crud/commit/1b1beccb59727f698d458fa725182ddd6cd7daca))
+* 增加edtior-quill ([73566e4](https://github.com/fast-crud/fast-crud/commit/73566e4492779008011d4bacbc3c1adcfcfef1ac))
+* 移除extends-uploader ([0063df7](https://github.com/fast-crud/fast-crud/commit/0063df7bf4421f1793a252166a9a7663ad4945bc))
+
+
+
+
+
 # [0.13.0](https://github.com/fast-crud/fast-crud/compare/v0.12.0...v0.13.0) (2021-07-04)
 
 **Note:** Version bump only for package @fast-crud/extends-uploader
