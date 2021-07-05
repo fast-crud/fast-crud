@@ -2,7 +2,7 @@ import vue from "@vitejs/plugin-vue";
 import vueJsx from "@vitejs/plugin-vue-jsx";
 
 import path from "path";
-import _ from "lodash-es";
+import _ from "lodash";
 import visualizer from "rollup-plugin-visualizer";
 import strip from "@rollup/plugin-strip";
 const { resolve } = path;

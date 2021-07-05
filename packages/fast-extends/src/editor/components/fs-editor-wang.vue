@@ -46,6 +46,25 @@ export default {
       return "fs-wang-editor-" + this.id;
     }
   },
+  watch: {
+    value: {
+      handler(val) {
+        // 确认是新的值
+        if (val !== this.currentValue) {
+          this.currentValue = val;
+          // 尝试更新
+          if (this.editor) {
+            if (this.dispatch) {
+              this.dispatch("ElFormItem", "el.form.blur");
+            }
+            this.$emit("change", val);
+            // this.editor.txt.html(this.value);
+          }
+        }
+      },
+      immediate: true
+    }
+  },
   mounted() {
     this.init();
   },
@@ -61,10 +80,6 @@ export default {
       lodash.merge(editor.config, wangConfig);
       editor.config.onchange = (newHtml) => {
         this.$emit("input", newHtml);
-        this.$emit("change", newHtml);
-        if (this.dispatch) {
-          this.dispatch("ElFormItem", "el.form.blur");
-        }
         this.currentValue = newHtml;
       };
 
