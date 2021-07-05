@@ -6,7 +6,7 @@
 安装好扩展包之后，你只需要给字段配置字段类型即可使用扩展包里的组件。 
 
 ## 官方扩展包
-* 上传扩展 [extends-uploader](../extends/uploader.md)
+* 上传扩展 [fast-extends/uploader](../extends/uploader.md)
 
 ## 第三方扩展包
 * 等你来开发哟 ღ( ´･ᴗ･` )

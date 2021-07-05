@@ -42,11 +42,8 @@ export default {
   },
   form: {
     successHandle(ret) {
-      // 需要将res.url 设置为url
-      if (ret.data == null || ret.data === "") {
-        throw new Error("上传失败");
-      }
-      return { url: ret.data };
+      //处理后端返回，转化为组件所需要的格式：{url:xxxx}
+      return ret;
     },
     action: undefined,
     name: "file",
@@ -55,6 +52,10 @@ export default {
     custom: {
       // buildKey，获取授权等接口中将会传入
     }
+    // async uploadRequest({ file, action }) {
+    //   自定义文件上传请求
+    //   return await axios.request();
+    // }
   },
   buildKey(context) {
     const { fileName } = context;

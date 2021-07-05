@@ -77,14 +77,15 @@ app.use(FastCrud, {
 如果你还需要文件上传、图片裁剪等组件   
 那么你还需要安装对应的扩展插件。
 
-以下为文件上传、图片裁剪扩展组件安装示例
+以下为文件上传、图片裁剪、富文本编辑器等扩展组件安装示例
 ```
-npm install @fast-crud/extends-uploader
+npm install @fast-crud/fast-extends
 ```
 ```js
-import { FsUploader } from "@fast-crud/extends-uploader";
-import "@fast-crud/extends-uploader/dist/style.css";
-app.use(FsUploader, {
+import { FsExtendsUploader,FsExtendsEditor } from "@fast-crud/extends-uploader";
+import "@fast-crud/fast-extends/dist/style.css";
+//文件上传
+app.use(FsExtendsUploader, {
     defaultType: "cos",
     // 上传实现的配置，你使用哪一个就配置哪一个即可
     cos: {},
@@ -92,8 +93,14 @@ app.use(FsUploader, {
     qiniu: {},
     form: {},
 });
+//富文本编辑器
+app.use(FsExtendsEditor, {
+    //富文本编辑器的公共配置
+    wangEditor:{},
+    quillEditor:{}
+});
 ```
-扩展组件文档请参考[extends-uploader](../advance/extends.md)
+扩展组件文档请参考[fast-extends](../advance/extends.md)
 
 ### 4. 完成
 现在`fast-crud`已经集成到你的项目中，你可以按照上一节学习的，在你的实际项目里开始你的crud开发了。

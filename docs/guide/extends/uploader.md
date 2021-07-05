@@ -1,17 +1,17 @@
-# extends-uploader
+# fast-extends/uploader
 上传扩展
 #### 1、install
 ```
-npm install @fast-crud/extends-uploader
+npm install @fast-crud/fast-extends
 ```
 
 ### 2、use
 ```js
-import FsUploader from "@fast-crud/extends-uploader";
-import "@fast-crud/extends-uploader/dist/style.css";
+import {FsExtendsUploader} from "@fast-crud/fast-extends";
+import "@fast-crud/fast-extends/dist/style.css";
 
 //配置uploader 公共参数
-app.use(FsUploader, {
+app.use(FsExtendsUploader, {
     defaultType: "cos",
     ... //其他参数
 }
