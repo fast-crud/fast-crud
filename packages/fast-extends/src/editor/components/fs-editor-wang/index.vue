@@ -31,6 +31,9 @@ export default {
      */
     uploader: {
       type: Object
+    },
+    disabled: {
+      type: Boolean
     }
   },
   emits: ["update:modelValue", "change"],
@@ -47,7 +50,7 @@ export default {
     }
   },
   watch: {
-    value: {
+    modelValue: {
       handler(val) {
         // 确认是新的值
         if (val !== this.currentValue) {
@@ -57,8 +60,20 @@ export default {
             if (this.dispatch) {
               this.dispatch("ElFormItem", "el.form.blur");
             }
-            this.$emit("change", val);
+            // this.$emit("change", val);
             this.editor.txt.html(value);
+          }
+        }
+      },
+      immediate: true
+    },
+    disabled: {
+      handler(value) {
+        if (this.editor) {
+          if (value === true) {
+            this.editor.disable();
+          } else {
+            this.editor.enable();
           }
         }
       },
@@ -80,6 +95,7 @@ export default {
       lodash.merge(editor.config, wangConfig);
       editor.config.onchange = (newHtml) => {
         this.$emit("update:modelValue", newHtml);
+        this.$emit("change", newHtml);
         this.currentValue = newHtml;
       };
 

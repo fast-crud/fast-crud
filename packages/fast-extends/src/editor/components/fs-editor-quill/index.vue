@@ -27,7 +27,7 @@ Quill.register(Font, true);
 export default {
   name: "FsEditorQuill",
   props: {
-    value: {
+    modelValue: {
       type: String,
       required: false,
       default: ""
@@ -41,8 +41,12 @@ export default {
       default: () => {
         return {};
       }
+    },
+    disabled: {
+      type: Boolean
     }
   },
+  emits: ["change", "update:modelValue", "editor-change", "text-change", "selection-change", "ready"],
   data() {
     return {
       Quill: undefined,
@@ -83,7 +87,7 @@ export default {
       },
       immediate: true
     },
-    value: {
+    modelValue: {
       handler(val) {
         // 确认是新的值
         if (val !== this.currentValue) {
@@ -93,8 +97,8 @@ export default {
             if (this.dispatch) {
               this.dispatch("ElFormItem", "el.form.blur");
             }
-            this.$emit("change", val);
-            this.Quill.pasteHTML(this.value);
+            // this.$emit("change", val);
+            this.Quill.pasteHTML(val);
           }
         }
       },
@@ -133,7 +137,7 @@ export default {
         // 更新内部的值
         this.currentValue = html;
         // 发出事件 v-model
-        this.$emit("input", html);
+        this.$emit("update:modelValue", html);
         // 发出事件 change
         this.$emit("change", html);
       });
