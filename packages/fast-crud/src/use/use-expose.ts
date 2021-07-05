@@ -256,7 +256,7 @@ export function useExpose(props: UseExposeProps): { expose: CrudExpose } {
           query
         });
       }
-      const { currentPage = page.currentPage, pageSize = page.pageSize, total } = pageRes;
+      const { currentPage = page.currentPage ?? page.current, pageSize = page.pageSize, total } = pageRes;
       const { records } = pageRes;
       if (records == null) {
         logger.warn(
@@ -272,12 +272,14 @@ export function useExpose(props: UseExposeProps): { expose: CrudExpose } {
       crudBinding.value.data = records;
       if (crudBinding.value.pagination) {
         crudBinding.value.pagination.currentPage = currentPage;
+        crudBinding.value.pagination.current = currentPage;
         crudBinding.value.pagination.pageSize = pageSize;
         crudBinding.value.pagination.total = total || records.length;
       }
     },
     doPageTurn(no: number) {
       crudBinding.value.pagination.currentPage = no;
+      crudBinding.value.pagination.current = no;
     },
     /**
      *
