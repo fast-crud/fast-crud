@@ -19,31 +19,38 @@ function installAsyncComponent(app, name, es, options) {
   app.component(name, asyncComponent, options);
 }
 
-function installAsyncComponents(app, modules, excludes, nameSuffix, transform) {
-  const imports = transformFromGlob(modules, nameSuffix, transform);
+function installAsyncComponents(app, modules, excludes, pickNameExp, transform) {
+  const imports = transformFromGlob(modules, pickNameExp, transform);
   _.forEach(imports, (item, name) => {
     if (excludes && excludes.indexOf(name)) {
       return;
     }
-    installAsyncComponent(app, name, item);
+    installAsyncComponent(app, name, item, null);
   });
 }
 
-function installSyncComponents(app, modules, excludes, nameSuffix, transform) {
-  const imports = transformFromGlob(modules, nameSuffix, transform);
-  _.forEach(imports, (item, name) => {
-    if (excludes && excludes.indexOf(name)) {
+function installSyncComponents(app, modules, excludes, pickNameExp, transform) {
+  const imports = transformFromGlob(modules, pickNameExp, transform);
+  _.forEach(imports, (item, key) => {
+    if (excludes && excludes.indexOf(key)) {
       return;
     }
-    app.component(name, item);
+    app.component(key, item.default);
   });
 }
-function transformFromGlob(modules, nameSuffix = ".vue", transform) {
+function transformFromGlob(modules, pickNameExp, transform) {
   const components = {};
+  if (pickNameExp == null) {
+    pickNameExp = /.*\/(.+).vue/;
+  }
   _.forEach(modules, (item, key) => {
     // 从路径提取组件名称
-    let name = key.substring(key.lastIndexOf("/") + 1);
-    name = name.replace(nameSuffix, "");
+    const result = key.match(pickNameExp);
+    if (result?.length <= 1) {
+      console.error(`"${key}" can't pick a component name,this component can't register`);
+      return;
+    }
+    let name = result[1];
 
     //将组件名称从 fs-uploader-form 转换为 FsUploaderForm
     name = _.camelCase(name);

@@ -33,7 +33,7 @@ export default {
       type: Object
     }
   },
-  emits: ["input", "change"],
+  emits: ["update:modelValue", "change"],
   data() {
     return {
       editor: null,
@@ -58,7 +58,7 @@ export default {
               this.dispatch("ElFormItem", "el.form.blur");
             }
             this.$emit("change", val);
-            // this.editor.txt.html(this.value);
+            this.editor.txt.html(value);
           }
         }
       },
@@ -79,7 +79,7 @@ export default {
       lodash.merge(wangConfig, this.config);
       lodash.merge(editor.config, wangConfig);
       editor.config.onchange = (newHtml) => {
-        this.$emit("input", newHtml);
+        this.$emit("update:modelValue", newHtml);
         this.currentValue = newHtml;
       };
 
