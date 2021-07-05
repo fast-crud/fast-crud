@@ -60,7 +60,7 @@ component:{
 
 
 ## buttons【按钮组配置】
-* 说明：按钮配置
+* 说明：按钮组配置
 * 类型：Object
 * 示例：
 ```
@@ -73,3 +73,23 @@ component:{
     },
 }
 ```
+
+
+## fs-button【按钮配置】
+* 说明：按钮配置
+* 类型：Object
+* 示例：
+```
+ rowHandle:{
+    view:{
+        text:"查看",//按钮文字
+        title:"查看",//鼠标停留显示的信息
+        icon:"", //图标
+        type:"", //a-button，el-button的类型
+        style:{},
+        disabled:false,
+        ...// a-button,el-button的其他配置
+    },
+}
+```
+

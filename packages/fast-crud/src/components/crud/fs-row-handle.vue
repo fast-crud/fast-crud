@@ -16,7 +16,7 @@
                 v-bind="item"
                 :[$fsui.dropdownItem.command]="item.key"
               >
-                {{ item.text }}
+                {{ item.text || item.title }}
               </component>
             </template>
           </component>
