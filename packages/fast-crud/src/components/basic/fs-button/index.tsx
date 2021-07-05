@@ -27,18 +27,13 @@ export default defineComponent({
   },
   render() {
     const { ui } = useUi();
-    let icon: string | null | undefined = this.icon;
-    let IconComp: any = null;
-    if (icon && ui.icon.isComponent) {
-      IconComp = resolveDynamicComponent(icon);
-      icon = null;
-    }
+    const icon: string | null | undefined = this.icon;
     const slots = {
       ...this.$slots,
       default: () => {
         const children: any = [];
-        if (IconComp) {
-          children.push(h(IconComp));
+        if (icon) {
+          children.push(<fs-icon icon={icon} />);
         }
         if (this.$slots.default) {
           children.push(this.$slots.default());
@@ -59,7 +54,7 @@ export default defineComponent({
       {
         ...this.$attrs,
         ...isCircle,
-        icon,
+        //icon,
         class: {
           "fs-button": true,
           "is-thin": !this.text && !this.$slots.default

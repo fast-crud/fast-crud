@@ -111,19 +111,22 @@ export default defineComponent({
           view: {
             key: "view",
             order: 1,
-            text: t("fs.rowHandle.view.text")
+            text: t("fs.rowHandle.view.text"),
+            title: t("fs.rowHandle.view.text")
           },
           edit: {
             key: "edit",
             type: "primary",
             order: 2,
-            text: t("fs.rowHandle.edit.text")
+            text: t("fs.rowHandle.edit.text"),
+            title: t("fs.rowHandle.edit.text")
           },
           remove: {
             key: "remove",
             type: "danger",
             order: 3,
-            text: t("fs.rowHandle.remove.text")
+            text: t("fs.rowHandle.remove.text"),
+            title: t("fs.rowHandle.remove.text")
           }
         };
         mergedBtns = _.merge(defBtns, computeProps.value.buttons);
