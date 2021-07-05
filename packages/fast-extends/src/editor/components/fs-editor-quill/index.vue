@@ -1,10 +1,13 @@
 <template>
-  <div
-    ref="editor"
-    class="ql-editor fs-editor-quill"
-    :class="{ 'is-disabled': 'disabled' }"
-    style="width: 100%; min-height: 300px"
-  ></div>
+  <div class="fs-editor-quill">
+    <div
+      ref="editor"
+      class="ql-editor"
+      :class="{ 'is-disabled': 'disabled' }"
+      style="width: 100%; min-height: 300px"
+    ></div>
+    <fs-uploader ref="uploaderImplRef" :type="uploader?.type" />
+  </div>
 </template>
 
 <script>
@@ -13,6 +16,8 @@ import "quill/dist/quill.core.css";
 import "quill/dist/quill.snow.css";
 import "quill/dist/quill.bubble.css";
 import _ from "lodash-es";
+import wangConfig from "../fs-editor-wang/utils/config";
+import defaultConfig from "../../type/config";
 const fontSizeStyle = Quill.import("attributors/style/size");
 fontSizeStyle.whitelist = ["10px", "14px", "16px", "18px", "22px", "26px", "30px", "34px", "38px", "45px"];
 Quill.register(fontSizeStyle, true);
@@ -37,10 +42,7 @@ export default {
     },
     // 上传参数，会临时覆盖全局上传配置参数[d2p-uploader](/guide/extends/uploader.html)
     uploader: {
-      type: Object,
-      default: () => {
-        return {};
-      }
+      type: Object
     },
     disabled: {
       type: Boolean
@@ -112,7 +114,7 @@ export default {
     init() {
       const editor = this.$refs.editor;
       // 初始化编辑器
-      _.merge(this.options, this.config);
+      _.merge(this.options, defaultConfig.quillEditor, this.config);
       this.Quill = new Quill(editor, this.options);
 
       const toolbar = this.Quill.getModule("toolbar");
@@ -166,8 +168,8 @@ export default {
       Imageinput.setAttribute("name", "upload_file");
       Imageinput.setAttribute("accept", "image/png, image/gif, image/jpeg");
       Imageinput.classList.add("ql-image");
-      Imageinput.addEventListener("change", () => {
-        var file = Imageinput.files[0];
+      Imageinput.addEventListener("change", async () => {
+        const file = Imageinput.files[0];
 
         const item = {
           status: "uploading",
@@ -180,7 +182,7 @@ export default {
         const onError = (e) => {
           item.status = "error";
           item.message = "文件上传出错:" + e.message;
-          log.debug(e);
+          console.error("文件上传出错：", e.message);
         };
         const option = {
           file: file,
@@ -189,31 +191,20 @@ export default {
           onError
         };
 
-        this.doUpload(option).then((upload) => {
-          const url = (item.url = upload.url);
-          item.status = "done";
-          const range = quill.getSelection(true);
-          // let index = range.index + range.length
-          quill.insertEmbed(range.index, "image", url);
-        });
+        const res = await this.doUpload(option);
+        let url = res?.url;
+        if (this.uploader?.buildUrl) {
+          url = await this.uploader.buildUrl(res);
+        }
+        const range = quill.getSelection(true);
+        // let index = range.index + range.length
+        quill.insertEmbed(range.index, "image", url);
       });
       Imageinput.click();
     },
-    doUpload(option) {
+    async doUpload(option) {
       option.config = this.uploader;
-      return this.getUploader().then((uploader) => {
-        return uploader.upload(option);
-      });
-    },
-    getUploader() {
-      let type = this.type;
-      if (this.uploader != null && this.uploader.type != null) {
-        type = this.uploader.type;
-      }
-      return D2pUploader.getUploader(type);
-    },
-    beforeUpload(file) {
-      return this.getUploader().beforeUpload(file);
+      return await this.$refs.uploaderImplRef.getUploaderRef().upload(option);
     }
   }
 };

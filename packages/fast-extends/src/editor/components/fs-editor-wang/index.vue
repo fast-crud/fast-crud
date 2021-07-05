@@ -2,6 +2,7 @@
   <div class="fs-editor-wang">
     <div :id="uniqueId"></div>
     <textarea v-model="currentValue" class="fs-editor-wang-preview" readonly></textarea>
+    <fs-uploader ref="uploaderImplRef" :type="uploader?.type" />
   </div>
 </template>
 
@@ -9,6 +10,7 @@
 import WangEditor from "wangeditor";
 import lodash from "lodash-es";
 import wangConfig from "./utils/config";
+import defaultConfig from "../../type/config";
 export default {
   name: "FsEditorWang",
   props: {
@@ -91,8 +93,7 @@ export default {
   methods: {
     init() {
       const editor = new WangEditor("#" + this.uniqueId);
-      lodash.merge(wangConfig, this.config);
-      lodash.merge(editor.config, wangConfig);
+      lodash.merge(editor.config, wangConfig, defaultConfig.wangEditor, this.config);
       editor.config.onchange = (newHtml) => {
         this.$emit("update:modelValue", newHtml);
         this.$emit("change", newHtml);
@@ -125,9 +126,13 @@ export default {
             onError
           };
 
-          const ret = await this.doUpload(option);
+          const res = await this.doUpload(option);
+          let url = res?.url;
+          if (this.uploader?.buildUrl) {
+            url = await this.uploader.buildUrl(res);
+          }
           // 上传图片，返回结果，将图片插入到编辑器中
-          insertImgFn(ret.url);
+          insertImgFn(url);
         };
       }
 

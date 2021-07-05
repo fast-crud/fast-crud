@@ -21,11 +21,11 @@ function installAsyncComponent(app, name, es, options) {
 
 function installAsyncComponents(app, modules, excludes, pickNameExp, transform) {
   const imports = transformFromGlob(modules, pickNameExp, transform);
-  _.forEach(imports, (item, name) => {
-    if (excludes && excludes.indexOf(name)) {
+  _.forEach(imports, (item, key) => {
+    if (excludes && excludes.indexOf(key) != -1) {
       return;
     }
-    installAsyncComponent(app, name, item, null);
+    installAsyncComponent(app, key, item, null);
   });
 }
 

@@ -6,6 +6,20 @@ import _ from "lodash-es";
 import ajax from "./utils/ajax";
 import { useUploader, buildKey } from "./utils/index";
 import { getCurrentInstance } from "vue";
+
+function doAjax(ajaxOptions) {
+  return new Promise((resolve, reject) => {
+    ajax(
+      ajaxOptions,
+      async (res) => {
+        resolve(res);
+      },
+      (e) => {
+        reject(e);
+      }
+    );
+  });
+}
 /**
  *
  * @param option {file,filename,action,data,headers}
@@ -23,26 +37,14 @@ async function doUpload({ file, fileName, onProgress, options }) {
     onProgress,
     ...options
   };
-  console.info("upload ajaxOptions ", key, ajaxOptions);
-  return new Promise((resolve, reject) => {
-    ajax(
-      ajaxOptions,
-      async (res) => {
-        try {
-          const ret = await options.successHandle(res, ajaxOptions);
-          if (ret && typeof ret === "object" && ret.key == null) {
-            ret.key = key;
-          }
-          resolve(ret);
-        } catch (e) {
-          reject(e);
-        }
-      },
-      (e) => {
-        reject(e);
-      }
-    );
-  });
+  delete ajaxOptions.uploadRequest;
+  const uploadRequest = options.uploadRequest ?? doAjax;
+  const res = await uploadRequest(ajaxOptions);
+  const ret = await options.successHandle(res, ajaxOptions);
+  if (ret && typeof ret === "object" && ret.key == null) {
+    ret.key = key;
+  }
+  return ret;
 }
 export default {
   name: "FsUploaderForm",
@@ -51,9 +53,8 @@ export default {
     const { getConfig } = useUploader(proxy);
     const global = getConfig("form");
     async function upload(context) {
-      const config = context.options;
-      const options = _.merge(_.cloneDeep(global), config);
-      context.options = options;
+      const config = context.config;
+      context.options = _.merge({}, _.cloneDeep(global), config);
       return await doUpload(context);
     }
     return { upload };
