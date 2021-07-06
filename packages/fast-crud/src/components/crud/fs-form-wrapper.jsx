@@ -204,7 +204,7 @@ export default {
       children = {
         title: () => {
           let fullScreenIcon = null;
-          if (this.fullscreenEnabled.value) {
+          if (this.fullscreenEnabled) {
             fullScreenIcon = (
               <fs-icon
                 onClick={this.toggleFullscreen}
