@@ -1,7 +1,7 @@
 
 # 基于配置
 本章节主要了解`FastCrud`是如何通过配置驱动出一个完整的`crud`的。
-## FastCrud运行过程
+## 1. FastCrud运行过程
 构建`crudOptions` --> 调用`useCrud` --> 获得`crudBinding` --> 传入`fs-crud`组件    
 
 ### crudOptions
@@ -12,7 +12,12 @@
 
 
 ### useCrud
-主要作用是初始化crud，将`crudOptions`转化为`expose.crudBinding`   
+主要作用是初始化crud，将`crudOptions`转化为`expose.crudBinding`    
+转化过程主要做了两件事：    
+1. 用户的`crudOptions`与公共配置、基础配置进行合并
+2. 将`crudOptions.columns`里面的`form`,`column`,`search`等配置分散到`table.columns`,`form.columns`,`search.columns`中去
+
+
 
 ### crudBinding
 在开发`crud`时，我们页面里面用的组件是`fs-crud`，`crudBinding`就是传入的全部参数
@@ -23,7 +28,7 @@
 </template>
 ```
 
-::: warning
+::: tip
 
 由于`fs-crud`实际参数是`crudBinding`。    
 所以动态修改`crudOptions`里面的属性时，你会发现并不会生效。      
@@ -36,4 +41,6 @@
 ### fs-crud组件
 其他的都交给`fs-crud`吧     
 具体`fs-crud`需要哪些参数，请查看[fs-crud组件的参数](/api/components/crud/fs-crud)文档
+
+
 
