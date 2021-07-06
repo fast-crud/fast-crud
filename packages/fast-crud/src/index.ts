@@ -1,8 +1,8 @@
 import defaultCrudOptions from "./use/default-crud-options";
-import utils from "./utils/index.js";
+import utils from "./utils/index";
 export * from "./utils/index";
 export * from "./use";
-import types from "./types/index.ts";
+import types from "./types/index";
 import * as components from "./components/index";
 import { i18n, useI18n } from "./locale/";
 import { uiContext } from "./ui";

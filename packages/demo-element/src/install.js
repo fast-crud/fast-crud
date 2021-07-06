@@ -2,8 +2,8 @@ import { request, requestForMock } from "./api/service";
 import "./mock";
 import { FastCrud, setLogger } from "@fast-crud/fast-crud";
 import "@fast-crud/fast-crud/dist/style.css";
-import FsUploader from "@fast-crud/extends-uploader";
-import "@fast-crud/extends-uploader/dist/style.css";
+import { FsExtendsUploader, FsExtendsEditor } from "@fast-crud/fast-extends";
+import "@fast-crud/fast-extends/dist/style.css";
 import UiElement from "@fast-crud/ui-element";
 //设置crud log级别
 if (import.meta.env.mode !== "production") {
@@ -39,8 +39,9 @@ export default function (app, i18n) {
     }
   });
 
+  app.use(FsExtendsEditor);
   //配置uploader 公共参数
-  app.use(FsUploader, {
+  app.use(FsExtendsUploader, {
     defaultType: "cos",
     cos: {
       domain: "https://d2p-demo-1251260344.cos.ap-guangzhou.myqcloud.com",
@@ -48,21 +49,20 @@ export default function (app, i18n) {
       region: "ap-guangzhou",
       secretId: "", //
       secretKey: "", // 传了secretKey 和secretId 代表使用本地签名模式（不安全，生产环境不推荐）
-      getAuthorization(custom) {
+      async getAuthorization(custom) {
         // 不传secretKey代表使用临时签名模式,此时此参数必传（安全，生产环境推荐）
-        return request({
+        const ret = await request({
           url: "/upload/cos/getAuthorization",
           method: "get"
-        }).then((ret) => {
-          // 返回结构如下
-          // ret.data:{
-          //   TmpSecretId,
-          //   TmpSecretKey,
-          //   XCosSecurityToken,
-          //   ExpiredTime, // SDK 在 ExpiredTime 时间前，不会再次调用 getAuthorization
-          // }
-          return ret;
         });
+        // 返回结构如下
+        // ret.data:{
+        //   TmpSecretId,
+        //   TmpSecretKey,
+        //   XCosSecurityToken,
+        //   ExpiredTime, // SDK 在 ExpiredTime 时间前，不会再次调用 getAuthorization
+        // }
+        return ret;
       },
       successHandle(ret) {
         // 上传完成后可以在此处处理结果，修改url什么的
