@@ -3,6 +3,28 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.15.0](https://github.com/fast-crud/fast-crud/compare/v0.14.0...v0.15.0) (2021-07-06)
+
+
+### Bug Fixes
+
+* 1 ([a0766a2](https://github.com/fast-crud/fast-crud/commit/a0766a282a52067c5c1b8d687481a84ccf0d3126))
+* 修复全屏按钮不显示的bug ([c211564](https://github.com/fast-crud/fast-crud/commit/c21156498d77c5f4e5a6c315c602a2267f9eaa9f))
+
+
+### Features
+
+* util to ts ([7b79e04](https://github.com/fast-crud/fast-crud/commit/7b79e047c6a4cc4ab87b9135c5610d9dac27fc0c))
+
+
+### Performance Improvements
+
+* rowHandle动态显隐示例 ([0ad8205](https://github.com/fast-crud/fast-crud/commit/0ad8205ca494b38dcbbe13ccadfe65d4d00a59e0))
+
+
+
+
+
 # [0.14.0](https://github.com/fast-crud/fast-crud/compare/v0.13.0...v0.14.0) (2021-07-05)
 
 
