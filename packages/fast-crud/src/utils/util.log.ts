@@ -4,7 +4,7 @@ function getCallerInfo() {
   return e.stack?.split("\n")[3];
 }
 
-const blank = () => {};
+const blank = (...args) => {};
 
 const error = (...args) => {
   console.error("[error]", ...args);

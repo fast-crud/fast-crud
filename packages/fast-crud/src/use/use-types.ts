@@ -4,6 +4,6 @@ export function useTypes() {
     addTypes: types.addTypes,
     getType: types.getType,
     getTypes: types.getTypes,
-    install: types.install,
+    install: types.install
   };
 }
