@@ -1,7 +1,7 @@
 const DEBUG_WITH_CALLER = true;
 function getCallerInfo() {
   const e = new Error();
-  return e.stack.split("\n")[3];
+  return e.stack?.split("\n")[3];
 }
 
 const blank = () => {};
@@ -23,15 +23,20 @@ const debug = (...args) => {
     console.log("[debug]", ...args);
   }
 };
-const logger = {};
+const logger = {
+  debug: blank,
+  info: blank,
+  warn: blank,
+  error: blank
+};
 
 export default logger;
-export function setLogger({ level } = {}) {
+export function setLogger(opts: any = {}) {
+  const level = opts?.level || "info";
   logger.debug = blank;
   logger.info = blank;
   logger.warn = blank;
   logger.error = blank;
-  level = level || "info";
   switch (level) {
     case "debug":
       logger.debug = debug;

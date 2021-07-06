@@ -1,8 +1,5 @@
 function isEmpty(value) {
-  if (value == null || value === "") {
-    return true;
-  }
-  return false;
+  return value == null || value === "";
 }
 function isAllEmpty(...values) {
   for (const value of values) {
