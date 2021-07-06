@@ -12,10 +12,12 @@
 
 
 ### useCrud
-主要作用是初始化crud，将`crudOptions`转化为`expose.crudBinding`    
+主要作用是初始化crud，将`crudOptions`转化为`crudBinding`    
 转化过程主要做了两件事：    
 1. 用户的`crudOptions`与公共配置、基础配置进行合并
-2. 将`crudOptions.columns`里面的`form`,`column`,`search`等配置分散到`table.columns`,`form.columns`,`search.columns`中去
+2. 将`columns`里面的`form`,`column`,`search`等配置分散到`table.columns`,`form.columns`,`search.columns`中去
+
+
 
 
 
