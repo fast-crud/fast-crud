@@ -145,19 +145,18 @@ export default {
       });
       // 将一些 quill 自带的事件传递出去
       this.Quill.on("text-change", (delta, oldDelta, source) => {
-        // 文本变更事件
+        /**
+         * 文本变更事件
+         */
         this.$emit("text-change", delta, oldDelta, source);
       });
       this.Quill.on("selection-change", (range, oldRange, source) => {
-        // 选择框变更事件
         this.$emit("selection-change", range, oldRange, source);
       });
       this.Quill.on("editor-change", (eventName, ...args) => {
-        // editor-change事件
         this.$emit("editor-change", eventName, ...args);
       });
       this.$nextTick(() => {
-        // 编辑器ready事件
         this.$emit("ready", { vm: this, quill: this.Quill });
       });
     },

@@ -8,7 +8,7 @@
     "docs:serve": "vitepress serve docs",
     "docgen:crud": "vue-docgen -c docgen/crud.config.js",
     "docgen:extends": "vue-docgen -c docgen/extends.config.js",
-    "docs:all": "npm run docgen:crud && npm run docgen:extends && npm run docs:build",
+    "docs:all": "npm run docgen:crud && npm run docgen:extends",
     "prepublishOnly": "lerna run build --scope */ui-* --scope @fast-crud/fast-crud --scope @fast-crud/fast-extends",
     "publish": "lerna publish --conventional-commits && npm run copylogs",
     "afterpublish": "npm run copylogs",
@@ -21,6 +21,6 @@
     "copyfiles": "^2.4.1",
     "lerna": "^4.0.0",
     "vitepress": "^0.15.6",
-    "vue-docgen-cli": "^4.37.0"
+    "vue-docgen-cli": "^4.40.0"
   }
 }

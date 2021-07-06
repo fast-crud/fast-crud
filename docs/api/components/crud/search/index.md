@@ -15,6 +15,7 @@
 | debounce         | 自动查询，防抖设置                                     | object  | -      |                                  |
 | slots            | 插槽                                                   |         | -      | function() {<br> return {};<br>} |
 | show             | 是否显示查询框                                         | boolean | -      | true                             |
+| validate         | 是否启用校验                                           | boolean | -      | false                            |
 
 ## Events
 

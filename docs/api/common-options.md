@@ -75,7 +75,7 @@ component:{
 ```
 
 
-## fs-button【按钮配置】
+## FsButton【按钮配置】
 * 说明：按钮配置
 * 类型：Object
 * 示例：
