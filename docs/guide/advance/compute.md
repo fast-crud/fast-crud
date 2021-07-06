@@ -170,10 +170,11 @@ context = {
     row:Object, 
     form:Object, //表格行的context里没有
     index:number, //addForm和search的context里没有
-    getComponentRef:Function(columnKey) //获取上下文范围内的组件ref实例
+    getComponentRef:(columnKey)=>vm //获取上下文范围内的组件ref实例方法
 }
 ```
 
 ## 适用范围
-`columns.key.form`、`columns.key.xxxForm`、`columns.key.column`、`columns.key.search`、`rowHandle`下的所有属性均可以使用动态计算
+1. 对于`ref或computed`类型的动态，基本上整个`crudBinding`都支持
+2. 对于`compute或asyncCompute`,则仅在`columns.key.form`、`columns.key.xxxForm`、`columns.key.column`、`columns.key.search`、`rowHandle`下的属性支持
 
