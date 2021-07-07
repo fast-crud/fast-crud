@@ -18,12 +18,12 @@
       "vite/client", "@types/jest",
       "webpack-env",
       "mocha",
-      "chai"
+      "chai",
+      "node"
     ],
     "paths": {
-      "@/*": [
-        "src/*"
-      ]
+      "/@/*": ["src/*"],
+      "/src/*": [ "src/*"]
     },
     "lib": [
       "esnext",

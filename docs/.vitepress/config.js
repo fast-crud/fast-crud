@@ -55,11 +55,14 @@ module.exports = {
                 {
                     text: 'ChangeLogs',
                     children: [
-                            {text: 'main', link: '/guide/other/changelogs/CHANGELOG'},
-                            {text: 'fast-crud', link: '/guide/other/changelogs/packages/fast-crud/CHANGELOG'},
-                            {text: 'extends-uploader', link: '/guide/other/changelogs/packages/extends/extends-uploader/CHANGELOG'},
-                            {text: 'ui-antdv', link: '/guide/other/changelogs/packages/ui/ui-antdv/CHANGELOG'},
-                            {text: 'ui-element', link: '/guide/other/changelogs/packages/ui/ui-element/CHANGELOG'},
+                        {text: 'main', link: '/guide/other/changelogs/CHANGELOG'},
+                        {text: 'fast-crud', link: '/guide/other/changelogs/packages/fast-crud/CHANGELOG'},
+                        {
+                            text: 'extends-uploader',
+                            link: '/guide/other/changelogs/packages/extends/extends-uploader/CHANGELOG'
+                        },
+                        {text: 'ui-antdv', link: '/guide/other/changelogs/packages/ui/ui-antdv/CHANGELOG'},
+                        {text: 'ui-element', link: '/guide/other/changelogs/packages/ui/ui-element/CHANGELOG'},
                     ],
                 },
             ],
@@ -73,7 +76,7 @@ module.exports = {
                         },
                         {
                             text: 'CrudOptions',
-                            children:[
+                            children: [
                                 {text: '概览', link: '/api/crud-options/index'},
                                 {text: 'request', link: '/api/crud-options/request'},
                                 {text: 'columns', link: '/api/crud-options/columns'},
@@ -135,7 +138,46 @@ module.exports = {
                                 {text: 'fs-values-format', link: "/api/components/crud/extends/fs-values-format"},
                             ]
                         },
-                        {text: '扩展组件', link: '/api/components/extends'},
+                        {
+                            text: '扩展组件', children: [
+                                {
+                                    text: '上传组件', children: [
+                                        {
+                                            text: "fs-cropper",
+                                            link: '/api/components/extends/uploader/components/fs-cropper'
+                                        },
+                                        {
+                                            text: "fs-cropper-uploader",
+                                            link: '/api/components/extends/uploader/components/fs-cropper-uploader'
+                                        },
+                                        {
+                                            text: "fs-file-uploader",
+                                            link: '/api/components/extends/uploader/components/fs-file-uploader'
+                                        },
+                                        {
+                                            text: "fs-images-format",
+                                            link: '/api/components/extends/uploader/components/fs-images-format'
+                                        },
+                                        {
+                                            text: "fs-files-format",
+                                            link: '/api/components/extends/uploader/components/fs-files-format'
+                                        }
+                                    ]
+                                },
+                                {
+                                    text: '富文本编辑器', children: [
+                                        {
+                                            text: "fs-editor-quill",
+                                            link: '/api/components/extends/editor/components/fs-editor-quill/index'
+                                        },
+                                        {
+                                            text: "fs-editor-wang",
+                                            link: '/api/components/extends/editor/components/fs-editor-wang/index'
+                                        }
+                                    ]
+                                }
+                            ]
+                        },
                     ],
                 }
             ]
@@ -145,8 +187,8 @@ module.exports = {
             {text: '首页', link: '/'},
             {text: '指南', link: '/guide/'},
             {text: 'API', link: '/api/'},
-            {text: '示例', link:'/demo/'},
-            {text: 'FsAdmin', link:'/admin/'},
+            {text: '示例', link: '/demo/'},
+            {text: 'FsAdmin', link: '/admin/'},
             {text: 'github', link: 'https://github.com/fast-crud/fast-crud'},
             {text: 'gitee', link: 'https://gitee.com/fast-crud/fast-crud'},
         ],

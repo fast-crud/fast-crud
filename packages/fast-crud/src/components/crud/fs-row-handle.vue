@@ -101,7 +101,9 @@ export default defineComponent({
       };
     });
     const computeProps = doComputed(pickedProps, () => {
-      return props.scope;
+      const index = props.scope[ui.tableColumn.index];
+      const row = props.scope[ui.tableColumn.row];
+      return { ...props.scope, index, row };
     });
     //const computeProps = { value: props };
     const computedAllHandleBtns = computed(() => {

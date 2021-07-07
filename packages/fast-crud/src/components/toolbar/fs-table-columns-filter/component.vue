@@ -57,7 +57,7 @@
   </component>
 </template>
 
-<script>
+<script lang="ts">
 import draggable from "vuedraggable/src/vuedraggable";
 import _ from "lodash-es";
 import FsButton from "../../basic/fs-button";

@@ -5,9 +5,10 @@
 
 ## Props
 
-| Prop name | Description                   | Type  | Values | Default |
-| --------- | ----------------------------- | ----- | ------ | ------- |
-| dict      | 数据字典配置                  |       | -      |         |
-| options   | 可选项，比 dict.data 优先级高 | array | -      |         |
+| Prop name | Description                                        | Type  | Values | Default |
+| --------- | -------------------------------------------------- | ----- | ------ | ------- |
+| dict      | 数据字典配置                                       |       | -      |         |
+| options   | 可选项，比 dict.data 优先级高                      | array | -      |         |
+| radioName | radio 组件名称<br>antdv 使用 button 样式的时候有用 |       | -      |         |
 
 ---

@@ -1,6 +1,6 @@
 {
   "name": "@fast-crud/ui-interface",
-  "version": "0.14.0",
+  "version": "0.15.0",
   "description": "",
   "main": "./src/index.js",
   "module": "./src/index.js",
@@ -42,5 +42,5 @@
     "vite-plugin-compression": "^0.2.3",
     "vue-eslint-parser": "^7.5.0"
   },
-  "gitHead": "8fad217c8b6c9bac7f2916cbc5e200ee08cce9a4"
+  "gitHead": "f46987ec211151da0663e9f321953a64205d8e86"
 }
