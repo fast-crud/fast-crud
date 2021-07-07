@@ -15,8 +15,10 @@ module.exports = {
     ],
 
     themeConfig: {
-        // algolia: {
-        // },
+        algolia: {
+            apiKey: '4c3df6ffd511f104fe912603ff34106b',
+            indexName: 'fast-crud'
+        },
         // search: true,
         sidebar: {
             '/guide/': [
