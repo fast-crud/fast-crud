@@ -60,8 +60,8 @@ module.exports = {
                         {text: 'main', link: '/guide/other/changelogs/CHANGELOG'},
                         {text: 'fast-crud', link: '/guide/other/changelogs/packages/fast-crud/CHANGELOG'},
                         {
-                            text: 'extends-uploader',
-                            link: '/guide/other/changelogs/packages/extends/extends-uploader/CHANGELOG'
+                            text: 'fast-extends',
+                            link: '/guide/other/changelogs/packages/extends/fast-extends/CHANGELOG'
                         },
                         {text: 'ui-antdv', link: '/guide/other/changelogs/packages/ui/ui-antdv/CHANGELOG'},
                         {text: 'ui-element', link: '/guide/other/changelogs/packages/ui/ui-element/CHANGELOG'},

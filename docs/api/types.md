@@ -19,7 +19,7 @@
     * [fs-dict-radio](/api/components/crud/extends/fs-dict-radio.md)  
     * [fs-dict-checkbox](/api/components/crud/extends/fs-dict-checkbox)  
     * [fs-values-format](/api/components/crud/extends/fs-values-format)
-* 示例：[antdv](http://fast-crud.docmirror.cn/antdv/#/component/select) | [element](http://fast-crud.docmirror.cn/element/#/component/select)
+* 示例：[antdv](http://fast-crud.docmirror.cn/antdv/#/crud/component/select) | [element](http://fast-crud.docmirror.cn/element/#/component/select)
 * 配置示例：
 ```javascript
 let column={
@@ -57,7 +57,7 @@ type = dict-cascader
 * 相关组件：
     * [fs-dict-cascader](/api/components/crud/extends/fs-dict-cascader.md)  
     * [fs-dict-cascader-format](/api/components/crud/extends/fs-dict-cascader-format.md)
-* 示例：[antdv](http://fast-crud.docmirror.cn/antdv/#/component/cascader) | [element](http://fast-crud.docmirror.cn/element/#/component/cascader)
+* 示例：[antdv](http://fast-crud.docmirror.cn/antdv/#/crud/component/cascader) | [element](http://fast-crud.docmirror.cn/element/#/component/cascader)
 
 ### 日期时间选择
 * type = datetime | date | time | daterange | datetimerange
@@ -68,7 +68,7 @@ type = dict-cascader
     * [el-date-picker](https://element-plus.gitee.io/#/zh-CN/component/date-picker#attributes)  
     * [el-time-picker](https://element-plus.gitee.io/#/zh-CN/component/time-picker)  
     * [fs-date-format](/api/components/crud/extends/fs-date-format)
-* 示例：[antdv](http://fast-crud.docmirror.cn/antdv/#/component/date) | [element](http://fast-crud.docmirror.cn/element/#/component/date)
+* 示例：[antdv](http://fast-crud.docmirror.cn/antdv/#/crud/component/date) | [element](http://fast-crud.docmirror.cn/element/#/component/date)
  
    
 
@@ -79,7 +79,7 @@ type = dict-cascader
 
 * 表单组件：
     * [el-input-number](https://element-plus.gitee.io/#zh-CN/component/input-number)
-* 示例：[antdv](http://fast-crud.docmirror.cn/antdv/#/component/number) | [element](http://fast-crud.docmirror.cn/element/#/component/number)
+* 示例：[antdv](http://fast-crud.docmirror.cn/antdv/#/crud/component/number) | [element](http://fast-crud.docmirror.cn/element/#/component/number)
  
 
 ## 扩展组件
@@ -89,15 +89,28 @@ type = dict-cascader
     *  file-uploader（文件上传） | image-uploader（图片上传） | avatar-uploader（头像上传，单图片）  
     *  avatar-cropper (头像裁剪上传)
     
-<<< @/../packages/extends/extends-uploader/src/type/types.js
-* 示例：[antdv](http://fast-crud.docmirror.cn/antdv/#/component/uploader/form) | [element](http://fast-crud.docmirror.cn/element/#/component/uploader/form)
+<<< @/../packages/fast-extends/src/uploader/type/types.js
+* 示例：[antdv](http://fast-crud.docmirror.cn/antdv/#/crud/component/uploader/form) | [element](http://fast-crud.docmirror.cn/element/#/component/uploader/form)
 
 * 相关组件文档：
-    * [fs-file-uploader](/api/components/extends/uploader/fs-file-uploader.md) 
-    * [fs-cropper-uploader](/api/components/extends/uploader/fs-cropper-uploader.md) 
-    * [fs-cropper](/api/components/extends/uploader/fs-cropper.md)  
-    * [fs-images-format](/api/components/extends/uploader/fs-images-format.md)
-    * [fs-files-format](/api/components/extends/uploader/fs-files-format.md)
+    * [fs-file-uploader](/api/components/extends/uploader/components/fs-file-uploader.md) 
+    * [fs-cropper-uploader](/api/components/extends/uploader/components/fs-cropper-uploader.md) 
+    * [fs-cropper](/api/components/extends/uploader/components/fs-cropper.md)  
+    * [fs-images-format](/api/components/extends/uploader/components/fs-images-format.md)
+    * [fs-files-format](/api/components/extends/uploader/components/fs-files-format.md)
+
+
+### 富文本
+* 类型
+  *  file-uploader（文件上传） | image-uploader（图片上传） | avatar-uploader（头像上传，单图片）
+  *  avatar-cropper (头像裁剪上传)
+
+<<< @/../packages/fast-extends/src/editor/type/types.js
+* 示例：[antdv](http://fast-crud.docmirror.cn/antdv/#/crud/component/editor) | [element](http://fast-crud.docmirror.cn/element/#/component/editor)
+
+* 相关组件文档：
+  * [fs-editor-wang](/api/components/extends/editor/components/fs-editor-wang/index.md)
+  * [fs-editor-quill](/api/components/extends/editor/components/fs-editor-quill/index.md)
 
 
 ## 辅助类型
