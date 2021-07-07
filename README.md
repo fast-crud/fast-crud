@@ -1,13 +1,14 @@
-# Introduction
-[English](./README.md) | [简体中文](./README_zhCN.md)
+# fast-crud
+[English](./README_en.md) | [简体中文](./README.md)
 
-FastCrud is an options-oriented crud development framework based on vue3. It can rapidly develop crud functions and can be used as the basic framework of a low code platform.    
-It is easy to get started, has strong scalability, and has rich examples so that you can quickly complete the task of moving bricks.
+FastCrud 是基于Vue3的面向配置的crud开发框架，快速开发crud功能，可作为低代码平台的基础框架。   
+继承并优化了D2CrudPlus的设计思想，入门简单，可扩展性强，丰富的示例，让你可以快速完成搬砖任务，更多的时间划水吹逼。
 
-source :[Github](https://github.com/fast-crud/fast-crud)  /  [Gitee](https://gitee.com/fast-crud/fast-crud)   
-demo:
-[antdv](http://fast-crud.docmirror.cn/antdv/)  /  [element](http://fast-crud.docmirror.cn/element/)  / [vben-admin-starter](http://fast-crud.docmirror.cn/vben/)    
-document：http://fast-crud.docmirror.cn/
+源码地址:[Github](https://github.com/fast-crud/fast-crud)  /  [Gitee](https://gitee.com/fast-crud/fast-crud)   
+示例地址:
+[antdv版](http://fast-crud.docmirror.cn/antdv/)  /  [element版](http://fast-crud.docmirror.cn/element/)
+
+文档地址：http://fast-crud.docmirror.cn/
 
 <div style="display:flex;">
 <a href="https://gitee.com/fast-crud/fast-crud" target="_blank"
@@ -18,43 +19,44 @@ document：http://fast-crud.docmirror.cn/
 /></a>
 </div>
 
-## Developing crud is as fast as lightning
-1、Just write the crud options
+
+## 开发crud，快如闪电
+1、只需简单编写crud配置
 ```js
 const crudOptions= {
-      columns: { //field conf
-        id: {// id
+      columns: { //字段配置
+        id: {// id字段
           title: "ID",
-          type: "number", //field type
+          type: "number", //字段类型
           column: { width: 50},
           form: { show: false }
         },
-        name: { // name field
-          title: "name",
-          type: "text", //text type field
-          search: { show: true } // show search
+        name: { // 姓名字段
+          title: "姓名",
+          type: "text", //文本类型字段
+          search: { show: true } //显示查询
         },
-        city: { // city field
-          title: "city",
-          type: "dict-select", // select type field
-          search: { show: true }, // show search
-          dict: dict({ //local dict
+        city: { //城市字段
+          title: "城市",
+          type: "dict-select", //选择类型字段
+          search: { show: true }, //显示查询
+          dict: dict({ //本地数据字典
             value: "id",
             label: "text",
             data: [
-              { id: "sz", text: "shenzhen", color: "success" },
-              { id: "gz", text: "guangzhou", color: "primary" },
-              { id: "bj", text: "beijing" },
-              { id: "wh", text: "wuhan" },
-              { id: "sh", text: "shanghai" }
+              { id: "sz", text: "深圳", color: "success" },
+              { id: "gz", text: "广州", color: "primary" },
+              { id: "bj", text: "北京" },
+              { id: "wh", text: "武汉" },
+              { id: "sh", text: "上海" }
             ]
           })
         },
         radio: {
-          title: "status",
-          search: { show: true }, //show search
-          type: "dict-radio", //radio type field
-          dict: dict({ //remote dict
+          title: "状态",
+          search: { show: true }, //显示查询
+          type: "dict-radio", //单选类型字段
+          dict: dict({ //远程数据字典
             url: "/dicts/OpenStatusEnum?single"
           })
         }
@@ -62,63 +64,66 @@ const crudOptions= {
     }
 ```
 
-2、 Get a complete crud
-![](./docs/images/crud-en.png)
+2、 一个完全体crud就出来了
+![](./docs/images/crud.png)
 
 
 
 
-## Feature
-### 1. Options-oriented crud programming
-* According to the crud options, the crud function can be developed quickly
+## 特性
+### 1. 面向配置的crud编程
+* 根据crud配置快速开发crud功能,可作为低代码平台基础框架
 
-### 2. Data dictionary
-* Support local and remote dictionaries
-* With the help of select, it is easy to store the value in the data, which needs the label of the corresponding dictionary to show the requirements
+### 2. 数据字典
+* 支持本地和远程获取
+* 配合select，轻松实现数据存的是value值，需要对应字典的label来展示的需求
 
-### 3. Rich field types
-* Simplify the options by configuring the field type `column.type`
-* Different form components are generated automatically according to different field types
-* Support custom field type
+### 3. 丰富的字段类型
+* 通过配置字段类型“column.type”来简化配置
+* 根据字段类型不同，自动生成不同的表单组件
+* 支持自定义字段类型
 
-### 4. Extends
-Extend the custom type by extending the custom component
+### 4. 扩展组件
+通过扩展自定义组件，扩展自定义类型
 
-### 5. Multi UI support
-Support antdv, element, you can use which you like
-
-
-## Getting start
-
-### Run demo
-```shell
-git clone https://gitee.com/fast-crud/fast-crud.git
-# run antdv demo
-cd fast-crud/packages/demo-antdv
-# or run element demo
-cd fast-crud/packages/demo-element
-
-# run 
-npm install  
-npm run demo
-```
-
-## Dependence on
-
-### [vitejs](https://github.com/vitejs/vite)
-
-Libaries and demos are build using vitejs    
+### 5. 多UI支持
+支持Antdv、Element，你喜欢哪个就用哪个
 
 
-### UI library
-[Antdv](https://github.com/vueComponent/ant-design-vue)   
-[Element-Plus](https://github.com/element-plus/element-plus)     
-Choose one of them
+## 依赖
+### ui组件库
+* [Antdv 2x](https://github.com/vueComponent/ant-design-vue) 、[Element-Plus](https://github.com/element-plus/element-plus) 二选一
+
+### 基于
+* [vue](https://github.com/vuejs/vue-next) 
+* [vitejs](https://github.com/vitejs/vite)
 
 
 ### monorepo
 [![lerna](https://img.shields.io/badge/maintained%20with-lerna-cc00ff.svg)](https://lerna.js.org/)
 
 
+## FsAdmin
+示例admin脚手架
+
+### 依赖
+* [vue](https://github.com/vuejs/vue-next) 
+* [vue-router](https://github.com/vuejs/vue-router-next)
+* [antdv 2x](https://github.com/vueComponent/ant-design-vue)
+* [vitejs](https://github.com/vitejs/vite)
+* [pinia](https://github.com/posva/pinia)
+* [purge-icons](https://github.com/antfu/purge-icons)
+
+### 参考如下项目
+* [d2-admin](https://github.com/d2-projects/d2-admin)
+* [antdv-pro](https://github.com/vueComponent/ant-design-vue-pro)
+* [vben-admin](https://github.com/anncwb/vue-vben-admin)
+
+感谢这些优秀的项目
 
 
+## 我的其他项目
+### [dev-sidecar](https://github.com/docmirror/dev-sidecar)
+> ---------------来都来了点个star再走呗-----------------↗↗↗↗↗↗↗↗  
+> 解谜提示  
+> 谜题共三层，前两层是两种不同的编码方式，第三层这里就不剧透了，留一点小乐趣。
