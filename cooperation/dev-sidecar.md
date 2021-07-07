@@ -1,4 +1,4 @@
-# dev-sidecar 解谜提示
+# [dev-sidecar](https://github.com/docmirror/dev-sidecar) 解谜提示
 
 
 ---------------来都来了点个star再走呗-----------------↗↗↗↗↗↗↗↗
