@@ -61,13 +61,12 @@
 </template>
 
 <script>
-import { computed, nextTick, reactive, ref } from "vue";
+import { computed, nextTick, reactive, ref, unref } from "vue";
 import _ from "lodash-es";
 import fsButton from "../basic/fs-button";
 import FsComponentRender from "../../components/render/fs-component-render";
 import FsSlotRender from "../../components/render/fs-slot-render";
 import { useCompute } from "../../use/use-compute";
-import traceUtil from "../../utils/util.trace";
 import { uiContext } from "../../ui";
 import { useI18n } from "../../locale";
 import logger from "../../utils/util.log";
@@ -162,19 +161,36 @@ export default {
   ],
   setup(props, ctx) {
     const ui = uiContext.get();
-    traceUtil.trace("fs-search");
     let autoSearch = ref(null);
     let initialForm = _.cloneDeep(props.initialForm || {});
-    _.forEach(props.columns, (column, key) => {
-      if (column.value !== undefined && column.show !== false && column.component?.show !== false) {
-        //默认值
-        initialForm[key] = column.value;
+    const form = reactive(initialForm);
+    const { doComputed } = useCompute();
+    _.each(props.columns, (item) => {
+      if (item.value != null && item.value instanceof AsyncComputeValue) {
+        logger.warn("form.value配置不支持AsyncCompute类型的动态计算");
       }
     });
-    const form = reactive(initialForm);
+    const computedColumns = doComputed(props.columns, getContextFn, null, (value) => {
+      if (!props.validate) {
+        //去掉rules
+        _.forEach(value, (item) => {
+          delete item.rules;
+        });
+      }
+      return value;
+    });
+    _.forEach(computedColumns.value, (column, key) => {
+      if (column.value === undefined) {
+        return;
+      }
+      const defValue = unref(column.value);
+      if (defValue !== undefined && column.show !== false && column.component?.show !== false) {
+        //默认值
+        form[key] = defValue;
+      }
+    });
     const searchFormRef = ref();
     const { t } = useI18n();
-    const { doComputed } = useCompute();
     const componentRenderRefs = ref({});
 
     function getComponentRenderRef(key) {
@@ -253,16 +269,6 @@ export default {
         return a.order - b.order;
       });
       return btns;
-    });
-
-    const computedColumns = doComputed(props.columns, getContextFn, null, (value) => {
-      if (!props.validate) {
-        //去掉rules
-        _.forEach(value, (item) => {
-          delete item.rules;
-        });
-      }
-      return value;
     });
 
     function initAutoSearch() {

@@ -84,10 +84,9 @@
 </template>
 
 <script>
-import { ref, reactive, getCurrentInstance, toRaw, computed } from "vue";
+import { ref, unref, reactive, getCurrentInstance, toRaw, computed } from "vue";
 import _ from "lodash-es";
 import { useCompute } from "../../use/use-compute";
-import traceUtil from "../../utils/util.trace";
 import FsRender from "../render/fs-render";
 import logger from "../../utils/util.log";
 import { uiContext } from "../../ui";
@@ -198,25 +197,45 @@ export default {
   setup(props, ctx) {
     const { merge } = useMerge();
     const ui = uiContext.get();
-    const { doComputed } = useCompute();
-    traceUtil.trace("fs-from");
+    const { AsyncComputeValue, doComputed } = useCompute();
     const formRef = ref();
-
     const form = reactive({});
     const { proxy } = getCurrentInstance();
     const initialForm = _.cloneDeep(props.initialForm);
-    // 初始数据赋值
-    _.each(props.columns, (item, key) => {
-      form[key] = undefined;
-      if (item.value !== undefined) {
-        form[key] = item.value;
+
+    const scope = ref({
+      row: initialForm,
+      form,
+      index: props.index,
+      mode: props.mode,
+      attrs: ctx.attrs,
+      getComponentRef
+    });
+    function getContextFn() {
+      return scope.value;
+    }
+
+    _.each(props.columns, (item) => {
+      if (item.value != null && item.value instanceof AsyncComputeValue) {
+        logger.warn("form.value配置不支持AsyncCompute类型的动态计算");
       }
+    });
+
+    const computedColumns = doComputed(props.columns, getContextFn);
+
+    // 初始数据赋值
+    _.each(computedColumns.value, (item, key) => {
+      form[key] = undefined;
       if (initialForm[key] !== undefined) {
         form[key] = initialForm[key];
       }
+      const defValue = unref(item.value);
+      if (defValue !== undefined) {
+        form[key] = defValue;
+      }
     });
     //form.valueBuilder
-    _.each(props.columns, (item, key) => {
+    _.each(computedColumns.value, (item, key) => {
       let value = form[key];
       if (item.valueBuilder) {
         item.valueBuilder({
@@ -230,15 +249,6 @@ export default {
       }
     });
 
-    const scope = ref({
-      row: initialForm,
-      form,
-      index: props.index,
-      mode: props.mode,
-      attrs: ctx.attrs,
-      getComponentRef
-    });
-
     const formItemRefs = ref({});
 
     function getFormItemRef(key) {
@@ -248,12 +258,6 @@ export default {
     function getComponentRef(key) {
       return getFormItemRef(key)?.getComponentRef();
     }
-
-    function getContextFn() {
-      return scope.value;
-    }
-
-    const computedColumns = doComputed(props.columns, getContextFn);
 
     const groupActiveKey = ref([]);
 

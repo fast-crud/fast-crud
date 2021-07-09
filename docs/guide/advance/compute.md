@@ -172,7 +172,7 @@ context = {
 ## 适用范围
 1. 对于`ref或computed`类型的动态，基本上整个`crudBinding`都支持
 2. 对于`compute或asyncCompute`,则仅在`columns.key.form`、`columns.key.xxxForm`、`columns.key.column`、`columns.key.search`、`rowHandle`下的属性支持
-
+3. `form.value`不支持`asyncCompute`方式动态，因为打开对话框就得设置默认值，等异步完成时已经晚了。
 ::: warning  
 使用动态计算会失去配置合并特性，无法与公共配置和基础配置进行合并。     
 建议只在末端配置上使用动态计算

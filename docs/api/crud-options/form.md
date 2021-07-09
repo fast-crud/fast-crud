@@ -69,6 +69,19 @@
 * 默认：el-dialog / a-modal
 * 可选：el-dialog / el-drawer / a-modal / a-drawer
 
+### wrapper .onOpen
+* 说明: 对话框打开事件处理方法
+* 类型：Function
+
+### wrapper .onOpened
+* 说明: 对话框打开完成事件处理方法
+* 类型：Function
+
+### wrapper .onClosed
+* 说明: 对话框关闭事件处理方法
+* 类型：Function
+
+
 ## columns
 * 说明: 字段列配置。（FastCrud初始化时会通过`crudOptions.columns.[key].form`的配置自动生成，无需主动配置）
 * 类型：Object
