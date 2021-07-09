@@ -44,13 +44,15 @@ export default {
       type: Object
     },
     /**
-     * 是否显示查询
+     * 当前是否显示查询。
+     * 注意：如果要隐藏search，请配置crudOptions.search.show=false
+     * 这里实际就是引用的crudOptions.search.show
      */
     search: {
       type: Boolean
     },
     /**
-     * 紧凑模式按钮
+     * 当前是否紧凑模式
      */
     compact: {
       type: Boolean,
