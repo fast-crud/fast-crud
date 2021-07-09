@@ -1,6 +1,6 @@
 {
   "name": "@fast-crud/demo-element",
-  "version": "0.15.0",
+  "version": "0.15.1",
   "private": true,
   "scripts": {
     "dev": "vite",
@@ -13,9 +13,9 @@
   "author": "Greper",
   "license": "MIT",
   "dependencies": {
-    "@fast-crud/fast-crud": "^0.15.0",
-    "@fast-crud/fast-extends": "^0.15.0",
-    "@fast-crud/ui-element": "^0.15.0",
+    "@fast-crud/fast-crud": "^0.15.1",
+    "@fast-crud/fast-extends": "^0.15.1",
+    "@fast-crud/ui-element": "^0.15.1",
     "@iconify/iconify": "^2.0.1",
     "@iconify/json": "^1.1.347",
     "@purge-icons/generated": "^0.7.0",

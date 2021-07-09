@@ -1,6 +1,6 @@
 {
   "name": "@fast-crud/fast-crud",
-  "version": "0.15.0",
+  "version": "0.15.1",
   "private": false,
   "main": "./dist/fast-crud.umd.js",
   "module": "./dist/fast-crud.es.js",
@@ -13,7 +13,7 @@
   "author": "Greper",
   "license": "MIT",
   "dependencies": {
-    "@fast-crud/ui-interface": "^0.15.0",
+    "@fast-crud/ui-interface": "^0.15.1",
     "dayjs": "^1.10.4",
     "deepdash-es": "5.3.5",
     "lodash-es": "^4.17.15",
