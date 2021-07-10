@@ -1,16 +1,13 @@
 import {
-  h,
-  resolveDynamicComponent,
-  resolveComponent,
-  getCurrentInstance,
   computed,
+  getCurrentInstance,
   mergeProps,
   onMounted,
   provide,
-  markRaw
+  resolveComponent,
+  resolveDynamicComponent
 } from "vue";
 import _ from "lodash-es";
-import traceUtil from "../../utils/util.trace";
 import { useUi } from "../../use";
 
 function mergeEventHandles(target, eventName) {
@@ -80,7 +77,6 @@ export default {
   },
   emits: ["update:dict", "update:modelValue"],
   setup(props, ctx) {
-    traceUtil.trace("fs-component-render");
     const { proxy } = getCurrentInstance();
     const { ui } = useUi();
     provide("get:scope", () => {
