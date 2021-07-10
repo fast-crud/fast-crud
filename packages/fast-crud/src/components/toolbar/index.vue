@@ -46,7 +46,6 @@ export default {
     /**
      * 当前是否显示查询。
      * 注意：如果要隐藏search，请配置crudOptions.search.show=false
-     * 这里实际就是引用的crudOptions.search.show
      */
     search: {
       type: Boolean
@@ -114,6 +113,7 @@ export default {
           }
         },
         export: {
+          show: false,
           type: "primary",
           icon: proxy.$fsui.icons.export,
           title: t("fs.toolbar.export.title"), // '导出',
