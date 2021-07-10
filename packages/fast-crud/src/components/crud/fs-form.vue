@@ -84,7 +84,7 @@
 </template>
 
 <script>
-import { ref, unref, reactive, getCurrentInstance, toRaw, computed } from "vue";
+import { ref, unref, reactive, getCurrentInstance, toRaw, computed, onMounted } from "vue";
 import _ from "lodash-es";
 import { AsyncComputeValue, useCompute } from "../../use/use-compute";
 import FsRender from "../render/fs-render";
@@ -376,16 +376,37 @@ export default {
     function buildItemScope(item) {
       return { key: item.key, ...scope.value };
     }
+
+    onMounted(() => {
+      // immediate valueChange触发
+      _.forEach(computedColumns.value, (item, key) => {
+        if (item.valueChange == null) {
+          return;
+        }
+        let valueChange = item.valueChange;
+        if (valueChange && valueChange.immediate === true && valueChange.handle) {
+          const event = { key, value: form[key], formRef: proxy, ...scope.value, immediate: true };
+          if (valueChange.handle) {
+            valueChange.handle(event);
+          }
+        }
+      });
+    });
     return {
       get: (form, key) => {
         return _.get(form, key);
       },
       set: (form, key, value) => {
         _.set(form, key, value);
-        const event = { key, value, formRef: proxy, ...scope.value };
+        const event = { key, value, formRef: proxy, ...scope.value, immediate: false };
         ctx.emit("value-change", event);
-        if (props.columns[key].valueChange) {
-          props.columns[key].valueChange(event);
+        let valueChange = props.columns[key].valueChange;
+        if (valueChange) {
+          if (valueChange instanceof Function) {
+            valueChange(event);
+          } else if (valueChange.handle) {
+            valueChange.handle(event);
+          }
         }
       },
       formRef,
