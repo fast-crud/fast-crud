@@ -12,13 +12,13 @@ const crudOptions = {
             title:'状态',
             dict:{url:'/dict/status'},
             search:{
-                compnent:{  //查询 使用选择框组件，并且是可以清除的
+                component:{  //查询 使用选择框组件，并且是可以清除的
                     name:'fs-dict-select',
                     clearable:true
                 }
             },
             form:{  //添加和编辑表单 使用选择框组件
-                compnent:{
+                component:{
                     name:'fs-dict-select'
                 }
             },
