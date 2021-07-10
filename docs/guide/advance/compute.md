@@ -35,7 +35,9 @@ showTableRef.value = true
 ```
 
 ## compute 【同步计算】
-> 注意后面没有`d`，基于`vue`的`computed`，用法类似，不同的是它支持上下文参数
+> 注意后面没有`d`，基于`vue`的`computed`，用法类似，不同的是它支持上下文参数      
+> 开发过程中但凡遇到需要根据表单数据或者行数据参与动态计算的，用`compute`或者`asyncCompute`就对了
+
 
 * 方法：compute(Function(context))
 * context： [上下文](#context【上下文】)，一般包含`row`/`form`/`index`/`getComponentRef`
