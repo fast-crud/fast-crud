@@ -164,7 +164,7 @@ export default {
     let autoSearch = ref(null);
     let initialForm = _.cloneDeep(props.initialForm || {});
     const form = reactive(initialForm);
-    const { doComputed } = useCompute();
+    const { doComputed, AsyncComputeValue } = useCompute();
     _.each(props.columns, (item) => {
       if (item.value != null && item.value instanceof AsyncComputeValue) {
         logger.warn("form.value配置不支持AsyncCompute类型的动态计算");
@@ -179,6 +179,7 @@ export default {
       }
       return value;
     });
+
     _.forEach(computedColumns.value, (column, key) => {
       if (column.value === undefined) {
         return;

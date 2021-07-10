@@ -86,7 +86,7 @@
 <script>
 import { ref, unref, reactive, getCurrentInstance, toRaw, computed } from "vue";
 import _ from "lodash-es";
-import { useCompute } from "../../use/use-compute";
+import { AsyncComputeValue, useCompute } from "../../use/use-compute";
 import FsRender from "../render/fs-render";
 import logger from "../../utils/util.log";
 import { uiContext } from "../../ui";
