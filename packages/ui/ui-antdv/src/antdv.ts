@@ -41,7 +41,7 @@ import {
   CollapseItemCI,
   ButtonCI,
   PaginationCI
-} from "@fast-crud/fast-crud";
+} from "@fast-crud/ui-interface";
 export class Antdv implements UiInterface {
   constructor(target) {
     this.notification.get = target.Notification;
