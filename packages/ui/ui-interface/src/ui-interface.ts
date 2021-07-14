@@ -172,6 +172,7 @@ export interface UploadCI extends CI {
 export interface ButtonCI extends CI {
   name;
   text;
+  colors: (type: string) => any;
 }
 export interface PaginationCI extends CI {
   name;

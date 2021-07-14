@@ -125,7 +125,7 @@ export default defineComponent({
           },
           remove: {
             key: "remove",
-            type: "danger",
+            ...ui.button.colors("danger"),
             order: 3,
             text: t("fs.rowHandle.remove.text"),
             title: t("fs.rowHandle.remove.text")

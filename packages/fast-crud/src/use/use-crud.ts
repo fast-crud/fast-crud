@@ -125,7 +125,7 @@ export function useCrud(ctx: UseCrudProps) {
     };
   }
 
-  function useRemove() {
+  function useRowHandle() {
     return {
       rowHandle: {
         buttons: {
@@ -242,7 +242,7 @@ export function useCrud(ctx: UseCrudProps) {
           editable: {
             remove: {
               text: "删除",
-              type: "danger",
+              ...ui.button.colors("danger"),
               click: ({ index }) => {
                 expose.editable.doRemoveRow({ index });
               }
@@ -283,7 +283,7 @@ export function useCrud(ctx: UseCrudProps) {
             },
             remove: {
               text: "删除",
-              type: "danger",
+              ...ui.button.colors("danger"),
               click: async ({ index }) => {
                 expose.editable?.doRemoveRow({ index });
               }
@@ -299,7 +299,7 @@ export function useCrud(ctx: UseCrudProps) {
       defaultCrudOptions.defaultOptions({ t, expose }),
       usePagination(),
       useFormSubmit(),
-      useRemove(),
+      useRowHandle(),
       useSearch(),
       useEvent(),
       useTable(),

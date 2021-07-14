@@ -254,7 +254,10 @@ export class Element implements UiInterface {
 
   button: ButtonCI = {
     name: "el-button",
-    text: "text"
+    text: "text",
+    colors: type => {
+      return { type };
+    }
   };
 
   pagination: PaginationCI = {

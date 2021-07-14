@@ -199,7 +199,16 @@ export class Antdv implements UiInterface {
 
   button: ButtonCI = {
     name: "a-button",
-    text: "link"
+    text: "link",
+    colors: type => {
+      if (type === "danger") {
+        return { danger: true };
+      }
+      if (type === "info" || type === "warning") {
+        return { type: "default" };
+      }
+      return { type };
+    }
   };
 
   buttonGroup: CI = {

@@ -4,6 +4,7 @@ import logger from "../utils/util.log";
 import { useMerge } from "../use/use-merge";
 import { useUi } from "../use/use-ui";
 import { useI18n } from "../locale";
+import crud from "../../../fast-admin/demo-element/src/views/basis/compute/crud";
 
 const { merge } = useMerge();
 export type UseExposeProps = {
@@ -13,24 +14,81 @@ export type UseExposeProps = {
 export type CrudExpose = {
   crudRef;
   crudBinding;
+  /**
+   * 获取FsFormWrapper的实例
+   */
   getFormWrapperRef;
+  /**
+   * 获取FsFormRef
+   */
   getFormRef;
+  /**
+   * 获取表单数据
+   */
   getFormData;
-  getFormComponentRef;
+  /**
+   * 获取表单组件实例
+   */
+  getFormComponentRef: (key: string) => any;
+  /**
+   * 执行valueBuilder
+   */
   doValueBuilder;
+  /**
+   * 执行valueResolve
+   */
   doValueResolve;
+  /**
+   * 刷新列表数据
+   */
   doRefresh;
+  /**
+   * 翻页
+   */
   doPageTurn;
+  /**
+   * 查询按钮点击，执行查询
+   */
   doSearch;
+  /**
+   * 删除行按钮点击
+   */
   doRemove;
+  /**
+   * 打开编辑对话框
+   */
   openEdit;
+  /**
+   * 打开添加对话框
+   */
   openAdd;
+  /**
+   * 打开查看对话框
+   */
   openView;
+  /**
+   * 打开对话框
+   */
   openDialog;
+  /**
+   * 获取查询表单数据
+   */
   getSearchFormData;
+  /**
+   * 重新设置查询表单数据
+   */
   setSearchFormData;
+  /**
+   * 获取FsTable的实例
+   */
   getTableRef;
+  /**
+   * 获取表格数据
+   */
   getTableData;
+  /**
+   * 重新设置表格数据
+   */
   setTableData;
   getTableDataRow;
   doSelectCurrentRow;
@@ -303,7 +361,7 @@ export function useExpose(props: UseExposeProps): { expose: CrudExpose } {
       await expose.doRefresh();
     },
     /**
-     * 获取表格实例
+     * 获取FsTable实例
      */
     getTableRef() {
       return crudRef.value?.tableRef;
@@ -312,16 +370,10 @@ export function useExpose(props: UseExposeProps): { expose: CrudExpose } {
      * 获取表格数据
      */
     getTableData() {
-      const tableRef = expose.getTableRef();
-      return tableRef?.value[ui.table.data];
+      return crudBinding.value.data;
     },
     setTableData(data) {
-      const tableRef = expose.getTableRef();
-      if (tableRef.value == null) {
-        logger.warn("table is not mounted, set data failed");
-        return;
-      }
-      tableRef.value[ui.table.data] = data;
+      crudBinding.value.data = data;
     },
     getTableDataRow(index) {
       const data = expose.getTableData();
