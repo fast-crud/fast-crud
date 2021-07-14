@@ -63,7 +63,7 @@ const crudOptions= {
 ```
 
 2、 Get a complete crud
-![](./docs/images/crud-en.png)
+![](./images/crud-en.png)
 
 
 

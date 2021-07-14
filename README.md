@@ -65,7 +65,7 @@ const crudOptions= {
 ```
 
 2、 一个完全体crud就出来了
-![](./docs/images/crud.png)
+![](./images/crud.png)
 
 
 
