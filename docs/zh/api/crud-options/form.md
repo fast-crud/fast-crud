@@ -83,7 +83,7 @@
 
 
 ## columns
-* 说明: 字段列配置。（FastCrud初始化时会通过`crudOptions.columns.[key].form`的配置自动生成，无需主动配置）
+* 说明: 字段列配置。（FastCrud初始化时会通过`crudOptions.columns.[key].form`的配置自动生成，无需配置）
 * 类型：Object
 * 示例：
 

@@ -152,6 +152,25 @@ columns:{
 
 ```
 
+### [key].form.helper
+* 说明：字段的帮助说明，显示在组件的下方
+* 类型：string | { render:()=>{} }
+```
+columns:{
+    fieldKey:{
+        form:{
+            helper: "我这里是字段的帮助说明"
+            // 也支持jsx形式的复杂显示
+            helper:{
+                render(){
+                    return <div class="red">我这里是通过jsx显示的帮助说明</div>
+                }
+            }
+        }
+    }
+}
+
+```
 
 ## [key].addForm
 * 说明：该字段在添加表单里面的配置
