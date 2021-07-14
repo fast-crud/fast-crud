@@ -10,7 +10,7 @@
     :model="form"
   >
     <!-- row -->
-    <component :is="$fsui.row.name" class="fs-row" v-bind="row">
+    <component :is="$fsui.row.name" class="fs-row">
       <!-- col -->
       <template v-for="item in computedDefaultColumns" :key="item.key">
         <component :is="$fsui.col.name" v-if="item.show !== false" class="fs-col" v-bind="mergeCol(item.col)">
@@ -51,7 +51,7 @@
           <fs-render :render-func="item" :scope="scope" />
         </template>
         <!-- row -->
-        <component :is="$fsui.row.name" class="fs-row" v-bind="row">
+        <component :is="$fsui.row.name" class="fs-row">
           <!-- col -->
           <template v-for="key in groupItem.columns" :key="key">
             <component
