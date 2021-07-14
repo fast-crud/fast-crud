@@ -3,6 +3,94 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.16.0](https://github.com/fast-crud/fast-crud/compare/v0.15.1...v0.16.0) (2021-07-14)
+
+
+### Bug Fixes
+
+* 修复行编辑对勾无效的bug，修复a-button的danger type警告 ([4d48447](https://github.com/fast-crud/fast-crud/commit/4d48447e6b1430663fdf5eca8c03aae531651b74))
+
+
+### Features
+
+* valueChange 支持 immediate ([16987d3](https://github.com/fast-crud/fast-crud/commit/16987d34f1c0c07dbe39305bb0482668320cb7e4))
+* valueChange 支持 immediate ([f72f87e](https://github.com/fast-crud/fast-crud/commit/f72f87ed6c934b116f8d9b224408575017cc3174))
+
+
+### Performance Improvements
+
+* 添加select本地过滤示例 ([2354a03](https://github.com/fast-crud/fast-crud/commit/2354a0322a87ff940984da4e76f456d251a37e75))
+* 添加select本地过滤示例 ([660dc5f](https://github.com/fast-crud/fast-crud/commit/660dc5fe0d290102c8df54c2b1a813ed13cd1d2d))
+
+
+
+
+
+## [0.15.1](https://github.com/fast-crud/fast-crud/compare/v0.15.0...v0.15.1) (2021-07-09)
+
+**Note:** Version bump only for package fast-crud-root
+
+
+
+
+
+# [0.15.0](https://github.com/fast-crud/fast-crud/compare/v0.14.0...v0.15.0) (2021-07-06)
+
+
+### Bug Fixes
+
+* 1 ([a0766a2](https://github.com/fast-crud/fast-crud/commit/a0766a282a52067c5c1b8d687481a84ccf0d3126))
+* 修复全屏按钮不显示的bug ([c211564](https://github.com/fast-crud/fast-crud/commit/c21156498d77c5f4e5a6c315c602a2267f9eaa9f))
+
+
+### Features
+
+* util to ts ([7b79e04](https://github.com/fast-crud/fast-crud/commit/7b79e047c6a4cc4ab87b9135c5610d9dac27fc0c))
+
+
+### Performance Improvements
+
+* rowHandle动态显隐示例 ([0ad8205](https://github.com/fast-crud/fast-crud/commit/0ad8205ca494b38dcbbe13ccadfe65d4d00a59e0))
+
+
+
+
+
+# [0.14.0](https://github.com/fast-crud/fast-crud/compare/v0.13.0...v0.14.0) (2021-07-05)
+
+
+### Bug Fixes
+
+* 修复antdv pagination current没有设置成功的bug ([d236e15](https://github.com/fast-crud/fast-crud/commit/d236e15304e73bc30ba6651677539734fa36fadb))
+
+
+### Features
+
+* fast-extends,包含uploader、editors ([1b1becc](https://github.com/fast-crud/fast-crud/commit/1b1beccb59727f698d458fa725182ddd6cd7daca))
+* fs-admin目录改成fast-admin ([fc6d962](https://github.com/fast-crud/fast-crud/commit/fc6d962389e14990c9629c9ca2e90b2ec8e3d378))
+* 增加edtior-quill ([73566e4](https://github.com/fast-crud/fast-crud/commit/73566e4492779008011d4bacbc3c1adcfcfef1ac))
+* 移除extends-uploader ([0063df7](https://github.com/fast-crud/fast-crud/commit/0063df7bf4421f1793a252166a9a7663ad4945bc))
+
+
+### Performance Improvements
+
+* fs-button引用fs-icon ([44b9120](https://github.com/fast-crud/fast-crud/commit/44b91201a3681e0921a0a42e5f1ca80ccb1f5542))
+
+
+
+
+
+# [0.13.0](https://github.com/fast-crud/fast-crud/compare/v0.12.0...v0.13.0) (2021-07-04)
+
+
+### Features
+
+* icon支持iconify ([72caa05](https://github.com/fast-crud/fast-crud/commit/72caa05d0e14a16b59d98c6f50056674729b9fa1))
+
+
+
+
+
 # [0.12.0](https://github.com/fast-crud/fast-crud/compare/v0.11.0...v0.12.0) (2021-07-03)
 
 

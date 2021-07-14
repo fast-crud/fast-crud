@@ -5,10 +5,7 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 # [0.16.0](https://github.com/fast-crud/fast-crud/compare/v0.15.1...v0.16.0) (2021-07-14)
 
-
-### Bug Fixes
-
-* 修复行编辑对勾无效的bug，修复a-button的danger type警告 ([4d48447](https://github.com/fast-crud/fast-crud/commit/4d48447e6b1430663fdf5eca8c03aae531651b74))
+**Note:** Version bump only for package @fast-crud/fast-extends
 
 
 
@@ -16,7 +13,7 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 ## [0.15.1](https://github.com/fast-crud/fast-crud/compare/v0.15.0...v0.15.1) (2021-07-09)
 
-**Note:** Version bump only for package @fast-crud/ui-antdv
+**Note:** Version bump only for package @fast-crud/fast-extends
 
 
 
@@ -24,7 +21,7 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 # [0.15.0](https://github.com/fast-crud/fast-crud/compare/v0.14.0...v0.15.0) (2021-07-06)
 
-**Note:** Version bump only for package @fast-crud/ui-antdv
+**Note:** Version bump only for package @fast-crud/fast-extends
 
 
 
@@ -32,7 +29,12 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 # [0.14.0](https://github.com/fast-crud/fast-crud/compare/v0.13.0...v0.14.0) (2021-07-05)
 
-**Note:** Version bump only for package @fast-crud/ui-antdv
+
+### Features
+
+* fast-extends,包含uploader、editors ([1b1becc](https://github.com/fast-crud/fast-crud/commit/1b1beccb59727f698d458fa725182ddd6cd7daca))
+* 增加edtior-quill ([73566e4](https://github.com/fast-crud/fast-crud/commit/73566e4492779008011d4bacbc3c1adcfcfef1ac))
+* 移除extends-uploader ([0063df7](https://github.com/fast-crud/fast-crud/commit/0063df7bf4421f1793a252166a9a7663ad4945bc))
 
 
 
@@ -40,7 +42,7 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 # [0.13.0](https://github.com/fast-crud/fast-crud/compare/v0.12.0...v0.13.0) (2021-07-04)
 
-**Note:** Version bump only for package @fast-crud/ui-antdv
+**Note:** Version bump only for package @fast-crud/extends-uploader
 
 
 
@@ -48,7 +50,7 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 # [0.12.0](https://github.com/fast-crud/fast-crud/compare/v0.11.0...v0.12.0) (2021-07-03)
 
-**Note:** Version bump only for package @fast-crud/ui-antdv
+**Note:** Version bump only for package @fast-crud/extends-uploader
 
 
 
@@ -56,7 +58,7 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 # [0.11.0](https://github.com/fast-crud/fast-crud/compare/v0.10.4...v0.11.0) (2021-07-02)
 
-**Note:** Version bump only for package @fast-crud/ui-antdv
+**Note:** Version bump only for package @fast-crud/extends-uploader
 
 
 
@@ -75,10 +77,7 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 # [0.10.0](https://github.com/fast-crud/fast-crud/compare/v0.9.3...v0.10.0) (2021-06-14)
 
-
-### Features
-
-* 将ui-interface单独抽出来 ([6bcc22a](https://github.com/fast-crud/fast-crud/commit/6bcc22a25b31e9644b1dd00badf2e5b01785b4aa))
+**Note:** Version bump only for package @fast-crud/extends-uploader
 
 
 
@@ -89,7 +88,6 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 ### Bug Fixes
 
-* sort change ui ([cdd754e](https://github.com/fast-crud/fast-crud/commit/cdd754ebbbfe673ab683b83a773aca8feedd6dfb))
 * 修复element pagination 触发antdv的onChange事件的bug ([8915732](https://github.com/fast-crud/fast-crud/commit/8915732f9f083f4d54b5cb7ef76beb5fe28b57ab))
 
 
@@ -98,7 +96,7 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 ## [0.9.2](https://github.com/fast-crud/fast-crud/compare/v0.9.1...v0.9.2) (2021-05-30)
 
-**Note:** Version bump only for package @fast-crud/ui-antdv
+**Note:** Version bump only for package @fast-crud/extends-uploader
 
 
 
@@ -106,7 +104,10 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 ## [0.9.1](https://github.com/fast-crud/fast-crud/compare/v0.9.0...v0.9.1) (2021-05-27)
 
-**Note:** Version bump only for package @fast-crud/ui-antdv
+
+### Bug Fixes
+
+* element文件上传到第二个时获取不到url的bug ([ac7f663](https://github.com/fast-crud/fast-crud/commit/ac7f6632da570a5a89f193b304c30597e8ad726e))
 
 
 
@@ -114,34 +115,7 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 # [0.9.0](https://github.com/fast-crud/fast-crud/compare/v0.8.5...v0.9.0) (2021-05-23)
 
-**Note:** Version bump only for package @fast-crud/ui-antdv
-
-
-
-
-
-## [0.8.4](https://github.com/fast-crud/fast-crud/compare/v0.8.3...v0.8.4) (2021-05-22)
-
-**Note:** Version bump only for package @fast-crud/ui-antdv
-
-
-
-
-
-## [0.8.3](https://github.com/fast-crud/fast-crud/compare/v0.8.2...v0.8.3) (2021-05-22)
-
-**Note:** Version bump only for package @fast-crud/ui-antdv
-
-
-
-
-
-## [0.8.2](https://github.com/fast-crud/fast-crud/compare/v0.8.1...v0.8.2) (2021-05-22)
-
-
-### Bug Fixes
-
-* editable add ([14f3aa9](https://github.com/fast-crud/fast-crud/commit/14f3aa9c06ccec9e5d83a6c72d83024a0505caa0))
+**Note:** Version bump only for package @fast-crud/extends-uploader
 
 
 
@@ -149,7 +123,7 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 ## [0.8.1](https://github.com/fast-crud/fast-crud/compare/v0.8.0...v0.8.1) (2021-05-22)
 
-**Note:** Version bump only for package @fast-crud/ui-antdv
+**Note:** Version bump only for package @fast-crud/extends-uploader
 
 
 
@@ -157,4 +131,4 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 # [0.8.0](https://github.com/fast-crud/fast-crud/compare/v0.7.1...v0.8.0) (2021-05-09)
 
-**Note:** Version bump only for package @fast-crud/ui-antdv
+**Note:** Version bump only for package @fast-crud/extends-uploader

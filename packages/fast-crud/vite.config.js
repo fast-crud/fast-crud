@@ -13,7 +13,7 @@ export default {
   },
   build: {
     lib: {
-      entry: resolve(__dirname, "src/index.js"),
+      entry: resolve(__dirname, "src/index.ts"),
       name: "fast-crud"
     },
     // cssCodeSplit: true,
