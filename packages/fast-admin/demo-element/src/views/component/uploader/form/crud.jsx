@@ -1,5 +1,5 @@
 import * as api from "./api";
-import { AllUploadSuccessValidator } from "@fast-crud/extends-uploader";
+import { AllUploadSuccessValidator } from "@fast-crud/fast-extends";
 export default function ({ expose }) {
   const pageRequest = async (query) => {
     return await api.GetList(query);

@@ -29,10 +29,6 @@ export const headerMenus = [
         path: "http://fast-crud.docmirror.cn/antdv/"
       },
       {
-        title: "FsAdmin",
-        path: "http://fs-admin.docmirror.cn/antdv/"
-      },
-      {
         title: "VbenAdminStarter",
         name: "VbenDemo",
         path: "http://fast-crud.docmirror.cn/vben/"
