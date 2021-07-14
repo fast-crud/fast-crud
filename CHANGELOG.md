@@ -3,6 +3,29 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.16.0](https://github.com/fast-crud/fast-crud/compare/v0.15.1...v0.16.0) (2021-07-14)
+
+
+### Bug Fixes
+
+* 修复行编辑对勾无效的bug，修复a-button的danger type警告 ([4d48447](https://github.com/fast-crud/fast-crud/commit/4d48447e6b1430663fdf5eca8c03aae531651b74))
+
+
+### Features
+
+* valueChange 支持 immediate ([16987d3](https://github.com/fast-crud/fast-crud/commit/16987d34f1c0c07dbe39305bb0482668320cb7e4))
+* valueChange 支持 immediate ([f72f87e](https://github.com/fast-crud/fast-crud/commit/f72f87ed6c934b116f8d9b224408575017cc3174))
+
+
+### Performance Improvements
+
+* 添加select本地过滤示例 ([2354a03](https://github.com/fast-crud/fast-crud/commit/2354a0322a87ff940984da4e76f456d251a37e75))
+* 添加select本地过滤示例 ([660dc5f](https://github.com/fast-crud/fast-crud/commit/660dc5fe0d290102c8df54c2b1a813ed13cd1d2d))
+
+
+
+
+
 ## [0.15.1](https://github.com/fast-crud/fast-crud/compare/v0.15.0...v0.15.1) (2021-07-09)
 
 **Note:** Version bump only for package fast-crud-root
