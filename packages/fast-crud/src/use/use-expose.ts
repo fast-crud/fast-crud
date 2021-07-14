@@ -31,6 +31,7 @@ export type CrudExpose = {
   setSearchFormData;
   getTableRef;
   getTableData;
+  setTableData;
   getTableDataRow;
   doSelectCurrentRow;
   editable: any;
@@ -313,6 +314,14 @@ export function useExpose(props: UseExposeProps): { expose: CrudExpose } {
     getTableData() {
       const tableRef = expose.getTableRef();
       return tableRef?.value[ui.table.data];
+    },
+    setTableData(data) {
+      const tableRef = expose.getTableRef();
+      if (tableRef.value == null) {
+        logger.warn("table is not mounted, set data failed");
+        return;
+      }
+      tableRef.value[ui.table.data] = data;
     },
     getTableDataRow(index) {
       const data = expose.getTableData();

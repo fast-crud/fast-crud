@@ -79,7 +79,7 @@ registerMergeColumnPlugin(mergeColumnDict);
 // 导出useCrud
 export function useCrud(ctx: UseCrudProps) {
   const ui = uiContext.get();
-  const { t, tc } = useI18n(); // call `useI18n`, and spread `t` from  `useI18n` returning
+  const { t } = useI18n(); // call `useI18n`, and spread `t` from  `useI18n` returning
   const options: CrudOptions = ctx.crudOptions;
   const expose = ctx.expose;
   const { crudBinding } = expose;
@@ -296,7 +296,7 @@ export function useCrud(ctx: UseCrudProps) {
 
   function resetCrudOptions(options) {
     const userOptions = merge(
-      defaultCrudOptions.defaultOptions({ t, tc, expose }),
+      defaultCrudOptions.defaultOptions({ t, expose }),
       usePagination(),
       useFormSubmit(),
       useRemove(),

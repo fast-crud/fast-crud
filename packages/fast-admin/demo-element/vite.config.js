@@ -19,12 +19,12 @@ export default ({ command, mode }) => {
   let devAlias = [];
   if (mode === "debug") {
     devAlias = [
-      { find: /@fast-crud\/fast-crud\/dist/, replacement: path.resolve("../fast-crud/src/") },
-      { find: /@fast-crud\/fast-crud$/, replacement: path.resolve("../fast-crud/src/") },
-      { find: /@fast-crud\/extends-uploader\/dist/, replacement: path.resolve("../extends/extends-uploader/src/") },
-      { find: /@fast-crud\/extends-uploader$/, replacement: path.resolve("../extends/extends-uploader/src/") },
-      { find: /@fast-crud\/ui-element$/, replacement: path.resolve("../ui/ui-element/src/") },
-      { find: /@fast-crud\/ui-interface$/, replacement: path.resolve("../ui/ui-interface/src/") }
+      { find: /@fast-crud\/fast-crud\/dist/, replacement: path.resolve("../../fast-crud/src/") },
+      { find: /@fast-crud\/fast-crud$/, replacement: path.resolve("../../fast-crud/src/") },
+      { find: /@fast-crud\/fast-extends\/dist/, replacement: path.resolve("../../fast-extends/src/") },
+      { find: /@fast-crud\/fast-extends$/, replacement: path.resolve("../../fast-extends/src/") },
+      { find: /@fast-crud\/ui-element$/, replacement: path.resolve("../../ui/ui-element/src/") },
+      { find: /@fast-crud\/ui-interface$/, replacement: path.resolve("../../ui/ui-interface/src/") }
     ];
   }
 
