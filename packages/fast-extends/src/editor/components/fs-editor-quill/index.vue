@@ -83,22 +83,21 @@ export default {
   watch: {
     disabled: {
       handler(value) {
-        if (this.Quill) {
-          this.Quill.enable(!value);
-        }
+        this.setDisabled(value);
       },
       immediate: true
     },
     modelValue: {
       handler(val) {
         // 确认是新的值
+        debugger;
         if (val !== this.currentValue) {
-          this.currentValue = val;
+          this.currentValue = val ?? "";
           // 尝试更新
           if (this.Quill) {
-            if (this.dispatch) {
-              this.dispatch("ElFormItem", "el.form.blur");
-            }
+            // if (this.dispatch) {
+            //   this.dispatch("ElFormItem", "el.form.blur");
+            // }
             // this.$emit("change", val);
             this.Quill.pasteHTML(val);
           }
@@ -124,7 +123,7 @@ export default {
 
       // 默认值
       this.Quill.enable(false);
-      this.Quill.pasteHTML(this.currentValue);
+      this.Quill.pasteHTML(this.modelValue || "");
       if (!this.disabled) {
         this.$nextTick(() => {
           this.Quill.enable(true);
@@ -133,21 +132,14 @@ export default {
 
       // 绑定事件
       this.Quill.on("text-change", (delta, oldDelta, source) => {
+        debugger;
         const html = this.$refs.editor.children[0].innerHTML;
-        // const text = this.Quill.getText()
-        // const quill = this.Quill
         // 更新内部的值
         this.currentValue = html;
         // 发出事件 v-model
         this.$emit("update:modelValue", html);
         // 发出事件 change
         this.$emit("change", html);
-      });
-      // 将一些 quill 自带的事件传递出去
-      this.Quill.on("text-change", (delta, oldDelta, source) => {
-        /**
-         * 文本变更事件
-         */
         this.$emit("text-change", delta, oldDelta, source);
       });
       this.Quill.on("selection-change", (range, oldRange, source) => {
@@ -204,6 +196,11 @@ export default {
     async doUpload(option) {
       option.config = this.uploader;
       return await this.$refs.uploaderImplRef.getUploaderRef().upload(option);
+    },
+    setDisabled(value = false) {
+      if (this.Quill) {
+        this.Quill.enable(!value);
+      }
     }
   }
 };

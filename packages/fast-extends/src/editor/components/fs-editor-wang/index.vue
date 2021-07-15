@@ -38,7 +38,7 @@ export default {
       type: Boolean
     }
   },
-  emits: ["update:modelValue", "change"],
+  emits: ["update:modelValue", "change", "ready"],
   data() {
     return {
       editor: null,
@@ -59,9 +59,9 @@ export default {
           this.currentValue = val;
           // 尝试更新
           if (this.editor) {
-            if (this.dispatch) {
-              this.dispatch("ElFormItem", "el.form.blur");
-            }
+            // if (this.dispatch) {
+            //   this.dispatch("ElFormItem", "el.form.blur");
+            // }
             // this.$emit("change", val);
             this.editor.txt.html(value);
           }
@@ -71,13 +71,7 @@ export default {
     },
     disabled: {
       handler(value) {
-        if (this.editor) {
-          if (value === true) {
-            this.editor.disable();
-          } else {
-            this.editor.enable();
-          }
-        }
+        this.setDisabled(value);
       },
       immediate: true
     }
@@ -139,6 +133,9 @@ export default {
       editor.create();
       editor.txt.html(this.currentValue);
       this.editor = editor;
+
+      this.setDisabled(this.disabled);
+      this.$emit("ready", { editor: editor });
     },
     async doUpload(option) {
       option.options = this.uploader;
@@ -147,6 +144,15 @@ export default {
         throw new Error("Sorry，The component is not ready yet");
       }
       return await uploaderRef?.upload(option);
+    },
+    setDisabled(value = false) {
+      if (this.editor) {
+        if (value === true) {
+          this.editor.disable();
+        } else {
+          this.editor.enable();
+        }
+      }
     }
   }
 };
