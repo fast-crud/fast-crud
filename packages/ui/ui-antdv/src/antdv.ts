@@ -42,6 +42,7 @@ import {
   ButtonCI,
   PaginationCI
 } from "@fast-crud/ui-interface";
+import { TooltipCI } from "../../ui-interface/src/ui-interface";
 export class Antdv implements UiInterface {
   constructor(target) {
     this.notification.get = target.Notification;
@@ -182,7 +183,8 @@ export class Antdv implements UiInterface {
     refreshRight: "RedoOutlined",
     upload: "UploadOutlined",
     fullScreen: "CompressOutlined",
-    unFullScreen: "ExpandOutlined"
+    unFullScreen: "ExpandOutlined",
+    question: "QuestionCircleOutlined"
   };
 
   dialog: DialogCI = {
@@ -485,5 +487,9 @@ export class Antdv implements UiInterface {
   };
   collapseItem: CollapseItemCI = {
     name: "a-collapse-panel"
+  };
+  tooltip: TooltipCI = {
+    name: "a-tooltip",
+    content: "title"
   };
 }

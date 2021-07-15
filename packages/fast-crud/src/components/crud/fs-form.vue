@@ -24,6 +24,7 @@
               }
             "
             :item="item"
+            :helper="helper"
             :model-value="get(form, item.key)"
             :form-slot="slots['form_' + item.key]"
             :get-context-fn="getContextFn"
@@ -191,6 +192,12 @@ export default {
     col: {
       type: Object,
       default: undefined
+    },
+    /**
+     * helper位置：{position:'label'}
+     */
+    helper: {
+      type: Object
     }
   },
   emits: ["reset", "submit", "validationError", "value-change"],

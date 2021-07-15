@@ -42,6 +42,7 @@ import {
   ButtonCI,
   PaginationCI
 } from "@fast-crud/ui-interface";
+import { TooltipCI } from "../../ui-interface/src/ui-interface";
 export class Element implements UiInterface {
   constructor(target) {
     if (target) {
@@ -155,7 +156,8 @@ export class Element implements UiInterface {
     refreshRight: "el-icon-refresh-right",
     upload: "el-icon-upload",
     fullScreen: "el-icon-full-screen",
-    unFullScreen: "el-icon-full-screen"
+    unFullScreen: "el-icon-full-screen",
+    question: "el-icon-question"
   };
 
   dialog: DialogCI = {
@@ -421,5 +423,9 @@ export class Element implements UiInterface {
   };
   collapseItem: CollapseItemCI = {
     name: "el-collapse-item"
+  };
+  tooltip: TooltipCI = {
+    name: "el-tooltip",
+    content: "content"
   };
 }

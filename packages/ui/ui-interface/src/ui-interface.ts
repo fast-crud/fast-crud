@@ -125,6 +125,10 @@ export interface FormItemCI extends CI {
   label: string;
 }
 
+export interface TooltipCI extends CI {
+  content: string;
+}
+
 export interface TagCI extends CI {
   type: string;
   colors: Array<string>;
@@ -204,6 +208,7 @@ export interface Icons {
   upload;
   fullScreen;
   unFullScreen;
+  question;
 }
 export interface UiInterface {
   modelValue: string;
@@ -220,6 +225,7 @@ export interface UiInterface {
   button: ButtonCI;
   form: CI;
   formItem: FormItemCI;
+  tooltip: TooltipCI;
   radioGroup: RadioGroupCI;
   radio: RadioCI;
   checkboxGroup: CheckboxGroupCI;
