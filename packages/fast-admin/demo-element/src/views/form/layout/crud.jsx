@@ -68,7 +68,7 @@ export default function ({ expose }) {
         },
         gridSpan: {
           title: "grid跨列",
-          type: "text-area",
+          type: "textarea",
           form: {
             col: {
               style: { gridColumn: "span 2" } // grid 模式
@@ -77,7 +77,7 @@ export default function ({ expose }) {
         },
         flexSpan: {
           title: "flex跨列",
-          type: "text-area",
+          type: "textarea",
           search: { show: false },
           form: {
             show: compute((context) => {

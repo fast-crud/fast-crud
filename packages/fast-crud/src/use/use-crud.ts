@@ -316,7 +316,7 @@ export function useCrud(ctx: UseCrudProps) {
     const viewFormColumns = {};
     const searchColumns = {};
 
-    function mergeFromForm(targetColumns, item, key, mergeSrc, addLabel = false) {
+    function cloneFromColumns(targetColumns, item, key, mergeSrc, addLabel = false) {
       const formColumn = cloneDeep(item[mergeSrc]) || {};
       if (addLabel) {
         if (formColumn.title == null) {
@@ -345,14 +345,15 @@ export function useCrud(ctx: UseCrudProps) {
           return;
         }
 
-        mergeFromForm(formColumns, item, key, "form", true);
-        mergeFromForm(addFormColumns, item, key, "addForm");
-        mergeFromForm(editFormColumns, item, key, "editForm");
-        mergeFromForm(viewFormColumns, item, key, "viewForm");
-        mergeFromForm(searchColumns, item, key, "search");
+        cloneFromColumns(formColumns, item, key, "form", true);
+        cloneFromColumns(addFormColumns, item, key, "addForm");
+        cloneFromColumns(editFormColumns, item, key, "editForm");
+        cloneFromColumns(viewFormColumns, item, key, "viewForm");
+        cloneFromColumns(searchColumns, item, key, "search");
       });
     }
 
+    //将columns里面的配置分别放clone到对应的form里面
     eachColumns(userOptions.columns);
 
     // 分置合并
@@ -362,7 +363,11 @@ export function useCrud(ctx: UseCrudProps) {
     userOptions.editForm = merge(cloneDeep(userOptions.form), { columns: editFormColumns }, userOptions.editForm);
     userOptions.addForm = merge(cloneDeep(userOptions.form), { columns: addFormColumns }, userOptions.addForm);
     userOptions.viewForm = merge(cloneDeep(userOptions.form), { columns: viewFormColumns }, userOptions.viewForm);
-    userOptions.search = merge({ columns: userOptions.form.columns }, { columns: searchColumns }, userOptions.search);
+    userOptions.search = merge(
+      { columns: cloneDeep(userOptions.form.columns) },
+      { columns: searchColumns },
+      userOptions.search
+    );
     userOptions.table.columns = tableColumns;
     const tableColumnsMap = {};
     _.forEach(tableColumns, (item) => {

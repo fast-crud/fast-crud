@@ -46,7 +46,7 @@ export default function ({ expose }) {
         },
         intro: {
           title: "简介",
-          type: "text-area",
+          type: "textarea",
           column: {
             "show-overflow-tooltip": true
           }
