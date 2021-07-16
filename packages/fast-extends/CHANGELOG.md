@@ -3,6 +3,23 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.17.0](https://github.com/fast-crud/fast-crud/compare/v0.16.0...v0.17.0) (2021-07-16)
+
+
+### Features
+
+* 升级依赖版本 ([ded1213](https://github.com/fast-crud/fast-crud/commit/ded121378f878fd4960fb3722fa7bc42987ace91))
+
+
+### Performance Improvements
+
+* 文件上传组件优化 ([0a5afa8](https://github.com/fast-crud/fast-crud/commit/0a5afa8398fd52afae3fc642f1a362760da388aa))
+* 文件上传组件优化 ([f46680c](https://github.com/fast-crud/fast-crud/commit/f46680cfdaef2747a59c32230b9098519183f957))
+
+
+
+
+
 # [0.16.0](https://github.com/fast-crud/fast-crud/compare/v0.15.1...v0.16.0) (2021-07-14)
 
 **Note:** Version bump only for package @fast-crud/fast-extends
