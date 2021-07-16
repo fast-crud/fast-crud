@@ -1,7 +1,7 @@
 <template>
-  <div class="fs-file-format">
+  <div class="fs-files-format">
     <template v-if="type === 'text'">
-      <span v-for="item in items" :key="item.url" class="fs-file-item">
+      <span v-for="item in itemsRef" :key="item.url" class="fs-files-item">
         <a :href="item.url" target="_blank" v-bind="a">
           {{ item.name }}
         </a>
@@ -10,7 +10,7 @@
     <template v-else>
       <component
         :is="$fsui.tag.name"
-        v-for="item in items"
+        v-for="item in itemsRef"
         :key="item.url"
         class="fs-tag-item"
         :type="item.color"
@@ -23,6 +23,7 @@
 </template>
 
 <script>
+import { ref, watch } from "vue";
 // 文件格式化展示组件
 export default {
   name: "FsFilesFormat",
@@ -52,48 +53,59 @@ export default {
       }
     }
   },
-  data() {
-    return {};
-  },
-  computed: {
-    items() {
-      if (this.modelValue == null || this.modelValue === "") {
-        return [];
-      }
-      let valueArr = [];
-      if (typeof this.modelValue === "string") {
-        valueArr = [this.getItem(this.modelValue)];
-      } else if (this.modelValue instanceof Array) {
-        // 本来就是数组的
-        valueArr = [];
-        for (const val of this.modelValue) {
-          valueArr.push(this.getItem(val));
-        }
-      }
-      return valueArr;
-    }
-  },
-  created() {},
-  methods: {
-    getFileName(url) {
+  setup(props, ctx) {
+    function getFileName(url) {
       if (url?.lastIndexOf("/") >= 0) {
         return url.substring(url.lastIndexOf("/") + 1);
       }
       return url;
-    },
-    getItem(value) {
+    }
+    async function getItem(value) {
       return {
-        url: this.buildUrl(value),
+        url: await props.buildUrl(value),
         value: value,
-        name: this.getFileName(value),
-        color: this.color
+        name: getFileName(value),
+        color: props.color
       };
     }
+
+    async function buildItems() {
+      if (props.modelValue == null || props.modelValue === "") {
+        return [];
+      }
+      let valueArr = [];
+      if (typeof props.modelValue === "string") {
+        valueArr = [await getItem(props.modelValue)];
+      } else if (props.modelValue instanceof Array) {
+        // 本来就是数组的
+        valueArr = [];
+        for (const val of props.modelValue) {
+          valueArr.push(await getItem(val));
+        }
+      }
+      return valueArr;
+    }
+    const itemsRef = ref([]);
+    watch(
+      () => {
+        return props.modelValue;
+      },
+      async () => {
+        itemsRef.value = await buildItems();
+      },
+      {
+        immediate: true
+      }
+    );
+
+    return {
+      itemsRef
+    };
   }
 };
 </script>
 <style lang="less">
-.fs-file-format {
+.fs-files-format {
   display: flex;
   flex-wrap: wrap;
   .fs-form-item,
@@ -102,15 +114,6 @@ export default {
     a {
       text-decoration: none;
     }
-  }
-  .d2-mb-2 {
-    margin-bottom: 2px;
-  }
-  .d2-mt-2 {
-    margin-top: 2px;
-  }
-  .d2-mr-5 {
-    margin-right: 5px;
   }
   .tag-item {
     margin-right: 10px;
