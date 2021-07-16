@@ -4,7 +4,6 @@ import logger from "../utils/util.log";
 import { useMerge } from "../use/use-merge";
 import { useUi } from "../use/use-ui";
 import { useI18n } from "../locale";
-import crud from "../../../fast-admin/demo-element/src/views/basis/compute/crud";
 
 const { merge } = useMerge();
 export type UseExposeProps = {

@@ -363,11 +363,16 @@ export function useCrud(ctx: UseCrudProps) {
     userOptions.editForm = merge(cloneDeep(userOptions.form), { columns: editFormColumns }, userOptions.editForm);
     userOptions.addForm = merge(cloneDeep(userOptions.form), { columns: addFormColumns }, userOptions.addForm);
     userOptions.viewForm = merge(cloneDeep(userOptions.form), { columns: viewFormColumns }, userOptions.viewForm);
-    userOptions.search = merge(
-      { columns: cloneDeep(userOptions.form.columns) },
-      { columns: searchColumns },
-      userOptions.search
-    );
+
+    //处理searchColumns， 只从form里面复制component和valueChange
+    const copyColumnsForSearch = cloneDeep(userOptions.form.columns);
+    const baseColumnsForSearch = {};
+    _.forEach(copyColumnsForSearch, (item, key) => {
+      baseColumnsForSearch[key] = _.pick(item, ["component", "valueChange", "title", "key", "label"]);
+    });
+    userOptions.search = merge({ columns: baseColumnsForSearch }, { columns: searchColumns }, userOptions.search);
+
+    // tableColumns
     userOptions.table.columns = tableColumns;
     const tableColumnsMap = {};
     _.forEach(tableColumns, (item) => {
