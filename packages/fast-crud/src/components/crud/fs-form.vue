@@ -332,7 +332,7 @@ export default {
       return columns;
     });
 
-    async function getFormRef() {
+    function getFormRef() {
       return formRef.value;
     }
     async function reset() {
