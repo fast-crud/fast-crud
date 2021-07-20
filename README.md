@@ -92,7 +92,7 @@ const crudOptions= {
 
 
 ## 谁在用fast-crud？
-* [battcn/wemirr-platform](https://gitee.com/battcn/wemirr-platform) ：中台管理系统 [预览地址](https://cloud.battcn.com/)
+* [battcn/wemirr-platform](https://gitee.com/battcn/wemirr-platform) ：中台管理系统 [预览地址](https://cloud.battcn.com/) , [配套前端ui](https://gitee.com/battcn/wemirr-platform-ui)
 
 
 ## 依赖
