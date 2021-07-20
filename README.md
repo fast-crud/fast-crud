@@ -90,6 +90,11 @@ const crudOptions= {
 支持Antdv、Element，你喜欢哪个就用哪个
 
 
+
+## 谁在用fast-crud？
+* [battcn/wemirr-platform](https://gitee.com/battcn/wemirr-platform) ：中台管理系统 [预览地址](https://cloud.battcn.com/)
+
+
 ## 依赖
 ### ui组件库
 * [Antdv 2x](https://github.com/vueComponent/ant-design-vue) 、[Element-Plus](https://github.com/element-plus/element-plus) 二选一
@@ -120,6 +125,9 @@ const crudOptions= {
 * [vben-admin](https://github.com/anncwb/vue-vben-admin)
 
 感谢这些优秀的项目
+
+
+
 
 
 ## 我的其他项目
