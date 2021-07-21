@@ -32,6 +32,7 @@ export type UseCrudProps = {
    * common里面可以使用
    */
   extra?: any;
+  [key: string]: any;
 };
 const { merge, cloneDeep } = useMerge();
 // mergeColumnPlugin 注册
