@@ -195,15 +195,12 @@ export function useCrud(ctx: UseCrudProps) {
   }
 
   function useTable() {
-    const events = ui.table.onSortChange({
-      emit({ isServerSort, prop, asc, order }) {
-        crudBinding.value.sort = isServerSort ? { prop, order, asc } : null;
-        expose.doRefresh();
-      }
-    });
     return {
       table: {
-        ...events
+        onSortChange({ isServerSort, prop, asc, order }) {
+          crudBinding.value.sort = isServerSort ? { prop, order, asc } : null;
+          expose.doRefresh();
+        }
       }
     };
   }

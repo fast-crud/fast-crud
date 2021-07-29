@@ -317,14 +317,18 @@ export class Antdv implements UiInterface {
     data: "dataSource",
     fixedHeaderNeedComputeBodyHeight: true,
     vLoading: false,
-    onSortChange({ emit }) {
+    onChange({ onSortChange, onFilterChange, onPagination }) {
       return {
-        // 监听a-table的服务端排序
-        onChange(pagination, filters, sorter) {
-          console.log("table change", pagination, filters, sorter);
+        onChange: (pagination, filters, sorter, { currentDataSource }) => {
+          if (pagination) {
+            onPagination({ ...pagination, data: currentDataSource });
+          }
+          if (filters) {
+            onFilterChange({ ...filters, data: currentDataSource });
+          }
           if (sorter) {
             const { column, field, order } = sorter;
-            emit({
+            onSortChange({
               isServerSort: order && column.sorter === true,
               prop: field,
               order,
