@@ -58,7 +58,7 @@ export default {
      */
     editable: {}
   },
-  emits: ["row-handle", "value-change"],
+  emits: ["row-handle", "value-change", "pagination-change", "filter-change", "sort-change"],
   setup(props, ctx) {
     const tableRef = ref();
     const componentRefs = ref([]);
@@ -253,7 +253,17 @@ export default {
       });
     }
 
-    const tableRender = <tableComp ref={"tableRef"} {...this.$attrs} {...dataSource} v-slots={tableSlots} />;
+    const events = ui.table.onChange({
+      onSortChange: (sorter) => {
+        this.$emit("sort-change", sorter);
+      },
+      onFilterChange: (filters) => {
+        this.$emit("filter-change", filters);
+      }
+    });
+    const tableRender = (
+      <tableComp ref={"tableRef"} {...this.$attrs} {...events} {...dataSource} v-slots={tableSlots} />
+    );
     if (proxy.$fsui.table.vLoading) {
       const loading = resolveDirective(proxy.$fsui.table.vLoading);
       return withDirectives(tableRender, [[loading, this.$attrs.loading]]);

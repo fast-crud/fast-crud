@@ -301,17 +301,20 @@ export class Element implements UiInterface {
     data: "data",
     fixedHeaderNeedComputeBodyHeight: false,
     vLoading: "loading",
-    onSortChange({ emit }) {
+    onChange({ onSortChange, onFilterChange }) {
       return {
-        onSortChange({ column, prop, order }) {
-          console.log("sort change", column, prop, order);
-          emit({
+        onSortChange: ({ column, prop, order }) => {
+          if (!onSortChange) {
+            return;
+          }
+          onSortChange({
             isServerSort: prop && column.sortable === "custom",
             prop,
             order,
             asc: order === "ascending"
           });
-        }
+        },
+        onFilterChange
       };
     }
   };

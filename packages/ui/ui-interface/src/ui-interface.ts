@@ -53,7 +53,7 @@ export interface TableCI extends CI {
   data;
   fixedHeaderNeedComputeBodyHeight;
   vLoading;
-  onSortChange;
+  onChange;
 }
 
 export interface CheckboxGroupCI extends CI {
