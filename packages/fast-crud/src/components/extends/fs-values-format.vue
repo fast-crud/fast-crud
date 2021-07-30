@@ -173,10 +173,10 @@ export default {
 
       if (dict) {
         options = dict.getNodesFromDataMap(valueArr);
-        if (this.defaultLabel) {
+        if (props.defaultLabel) {
           _.forEach(options, (item) => {
             if (item[labelProp] == null) {
-              item[labelProp] = this.defaultLabel;
+              item[labelProp] = props.defaultLabel;
             }
           });
         }

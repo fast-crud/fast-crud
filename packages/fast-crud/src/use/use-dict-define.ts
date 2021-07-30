@@ -96,6 +96,10 @@ class Dict extends UnMergeable {
     }
     let data: Array<any> = [];
     if (this.getNodesByValues) {
+      if (context == null) {
+        logger.warn("您配置了getNodesByValues，根据value值获取节点数据需要dict.prototype=true");
+        return [];
+      }
       if (context.value) {
         let cacheKey = null;
         if (this.cache && this.url) {
