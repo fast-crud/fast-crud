@@ -140,6 +140,9 @@ export default defineComponent({
       const btns = [];
       _.forEach(mergedBtns, (item, key) => {
         item.key = key;
+        if (item.show === false) {
+          return;
+        }
         btns.push(item);
       });
 
