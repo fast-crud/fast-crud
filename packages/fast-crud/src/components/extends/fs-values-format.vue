@@ -120,7 +120,11 @@ export default {
      */
     type: {
       default: "tag"
-    }
+    },
+    /**
+     * 当value值不在字典中时默认显示的文本
+     */
+    defaultLabel: {}
   },
   emits: ["click"],
   setup(props, ctx) {
@@ -169,6 +173,13 @@ export default {
 
       if (dict) {
         options = dict.getNodesFromDataMap(valueArr);
+        if (this.defaultLabel) {
+          _.forEach(options, (item) => {
+            if (item[labelProp] == null) {
+              item[labelProp] = this.defaultLabel;
+            }
+          });
+        }
       } else {
         options = [];
         _.forEach(valueArr, (item) => {

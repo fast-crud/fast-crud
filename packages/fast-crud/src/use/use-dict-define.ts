@@ -272,6 +272,8 @@ class Dict extends UnMergeable {
       const node = this.dataMap[item];
       if (node) {
         nodes.push(node);
+      } else {
+        nodes.push({ [this.value]: item });
       }
     });
     return nodes;
