@@ -72,7 +72,7 @@
                 "
                 :item="computedColumns[key]"
                 :model-value="get(form, key)"
-                :slots="slots['form_' + key]"
+                :form-slot="slots['form_' + key]"
                 :get-context-fn="getContextFn"
                 @update:modelValue="set(form, key, $event)"
               />
