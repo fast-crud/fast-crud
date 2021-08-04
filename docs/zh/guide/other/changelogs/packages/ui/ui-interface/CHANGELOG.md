@@ -3,6 +3,26 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.17.1](https://github.com/fast-crud/fast-crud/compare/v0.17.0...v0.17.1) (2021-08-04)
+
+**Note:** Version bump only for package @fast-crud/ui-interface
+
+
+
+
+
+# [0.17.0](https://github.com/fast-crud/fast-crud/compare/v0.16.0...v0.17.0) (2021-07-16)
+
+
+### Features
+
+* 升级依赖版本 ([ded1213](https://github.com/fast-crud/fast-crud/commit/ded121378f878fd4960fb3722fa7bc42987ace91))
+* form-helper ([dc749ae](https://github.com/fast-crud/fast-crud/commit/dc749ae82e6cdd0bedef27ebc5d21b9c452f36c7))
+
+
+
+
+
 # [0.16.0](https://github.com/fast-crud/fast-crud/compare/v0.15.1...v0.16.0) (2021-07-14)
 
 
