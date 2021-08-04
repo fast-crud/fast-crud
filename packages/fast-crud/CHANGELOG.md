@@ -3,6 +3,20 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.17.1](https://github.com/fast-crud/fast-crud/compare/v0.17.0...v0.17.1) (2021-08-04)
+
+
+### Bug Fixes
+
+* https://github.com/fast-crud/fast-crud/issues/11 ([3e95b39](https://github.com/fast-crud/fast-crud/commit/3e95b394bb25fbba3813e71318d75438893e5989))
+* 修复group无法显示表单slot的bug ([72fd641](https://github.com/fast-crud/fast-crud/commit/72fd641588814ca293bd43b14c7faf54282dd36f))
+* 修复动态getData缓存的bug ([86cd495](https://github.com/fast-crud/fast-crud/commit/86cd495f003b6cd177bb403f7b6e619caee15604))
+* 懒加载不反显的bug ([62dcc0e](https://github.com/fast-crud/fast-crud/commit/62dcc0e6fba78c8e8b8713033da7515509bb238e))
+
+
+
+
+
 # [0.17.0](https://github.com/fast-crud/fast-crud/compare/v0.16.0...v0.17.0) (2021-07-16)
 
 
