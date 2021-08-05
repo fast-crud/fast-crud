@@ -233,12 +233,12 @@ export default {
     // 初始数据赋值
     _.each(computedColumns.value, (item, key) => {
       form[key] = undefined;
-      if (initialForm[key] !== undefined) {
-        form[key] = initialForm[key];
-      }
       const defValue = unref(item.value);
       if (defValue !== undefined) {
         form[key] = defValue;
+      }
+      if (initialForm && initialForm[key] !== undefined) {
+        form[key] = initialForm[key];
       }
     });
     //form.valueBuilder
