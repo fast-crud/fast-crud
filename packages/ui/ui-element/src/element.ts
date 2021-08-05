@@ -241,7 +241,12 @@ export class Element implements UiInterface {
   cascader: CascaderCI = {
     name: "el-cascader",
     modelValue: "modelValue",
-    clearable: "clearable"
+    clearable: "clearable",
+    fieldNames(namesMap) {
+      return {
+        props: namesMap
+      };
+    }
   };
 
   form: CI = {

@@ -68,6 +68,7 @@ export interface CheckboxCI extends CI {
 export interface CascaderCI extends CI {
   modelValue;
   clearable;
+  fieldNames: Function;
 }
 
 export type TabsCI = CI;

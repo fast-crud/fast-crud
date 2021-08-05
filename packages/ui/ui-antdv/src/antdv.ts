@@ -227,7 +227,10 @@ export class Antdv implements UiInterface {
   cascader: CascaderCI = {
     name: "a-cascader",
     modelValue: "value",
-    clearable: "allowClear"
+    clearable: "allowClear",
+    fieldNames(namesMap) {
+      return { fieldNames: namesMap };
+    }
   };
 
   checkboxGroup: CheckboxGroupCI = {
