@@ -7,7 +7,7 @@ import types from "../types";
 import { uiContext } from "../ui";
 import { useI18n } from "../locale";
 import { useMerge } from "./use-merge";
-import { CrudExpose } from "./use-expose";
+import { CrudExpose } from "../d.ts";
 import { useCompute } from "./use-compute";
 export interface CrudOptions {
   table?: {};

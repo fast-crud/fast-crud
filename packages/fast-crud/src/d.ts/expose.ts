@@ -15,8 +15,10 @@ export type CrudExpose = {
   getFormData;
   /**
    * 获取表单组件实例
+   * key: 字段key
+   * isAsync: 是否异步获取，传true时，此方法返回promise（当组件是异步组件<extends中的组件>时，第一次获取会为空，所以需要异步等待加载完成后才能获取）
    */
-  getFormComponentRef: (key: string) => any;
+  getFormComponentRef: (key: string, isAsync: boolean) => any;
   /**
    * 执行valueBuilder
    */

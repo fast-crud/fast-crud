@@ -262,8 +262,8 @@ export default {
       return formItemRefs.value[key];
     }
 
-    function getComponentRef(key) {
-      return getFormItemRef(key)?.getComponentRef();
+    function getComponentRef(key, isAsync = false) {
+      return getFormItemRef(key)?.getComponentRef(isAsync);
     }
 
     const groupActiveKey = ref([]);

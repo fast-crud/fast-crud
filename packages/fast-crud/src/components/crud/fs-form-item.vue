@@ -86,7 +86,10 @@ export default {
     function updateModelValue(value) {
       ctx.emit("update:modelValue", value);
     }
-    function getComponentRef() {
+    function getComponentRef(isAsync = false) {
+      if (isAsync) {
+        return componentRenderRef.value?.getTargetRefAsync();
+      }
       return componentRenderRef.value?.getTargetRef();
     }
 

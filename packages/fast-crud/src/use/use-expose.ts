@@ -145,9 +145,9 @@ export function useExpose(props: UseExposeProps): { expose: CrudExpose } {
       const formRef = expose.getFormRef();
       return formRef?.getFormData();
     },
-    getFormComponentRef(key) {
+    getFormComponentRef(key, isAsync = false) {
       const formRef = expose.getFormRef();
-      return formRef?.getComponentRef(key);
+      return formRef?.getComponentRef(key, isAsync);
     },
     doValueBuilder(records) {
       const columns = toRaw(crudBinding.value.columns);
