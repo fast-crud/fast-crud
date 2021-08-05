@@ -3,6 +3,18 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.17.2](https://github.com/fast-crud/fast-crud/compare/v0.17.1...v0.17.2) (2021-08-05)
+
+
+### Performance Improvements
+
+* 优化cascader，fieldNames跟随dict配置走 ([5a603d0](https://github.com/fast-crud/fast-crud/commit/5a603d0938e927bf4a1d5d5c5a9ba17e98db2e63))
+* 优化cascader，fieldNames跟随dict配置走 ([c35029e](https://github.com/fast-crud/fast-crud/commit/c35029e0420c3570341a7bc9b300cb6f1681efb3))
+
+
+
+
+
 ## [0.17.1](https://github.com/fast-crud/fast-crud/compare/v0.17.0...v0.17.1) (2021-08-04)
 
 
