@@ -4,15 +4,15 @@ export type CrudExpose = {
   /**
    * 获取FsFormWrapper的实例
    */
-  getFormWrapperRef;
+  getFormWrapperRef: () => any;
   /**
    * 获取FsFormRef
    */
-  getFormRef;
+  getFormRef: () => any;
   /**
    * 获取表单数据
    */
-  getFormData;
+  getFormData: () => any;
   /**
    * 获取表单组件实例
    * key: 字段key
@@ -21,52 +21,61 @@ export type CrudExpose = {
   getFormComponentRef: (key: string, isAsync: boolean) => any;
   /**
    * 执行valueBuilder
+   * @param records 表格数据列表
    */
-  doValueBuilder;
+  doValueBuilder: (records) => void;
   /**
    * 执行valueResolve
+   * @param context { form }
    */
-  doValueResolve;
+  doValueResolve: (context: { form: any }) => void;
   /**
    * 刷新列表数据
    */
-  doRefresh;
+  doRefresh: () => Promise<void>;
   /**
    * 翻页
    */
-  doPageTurn;
+  doPageTurn: (no: number) => void;
   /**
    * 查询按钮点击，执行查询
+   * @param opts {form, goFirstPage =true,mergeForm=false}
    */
-  doSearch;
+  doSearch: (opts: { form: any; goFirstPage?: boolean; mergeForm?: boolean }) => Promise<void>;
   /**
    * 删除行按钮点击
+   * @param context = {index,row,...} , delRequest的请求参数
    */
-  doRemove;
+  doRemove: (context) => Promise<void>;
   /**
    * 打开编辑对话框
+   * @param context = {index,row,...formWrapper.open的自定义参数}
    */
-  openEdit;
+  openEdit: (context) => Promise<void>;
   /**
    * 打开添加对话框
+   *  @param context = {row,...formWrapper.open的自定义参数}
    */
-  openAdd;
+  openAdd: (context) => Promise<void>;
   /**
    * 打开查看对话框
+   *  @param context = {index,row,...formWrapper.open的自定义参数}
    */
-  openView;
+  openView: (context) => Promise<void>;
   /**
    * 打开对话框
+   * @param context = {...formWrapper.open的自定义参数}
    */
-  openDialog;
+  openDialog: (context) => Promise<void>;
   /**
    * 获取查询表单数据
+   * @param context
    */
   getSearchFormData;
   /**
    * 重新设置查询表单数据
    */
-  setSearchFormData;
+  setSearchFormData: (context: { form; mergeForm?: boolean }) => void;
   /**
    * 获取FsTable的实例
    */

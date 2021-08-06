@@ -192,8 +192,8 @@ export function useExpose(props: UseExposeProps): { expose: CrudExpose } {
     /**
      * {form,mergeForm}
      */
-    setSearchFormData({ form, mergeForm }) {
-      crudRef.value.setSearchFormData({ form, mergeForm });
+    setSearchFormData(context: { form: any; mergeForm?: boolean }) {
+      crudRef.value.setSearchFormData(context);
     },
     async doRefresh() {
       let page;

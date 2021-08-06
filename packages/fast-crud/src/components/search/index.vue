@@ -289,7 +289,12 @@ export default {
     /**
      * 设置form值
      */
-    function setForm(newForm) {
+    function setForm(newForm, merge = true) {
+      if (!merge) {
+        _.each(_.keys(form), (item) => {
+          delete form[item];
+        });
+      }
       _.merge(form, newForm);
     }
 
