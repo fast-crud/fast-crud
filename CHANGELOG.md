@@ -3,6 +3,18 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.17.3](https://github.com/fast-crud/fast-crud/compare/v0.17.2...v0.17.3) (2021-08-06)
+
+
+### Bug Fixes
+
+* 修复默认值的bug ([f8de8f6](https://github.com/fast-crud/fast-crud/commit/f8de8f601935580c8806a5d92eadf36d5b2fca55))
+* 第一次获取异步组件为空的bug ([9eb7a05](https://github.com/fast-crud/fast-crud/commit/9eb7a05d9ed98be2f27e9df050a2cc6731dac987))
+
+
+
+
+
 ## [0.17.2](https://github.com/fast-crud/fast-crud/compare/v0.17.1...v0.17.2) (2021-08-05)
 
 
