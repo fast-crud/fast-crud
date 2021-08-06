@@ -71,7 +71,7 @@ export type CrudExpose = {
    * 获取查询表单数据
    * @param context
    */
-  getSearchFormData;
+  getSearchFormData: () => any;
   /**
    * 重新设置查询表单数据
    */
@@ -79,16 +79,26 @@ export type CrudExpose = {
   /**
    * 获取FsTable的实例
    */
-  getTableRef;
+  getTableRef: () => any;
   /**
    * 获取表格数据
    */
-  getTableData;
+  getTableData: () => [];
   /**
    * 重新设置表格数据
    */
-  setTableData;
-  getTableDataRow;
-  doSelectCurrentRow;
+  setTableData: ([]) => void;
+  /**
+   * 获取表格数据某一行
+   */
+  getTableDataRow: (index: number) => any;
+  /**
+   * 选中某一行
+   * @param context = {row}
+   */
+  doSelectCurrentRow: (context: { row }) => void;
+  /**
+   * 行编辑
+   */
   editable: any;
 };
