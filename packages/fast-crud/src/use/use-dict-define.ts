@@ -96,6 +96,11 @@ class Dict extends UnMergeable {
     }
     let data: Array<any> = [];
     if (this.getNodesByValues) {
+      if (context == null) {
+        logger.warn("您配置了getNodesByValues，根据value值获取节点数据需要dict.prototype=true");
+        return [];
+      }
+
       if (context.value) {
         let cacheKey = null;
         if (this.cache && this.url) {
@@ -151,28 +156,27 @@ class Dict extends UnMergeable {
   async getRemoteDictData(context?) {
     let getFromRemote;
     let cacheKey;
-    if (this.getData != null) {
-      cacheKey = this.getData;
-      getFromRemote = async () => {
-        // @ts-ignore
-        return await this.getData({ dict: this, ...context });
-      };
-    } else if (this.url) {
-      let url = this.url;
+    let url;
+    if (this.url) {
+      url = this.url;
       if (url instanceof Function) {
         url = url({ ...context, dict: this });
       }
-      if (url == null) {
-        return;
-      }
       cacheKey = url;
+    }
+    if (this.getData != null) {
+      getFromRemote = async () => {
+        // @ts-ignore
+        return await this.getData({ url, dict: this, ...context });
+      };
+    } else if (url) {
       getFromRemote = async () => {
         return await dictRequest({ url, dict });
       };
     } else {
       return [];
     }
-    if (this.cache) {
+    if (this.cache && cacheKey) {
       let cached = DictGlobalCache.get(cacheKey);
 
       if (cached == null) {
@@ -272,6 +276,8 @@ class Dict extends UnMergeable {
       const node = this.dataMap[item];
       if (node) {
         nodes.push(node);
+      } else {
+        nodes.push({ [this.value]: item });
       }
     });
     return nodes;

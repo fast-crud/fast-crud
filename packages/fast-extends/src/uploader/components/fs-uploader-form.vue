@@ -39,12 +39,15 @@ async function doUpload({ file, fileName, onProgress, options }) {
   };
   delete ajaxOptions.uploadRequest;
   const uploadRequest = options.uploadRequest ?? doAjax;
-  const res = await uploadRequest(ajaxOptions);
-  const ret = await options.successHandle(res, ajaxOptions);
-  if (ret && typeof ret === "object" && ret.key == null) {
-    ret.key = key;
+  let res = await uploadRequest(ajaxOptions);
+  if (options.successHandle) {
+    res = await options.successHandle(res, ajaxOptions);
   }
-  return ret;
+
+  if (res && typeof res === "object" && res.key == null) {
+    res.key = key;
+  }
+  return res;
 }
 export default {
   name: "FsUploaderForm",
@@ -53,8 +56,7 @@ export default {
     const { getConfig } = useUploader(proxy);
     const global = getConfig("form");
     async function upload(context) {
-      const config = context.config;
-      context.options = _.merge({}, _.cloneDeep(global), config);
+      context.options = _.merge({}, _.cloneDeep(global), context.options);
       return await doUpload(context);
     }
     return { upload };

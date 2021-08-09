@@ -53,7 +53,7 @@ export default {
         let editIcon = null;
         if (props.editable?.activeTrigger) {
           editIcon = (
-            <div key={0} class={"fs-cell-edit-action"}>
+            <div key={props.index} class={"fs-cell-edit-action"}>
               <fs-icon size={"mini"} icon={ui.icons.check} onClick={editable.inactive} />
               <fs-icon size={"mini"} icon={ui.icons.close} onClick={editable.resume} />
             </div>
@@ -86,13 +86,13 @@ export default {
           }
         };
         actions = (
-          <div key={1} class={"fs-cell-edit-action fs-cell-edit-icon"}>
+          <div class={"fs-cell-edit-action fs-cell-edit-icon"}>
             <fs-icon icon={ui.icons.edit} />
           </div>
         );
       }
       return (
-        <div class={"fs-cell-edit"} {...activeTrigger}>
+        <div key={props.index} class={"fs-cell-edit"} {...activeTrigger}>
           <div class={"fs-cell-edit-input"}>
             {dirty}
             <fs-cell ref={"targetRef"} item={props.item} getScope={props.getScope} {...ctx.attrs} />

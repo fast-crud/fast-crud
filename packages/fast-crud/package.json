@@ -1,6 +1,6 @@
 {
   "name": "@fast-crud/fast-crud",
-  "version": "0.15.1",
+  "version": "0.17.3",
   "private": false,
   "main": "./dist/fast-crud.umd.js",
   "module": "./dist/fast-crud.es.js",
@@ -13,13 +13,13 @@
   "author": "Greper",
   "license": "MIT",
   "dependencies": {
-    "@fast-crud/ui-interface": "^0.15.1",
+    "@fast-crud/ui-interface": "^0.17.2",
     "dayjs": "^1.10.4",
     "deepdash-es": "5.3.5",
     "lodash-es": "^4.17.15",
     "lru-cache": "^6.0.0",
-    "vue": "^3.0.7",
-    "vuedraggable": "^4.0.1"
+    "vue": "^3.1.4",
+    "vuedraggable": "^4.0.3"
   },
   "devDependencies": {
     "@commitlint/cli": "^12.0.1",
@@ -51,11 +51,11 @@
     "eslint-plugin-prettier": "^3.3.1",
     "eslint-plugin-promise": "^5.1.0",
     "eslint-plugin-vue": "^7.6.0",
-    "esno": "^0.5.0",
-    "jest": "^26.6.3",
+    "esno": "^0.7.3",
+    "jest": "^27.0.6",
     "less": "^4.1.1",
-    "less-loader": "^8.0.0",
-    "lint-staged": "^10.5.4",
+    "less-loader": "^10.0.1",
+    "lint-staged": "^11.0.1",
     "postcss": "^8.2.6",
     "prettier": "^2.2.1",
     "pretty-quick": "^3.1.0",
@@ -64,13 +64,13 @@
     "stylelint": "^13.11.0",
     "stylelint-config-prettier": "^8.0.2",
     "stylelint-order": "^4.1.0",
-    "ts-jest": "^26.5.4",
-    "ts-node": "^9.1.1",
-    "typescript": "4.2.4",
+    "ts-jest": "^27.0.3",
+    "ts-node": "^10.1.0",
+    "typescript": "4.3.5",
     "vite": "^2.0.4",
-    "vite-plugin-compression": "^0.2.3",
+    "vite-plugin-compression": "^0.3.0",
     "vue-eslint-parser": "^7.5.0",
     "vue-jest": "^5.0.0-alpha.7"
   },
-  "gitHead": "d1a9d914703ef7da397088e847586fb7fe8fbea6"
+  "gitHead": "9fdb21a31333678c475e2c55b8f80298b1f58f00"
 }

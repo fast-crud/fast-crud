@@ -5,14 +5,14 @@
 ## 文本输入框
 * 字段类型: text | password | textarea
 
-<<<@/../packages/fast-crud/src/types/list/text.ts
+<<<@/../../packages/fast-crud/src/types/list/text.ts
 
 ## 基本组件
 
 ### 选择框
 * 字段类型 dict-select | dict-radio | dict-checkbox | dict-switch  
   
-<<<@/../packages/fast-crud/src/types/list/select.ts
+<<<@/../../packages/fast-crud/src/types/list/select.ts
 
 * 相关组件参数：
     * [fs-dict-select](/api/components/crud/extends/fs-dict-select.md)  
@@ -52,7 +52,7 @@ let column={
 * 类型  
 type = dict-cascader
 
-<<< @/../packages/fast-crud/src/types/list/cascader.ts
+<<< @/../../packages/fast-crud/src/types/list/cascader.ts
 
 * 相关组件：
     * [fs-dict-cascader](/api/components/crud/extends/fs-dict-cascader.md)  
@@ -62,7 +62,7 @@ type = dict-cascader
 ### 日期时间选择
 * type = datetime | date | time | daterange | datetimerange
 
-<<<@/../packages/fast-crud/src/types/list/date.ts
+<<<@/../../packages/fast-crud/src/types/list/date.ts
 
 * 相关组件：
     * [el-date-picker](https://element-plus.gitee.io/#/zh-CN/component/date-picker#attributes)  
@@ -75,7 +75,7 @@ type = dict-cascader
 ### 数字输入
 * type = number
 
-<<< @/../packages/fast-crud/src/types/list/number.ts
+<<< @/../../packages/fast-crud/src/types/list/number.ts
 
 * 表单组件：
     * [el-input-number](https://element-plus.gitee.io/#zh-CN/component/input-number)
@@ -89,7 +89,7 @@ type = dict-cascader
     *  file-uploader（文件上传） | image-uploader（图片上传） | avatar-uploader（头像上传，单图片）  
     *  avatar-cropper (头像裁剪上传)
     
-<<< @/../packages/fast-extends/src/uploader/type/types.js
+<<< @/../../packages/fast-extends/src/uploader/type/types.js
 * 示例：[antdv](http://fast-crud.docmirror.cn/antdv/#/crud/component/uploader/form) | [element](http://fast-crud.docmirror.cn/element/#/component/uploader/form)
 
 * 相关组件文档：
@@ -105,7 +105,7 @@ type = dict-cascader
   *  file-uploader（文件上传） | image-uploader（图片上传） | avatar-uploader（头像上传，单图片）
   *  avatar-cropper (头像裁剪上传)
 
-<<< @/../packages/fast-extends/src/editor/type/types.js
+<<< @/../../packages/fast-extends/src/editor/type/types.js
 * 示例：[antdv](http://fast-crud.docmirror.cn/antdv/#/crud/component/editor) | [element](http://fast-crud.docmirror.cn/element/#/component/editor)
 
 * 相关组件文档：
@@ -115,5 +115,5 @@ type = dict-cascader
 
 ## 辅助类型
 
-<<< @/../packages/fast-crud/src/types/list/assist.ts
+<<< @/../../packages/fast-crud/src/types/list/assist.ts
 

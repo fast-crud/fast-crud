@@ -42,6 +42,7 @@ import {
   ButtonCI,
   PaginationCI
 } from "@fast-crud/ui-interface";
+import { TooltipCI } from "../../ui-interface/src/ui-interface";
 export class Element implements UiInterface {
   constructor(target) {
     if (target) {
@@ -155,7 +156,8 @@ export class Element implements UiInterface {
     refreshRight: "el-icon-refresh-right",
     upload: "el-icon-upload",
     fullScreen: "el-icon-full-screen",
-    unFullScreen: "el-icon-full-screen"
+    unFullScreen: "el-icon-full-screen",
+    question: "el-icon-question"
   };
 
   dialog: DialogCI = {
@@ -239,7 +241,12 @@ export class Element implements UiInterface {
   cascader: CascaderCI = {
     name: "el-cascader",
     modelValue: "modelValue",
-    clearable: "clearable"
+    clearable: "clearable",
+    fieldNames(namesMap) {
+      return {
+        props: namesMap
+      };
+    }
   };
 
   form: CI = {
@@ -254,7 +261,10 @@ export class Element implements UiInterface {
 
   button: ButtonCI = {
     name: "el-button",
-    text: "text"
+    text: "text",
+    colors: type => {
+      return { type };
+    }
   };
 
   pagination: PaginationCI = {
@@ -296,17 +306,20 @@ export class Element implements UiInterface {
     data: "data",
     fixedHeaderNeedComputeBodyHeight: false,
     vLoading: "loading",
-    onSortChange({ emit }) {
+    onChange({ onSortChange, onFilterChange }) {
       return {
-        onSortChange({ column, prop, order }) {
-          console.log("sort change", column, prop, order);
-          emit({
+        onSortChange: ({ column, prop, order }) => {
+          if (!onSortChange) {
+            return;
+          }
+          onSortChange({
             isServerSort: prop && column.sortable === "custom",
             prop,
             order,
             asc: order === "ascending"
           });
-        }
+        },
+        onFilterChange
       };
     }
   };
@@ -418,5 +431,9 @@ export class Element implements UiInterface {
   };
   collapseItem: CollapseItemCI = {
     name: "el-collapse-item"
+  };
+  tooltip: TooltipCI = {
+    name: "el-tooltip",
+    content: "content"
   };
 }

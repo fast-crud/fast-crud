@@ -57,3 +57,33 @@
   }
 }
 ```
+## onSortChange
+* 说明：表头排序改变事件
+* 类型：Function
+* 默认：通常无需配置，自动根据配置触发服务端排序或本地排序，只需要在pageRequest中处理sort相关参数即可
+```js
+{
+  table:{
+    onSortChange({isServerSort, prop, asc, order}){
+        
+    }
+  }    
+    
+}
+```
+
+## onFilterChange
+* 说明：表头筛选变化事件
+* 类型：Function
+* 默认值：无
+```js
+{
+  table:{
+    onFilterChange(filters){
+          // 你的过滤操作
+          // 比如你想要服务端过滤，就可以修改查询表单，然后触发doSearch
+    }
+  }    
+    
+}
+```

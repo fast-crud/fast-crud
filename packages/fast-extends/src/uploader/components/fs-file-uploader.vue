@@ -52,7 +52,7 @@ export default {
       default: "url"
     } //''
   },
-  emits: ["change", "update:modelValue"],
+  emits: ["change", "update:modelValue", "success", "exceed"],
   setup(props, ctx) {
     const ui = uiContext.get();
     const { t } = useI18n();
@@ -112,8 +112,6 @@ export default {
     }
     function onInput(value) {
       currentValue.value = value;
-      // fileList.value = value;
-      console.log("file uploader value:", value);
       ctx.emit("update:modelValue", value);
     }
 
@@ -122,7 +120,6 @@ export default {
         return props.modelValue;
       },
       (value) => {
-        onChange(value);
         if (value === currentValue.value) {
           return;
         }
@@ -131,7 +128,9 @@ export default {
     );
 
     function buildEmitValue(fList) {
-      console.log("fileList before emit:", fList);
+      if (fList == null || fList.length === 0) {
+        return [];
+      }
       if (props.limit === 1) {
         //单个文件
         return buildOneToValue(fList[0]);
@@ -143,19 +142,25 @@ export default {
       return array;
     }
     function hasUploading() {
-      console.log("hasUploading", fileListLocal.value);
       const uploading = fileListLocal.value.filter((item) => {
         return item.status === ui.upload.status.uploading;
       });
       return uploading.length > 0;
     }
-    function handleSuccess(list) {
+    function emitValue(list) {
       onInput(buildEmitValue(list));
+      onChange(buildEmitValue(list));
     }
 
-    function handleChange(list) {
+    function handleChange(file, list) {
       console.log("handleChange", list);
       fileListLocal.value = list;
+      emitValue(list);
+    }
+
+    function handleSuccess(res, file, list) {
+      ctx.emit("success", { res, file, fileList: list });
+      handleChange(file, list);
     }
 
     const uploaderImplRef = ref();
@@ -210,6 +215,13 @@ export default {
     }
 
     const beforeUpload = async (file) => {
+      if (props.beforeUpload) {
+        const ret = await props.beforeUpload({ file, fileList: fileListLocal.value });
+        if (ret === false) {
+          return;
+        }
+      }
+
       checkLimit();
       checkSizeLimit(file);
     };
@@ -292,14 +304,12 @@ export default {
         beforeUpload,
         listType: props.listType,
         onChange: (change) => {
-          const { fileList } = change;
-          handleChange(fileList);
-          console.log("change", change);
-          let status = change.file?.status;
+          const { file, fileList } = change;
+          let status = file?.status;
           if (status !== "done" && status !== "removed") {
             return;
           }
-          handleSuccess(fileList);
+          handleChange(file, fileList);
         },
         onPreview: handlePreview
       };
@@ -312,25 +322,22 @@ export default {
         "before-upload": beforeUpload,
         "http-request": customRequest,
         "on-exceed": () => {
-          console.log("on exceed");
           checkLimit();
+          ctx.emit("exceed", { fileList: fileListLocal.value });
         },
         "on-remove": (file, fileList) => {
-          handleChange(fileList);
-          handleSuccess(fileList);
+          handleChange(file, fileList);
         },
         "on-change": (file, fileList) => {
-          console.log("on change", file, fileList);
-          handleChange(fileList);
+          handleChange(file, fileList);
         },
         "on-success": (res, file, fileList) => {
           if (res == null) {
             return;
           }
-          console.log("on success", res, file, fileList);
           file.response = res;
           file.fsRes = res;
-          handleSuccess(fileList);
+          handleSuccess(res, file, fileList);
         },
         // "on-error": "handleUploadFileError",
         // "on-progress": "handleUploadProgress"

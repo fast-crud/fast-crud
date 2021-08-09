@@ -7,7 +7,7 @@ import types from "../types";
 import { uiContext } from "../ui";
 import { useI18n } from "../locale";
 import { useMerge } from "./use-merge";
-import { CrudExpose } from "./use-expose";
+import { CrudExpose } from "../d.ts";
 import { useCompute } from "./use-compute";
 export interface CrudOptions {
   table?: {};
@@ -32,6 +32,7 @@ export type UseCrudProps = {
    * common里面可以使用
    */
   extra?: any;
+  [key: string]: any;
 };
 const { merge, cloneDeep } = useMerge();
 // mergeColumnPlugin 注册
@@ -125,7 +126,7 @@ export function useCrud(ctx: UseCrudProps) {
     };
   }
 
-  function useRemove() {
+  function useRowHandle() {
     return {
       rowHandle: {
         buttons: {
@@ -194,15 +195,12 @@ export function useCrud(ctx: UseCrudProps) {
   }
 
   function useTable() {
-    const events = ui.table.onSortChange({
-      emit({ isServerSort, prop, asc, order }) {
-        crudBinding.value.sort = isServerSort ? { prop, order, asc } : null;
-        expose.doRefresh();
-      }
-    });
     return {
       table: {
-        ...events
+        onSortChange({ isServerSort, prop, asc, order }) {
+          crudBinding.value.sort = isServerSort ? { prop, order, asc } : null;
+          expose.doRefresh();
+        }
       }
     };
   }
@@ -242,7 +240,7 @@ export function useCrud(ctx: UseCrudProps) {
           editable: {
             remove: {
               text: "删除",
-              type: "danger",
+              ...ui.button.colors("danger"),
               click: ({ index }) => {
                 expose.editable.doRemoveRow({ index });
               }
@@ -283,7 +281,7 @@ export function useCrud(ctx: UseCrudProps) {
             },
             remove: {
               text: "删除",
-              type: "danger",
+              ...ui.button.colors("danger"),
               click: async ({ index }) => {
                 expose.editable?.doRemoveRow({ index });
               }
@@ -299,7 +297,7 @@ export function useCrud(ctx: UseCrudProps) {
       defaultCrudOptions.defaultOptions({ t, expose }),
       usePagination(),
       useFormSubmit(),
-      useRemove(),
+      useRowHandle(),
       useSearch(),
       useEvent(),
       useTable(),
@@ -316,7 +314,7 @@ export function useCrud(ctx: UseCrudProps) {
     const viewFormColumns = {};
     const searchColumns = {};
 
-    function mergeFromForm(targetColumns, item, key, mergeSrc, addLabel = false) {
+    function cloneFromColumns(targetColumns, item, key, mergeSrc, addLabel = false) {
       const formColumn = cloneDeep(item[mergeSrc]) || {};
       if (addLabel) {
         if (formColumn.title == null) {
@@ -345,14 +343,15 @@ export function useCrud(ctx: UseCrudProps) {
           return;
         }
 
-        mergeFromForm(formColumns, item, key, "form", true);
-        mergeFromForm(addFormColumns, item, key, "addForm");
-        mergeFromForm(editFormColumns, item, key, "editForm");
-        mergeFromForm(viewFormColumns, item, key, "viewForm");
-        mergeFromForm(searchColumns, item, key, "search");
+        cloneFromColumns(formColumns, item, key, "form", true);
+        cloneFromColumns(addFormColumns, item, key, "addForm");
+        cloneFromColumns(editFormColumns, item, key, "editForm");
+        cloneFromColumns(viewFormColumns, item, key, "viewForm");
+        cloneFromColumns(searchColumns, item, key, "search");
       });
     }
 
+    //将columns里面的配置分别放clone到对应的form里面
     eachColumns(userOptions.columns);
 
     // 分置合并
@@ -362,7 +361,16 @@ export function useCrud(ctx: UseCrudProps) {
     userOptions.editForm = merge(cloneDeep(userOptions.form), { columns: editFormColumns }, userOptions.editForm);
     userOptions.addForm = merge(cloneDeep(userOptions.form), { columns: addFormColumns }, userOptions.addForm);
     userOptions.viewForm = merge(cloneDeep(userOptions.form), { columns: viewFormColumns }, userOptions.viewForm);
-    userOptions.search = merge({ columns: userOptions.form.columns }, { columns: searchColumns }, userOptions.search);
+
+    //处理searchColumns， 只从form里面复制component和valueChange
+    const copyColumnsForSearch = cloneDeep(userOptions.form.columns);
+    const baseColumnsForSearch = {};
+    _.forEach(copyColumnsForSearch, (item, key) => {
+      baseColumnsForSearch[key] = _.pick(item, ["component", "valueChange", "title", "key", "label"]);
+    });
+    userOptions.search = merge({ columns: baseColumnsForSearch }, { columns: searchColumns }, userOptions.search);
+
+    // tableColumns
     userOptions.table.columns = tableColumns;
     const tableColumnsMap = {};
     _.forEach(tableColumns, (item) => {

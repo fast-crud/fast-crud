@@ -167,7 +167,7 @@ export default {
     const { doComputed, AsyncComputeValue } = useCompute();
     _.each(props.columns, (item) => {
       if (item.value != null && item.value instanceof AsyncComputeValue) {
-        logger.warn("form.value配置不支持AsyncCompute类型的动态计算");
+        logger.warn("search.value配置不支持AsyncCompute类型的动态计算");
       }
     });
     const computedColumns = doComputed(props.columns, getContextFn, null, (value) => {
@@ -289,7 +289,12 @@ export default {
     /**
      * 设置form值
      */
-    function setForm(newForm) {
+    function setForm(newForm, merge = true) {
+      if (!merge) {
+        _.each(_.keys(form), (item) => {
+          delete form[item];
+        });
+      }
       _.merge(form, newForm);
     }
 

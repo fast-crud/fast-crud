@@ -47,7 +47,7 @@ export default function ({ expose }) {
         },
         intro: {
           title: "跨列",
-          type: "text-area",
+          type: "textarea",
           form: {
             col: {
               style: { gridColumn: "span 2" } // grid 模式控制跨列

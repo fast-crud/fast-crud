@@ -56,7 +56,7 @@
     <fs-form-wrapper
       ref="formWrapperRef"
       :slots="computedFormSlots"
-      @value-change="this.$emit('form-value-change', $event)"
+      @value-change="$emit('form-value-change', $event)"
     />
 
     <template #footer>
@@ -145,7 +145,7 @@ function useSearch(props, ctx) {
     }
     searchFormData.value = baseForm;
     if (searchRef.value) {
-      searchRef.value.setForm(form);
+      searchRef.value.setForm(baseForm, false);
     }
   }
 

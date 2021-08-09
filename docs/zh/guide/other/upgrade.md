@@ -15,7 +15,7 @@ yarn upgrade
 然后执行`npm install` 或 `yarn install` 即可
    
 * @fast-crud/fast-crud:xxx
-* @fast-crud/extends-uploader:xxx
+* @fast-crud/fast-extends:xxx
 
 > 具体的版本号请查看`changelog`
 
@@ -23,5 +23,5 @@ yarn upgrade
 ```shell script
 yarn upgrade //升级依赖小版本
 yarn outdated //查看依赖是否有新版本升级
-yarn upgrade-interactive --latest //升级依赖大版本
+yarn upgrade-interactive --latest //手动选择升级依赖
 ```

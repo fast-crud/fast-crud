@@ -106,6 +106,10 @@ module.exports = {
                             text: '官方字段类型列表',
                             link: '/api/types'
                         },
+                        {
+                            text: 'Expose暴露的方法',
+                            link: '/api/expose'
+                        },
                     ]
                 },
                 {

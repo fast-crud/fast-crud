@@ -1,4 +1,5 @@
 import { toRaw, nextTick } from "vue";
+import { CrudExpose } from "../d.ts/expose";
 import _ from "lodash-es";
 import logger from "../utils/util.log";
 import { useMerge } from "../use/use-merge";
@@ -9,32 +10,6 @@ const { merge } = useMerge();
 export type UseExposeProps = {
   crudRef;
   crudBinding;
-};
-export type CrudExpose = {
-  crudRef;
-  crudBinding;
-  getFormWrapperRef;
-  getFormRef;
-  getFormData;
-  getFormComponentRef;
-  doValueBuilder;
-  doValueResolve;
-  doRefresh;
-  doPageTurn;
-  doSearch;
-  doRemove;
-  openEdit;
-  openAdd;
-  openView;
-  openDialog;
-  getSearchFormData;
-  setSearchFormData;
-  getTableRef;
-  getTableData;
-  setTableData;
-  getTableDataRow;
-  doSelectCurrentRow;
-  editable: any;
 };
 
 function useEditable({ expose }) {
@@ -170,9 +145,9 @@ export function useExpose(props: UseExposeProps): { expose: CrudExpose } {
       const formRef = expose.getFormRef();
       return formRef?.getFormData();
     },
-    getFormComponentRef(key) {
+    getFormComponentRef(key, isAsync = false) {
       const formRef = expose.getFormRef();
-      return formRef?.getComponentRef(key);
+      return formRef?.getComponentRef(key, isAsync);
     },
     doValueBuilder(records) {
       const columns = toRaw(crudBinding.value.columns);
@@ -217,8 +192,8 @@ export function useExpose(props: UseExposeProps): { expose: CrudExpose } {
     /**
      * {form,mergeForm}
      */
-    setSearchFormData({ form, mergeForm }) {
-      crudRef.value.setSearchFormData({ form, mergeForm });
+    setSearchFormData(context: { form: any; mergeForm?: boolean }) {
+      crudRef.value.setSearchFormData(context);
     },
     async doRefresh() {
       let page;
@@ -303,7 +278,7 @@ export function useExpose(props: UseExposeProps): { expose: CrudExpose } {
       await expose.doRefresh();
     },
     /**
-     * 获取表格实例
+     * 获取FsTable实例
      */
     getTableRef() {
       return crudRef.value?.tableRef;
@@ -312,16 +287,10 @@ export function useExpose(props: UseExposeProps): { expose: CrudExpose } {
      * 获取表格数据
      */
     getTableData() {
-      const tableRef = expose.getTableRef();
-      return tableRef?.value[ui.table.data];
+      return crudBinding.value.data;
     },
     setTableData(data) {
-      const tableRef = expose.getTableRef();
-      if (tableRef.value == null) {
-        logger.warn("table is not mounted, set data failed");
-        return;
-      }
-      tableRef.value[ui.table.data] = data;
+      crudBinding.value.data = data;
     },
     getTableDataRow(index) {
       const data = expose.getTableData();

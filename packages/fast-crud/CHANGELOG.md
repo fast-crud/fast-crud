@@ -3,6 +3,81 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.17.3](https://github.com/fast-crud/fast-crud/compare/v0.17.2...v0.17.3) (2021-08-06)
+
+
+### Bug Fixes
+
+* 修复默认值的bug ([f8de8f6](https://github.com/fast-crud/fast-crud/commit/f8de8f601935580c8806a5d92eadf36d5b2fca55))
+* 第一次获取异步组件为空的bug ([9eb7a05](https://github.com/fast-crud/fast-crud/commit/9eb7a05d9ed98be2f27e9df050a2cc6731dac987))
+
+
+
+
+
+## [0.17.2](https://github.com/fast-crud/fast-crud/compare/v0.17.1...v0.17.2) (2021-08-05)
+
+
+### Performance Improvements
+
+* 优化cascader，fieldNames跟随dict配置走 ([c35029e](https://github.com/fast-crud/fast-crud/commit/c35029e0420c3570341a7bc9b300cb6f1681efb3))
+
+
+
+
+
+## [0.17.1](https://github.com/fast-crud/fast-crud/compare/v0.17.0...v0.17.1) (2021-08-04)
+
+
+### Bug Fixes
+
+* https://github.com/fast-crud/fast-crud/issues/11 ([3e95b39](https://github.com/fast-crud/fast-crud/commit/3e95b394bb25fbba3813e71318d75438893e5989))
+* 修复group无法显示表单slot的bug ([72fd641](https://github.com/fast-crud/fast-crud/commit/72fd641588814ca293bd43b14c7faf54282dd36f))
+* 修复动态getData缓存的bug ([86cd495](https://github.com/fast-crud/fast-crud/commit/86cd495f003b6cd177bb403f7b6e619caee15604))
+* 懒加载不反显的bug ([62dcc0e](https://github.com/fast-crud/fast-crud/commit/62dcc0e6fba78c8e8b8713033da7515509bb238e))
+
+
+
+
+
+# [0.17.0](https://github.com/fast-crud/fast-crud/compare/v0.16.0...v0.17.0) (2021-07-16)
+
+
+### Bug Fixes
+
+* 修复form a-row的警告 ([1ec74b3](https://github.com/fast-crud/fast-crud/commit/1ec74b39a60a5cc90b5d4d3af85e081148d5aef8))
+
+
+### Features
+
+* 升级依赖版本 ([ded1213](https://github.com/fast-crud/fast-crud/commit/ded121378f878fd4960fb3722fa7bc42987ace91))
+* form-helper ([dc749ae](https://github.com/fast-crud/fast-crud/commit/dc749ae82e6cdd0bedef27ebc5d21b9c452f36c7))
+
+
+
+
+
+# [0.16.0](https://github.com/fast-crud/fast-crud/compare/v0.15.1...v0.16.0) (2021-07-14)
+
+
+### Bug Fixes
+
+* 修复行编辑对勾无效的bug，修复a-button的danger type警告 ([4d48447](https://github.com/fast-crud/fast-crud/commit/4d48447e6b1430663fdf5eca8c03aae531651b74))
+
+
+### Features
+
+* valueChange 支持 immediate ([f72f87e](https://github.com/fast-crud/fast-crud/commit/f72f87ed6c934b116f8d9b224408575017cc3174))
+
+
+### Performance Improvements
+
+* 添加select本地过滤示例 ([660dc5f](https://github.com/fast-crud/fast-crud/commit/660dc5fe0d290102c8df54c2b1a813ed13cd1d2d))
+
+
+
+
+
 ## [0.15.1](https://github.com/fast-crud/fast-crud/compare/v0.15.0...v0.15.1) (2021-07-09)
 
 **Note:** Version bump only for package @fast-crud/fast-crud

@@ -171,7 +171,7 @@ export default function ({ crudRef }) {
             search: {
               show: true
             },
-            type: "text-area"
+            type: "textarea"
           }
         }
       },

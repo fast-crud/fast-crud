@@ -53,7 +53,7 @@ export interface TableCI extends CI {
   data;
   fixedHeaderNeedComputeBodyHeight;
   vLoading;
-  onSortChange;
+  onChange;
 }
 
 export interface CheckboxGroupCI extends CI {
@@ -68,6 +68,7 @@ export interface CheckboxCI extends CI {
 export interface CascaderCI extends CI {
   modelValue;
   clearable;
+  fieldNames: Function;
 }
 
 export type TabsCI = CI;
@@ -125,6 +126,10 @@ export interface FormItemCI extends CI {
   label: string;
 }
 
+export interface TooltipCI extends CI {
+  content: string;
+}
+
 export interface TagCI extends CI {
   type: string;
   colors: Array<string>;
@@ -172,6 +177,7 @@ export interface UploadCI extends CI {
 export interface ButtonCI extends CI {
   name;
   text;
+  colors: (type: string) => any;
 }
 export interface PaginationCI extends CI {
   name;
@@ -203,6 +209,7 @@ export interface Icons {
   upload;
   fullScreen;
   unFullScreen;
+  question;
 }
 export interface UiInterface {
   modelValue: string;
@@ -219,6 +226,7 @@ export interface UiInterface {
   button: ButtonCI;
   form: CI;
   formItem: FormItemCI;
+  tooltip: TooltipCI;
   radioGroup: RadioGroupCI;
   radio: RadioCI;
   checkboxGroup: CheckboxGroupCI;

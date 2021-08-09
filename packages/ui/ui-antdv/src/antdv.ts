@@ -42,6 +42,8 @@ import {
   ButtonCI,
   PaginationCI
 } from "@fast-crud/ui-interface";
+import { TooltipCI } from "../../ui-interface/src/ui-interface";
+
 export class Antdv implements UiInterface {
   constructor(target) {
     this.notification.get = target.Notification;
@@ -83,10 +85,12 @@ export class Antdv implements UiInterface {
         function onOk() {
           resolve();
         }
+
         // eslint-disable-next-line @typescript-eslint/no-empty-function
         function onCancel() {
           reject(new Error("cancel"));
         }
+
         const newContext = {
           ...context,
           content: context.message,
@@ -182,7 +186,8 @@ export class Antdv implements UiInterface {
     refreshRight: "RedoOutlined",
     upload: "UploadOutlined",
     fullScreen: "CompressOutlined",
-    unFullScreen: "ExpandOutlined"
+    unFullScreen: "ExpandOutlined",
+    question: "QuestionCircleOutlined"
   };
 
   dialog: DialogCI = {
@@ -199,7 +204,16 @@ export class Antdv implements UiInterface {
 
   button: ButtonCI = {
     name: "a-button",
-    text: "link"
+    text: "link",
+    colors: type => {
+      if (type === "danger") {
+        return { danger: true };
+      }
+      if (type === "info" || type === "warning") {
+        return { type: "default" };
+      }
+      return { type };
+    }
   };
 
   buttonGroup: CI = {
@@ -213,7 +227,10 @@ export class Antdv implements UiInterface {
   cascader: CascaderCI = {
     name: "a-cascader",
     modelValue: "value",
-    clearable: "allowClear"
+    clearable: "allowClear",
+    fieldNames(namesMap) {
+      return { fieldNames: namesMap };
+    }
   };
 
   checkboxGroup: CheckboxGroupCI = {
@@ -306,14 +323,18 @@ export class Antdv implements UiInterface {
     data: "dataSource",
     fixedHeaderNeedComputeBodyHeight: true,
     vLoading: false,
-    onSortChange({ emit }) {
+    onChange({ onSortChange, onFilterChange, onPagination }) {
       return {
-        // 监听a-table的服务端排序
-        onChange(pagination, filters, sorter) {
-          console.log("table change", pagination, filters, sorter);
-          if (sorter) {
+        onChange: (pagination, filters, sorter, { currentDataSource }) => {
+          if (pagination && onPagination) {
+            onPagination({ ...pagination, data: currentDataSource });
+          }
+          if (filters && onFilterChange) {
+            onFilterChange({ ...filters, data: currentDataSource });
+          }
+          if (sorter && onSortChange) {
             const { column, field, order } = sorter;
-            emit({
+            onSortChange({
               isServerSort: order && column.sorter === true,
               prop: field,
               order,
@@ -476,5 +497,9 @@ export class Antdv implements UiInterface {
   };
   collapseItem: CollapseItemCI = {
     name: "a-collapse-panel"
+  };
+  tooltip: TooltipCI = {
+    name: "a-tooltip",
+    content: "title"
   };
 }

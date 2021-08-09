@@ -10,7 +10,7 @@
     :model="form"
   >
     <!-- row -->
-    <component :is="$fsui.row.name" class="fs-row" v-bind="row">
+    <component :is="$fsui.row.name" class="fs-row">
       <!-- col -->
       <template v-for="item in computedDefaultColumns" :key="item.key">
         <component :is="$fsui.col.name" v-if="item.show !== false" class="fs-col" v-bind="mergeCol(item.col)">
@@ -24,6 +24,7 @@
               }
             "
             :item="item"
+            :helper="helper"
             :model-value="get(form, item.key)"
             :form-slot="slots['form_' + item.key]"
             :get-context-fn="getContextFn"
@@ -51,7 +52,7 @@
           <fs-render :render-func="item" :scope="scope" />
         </template>
         <!-- row -->
-        <component :is="$fsui.row.name" class="fs-row" v-bind="row">
+        <component :is="$fsui.row.name" class="fs-row">
           <!-- col -->
           <template v-for="key in groupItem.columns" :key="key">
             <component
@@ -71,7 +72,7 @@
                 "
                 :item="computedColumns[key]"
                 :model-value="get(form, key)"
-                :slots="slots['form_' + key]"
+                :form-slot="slots['form_' + key]"
                 :get-context-fn="getContextFn"
                 @update:modelValue="set(form, key, $event)"
               />
@@ -191,6 +192,12 @@ export default {
     col: {
       type: Object,
       default: undefined
+    },
+    /**
+     * helper位置：{position:'label'}
+     */
+    helper: {
+      type: Object
     }
   },
   emits: ["reset", "submit", "validationError", "value-change"],
@@ -226,12 +233,12 @@ export default {
     // 初始数据赋值
     _.each(computedColumns.value, (item, key) => {
       form[key] = undefined;
-      if (initialForm[key] !== undefined) {
-        form[key] = initialForm[key];
-      }
       const defValue = unref(item.value);
       if (defValue !== undefined) {
         form[key] = defValue;
+      }
+      if (initialForm && initialForm[key] !== undefined) {
+        form[key] = initialForm[key];
       }
     });
     //form.valueBuilder
@@ -255,8 +262,8 @@ export default {
       return formItemRefs.value[key];
     }
 
-    function getComponentRef(key) {
-      return getFormItemRef(key)?.getComponentRef();
+    function getComponentRef(key, isAsync = false) {
+      return getFormItemRef(key)?.getComponentRef(isAsync);
     }
 
     const groupActiveKey = ref([]);
@@ -325,7 +332,7 @@ export default {
       return columns;
     });
 
-    async function getFormRef() {
+    function getFormRef() {
       return formRef.value;
     }
     async function reset() {

@@ -41,7 +41,7 @@ export default function ({ expose }) {
         },
         intro: {
           title: "跨列",
-          type: "text-area",
+          type: "textarea",
           form: {
             // flex模式控制跨列
             col: {

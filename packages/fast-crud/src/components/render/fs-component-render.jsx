@@ -5,7 +5,8 @@ import {
   onMounted,
   provide,
   resolveComponent,
-  resolveDynamicComponent
+  resolveDynamicComponent,
+  ref
 } from "vue";
 import _ from "lodash-es";
 import { useUi } from "../../use";
@@ -135,24 +136,67 @@ export default {
     // eslint-disable-next-line vue/no-setup-props-destructure
     let inputComp = props.name || proxy.$fsui.input.name;
 
+    const isAsyncComponent = ref(false);
     if (!htmlTags.includes(inputComp)) {
       inputComp = resolveDynamicComponent(inputComp);
       if (typeof inputComp === "string") {
         inputComp = resolveComponent(inputComp);
       }
+      if (inputComp?.name === "AsyncComponentWrapper") {
+        //如果是异步组件
+        isAsyncComponent.value = true;
+      }
     }
-    const children = childrenRender();
-    return () => {
-      //merge 必须写在这里
-      const merged = mergeProps(allAttrs.value, ctx.attrs);
-      mergeEventHandles(merged, "onChange");
-      mergeEventHandles(merged, "onBlur");
-      return <inputComp {...merged}>{children}</inputComp>;
+    const childrenRendered = childrenRender();
+    return {
+      allAttrs,
+      isAsyncComponent,
+      childrenRendered,
+      inputComp
     };
   },
   methods: {
     getTargetRef() {
+      if (this.isAsyncComponent) {
+        return this.getTargetRefAsync();
+      }
+      return this.getTargetRefSync();
+    },
+    getTargetRefSync() {
       return this.$refs.targetRef;
+    },
+    //异步获取组件实例,asyncComponent加载需要时间
+    async getTargetRefAsync() {
+      const c = this.getTargetRefSync();
+      if (c != null) {
+        return c;
+      }
+      return new Promise((resolve, reject) => {
+        this.getTargetRefDelay(resolve, reject, 0);
+      });
+    },
+    getTargetRefDelay(resolve, reject, count) {
+      setTimeout(() => {
+        const c = this.getTargetRefSync();
+        if (c != null) {
+          resolve(c);
+          return;
+        }
+        count++;
+        if (count > 10) {
+          reject(new Error("异步组件加载超时"));
+          return;
+        }
+        this.getTargetRefDelay(resolve, reject, count);
+      }, 200);
     }
+  },
+  render() {
+    //merge 必须写在这里
+    const merged = mergeProps(this.allAttrs, this.$attrs);
+    mergeEventHandles(merged, "onChange");
+    mergeEventHandles(merged, "onBlur");
+    const inputComp = this.inputComp;
+    return <inputComp {...merged}>{this.childrenRendered}</inputComp>;
   }
 };

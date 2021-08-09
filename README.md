@@ -65,7 +65,7 @@ const crudOptions= {
 ```
 
 2、 一个完全体crud就出来了
-![](./docs/images/crud.png)
+![](./images/crud.png)
 
 
 
@@ -88,6 +88,11 @@ const crudOptions= {
 
 ### 5. 多UI支持
 支持Antdv、Element，你喜欢哪个就用哪个
+
+
+
+## 谁在用fast-crud？
+* [battcn/wemirr-platform](https://gitee.com/battcn/wemirr-platform) ：中台管理系统 [预览地址](https://cloud.battcn.com/) , [配套前端ui](https://gitee.com/battcn/wemirr-platform-ui)
 
 
 ## 依赖
@@ -120,6 +125,9 @@ const crudOptions= {
 * [vben-admin](https://github.com/anncwb/vue-vben-admin)
 
 感谢这些优秀的项目
+
+
+
 
 
 ## 我的其他项目

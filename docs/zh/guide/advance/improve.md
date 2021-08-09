@@ -47,3 +47,10 @@ const crudOptions ={
 }
 
 ``` 
+
+## 设置日志级别
+日志级别包括: `debug`、 `info` 、`warn`、 `error`
+```js
+import {setLogger} from '@fast-crud/fast-crud'
+setLogger({level:'error'})
+```

@@ -13,10 +13,11 @@
               <component
                 :is="$fsui.dropdownItem.name"
                 v-if="item.show !== false"
-                v-bind="item"
                 :[$fsui.dropdownItem.command]="item.key"
               >
-                {{ item.text || item.title }}
+                <div class="fs-row-handle-dropdown-item" v-bind="item">
+                  <fs-icon v-if="item.icon" :icon="item.icon" /> {{ item.text || item.title }}
+                </div>
               </component>
             </template>
           </component>
@@ -125,7 +126,7 @@ export default defineComponent({
           },
           remove: {
             key: "remove",
-            type: "danger",
+            ...ui.button.colors("danger"),
             order: 3,
             text: t("fs.rowHandle.remove.text"),
             title: t("fs.rowHandle.remove.text")
@@ -139,6 +140,9 @@ export default defineComponent({
       const btns = [];
       _.forEach(mergedBtns, (item, key) => {
         item.key = key;
+        if (item.show === false) {
+          return;
+        }
         btns.push(item);
       });
 
@@ -208,6 +212,9 @@ export default defineComponent({
     &.el-button {
       margin: 2px;
     }
+  }
+  .fs-row-handle-dropdown-item {
+    display: flex;
   }
 }
 </style>
