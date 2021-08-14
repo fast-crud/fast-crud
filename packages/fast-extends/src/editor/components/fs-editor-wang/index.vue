@@ -8,9 +8,9 @@
 
 <script>
 import WangEditor from "wangeditor";
-import lodash from "lodash-es";
 import wangConfig from "./utils/config";
 import defaultConfig from "../../type/config";
+import _ from "lodash-es";
 export default {
   name: "FsEditorWang",
   props: {
@@ -87,7 +87,7 @@ export default {
   methods: {
     init() {
       const editor = new WangEditor("#" + this.uniqueId);
-      lodash.merge(editor.config, wangConfig, defaultConfig.wangEditor, this.config);
+      _.merge(editor.config, wangConfig, defaultConfig.wangEditor, this.config);
       editor.config.onchange = (newHtml) => {
         this.$emit("update:modelValue", newHtml);
         this.$emit("change", newHtml);
@@ -95,11 +95,7 @@ export default {
       };
 
       if (this.uploader) {
-        editor.config.customUploadImg = async (resultFiles, insertImgFn) => {
-          // resultFiles 是 input 中选中的文件列表
-          // insertImgFn 是获取图片 url 后，插入到编辑器的方法
-          const file = resultFiles[0];
-
+        const addImage = async (file, insertImgFn) => {
           const item = {
             status: "uploading",
             progress: 0
@@ -127,6 +123,13 @@ export default {
           }
           // 上传图片，返回结果，将图片插入到编辑器中
           insertImgFn(url);
+        };
+        editor.config.customUploadImg = async (resultFiles, insertImgFn) => {
+          // resultFiles 是 input 中选中的文件列表
+          // insertImgFn 是获取图片 url 后，插入到编辑器的方法
+          _.forEach(resultFiles, (file) => {
+            addImage(file, insertImgFn);
+          });
         };
       }
 

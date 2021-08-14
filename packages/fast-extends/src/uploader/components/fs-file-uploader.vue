@@ -89,6 +89,7 @@ export default {
       return value[props.valueType];
     }
     function initValue(value) {
+      console.log("init value", value);
       const array = [];
       if (value == null || value.length === 0) {
         fileList.value = array;
@@ -142,24 +143,25 @@ export default {
       return array;
     }
     function hasUploading() {
-      console.log("has uploading", fileListLocal.value);
       const uploading = fileListLocal.value.filter((item) => {
         return item.status === ui.upload.status.uploading;
       });
       return uploading.length > 0;
     }
     function emitValue(list) {
-      onInput(buildEmitValue(list));
-      onChange(buildEmitValue(list));
+      let value = buildEmitValue(list);
+      onInput(value);
+      onChange(value);
     }
 
     function handleChange(file, list) {
-      console.log("handleChange", list);
+      console.log("handleChange", list, fileList.value);
       fileListLocal.value = list;
       emitValue(list);
     }
 
     function handleSuccess(res, file, list) {
+      console.log("success", res, file, list);
       ctx.emit("success", { res, file, fileList: list });
       handleChange(file, list);
     }
@@ -215,13 +217,17 @@ export default {
       }
     }
 
-    const beforeUpload = async (file) => {
+    const beforeUpload = async (file, list) => {
+      console.log("before upload", file, fileList);
       if (props.beforeUpload) {
         const ret = await props.beforeUpload({ file, fileList: fileListLocal.value });
         if (ret === false) {
           return;
         }
       }
+
+      fileList.value = [...fileList.value, file];
+      fileListLocal.value = fileList.value;
 
       checkLimit();
       checkSizeLimit(file);
@@ -236,6 +242,7 @@ export default {
       return await uploaderRef?.upload(option);
     }
     async function customRequest(context) {
+      console.log("custom Request", context);
       const { file, onProgress, onSuccess, onError } = context;
       const option = {
         file,
@@ -301,10 +308,11 @@ export default {
 
     function buildAntdvBinding() {
       return {
-        customRequest: customRequest,
+        customRequest,
         beforeUpload,
         listType: props.listType,
         onChange: (change) => {
+          console.log("changed", change);
           const { file, fileList } = change;
           let status = file?.status;
           if (status !== "done" && status !== "removed") {

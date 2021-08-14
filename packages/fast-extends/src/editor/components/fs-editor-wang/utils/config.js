@@ -91,7 +91,7 @@ export default {
   uploadImgAccept: ["jpg", "jpeg", "png", "gif", "bmp"],
 
   // 一次最多上传 1 个图片
-  uploadImgMaxLength: 1,
+  uploadImgMaxLength: 5,
 
   // 超时时间
   uploadImgTimeout: 5 * 1000
