@@ -147,7 +147,7 @@ export default {
         isAsyncComponent.value = true;
       }
     }
-    const childrenRendered = childrenRender();
+    const childrenRendered = childrenRender;
     return {
       allAttrs,
       isAsyncComponent,
@@ -197,6 +197,6 @@ export default {
     mergeEventHandles(merged, "onChange");
     mergeEventHandles(merged, "onBlur");
     const inputComp = this.inputComp;
-    return <inputComp {...merged}>{this.childrenRendered}</inputComp>;
+    return <inputComp {...merged}>{this.childrenRendered()}</inputComp>;
   }
 };

@@ -142,6 +142,7 @@ export default {
       return array;
     }
     function hasUploading() {
+      console.log("has uploading", fileListLocal.value);
       const uploading = fileListLocal.value.filter((item) => {
         return item.status === ui.upload.status.uploading;
       });
