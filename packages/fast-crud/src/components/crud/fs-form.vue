@@ -57,7 +57,7 @@
           <template v-for="key in groupItem.columns" :key="key">
             <component
               :is="$fsui.col.name"
-              v-if="computedColumns[key].show !== false"
+              v-if="computedColumns[key]?.show !== false"
               class="fs-col"
               v-bind="mergeCol(computedColumns[key].col)"
             >
