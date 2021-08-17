@@ -3,6 +3,23 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.17.4](https://github.com/fast-crud/fast-crud/compare/v0.17.3...v0.17.4) (2021-08-17)
+
+
+### Bug Fixes
+
+* form group 里面某个字段没有配置时提示readproperty show undefined的bug ([ccede90](https://github.com/fast-crud/fast-crud/commit/ccede903bb994621cede9028ba98d69a9055909f))
+* 修复日期组件显示问题，修复上传组件校验报错的问题 ([1580c9b](https://github.com/fast-crud/fast-crud/commit/1580c9bb978a14bf152ce391feda578f768ace24))
+
+
+### Performance Improvements
+
+* 文件上传组件，支持一次选择多个文件 ([df90b39](https://github.com/fast-crud/fast-crud/commit/df90b390bbe5554d105673f968edb65ef4a4e825))
+
+
+
+
+
 ## [0.17.3](https://github.com/fast-crud/fast-crud/compare/v0.17.2...v0.17.3) (2021-08-06)
 
 
