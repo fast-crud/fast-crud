@@ -361,6 +361,7 @@ export default defineComponent({
 </script>
 <style lang="less">
 .fs-crud-container {
+  min-height: 300px;
   &.compact {
     .el-table--border {
       border-left: 0;
