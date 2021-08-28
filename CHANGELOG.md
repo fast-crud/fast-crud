@@ -3,6 +3,23 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.17.5](https://github.com/fast-crud/fast-crud/compare/v0.17.4...v0.17.5) (2021-08-28)
+
+
+### Bug Fixes
+
+* https://github.com/fast-crud/fast-crud/issues/19 ([7781000](https://github.com/fast-crud/fast-crud/commit/77810001678d08da5094926533a9e65e27aa4b9a))
+* 修复文件上传数量限制错误的bug ([2db661c](https://github.com/fast-crud/fast-crud/commit/2db661c356dffd1cf6c5cca8d21246f1d60aabd7))
+
+
+### Performance Improvements
+
+* 列排序 ([7c0b019](https://github.com/fast-crud/fast-crud/commit/7c0b0198b240aa68523563ee8f39a172a2f79fcb))
+
+
+
+
+
 ## [0.17.4](https://github.com/fast-crud/fast-crud/compare/v0.17.3...v0.17.4) (2021-08-17)
 
 
