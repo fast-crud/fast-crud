@@ -372,10 +372,18 @@ export function useCrud(ctx: UseCrudProps) {
     userOptions.search = merge({ columns: baseColumnsForSearch }, { columns: searchColumns }, userOptions.search);
 
     // tableColumns
-    const sortedTableColumns = _.sortBy(tableColumns, (item) => {
-      return item.order ?? 1;
-    }); //排序
-    userOptions.table.columns = sortedTableColumns;
+    function sortBy(arr) {
+      return _.sortBy(arr, (item) => {
+        sortChildren(item);
+        return item.order ?? 1;
+      });
+    }
+    function sortChildren(column) {
+      if (column && column.children) {
+        column.children = sortBy(column.children);
+      }
+    }
+    userOptions.table.columns = sortBy(tableColumns);
 
     const tableColumnsMap = {};
     _.forEach(tableColumns, (item) => {
