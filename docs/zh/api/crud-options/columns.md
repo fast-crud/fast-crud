@@ -90,6 +90,7 @@ const crudOptions = {
 * 说明：列排序号，数字越小越靠前排列。
 * 类型：number
 * 默认值： 1 ， 当配置0则排到最前面，配置2则排到最后面
+* 场景：比如可以在commonOptions里面配置一个显示在最后面的公共时间列
 
 
 ### [key].column.[el-table-column | a-table-column的配置]
