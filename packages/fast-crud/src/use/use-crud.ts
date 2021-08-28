@@ -11,7 +11,7 @@ import { CrudExpose } from "../d.ts";
 import { useCompute } from "./use-compute";
 export interface CrudOptions {
   table?: {};
-  columns?: [];
+  columns?: {};
   data?: [];
   rowHandle?: {};
   search?: {};
