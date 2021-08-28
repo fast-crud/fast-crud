@@ -372,7 +372,11 @@ export function useCrud(ctx: UseCrudProps) {
     userOptions.search = merge({ columns: baseColumnsForSearch }, { columns: searchColumns }, userOptions.search);
 
     // tableColumns
-    userOptions.table.columns = tableColumns;
+    const sortedTableColumns = _.sortBy(tableColumns, (item) => {
+      return item.order ?? 1;
+    }); //排序
+    userOptions.table.columns = sortedTableColumns;
+
     const tableColumnsMap = {};
     _.forEach(tableColumns, (item) => {
       tableColumnsMap[item.key] = item;

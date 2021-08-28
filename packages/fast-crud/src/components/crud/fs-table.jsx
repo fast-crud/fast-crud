@@ -71,15 +71,10 @@ export default {
       return cellRef?.getTargetRef();
     };
 
-    const { doComputed } = useCompute();
-    const refColumns = toRef(props, "columns");
-    const computedColumns = doComputed(refColumns, null, [/\[.+\]component/]);
-
     return {
       tableRef,
       componentRefs,
       getComponentRef,
-      computedColumns,
       ...useEditable(props, ctx, tableRef)
     };
   },

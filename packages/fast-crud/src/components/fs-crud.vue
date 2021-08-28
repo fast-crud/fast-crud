@@ -47,7 +47,6 @@
       ref="tableRef"
       class="fs-crud-table"
       v-bind="computedTable"
-      :columns="computedTable.columns"
       :row-handle="rowHandle"
       :data="data"
       :cell-slots="computedCellSlots"
@@ -336,7 +335,11 @@ export default defineComponent({
     /**
      * crud包裹容器的class
      */
-    customClass: {}
+    customClass: {},
+    /**
+     * 不要传到fs-table去
+     */
+    form: {}
   },
   emits: [
     "search-submit",
