@@ -438,6 +438,12 @@ export default defineComponent({
       .fs-pagination {
         flex: 1;
 
+        .ant-pagination-options {
+          .ant-select {
+            width: auto;
+          }
+        }
+
         .el-pagination {
           padding-left: 0;
           padding-right: 0;
