@@ -86,6 +86,12 @@ const crudOptions = {
 * 说明：格式化显示
 * 类型：Function(context):String
 
+### [key].column.order
+* 说明：列排序号，数字越小越靠前排列。
+* 类型：number
+* 默认值： 1 ， 当配置0则排到最前面，配置2则排到最后面
+
+
 ### [key].column.[el-table-column | a-table-column的配置]
 * 说明：column下支持 el-table-column 或 a-table-column的全部配置
 * 文档： [el-table-column](https://element-plus.gitee.io/#/zh-CN/component/table#table-column-attributes) | [a-table-column](https://2x.antdv.com/components/table-cn#API)
