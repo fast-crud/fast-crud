@@ -80,7 +80,7 @@ registerMergeColumnPlugin(mergeColumnDict);
 // 导出useCrud
 export function useCrud(ctx: UseCrudProps) {
   const ui = uiContext.get();
-  const { t } = useI18n(); // call `useI18n`, and spread `t` from  `useI18n` returning
+  const { t } = useI18n();
   const options: CrudOptions = ctx.crudOptions;
   const expose = ctx.expose;
   const { crudBinding } = expose;
@@ -95,9 +95,10 @@ export function useCrud(ctx: UseCrudProps) {
       },
       setPageSize(pageSize) {
         crudBinding.value.pagination.pageSize = pageSize;
+        crudBinding.value.pagination.currentPage = 1; //重置页码到1
       },
       doAfterChange() {
-        doRefresh();
+        return doRefresh();
       }
     });
     return {

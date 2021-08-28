@@ -6,11 +6,10 @@
 src
   |--packages    
     |-- fast-crud                  //核心工程
-    |-- extends                    //扩展组件
-        |-- extends-uploader       //上传组件扩展
-    |-- fs-admin
+    |-- fast-extends               //官方扩展组件
+    |-- fast-admin
         |-- fs-admin-antdv         //Antdv版示例工程
-    |-- demo-element               //Element版示例工程,后续会改造成fs-admin-element
+        |-- demo-element           //Element版示例工程,后续会改造成fs-admin-element
 
 ```
 
@@ -47,17 +46,19 @@ npm run dev
 ```shell script
 git clone https://gitee.com/fast-crud/fast-crud.git
 cd fast-crud
+# 同步fast-admin子模块
+git submodule update --init --recursive
+
 # 可以通过lerna bootstrap命令一次性全部install
-# 安装lerna
 npm install lerna -g
-# 通过bootstrap命令将fast-crud和extends-uploader
 lerna bootstrap
 
-# 也可以手动进入fast-crud和extends-xxx目录，一个个单独install
+# 或者
+# 也可以手动进入fast-crud和fast-extends等子项目目录，一个个单独install
 cd ./packages/fast-crud
 npm install
 
-cd ./packages/extends/extends-uploader
+cd ./packages/extends/fast-extends
 npm install
 
 ```
@@ -71,14 +72,14 @@ cd fast-crud/packages/fs-admin/fs-admin-antdv
 npm install  
 #不启用权限模块
 npm run debug
-#启用权限
+#启用权限运行
 npm run debug:pm
 #启动成功后打开输出链接即可看到效果
 ```
 * 调试element版示例
 ```shell script
-# 运行 antdv版示例
-cd fast-crud/packages/demo-element  
+# 运行element版示例
+cd fast-crud/packages/fast-crud/demo-element  
 #如果第一步执行过，就无需再执行
 npm install  
 npm run debug

@@ -225,12 +225,11 @@ export default {
           return;
         }
       }
+      checkLimit();
+      checkSizeLimit(file);
 
       fileList.value = [...fileList.value, file];
       fileListLocal.value = fileList.value;
-
-      checkLimit();
-      checkSizeLimit(file);
     };
 
     async function doUpload(option) {
