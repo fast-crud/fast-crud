@@ -1,6 +1,6 @@
 {
   "name": "@fast-crud/ui-antdv",
-  "version": "0.17.2",
+  "version": "0.17.6",
   "description": "",
   "main": "./dist/ui-antdv.umd.js",
   "module": "./dist/ui-antdv.es.js",
@@ -12,7 +12,7 @@
   "license": "MIT",
   "dependencies": {
     "@ant-design/icons-vue": "^6.0.1",
-    "@fast-crud/ui-interface": "^0.17.2",
+    "@fast-crud/ui-interface": "^0.17.6",
     "ant-design-vue": "^2.2.2"
   },
   "devDependencies": {
@@ -42,8 +42,8 @@
     "typescript": "4.3.5",
     "vite": "^2.4.2",
     "vite-plugin-compression": "^0.3.0",
-    "vue-eslint-parser": "^7.5.0",
-    "vue": "^3.1.4"
+    "vue": "^3.1.4",
+    "vue-eslint-parser": "^7.5.0"
   },
   "gitHead": "9fdb21a31333678c475e2c55b8f80298b1f58f00"
 }

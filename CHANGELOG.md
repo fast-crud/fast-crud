@@ -3,6 +3,18 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.17.6](https://github.com/fast-crud/fast-crud/compare/v0.17.5...v0.17.6) (2021-09-07)
+
+
+### Bug Fixes
+
+* vue转移到devDependencies ([9af76bc](https://github.com/fast-crud/fast-crud/commit/9af76bc3b667a89026c9d2a3e31f103ffab9489f))
+* 修复作为子组件时翻页组件错乱的bug，https://github.com/fast-crud/fast-crud/issues/17 ([48289be](https://github.com/fast-crud/fast-crud/commit/48289bec1df00a2d3d8a8fc0acac712b1d14ef41))
+
+
+
+
+
 ## [0.17.5](https://github.com/fast-crud/fast-crud/compare/v0.17.4...v0.17.5) (2021-08-28)
 
 
