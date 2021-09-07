@@ -3,6 +3,33 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.17.5](https://github.com/fast-crud/fast-crud/compare/v0.17.4...v0.17.5) (2021-08-28)
+
+
+### Bug Fixes
+
+* 修复文件上传数量限制错误的bug ([2db661c](https://github.com/fast-crud/fast-crud/commit/2db661c356dffd1cf6c5cca8d21246f1d60aabd7))
+
+
+
+
+
+## [0.17.4](https://github.com/fast-crud/fast-crud/compare/v0.17.3...v0.17.4) (2021-08-17)
+
+
+### Bug Fixes
+
+* 修复日期组件显示问题，修复上传组件校验报错的问题 ([1580c9b](https://github.com/fast-crud/fast-crud/commit/1580c9bb978a14bf152ce391feda578f768ace24))
+
+
+### Performance Improvements
+
+* 文件上传组件，支持一次选择多个文件 ([df90b39](https://github.com/fast-crud/fast-crud/commit/df90b390bbe5554d105673f968edb65ef4a4e825))
+
+
+
+
+
 ## [0.17.1](https://github.com/fast-crud/fast-crud/compare/v0.17.0...v0.17.1) (2021-08-04)
 
 **Note:** Version bump only for package @fast-crud/fast-extends
