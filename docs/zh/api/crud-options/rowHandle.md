@@ -16,7 +16,6 @@
 ```json5
 { //crudOptions
   rowHandle: {
-    atLeast: 2, //按钮折叠配置，至少显示多少个按钮，多余的折叠
     buttons: {
       view:{
           ...FsButton, // FsButton的配置，可以修改文本、颜色，也可以修改成图标按钮、纯文本按钮等
