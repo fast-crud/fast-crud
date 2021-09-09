@@ -11,7 +11,7 @@ import { CrudExpose } from "../d.ts";
 import { useCompute } from "./use-compute";
 export interface CrudOptions {
   table?: {};
-  columns?: [];
+  columns?: {};
   data?: [];
   rowHandle?: {};
   search?: {};
@@ -80,7 +80,7 @@ registerMergeColumnPlugin(mergeColumnDict);
 // 导出useCrud
 export function useCrud(ctx: UseCrudProps) {
   const ui = uiContext.get();
-  const { t } = useI18n(); // call `useI18n`, and spread `t` from  `useI18n` returning
+  const { t } = useI18n();
   const options: CrudOptions = ctx.crudOptions;
   const expose = ctx.expose;
   const { crudBinding } = expose;
@@ -95,9 +95,10 @@ export function useCrud(ctx: UseCrudProps) {
       },
       setPageSize(pageSize) {
         crudBinding.value.pagination.pageSize = pageSize;
+        crudBinding.value.pagination.currentPage = 1; //重置页码到1
       },
       doAfterChange() {
-        doRefresh();
+        return doRefresh();
       }
     });
     return {
@@ -371,7 +372,19 @@ export function useCrud(ctx: UseCrudProps) {
     userOptions.search = merge({ columns: baseColumnsForSearch }, { columns: searchColumns }, userOptions.search);
 
     // tableColumns
-    userOptions.table.columns = tableColumns;
+    function sortBy(arr) {
+      return _.sortBy(arr, (item) => {
+        sortChildren(item);
+        return item.order ?? 1;
+      });
+    }
+    function sortChildren(column) {
+      if (column && column.children) {
+        column.children = sortBy(column.children);
+      }
+    }
+    userOptions.table.columns = sortBy(tableColumns);
+
     const tableColumnsMap = {};
     _.forEach(tableColumns, (item) => {
       tableColumnsMap[item.key] = item;

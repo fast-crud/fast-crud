@@ -3,6 +3,35 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.17.6](https://github.com/fast-crud/fast-crud/compare/v0.17.5...v0.17.6) (2021-09-07)
+
+
+### Bug Fixes
+
+* vue转移到devDependencies ([9af76bc](https://github.com/fast-crud/fast-crud/commit/9af76bc3b667a89026c9d2a3e31f103ffab9489f))
+* 修复作为子组件时翻页组件错乱的bug，https://github.com/fast-crud/fast-crud/issues/17 ([48289be](https://github.com/fast-crud/fast-crud/commit/48289bec1df00a2d3d8a8fc0acac712b1d14ef41))
+
+
+
+
+
+## [0.17.5](https://github.com/fast-crud/fast-crud/compare/v0.17.4...v0.17.5) (2021-08-28)
+
+
+### Bug Fixes
+
+* https://github.com/fast-crud/fast-crud/issues/19 ([7781000](https://github.com/fast-crud/fast-crud/commit/77810001678d08da5094926533a9e65e27aa4b9a))
+* 修复文件上传数量限制错误的bug ([2db661c](https://github.com/fast-crud/fast-crud/commit/2db661c356dffd1cf6c5cca8d21246f1d60aabd7))
+
+
+### Performance Improvements
+
+* 列排序 ([7c0b019](https://github.com/fast-crud/fast-crud/commit/7c0b0198b240aa68523563ee8f39a172a2f79fcb))
+
+
+
+
+
 ## [0.17.4](https://github.com/fast-crud/fast-crud/compare/v0.17.3...v0.17.4) (2021-08-17)
 
 

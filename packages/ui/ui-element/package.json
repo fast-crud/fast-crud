@@ -1,6 +1,6 @@
 {
   "name": "@fast-crud/ui-element",
-  "version": "0.17.2",
+  "version": "0.17.6",
   "description": "",
   "main": "./dist/ui-element.umd.js",
   "module": "./dist/ui-element.es.js",
@@ -12,9 +12,8 @@
   "author": "Greper",
   "license": "MIT",
   "dependencies": {
-    "@fast-crud/ui-interface": "^0.17.2",
-    "element-plus": "^1.0.2-beta.55",
-    "vue": "^3.1.4"
+    "@fast-crud/ui-interface": "^0.17.6",
+    "element-plus": "^1.0.2-beta.55"
   },
   "devDependencies": {
     "@commitlint/cli": "^12.0.1",
@@ -43,7 +42,8 @@
     "typescript": "4.3.5",
     "vite": "^2.4.2",
     "vite-plugin-compression": "^0.3.0",
+    "vue": "^3.1.4",
     "vue-eslint-parser": "^7.5.0"
   },
-  "gitHead": "9fdb21a31333678c475e2c55b8f80298b1f58f00"
+  "gitHead": "bf665adfbb504e2f63ad2efcef4ec10c84f3fd9b"
 }
