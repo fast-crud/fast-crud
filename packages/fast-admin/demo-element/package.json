@@ -32,7 +32,7 @@
     "lodash-es": "^4.17.20",
     "nprogress": "^0.2.0",
     "qiniu-js": "^3.3.1",
-    "vue": "^3.1.4",
+    "vue": "^3.2.11",
     "vue-i18n": "^9.1.7",
     "vue-router": "^4.0.1",
     "vuedraggable": "^4.0.1"
