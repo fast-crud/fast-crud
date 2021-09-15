@@ -1,18 +1,9 @@
-<template>
-  <component :is="$fsui.select.name" :placeholder="computedPlaceholder">
-    <template v-for="item of computedOptions" :key="getValue(item)">
-      <component :is="$fsui.option.name" v-bind="item" :value="getValue(item)" :label="getLabel(item)">
-        {{ getLabel(item) }}
-      </component>
-    </template>
-  </component>
-</template>
-<script>
-import { computed } from "vue";
+<script lang="jsx">
+import { computed, resolveDynamicComponent } from "vue";
 import { useDict } from "../../use/use-dict";
 import { useI18n } from "../../locale";
 import { useUi } from "../../use";
-
+import _ from "lodash-es";
 /**
  * 字典选择框
  * 支持el-select|a-select的属性配置
@@ -31,7 +22,11 @@ export default {
     /**
      * placeholder
      */
-    placeholder: { type: String }
+    placeholder: { type: String },
+    /**
+     * select组件的插槽
+     */
+    slots: {}
   },
   // render () {
   //   return this.renderFunc({ data: this.data, dataMap: this.dataMap, scope: this.scope, attrs: this.$attrs })
@@ -47,6 +42,24 @@ export default {
       computedPlaceholder,
       ...useDict(props, ctx, ui.select.modelValue)
     };
+  },
+  render() {
+    const selectComp = resolveDynamicComponent(this.$fsui.select.name);
+    const options = [];
+    const optionComp = resolveDynamicComponent(this.$fsui.option.name);
+    for (const item of this.computedOptions) {
+      const option = (
+        <optionComp {...item} value={this.getValue(item)} label={this.getLabel(item)}>
+          {this.getLabel(item)}
+        </optionComp>
+      );
+      options.push(option);
+    }
+    return (
+      <selectComp placeholder={this.computedPlaceholder} v-slots={this.slots}>
+        {options}
+      </selectComp>
+    );
   }
 };
 </script>
