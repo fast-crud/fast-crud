@@ -5,3 +5,4 @@ export * from "./use-dict-define";
 export * from "./use-types";
 export * from "./use-ui";
 export * from "./use-expose";
+export * from "./use-merge";

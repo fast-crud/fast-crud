@@ -3,6 +3,32 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.18.0](https://github.com/fast-crud/fast-crud/compare/v0.17.6...v0.18.0) (2021-09-24)
+
+
+### Features
+
+* 升级vue到3.2.11 ([d4c4fb4](https://github.com/fast-crud/fast-crud/commit/d4c4fb4bbcade4848c5f0ca1079c5b74b9383fc4))
+* 升级vue到3.2.11 ([0fdd615](https://github.com/fast-crud/fast-crud/commit/0fdd61550fde70310dd17efec46cd91c4f65158b))
+* dict-select支持select的插槽配置，支持页面内打开对话框，支持路由缓存 ([ddf4aaa](https://github.com/fast-crud/fast-crud/commit/ddf4aaa2394b32291f8fb71fda642df272e86525))
+* dict-select支持select的插槽配置，支持页面内打开对话框，支持路由缓存 ([e5c0fc0](https://github.com/fast-crud/fast-crud/commit/e5c0fc008c473ed7dd2e75fb1348141184ca4979))
+
+
+
+
+
+## [0.17.6](https://github.com/fast-crud/fast-crud/compare/v0.17.5...v0.17.6) (2021-09-07)
+
+
+### Bug Fixes
+
+* vue转移到devDependencies ([9af76bc](https://github.com/fast-crud/fast-crud/commit/9af76bc3b667a89026c9d2a3e31f103ffab9489f))
+* 修复作为子组件时翻页组件错乱的bug，https://github.com/fast-crud/fast-crud/issues/17 ([48289be](https://github.com/fast-crud/fast-crud/commit/48289bec1df00a2d3d8a8fc0acac712b1d14ef41))
+
+
+
+
+
 ## [0.17.5](https://github.com/fast-crud/fast-crud/compare/v0.17.4...v0.17.5) (2021-08-28)
 
 

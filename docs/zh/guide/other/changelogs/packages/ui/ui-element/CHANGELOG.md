@@ -3,6 +3,28 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.18.0](https://github.com/fast-crud/fast-crud/compare/v0.17.6...v0.18.0) (2021-09-24)
+
+
+### Features
+
+* 升级vue到3.2.11 ([0fdd615](https://github.com/fast-crud/fast-crud/commit/0fdd61550fde70310dd17efec46cd91c4f65158b))
+
+
+
+
+
+## [0.17.6](https://github.com/fast-crud/fast-crud/compare/v0.17.5...v0.17.6) (2021-09-07)
+
+
+### Bug Fixes
+
+* vue转移到devDependencies ([9af76bc](https://github.com/fast-crud/fast-crud/commit/9af76bc3b667a89026c9d2a3e31f103ffab9489f))
+
+
+
+
+
 ## [0.17.2](https://github.com/fast-crud/fast-crud/compare/v0.17.1...v0.17.2) (2021-08-05)
 
 
