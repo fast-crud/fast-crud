@@ -4,6 +4,7 @@ export * from "./utils/index";
 export * from "./use";
 import types from "./types/index";
 import * as components from "./components/index";
+export * from "./components/index";
 import { i18n, useI18n } from "./locale/";
 import { uiContext } from "./ui";
 export * from "./ui";

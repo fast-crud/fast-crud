@@ -88,7 +88,6 @@ import FsToolbar from "./toolbar/index.vue";
 import FsTable from "./crud/fs-table.jsx";
 import traceUtil from "../utils/util.trace";
 import { uiContext } from "../ui";
-import logger from "../utils/util.log";
 import { useMerge } from "../use/use-merge";
 const { merge } = useMerge();
 function useProviders(props, ctx) {
