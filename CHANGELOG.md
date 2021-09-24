@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.18.1](https://github.com/fast-crud/fast-crud/compare/v0.18.0...v0.18.1) (2021-09-24)
+
+
+### Performance Improvements
+
+* 增加自定义布局示例 ([615ca18](https://github.com/fast-crud/fast-crud/commit/615ca180fd05fca41ebdfa5c0325c376e3f9d431))
+
+
+
+
+
 # [0.18.0](https://github.com/fast-crud/fast-crud/compare/v0.17.6...v0.18.0) (2021-09-24)
 
 
