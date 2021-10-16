@@ -93,14 +93,17 @@ export default {
     // 带事件的attrs
     const allAttrs = computed(() => {
       const vModel = props.vModel || "modelValue";
-      const modelValue = props.modelValue ?? (ui.type === "antdv" ? undefined : null);
       const attrs = {
         ref: "targetRef",
         // scope: props.scope,
         // fix element display false bug
-        [vModel]: modelValue,
         ...props.props
       };
+      if (props.modelValue != null) {
+        attrs[vModel] = props.modelValue;
+      } else {
+        attrs[vModel] = null;
+      }
       attrs["onUpdate:" + vModel] = (value) => {
         ctx.emit("update:modelValue", value);
       };

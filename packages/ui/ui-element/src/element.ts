@@ -40,9 +40,9 @@ import {
   CollapseCI,
   CollapseItemCI,
   ButtonCI,
-  PaginationCI
+  PaginationCI,
+  TooltipCI
 } from "@fast-crud/ui-interface";
-import { TooltipCI } from "../../ui-interface/src/ui-interface";
 export class Element implements UiInterface {
   constructor(target) {
     if (target) {
@@ -273,11 +273,11 @@ export class Element implements UiInterface {
     onChange({ setCurrentPage, setPageSize, doAfterChange }) {
       return {
         // element 页码改动回调
-        onCurrentChange(event) {
+        "onUpdate:current-page": event => {
           setCurrentPage(event);
           doAfterChange();
         },
-        onSizeChange(event) {
+        "onUpdate:page-size": event => {
           setPageSize(event);
           doAfterChange();
         }

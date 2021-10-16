@@ -2,7 +2,6 @@
   <component :is="$fsui.formItem.name" class="fs-form-item" :[$fsui.formItem.prop]="item.key" v-bind="item">
     <template #label>
       {{ item.label || item.title }}
-
       <component
         :is="$fsui.tooltip.name"
         v-if="item.helper && computedHelperPosition === 'label'"
@@ -73,7 +72,8 @@ export default {
      */
     helper: {
       type: Object
-    }
+    },
+    col: {}
   },
   emits: ["update:modelValue"],
   setup(props, ctx) {
