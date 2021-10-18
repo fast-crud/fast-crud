@@ -93,7 +93,7 @@ import logger from "../../utils/util.log";
 import { uiContext } from "../../ui";
 import { useMerge } from "../../use/use-merge";
 import FsFormItem from "./fs-form-item.vue";
-import { Constants } from "/@/utils/util.constants";
+import { Constants } from "../../utils/util.constants";
 
 /**
  * 配置化的表单组件

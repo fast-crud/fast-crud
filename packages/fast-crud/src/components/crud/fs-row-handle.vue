@@ -34,7 +34,7 @@ import traceUtil from "../../utils/util.trace";
 import { useI18n } from "../../locale";
 import { useUi } from "../../use/use-ui";
 import { useCompute } from "../../use/use-compute";
-import { Constants } from "/@/utils/util.constants";
+import { Constants } from "../../utils/util.constants";
 
 /**
  * 操作列配置
