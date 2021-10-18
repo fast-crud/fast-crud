@@ -21,6 +21,7 @@ import { ref, computed, getCurrentInstance } from "vue";
 import traceUtil from "../../utils/util.trace";
 import { useI18n } from "../../locale";
 import FsSlotRender from "../render/fs-slot-render";
+import { Constants } from "../../utils/util.constants";
 
 /**
  * 工具条
@@ -141,7 +142,6 @@ export default {
         defaultButtons.compact.type = props.compact ? "primary" : "default";
       }
 
-
       let sortArr = [];
       for (let defaultButtonsKey in defaultButtons) {
         sortArr.push({
@@ -150,7 +150,7 @@ export default {
         });
       }
       sortArr = _.sortBy(sortArr, (item) => {
-        return [null, undefined].includes(item.order) ? 100 : item.order;
+        return item.order ?? Constants.orderDefault;
       });
 
       const sortedButtons = {};

@@ -9,6 +9,7 @@ import { useI18n } from "../locale";
 import { useMerge } from "./use-merge";
 import { CrudExpose } from "../d.ts";
 import { useCompute } from "./use-compute";
+import { Constants } from "../utils/util.constants";
 export interface CrudOptions {
   table?: {};
   columns?: {};
@@ -375,7 +376,7 @@ export function useCrud(ctx: UseCrudProps) {
     function sortBy(arr) {
       return _.sortBy(arr, (item) => {
         sortChildren(item);
-        return item.order ?? 1;
+        return item.order ?? Constants.orderDefault;
       });
     }
     function sortChildren(column) {
