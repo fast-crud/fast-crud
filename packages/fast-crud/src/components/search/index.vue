@@ -167,7 +167,7 @@ export default {
     const { doComputed, AsyncComputeValue } = useCompute();
 
     const columns = _.sortBy(props.columns, (item) => {
-      return item.order ?? 9999999999;
+      return item.order ?? 100;
     });
     _.each(columns, (item) => {
       if (item.value != null && item.value instanceof AsyncComputeValue) {

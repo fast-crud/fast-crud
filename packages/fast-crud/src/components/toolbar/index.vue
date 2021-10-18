@@ -149,7 +149,7 @@ export default {
         });
       }
       sortArr = _.sortBy(sortArr, (item) => {
-        return item.order ?? 9999999999;
+        return item.order ?? 100;
       });
 
       const sortedButtons = {};
