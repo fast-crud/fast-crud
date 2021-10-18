@@ -1,19 +1,28 @@
 <template>
-  <component :is="$fsui.imageGroup.name" class="fs-image-format" v-bind="wrapper">
-    <component :is="$fsui.image.name" v-for="url in computedUrls" :key="url" :src="url" v-bind="binding">
-      <template #placeholder>
-        <div class="fs-image-slot">
-          <fs-loading :loading="true" />
-        </div>
-      </template>
+  <div class="fs-image-format">
+    <component :is="$fsui.imageGroup.name" v-bind="wrapper">
+      <component
+        :is="$fsui.image.name"
+        v-for="url in computedUrls"
+        :key="url"
+        class="fs-image-item"
+        :src="url"
+        v-bind="binding"
+      >
+        <template #placeholder>
+          <div class="fs-image-slot">
+            <fs-loading :loading="true" />
+          </div>
+        </template>
 
-      <template #error>
-        <div class="fs-image-slot">
-          <img :src="error" style="max-width: 50%" />
-        </div>
-      </template>
+        <template #error>
+          <div class="fs-image-slot">
+            <img :src="error" style="max-width: 50%" />
+          </div>
+        </template>
+      </component>
     </component>
-  </component>
+  </div>
 </template>
 
 <script>
@@ -98,6 +107,12 @@ export default {
   display: flex;
   margin: 1px;
   flex-wrap: wrap;
+  justify-content: center;
+  align-items: center;
+  .fs-image-item {
+    border: 1px solid #eee;
+    margin: 0 1px;
+  }
   .image-slot {
     display: flex;
     align-items: center;
