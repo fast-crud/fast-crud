@@ -165,7 +165,6 @@ export default {
     let initialForm = _.cloneDeep(props.initialForm || {});
     const form = reactive(initialForm);
     const { doComputed, AsyncComputeValue } = useCompute();
-
     _.each(props.columns, (item) => {
       if (item.value != null && item.value instanceof AsyncComputeValue) {
         logger.warn("search.value配置不支持AsyncCompute类型的动态计算");
@@ -178,10 +177,23 @@ export default {
           delete item.rules;
         });
       }
-
-      return _.sortBy(value, (item) => {
-        return item.order ?? 100;
+      let sortArr = [];
+      for (let key in value) {
+        value[key]._key = key;
+        sortArr.push(value[key]);
+      }
+      sortArr = _.sortBy(sortArr, (item) => {
+        return [null, undefined].includes(item.order) ? 100 : item.order;
       });
+
+      const sortedColumns = {};
+
+      sortArr.forEach((item) => {
+        let _key = item._key;
+        delete item._key;
+        sortedColumns[_key] = item;
+      });
+      return sortedColumns;
     });
 
     _.forEach(computedColumns.value, (column, key) => {
