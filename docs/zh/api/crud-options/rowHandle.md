@@ -19,14 +19,14 @@
     buttons: {
       view:{
           ...FsButton, // FsButton的配置，可以修改文本、颜色，也可以修改成图标按钮、纯文本按钮等
-          order:1, //排序号，越小则排前面
+          order:1, //排序号，越小则排前面，默认值1
           show:true,
           //点击事件,点击此按钮会触发此方法
           //此处的查看按钮如果不配置默认打开查看对话框
           click:(context)=>{} 
       },
-      edit:{order:2}, //编辑按钮
-      remove:{order:3},//删除按钮
+      edit:{order:1}, //编辑按钮
+      remove:{order:1},//删除按钮
       custom:{},//自定义按钮，可以任意命名,任意数量
     }
   }

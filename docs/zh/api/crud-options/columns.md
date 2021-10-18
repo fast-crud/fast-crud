@@ -89,7 +89,7 @@ const crudOptions = {
 ### [key].column.order
 * 说明：列排序号，数字越小越靠前排列。
 * 类型：number
-* 默认值： 1 ， 当配置0则排到最前面，配置2则排到最后面
+* 默认值： 1 ， 当配置0或负数则排到最前面，配置2则排到最后面
 * 场景：比如可以在commonOptions里面配置一个显示在最后面的公共时间列
 
 
@@ -179,6 +179,11 @@ columns:{
 
 ```
 
+### [key].form.order
+* 说明：表单字段排序号，数字越小越靠前排列。
+* 类型：number
+* 默认值： 1 ， 当配置0或负数则排到最前面，配置2则排到最后面
+
 ## [key].addForm
 * 说明：该字段在添加表单里面的配置
 * 类型：Object
@@ -212,6 +217,10 @@ columns:{
 * 类型：Object
 参考组件配置[component](../common-options.md)
 
+### [key].search.order
+* 说明：查询排序号，数字越小越靠前排列。
+* 类型：number
+* 默认值： 1 ， 当配置0或负数则排到最前面，配置2则排到最后面
 
 ## valueBuilder与valueResolve
 * 说明： 后台值与前端值不一致时解决方案
