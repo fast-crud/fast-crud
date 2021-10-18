@@ -93,6 +93,7 @@ import logger from "../../utils/util.log";
 import { uiContext } from "../../ui";
 import { useMerge } from "../../use/use-merge";
 import FsFormItem from "./fs-form-item.vue";
+import { Constants } from "/@/utils/util.constants";
 
 /**
  * 配置化的表单组件
@@ -311,14 +312,12 @@ export default {
 
     const computedDefaultColumns = computed(() => {
       const columns = [];
-      let index = 1;
       //default columns排序
       _.forEach(computedColumns.value, (value, key) => {
         value.key = key;
         if (value.order == null) {
-          value.order = index;
+          value.order = Constants.orderDefault;
         }
-        index++;
         if (!computedGroup.value?.groupedKeys?.has(key)) {
           columns.push(value);
         }
