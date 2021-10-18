@@ -4,11 +4,11 @@
       <fs-button v-if="item.show !== false" v-bind="item" @click="item.click()" />
     </template>
     <fs-table-columns-filter
-      v-if="columns"
-      ref="columnsFilterRef"
-      :columns="columns"
-      :storage="storage"
-      @update:columns="$emit('update:columns', $event)"
+        v-if="columns"
+        ref="columnsFilterRef"
+        :columns="columns"
+        :storage="storage"
+        @update:columns="$emit('update:columns', $event)"
     />
   </div>
 </template>
@@ -140,8 +140,28 @@ export default {
       if (defaultButtons.compact) {
         defaultButtons.compact.type = props.compact ? "primary" : "default";
       }
-      return defaultButtons;
+
+      let sortArr = [];
+      for (let defaultButtonsKey in defaultButtons) {
+        sortArr.push({
+          ...defaultButtons[defaultButtonsKey],
+          _key: defaultButtonsKey
+        });
+      }
+      sortArr = _.sortBy(sortArr, (item) => {
+        return item.order ?? 100;
+      });
+
+      const sortedButtons = {};
+
+      sortArr.forEach((item) => {
+        let _key = item._key;
+        delete item._key;
+        sortedButtons[_key] = item;
+      });
+      return sortedButtons;
     });
+
     return {
       columnsFilterRef,
       computedButtons
