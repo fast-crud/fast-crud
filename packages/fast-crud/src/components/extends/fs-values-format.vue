@@ -11,7 +11,7 @@
         :key="getValue(item)"
         class="fs-tag"
         size="small"
-        :[$fsui.tag.type]="getColor(item) || ''"
+        :[$fsui.tag.type]="getColor(item) || 'default'"
         :effect="item.effect"
         @click="doClick(item)"
       >

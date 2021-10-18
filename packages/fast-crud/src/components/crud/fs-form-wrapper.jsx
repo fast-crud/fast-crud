@@ -235,7 +235,6 @@ export default {
             }
             buttons.push(<fs-button {...item} />);
           });
-          console.log(" formOptions", this.formOptions);
           return (
             <div class={"fs-form-wrapper-body"}>
               <div class={"fs-form-body"}>
@@ -277,11 +276,11 @@ export default {
     const formWrapperComp = resolveDynamicComponent(is);
     return (
       <formWrapperComp
+        {...vCustomClass}
         {...this.formWrapper}
         {...vModel}
         {...vClosed}
         {...vFullScreen}
-        {...vCustomClass}
         v-slots={children}
       />
     );

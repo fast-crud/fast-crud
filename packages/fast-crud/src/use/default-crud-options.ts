@@ -22,7 +22,7 @@ export default {
       },
       form: {
         labelPosition: "right",
-        labelWidth: "100px",
+        labelWidth: "80px",
         style: {
           "grid-template-columns": "50% 50%" // grid布局，默认两列
         },
@@ -66,7 +66,6 @@ export default {
       },
       pagination: {
         background: true,
-        total: 0,
         pageSize: 20,
         pageSizes: [5, 10, 20, 50],
         layout: "total, sizes, prev, pager, next, jumper",

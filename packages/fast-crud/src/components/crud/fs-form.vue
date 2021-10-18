@@ -322,9 +322,7 @@ export default {
         if (!computedGroup.value?.groupedKeys?.has(key)) {
           columns.push(value);
         }
-        // if (value.col) {
-        //   value.col = mergeCol(value.col);
-        // }
+        value.col = mergeCol(value.col);
       });
       //排序
       columns.sort((a, b) => {
@@ -488,7 +486,6 @@ export default {
     color: #7d7d7d;
     font-size: 12px;
     line-height: 1.5;
-    margin-top: 2px;
   }
 }
 </style>

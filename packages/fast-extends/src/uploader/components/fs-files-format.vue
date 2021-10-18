@@ -35,7 +35,7 @@ export default {
     // tag颜色，【primary, success, warning, danger ,info】
     color: {
       require: false,
-      default: ""
+      default: "primary"
     },
     // 展示类型【text, tag】
     type: {

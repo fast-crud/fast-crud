@@ -177,6 +177,7 @@ export default {
           delete item.rules;
         });
       }
+
       let sortArr = [];
       for (let key in value) {
         value[key]._key = key;
@@ -194,6 +195,7 @@ export default {
         sortedColumns[_key] = item;
       });
       return sortedColumns;
+
     });
 
     _.forEach(computedColumns.value, (column, key) => {

@@ -73,7 +73,7 @@ export default function ({ expose }) {
           title: "简介",
           type: "textarea",
           form: {
-            component: { showWordLimit: true, maxlength: 200 }
+            component: { showCount: true, maxlength: 200 }
           },
           column: {
             "show-overflow-tooltip": true
