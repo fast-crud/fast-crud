@@ -140,27 +140,7 @@ export default {
       if (defaultButtons.compact) {
         defaultButtons.compact.type = props.compact ? "primary" : "default";
       }
-
-
-      let sortArr = [];
-      for (let defaultButtonsKey in defaultButtons) {
-        sortArr.push({
-          ...defaultButtons[defaultButtonsKey],
-          _key: defaultButtonsKey
-        });
-      }
-      sortArr = _.sortBy(sortArr, (item) => {
-        return [null, undefined].includes(item.order) ? 100 : item.order;
-      });
-
-      const sortedButtons = {};
-
-      sortArr.forEach((item) => {
-        let _key = item._key;
-        delete item._key;
-        sortedButtons[_key] = item;
-      });
-      return sortedButtons;
+      return defaultButtons;
     });
     return {
       columnsFilterRef,

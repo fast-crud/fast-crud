@@ -177,25 +177,7 @@ export default {
           delete item.rules;
         });
       }
-
-      let sortArr = [];
-      for (let key in value) {
-        value[key]._key = key;
-        sortArr.push(value[key]);
-      }
-      sortArr = _.sortBy(sortArr, (item) => {
-        return [null, undefined].includes(item.order) ? 100 : item.order;
-      });
-
-      const sortedColumns = {};
-
-      sortArr.forEach((item) => {
-        let _key = item._key;
-        delete item._key;
-        sortedColumns[_key] = item;
-      });
-      return sortedColumns;
-
+      return value;
     });
 
     _.forEach(computedColumns.value, (column, key) => {
