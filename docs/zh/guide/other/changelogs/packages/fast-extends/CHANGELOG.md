@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.19.0](https://github.com/fast-crud/fast-crud/compare/v0.18.1...v0.19.0) (2021-10-18)
+
+
+### Performance Improvements
+
+* image border ([3b459cc](https://github.com/fast-crud/fast-crud/commit/3b459cc06be7ba239c777074e446542ab3c1445c))
+
+
+
+
+
 # [0.18.0](https://github.com/fast-crud/fast-crud/compare/v0.17.6...v0.18.0) (2021-09-24)
 
 
