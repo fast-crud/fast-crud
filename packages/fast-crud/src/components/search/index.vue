@@ -166,9 +166,12 @@ export default {
     const form = reactive(initialForm);
     const { doComputed, AsyncComputeValue } = useCompute();
 
-    const columns = _.sortBy(props.columns, (item) => {
-      return item.order ?? 100;
-    });
+    const columns = computed(()=>{
+      return _.sortBy(props.columns, (item) => {
+        return item.order ?? 100;
+      });
+    })
+
     _.each(columns, (item) => {
       if (item.value != null && item.value instanceof AsyncComputeValue) {
         logger.warn("search.value配置不支持AsyncCompute类型的动态计算");
