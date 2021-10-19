@@ -3,6 +3,14 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.19.0](https://github.com/fast-crud/fast-crud/compare/v0.18.1...v0.19.0) (2021-10-18)
+
+**Note:** Version bump only for package @fast-crud/ui-element
+
+
+
+
+
 # [0.18.0](https://github.com/fast-crud/fast-crud/compare/v0.17.6...v0.18.0) (2021-09-24)
 
 

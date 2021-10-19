@@ -34,6 +34,7 @@ import traceUtil from "../../utils/util.trace";
 import { useI18n } from "../../locale";
 import { useUi } from "../../use/use-ui";
 import { useCompute } from "../../use/use-compute";
+import { Constants } from "../../utils/util.constants";
 
 /**
  * 操作列配置
@@ -113,21 +114,18 @@ export default defineComponent({
         const defBtns = {
           view: {
             key: "view",
-            order: 1,
             text: t("fs.rowHandle.view.text"),
             title: t("fs.rowHandle.view.text")
           },
           edit: {
             key: "edit",
             type: "primary",
-            order: 2,
             text: t("fs.rowHandle.edit.text"),
             title: t("fs.rowHandle.edit.text")
           },
           remove: {
             key: "remove",
             ...ui.button.colors("danger"),
-            order: 3,
             text: t("fs.rowHandle.remove.text"),
             title: t("fs.rowHandle.remove.text")
           }
@@ -146,10 +144,9 @@ export default defineComponent({
         btns.push(item);
       });
 
-      btns.sort((a, b) => {
-        return a.order - b.order;
+      return _.sortBy(btns, (item) => {
+        return item.order ?? Constants.orderDefault;
       });
-      return btns;
     });
 
     const computedDropdownAtLeast = computed(() => {

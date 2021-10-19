@@ -67,6 +67,7 @@ export default {
       pagination: {
         background: true,
         pageSize: 20,
+        total: 1,
         pageSizes: [5, 10, 20, 50],
         layout: "total, sizes, prev, pager, next, jumper",
         showSizeChanger: true, // antdv

@@ -21,6 +21,7 @@ import { ref, computed, getCurrentInstance } from "vue";
 import traceUtil from "../../utils/util.trace";
 import { useI18n } from "../../locale";
 import FsSlotRender from "../render/fs-slot-render";
+import { Constants } from "../../utils/util.constants";
 
 /**
  * 工具条
@@ -140,7 +141,26 @@ export default {
       if (defaultButtons.compact) {
         defaultButtons.compact.type = props.compact ? "primary" : "default";
       }
-      return defaultButtons;
+
+      let sortArr = [];
+      for (let defaultButtonsKey in defaultButtons) {
+        sortArr.push({
+          ...defaultButtons[defaultButtonsKey],
+          _key: defaultButtonsKey
+        });
+      }
+      sortArr = _.sortBy(sortArr, (item) => {
+        return item.order ?? Constants.orderDefault;
+      });
+
+      const sortedButtons = {};
+
+      sortArr.forEach((item) => {
+        let _key = item._key;
+        delete item._key;
+        sortedButtons[_key] = item;
+      });
+      return sortedButtons;
     });
     return {
       columnsFilterRef,

@@ -71,6 +71,7 @@ import { uiContext } from "../../ui";
 import { useI18n } from "../../locale";
 import logger from "../../utils/util.log";
 
+import { Constants } from "../../utils/util.constants";
 /**
  * 查询框组件
  */
@@ -172,14 +173,33 @@ export default {
     });
     const computedColumns = doComputed(props.columns, getContextFn, null, (value) => {
       if (!props.validate) {
-        //去掉rules
+        //如果关闭validate则去掉rules
         _.forEach(value, (item) => {
           delete item.rules;
         });
       }
-      return value;
+
+      //字段排序
+      let sortArr = [];
+      _.forEach(value, (v, key) => {
+        v._key = key;
+        sortArr.push(v);
+      });
+      sortArr = _.sortBy(sortArr, (item) => {
+        return item.order ?? Constants.orderDefault;
+      });
+
+      const sortedColumns = {};
+
+      sortArr.forEach((item) => {
+        let _key = item._key;
+        delete item._key;
+        sortedColumns[_key] = item;
+      });
+      return sortedColumns;
     });
 
+    //默认值
     _.forEach(computedColumns.value, (column, key) => {
       if (column.value === undefined) {
         return;
