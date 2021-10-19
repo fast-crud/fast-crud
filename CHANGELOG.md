@@ -3,6 +3,31 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.20.0](https://github.com/fast-crud/fast-crud/compare/v0.18.1...v0.20.0) (2021-10-19)
+
+
+### Features
+
+* 统一字段排序，【破坏性变更】所有字段排序号默认都为1 ([e09b17f](https://github.com/fast-crud/fast-crud/commit/e09b17f535283dd24e1c0ff8a6e296e4b0a2faa3))
+
+
+### Performance Improvements
+
+*  element ([4e81976](https://github.com/fast-crud/fast-crud/commit/4e81976a9a30e8d67d3901f4ae8fc900c89621dc))
+*  element ([86db595](https://github.com/fast-crud/fast-crud/commit/86db5957300a9c808bca202663ca8cab28e069ee))
+* 优化排序 ([155726f](https://github.com/fast-crud/fast-crud/commit/155726f95a8f0ffb3826a9920c2d1c3c418287eb))
+* 优化排序 ([83f7fd1](https://github.com/fast-crud/fast-crud/commit/83f7fd18ebe9e4dfd95004a436ef7fd29198281d))
+* 优化排序 ([2577698](https://github.com/fast-crud/fast-crud/commit/25776987296129518d5c49a8dcbbc5ac798a9318))
+* 支持json-editor ([56e0203](https://github.com/fast-crud/fast-crud/commit/56e0203dff575b11b8f37b7eea8e75f28bb74c2c))
+* fs-admin-element ([8b86ebe](https://github.com/fast-crud/fast-crud/commit/8b86ebeb9056fd69dcbb30d7ec7714c525a7d1ea))
+* fs-admin-element ([8105098](https://github.com/fast-crud/fast-crud/commit/81050985d3e8dbd3c10631406cf5017ece37c3c1))
+* fs-admin-element ([983fe21](https://github.com/fast-crud/fast-crud/commit/983fe214c90c5907b3e69aeccfeb1795b0426f3a))
+* image border ([3b459cc](https://github.com/fast-crud/fast-crud/commit/3b459cc06be7ba239c777074e446542ab3c1445c))
+
+
+
+
+
 # [0.19.0](https://github.com/fast-crud/fast-crud/compare/v0.18.1...v0.19.0) (2021-10-18)
 
 

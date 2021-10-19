@@ -3,6 +3,22 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.20.0](https://github.com/fast-crud/fast-crud/compare/v0.18.1...v0.20.0) (2021-10-19)
+
+
+### Features
+
+* 统一字段排序，【破坏性变更】所有字段排序号默认都为1 ([e09b17f](https://github.com/fast-crud/fast-crud/commit/e09b17f535283dd24e1c0ff8a6e296e4b0a2faa3))
+
+
+### Performance Improvements
+
+* 优化排序 ([2577698](https://github.com/fast-crud/fast-crud/commit/25776987296129518d5c49a8dcbbc5ac798a9318))
+
+
+
+
+
 # [0.19.0](https://github.com/fast-crud/fast-crud/compare/v0.18.1...v0.19.0) (2021-10-18)
 
 

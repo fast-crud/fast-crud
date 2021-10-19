@@ -3,6 +3,18 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.20.0](https://github.com/fast-crud/fast-crud/compare/v0.18.1...v0.20.0) (2021-10-19)
+
+
+### Performance Improvements
+
+* 支持json-editor ([56e0203](https://github.com/fast-crud/fast-crud/commit/56e0203dff575b11b8f37b7eea8e75f28bb74c2c))
+* image border ([3b459cc](https://github.com/fast-crud/fast-crud/commit/3b459cc06be7ba239c777074e446542ab3c1445c))
+
+
+
+
+
 # [0.19.0](https://github.com/fast-crud/fast-crud/compare/v0.18.1...v0.19.0) (2021-10-18)
 
 
