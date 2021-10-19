@@ -3,6 +3,14 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.20.0](https://github.com/fast-crud/fast-crud/compare/v0.18.1...v0.20.0) (2021-10-19)
+
+**Note:** Version bump only for package @fast-crud/ui-antdv
+
+
+
+
+
 # [0.19.0](https://github.com/fast-crud/fast-crud/compare/v0.18.1...v0.19.0) (2021-10-18)
 
 **Note:** Version bump only for package @fast-crud/ui-antdv
