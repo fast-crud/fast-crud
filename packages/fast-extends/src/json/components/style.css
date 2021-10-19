@@ -1,0 +1,41 @@
+.ace_line_group {
+  text-align: left;
+}
+.json-editor-container {
+  display: flex;
+  width: 100%;
+}
+.json-editor-container .tree-mode {
+  width: 50%;
+}
+.json-editor-container .code-mode {
+  flex-grow: 1;
+}
+.jsoneditor-btns {
+  text-align: center;
+  margin-top: 10px;
+}
+.jsoneditor-vue .jsoneditor-outer {
+  min-height: 150px;
+}
+.jsoneditor-vue div.jsoneditor-tree {
+  min-height: 350px;
+}
+.json-save-btn {
+  background-color: #20a0ff;
+  border: none;
+  color: #fff;
+  padding: 5px 10px;
+  border-radius: 5px;
+  cursor: pointer;
+}
+.json-save-btn:focus {
+  outline: none;
+}
+.json-save-btn[disabled] {
+  background-color: #1d8ce0;
+  cursor: not-allowed;
+}
+code {
+  background-color: #f5f5f5;
+}
