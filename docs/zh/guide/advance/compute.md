@@ -67,23 +67,21 @@ import {useCompute} from '@fast-crud/fast-crud'
 const {compute} = useCompute()
 const crudOptions = {
     columns:{
-        grade:{
-            title: '年级',
-            type: 'text',
-            form: {
-                component:{
-                    name:'a-select',
-                    options: asyncCompute()
-                }
-            }
+        userType:{
+            title: '用户类型',
+            type: 'dict-select',
+            dict: dict({data:[
+                    {value:1,label:'个人'},
+                    {value:2,label:'公司'}
+                ]})
         },
         businessLicenceImg :{
             title: '营业执照上传',
             type: 'avatar-uploader',
             form:{
                 show:compute((context)=>{
-                    // 通过动态计算show属性的值，当前表单内的userType值为organization，才显示此字段
-                    return context.form.userType ==='organization'
+                    // 通过动态计算show属性的值，当前表单内的userType值为公司，才显示此字段
+                    return context.form.userType ===2
                 })
             }
         },
@@ -92,8 +90,8 @@ const crudOptions = {
             type: 'text',
             form:{
                 show:compute((context)=>{
-                    // 通过动态计算show属性的值，当前表单内的userType值为organization，才显示此字段
-                    return context.form.userType ==='organization'
+                    // 通过动态计算show属性的值，当前表单内的userType值为公司，才显示此字段
+                    return context.form.userType ===2
                 })
             }
         }
