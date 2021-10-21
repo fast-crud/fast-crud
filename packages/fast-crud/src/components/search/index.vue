@@ -321,7 +321,7 @@ export default {
     const inputEventDisabled = ref(false);
 
     const doAutoSearch = () => {
-      if (inputEventDisabled.value !== true && autoSearch) {
+      if (inputEventDisabled.value !== true && autoSearch.value) {
         // 防抖查询
         autoSearch();
       }
