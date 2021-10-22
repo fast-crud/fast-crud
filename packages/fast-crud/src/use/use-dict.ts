@@ -22,7 +22,12 @@ export function useDict(props, ctx, vModel = "modelValue") {
   function getDict() {
     return dict;
   }
-  const getScope: Function = inject("get:scope") || function () {};
+
+  let getScope: Function = function () {};
+  try {
+    getScope = inject("get:scope") || getScope;
+  } catch (e) {}
+
   function getCurrentScope() {
     const value = props[vModel];
     return {
