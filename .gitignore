@@ -114,3 +114,4 @@ packages/vben-admin-thin-next
 /*-lock.json
 /**/package-lock.json
 /**/.DS_Store
+/pnpm-lock.yaml
