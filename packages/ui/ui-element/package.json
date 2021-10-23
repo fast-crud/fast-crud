@@ -13,6 +13,7 @@
   "license": "MIT",
   "dependencies": {
     "@fast-crud/ui-interface": "^0.20.0",
+    "@fast-crud/fast-crud": "^0.20.0",
     "element-plus": "^1.0.2-beta.55"
   },
   "devDependencies": {

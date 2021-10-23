@@ -55,6 +55,10 @@ class Dict extends UnMergeable {
       value: false,
       enumerable: false
     });
+    Object.defineProperty(this, "originalData", {
+      value: null,
+      enumerable: false
+    });
     this.loading = false;
     _.merge(this, dict);
     if (dict.data != null) {
