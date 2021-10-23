@@ -12,16 +12,26 @@
 
 ### 基于antdv
 
+* fs-admin-antdv :
+  [预览](http://fast-crud.docmirror.cn/antdv/) /
+  [源码](https://github.com/fast-crud/fs-admin-antdv/)
+
+
 * vben-admin : 
-[预览](http://fast-crud.docmirror.cn/vben/) /
-[源码](https://github.com/fast-crud/fs-in-vben-starter)
+  [预览](http://fast-crud.docmirror.cn/vben/) /
+  [starter源码](https://github.com/fast-crud/fs-in-vben-starter)
+  [原项目地址](https://github.com/anncwb/vue-vben-admin)
    
-* fs-admin :
-[预览](http://fast-crud.docmirror.cn/antdv/) /
-[源码](https://github.com/fast-crud/fs-admin-antdv/) 
 
 ### 基于element-plus
-* 暂时还没有找到比较好的admin框架
+* fs-admin-element :
+  [预览](http://fast-crud.docmirror.cn/element/) /
+  [源码](https://github.com/fast-crud/fs-admin-element/)
+
+* cool-admin-vue
+  [预览](http://fast-crud.docmirror.cn/cool/) /
+  [start源码](https://gitee.com/fast-crud/fs-in-cool-admin-vue) /
+  [原项目源码](https://github.com/cool-team-official/cool-admin-vue)
 
 ### 等你推荐
 如果你知道比较好的admin项目，欢迎推荐，我将尽快安排它的starter

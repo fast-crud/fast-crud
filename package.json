@@ -5,7 +5,7 @@
     "bootstrap": "lerna bootstrap --hoist",
     "docs:dev": "vitepress dev docs/zh",
     "docs:dev:en": "vitepress dev docs/zh",
-    "docs:build": "vitepress build docs/zh  && vitepress build docs/en",
+    "docs:build": "vitepress build docs/zh",
     "docs:serve": "vitepress serve docs/zh",
     "docgen:crud": "vue-docgen -c docgen/crud.config.js",
     "docgen:extends": "vue-docgen -c docgen/extends.config.js",
@@ -21,7 +21,7 @@
   "devDependencies": {
     "copyfiles": "^2.4.1",
     "lerna": "^4.0.0",
-    "vitepress": "^0.15.6",
-    "vue-docgen-cli": "^4.40.0"
+    "vitepress": "^0.20.0",
+    "vue-docgen-cli": "^4.41.2"
   }
 }

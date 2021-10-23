@@ -19,6 +19,7 @@
   "dependencies": {
     "ali-oss": "^6.16.0",
     "cos-js-sdk-v5": "^1.2.9",
+    "cropperjs": "^1.5.12",
     "dayjs": "^1.10.4",
     "glob": "^7.1.6",
     "jsoneditor": "^9.5.6",

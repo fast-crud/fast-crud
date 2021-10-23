@@ -8,7 +8,7 @@
 4. 使用iconify图标见下一条
 
 ## Iconify图标使用
-1. 如果要使用Iconify图标，需要配置[PurgeIcons](https://github.com/antfu/purge-icons) 的`vite`插件
+1. 如果要使用Iconify图标，需要配置[PurgeIcons](https://github.com/antfu/purge-icons) 的`vite`插件,然后在main.ts中`import "@purge-icons/generated";`
 2. 然后去[iconify图标库](https://iconify.design/icon-sets/ion/) 中查找你要使用的图标，复制图标名称，配置到`icon`属性即可.
 3. 注意图标名称要是`xxx:yyyy`格式的，中间要有冒号。如果图标没有冒号的，请确认当前图标所在图标库名，图标库名后面的第一个`-`换成`:`即可
 4. fs-admin、vben-admin 默认已经支持iconify。

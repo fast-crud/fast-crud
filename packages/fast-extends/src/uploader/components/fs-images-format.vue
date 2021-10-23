@@ -112,6 +112,7 @@ export default {
   .fs-image-item {
     border: 1px solid #eee;
     margin: 0 1px;
+    object-fit: fill;
   }
   .image-slot {
     display: flex;
