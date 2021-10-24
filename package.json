@@ -11,7 +11,7 @@
     "docgen:extends": "vue-docgen -c docgen/extends.config.js",
     "docs:all": "npm run docgen:crud && npm run docgen:extends",
     "prepublishOnly": "lerna run build --scope */ui-* --scope @fast-crud/fast-crud --scope @fast-crud/fast-extends",
-    "publish": "lerna publish --conventional-commits && npm run copylogs",
+    "publish1": "lerna publish --conventional-commits && npm run copylogs",
     "afterpublish": "npm run copylogs",
     "copylogs": "copyfiles \"packages/**/CHANGELOG.md\"  ./docs/zh/guide/other/changelogs/ -e **/node_modules/** && copyfiles \"CHANGELOG.md\"  ./docs/zh/guide/other/changelogs/",
     "init": "git submodule update --init --recursive"
