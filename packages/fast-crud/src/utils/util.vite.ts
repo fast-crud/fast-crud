@@ -1,8 +1,8 @@
 import { defineAsyncComponent } from "vue";
 import _ from "lodash-es";
 
-function installAsyncComponent(app, name, es, options) {
-  const asyncComponent = defineAsyncComponent({
+function createAsyncComponent(es) {
+  return defineAsyncComponent({
     loader: es,
     onError(error, retry, fail, attempts) {
       console.error("load error", error);
@@ -16,6 +16,9 @@ function installAsyncComponent(app, name, es, options) {
       }
     }
   });
+}
+function installAsyncComponent(app, name, es, options) {
+  const asyncComponent = createAsyncComponent(es);
   app.component(name, asyncComponent, options);
 }
 
@@ -41,7 +44,7 @@ function installSyncComponents(app, modules, excludes, pickNameExp, transform) {
 function transformFromGlob(modules, pickNameExp, transform) {
   const components = {};
   if (pickNameExp == null) {
-    pickNameExp = /.*\/(.+).vue/;
+    pickNameExp = /.*\/(.+).(vue|jsx|tsx)/;
   }
   _.forEach(modules, (item, key) => {
     // 从路径提取组件名称
@@ -64,8 +67,27 @@ function transformFromGlob(modules, pickNameExp, transform) {
   return components;
 }
 
+function loadAsyncComponentFromGlob(modules) {
+  const map = {};
+  _.forEach(modules, (item, key) => {
+    map[key] = createAsyncComponent(item);
+  });
+  return map;
+}
+
+function loadComponentFromGlob(modules) {
+  const map = {};
+  _.forEach(modules, (item, key) => {
+    map[key] = item.default;
+  });
+  return map;
+}
+
 export default {
   transformFromGlob,
   installAsyncComponents,
-  installSyncComponents
+  installSyncComponents,
+  createAsyncComponent,
+  loadAsyncComponentFromGlob,
+  loadComponentFromGlob
 };
