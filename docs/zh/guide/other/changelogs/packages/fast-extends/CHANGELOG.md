@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.20.1](https://github.com/fast-crud/fast-crud/compare/v0.20.0...v0.20.1) (2021-10-25)
+
+
+### Performance Improvements
+
+* 改用pnpm ([af59c5b](https://github.com/fast-crud/fast-crud/commit/af59c5b9e3f62949a62f1f1f73c03f8cf07fa13d))
+
+
+
+
+
 # [0.20.0](https://github.com/fast-crud/fast-crud/compare/v0.18.1...v0.20.0) (2021-10-19)
 
 
