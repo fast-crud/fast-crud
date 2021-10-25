@@ -4,6 +4,6 @@ export function useVModel(props, ctx, vModel) {
     [vModel]: props.modelValue,
     ["onUpdate:" + vModel]: (value) => {
       ctx.emit("onUpdate:modelValue", value);
-    },
+    }
   });
 }

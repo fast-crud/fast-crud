@@ -63,6 +63,7 @@ function transformFromGlob(modules, pickNameExp, transform) {
   });
   return components;
 }
+
 export default {
   transformFromGlob,
   installAsyncComponents,
