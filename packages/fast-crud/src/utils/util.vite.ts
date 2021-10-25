@@ -68,16 +68,18 @@ function transformFromGlob(modules, pickNameExp, transform) {
 }
 
 function loadAsyncComponentFromGlob(modules) {
+  const imports = transformFromGlob(modules);
   const map = {};
-  _.forEach(modules, (item, key) => {
+  _.forEach(imports, (item, key) => {
     map[key] = createAsyncComponent(item);
   });
   return map;
 }
 
 function loadComponentFromGlob(modules) {
+  const imports = transformFromGlob(modules);
   const map = {};
-  _.forEach(modules, (item, key) => {
+  _.forEach(imports, (item, key) => {
     map[key] = item.default;
   });
   return map;
