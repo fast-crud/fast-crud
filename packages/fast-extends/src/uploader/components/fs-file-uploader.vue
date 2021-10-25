@@ -228,7 +228,7 @@ export default {
       checkLimit();
       checkSizeLimit(file);
 
-      fileList.value = [...fileList.value, file];
+      // fileList.value = [...fileList.value, file];
       fileListLocal.value = fileList.value;
     };
 
@@ -296,7 +296,11 @@ export default {
     }
     const handlePreview = async (file) => {
       if (!isPicture()) {
-        window.open(file.url, "_blank");
+        if (ui.type === "antdv") {
+          window.open(file.response.url, "_blank");
+        } else {
+          window.open(file.fsRes.url, "_blank");
+        }
       }
       if (!file.url && !file.preview && file.originFileObj) {
         file.preview = await getBase64(file.originFileObj);
