@@ -296,11 +296,17 @@ export default {
     }
     const handlePreview = async (file) => {
       if (!isPicture()) {
-        if (ui.type === "antdv") {
-          window.open(file.response.url, "_blank");
+        let url;
+        if (file.url) {
+          url = file.url
         } else {
-          window.open(file.fsRes.url, "_blank");
+          if (ui.type === "antdv") {
+            url = file.response.url
+          } else {
+            url = file.fsRes.url
+          }
         }
+        window.open(url, "_blank");
       }
       if (!file.url && !file.preview && file.originFileObj) {
         file.preview = await getBase64(file.originFileObj);
