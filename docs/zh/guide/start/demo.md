@@ -17,25 +17,31 @@ src
 
 ### 基本示例运行
 
-* 运行antdv版示例
+* 下载源码
+```shell
+git clone https://gitee.com/fast-crud/fast-crud.git
+cd fast-crud
+# 同步fast-admin子模块
+git submodule update --init --recursive
 ```
-git clone https://gitee.com/fast-crud/fs-admin-antdv.git
-cd fs-admin-antdv
+
+* 运行antdv版示例
+```shell
+cd packages/fast-admin/fs-admin-antdv
 npm install # or yarn instal
 npm run dev
 #启动成功后打开输出链接即可看到效果
 ```
 
 * 运行element示例
-```shell script
-git clone https://gitee.com/fast-crud/fast-crud.git
-# 运行 element版示例，请进入demo-element目录
-cd fast-crud/packages/demo-element  
-# 启动element  demo
-npm install  #或者yarn install
+```shell
+cd packages/fast-admin/fs-admin-element
+cd fs-admin-element
+npm install # or yarn instal
 npm run dev
 #启动成功后打开输出链接即可看到效果
 ```
+
 
 
 ### 调试运行
@@ -78,11 +84,13 @@ npm run debug:pm
 ```
 * 调试element版示例
 ```shell script
-# 运行element版示例
-cd fast-crud/packages/fast-crud/demo-element  
-#如果第一步执行过，就无需再执行
+# 运行 element版示例
+cd fast-crud/packages/fs-admin/fs-admin-element  
 npm install  
+#不启用权限模块
 npm run debug
+#启用权限运行
+npm run debug:pm
 #启动成功后打开输出链接即可看到效果
 ```
 
