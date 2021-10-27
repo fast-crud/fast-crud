@@ -16,6 +16,7 @@
   request: {
     transformQuery: ({ page, form, sort }) => {
       const order = sort == null?{}:{orderProp:sort.prop,orderAsc:sort.asc}
+        //改造成你的后端所能接受的参数结构
       return { current: page.currentPage, size: page.pageSize, ...form,...order };
     }
   }
@@ -51,6 +52,7 @@
 {
   request: {
     transformRes: ({ res }) => {
+      //将后端返回的结果，改造成fs所需要的结构
       return { currentPage: res.current, pageSize: res.size, ...res };
     }
   }
