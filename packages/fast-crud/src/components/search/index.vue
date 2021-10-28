@@ -162,7 +162,7 @@ export default {
   ],
   setup(props, ctx) {
     const ui = uiContext.get();
-    let autoSearch = ref(null);
+    let autoSearch = null;
     let initialForm = _.cloneDeep(props.initialForm || {});
     const form = reactive(initialForm);
     const { doComputed, AsyncComputeValue } = useCompute();
@@ -227,9 +227,9 @@ export default {
     }
 
     async function doSearch() {
-      if (autoSearch.value) {
+      if (autoSearch) {
         // 防抖查询取消
-        autoSearch.value.cancel();
+        autoSearch.cancel();
       }
       const valid = await searchFormRef.value.validate();
       if (valid) {
@@ -321,7 +321,7 @@ export default {
     const inputEventDisabled = ref(false);
 
     const doAutoSearch = () => {
-      if (inputEventDisabled.value !== true && autoSearch.value) {
+      if (inputEventDisabled.value !== true && autoSearch) {
         // 防抖查询
         autoSearch();
       }
