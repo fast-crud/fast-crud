@@ -17,11 +17,11 @@
 
 ```json
  {
-  "dependencies": {
-    "@purge-icons/generated": "^0.7.0"
-  },
   "devDependencies": {
     "vite-plugin-purge-icons": "^0.7.0",
+    "@iconify/iconify": "^2.0.1",
+    "@iconify/json": "^1.1.376",
+    "@purge-icons/generated": "^0.7.0"
   }
 }
 
