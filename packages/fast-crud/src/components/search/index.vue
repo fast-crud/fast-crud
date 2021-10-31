@@ -1,6 +1,6 @@
 <template>
   <component :is="$fsui.collapseTransition.name">
-    <div v-if="show !== false" class="fs-search">
+    <div v-if="show !== false" class="fs-search" :class="{ 'fs-search-multi-line': layout === 'multi-line' }">
       <component
         :is="$fsui.form.name"
         ref="searchFormRef"
@@ -11,57 +11,73 @@
         @compositionstart="changeInputEventDisabled(true)"
         @compositionend="changeInputEventDisabled(false)"
       >
-        <component :is="$fsui.formItem.name" v-if="slots['search-left']">
-          <fs-slot-render :slots="slots['search-left']" :scope="{ form }" />
-        </component>
-        <template v-for="(item, key) in computedColumns" :key="key">
-          <component
-            :is="$fsui.formItem.name"
-            v-if="item.show === true"
-            v-bind="item"
-            :[$fsui.formItem.prop]="key"
-            :label="item.title"
-          >
-            <template v-if="slots['search_' + key]">
-              <fs-slot-render :slots="slots['search_' + key]" :scope="{ form, key }" />
+        <div
+          class="fs-search-columns"
+          :class="{ 'fs-search-collapse': collapseRef }"
+          :style="{ height: computedColumnBoxHeight }"
+        >
+          <component :is="$fsui.row.name" ref="columnsRowRef">
+            <component :is="$fsui.col.name">
+              <component :is="$fsui.formItem.name" v-if="slots['search-left']">
+                <fs-slot-render :slots="slots['search-left']" :scope="{ form }" />
+              </component>
+            </component>
+            <template v-for="(item, key) in computedColumns" :key="key">
+              <component :is="$fsui.col.name" v-if="item.show === true" v-bind="item.col">
+                <component :is="$fsui.formItem.name" v-bind="item" :[$fsui.formItem.prop]="key" :label="item.title">
+                  <template v-if="slots['search_' + key]">
+                    <fs-slot-render :slots="slots['search_' + key]" :scope="{ form, key }" />
+                  </template>
+                  <template v-else>
+                    <fs-component-render
+                      v-if="item.component && item.component.show !== false"
+                      :ref="
+                        (el) => {
+                          if (el) {
+                            componentRenderRefs[item.key] = el;
+                          }
+                        }
+                      "
+                      :model-value="get(form, key)"
+                      v-bind="item.component"
+                      :scope="{ form }"
+                      @update:modelValue="onValueChanged($event, item)"
+                      @input="onInput(item)"
+                    />
+                  </template>
+                </component>
+              </component>
             </template>
-            <template v-else>
-              <fs-component-render
-                v-if="item.component && item.component.show !== false"
-                :ref="
-                  (el) => {
-                    if (el) {
-                      componentRenderRefs[item.key] = el;
-                    }
-                  }
-                "
-                :model-value="get(form, key)"
-                v-bind="item.component"
-                :scope="{ form }"
-                @update:modelValue="onValueChanged($event, item)"
-                @input="onInput(item)"
-              />
+            <component :is="$fsui.col.name">
+              <component :is="$fsui.formItem.name" v-if="slots['search-middle']">
+                <fs-slot-render :slots="slots['search-middle']" :scope="{ form }" />
+              </component>
+            </component>
+          </component>
+        </div>
+        <component :is="$fsui.col.name" class="fs-search-btns">
+          <component :is="$fsui.formItem.name">
+            <template v-for="(item, index) in computedButtons" :key="index">
+              <fs-button v-if="item.show" v-bind="item" @click="item.click()" />
             </template>
           </component>
-        </template>
-        <component :is="$fsui.formItem.name" v-if="slots['search-middle']">
-          <fs-slot-render :slots="slots['search-middle']" :scope="{ form }" />
         </component>
-        <component :is="$fsui.formItem.name" class="fs-search-btns">
-          <template v-for="(item, index) in computedButtons" :key="index">
-            <fs-button v-if="item.show" v-bind="item" @click="item.click()" />
-          </template>
-        </component>
-        <component :is="$fsui.formItem.name" v-if="slots['search-right']">
-          <fs-slot-render :slots="slots['search-right']" :scope="{ form }" />
+        <component :is="$fsui.col.name">
+          <component :is="$fsui.formItem.name" v-if="slots['search-right']">
+            <fs-slot-render :slots="slots['search-right']" :scope="{ form }" />
+          </component>
         </component>
       </component>
+
+      <div v-if="layout === 'multi-line'" class="fs-search-action">
+        <fs-button :text="collapseRef ? '收起' : '展开'" @click="toggleCollapse" />
+      </div>
     </div>
   </component>
 </template>
 
 <script>
-import { computed, nextTick, reactive, ref, unref } from "vue";
+import { computed, nextTick, reactive, ref, unref, watch, onMounted } from "vue";
 import _ from "lodash-es";
 import fsButton from "../basic/fs-button";
 import FsComponentRender from "../../components/render/fs-component-render";
@@ -148,6 +164,25 @@ export default {
      */
     validate: {
       default: false
+    },
+    /**
+     * 布局, single-line 单行， multi-line 多行（支持展开收起）
+     */
+    layout: {
+      type: String,
+      default: "single-line"
+    },
+    /**
+     * 列的宽度设置，span=xx
+     */
+    col: {},
+
+    /**
+     * 是否折叠
+     */
+    collapse: {
+      type: Boolean,
+      default: false
     }
   },
   emits: [
@@ -176,6 +211,12 @@ export default {
         //如果关闭validate则去掉rules
         _.forEach(value, (item) => {
           delete item.rules;
+        });
+      }
+      // 合并col
+      if (props.col) {
+        _.forEach(value, (v, key) => {
+          v.col = _.merge({}, props.col, v.col);
         });
       }
 
@@ -359,6 +400,38 @@ export default {
       return props.options.rules;
     });
 
+    //-----多行模式折叠
+
+    const collapseRef = ref(false);
+    const columnsRowRef = ref();
+    const columnsBoxHeightRef = ref();
+    const columnsLineHeightRef = ref();
+    watch(
+      () => {
+        return props.collapse;
+      },
+      (value) => {
+        collapseRef.value = value;
+      }
+    );
+
+    const toggleCollapse = () => {
+      collapseRef.value = !collapseRef.value;
+    };
+
+    const computedColumnBoxHeight = computed(() => {
+      if (collapseRef.value) {
+        return columnsLineHeightRef.value ? columnsLineHeightRef.value + "px" : "";
+      } else {
+        return columnsBoxHeightRef.value ? columnsBoxHeightRef.value + "px" : "";
+      }
+    });
+
+    onMounted(() => {
+      columnsBoxHeightRef.value = columnsRowRef.value.$el.offsetHeight;
+      columnsLineHeightRef.value = columnsRowRef.value.$el.children[0].offsetHeight;
+    });
+
     return {
       get: (form, key) => {
         return _.get(form, key);
@@ -378,7 +451,11 @@ export default {
       changeInputEventDisabled,
       computedColumns,
       computedButtons,
-      computedRules
+      computedRules,
+      collapseRef,
+      columnsRowRef,
+      computedColumnBoxHeight,
+      toggleCollapse
     };
   }
 };
@@ -421,11 +498,27 @@ export default {
       display: flex;
       align-items: center;
     }
+
+    .fs-search-multi-line {
+    }
   }
 
   .fs-search-btns {
     .fs-button {
       margin-right: 5px;
+    }
+  }
+
+  &.fs-search-multi-line {
+    .fs-search-btns {
+      width: 100%;
+      text-align: center;
+    }
+    .fs-search-columns {
+      height: auto;
+      overflow-y: hidden;
+      transition: all 0.3s linear;
+      will-change: height;
     }
   }
 }

@@ -19,7 +19,7 @@ export default defineComponent({
   setup(props) {
     const { ui } = useUi();
     const computedRenderFunc = computed(() => {
-      if (props.icon?.indexOf(":") >= 0) {
+      if (props.icon && props.icon?.indexOf(":") >= 0) {
         const IconComp: any = resolveDynamicComponent("FsIconify");
         //如果是iconify图标
         return () => {
