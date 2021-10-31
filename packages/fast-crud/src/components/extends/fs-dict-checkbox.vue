@@ -1,10 +1,11 @@
 <template>
   <component :is="$fsui.checkboxGroup.name">
     <component
-      :is="$fsui.checkbox.name"
+      :is="optionName || $fsui.checkbox.name"
       v-for="item of computedOptions"
       :key="getValue(item)"
       :[$fsui.checkbox.value]="getValue(item)"
+      v-bind="optionProps"
       >{{ getLabel(item) }}</component
     >
   </component>
@@ -27,7 +28,24 @@ export default {
     /**
      * 选项，比dict.data优先级高
      */
-    options: { type: Array, default: undefined, require: false }
+    options: { type: Array, default: undefined, require: false },
+
+    /**
+     * 选项的组件名称
+     */
+    optionName: {
+      type: String
+    },
+
+    /**
+     * 选项的属性
+     */
+    optionProps: {
+      type: Object,
+      default() {
+        return {};
+      }
+    }
   },
   setup(props, ctx) {
     const ui = uiContext.get();

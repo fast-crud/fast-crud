@@ -5,6 +5,7 @@
       v-for="item of computedOptions"
       :key="getValue(item)"
       :[$fsui.radio.value]="getValue(item)"
+      v-bind="optionProps"
     >
       {{ getLabel(item) }}
     </component>
@@ -34,14 +35,35 @@ export default {
     /**
      * radio组件名称
      * antdv使用button样式的时候有用
+     * 即将废弃,请使用optionName
      */
-    radioName: {}
+    radioName: {},
+
+    /**
+     * 选项的组件名称
+     */
+    optionName: {
+      type: String
+    },
+
+    /**
+     * 选项的属性
+     */
+    optionProps: {
+      type: Object,
+      default() {
+        return {};
+      }
+    }
   },
   setup(props, ctx) {
     const ui = uiContext.get();
 
+    if (props.radioName) {
+      console.warn("参数radioName即将废弃，请改成optionName");
+    }
     const computedRadioName = computed(() => {
-      return props.radioName ?? ui.radio.name;
+      return props.optionName ?? props.radioName ?? ui.radio.name;
     });
 
     return {
