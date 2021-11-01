@@ -17,13 +17,13 @@
           :style="{ height: computedColumnBoxHeight }"
         >
           <component :is="$fsui.row.name" ref="columnsRowRef">
-            <component :is="$fsui.col.name">
+            <component :is="computedColName" class="fs-search-col">
               <component :is="$fsui.formItem.name" v-if="slots['search-left']">
                 <fs-slot-render :slots="slots['search-left']" :scope="{ form }" />
               </component>
             </component>
             <template v-for="(item, key) in computedColumns" :key="key">
-              <component :is="$fsui.col.name" v-if="item.show === true" v-bind="item.col">
+              <component :is="computedColName" v-if="item.show === true" class="fs-search-col" v-bind="item.col">
                 <component :is="$fsui.formItem.name" v-bind="item" :[$fsui.formItem.prop]="key" :label="item.title">
                   <template v-if="slots['search_' + key]">
                     <fs-slot-render :slots="slots['search_' + key]" :scope="{ form, key }" />
@@ -48,21 +48,21 @@
                 </component>
               </component>
             </template>
-            <component :is="$fsui.col.name">
+            <component :is="computedColName" class="fs-search-col">
               <component :is="$fsui.formItem.name" v-if="slots['search-middle']">
                 <fs-slot-render :slots="slots['search-middle']" :scope="{ form }" />
               </component>
             </component>
           </component>
         </div>
-        <component :is="$fsui.col.name" class="fs-search-btns">
+        <component :is="computedColName" class="fs-search-btns">
           <component :is="$fsui.formItem.name">
             <template v-for="(item, index) in computedButtons" :key="index">
               <fs-button v-if="item.show" v-bind="item" @click="item.click()" />
             </template>
           </component>
         </component>
-        <component :is="$fsui.col.name">
+        <component :is="computedColName" class="fs-search-col">
           <component :is="$fsui.formItem.name" v-if="slots['search-right']">
             <fs-slot-render :slots="slots['search-right']" :scope="{ form }" />
           </component>
@@ -419,6 +419,13 @@ export default {
       collapseRef.value = !collapseRef.value;
     };
 
+    const computedColName = computed(() => {
+      if (props.layout === "multi-line") {
+        return ui.col.name;
+      }
+      return "div";
+    });
+
     const computedColumnBoxHeight = computed(() => {
       if (collapseRef.value) {
         return columnsLineHeightRef.value ? columnsLineHeightRef.value + "px" : "";
@@ -455,6 +462,7 @@ export default {
       collapseRef,
       columnsRowRef,
       computedColumnBoxHeight,
+      computedColName,
       toggleCollapse
     };
   }
