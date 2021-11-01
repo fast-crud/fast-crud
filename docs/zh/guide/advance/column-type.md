@@ -166,7 +166,8 @@ crudBinding.value= {
   },
   search:{ //查询框的参数
     columns:{}
-  }
+  },
+  ... //更多其他配置
 }
 ```
 

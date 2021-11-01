@@ -244,8 +244,15 @@ columns:{
             valueBuilder(context){
                 //如果配置在form下，则表示将行数据的值转化为表单组件所需要的值 
                 //在点击编辑按钮之后，弹出表单对话框之前执行转化。
+                
+                //以下示例为，后台返回的数据的roles带了roleName和id
+                // 但在表单编辑时，组件所需要的value值为roles =[1]，所以需要将value转化为id数组
+                // context.form.roles = [{roleId:1,roleName:'管理员'}]
+                context.form.roles = context.form.roles.map(item=>item.roleId)
             }, 
-            valueResolve(context){},
+            valueResolve(context){
+                //与builder相反，提交表单时，需要将value值转换为后台所需要的格式提交给后台
+            },
         }
     }
 }
