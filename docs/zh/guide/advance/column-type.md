@@ -148,23 +148,23 @@ export const crudOptions = {
 * 从`每个字段下包含不同分类`转换为`分类下包含多个字段`的格式，交给不同的组件渲染（`fs-search`，`fs-table`，`fs-form`）。    
 
 ```javascript
-this.crud= {
-  table:{
-      columns:[]
+crudBinding.value= {
+  table:{ //表格的参数
+      columns:[] //表格这里的columns是数组
   },
   form:{ //作为addForm、viewForm、editForm的基准配置
     columns:{}
   },
-  addForm:{
+  addForm:{ //添加form的参数，当你独立使用fs-form时，可以直接使用此参数打开一个表单对话框
     columns:{}
   },
-  editForm:{
+  editForm:{ //编辑form的参数，当你独立使用fs-form时，可以直接使用此参数打开一个表单对话框
     columns:{}
   },
-  viewForm:{
+  viewForm:{ //查看form的参数，当你独立使用fs-form时，可以直接使用此参数打开一个表单对话框
     columns:{}
   },
-  search:{
+  search:{ //查询框的参数
     columns:{}
   }
 }
