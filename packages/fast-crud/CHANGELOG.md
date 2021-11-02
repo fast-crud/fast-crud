@@ -3,6 +3,24 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.21.0](https://github.com/fast-crud/fast-crud/compare/v0.20.1...v0.21.0) (2021-11-02)
+
+
+### Bug Fixes
+
+* 日期示例、checkbox radio 支持按钮样式、边框样式 ([b2905eb](https://github.com/fast-crud/fast-crud/commit/b2905eb6ba19537cd7e0ac71c59170b20eed18b9))
+* 修复auto search不触发的bug ([9d929da](https://github.com/fast-crud/fast-crud/commit/9d929daec11a064af0133bde1994b823eabd7224))
+
+
+### Features
+
+* 查询框多行模式 ([f01a92e](https://github.com/fast-crud/fast-crud/commit/f01a92e7eb3362427b470f416f045f6102ccd591))
+* rowHandle按钮根据dropdown的配置来判断是否折叠 ([242530a](https://github.com/fast-crud/fast-crud/commit/242530a55eac766cf231104397637c3cf7a08ded))
+
+
+
+
+
 ## [0.20.1](https://github.com/fast-crud/fast-crud/compare/v0.20.0...v0.20.1) (2021-10-25)
 
 
