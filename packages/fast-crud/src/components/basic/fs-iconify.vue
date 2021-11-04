@@ -56,8 +56,17 @@ export default defineComponent({
 
   &-spin {
     svg {
-      animation: loadingCircle 1s infinite linear;
+      animation: fsLoadingCircle 1s infinite linear;
     }
+  }
+}
+
+@-webkit-keyframes fsLoadingCircle {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
   }
 }
 
