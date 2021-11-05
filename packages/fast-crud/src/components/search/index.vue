@@ -1,6 +1,6 @@
 <template>
   <component :is="$fsui.collapseTransition.name">
-    <div v-if="show !== false" class="fs-search" :class="{ 'fs-search-multi-line': layout === 'multi-line' }">
+    <div v-if="show !== false" class="fs-search" :class="{ 'fs-search-multi-line': computedIsMultiLine }">
       <component
         :is="$fsui.form.name"
         ref="searchFormRef"
@@ -71,7 +71,6 @@
             </div>
           </div>
 
-          <!-- 这里不能用 computedIsMultiLine，会有死循环-->
           <div v-if="computedIsMultiLine" class="fs-search-action">
             <component :is="$fsui.formItem.name">
               <fs-button
@@ -414,7 +413,7 @@ export default {
 
     const collapseRef = ref(false);
     const columnsRowRef = ref();
-    const columnsBoxHeightRef = ref(1);
+    const columnsBoxHeightRef = ref(0);
     const columnsLineHeightRef = ref(0);
     watch(
       () => {
@@ -436,11 +435,12 @@ export default {
       return "div";
     });
     const computedIsMultiLine = computed(() => {
-      return props.layout === "multi-line" && columnsBoxHeightRef.value > columnsLineHeightRef.value;
+      return props.layout === "multi-line";
+      //不要这个，会死循环， && columnsBoxHeightRef.value > columnsLineHeightRef.value;
     });
 
     const computedColumnBoxHeight = computed(() => {
-      if (props.layout !== "multi-line") {
+      if (computedIsMultiLine.value) {
         return "auto";
       }
       if (collapseRef.value) {
@@ -451,10 +451,12 @@ export default {
     });
 
     onMounted(() => {
-      columnsBoxHeightRef.value = columnsRowRef.value.$el.offsetHeight;
-      const columnsList = columnsRowRef.value.$el.children;
-      if (columnsList) {
-        columnsLineHeightRef.value = columnsList[1].offsetHeight + 2;
+      if (computedIsMultiLine.value) {
+        columnsBoxHeightRef.value = columnsRowRef.value.$el.offsetHeight;
+        const columnsList = columnsRowRef.value.$el.children;
+        if (columnsList && columnsList.length > 1) {
+          columnsLineHeightRef.value = columnsList[1].offsetHeight + 2;
+        }
       }
     });
 
