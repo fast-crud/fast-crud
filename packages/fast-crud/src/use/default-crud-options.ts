@@ -2,7 +2,7 @@ import { uiContext } from "../ui";
 export default {
   // eslint-disable-next-line @typescript-eslint/no-empty-function,@typescript-eslint/no-unused-vars
   commonOptions(ctx) {},
-  defaultOptions({ t, expose }) {
+  defaultOptions({ t }) {
     const ui = uiContext.get();
     return {
       search: {

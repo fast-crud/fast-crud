@@ -4,6 +4,7 @@ import { Constants } from "../utils/util.constants";
 import defaultCrudOptions from "./default-crud-options";
 import _ from "lodash-es";
 import { reactive } from "vue";
+import { useI18n } from "../locale";
 const { merge, cloneDeep } = useMerge();
 // mergeColumnPlugin 注册
 const mergeColumnPlugins: Array<Function> = [];
@@ -197,10 +198,13 @@ function buildSearchForm(baseOptions, formType = "search", columnsMap) {
   return merge({ columns: formColumnsForSearch }, { columns: searchColumns }, baseOptions.search);
 }
 
-function buildFormOptions(columns) {
-  const userOptions = merge(defaultCrudOptions.defaultOptions({ t, expose }), defaultCrudOptions.commonOptions(ctx), {
-    columns
-  });
+function buildFormOptions(crudOptions) {
+  const { t } = useI18n();
+  const userOptions = merge(
+    defaultCrudOptions.defaultOptions({ t }),
+    defaultCrudOptions.commonOptions({}),
+    crudOptions
+  );
   const initedColumns = setupOptionsColumns(cloneDeep(userOptions.columns));
   const columnsMap = buildOptionsColumnsMap({}, initedColumns);
   return buildForm(userOptions, "form", columnsMap);
