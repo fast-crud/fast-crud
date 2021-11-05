@@ -294,6 +294,157 @@ export function useCrud(ctx: UseCrudProps) {
     };
   }
 
+  /**
+   * 排序
+   * @param arr
+   */
+  function doArraySort(arr) {
+    return _.sortBy(arr, (item) => {
+      return item.order ?? Constants.orderDefault;
+    });
+  }
+
+  /**
+   * 初始化用户配置的列
+   * 将dict和fieldType合并
+   * @param columns
+   */
+  function setupOptionsColumns(columns) {
+    const initedColumns = {};
+    _.forEach(columns, (item, key) => {
+      item.key = key;
+      if (item.children) {
+        item.children = setupOptionsColumns(item.children);
+      } else {
+        //执行mergePlugin，复制type，复制dict
+        for (const plugin of mergeColumnPlugins) {
+          item = plugin(item);
+        }
+      }
+      initedColumns[key] = item;
+    });
+    return initedColumns;
+  }
+
+  /**
+   * 构建用户配置的列的map
+   * 从多级表头里面将列配置拍平
+   * @param map
+   * @param columns
+   */
+  function buildOptionsColumnsMap(map = {}, columns) {
+    _.forEach(columns, (item, key) => {
+      if (item.children) {
+        buildOptionsColumnsMap(map, item.children);
+      } else {
+        map[key] = item;
+      }
+    });
+    return map;
+  }
+
+  /**
+   * 构建table单个列
+   * @param colTemplate
+   */
+  function buildTableColumn(colTemplate) {
+    const item = colTemplate;
+    const tableColumn = item.column || {};
+    if (tableColumn.title == null) {
+      tableColumn.title = item.title;
+    }
+    tableColumn.key = item.key;
+    if (item.children) {
+      tableColumn.children = buildTableColumns(item.children);
+    }
+    return reactive(tableColumn);
+  }
+
+  /**
+   * 构建列表表头配置
+   * @param columns
+   */
+  function buildTableColumns(columns) {
+    const tableColumns = [];
+    //合并为tableColumns
+    _.forEach(columns, (item) => {
+      const column = buildTableColumn(item);
+      tableColumns.push(column);
+    });
+
+    //排序
+    doArraySort(tableColumns);
+
+    return tableColumns;
+  }
+
+  /**
+   * 将列表表头拍平
+   * @param map
+   * @param columns
+   */
+  function buildTableColumnsMap(map = {}, columns) {
+    _.forEach(columns, (item) => {
+      map[item.key] = item;
+      if (item.children && item.children.length > 0) {
+        buildTableColumnsMap(map, item.children);
+      }
+    });
+    return map;
+  }
+
+  /**
+   * 构建公共表单列配置
+   * @param columns
+   * @param formType
+   */
+  function buildFormColumns(columns, formType) {
+    // 合并form
+    const formColumns = {};
+    _.forEach(columns, (item) => {
+      const formColumn = cloneDeep(item[formType]) || {};
+      if (formType === "form" && formColumn.title == null) {
+        formColumn.title = item.title;
+      }
+      formColumn.key = item.key;
+      formColumns[item.key] = formColumn;
+    });
+    return formColumns;
+  }
+
+  /**
+   * 构建表单配置
+   * @param baseOptions
+   * @param formType 可选[form/addForm/editForm/viewForm]
+   * @param columnsMap
+   * @param onComplete
+   */
+  function buildForm(baseOptions, formType, columnsMap, onComplete) {
+    debugger;
+    const formColumns = buildFormColumns(columnsMap, formType);
+    const form = merge(cloneDeep(baseOptions.form), baseOptions[formType], { columns: formColumns });
+    if (onComplete) {
+      onComplete(form);
+    }
+    return form;
+  }
+
+  /**
+   * 构建查询表单配置，仅复制有限的配置
+   * @param baseOptions
+   * @param formType
+   * @param columnsMap
+   */
+  function buildSearchForm(baseOptions, formType = "search", columnsMap) {
+    const searchColumns = buildFormColumns(columnsMap, formType);
+    const formColumnsForSearch = {};
+    _.forEach(cloneDeep(baseOptions.form.columns), (item, key) => {
+      formColumnsForSearch[key] = _.pick(item, ["component", "valueChange", "title", "key", "label"]);
+    });
+
+    return merge({ columns: formColumnsForSearch }, { columns: searchColumns }, baseOptions.search);
+  }
+
   function resetCrudOptions(options) {
     const userOptions = merge(
       defaultCrudOptions.defaultOptions({ t, expose }),
@@ -308,96 +459,26 @@ export function useCrud(ctx: UseCrudProps) {
       defaultCrudOptions.commonOptions(ctx),
       options
     );
-    // 分散 合并到不同的维度
-    const tableColumns: Array<any> = [];
-    const formColumns = {};
-    const addFormColumns = {};
-    const editFormColumns = {};
-    const viewFormColumns = {};
-    const searchColumns = {};
 
-    function cloneFromColumns(targetColumns, item, key, mergeSrc, addLabel = false) {
-      const formColumn = cloneDeep(item[mergeSrc]) || {};
-      if (addLabel) {
-        if (formColumn.title == null) {
-          formColumn.title = item.title;
-        }
-      }
-      formColumn.key = key;
-      targetColumns[key] = formColumn;
-    }
-    function eachColumns(columns, tableParentColumns: Array<any> = tableColumns) {
-      _.forEach(columns, (item, key) => {
-        item.key = key;
-        //执行mergePlugin，复制type，复制dict
-        for (const plugin of mergeColumnPlugins) {
-          item = plugin(item);
-        }
+    const columns = setupOptionsColumns(cloneDeep(userOptions.columns));
+    const columnsMap = buildOptionsColumnsMap({}, columns);
 
-        const tableColumn = reactive(item.column || {});
-        if (tableColumn.title == null) {
-          tableColumn.title = item.title;
+    userOptions.table.columns = buildTableColumns(cloneDeep(columns));
+    userOptions.table.columnsMap = buildTableColumnsMap({}, userOptions.table.columns);
+    userOptions.form = buildForm(userOptions, "form", columnsMap);
+    userOptions.addForm = buildForm(userOptions, "addForm", columnsMap);
+    userOptions.editForm = buildForm(userOptions, "editForm", columnsMap);
+    userOptions.viewForm = buildForm(userOptions, "viewForm", columnsMap, (form) => {
+      // 单独处理viewForm的component
+      _.forEach(form.columns, (value) => {
+        if (!value.component) {
+          value.component = {};
         }
-        tableColumn.key = key;
-        tableParentColumns.push(tableColumn);
-        if (item.children) {
-          eachColumns(item.children, (tableColumn.children = []));
-          return;
-        }
-
-        cloneFromColumns(formColumns, item, key, "form", true);
-        cloneFromColumns(addFormColumns, item, key, "addForm");
-        cloneFromColumns(editFormColumns, item, key, "editForm");
-        cloneFromColumns(viewFormColumns, item, key, "viewForm");
-        cloneFromColumns(searchColumns, item, key, "search");
+        value.component.disabled = true;
       });
-    }
-
-    //将columns里面的配置分别放clone到对应的form里面
-    eachColumns(userOptions.columns);
-
-    // 分置合并
-    userOptions.form = merge(cloneDeep(userOptions.form), {
-      columns: formColumns
     });
-    userOptions.editForm = merge(cloneDeep(userOptions.form), { columns: editFormColumns }, userOptions.editForm);
-    userOptions.addForm = merge(cloneDeep(userOptions.form), { columns: addFormColumns }, userOptions.addForm);
-    userOptions.viewForm = merge(cloneDeep(userOptions.form), { columns: viewFormColumns }, userOptions.viewForm);
-
     //处理searchColumns， 只从form里面复制component和valueChange
-    const copyColumnsForSearch = cloneDeep(userOptions.form.columns);
-    const baseColumnsForSearch = {};
-    _.forEach(copyColumnsForSearch, (item, key) => {
-      baseColumnsForSearch[key] = _.pick(item, ["component", "valueChange", "title", "key", "label"]);
-    });
-    userOptions.search = merge({ columns: baseColumnsForSearch }, { columns: searchColumns }, userOptions.search);
-
-    // tableColumns
-    function sortBy(arr) {
-      return _.sortBy(arr, (item) => {
-        sortChildren(item);
-        return item.order ?? Constants.orderDefault;
-      });
-    }
-    function sortChildren(column) {
-      if (column && column.children) {
-        column.children = sortBy(column.children);
-      }
-    }
-    userOptions.table.columns = sortBy(tableColumns);
-
-    const tableColumnsMap = {};
-    _.forEach(tableColumns, (item) => {
-      tableColumnsMap[item.key] = item;
-    });
-    userOptions.table.columnsMap = tableColumnsMap;
-    // 单独处理viewForm的component
-    _.forEach(userOptions.viewForm.columns, (value) => {
-      if (!value.component) {
-        value.component = {};
-      }
-      value.component.disabled = true;
-    });
+    userOptions.search = buildSearchForm(userOptions, "search", columnsMap);
 
     //处理editable form
     if (userOptions.table.editable) {
