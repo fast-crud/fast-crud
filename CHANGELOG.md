@@ -6,6 +6,7 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 # [0.21.0](https://github.com/fast-crud/fast-crud/compare/v0.20.1...v0.21.0) (2021-11-02)
 
 
+
 ### Bug Fixes
 
 * 日期示例、checkbox radio 支持按钮样式、边框样式 ([b2905eb](https://github.com/fast-crud/fast-crud/commit/b2905eb6ba19537cd7e0ac71c59170b20eed18b9))
