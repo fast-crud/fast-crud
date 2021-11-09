@@ -63,7 +63,7 @@ export default {
             //   this.dispatch("ElFormItem", "el.form.blur");
             // }
             // this.$emit("change", val);
-            this.editor.txt.html(value);
+            this.editor.txt.html(val);
           }
         }
       },
@@ -86,7 +86,14 @@ export default {
   },
   methods: {
     init() {
-      const editor = new WangEditor("#" + this.uniqueId);
+      let editor = null;
+      try {
+        editor = new WangEditor("#" + this.uniqueId);
+      } catch (e) {
+        console.error(e);
+        return;
+      }
+
       _.merge(editor.config, wangConfig, defaultConfig.wangEditor, this.config);
       editor.config.onchange = (newHtml) => {
         this.$emit("update:modelValue", newHtml);

@@ -440,7 +440,7 @@ export default {
     });
 
     const computedColumnBoxHeight = computed(() => {
-      if (computedIsMultiLine.value) {
+      if (!computedIsMultiLine.value) {
         return "auto";
       }
       if (collapseRef.value) {

@@ -1,5 +1,7 @@
 
 .fs-form-wrapper{
+  display: flex;
+  flex-direction: column;
   &.fs-dialog-inner{
     position: absolute;
   }
@@ -64,6 +66,8 @@
 
 
   &.fs-fullscreen{
+    display: flex;
+    flex-direction: column;
     .ant-modal{
       width:100% !important;
       height:100% !important;
@@ -79,23 +83,29 @@
           position: relative;
         }
       }
+    }
+
+    .el-dialog__header {
+    }
+    .el-dialog__body {
+      position: relative;
+      flex:1
+    }
 
 
-      .fs-form-wrapper-body{
-        height: 100%;
-        width: 100%;
-        position: absolute;
-        top:0;
-        left:0;
-        display: flex;
-        flex-direction: column;
-        padding:24px;
-        .fs-form-body{
-          flex:1;
-          overflow:auto;
-        }
+    .fs-form-wrapper-body{
+      height: 100%;
+      width: 100%;
+      position: absolute;
+      top:0;
+      left:0;
+      display: flex;
+      flex-direction: column;
+      padding:24px;
+      .fs-form-body{
+        flex:1;
+        overflow:auto;
       }
-
     }
   }
 }

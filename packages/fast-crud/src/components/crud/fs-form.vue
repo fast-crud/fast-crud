@@ -362,6 +362,7 @@ export default {
         }
       });
 
+      debugger;
       if (props.doSubmit) {
         await props.doSubmit(submitScope);
       }

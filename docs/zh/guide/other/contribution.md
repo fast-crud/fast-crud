@@ -16,17 +16,9 @@ cd fast-crud
 # 同步fast-admin子模块
 git submodule update --init --recursive
 
-# 可以通过lerna bootstrap命令一次性全部install
-npm install lerna -g
-lerna bootstrap
-
-# 或者
-# 也可以手动进入fast-crud和fast-extends等子项目目录，一个个单独install
-cd ./packages/fast-crud
-npm install
-
-cd ./packages/extends/fast-extends
-npm install
+# 通过pnpm命令一次性全部install
+npm install -g pnpm # 如果没有安装pnpm，则需要先安装
+pnpm install
 
 ```
 
@@ -39,7 +31,7 @@ cd fast-crud/packages/fs-admin/fs-admin-antdv
 npm install  
 #不启用权限模块
 npm run debug
-#启用权限运行
+#启用权限模块运行
 npm run debug:pm
 #启动成功后打开输出链接即可看到效果
 ```
@@ -51,7 +43,7 @@ cd fast-crud/packages/fs-admin/fs-admin-element
 npm install  
 #不启用权限模块
 npm run debug
-#启用权限运行
+#启用权限模块运行
 npm run debug:pm
 #启动成功后打开输出链接即可看到效果
 ```
