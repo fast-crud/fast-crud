@@ -61,7 +61,7 @@ const icons = {
   DownOutlined,
   QuestionCircleOutlined
 };
-export default function(app) {
+export default function (app) {
   for (let key in icons) {
     app.component(key, icons[key]);
   }

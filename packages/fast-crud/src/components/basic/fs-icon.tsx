@@ -32,6 +32,15 @@ export default defineComponent({
         return () => {
           return <IconComp />;
         };
+      } else {
+        const IconComp: any = resolveDynamicComponent(props.icon);
+        return () => {
+          return (
+            <el-icon>
+              <IconComp />
+            </el-icon>
+          );
+        };
       }
       return () => {
         return <i class={props.icon} />;

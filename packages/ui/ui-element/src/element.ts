@@ -78,10 +78,10 @@ export class Element implements UiInterface {
   messageBox: MessageBoxCI = {
     name: "el-message-box",
     get: undefined,
-    open: async context => {
+    open: async (context) => {
       return this.messageBox.get(context);
     },
-    confirm: async context => {
+    confirm: async (context) => {
       return this.messageBox.get(context);
     }
   };
@@ -89,19 +89,19 @@ export class Element implements UiInterface {
   message: MessageCI = {
     get: undefined,
     name: "el-message",
-    open: context => {
+    open: (context) => {
       this.message.get.open(context);
     },
-    success: msg => {
+    success: (msg) => {
       this.message.get.success(msg);
     },
-    error: msg => {
+    error: (msg) => {
       this.message.get.error(msg);
     },
-    warn: msg => {
+    warn: (msg) => {
       this.message.get.warning(msg);
     },
-    info: msg => {
+    info: (msg) => {
       this.message.get(msg);
     }
   };
@@ -109,19 +109,19 @@ export class Element implements UiInterface {
   notification: NotificationCI = {
     get: undefined,
     name: "el-notification",
-    open: context => {
+    open: (context) => {
       this.notification.get.open(context);
     },
-    success: msg => {
+    success: (msg) => {
       this.notification.get.success(msg);
     },
-    error: msg => {
+    error: (msg) => {
       this.notification.get.error(msg);
     },
-    warn: msg => {
+    warn: (msg) => {
       this.notification.get.warn(msg);
     },
-    info: msg => {
+    info: (msg) => {
       this.notification.get.success(msg);
     }
   };
@@ -133,31 +133,31 @@ export class Element implements UiInterface {
   };
 
   icons: Icons = {
-    add: "el-icon-plus",
-    columnsFilter: "el-icon-set-up",
-    compact: "el-icon-rank",
-    edit: "el-icon-edit",
-    remove: "el-icon-remove",
-    search: "el-icon-search",
-    refresh: "el-icon-refresh",
-    export: "el-icon-upload2",
-    check: "el-icon-check",
-    sort: "el-icon-sort",
-    left: "el-icon-arrow-left",
-    right: "el-icon-arrow-right",
-    close: "el-icon-close",
-    arrowLeft: "el-icon-left",
-    arrowRight: "el-icon-right",
-    more: "el-icon-more",
-    plus: "el-icon-plus",
-    zoomIn: "el-icon-zoom-in",
-    zoomOut: "el-icon-zoom-out",
-    refreshLeft: "el-icon-refresh-left",
-    refreshRight: "el-icon-refresh-right",
-    upload: "el-icon-upload",
-    fullScreen: "el-icon-full-screen",
-    unFullScreen: "el-icon-full-screen",
-    question: "el-icon-question"
+    add: "plus",
+    columnsFilter: "set-up",
+    compact: "rank",
+    edit: "edit",
+    remove: "delete",
+    search: "search",
+    refresh: "refresh",
+    export: "upload2",
+    check: "check",
+    sort: "sort",
+    left: "arrow-left",
+    right: "arrow-right",
+    close: "close",
+    arrowLeft: "left",
+    arrowRight: "right",
+    more: "more",
+    plus: "plus",
+    zoomIn: "zoom-in",
+    zoomOut: "zoom-out",
+    refreshLeft: "refresh-left",
+    refreshRight: "refresh-right",
+    upload: "upload",
+    fullScreen: "full-screen",
+    unFullScreen: "full-screen",
+    question: "question"
   };
 
   dialog: DialogCI = {
@@ -262,7 +262,7 @@ export class Element implements UiInterface {
   button: ButtonCI = {
     name: "el-button",
     text: "text",
-    colors: type => {
+    colors: (type) => {
       return { type };
     }
   };
@@ -392,7 +392,7 @@ export class Element implements UiInterface {
   };
   image: ImageCI = {
     name: "el-image",
-    buildPreviewList: urls => {
+    buildPreviewList: (urls) => {
       return { "preview-src-list": urls };
     }
   };

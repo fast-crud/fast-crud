@@ -12,6 +12,7 @@
   "author": "Greper",
   "license": "MIT",
   "dependencies": {
+    "@element-plus/icons": "^0.0.11",
     "@fast-crud/ui-interface": "^0.21.0"
   },
   "devDependencies": {
