@@ -1,5 +1,6 @@
 {
   "name": "fast-crud-root",
+  "version": "0.21.0",
   "private": false,
   "scripts": {
     "bootstrap": "lerna bootstrap --hoist",
