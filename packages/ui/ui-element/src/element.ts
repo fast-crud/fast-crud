@@ -157,7 +157,7 @@ export class Element implements UiInterface {
     upload: "upload",
     fullScreen: "full-screen",
     unFullScreen: "full-screen",
-    question: "question"
+    question: "question-filled"
   };
 
   dialog: DialogCI = {
