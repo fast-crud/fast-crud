@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.22.0](https://github.com/fast-crud/fast-crud/compare/v0.21.0...v0.22.0) (2021-11-09)
+
+
+### Features
+
+* 查询框展开，新页面打开表单 ([eebd6a3](https://github.com/fast-crud/fast-crud/commit/eebd6a3af256061e6075fa6b41c6893e1b767066))
+
+
+
+
+
 # [0.21.0](https://github.com/fast-crud/fast-crud/compare/v0.20.1...v0.21.0) (2021-11-02)
 
 **Note:** Version bump only for package @fast-crud/fast-extends
