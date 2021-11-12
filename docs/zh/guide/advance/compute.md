@@ -122,7 +122,7 @@ const crudOptions = {
                     options: asyncCompute({
                         //没有配置watch，只会触发一次
                         asyncFn: async ()=>{
-                            //异步获取年级列表
+                            //异步获取年级列表，这里返回的值将会赋给a-select的options
                             return request({url:"/getGradeList"})
                         }
                     })
@@ -143,6 +143,7 @@ const crudOptions = {
                         }),
                         //当watch的值有变化时，触发asyncFn,获取班级列表
                         asyncFn: async (watchValue,context)=>{
+                            //这里返回的值 将会赋值给a-select的options
                             return request({"/getClassList?grade=" + watchValue})
                         }
                     })
