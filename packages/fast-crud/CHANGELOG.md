@@ -3,6 +3,22 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.22.1](https://github.com/fast-crud/fast-crud/compare/v0.22.0...v0.22.1) (2021-11-29)
+
+
+### Bug Fixes
+
+* setFormData支持valueBuilder ([95dcb5d](https://github.com/fast-crud/fast-crud/commit/95dcb5ddc6cf7dc712a668b3ad15e26b4e19f93f))
+
+
+### Performance Improvements
+
+* 升级依赖版本 ([48531ac](https://github.com/fast-crud/fast-crud/commit/48531ac4d989a83d6e94fa4b086755149afca108))
+
+
+
+
+
 # [0.22.0](https://github.com/fast-crud/fast-crud/compare/v0.21.0...v0.22.0) (2021-11-09)
 
 

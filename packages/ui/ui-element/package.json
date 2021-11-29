@@ -1,6 +1,6 @@
 {
   "name": "@fast-crud/ui-element",
-  "version": "0.22.0",
+  "version": "0.22.1",
   "description": "",
   "main": "./dist/ui-element.umd.js",
   "module": "./dist/ui-element.es.js",
@@ -13,10 +13,10 @@
   "license": "MIT",
   "dependencies": {
     "@element-plus/icons": "^0.0.11",
-    "@fast-crud/ui-interface": "^0.22.0"
+    "@fast-crud/ui-interface": "^0.22.1"
   },
   "devDependencies": {
-    "@fast-crud/fast-crud": "^0.22.0",
+    "@fast-crud/fast-crud": "^0.22.1",
     "@rollup/plugin-strip": "^2.0.0",
     "@typescript-eslint/eslint-plugin": "^5.4.0",
     "@typescript-eslint/parser": "^5.4.0",
