@@ -90,7 +90,6 @@ export default {
     modelValue: {
       handler(val) {
         // 确认是新的值
-        debugger;
         if (val !== this.currentValue) {
           this.currentValue = val ?? "";
           // 尝试更新
@@ -132,7 +131,6 @@ export default {
 
       // 绑定事件
       this.Quill.on("text-change", (delta, oldDelta, source) => {
-        debugger;
         const html = this.$refs.editor.children[0].innerHTML;
         // 更新内部的值
         this.currentValue = html;

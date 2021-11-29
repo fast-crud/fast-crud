@@ -87,10 +87,6 @@ function doComputed(target, getContextFn, excludes, userComputedFn) {
 
   return computed(() => {
     let targetValue = target.value;
-    if (targetValue instanceof Array) {
-      debugger;
-    }
-
     if (asyncCount > 0 || syncCount > 0) {
       targetValue = cloneDeep(targetValue);
       if (syncCount > 0) {
