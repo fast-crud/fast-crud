@@ -243,20 +243,26 @@ export default {
       }
     });
     //form.valueBuilder
-    _.each(computedColumns.value, (item, key) => {
-      let value = form[key];
-      if (item.valueBuilder) {
-        item.valueBuilder({
-          value,
-          key,
-          row: props.initialForm,
-          form,
-          index: props.index,
-          mode: props.mode
-        });
+    function doValueBuilder(form) {
+      if (form == null) {
+        return;
       }
-    });
+      _.each(computedColumns.value, (item, key) => {
+        let value = form[key];
+        if (item.valueBuilder) {
+          item.valueBuilder({
+            value,
+            key,
+            row: props.initialForm,
+            form,
+            index: props.index,
+            mode: props.mode
+          });
+        }
+      });
+    }
 
+    doValueBuilder(form);
     const formItemRefs = ref({});
 
     function getFormItemRef(key) {
@@ -362,7 +368,6 @@ export default {
         }
       });
 
-      debugger;
       if (props.doSubmit) {
         await props.doSubmit(submitScope);
       }
@@ -373,6 +378,7 @@ export default {
       return form;
     }
     function setFormData(formData) {
+      doValueBuilder(formData);
       _.merge(form, formData);
     }
 

@@ -254,7 +254,7 @@ export function useCrud(ctx: UseCrudProps) {
 
   function resetCrudOptions(options) {
     let userOptions = merge(
-      defaultCrudOptions.defaultOptions({ t, expose }),
+      defaultCrudOptions.defaultOptions({ t }),
       usePagination(),
       useFormSubmit(),
       useRowHandle(),
@@ -272,7 +272,7 @@ export function useCrud(ctx: UseCrudProps) {
     userOptions = buildColumns(userOptions);
     // 设置crudOptions Ref
     crudBinding.value = userOptions;
-    logger.info("fast-crud inited:", crudBinding.value);
+    logger.info("fast-crud inited, crudBinding=", crudBinding.value);
   }
 
   resetCrudOptions(options);
