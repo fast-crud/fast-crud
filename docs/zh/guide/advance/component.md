@@ -111,7 +111,7 @@ const types ={
 
 这里它使用了这个`el-date-picker`组件，找到它的文档，然后找到禁用日期相关参数
 
-![](../../../images/date-picker.png)
+![](../../../../images/date-picker.png)
 
 ### 3.给component添加参数
 ```js
