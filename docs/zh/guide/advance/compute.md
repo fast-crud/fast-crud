@@ -10,8 +10,8 @@
 本节将详细介绍后三种动态计算方式  
 
 动态计算demo：
-[antdv版](http://fast-crud.docmirror.cn/antdv/#/basis/compute)  | 
-[element版](http://fast-crud.docmirror.cn/antdv/#/basis/compute)
+[antdv版](http://fast-crud.docmirror.cn/antdv/#/crud/basis/compute)  | 
+[element版](http://fast-crud.docmirror.cn/antdv/#/crud/basis/compute)
 
 ## ref和computed【ref引用】
 给`crudOptions`里的属性配置`ref或者computed`即可实现全局动态变化。     
