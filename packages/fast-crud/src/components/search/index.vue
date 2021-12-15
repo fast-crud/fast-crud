@@ -344,7 +344,7 @@ export default {
 
     function initAutoSearch() {
       // 构建防抖查询函数
-      if (props.debounce !== false) {
+      if (props.debounce !== false && props.autoSearch !== false) {
         let wait = props.debounce?.wait || 500;
         autoSearch = _.debounce(doSearch, wait, props.debounce);
       }
