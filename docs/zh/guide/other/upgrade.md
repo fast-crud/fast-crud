@@ -41,11 +41,12 @@ pnpm up --lastest //升级依赖版本,不加lastest则仅在小版本范围内�
 
 ### 1、准备工作
 
-如果你的项目准备在gitee或者github上进行管理。    
+* 如果你的项目准备在gitee或者github上进行管理。    
 那么准备工作很简单，直接`fork` `fs-in-vben-starter` 到你的账户即可    
 你可以给fork下来的项目重命名，假设叫`my-test-project`
 
-如果你的项目是在自建git服务器上进行管理。请按如下步骤操作：
+
+* 如果你的项目是在自建git服务器上进行管理。请按如下步骤操作：
 
 1. clone示例仓库 
 ```shell
