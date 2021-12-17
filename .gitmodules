@@ -4,3 +4,6 @@
 [submodule "packages/fast-admin/fs-admin-element"]
 	path = packages/fast-admin/fs-admin-element
 	url = https://github.com/fast-crud/fs-admin-element
+[submodule "packages/fast-admin/fs-admin-naive-ui"]
+	path = packages/fast-admin/fs-admin-naive-ui
+	url = https://github.com/fast-crud/fs-admin-naive-ui
