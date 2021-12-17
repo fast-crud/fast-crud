@@ -140,7 +140,7 @@ export class Element implements UiInterface {
     remove: "delete",
     search: "search",
     refresh: "refresh",
-    export: "upload2",
+    export: "upload",
     check: "check",
     sort: "sort",
     left: "arrow-left",

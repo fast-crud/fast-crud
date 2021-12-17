@@ -21,6 +21,10 @@ export default defineComponent({
      */
     icon: { type: String, default: "", required: false },
     /**
+     * 右边的图标
+     */
+    iconRight: { type: String, default: "", required: false },
+    /**
      * 是否圆形按钮，text需配置为null
      */
     circle: { type: Boolean, default: false, required: false }
@@ -28,6 +32,7 @@ export default defineComponent({
   render() {
     const { ui } = useUi();
     const icon: string | null | undefined = this.icon;
+    const iconRight: string | null | undefined = this.iconRight;
     const slots = {
       ...this.$slots,
       default: () => {
@@ -40,6 +45,9 @@ export default defineComponent({
         }
         if (this.text) {
           children.push(this.text);
+        }
+        if (iconRight) {
+          children.push(<fs-icon icon={iconRight} />);
         }
         return children;
       }

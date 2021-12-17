@@ -85,6 +85,7 @@ component:{
         text:"查看",//按钮文字
         title:"查看",//鼠标停留显示的信息
         icon:"", //图标
+        iconRight:"", //右侧图标
         type:"", //a-button，el-button的类型
         style:{},
         disabled:false,
