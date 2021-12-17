@@ -343,8 +343,11 @@ export default {
     });
 
     function initAutoSearch() {
+      if (props.autoSearch === false) {
+        return;
+      }
       // 构建防抖查询函数
-      if (props.debounce !== false && props.autoSearch !== false) {
+      if (props.debounce !== false) {
         let wait = props.debounce?.wait || 500;
         autoSearch = _.debounce(doSearch, wait, props.debounce);
       }
