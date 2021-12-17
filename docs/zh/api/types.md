@@ -110,8 +110,6 @@ type = dict-cascader
 
 * 相关组件文档：
   * [fs-editor-wang](/api/components/extends/editor/components/fs-editor-wang/index.md)
-  * [fs-editor-quill](/api/components/extends/editor/components/fs-editor-quill/index.md)
-
 
 ## 辅助类型
 
