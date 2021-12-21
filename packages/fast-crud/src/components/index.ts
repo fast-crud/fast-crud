@@ -1,3 +1,4 @@
+import FsPage from "./container/fs-page.vue";
 import FsContainer from "./container/fs-container.vue";
 import FsButton from "./basic/fs-button";
 import FsIcon from "./basic/fs-icon";
@@ -27,6 +28,7 @@ import FsDictSwitch from "./extends/fs-dict-switch.vue";
 import FsDateFormat from "./extends/fs-date-format.vue";
 import FsDictTree from "./extends/fs-dict-tree.vue";
 export {
+  FsPage,
   FsContainer,
   FsComponentRender,
   FsSlotRender,
