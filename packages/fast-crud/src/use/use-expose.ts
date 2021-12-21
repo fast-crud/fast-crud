@@ -126,7 +126,12 @@ function useEditable({ expose }) {
   };
   return editable;
 }
-export function useExpose(props: UseExposeProps): { expose: CrudExpose } {
+
+/**
+ *
+ * @param props
+ */
+export function useExpose(props: UseExposeProps): { expose: CrudExpose; crudExpose: CrudExpose } {
   const { crudRef, crudBinding } = props;
   const { ui } = useUi();
   const { t } = useI18n();
@@ -376,5 +381,5 @@ export function useExpose(props: UseExposeProps): { expose: CrudExpose } {
     editable: undefined
   };
   expose.editable = useEditable({ expose });
-  return { expose };
+  return { expose, crudExpose: expose };
 }
