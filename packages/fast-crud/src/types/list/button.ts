@@ -30,7 +30,7 @@ export default function () {
         component: {
           name: "fs-button",
           vModel: "text",
-          type: ui.button.text
+          ...ui.button.textType
         }
       }
     }

@@ -4,17 +4,19 @@ import setupIcons from "./icons";
 import { Naive } from "./naive";
 export default {
   install(app) {
-    const message = useMessage();
-    const notification = useNotification();
-    const dialog = useDialog();
-    const naiveUi = new Naive({
-      message: message,
-      notification: notification,
-      messageBox: dialog
-    });
+    const naiveUi = new Naive();
     uiContext.set(naiveUi);
 
     setupIcons(app);
     console.log("naive ui installed");
+  },
+  init() {
+    if (uiContext.ref == null) {
+      throw new Error("请先安装ui：app.use(UiNaive);");
+    }
+    const message = useMessage();
+    const notification = useNotification();
+    const dialog = useDialog();
+    uiContext.ref.init({ message, notification, dialog });
   }
 };

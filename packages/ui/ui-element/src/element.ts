@@ -42,7 +42,7 @@ import {
   ButtonCI,
   PaginationCI
 } from "@fast-crud/ui-interface";
-import { TooltipCI } from "../../ui-interface/src/ui-interface";
+import { FormCI, TooltipCI } from "../../ui-interface/src/ui-interface";
 export class Element implements UiInterface {
   constructor(target) {
     if (target) {
@@ -128,8 +128,7 @@ export class Element implements UiInterface {
 
   icon: IconCI = {
     name: "",
-    isComponent: false,
-    circle: { circle: true }
+    isComponent: false
   };
 
   icons: Icons = {
@@ -249,8 +248,15 @@ export class Element implements UiInterface {
     }
   };
 
-  form: CI = {
-    name: "el-form"
+  form: FormCI = {
+    name: "el-form",
+    inlineLayout: {
+      layout: "inline",
+      inline: true
+    },
+    validateWrap: async (formRef) => {
+      return formRef.validate();
+    }
   };
 
   formItem: FormItemCI = {
@@ -261,7 +267,8 @@ export class Element implements UiInterface {
 
   button: ButtonCI = {
     name: "el-button",
-    text: "text",
+    textType: { type: "text" },
+    circle: { circle: true },
     colors: (type) => {
       return { type };
     }
@@ -270,6 +277,8 @@ export class Element implements UiInterface {
   pagination: PaginationCI = {
     name: "el-pagination",
     currentPage: "currentPage",
+    total: "total", //总条数
+    pageCount: null,
     onChange({ setCurrentPage, setPageSize, doAfterChange }) {
       return {
         // element 页码改动回调

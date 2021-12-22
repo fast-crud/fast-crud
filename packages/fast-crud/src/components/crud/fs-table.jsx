@@ -115,18 +115,27 @@ function buildTableSlots({ props, ctx, ui, getContextFn, componentRefs, renderRo
  * @returns {*[]}
  */
 function buildTableColumns({ props, ctx, ui, getContextFn, componentRefs, renderRowHandle, renderCellComponent }) {
-  const columns = [...props.columns];
+  const columns = [];
 
-  for (let column of columns) {
-    if (column.children != null) {
+  for (let column of props.columns) {
+    const item = { ...column };
+    columns.push(item);
+    if (item.children != null) {
       // 表头分组
-    } else if (column.type != null) {
+    } else if (item.type != null) {
       // 特定列 selection 和 expand
     } else {
       //渲染组件
-      column.render = (row, index) => {
+      const customRender = item.render;
+      delete item.render;
+      const newCol = { ...item };
+      if (customRender) {
+        //fs-cell内部也有个render
+        newCol.render = customRender;
+      }
+      item.render = (row, index) => {
         const scope = { row, index };
-        return renderCellComponent(column, scope);
+        return renderCellComponent(newCol, scope);
       };
     }
   }

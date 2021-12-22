@@ -13,9 +13,7 @@ export class UiContext {
 
   get(): UiInterface {
     if (this.ref == null) {
-      throw new Error(
-        '您还未设置ui,请在use(FastCrud)时,传入如下参数：app.use(FastCrud, {ui: { name: "antdv或element"}})'
-      );
+      throw new Error("您还未设置ui,请在use(FastCrud)前，安装ui，“app.use(UiXxx)”");
     }
     return this.ref;
   }

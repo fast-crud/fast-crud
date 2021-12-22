@@ -53,7 +53,7 @@ export default defineComponent({
       }
     };
 
-    const isCircle = this.circle ? ui.icon.circle : {};
+    const isCircle = this.circle ? ui.button.circle : {};
 
     const buttonComp: any = resolveDynamicComponent(ui.button.name);
 

@@ -281,7 +281,8 @@ export default {
         // 防抖查询取消
         autoSearch.cancel();
       }
-      const valid = await searchFormRef.value.validate();
+
+      const valid = await ui.form.validateWrap(searchFormRef.value);
       if (valid) {
         ctx.emit("search", { form });
       } else {
@@ -523,8 +524,7 @@ export default {
       }
     }
     .fs-search-col {
-      margin-bottom: 1px;
-      margin-top: 1px;
+      margin: 1px;
     }
 
     .el-form-item {

@@ -58,11 +58,10 @@ export function useCrud(ctx: UseCrudProps) {
     const events = ui.pagination.onChange({
       setCurrentPage(current) {
         crudBinding.value.pagination[ui.pagination.currentPage] = current;
-        crudBinding.value.pagination.currentPage = current;
       },
       setPageSize(pageSize) {
         crudBinding.value.pagination.pageSize = pageSize;
-        crudBinding.value.pagination.currentPage = 1; //重置页码到1
+        crudBinding.value.pagination[ui.pagination.currentPage] = 1; //重置页码到1
       },
       doAfterChange() {
         return doRefresh();

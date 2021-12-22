@@ -9,6 +9,7 @@ import {
   DropdownCI,
   DropdownItemCI,
   DropdownMenuCI,
+  FormCI,
   FormItemCI,
   FormWrapperCI,
   IconCI,
@@ -158,8 +159,7 @@ export class Antdv implements UiInterface {
 
   icon: IconCI = {
     name: "",
-    isComponent: true,
-    circle: { shape: "circle" }
+    isComponent: true
   };
 
   icons: Icons = {
@@ -204,7 +204,8 @@ export class Antdv implements UiInterface {
 
   button: ButtonCI = {
     name: "a-button",
-    text: "link",
+    textType: { type: "link" },
+    circle: { shape: "circle" },
     colors: (type) => {
       if (type === "danger") {
         return { danger: true };
@@ -261,8 +262,15 @@ export class Antdv implements UiInterface {
     width: "width"
   };
 
-  form: CI = {
-    name: "a-form"
+  form: FormCI = {
+    name: "a-form",
+    inlineLayout: {
+      layout: "inline",
+      inline: true
+    },
+    validateWrap: async (formRef) => {
+      return formRef.validate();
+    }
   };
 
   formItem: FormItemCI = {
@@ -278,6 +286,8 @@ export class Antdv implements UiInterface {
   pagination: PaginationCI = {
     name: "a-pagination",
     currentPage: "current",
+    total: "total",
+    pageCount: null,
     onChange({ setCurrentPage, setPageSize, doAfterChange }) {
       return {
         // antd 页码改动回调

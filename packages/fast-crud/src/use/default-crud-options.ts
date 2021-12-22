@@ -7,8 +7,9 @@ export default {
     return {
       search: {
         options: {
-          layout: "inline",
-          inline: true
+          ...ui.form.inlineLayout,
+          // n-form 是否显示校验反馈
+          showFeedback: false
         },
         show: true,
         buttons: {
@@ -67,11 +68,13 @@ export default {
       pagination: {
         background: true,
         pageSize: 20,
-        total: 1,
+        [ui.pagination.currentPage]: 1,
+        [ui.pagination.total]: 1,
         pageSizes: [5, 10, 20, 50],
         layout: "total, sizes, prev, pager, next, jumper",
         showSizeChanger: true, // antdv
         showQuickJumper: true, // antdv
+        showSizePicker: true, // naive
         showTotal: (total) => t("fs.pagination.showTotal", [total]) //antdv
       },
       table: {

@@ -1,6 +1,12 @@
 export interface CI {
   name;
 }
+
+export interface FormCI {
+  name;
+  inlineLayout: Object;
+  validateWrap: Function;
+}
 export interface SelectCI extends CI {
   modelValue;
   clearable;
@@ -89,7 +95,6 @@ export interface SwitchCI extends CI {
   inactiveValue;
 }
 export interface MessageCI extends CI {
-  get;
   open;
   success;
   error;
@@ -106,12 +111,10 @@ export type MessageBoxContextType = {
 };
 export type MessageBoxOpenType = (context: MessageBoxContextType) => Promise<void>;
 export interface MessageBoxCI extends CI {
-  get;
   open: MessageBoxOpenType;
   confirm: MessageBoxOpenType;
 }
 export interface NotificationCI extends CI {
-  get;
   open;
   success;
   error;
@@ -176,14 +179,17 @@ export interface UploadCI extends CI {
   limitAdd;
 }
 export interface ButtonCI extends CI {
-  name;
-  text;
+  name: string;
+  textType: Object;
   colors: (type: string) => any;
+  circle: Object;
 }
 export interface PaginationCI extends CI {
   name;
   currentPage;
   onChange;
+  total;
+  pageCount;
 }
 export interface Icons {
   refresh;
@@ -225,7 +231,7 @@ export interface UiInterface {
   tableColumnGroup: TableColumnCI;
   pagination: PaginationCI;
   button: ButtonCI;
-  form: CI;
+  form: FormCI;
   formItem: FormItemCI;
   tooltip: TooltipCI;
   radioGroup: RadioGroupCI;

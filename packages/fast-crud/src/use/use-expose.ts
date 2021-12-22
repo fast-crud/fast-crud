@@ -107,6 +107,7 @@ function useEditable({ expose }) {
           type: "warn"
         });
       } catch (e) {
+        // @ts-ignore
         logger.info("delete canceled", e.message);
         return;
       }
@@ -204,7 +205,7 @@ export function useExpose(props: UseExposeProps): { expose: CrudExpose; crudExpo
       let page;
       if (crudBinding.value.pagination) {
         page = {
-          currentPage: crudBinding.value.pagination.currentPage,
+          currentPage: crudBinding.value.pagination[ui.pagination.currentPage],
           pageSize: crudBinding.value.pagination.pageSize
         };
       }
@@ -237,7 +238,7 @@ export function useExpose(props: UseExposeProps): { expose: CrudExpose; crudExpo
           query
         });
       }
-      const { currentPage = page.currentPage ?? page.current, pageSize = page.pageSize, total } = pageRes;
+      const { currentPage = page[ui.pagination.currentPage], pageSize = page.pageSize, total } = pageRes;
       const { records } = pageRes;
       if (records == null) {
         logger.warn(
@@ -252,15 +253,13 @@ export function useExpose(props: UseExposeProps): { expose: CrudExpose; crudExpo
 
       crudBinding.value.data = records;
       if (crudBinding.value.pagination) {
-        crudBinding.value.pagination.currentPage = currentPage;
-        crudBinding.value.pagination.current = currentPage;
+        crudBinding.value.pagination[ui.pagination.currentPage] = currentPage;
         crudBinding.value.pagination.pageSize = pageSize;
-        crudBinding.value.pagination.total = total || records.length;
+        crudBinding.value.pagination[ui.pagination.total] = total || records.length;
       }
     },
     doPageTurn(no: number) {
-      crudBinding.value.pagination.currentPage = no;
-      crudBinding.value.pagination.current = no;
+      crudBinding.value.pagination[ui.pagination.currentPage] = no;
     },
     /**
      *
@@ -328,6 +327,7 @@ export function useExpose(props: UseExposeProps): { expose: CrudExpose; crudExpo
           type: "warn"
         });
       } catch (e) {
+        // @ts-ignore
         logger.info("delete canceled", e.message);
         return;
       }

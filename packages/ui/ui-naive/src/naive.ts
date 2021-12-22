@@ -42,13 +42,19 @@ import {
   ButtonCI,
   PaginationCI
 } from "@fast-crud/ui-interface";
-import { TooltipCI } from "../../ui-interface/src/ui-interface";
+import { FormCI, TooltipCI } from "../../ui-interface/src/ui-interface";
 
 export class Naive implements UiInterface {
   constructor(target) {
-    this.notification.get = target.notification;
-    this.message.get = target.message;
-    this.messageBox.get = target.messageBox;
+    if (target) {
+      this.init(target);
+    }
+  }
+
+  init({ notification, message, messageBox }) {
+    this.notification.instance = notification;
+    this.message.instance = message;
+    this.messageBox.instance = messageBox;
   }
 
   type = "naive";
@@ -62,7 +68,7 @@ export class Naive implements UiInterface {
         return { afterClose: onClosed };
       } else if (is === "n-drawer") {
         return {
-          afterVisibleChange: visible => {
+          afterVisibleChange: (visible) => {
             if (visible === false) {
               onClosed(visible);
             }
@@ -76,11 +82,21 @@ export class Naive implements UiInterface {
 
   messageBox: MessageBoxCI = {
     name: "n-dialog",
-    get: undefined,
-    open: context => {
+    instance: undefined,
+    get() {
+      if (!this.instance) {
+        throw new Error("请先在app.vue中执行ui初始化(naiveUi.init())");
+      }
+      if (this.instance instanceof Function) {
+        return this.instance();
+      } else {
+        return this.instance;
+      }
+    },
+    open: (context) => {
       return this.messageBox.confirm(context);
     },
-    confirm: context => {
+    confirm: (context) => {
       return new Promise<void>((resolve, reject) => {
         function onOk() {
           resolve();
@@ -97,38 +113,58 @@ export class Naive implements UiInterface {
           onOk,
           onCancel
         };
-        this.messageBox.get.confirm(newContext);
+        this.messageBox.get().confirm(newContext);
       });
     }
   };
 
   message: MessageCI = {
-    get: undefined,
+    instance: undefined,
+    get() {
+      if (!this.instance) {
+        throw new Error("请先在app.vue中执行ui初始化");
+      }
+      if (this.instance instanceof Function) {
+        return this.instance();
+      } else {
+        return this.instance;
+      }
+    },
     name: "n-message",
     open: (type, context) => {
       let content = context;
       if (typeof context !== "string") {
         content = context.message || context.content;
       }
-      this.message.get[type](content);
+      this.message.get()[type](content);
     },
-    success: context => {
+    success: (context) => {
       this.message.open("success", context);
     },
-    error: context => {
+    error: (context) => {
       this.message.open("error", context);
     },
-    warn: context => {
+    warn: (context) => {
       this.message.open("warn", context);
     },
-    info: context => {
+    info: (context) => {
       this.message.open("info", context);
     }
   };
 
   notification: NotificationCI = {
-    get: undefined,
+    instance: undefined,
     name: "n-notification",
+    get() {
+      if (!this.instance) {
+        throw new Error("请先配置ui");
+      }
+      if (this.instance instanceof Function) {
+        return this.instance();
+      } else {
+        return this.instance;
+      }
+    },
     open: (type, context) => {
       if (typeof context === "string") {
         context = {
@@ -137,21 +173,21 @@ export class Naive implements UiInterface {
       }
       type = type || context.type;
       if (type) {
-        this.notification.get[type](context);
+        this.notification.get()[type](context);
       } else {
-        this.notification.get.open(context);
+        this.notification.get().open(context);
       }
     },
-    success: context => {
+    success: (context) => {
       this.notification.open("success", context);
     },
-    error: context => {
+    error: (context) => {
       this.notification.open("error", context);
     },
-    warn: context => {
+    warn: (context) => {
       this.notification.open("warn", context);
     },
-    info: context => {
+    info: (context) => {
       this.notification.open("info", context);
     }
   };
@@ -204,8 +240,9 @@ export class Naive implements UiInterface {
 
   button: ButtonCI = {
     name: "n-button",
-    text: "link",
-    colors: type => {
+    textType: { text: true },
+    circle: { circle: true },
+    colors: (type) => {
       if (type === "danger") {
         return { danger: true };
       }
@@ -261,8 +298,23 @@ export class Naive implements UiInterface {
     width: "width"
   };
 
-  form: CI = {
-    name: "n-form"
+  form: FormCI = {
+    name: "n-form",
+    inlineLayout: {
+      inline: true,
+      labelPlacement: "left"
+    },
+    validateWrap: async (formRef) => {
+      return new Promise((resolve, reject) => {
+        formRef.validate((errors: Array<any>) => {
+          if (!errors || errors.length === 0) {
+            resolve(true);
+          } else {
+            reject(errors);
+          }
+        });
+      });
+    }
   };
 
   formItem: FormItemCI = {
@@ -277,16 +329,20 @@ export class Naive implements UiInterface {
 
   pagination: PaginationCI = {
     name: "n-pagination",
-    currentPage: "current",
+    currentPage: "page",
+    total: "itemCount",
+    pageCount: "pageCount",
     onChange({ setCurrentPage, setPageSize, doAfterChange }) {
       return {
         // antd 页码改动回调
-        onChange(page) {
+        "onUpdate:page": (page) => {
+          console.log("update page", page);
           setCurrentPage(page);
           doAfterChange();
         },
-        onShowSizeChange(current, size) {
-          setPageSize(size);
+        "onUpdate:pageSize": (pageSize) => {
+          console.log("update page size", pageSize);
+          setPageSize(pageSize);
           doAfterChange();
         }
       };
@@ -320,9 +376,9 @@ export class Naive implements UiInterface {
   };
   table: TableCI = {
     name: "n-data-table",
-    renderMode:"config",
+    renderMode: "config",
     data: "data",
-    defaultRowKey: (rowData)=>{
+    defaultRowKey: (rowData) => {
       return rowData.id;
     },
     fixedHeaderNeedComputeBodyHeight: true,
@@ -445,7 +501,7 @@ export class Naive implements UiInterface {
   };
   dropdownMenu: DropdownMenuCI = {
     name: "n-menu",
-    command: callback => {
+    command: (callback) => {
       return {
         onClick($event) {
           callback($event.key);
