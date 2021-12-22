@@ -27,12 +27,15 @@ export interface CrudOptions {
 }
 export type UseCrudProps = {
   crudOptions: CrudOptions;
-  expose: CrudExpose;
+  /**
+   * 即将废弃，请使用crudExpose
+   */
+  expose?: CrudExpose;
+  crudExpose?: CrudExpose;
   /**
    * 自定义参数
    * common里面可以使用
    */
-  extra?: any;
   [key: string]: any;
 };
 
@@ -41,7 +44,12 @@ export function useCrud(ctx: UseCrudProps) {
   const ui = uiContext.get();
   const { t } = useI18n();
   const options: CrudOptions = ctx.crudOptions;
-  const expose = ctx.expose;
+  const crudExpose = ctx.expose || ctx.crudExpose;
+  if (!crudExpose) {
+    throw new Error("crudExpose不能为空，请给useCrud传入{crudExpose}参数");
+  }
+  const expose: CrudExpose = crudExpose;
+
   const { crudBinding } = expose;
 
   const { doRefresh, doValueResolve, doSearch } = expose;

@@ -51,16 +51,16 @@ export class Naive implements UiInterface {
     this.messageBox.get = target.messageBox;
   }
 
-  type = "antdv";
-  modelValue = "value";
+  type = "naive";
+  modelValue = "modelValue";
 
   formWrapper: FormWrapperCI = {
     visible: "visible",
     customClass: "wrapClassName",
     buildOnClosedBind(is, onClosed: Function): {} {
-      if (is === "a-modal") {
+      if (is === "n-modal") {
         return { afterClose: onClosed };
-      } else if (is === "a-drawer") {
+      } else if (is === "n-drawer") {
         return {
           afterVisibleChange: visible => {
             if (visible === false) {
@@ -75,7 +75,7 @@ export class Naive implements UiInterface {
   };
 
   messageBox: MessageBoxCI = {
-    name: "a-model",
+    name: "n-dialog",
     get: undefined,
     open: context => {
       return this.messageBox.confirm(context);
@@ -104,7 +104,7 @@ export class Naive implements UiInterface {
 
   message: MessageCI = {
     get: undefined,
-    name: "a-message",
+    name: "n-message",
     open: (type, context) => {
       let content = context;
       if (typeof context !== "string") {
@@ -128,7 +128,7 @@ export class Naive implements UiInterface {
 
   notification: NotificationCI = {
     get: undefined,
-    name: "a-notification",
+    name: "n-notification",
     open: (type, context) => {
       if (typeof context === "string") {
         context = {
@@ -191,7 +191,7 @@ export class Naive implements UiInterface {
   };
 
   dialog: DialogCI = {
-    name: "a-modal",
+    name: "n-modal",
     visible: "visible",
     customClass: "wrapClassName",
     footer(footer = null) {
@@ -203,7 +203,7 @@ export class Naive implements UiInterface {
   };
 
   button: ButtonCI = {
-    name: "a-button",
+    name: "n-button",
     text: "link",
     colors: type => {
       if (type === "danger") {
@@ -217,15 +217,15 @@ export class Naive implements UiInterface {
   };
 
   buttonGroup: CI = {
-    name: "a-button-group"
+    name: "n-button-group"
   };
 
   card: CI = {
-    name: "a-card"
+    name: "n-card"
   };
 
   cascader: CascaderCI = {
-    name: "a-cascader",
+    name: "n-cascader",
     modelValue: "value",
     clearable: "allowClear",
     fieldNames(namesMap) {
@@ -234,11 +234,11 @@ export class Naive implements UiInterface {
   };
 
   checkboxGroup: CheckboxGroupCI = {
-    name: "a-checkbox-group",
+    name: "n-checkbox-group",
     modelValue: "value"
   };
   checkbox: CheckboxCI = {
-    name: "a-checkbox",
+    name: "n-checkbox",
     resolveEvent(e) {
       return e.target.checked;
     },
@@ -247,7 +247,7 @@ export class Naive implements UiInterface {
   };
 
   col: CI = {
-    name: "a-col"
+    name: "n-col"
   };
 
   collapseTransition: CI = {
@@ -255,28 +255,28 @@ export class Naive implements UiInterface {
   };
 
   drawer: DrawerCI = {
-    name: "a-drawer",
+    name: "n-drawer",
     visible: "visible",
     customClass: "wrapClassName",
     width: "width"
   };
 
   form: CI = {
-    name: "a-form"
+    name: "n-form"
   };
 
   formItem: FormItemCI = {
-    name: "a-form-item",
+    name: "n-form-item",
     prop: "name",
     label: "label"
   };
 
   option: CI = {
-    name: "a-select-option"
+    name: "n-select-option"
   };
 
   pagination: PaginationCI = {
-    name: "a-pagination",
+    name: "n-pagination",
     currentPage: "current",
     onChange({ setCurrentPage, setPageSize, doAfterChange }) {
       return {
@@ -294,33 +294,37 @@ export class Naive implements UiInterface {
   };
 
   radio: RadioCI = {
-    name: "a-radio",
+    name: "n-radio",
     value: "value"
   };
 
   radioGroup: RadioGroupCI = {
-    name: "a-radio-group",
+    name: "n-radio-group",
     modelValue: "value"
   };
 
   row: CI = {
-    name: "a-row"
+    name: "n-row"
   };
 
   select: SelectCI = {
-    name: "a-select",
+    name: "n-select",
     modelValue: "value",
     clearable: "allowClear"
   };
 
   treeSelect: TreeSelectCI = {
-    name: "a-tree-select",
+    name: "n-tree-select",
     modelValue: "value",
     clearable: "allowClear"
   };
   table: TableCI = {
-    name: "a-table",
-    data: "dataSource",
+    name: "n-data-table",
+    renderMode:"config",
+    data: "data",
+    defaultRowKey: (rowData)=>{
+      return rowData.id;
+    },
     fixedHeaderNeedComputeBodyHeight: true,
     vLoading: false,
     onChange({ onSortChange, onFilterChange, onPagination }) {
@@ -347,15 +351,15 @@ export class Naive implements UiInterface {
   };
 
   tableColumn: TableColumnCI = {
-    name: "a-table-column",
+    name: "n-table-column",
     label: "title",
     prop: "key",
-    row: "record",
+    row: "row",
     index: "index"
   };
 
   tableColumnGroup: TableColumnCI = {
-    name: "a-table-column-group",
+    name: "n-table-column-group",
     label: "title",
     prop: "key",
     row: "record",
@@ -363,34 +367,34 @@ export class Naive implements UiInterface {
   };
 
   textArea: TextAreaCI = {
-    name: "a-textarea",
+    name: "n-textarea",
     type: undefined,
     modelValue: "value",
     clearable: "allowClear"
   };
 
   tag: TagCI = {
-    name: "a-tag",
+    name: "n-tag",
     type: "color",
     colors: ["blue", "green", "orange", "red", "cyan", "purple"]
   };
 
   inputGroup: InputGroupCI = {
-    name: "a-input"
+    name: "n-input"
   };
   input: InputCI = {
-    name: "a-input",
+    name: "n-input",
     clearable: "allowClear",
     modelValue: "value"
   };
   inputPassword: InputPasswordCI = {
-    name: "a-input-password",
+    name: "n-input-password",
     clearable: "allowClear",
     modelValue: "value",
     showPassword: "showPassword"
   };
   number: CI = {
-    name: "a-input-number"
+    name: "n-input-number"
   };
   switch: SwitchCI = {
     activeColor: "active-color",
@@ -400,47 +404,47 @@ export class Naive implements UiInterface {
     inactiveText: "unCheckedChildren",
     inactiveValue: "inactive-value",
     modelValue: "checked",
-    name: "a-switch"
+    name: "n-switch"
   };
   datePicker: DatePickerCI = {
-    name: "a-date-picker",
+    name: "n-date-picker",
     modelValue: "value",
     buildDateType(type) {
       if (type === "date") {
-        return { name: "a-date-picker" };
+        return { name: "n-date-picker" };
       }
       // year/month/date/week/datetime/datetimerange/daterange
       if (type === "datetime") {
-        return { name: "a-date-picker", showTime: true };
+        return { name: "n-date-picker", showTime: true };
       }
       if (type === "daterange") {
-        return { name: "a-range-picker" };
+        return { name: "n-range-picker" };
       }
       if (type === "datetimerange") {
-        return { name: "a-range-picker", showTime: true };
+        return { name: "n-range-picker", showTime: true };
       }
       if (type === "month") {
-        return { name: "a-month-picker" };
+        return { name: "n-month-picker" };
       }
       if (type === "week") {
-        return { name: "a-week-picker" };
+        return { name: "n-week-picker" };
       }
-      return { name: "a-date-picker" };
+      return { name: "n-date-picker" };
     }
   };
   timePicker: TimePickerCI = {
-    name: "a-time-picker",
+    name: "n-time-picker",
     modelValue: "value"
   };
   dropdown: DropdownCI = {
-    name: "a-dropdown",
+    name: "n-dropdown",
     command: () => {
       return {};
     },
     slotName: "overlay"
   };
   dropdownMenu: DropdownMenuCI = {
-    name: "a-menu",
+    name: "n-menu",
     command: callback => {
       return {
         onClick($event) {
@@ -450,27 +454,27 @@ export class Naive implements UiInterface {
     }
   };
   dropdownItem: DropdownItemCI = {
-    name: "a-menu-item",
+    name: "n-menu-item",
     command: "key"
   };
   imageGroup: ImageGroupCI = {
-    name: "a-image-preview-group"
+    name: "n-image-preview-group"
   };
   image: ImageCI = {
-    name: "a-image",
+    name: "n-image",
     buildPreviewList: () => {
       return {};
     }
   };
   progress: ProgressCI = {
-    name: "a-progress"
+    name: "n-progress"
   };
   loading: LoadingCI = {
-    name: "a-spin",
+    name: "n-spin",
     type: "component"
   };
   upload: UploadCI = {
-    name: "a-upload",
+    name: "n-upload",
     type: "",
     getStatusFromEvent(event) {
       return event?.file?.status;
@@ -485,21 +489,21 @@ export class Naive implements UiInterface {
     limitAdd: 0
   };
   tabs: TabsCI = {
-    name: "a-tabs"
+    name: "n-tabs"
   };
   tabPane: TabPaneCI = {
-    name: "a-tab-pane"
+    name: "n-tab-pane"
   };
   collapse: CollapseCI = {
-    name: "a-collapse",
+    name: "n-collapse",
     modelValue: "activeKey",
     keyName: "key"
   };
   collapseItem: CollapseItemCI = {
-    name: "a-collapse-panel"
+    name: "n-collapse-panel"
   };
   tooltip: TooltipCI = {
-    name: "a-tooltip",
+    name: "n-tooltip",
     content: "title"
   };
 }

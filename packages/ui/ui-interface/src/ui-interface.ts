@@ -54,6 +54,7 @@ export interface TableCI extends CI {
   fixedHeaderNeedComputeBodyHeight;
   vLoading;
   onChange;
+  renderMode;
 }
 
 export interface CheckboxGroupCI extends CI {

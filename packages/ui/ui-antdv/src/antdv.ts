@@ -62,7 +62,7 @@ export class Antdv implements UiInterface {
         return { afterClose: onClosed };
       } else if (is === "a-drawer") {
         return {
-          afterVisibleChange: visible => {
+          afterVisibleChange: (visible) => {
             if (visible === false) {
               onClosed(visible);
             }
@@ -77,10 +77,10 @@ export class Antdv implements UiInterface {
   messageBox: MessageBoxCI = {
     name: "a-model",
     get: undefined,
-    open: context => {
+    open: (context) => {
       return this.messageBox.confirm(context);
     },
-    confirm: context => {
+    confirm: (context) => {
       return new Promise<void>((resolve, reject) => {
         function onOk() {
           resolve();
@@ -112,16 +112,16 @@ export class Antdv implements UiInterface {
       }
       this.message.get[type](content);
     },
-    success: context => {
+    success: (context) => {
       this.message.open("success", context);
     },
-    error: context => {
+    error: (context) => {
       this.message.open("error", context);
     },
-    warn: context => {
+    warn: (context) => {
       this.message.open("warn", context);
     },
-    info: context => {
+    info: (context) => {
       this.message.open("info", context);
     }
   };
@@ -142,16 +142,16 @@ export class Antdv implements UiInterface {
         this.notification.get.open(context);
       }
     },
-    success: context => {
+    success: (context) => {
       this.notification.open("success", context);
     },
-    error: context => {
+    error: (context) => {
       this.notification.open("error", context);
     },
-    warn: context => {
+    warn: (context) => {
       this.notification.open("warn", context);
     },
-    info: context => {
+    info: (context) => {
       this.notification.open("info", context);
     }
   };
@@ -205,7 +205,7 @@ export class Antdv implements UiInterface {
   button: ButtonCI = {
     name: "a-button",
     text: "link",
-    colors: type => {
+    colors: (type) => {
       if (type === "danger") {
         return { danger: true };
       }
@@ -321,6 +321,8 @@ export class Antdv implements UiInterface {
   table: TableCI = {
     name: "a-table",
     data: "dataSource",
+    renderMode: "slot",
+    defaultRowKey: "id",
     fixedHeaderNeedComputeBodyHeight: true,
     vLoading: false,
     onChange({ onSortChange, onFilterChange, onPagination }) {
@@ -441,7 +443,7 @@ export class Antdv implements UiInterface {
   };
   dropdownMenu: DropdownMenuCI = {
     name: "a-menu",
-    command: callback => {
+    command: (callback) => {
       return {
         onClick($event) {
           callback($event.key);

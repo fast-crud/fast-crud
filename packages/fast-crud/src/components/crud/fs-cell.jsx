@@ -20,6 +20,7 @@ export default {
     const computedComponent = doComputed(props.item.component, props.getScope);
 
     return (props, ctx) => {
+      debugger;
       if (props.slots) {
         return <span class={"fs-cell"}>{props.slots(props.getScope())}</span>;
       } else if (props.item.formatter) {

@@ -304,6 +304,8 @@ export class Element implements UiInterface {
   table: TableCI = {
     name: "el-table",
     data: "data",
+    renderMode: "slot",
+    defaultRowKey: "id",
     fixedHeaderNeedComputeBodyHeight: false,
     vLoading: "loading",
     onChange({ onSortChange, onFilterChange }) {

@@ -76,7 +76,7 @@ export default {
       },
       table: {
         height: "100%",
-        rowKey: "id",
+        rowKey: ui.table.defaultRowKey,
         stripe: true,
         border: true,
         bordered: true,
