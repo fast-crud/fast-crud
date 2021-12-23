@@ -263,10 +263,12 @@ export default {
       }
     };
     const vClosed = this.$fsui.formWrapper.buildOnClosedBind(is, this.onClosed);
+    const customClass = `fs-form-wrapper ${this.formWrapper.customClass || ""}  ${
+      this.fullscreen ? "fs-fullscreen" : ""
+    }`;
     const vCustomClass = {
-      [this.$fsui.formWrapper.customClass]: `fs-form-wrapper ${this.formWrapper.customClass || ""}  ${
-        this.fullscreen ? "fs-fullscreen" : ""
-      }`
+      [this.$fsui.formWrapper.customClass]: customClass,
+      class: customClass
     };
 
     const vFullScreen = {

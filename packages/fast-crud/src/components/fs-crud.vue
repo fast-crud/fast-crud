@@ -54,7 +54,6 @@
     <!-- 编辑对话框 -->
     <fs-form-wrapper
       ref="formWrapperRef"
-      class="fs-form-wrapper"
       :slots="computedFormSlots"
       @value-change="$emit('form-value-change', $event)"
     />

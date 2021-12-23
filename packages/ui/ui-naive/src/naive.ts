@@ -41,7 +41,8 @@ import {
   CollapseItemCI,
   ButtonCI,
   PaginationCI,
-  FormCI, TooltipCI
+  FormCI,
+  TooltipCI
 } from "@fast-crud/ui-interface";
 
 export class Naive implements UiInterface {
@@ -63,7 +64,7 @@ export class Naive implements UiInterface {
   formWrapper: FormWrapperCI = {
     visible: "show",
     customClass: "wrapClassName",
-    titleSlotName:"header",
+    titleSlotName: "header",
     buildOnClosedBind(is, onClosed: Function): {} {
       if (is === "n-modal") {
         return { afterClose: onClosed };
@@ -325,7 +326,7 @@ export class Naive implements UiInterface {
   };
 
   option: CI = {
-    name: "n-select-option"
+    name: null
   };
 
   pagination: PaginationCI = {
@@ -367,7 +368,7 @@ export class Naive implements UiInterface {
   select: SelectCI = {
     name: "n-select",
     modelValue: "value",
-    clearable: "allowClear"
+    clearable: "clearable"
   };
 
   treeSelect: TreeSelectCI = {
@@ -383,7 +384,7 @@ export class Naive implements UiInterface {
       return rowData.id;
     },
     fixedHeaderNeedComputeBodyHeight: true,
-    headerDomSelector:".n-data-table-thead",
+    headerDomSelector: ".n-data-table-thead",
     vLoading: false,
     onChange({ onSortChange, onFilterChange, onPagination }) {
       return {
@@ -426,7 +427,7 @@ export class Naive implements UiInterface {
 
   textArea: TextAreaCI = {
     name: "n-input",
-    type: 'textarea',
+    type: "textarea",
     modelValue: "value",
     clearable: "clearable"
   };
@@ -449,7 +450,7 @@ export class Naive implements UiInterface {
     name: "n-input",
     clearable: "clearable",
     modelValue: "value",
-    passwordType: {type: 'password'}
+    passwordType: { type: "password" }
   };
   number: CI = {
     name: "n-input-number"

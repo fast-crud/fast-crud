@@ -45,6 +45,13 @@ export default {
   },
   render() {
     const selectComp = resolveDynamicComponent(this.$fsui.select.name);
+    if (this.$fsui.option.name == null) {
+      //naive ui
+      //以options参数作为options
+      const options = this.options || [];
+      return <selectComp placeholder={this.computedPlaceholder} options={options} />;
+    }
+    // options 为子组件
     const options = [];
     const optionComp = resolveDynamicComponent(this.$fsui.option.name);
     for (const item of this.computedOptions) {
