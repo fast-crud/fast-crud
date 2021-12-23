@@ -202,7 +202,7 @@ export default {
       const { index, mode } = this.formOptions || {};
       const scope = { _self: this, index, mode, getFormData: this.getFormData };
       children = {
-        title: () => {
+        [ui.formWrapper.titleSlotName]: () => {
           let fullScreenIcon = null;
           if (this.fullscreenEnabled) {
             fullScreenIcon = (

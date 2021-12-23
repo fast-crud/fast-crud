@@ -69,6 +69,7 @@ export class Element implements UiInterface {
   formWrapper: FormWrapperCI = {
     visible: "modelValue",
     customClass: "customClass",
+    titleSlotName: "title",
     buildOnClosedBind(is: string, onClosed: Function) {
       return { onClosed };
     },
@@ -316,6 +317,7 @@ export class Element implements UiInterface {
     renderMode: "slot",
     defaultRowKey: "id",
     fixedHeaderNeedComputeBodyHeight: false,
+    headerDomSelector: "",
     vLoading: "loading",
     onChange({ onSortChange, onFilterChange }) {
       return {
@@ -360,7 +362,7 @@ export class Element implements UiInterface {
     name: "el-input",
     clearable: "clearable",
     modelValue: "modelValue",
-    showPassword: "showPassword"
+    passwordType: { showPassword: true }
   };
   number: CI = {
     name: "el-input-number"

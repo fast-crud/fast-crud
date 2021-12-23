@@ -22,8 +22,9 @@ export default {
         }
       },
       form: {
-        labelPosition: "right",
-        labelWidth: "80px",
+        labelPlacement: "left", // naive
+        labelPosition: "right", //element
+        labelWidth: "80px", //element
         style: {
           "grid-template-columns": "50% 50%" // grid布局，默认两列
         },
@@ -34,6 +35,10 @@ export default {
         wrapper: {
           is: ui.dialog.name,
           width: "960px",
+          style: {
+            width: "960px" //naive
+          },
+          preset: "card",
           destroyOnClose: true, // antdv
           ...ui.dialog.footer() // antdv
         }
@@ -83,6 +88,7 @@ export default {
         stripe: true,
         border: true,
         bordered: true,
+        singleLine: false, //naive
         editable: { enabled: false }
       },
       toolbar: {

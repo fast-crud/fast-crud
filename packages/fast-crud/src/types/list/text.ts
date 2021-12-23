@@ -17,9 +17,8 @@ export default function () {
         component: {
           // el-input / a-input-password
           name: ui.inputPassword.name,
-          vModel: ui.textArea.modelValue,
-          [ui.input.clearable]: true,
-          [ui.inputPassword.showPassword]: true
+          vModel: ui.inputPassword.modelValue,
+          ...ui.inputPassword.passwordType
         }
       }
     },

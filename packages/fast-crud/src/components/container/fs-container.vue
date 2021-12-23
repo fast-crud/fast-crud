@@ -37,11 +37,15 @@ export default defineComponent({
   }
   padding: 0 20px;
   height: 100%;
-
+  display: flex;
+  flex-direction: column;
   .box {
     height: 100%;
     width: 100%;
     position: relative;
+    display: flex;
+    flex-direction: column;
+    flex: 1;
     .inner {
       position: absolute;
       top: 0;

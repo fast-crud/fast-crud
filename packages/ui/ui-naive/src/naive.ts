@@ -40,9 +40,9 @@ import {
   CollapseCI,
   CollapseItemCI,
   ButtonCI,
-  PaginationCI
+  PaginationCI,
+  FormCI, TooltipCI
 } from "@fast-crud/ui-interface";
-import { FormCI, TooltipCI } from "../../ui-interface/src/ui-interface";
 
 export class Naive implements UiInterface {
   constructor(target) {
@@ -58,11 +58,12 @@ export class Naive implements UiInterface {
   }
 
   type = "naive";
-  modelValue = "modelValue";
+  modelValue = "value";
 
   formWrapper: FormWrapperCI = {
-    visible: "visible",
+    visible: "show",
     customClass: "wrapClassName",
+    titleSlotName:"header",
     buildOnClosedBind(is, onClosed: Function): {} {
       if (is === "n-modal") {
         return { afterClose: onClosed };
@@ -228,7 +229,7 @@ export class Naive implements UiInterface {
 
   dialog: DialogCI = {
     name: "n-modal",
-    visible: "visible",
+    visible: "show",
     customClass: "wrapClassName",
     footer(footer = null) {
       return { footer };
@@ -382,6 +383,7 @@ export class Naive implements UiInterface {
       return rowData.id;
     },
     fixedHeaderNeedComputeBodyHeight: true,
+    headerDomSelector:".n-data-table-thead",
     vLoading: false,
     onChange({ onSortChange, onFilterChange, onPagination }) {
       return {
@@ -423,10 +425,10 @@ export class Naive implements UiInterface {
   };
 
   textArea: TextAreaCI = {
-    name: "n-textarea",
-    type: undefined,
+    name: "n-input",
+    type: 'textarea',
     modelValue: "value",
-    clearable: "allowClear"
+    clearable: "clearable"
   };
 
   tag: TagCI = {
@@ -440,14 +442,14 @@ export class Naive implements UiInterface {
   };
   input: InputCI = {
     name: "n-input",
-    clearable: "allowClear",
+    clearable: "clearable",
     modelValue: "value"
   };
   inputPassword: InputPasswordCI = {
-    name: "n-input-password",
-    clearable: "allowClear",
+    name: "n-input",
+    clearable: "clearable",
     modelValue: "value",
-    showPassword: "showPassword"
+    passwordType: {type: 'password'}
   };
   number: CI = {
     name: "n-input-number"

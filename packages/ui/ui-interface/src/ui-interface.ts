@@ -22,12 +22,14 @@ export interface RadioGroupCI extends CI {
   modelValue;
 }
 export interface InputCI extends CI {
-  clearable;
-  modelValue;
+  clearable: string;
+  modelValue: string;
 }
 export type InputGroupCI = CI;
 export interface InputPasswordCI extends InputCI {
-  showPassword;
+  passwordType: Object;
+  clearable: string;
+  modelValue: string;
 }
 export interface TextAreaCI extends CI {
   type;
@@ -57,7 +59,8 @@ export interface TableColumnCI extends CI {
 
 export interface TableCI extends CI {
   data;
-  fixedHeaderNeedComputeBodyHeight;
+  fixedHeaderNeedComputeBodyHeight: boolean;
+  headerDomSelector: string; //用于计算高度
   vLoading;
   onChange;
   renderMode;
@@ -143,6 +146,7 @@ export interface FormWrapperCI extends CI {
   visible: string;
   buildOnClosedBind: (is, Function) => {};
   customClass: string;
+  titleSlotName: string;
 }
 export interface DatePickerCI extends CI {
   modelValue;

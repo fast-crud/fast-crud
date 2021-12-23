@@ -54,6 +54,7 @@
     <!-- 编辑对话框 -->
     <fs-form-wrapper
       ref="formWrapperRef"
+      class="fs-form-wrapper"
       :slots="computedFormSlots"
       @value-change="$emit('form-value-change', $event)"
     />
@@ -183,15 +184,22 @@ function useFixedHeight(props, ctx, { tableRef, containerRef }) {
     if (tableDom == null || tableDom.querySelector == null) {
       return;
     }
-    const headDom = tableDom.querySelector(".ant-table-thead");
+    const headDom = tableDom.querySelector(ui.table.headerDomSelector);
     if (headDom == null) {
       return;
     }
     const tableHeight = tableDom.getBoundingClientRect().height;
     const headHeight = headDom.getBoundingClientRect().height;
-    fixedOptions.scroll.y = tableHeight - headHeight - 2;
-    if (props.table?.scroll?.fixed) {
-      fixedOptions.scroll.x = tableDom.getBoundingClientRect().width;
+    const maxHeight = tableHeight - headHeight - 2;
+    if (ui.type === "antdv") {
+      //antdv
+      fixedOptions.scroll.y = maxHeight;
+      if (props.table?.scroll?.fixed) {
+        fixedOptions.scroll.x = tableDom.getBoundingClientRect().width;
+      }
+    } else {
+      //naive
+      fixedOptions.maxHeight = maxHeight;
     }
   }
 

@@ -58,6 +58,7 @@ export class Antdv implements UiInterface {
   formWrapper: FormWrapperCI = {
     visible: "visible",
     customClass: "wrapClassName",
+    titleSlotName: "title",
     buildOnClosedBind(is, onClosed: Function): {} {
       if (is === "a-modal") {
         return { afterClose: onClosed };
@@ -334,6 +335,7 @@ export class Antdv implements UiInterface {
     renderMode: "slot",
     defaultRowKey: "id",
     fixedHeaderNeedComputeBodyHeight: true,
+    headerDomSelector: ".ant-table-thead",
     vLoading: false,
     onChange({ onSortChange, onFilterChange, onPagination }) {
       return {
@@ -399,7 +401,7 @@ export class Antdv implements UiInterface {
     name: "a-input-password",
     clearable: "allowClear",
     modelValue: "value",
-    showPassword: "showPassword"
+    passwordType: { showPassword: true }
   };
   number: CI = {
     name: "a-input-number"

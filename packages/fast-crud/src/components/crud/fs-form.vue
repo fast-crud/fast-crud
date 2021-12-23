@@ -150,6 +150,14 @@ export default {
       type: Function,
       default: undefined
     },
+    beforeSubmit: {
+      type: Function,
+      default: undefined
+    },
+    afterSubmit: {
+      type: Function,
+      default: undefined
+    },
     /**
      * 插槽内容
      */
@@ -349,7 +357,7 @@ export default {
     }
 
     async function submit() {
-      const valid = await formRef.value.validate();
+      const valid = await ui.form.validateWrap(formRef.value);
       if (!valid) {
         ctx.emit("validationError", scope.value);
         return;
@@ -368,10 +376,16 @@ export default {
         }
       });
 
+      if (props.beforeSubmit) {
+        props.beforeSubmit(submitScope);
+      }
       if (props.doSubmit) {
         await props.doSubmit(submitScope);
       }
       ctx.emit("submit", submitScope);
+      if (props.afterSubmit) {
+        props.afterSubmit(submitScope);
+      }
     }
 
     function getFormData() {
