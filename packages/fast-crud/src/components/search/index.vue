@@ -207,8 +207,10 @@ export default {
   setup(props, ctx) {
     const ui = uiContext.get();
     let autoSearch = null;
-    let initialForm = _.cloneDeep(props.initialForm || {});
-    const form = reactive(initialForm);
+    function createInitialForm() {
+      return _.cloneDeep(props.initialForm || {});
+    }
+    const form = reactive(createInitialForm());
     const { doComputed, AsyncComputeValue } = useCompute();
     _.each(props.columns, (item) => {
       if (item.value != null && item.value instanceof AsyncComputeValue) {
@@ -294,7 +296,7 @@ export default {
     }
 
     function doReset() {
-      searchFormRef.value.resetFields();
+      ui.form.resetWrap(searchFormRef.value, { form, initialForm: createInitialForm() });
 
       if (props.reset) {
         props.reset({ form });

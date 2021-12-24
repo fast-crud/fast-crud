@@ -27,6 +27,7 @@ import {
   RadioCI,
   RadioGroupCI,
   SelectCI,
+  OptionCI,
   SwitchCI,
   TableCI,
   TableColumnCI,
@@ -269,6 +270,9 @@ export class Antdv implements UiInterface {
       layout: "inline",
       inline: true
     },
+    resetWrap: (formRef, { form, initialForm }) => {
+      formRef.resetFields();
+    },
     validateWrap: async (formRef) => {
       return formRef.validate();
     }
@@ -280,8 +284,10 @@ export class Antdv implements UiInterface {
     label: "label"
   };
 
-  option: CI = {
-    name: "a-select-option"
+  option: OptionCI = {
+    name: "a-select-option",
+    value: "value",
+    label: "label"
   };
 
   pagination: PaginationCI = {

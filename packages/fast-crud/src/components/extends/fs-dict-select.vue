@@ -48,7 +48,7 @@ export default {
     if (this.$fsui.option.name == null) {
       //naive ui
       //以options参数作为options
-      const options = this.options || [];
+      const options = this.computedOptions || [];
       return <selectComp placeholder={this.computedPlaceholder} options={options} />;
     }
     // options 为子组件

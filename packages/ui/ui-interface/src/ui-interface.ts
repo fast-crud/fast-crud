@@ -5,11 +5,17 @@ export interface CI {
 export interface FormCI {
   name;
   inlineLayout: Object;
+  resetWrap: Function;
   validateWrap: Function;
 }
 export interface SelectCI extends CI {
   modelValue;
   clearable;
+}
+export interface OptionCI extends CI {
+  // 默认的value和label字段名
+  value: string;
+  label: string;
 }
 export interface TreeSelectCI extends CI {
   modelValue;
@@ -244,7 +250,7 @@ export interface UiInterface {
   checkbox: CheckboxCI;
   select: SelectCI;
   treeSelect: TreeSelectCI;
-  option: CI;
+  option: OptionCI;
   collapseTransition: CI;
   card: CI;
   drawer: DrawerCI;

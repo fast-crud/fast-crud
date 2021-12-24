@@ -42,9 +42,10 @@ import {
   ButtonCI,
   PaginationCI,
   FormCI,
-  TooltipCI
+  TooltipCI,
+  OptionCI
 } from "@fast-crud/ui-interface";
-
+import _ from "lodash-es";
 export class Naive implements UiInterface {
   constructor(target) {
     if (target) {
@@ -52,7 +53,7 @@ export class Naive implements UiInterface {
     }
   }
 
-  init({ notification, message, messageBox,i18n }) {
+  init({ notification, message, messageBox, i18n }) {
     this.notification.instance = notification;
     this.message.instance = message;
     this.messageBox.instance = messageBox;
@@ -111,13 +112,13 @@ export class Naive implements UiInterface {
         }
 
         const newContext = {
-          content:context.message,
-          title:"请确认",
-          negativeText:"取消",
-          positiveText:"确定",
-          onPositiveClick:onOk,
-          onNegativeClick:onCancel,
-          ...context,
+          content: context.message,
+          title: "请确认",
+          negativeText: "取消",
+          positiveText: "确定",
+          onPositiveClick: onOk,
+          onNegativeClick: onCancel,
+          ...context
         };
         this.messageBox.open(newContext);
       });
@@ -250,7 +251,7 @@ export class Naive implements UiInterface {
     circle: { circle: true },
     colors: (type) => {
       if (type === "danger") {
-        return { type: 'error' };
+        return { type: "error" };
       }
       return { type };
     }
@@ -307,6 +308,16 @@ export class Naive implements UiInterface {
       inline: true,
       labelPlacement: "left"
     },
+    resetWrap: (formRef, { form, initialForm }) => {
+      const keys = Object.keys(form);
+      for (const key of keys) {
+        if (initialForm[key] != null) {
+          form[key] = initialForm[key];
+        } else {
+          delete form[key];
+        }
+      }
+    },
     validateWrap: async (formRef) => {
       return new Promise((resolve, reject) => {
         formRef.validate((errors: Array<any>) => {
@@ -326,8 +337,10 @@ export class Naive implements UiInterface {
     label: "label"
   };
 
-  option: CI = {
-    name: null
+  option: OptionCI = {
+    name: null,
+    value: "value",
+    label: "label"
   };
 
   pagination: PaginationCI = {
@@ -435,8 +448,8 @@ export class Naive implements UiInterface {
 
   tag: TagCI = {
     name: "n-tag",
-    type: "color",
-    colors: ["blue", "green", "orange", "red", "cyan", "purple"]
+    type: "type",
+    colors: ["success", "warning", "error", "info"]
   };
 
   inputGroup: InputGroupCI = {

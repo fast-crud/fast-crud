@@ -12,6 +12,7 @@ import {
   NotificationCI,
   MessageBoxCI,
   InputCI,
+  OptionCI,
   FormWrapperCI,
   FormItemCI,
   DrawerCI,
@@ -212,8 +213,10 @@ export class Element implements UiInterface {
     name: "el-collapse-transition"
   };
 
-  option: CI = {
-    name: "el-option"
+  option: OptionCI = {
+    name: "el-option",
+    value: "value",
+    label: "label"
   };
 
   select: SelectCI = {
@@ -254,6 +257,9 @@ export class Element implements UiInterface {
     inlineLayout: {
       layout: "inline",
       inline: true
+    },
+    resetWrap: (formRef, { form, initialForm }) => {
+      formRef.resetFields();
     },
     validateWrap: async (formRef) => {
       return formRef.validate();

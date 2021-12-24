@@ -11,8 +11,6 @@
         :key="getValue(item)"
         class="fs-tag"
         size="small"
-        :[$fsui.tag.type]="getColor(item) || ''"
-        :effect="item.effect"
         @click="doClick(item)"
       >
         {{ getLabel(item) }}
@@ -136,7 +134,7 @@ export default {
     const EFFECT_LIST = ["plain", "light"];
 
     const usedDict = useDict(props, ctx);
-    const { getColor, getValue } = usedDict;
+    const { getColor, getValue, removePropValue } = usedDict;
     usedDict.watchValue(() => {
       return props.modelValue;
     });
@@ -144,18 +142,26 @@ export default {
       if (!item.effect && props.effect) {
         item.effect = props.effect;
       }
-      if (getColor(item) != null) {
+      const typeKey = ui.tag.type;
+      const color = getColor(item);
+      if (color != null) {
+        //如果已经配置了color
+        if (typeof color != "string") {
+          return;
+        }
+        //将原有的color字段删掉，避免naive color报错
+        removePropValue(item, "color");
+        item[typeKey] = color;
         return;
       }
-      const colorProp = props.dict?.color || "color";
       if (props.color === "auto") {
         const hashcode = getHashCode(getValue(item));
         const colors = props.autoColors ? props.autoColors : COLOR_LIST;
-        item[colorProp] = colors[hashcode % colors.length];
+        item[typeKey] = colors[hashcode % colors.length];
         const effects = props.autoEffects ? props.autoEffects : EFFECT_LIST;
         item.effect = effects[Math.floor(hashcode / colors.length) % effects.length];
       } else {
-        item[colorProp] = props.color;
+        item[typeKey] = props.color;
       }
     }
 
