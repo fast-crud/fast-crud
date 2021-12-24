@@ -16,7 +16,7 @@ export default {
     }
     const message = useMessage();
     const notification = useNotification();
-    const dialog = useDialog();
-    uiContext.ref.init({ message, notification, dialog });
+    const messageBox = useDialog();
+    uiContext.ref.init({ message, notification, messageBox });
   }
 };

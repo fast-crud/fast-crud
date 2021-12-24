@@ -14,21 +14,33 @@
         <fs-icon class="fs-form-item-label-icon" :icon="$fsui.icons.question"></fs-icon>
       </component>
     </template>
-    <fs-slot-render v-if="formSlot" :slots="formSlot" :scope="buildItemScope(item)" />
-    <template v-else-if="item.component?.show !== false">
-      <fs-render v-if="item.component?.render" :render-func="item.component.render" :scope="buildItemScope(item)" />
-      <fs-component-render
-        v-else
-        ref="componentRenderRef"
-        v-bind="item.component"
-        :model-value="modelValue"
-        :scope="buildItemScope(item)"
-        @update:modelValue="updateModelValue"
-      />
-    </template>
-    <template v-if="item.helper && computedHelperPosition !== 'label'">
-      <fs-form-helper :helper="item.helper" :scope="buildItemScope(item)" />
-    </template>
+    <div class="fs-form-item-content">
+      <div class="fs-form-item-render">
+        <fs-render v-if="item.prefixRender" :render-func="item.prefixRender" :scope="buildItemScope(item)" />
+        <div class="fs-form-item-component">
+          <fs-slot-render v-if="formSlot" :slots="formSlot" :scope="buildItemScope(item)" />
+          <template v-else-if="item.component?.show !== false">
+            <fs-render
+              v-if="item.component?.render"
+              :render-func="item.component.render"
+              :scope="buildItemScope(item)"
+            />
+            <fs-component-render
+              v-else
+              ref="componentRenderRef"
+              v-bind="item.component"
+              :model-value="modelValue"
+              :scope="buildItemScope(item)"
+              @update:modelValue="updateModelValue"
+            />
+          </template>
+        </div>
+        <fs-render v-if="item.suffixRender" :render-func="item.suffixRender" :scope="buildItemScope(item)" />
+      </div>
+      <template v-if="item.helper && computedHelperPosition !== 'label'">
+        <fs-form-helper :helper="item.helper" :scope="buildItemScope(item)" />
+      </template>
+    </div>
   </component>
 </template>
 <script>
@@ -115,6 +127,20 @@ export default {
 .fs-form-item {
   .fs-form-item-label-icon {
     margin: 0 2px;
+  }
+  .fs-form-item-content {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    flex: 1;
+    .fs-form-item-render {
+      display: flex;
+      align-items: center;
+      justify-content: flex-start;
+      .fs-form-item-component {
+        flex: 1;
+      }
+    }
   }
 }
 </style>

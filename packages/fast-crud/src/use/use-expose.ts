@@ -328,7 +328,7 @@ export function useExpose(props: UseExposeProps): { expose: CrudExpose; crudExpo
         });
       } catch (e) {
         // @ts-ignore
-        logger.info("delete canceled", e.message);
+        logger.info("delete canceled", e.message, e);
         return;
       }
       await crudBinding.value.request.delRequest(context);

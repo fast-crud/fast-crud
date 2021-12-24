@@ -52,7 +52,7 @@ export class Naive implements UiInterface {
     }
   }
 
-  init({ notification, message, messageBox }) {
+  init({ notification, message, messageBox,i18n }) {
     this.notification.instance = notification;
     this.message.instance = message;
     this.messageBox.instance = messageBox;
@@ -60,6 +60,7 @@ export class Naive implements UiInterface {
 
   type = "naive";
   modelValue = "value";
+  i18n = null;
 
   formWrapper: FormWrapperCI = {
     visible: "show",
@@ -96,7 +97,7 @@ export class Naive implements UiInterface {
       }
     },
     open: (context) => {
-      return this.messageBox.confirm(context);
+      return this.messageBox.get().info(context);
     },
     confirm: (context) => {
       return new Promise<void>((resolve, reject) => {
@@ -110,12 +111,15 @@ export class Naive implements UiInterface {
         }
 
         const newContext = {
+          content:context.message,
+          title:"请确认",
+          negativeText:"取消",
+          positiveText:"确定",
+          onPositiveClick:onOk,
+          onNegativeClick:onCancel,
           ...context,
-          content: context.message,
-          onOk,
-          onCancel
         };
-        this.messageBox.get().confirm(newContext);
+        this.messageBox.open(newContext);
       });
     }
   };
@@ -246,10 +250,7 @@ export class Naive implements UiInterface {
     circle: { circle: true },
     colors: (type) => {
       if (type === "danger") {
-        return { danger: true };
-      }
-      if (type === "info" || type === "warning") {
-        return { type: "default" };
+        return { type: 'error' };
       }
       return { type };
     }

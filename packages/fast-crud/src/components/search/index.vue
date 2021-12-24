@@ -578,4 +578,10 @@ export default {
     }
   }
 }
+
+.fs-search {
+  .n-form-item-blank {
+    min-width: 150px;
+  }
+}
 </style>
