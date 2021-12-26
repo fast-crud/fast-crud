@@ -19,8 +19,8 @@
               :style="{ height: computedColumnBoxHeight }"
             >
               <component :is="$fsui.row.name" ref="columnsRowRef">
-                <div class="fs-search-col">
-                  <component :is="$fsui.formItem.name" v-if="slots['search-left']">
+                <div v-if="slots['search-left']" class="fs-search-col">
+                  <component :is="$fsui.formItem.name">
                     <fs-slot-render :slots="slots['search-left']" :scope="{ form }" />
                   </component>
                 </div>
@@ -52,8 +52,8 @@
                 </template>
               </component>
             </div>
-            <div class="fs-search-col fs-search-middle">
-              <component :is="$fsui.formItem.name" v-if="slots['search-middle']">
+            <div v-if="slots['search-middle']" class="fs-search-col fs-search-middle">
+              <component :is="$fsui.formItem.name">
                 <fs-slot-render :slots="slots['search-middle']" :scope="{ form }" />
               </component>
             </div>
@@ -64,8 +64,8 @@
                 </template>
               </component>
             </div>
-            <div class="fs-search-col fs-search-right">
-              <component :is="$fsui.formItem.name" v-if="slots['search-right']">
+            <div v-if="slots['search-right']" class="fs-search-col fs-search-right">
+              <component :is="$fsui.formItem.name">
                 <fs-slot-render :slots="slots['search-right']" :scope="{ form }" />
               </component>
             </div>
@@ -205,6 +205,19 @@ export default {
     "reset"
   ],
   setup(props, ctx) {
+    // 异步setup需要放在第一个await之前
+    // onMounted is called when there is no active component instance to be associated with.
+    //为啥会有这个警告
+    onMounted(() => {
+      if (computedIsMultiLine.value && columnsRowRef.value) {
+        columnsBoxHeightRef.value = columnsRowRef.value.$el.offsetHeight;
+        const columnsList = columnsRowRef.value.$el.children;
+        if (columnsList && columnsList.length > 1) {
+          columnsLineHeightRef.value = columnsList[1].offsetHeight + 2;
+        }
+      }
+    });
+
     const ui = uiContext.get();
     let autoSearch = null;
     function createInitialForm() {
@@ -456,16 +469,6 @@ export default {
       }
     });
 
-    onMounted(() => {
-      if (computedIsMultiLine.value) {
-        columnsBoxHeightRef.value = columnsRowRef.value.$el.offsetHeight;
-        const columnsList = columnsRowRef.value.$el.children;
-        if (columnsList && columnsList.length > 1) {
-          columnsLineHeightRef.value = columnsList[1].offsetHeight + 2;
-        }
-      }
-    });
-
     return {
       get: (form, key) => {
         return _.get(form, key);
@@ -526,7 +529,10 @@ export default {
       }
     }
     .fs-search-col {
-      margin: 1px;
+      margin: 1px 5px;
+      &:first-child {
+        margin-left: 0;
+      }
     }
 
     .el-form-item {

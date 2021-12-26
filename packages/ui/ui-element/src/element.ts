@@ -74,6 +74,12 @@ export class Element implements UiInterface {
     buildOnClosedBind(is: string, onClosed: Function) {
       return { onClosed };
     },
+    buildWidthBind(is, width) {
+      return { width: width };
+    },
+    buildInitBind(is) {
+      return {};
+    },
     name: "fs-form-wrapper"
   };
 

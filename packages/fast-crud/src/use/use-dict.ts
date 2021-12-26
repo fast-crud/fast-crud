@@ -15,10 +15,10 @@ export function useDict(props, ctx, vModel = "modelValue") {
     let options: any = [];
     if (props.options) {
       options = props.options;
-    }
-    if (dict && dict.data != null) {
+    } else if (dict && dict.data != null) {
       options = dict.data;
     }
+
     if (ui.type === "naive") {
       const newOptions: any = [];
       for (const option of options) {

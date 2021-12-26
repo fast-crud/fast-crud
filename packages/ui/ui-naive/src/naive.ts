@@ -65,7 +65,7 @@ export class Naive implements UiInterface {
 
   formWrapper: FormWrapperCI = {
     visible: "show",
-    customClass: "wrapClassName",
+    customClass: "class",
     titleSlotName: "header",
     buildOnClosedBind(is, onClosed: Function): {} {
       if (is === "n-modal") {
@@ -80,6 +80,12 @@ export class Naive implements UiInterface {
         };
       }
       return {};
+    },
+    buildWidthBind(is, width) {
+      return { style: { width: width } };
+    },
+    buildInitBind(is) {
+      return { preset: "card" };
     },
     name: "fs-form-wrapper"
   };
@@ -268,9 +274,14 @@ export class Naive implements UiInterface {
   cascader: CascaderCI = {
     name: "n-cascader",
     modelValue: "value",
-    clearable: "allowClear",
+    clearable: "clearable",
     fieldNames(namesMap) {
-      return { fieldNames: namesMap };
+      /**
+       * label-field="whateverLabel"
+       value-field="whateverValue"
+       children-field="whateverChildren"
+       */
+      return { labelField: namesMap.label, valueField: namesMap.value, childrenField: namesMap.children };
     }
   };
 
@@ -472,37 +483,18 @@ export class Naive implements UiInterface {
   switch: SwitchCI = {
     activeColor: "active-color",
     activeText: "checkedChildren",
-    activeValue: "active-value",
+    activeValue: "checked-value",
     inactiveColor: "inactive-color",
     inactiveText: "unCheckedChildren",
-    inactiveValue: "inactive-value",
-    modelValue: "checked",
+    inactiveValue: "unchecked-value",
+    modelValue: "value",
     name: "n-switch"
   };
   datePicker: DatePickerCI = {
     name: "n-date-picker",
     modelValue: "value",
     buildDateType(type) {
-      if (type === "date") {
-        return { name: "n-date-picker" };
-      }
-      // year/month/date/week/datetime/datetimerange/daterange
-      if (type === "datetime") {
-        return { name: "n-date-picker", showTime: true };
-      }
-      if (type === "daterange") {
-        return { name: "n-range-picker" };
-      }
-      if (type === "datetimerange") {
-        return { name: "n-range-picker", showTime: true };
-      }
-      if (type === "month") {
-        return { name: "n-month-picker" };
-      }
-      if (type === "week") {
-        return { name: "n-week-picker" };
-      }
-      return { name: "n-date-picker" };
+      return { name: "n-date-picker", type };
     }
   };
   timePicker: TimePickerCI = {

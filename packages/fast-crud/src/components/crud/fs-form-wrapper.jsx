@@ -267,8 +267,7 @@ export default {
       this.fullscreen ? "fs-fullscreen" : ""
     }`;
     const vCustomClass = {
-      [this.$fsui.formWrapper.customClass]: customClass,
-      class: customClass
+      [this.$fsui.formWrapper.customClass]: customClass
     };
 
     const vFullScreen = {

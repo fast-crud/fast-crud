@@ -34,11 +34,8 @@ export default {
         wrapperCol: { span: 18 }, // antdv
         wrapper: {
           is: ui.dialog.name,
-          width: "960px",
-          style: {
-            width: "960px" //naive
-          },
-          preset: "card",
+          ...ui.formWrapper.buildWidthBind(ui.dialog.name, "960px"),
+          ...ui.formWrapper.buildInitBind(ui.dialog.name),
           destroyOnClose: true, // antdv
           ...ui.dialog.footer() // antdv
         }

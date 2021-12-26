@@ -74,6 +74,12 @@ export class Antdv implements UiInterface {
       }
       return {};
     },
+    buildWidthBind(is, width) {
+      return { width: width };
+    },
+    buildInitBind(is) {
+      return {};
+    },
     name: "fs-form-wrapper"
   };
 

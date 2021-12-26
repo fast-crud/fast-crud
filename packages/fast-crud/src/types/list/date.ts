@@ -22,13 +22,12 @@ export default function () {
         component: {
           //el-date-picker,a-date-picker
           ...ui.datePicker.buildDateType("date"),
-          vModel: ui.datePicker.modelValue,
-          format: "YYYY-MM-DD"
+          vModel: ui.datePicker.modelValue
         }
       },
       column: {
         align: "center",
-        width: "120px",
+        width: 120,
         component: { name: "fs-date-format", format: "YYYY-MM-DD" }
       }
     },
@@ -63,6 +62,8 @@ export default function () {
         }
       },
       column: {
+        width: 100,
+        align: "center",
         component: { name: "fs-date-format", format: "HH:mm:ss" }
       }
     }

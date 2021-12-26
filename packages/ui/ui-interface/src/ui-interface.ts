@@ -150,9 +150,11 @@ export interface TagCI extends CI {
 
 export interface FormWrapperCI extends CI {
   visible: string;
-  buildOnClosedBind: (is, Function) => {};
+  buildOnClosedBind: (is, onClose: Function) => {};
   customClass: string;
   titleSlotName: string;
+  buildWidthBind: (is, width: any) => {};
+  buildInitBind: (is) => {};
 }
 export interface DatePickerCI extends CI {
   modelValue;

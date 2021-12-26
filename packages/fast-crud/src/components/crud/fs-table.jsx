@@ -314,7 +314,7 @@ export default {
     const renderMode = ui.table.renderMode;
     if (renderMode === "slot") {
       const computedTableSlots = computed(() => {
-        return buildTableSlots({ props, ctx, ui, getContextFn, componentRefs, renderRowHandle });
+        return buildTableSlots({ props, ctx, ui, getContextFn, componentRefs, renderRowHandle, renderCellComponent });
       });
 
       return () => {
