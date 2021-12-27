@@ -126,7 +126,9 @@ export default {
     const customClass = ui.dialog.customClass;
     const dialogBinding = ref({
       ...vClosed,
-      [customClass]: "fs-cropper-dialog"
+      [customClass]: "fs-cropper-dialog",
+      ...ui.formWrapper.buildWidthBind(ui.dialog.name, "960px"),
+      ...ui.formWrapper.buildInitBind(ui.dialog.name),
     });
 
     function open(url) {
