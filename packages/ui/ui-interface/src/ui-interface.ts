@@ -20,6 +20,10 @@ export interface OptionCI extends CI {
 export interface TreeSelectCI extends CI {
   modelValue;
   clearable;
+  options: string,
+  value: string,
+  label: string,
+  children: string,
 }
 export interface RadioCI extends CI {
   value;
@@ -193,6 +197,7 @@ export interface UploadCI extends CI {
 export interface ButtonCI extends CI {
   name: string;
   textType: Object;
+  linkType: Object;
   colors: (type: string) => any;
   circle: Object;
 }

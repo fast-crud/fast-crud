@@ -1,5 +1,9 @@
 <template>
-  <component :is="$fsui.treeSelect.name" :tree-data="computedOptions" :placeholder="computedPlaceholder" />
+  <component
+    :is="$fsui.treeSelect.name"
+    :[$fsui.treeSelect.options]="computedOptions"
+    :placeholder="computedPlaceholder"
+  />
 </template>
 <script>
 import { computed } from "vue";

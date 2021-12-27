@@ -213,6 +213,7 @@ export class Antdv implements UiInterface {
   button: ButtonCI = {
     name: "a-button",
     textType: { type: "link" },
+    linkType: { type: "link" },
     circle: { shape: "circle" },
     colors: (type) => {
       if (type === "danger") {
@@ -339,7 +340,12 @@ export class Antdv implements UiInterface {
   treeSelect: TreeSelectCI = {
     name: "a-tree-select",
     modelValue: "value",
-    clearable: "allowClear"
+    clearable: "allowClear",
+    options: "tree-data",
+    value:"value",
+    label:"label",
+    children:"children",
+
   };
   table: TableCI = {
     name: "a-table",

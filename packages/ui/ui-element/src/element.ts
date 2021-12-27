@@ -232,9 +232,13 @@ export class Element implements UiInterface {
   };
 
   treeSelect: TreeSelectCI = {
-    name: "el-tree-select",
+    name: "null",
     modelValue: "value",
-    clearable: "clearable"
+    clearable: "clearable",
+    options: "tree-data",
+    value: "value",
+    label: "label",
+    children: "children",
   };
 
   radio: RadioCI = {
@@ -281,6 +285,7 @@ export class Element implements UiInterface {
   button: ButtonCI = {
     name: "el-button",
     textType: { type: "text" },
+    linkType: { type: "text" },
     circle: { circle: true },
     colors: (type) => {
       return { type };

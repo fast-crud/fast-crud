@@ -253,7 +253,8 @@ export class Naive implements UiInterface {
 
   button: ButtonCI = {
     name: "n-button",
-    textType: { text: true },
+    textType: { type:'text',quaternary :true},
+    linkType:{type:'text',quaternary :true,tag:"a",vModel:"text",target:"_blank","textColor": "#2080f0" },
     circle: { circle: true },
     colors: (type) => {
       if (type === "danger") {
@@ -399,7 +400,11 @@ export class Naive implements UiInterface {
   treeSelect: TreeSelectCI = {
     name: "n-tree-select",
     modelValue: "value",
-    clearable: "allowClear"
+    clearable: "clearable",
+    value:"keyField",
+    label:"labelField",
+    children:"childrenField",
+    options:"options"
   };
   table: TableCI = {
     name: "n-data-table",
