@@ -12,7 +12,7 @@
 
 * 说明：按钮配置
 * 类型：Object
-* 默认：[buttons](#buttons)
+* 相关：[FsButton配置](../common-options.md#buttons)
 ```json5
 { //crudOptions.toolbar.buttons
     //查询按钮

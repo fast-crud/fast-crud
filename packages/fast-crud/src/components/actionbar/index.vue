@@ -36,6 +36,10 @@ export default defineComponent({
         value.click(e);
         return;
       }
+      if (value.onClick) {
+        value.onClick(e);
+        return;
+      }
       ctx.emit("action", e);
     }
     const { doComputed } = useCompute();

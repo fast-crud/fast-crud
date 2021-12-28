@@ -11,6 +11,7 @@
 * 说明：按钮配置
 * 类型：Object
 * 默认： {search:{},reset:{}}
+* 相关：[FsButton配置](../common-options.md#buttons)
 * 示例：
 ```json5
 {//crudOptions.search.buttons

@@ -86,6 +86,7 @@ module.exports = {
                                 {text: 'columns', link: '/api/crud-options/columns'},
                                 {text: 'form', link: '/api/crud-options/form'},
                                 {text: 'search', link: '/api/crud-options/search'},
+                                {text: 'actionbar', link: '/api/crud-options/actionbar'},
                                 {text: 'toolbar', link: '/api/crud-options/toolbar'},
                                 {text: 'viewForm', link: '/api/crud-options/viewForm'},
                                 {text: 'addForm', link: '/api/crud-options/addForm'},

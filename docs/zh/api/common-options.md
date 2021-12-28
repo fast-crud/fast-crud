@@ -59,7 +59,7 @@ component:{
 * 区别：当组件的属性与上面所列的属性名称（name、vModel、on、props等等）有冲突时，可以配置在`props`下
 
 
-## buttons【按钮组配置】
+## buttons
 * 说明：按钮组配置
 * 类型：Object
 * 示例：

@@ -18,6 +18,7 @@
 * 示例： [antdv版](http://fast-crud.docmirror.cn/antdv/#/crud/feature/dropdown)
   [element版](http://fast-crud.docmirror.cn/element/#/crud/feature/dropdown)
 * 默认：
+* 相关：[FsButton配置](../common-options.md#buttons)
 ```json5
 { //crudOptions
   rowHandle: {
