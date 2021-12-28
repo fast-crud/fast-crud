@@ -92,6 +92,23 @@ const crudOptions = {
 * 默认值： 1 ， 当配置0或负数则排到最前面，配置2则排到最后面
 * 场景：比如可以在commonOptions里面配置一个显示在最后面的公共时间列
 
+### [key].column.cellRender
+* 说明：自定义单元格渲染。
+* 类型：Function(scope)
+```js
+{ //crudOptions
+    columns:{
+       key:{
+            column:{
+                cellRender(scope){
+                    return <div>{{scope.value}}</div>
+                }
+            }
+       }
+    }   
+}
+
+```
 
 ### [key].column.[el-table-column | a-table-column的配置]
 * 说明：column下支持 el-table-column 或 a-table-column的全部配置

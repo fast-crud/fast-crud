@@ -105,7 +105,7 @@ function buildTableSlots({ props, ctx, ui, getContextFn, componentRefs, renderRo
 }
 
 /**
- * 目前专门给naive的buildTableColumns
+ * 通过config来渲染列
  * @param props
  * @param ctx
  * @param ui
@@ -119,6 +119,7 @@ function buildTableColumns({ props, ctx, ui, getContextFn, componentRefs, render
 
   for (let column of props.columns) {
     const item = { ...column };
+    item.dataIndex = column.key;
     columns.push(item);
     if (item.children != null) {
       // 表头分组
@@ -126,26 +127,35 @@ function buildTableColumns({ props, ctx, ui, getContextFn, componentRefs, render
       // 特定列 selection 和 expand
     } else {
       //渲染组件
-      const customRender = item.render;
-      delete item.render;
+      const customRender = item[ui.table.renderMethod];
       const newCol = { ...item };
-      if (customRender) {
-        //fs-cell内部也有个render
-        newCol.render = customRender;
+      delete newCol[ui.table.renderMethod];
+      if (!customRender) {
+        //如果没有配置customRender 默认使用render cell component
+        item[ui.table.renderMethod] = (a, b, c) => {
+          const scope = ui.table.rebuildRenderScope(a, b, c);
+          return renderCellComponent(newCol, scope);
+        };
+      } else {
+        //配置了customRender,先走customRender，在内部让用户根据情况调用cellRender
+        item[ui.table.renderMethod] = (a, b, c) => {
+          const scope = ui.table.rebuildRenderScope(a, b, c);
+          const cellRender = () => {
+            return renderCellComponent(newCol, scope);
+          };
+          return customRender(scope, cellRender);
+        };
       }
-      item.render = (row, index) => {
-        const scope = { row, index };
-        return renderCellComponent(newCol, scope);
-      };
     }
   }
 
   //操作列
   let rowHandle = {
+    key: "_rowHandle",
     ...props.rowHandle
   };
-  rowHandle.render = (row, index) => {
-    const scope = { row, index };
+  rowHandle[ui.table.renderMethod] = (a, b, c) => {
+    const scope = ui.table.rebuildRenderScope(a, b, c);
     return renderRowHandle(scope);
   };
   columns.push(rowHandle);
@@ -317,6 +327,7 @@ export default {
         return buildTableSlots({ props, ctx, ui, getContextFn, componentRefs, renderRowHandle, renderCellComponent });
       });
 
+      // 使用config render
       return () => {
         if (props.show === false) {
           return;

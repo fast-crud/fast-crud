@@ -404,7 +404,8 @@ export class Element implements UiInterface {
         }
       };
     },
-    slotName: "dropdown"
+    slotName: "dropdown",
+    renderMode: "slot"
   };
   dropdownMenu: DropdownMenuCI = {
     name: "el-dropdown-menu",

@@ -119,17 +119,14 @@ function buildTableColumn(colTemplate) {
  * @param columns
  */
 function buildTableColumns(columns) {
-  const tableColumns = [];
+  const tableColumns: any = [];
   //合并为tableColumns
   _.forEach(columns, (item) => {
     const column = buildTableColumn(item);
     tableColumns.push(column);
   });
-
   //排序
-  doArraySort(tableColumns);
-
-  return tableColumns;
+  return doArraySort(tableColumns);
 }
 
 /**

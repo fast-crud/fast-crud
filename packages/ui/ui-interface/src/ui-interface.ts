@@ -20,10 +20,10 @@ export interface OptionCI extends CI {
 export interface TreeSelectCI extends CI {
   modelValue;
   clearable;
-  options: string,
-  value: string,
-  label: string,
-  children: string,
+  options: string;
+  value: string;
+  label: string;
+  children: string;
 }
 export interface RadioCI extends CI {
   value;
@@ -73,7 +73,18 @@ export interface TableCI extends CI {
   headerDomSelector: string; //用于计算高度
   vLoading;
   onChange;
+  /**
+   * 列render的模式，antdv和naive为config模式，element为slot模式
+   */
   renderMode;
+  /**
+   * render的方法名
+   */
+  renderMethod: string;
+  /**
+   * render 方法触发时的参数构建出一个scope
+   */
+  rebuildRenderScope: Function;
 }
 
 export interface CheckboxGroupCI extends CI {
@@ -170,6 +181,13 @@ export interface TimePickerCI extends CI {
 export interface DropdownCI extends CI {
   command: Function;
   slotName;
+  /**
+   * 选项的渲染模式，slot or config
+   */
+  renderMode: string;
+  value: string;
+  label: string;
+  children: string;
 }
 export interface DropdownMenuCI extends CI {
   command: Function;

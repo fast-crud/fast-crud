@@ -58,14 +58,14 @@ export class Antdv implements UiInterface {
 
   formWrapper: FormWrapperCI = {
     visible: "visible",
-    customClass: "wrapClassName",
+    customClass: "class",
     titleSlotName: "title",
     buildOnClosedBind(is, onClosed: Function): {} {
       if (is === "a-modal") {
         return { afterClose: onClosed };
       } else if (is === "a-drawer") {
         return {
-          afterVisibleChange: (visible) => {
+          onAfterVisibleChange: (visible) => {
             if (visible === false) {
               onClosed(visible);
             }
@@ -267,7 +267,7 @@ export class Antdv implements UiInterface {
   drawer: DrawerCI = {
     name: "a-drawer",
     visible: "visible",
-    customClass: "wrapClassName",
+    customClass: "class",
     width: "width"
   };
 
@@ -342,15 +342,18 @@ export class Antdv implements UiInterface {
     modelValue: "value",
     clearable: "allowClear",
     options: "tree-data",
-    value:"value",
-    label:"label",
-    children:"children",
-
+    value: "value",
+    label: "label",
+    children: "children"
   };
   table: TableCI = {
     name: "a-table",
     data: "dataSource",
-    renderMode: "slot",
+    renderMode: "config",
+    renderMethod: "customRender",
+    rebuildRenderScope: (scope) => {
+      return scope;
+    },
     defaultRowKey: "id",
     fixedHeaderNeedComputeBodyHeight: true,
     headerDomSelector: ".ant-table-thead",
@@ -469,7 +472,8 @@ export class Antdv implements UiInterface {
     command: () => {
       return {};
     },
-    slotName: "overlay"
+    slotName: "overlay",
+    renderMode: "slot"
   };
   dropdownMenu: DropdownMenuCI = {
     name: "a-menu",

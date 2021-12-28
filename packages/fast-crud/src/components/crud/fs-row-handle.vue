@@ -13,7 +13,11 @@
       <component :is="$fsui.dropdown.name" v-bind="computedDropdownBinding">
         <fs-button v-bind="dropdown.more" />
         <template #[$fsui.dropdown.slotName]>
-          <component :is="$fsui.dropdownMenu.name" v-bind="$fsui.dropdownMenu.command(doDropdownItemClick)">
+          <component
+            :is="$fsui.dropdownMenu.name"
+            v-if="$fsui.dropdown.renderMode === 'slot'"
+            v-bind="$fsui.dropdownMenu.command(doDropdownItemClick)"
+          >
             <template v-for="(item, index) in computedHandleBtns" :key="index">
               <component
                 :is="$fsui.dropdownItem.name"
@@ -197,9 +201,26 @@ export default defineComponent({
     }
 
     const computedDropdownBinding = computed(() => {
+      const options = {};
+      if (ui.dropdown.renderMode !== "slot") {
+        // naive 通过options配置来显示子项
+        const btns = computedHandleBtns.value;
+        const opts = [];
+        _.forEach(btns, (value, index) => {
+          if (value.show !== false && isDropdownBtn(value, index)) {
+            opts.push({
+              [ui.dropdown.value]: value.key,
+              [ui.dropdown.label]: value.text,
+              title: value.title
+            });
+          }
+        });
+        options.options = opts;
+      }
       return {
         ..._.omit(props.dropdown, "more", "atLeast"),
-        ...ui.dropdown.command(doDropdownItemClick)
+        ...ui.dropdown.command(doDropdownItemClick),
+        ...options
       };
     });
 
@@ -218,6 +239,8 @@ export default defineComponent({
 
 <style lang="less">
 .fs-row-handle {
+  display: flex;
+  flex-wrap: wrap;
   .row-handle-btn {
     margin: 2px;
     &.el-button {

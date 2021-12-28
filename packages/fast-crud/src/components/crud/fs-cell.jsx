@@ -24,7 +24,10 @@ export default {
         return <span class={"fs-cell"}>{props.slots(props.getScope())}</span>;
       } else if (props.item.formatter) {
         return <span class={"fs-cell"}>{props.item.formatter(props.getScope())}</span>;
+      } else if (props.item.cellRender) {
+        return <span class={"fs-cell"}>{props.item.cellRender(props.getScope())}</span>;
       } else if (props.item.render) {
+        console.warn("column.render 配置已废弃，请使用column.cellRender代替");
         return <span class={"fs-cell"}>{props.item.render(props.getScope())}</span>;
       } else if (props.item.component?.name) {
         if (computedComponent.value?.show === false) {

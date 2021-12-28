@@ -576,6 +576,11 @@ export default {
           .el-form-item__content {
             justify-content: center;
           }
+
+          .n-form-item-blank {
+            display: flex;
+            justify-content: center;
+          }
         }
       }
     }
