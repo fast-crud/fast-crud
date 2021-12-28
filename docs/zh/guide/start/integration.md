@@ -23,8 +23,15 @@ npm i  @fast-crud/ui-antdv
 
 
 ```
-
-### 2.引入
+### 2.安装基础组件
+```js
+//安装基础组件,二选一
+// element 
+app.use(ElementPlus,{})
+// 或者 antdv 
+app.use(Antdv)
+```
+### 3.引入
 
  ```javascript
 // 引入fast-crud
@@ -75,7 +82,7 @@ app.use(FastCrud, {
 :::
 
 
-### 3. 安装扩展组件
+### 4. 安装扩展组件
 
 如果你还需要文件上传、图片裁剪等组件   
 那么你还需要安装对应的扩展插件。
@@ -105,11 +112,11 @@ app.use(FsExtendsEditor, {
 ```
 扩展组件文档请参考[fast-extends](../advance/extends.md)
 
-### 4. 完成
+### 5. 完成
 现在`fast-crud`已经集成到你的项目中，你可以按照上一节学习的，在你的实际项目里开始你的crud开发了。
 
 ::: warning
-注意你必须让`<fs-crud></fs-crud>`外部容器具备高度
+注意你必须让`<fs-crud></fs-crud>`外部容器具备高度，如果看不到表格你可以先给`fs-crud`设置一个`height="800px"`看看效果。
 :::
 
 ## starter

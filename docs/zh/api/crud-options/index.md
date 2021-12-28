@@ -33,3 +33,5 @@ const crudOptions ={
 }
 
 ```
+
+![](../../images/struct.png)

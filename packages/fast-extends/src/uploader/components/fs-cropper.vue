@@ -128,7 +128,7 @@ export default {
       ...vClosed,
       [customClass]: "fs-cropper-dialog",
       ...ui.formWrapper.buildWidthBind(ui.dialog.name, "960px"),
-      ...ui.formWrapper.buildInitBind(ui.dialog.name),
+      ...ui.formWrapper.buildInitBind(ui.dialog.name)
     });
 
     function open(url) {
@@ -477,6 +477,11 @@ export default {
     width: 100%;
     height: 100%;
     padding-bottom: 20px;
+  }
+  .dialog-footer {
+    > .fs-button {
+      margin: 2px;
+    }
   }
 
   &_left {
