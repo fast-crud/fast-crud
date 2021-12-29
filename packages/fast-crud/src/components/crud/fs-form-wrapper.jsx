@@ -188,7 +188,6 @@ export default {
       return null;
     }
     const ui = uiContext.get();
-    logger.debug("formWrapper", this.formWrapper);
     let children = {};
     const _slots = { ...this.$slots, ...this.slots };
     const slotsRender = (key, scope, slots = _slots) => {
@@ -197,7 +196,7 @@ export default {
       }
       return slots[key](scope);
     };
-
+    const is = this.formWrapperIs || "el-dialog";
     if (this.formOptions) {
       const { index, mode } = this.formOptions || {};
       const scope = { _self: this, index, mode, getFormData: this.getFormData };
@@ -253,7 +252,18 @@ export default {
       };
     }
 
-    const is = this.formWrapperIs || "el-dialog";
+    if (ui.formWrapper.hasContentWrap) {
+      const contentWrap = ui.formWrapper.hasContentWrap(is);
+      const subChildren = children;
+      if (contentWrap) {
+        const contentWrapComp = resolveDynamicComponent(contentWrap);
+        children = {
+          default: () => {
+            return <contentWrapComp>{subChildren}</contentWrapComp>;
+          }
+        };
+      }
+    }
 
     const visible = this.$fsui.formWrapper.visible;
     const vModel = {

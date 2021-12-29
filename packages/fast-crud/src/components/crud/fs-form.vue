@@ -357,6 +357,7 @@ export default {
     }
 
     async function submit() {
+      debugger;
       const valid = await ui.form.validateWrap(formRef.value);
       if (!valid) {
         ctx.emit("validationError", scope.value);

@@ -7,10 +7,10 @@
       <component
         :is="$fsui.tag.name"
         v-for="item in computedValueItems"
-        v-bind="item"
         :key="getValue(item)"
         class="fs-tag"
         size="small"
+        v-bind="item"
         @click="doClick(item)"
       >
         {{ getLabel(item) }}

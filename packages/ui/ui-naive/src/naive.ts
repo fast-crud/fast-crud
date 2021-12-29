@@ -88,6 +88,11 @@ export class Naive implements UiInterface {
     buildInitBind(is) {
       return { preset: "card" };
     },
+    hasContentWrap(is){
+      if(is ==='n-drawer'){
+        return "n-drawer-content"
+      }
+    },
     name: "fs-form-wrapper"
   };
 

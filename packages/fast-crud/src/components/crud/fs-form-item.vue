@@ -1,5 +1,11 @@
 <template>
-  <component :is="$fsui.formItem.name" class="fs-form-item" :[$fsui.formItem.prop]="item.key" v-bind="item">
+  <component
+    :is="$fsui.formItem.name"
+    class="fs-form-item"
+    :[$fsui.formItem.prop]="item.key"
+    v-bind="item"
+    :path="item.key"
+  >
     <template #label>
       {{ item.label || item.title }}
 

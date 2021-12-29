@@ -170,6 +170,7 @@ export interface FormWrapperCI extends CI {
   titleSlotName: string;
   buildWidthBind: (is, width: any) => {};
   buildInitBind: (is) => {};
+  hasContentWrap: (is) => string;
 }
 export interface DatePickerCI extends CI {
   modelValue;
