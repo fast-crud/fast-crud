@@ -34,6 +34,13 @@
 * 默认： {}
 * 示例：
 
+
+### columns[key].xxx
+* 说明：formItem配置，支持el-form-item,a-form-item,n-form-item的配置
+* 类型：Object
+* 备注：此属性无需配置，`useCrud`后会从`crudOptions.columns[key].search`中复制过来,你只需要配置各个字段的`search`即可
+
+
 ### columns[key].component
 * 说明：查询字段组件配置
 * 类型：Object

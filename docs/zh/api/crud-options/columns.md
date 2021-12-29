@@ -229,6 +229,22 @@ columns:{
 * 配置同`[key].form`
 >初始化时会与`[key].form`合并，然后放入`crudOptions.search.columns[key]`
 
+## [key].search.xxx
+* 说明：formItem配置，支持el-form-item,a-form-item,n-form-item的配置
+* 类型：Object
+* 示例：
+```js
+const crudOptions = {
+    columns:{
+        key:{
+            search:{
+                labelWidth:200 //配置查询框的label宽度
+            }
+        }
+    }
+}
+```
+
 ### [key].search.component
 * 说明：查询框字段组件配置
 * 类型：Object
