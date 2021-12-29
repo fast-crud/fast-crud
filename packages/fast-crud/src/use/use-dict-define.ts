@@ -175,7 +175,7 @@ class Dict extends UnMergeable {
       };
     } else if (url) {
       getFromRemote = async () => {
-        return await dictRequest({ url, dict });
+        return await dictRequest({ url, dict: this });
       };
     } else {
       return [];
