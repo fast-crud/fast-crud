@@ -587,14 +587,15 @@ export class Naive implements UiInterface {
   };
   collapse: CollapseCI = {
     name: "n-collapse",
-    modelValue: "activeKey",
-    keyName: "key"
+    modelValue: "expandedNames",
+    keyName: "name"
   };
   collapseItem: CollapseItemCI = {
-    name: "n-collapse-panel"
+    name: "n-collapse-item"
   };
   tooltip: TooltipCI = {
     name: "n-tooltip",
-    content: "title"
+    content: "default",
+    trigger:"trigger"
   };
 }

@@ -155,7 +155,10 @@ export interface FormItemCI extends CI {
 }
 
 export interface TooltipCI extends CI {
+  // tooltip框里的内容slotName
   content: string;
+  // 触发按钮内容slotName
+  trigger: string;
 }
 
 export interface TagCI extends CI {

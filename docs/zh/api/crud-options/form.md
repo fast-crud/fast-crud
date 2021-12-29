@@ -33,6 +33,29 @@
 * 类型：Object
 * 默认：`{span:12}` 一行显示两个字段，分两列布局（如果配置`{span:24}`，则为单列布局）
 
+## prefixRender
+* 说明: 可以在字段组件前面自定义渲染
+* 类型：Function
+* 默认：无
+```js
+{ // crudOptions.form
+    prefixRender(scope){
+        return <div>组件的前面</div>
+    }
+}
+```
+
+## suffixRender
+* 说明: 可以在字段组件后面自定义渲染
+* 类型：Function
+* 默认：无
+```js
+{ // crudOptions.form
+    suffixRender(scope){
+        return <div>组件的后面</div>
+    }
+}
+```
 
 ## el-form,a-form配置
 * 说明: 支持`el-form`|`a-form`配置

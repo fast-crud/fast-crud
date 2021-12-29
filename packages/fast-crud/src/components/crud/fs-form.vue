@@ -348,8 +348,11 @@ export default {
     function getFormRef() {
       return formRef.value;
     }
+    function createInitialForm() {
+      return _.cloneDeep(props.initialForm || {});
+    }
     async function reset() {
-      formRef.value.resetFields();
+      ui.form.resetWrap(formRef.value, { form, initialForm: createInitialForm() });
       if (props.doReset) {
         await props.doReset(scope.value);
       }
@@ -357,7 +360,6 @@ export default {
     }
 
     async function submit() {
-      debugger;
       const valid = await ui.form.validateWrap(formRef.value);
       if (!valid) {
         ctx.emit("validationError", scope.value);

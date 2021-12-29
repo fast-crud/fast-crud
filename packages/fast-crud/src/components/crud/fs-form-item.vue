@@ -17,7 +17,9 @@
         <template #[$fsui.tooltip.content]>
           <fs-form-helper :helper="item.helper" :scope="buildItemScope(item)" />
         </template>
-        <fs-icon class="fs-form-item-label-icon" :icon="$fsui.icons.question"></fs-icon>
+        <template #[$fsui.tooltip.trigger]>
+          <fs-icon class="fs-form-item-label-icon" :icon="$fsui.icons.question"></fs-icon>
+        </template>
       </component>
     </template>
     <div class="fs-form-item-content">

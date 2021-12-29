@@ -465,6 +465,7 @@ export class Element implements UiInterface {
   };
   tooltip: TooltipCI = {
     name: "el-tooltip",
-    content: "content"
+    content: "content",
+    trigger: "default"
   };
 }

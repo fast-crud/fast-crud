@@ -536,6 +536,7 @@ export class Antdv implements UiInterface {
   };
   tooltip: TooltipCI = {
     name: "a-tooltip",
-    content: "title"
+    content: "title",
+    trigger: "default"
   };
 }
