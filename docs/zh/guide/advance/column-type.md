@@ -207,7 +207,12 @@ Vue.use(FastCrud)
 //不要写在页面里，这个是全局的，要写在vue.use(FastCrud)之后
 const { getType } = useTypes()
 const selectType = getType('dict-select')
-selectType.component.color='auto'  //修改官方的字段类型，设置为支持自动染色
+selectType.column.component.color='auto'  //修改官方的字段类型，设置为支持自动染色
+
+// 也可以修改其他配置，增加配置等
+// selectType.form.component.xxx = xxx
+// selectType.search.component.xxx = xxx
+
 ```
 
 ## 字段类型列表
