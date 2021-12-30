@@ -284,7 +284,8 @@ export class Element implements UiInterface {
   formItem: FormItemCI = {
     name: "el-form-item",
     prop: "prop",
-    label: "label"
+    label: "label",
+    rules: "rules"
   };
 
   button: ButtonCI = {
@@ -442,6 +443,8 @@ export class Element implements UiInterface {
   upload: UploadCI = {
     name: "el-upload",
     type: "",
+    typeImageCard: "picture-card",
+    typeImage: "picture",
     getStatusFromEvent(event) {
       return event?.status;
     },

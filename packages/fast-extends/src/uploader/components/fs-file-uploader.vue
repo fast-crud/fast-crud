@@ -289,21 +289,23 @@ export default {
       });
     }
     function isPicture() {
-      return props.listType === "picture-card" || props.listType === "picture";
+      return props.listType === ui.upload.typeImageCard || props.listType === ui.upload.typeImage;
     }
     function isPictureCard() {
-      return props.listType === "picture-card";
+      return props.listType === ui.upload.typeImageCard;
     }
     const handlePreview = async (file) => {
       if (!isPicture()) {
         let url;
         if (file.url) {
-          url = file.url
+          url = file.url;
         } else {
           if (ui.type === "antdv") {
-            url = file.response.url
+            url = file.response.url;
+          } else if (ui.type === "element") {
+            url = file.fsRes.url;
           } else {
-            url = file.fsRes.url
+            url = file.url;
           }
         }
         window.open(url, "_blank");
@@ -336,20 +338,20 @@ export default {
     function buildElementBinding() {
       return {
         action: "",
-        "list-type": props.listType,
-        "before-upload": beforeUpload,
-        "http-request": customRequest,
-        "on-exceed": () => {
+        listType: props.listType,
+        beforeUpload: beforeUpload,
+        httpRequest: customRequest,
+        onExceed: () => {
           checkLimit();
           ctx.emit("exceed", { fileList: fileListLocal.value });
         },
-        "on-remove": (file, fileList) => {
+        onRemove: (file, fileList) => {
           handleChange(file, fileList);
         },
-        "on-change": (file, fileList) => {
+        onChange: (file, fileList) => {
           handleChange(file, fileList);
         },
-        "on-success": (res, file, fileList) => {
+        onSuccess: (res, file, fileList) => {
           if (res == null) {
             return;
           }
@@ -359,12 +361,57 @@ export default {
         },
         // "on-error": "handleUploadFileError",
         // "on-progress": "handleUploadProgress"
-        "on-preview": handlePreview
+        onPreview: handlePreview
+      };
+    }
+
+    function buildNaiveBinding() {
+      return {
+        action: "",
+        listType: props.listType,
+        onBeforeUpload: async ({ file, fileList }) => {
+          return beforeUpload(file, fileList);
+        },
+        customRequest: (context) => {
+          const fileInfo = context.file;
+          customRequest({
+            ...context,
+            file: fileInfo.file,
+            onSuccess: (res) => {
+              _.merge(fileInfo, res);
+              context.onFinish();
+            },
+            onProgress: (opts) => {
+              context.onProgress(opts);
+            }
+          });
+        },
+        onExceed: () => {
+          checkLimit();
+          ctx.emit("exceed", { fileList: fileList.value });
+        },
+        onRemove: (file) => {
+          handleChange(file, fileList.value);
+        },
+        onChange: ({ event, file, fileList }) => {
+          handleChange(file, fileList);
+        },
+        onFinish: (file) => {
+          handleSuccess({}, file, fileList.value);
+        },
+        onPreview: handlePreview
       };
     }
 
     const computedBinding = computed(() => {
-      const binding = ui.type === "antdv" ? buildAntdvBinding() : buildElementBinding();
+      let binding = null;
+      if (ui.type === "antdv") {
+        binding = buildAntdvBinding();
+      } else if (ui.type === "element") {
+        binding = buildElementBinding();
+      } else {
+        binding = buildNaiveBinding();
+      }
       return {
         ...binding,
         ...ctx.attrs

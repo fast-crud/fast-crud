@@ -1,16 +1,17 @@
 import { AllUploadSuccessValidator } from "./validators";
-import { useI18n } from "@fast-crud/fast-crud";
+import { uiContext, useI18n } from "@fast-crud/fast-crud";
 export default function () {
   const { t } = useI18n();
+  const ui = uiContext.get();
   return {
     "image-uploader": {
       form: {
         component: {
           name: "fs-file-uploader",
-          listType: "picture-card",
+          listType: ui.upload.typeImageCard,
           accept: ".png,.jpeg,.jpg,.ico,.bmp,.gif,.webp,.svg"
         },
-        rules: [
+        [ui.formItem.rules]: [
           {
             validator: AllUploadSuccessValidator(),
             message: t("fs.extends.fileUploader.hasUploading")
@@ -26,7 +27,7 @@ export default function () {
     },
     "avatar-uploader": {
       form: {
-        rules: [
+        [ui.formItem.rules]: [
           {
             validator: AllUploadSuccessValidator(),
             message: t("fs.extends.fileUploader.hasUploading")
@@ -35,7 +36,7 @@ export default function () {
         component: {
           name: "fs-file-uploader",
           limit: 1,
-          listType: "picture-card",
+          listType: ui.upload.typeImageCard,
           accept: ".png,.jpeg,.jpg,.ico,.bmp,.gif,.webp,.svg",
           showFileList: false
         }
@@ -64,7 +65,7 @@ export default function () {
           name: "fs-file-uploader",
           listType: "text"
         },
-        rules: [
+        [ui.formItem.rules]: [
           {
             validator: AllUploadSuccessValidator(),
             message: t("fs.extends.fileUploader.hasUploading")
@@ -82,7 +83,7 @@ export default function () {
           accept: ".png,.jpeg,.jpg,.ico,.bmp,.gif,.svg,.webp",
           cropper: { viewMode: 1 }
         },
-        rules: [
+        [ui.formItem.rules]: [
           {
             validator: AllUploadSuccessValidator(),
             message: t("fs.extends.fileUploader.hasUploading")

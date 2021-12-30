@@ -153,6 +153,7 @@ export interface IconCI extends CI {
 export interface FormItemCI extends CI {
   prop: string;
   label: string;
+  rules: string;
 }
 
 export interface TooltipCI extends CI {
@@ -212,6 +213,8 @@ export interface LoadingCI extends CI {
 export interface UploadCI extends CI {
   name;
   type;
+  typeImageCard: string;
+  typeImage: string;
   getStatusFromEvent;
   getFileListFromEvent;
   status;

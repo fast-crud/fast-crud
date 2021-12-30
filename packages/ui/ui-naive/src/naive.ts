@@ -88,9 +88,9 @@ export class Naive implements UiInterface {
     buildInitBind(is) {
       return { preset: "card" };
     },
-    hasContentWrap(is){
-      if(is ==='n-drawer'){
-        return "n-drawer-content"
+    hasContentWrap(is) {
+      if (is === "n-drawer") {
+        return "n-drawer-content";
       }
     },
     name: "fs-form-wrapper"
@@ -310,10 +310,10 @@ export class Naive implements UiInterface {
     },
     value: "value",
     modelValue: "checked",
-    onChange(callback){
+    onChange(callback) {
       return {
         "onUpdate:checked": callback
-      }
+      };
     }
   };
 
@@ -330,7 +330,7 @@ export class Naive implements UiInterface {
     visible: "show",
     customClass: "class",
     width: "width",
-    hasContentWrap:"n-drawer-content"
+    hasContentWrap: "n-drawer-content"
   };
 
   form: FormCI = {
@@ -365,7 +365,8 @@ export class Naive implements UiInterface {
   formItem: FormItemCI = {
     name: "n-form-item",
     prop: "name",
-    label: "label"
+    label: "label",
+    rules: "rule"
   };
 
   option: OptionCI = {
@@ -573,6 +574,8 @@ export class Naive implements UiInterface {
   upload: UploadCI = {
     name: "n-upload",
     type: "",
+    typeImageCard: "image-card",
+    typeImage: "image",
     getStatusFromEvent(event) {
       return event?.file?.status;
     },
@@ -602,6 +605,6 @@ export class Naive implements UiInterface {
   tooltip: TooltipCI = {
     name: "n-tooltip",
     content: "default",
-    trigger:"trigger"
+    trigger: "trigger"
   };
 }

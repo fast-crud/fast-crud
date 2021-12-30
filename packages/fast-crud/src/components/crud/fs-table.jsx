@@ -124,9 +124,9 @@ function buildTableColumns({ props, ctx, ui, getContextFn, componentRefs, render
     const item = { ...column };
     item.dataIndex = column.key;
     columns.push(item);
-    if (item.children != null) {
+    if (column.children != null) {
       // 表头分组
-    } else if (item.type != null) {
+    } else if (column.type != null) {
       // 特定列 selection 和 expand
     } else {
       //渲染组件
@@ -222,14 +222,6 @@ export default {
       return cellRef?.getTargetRef();
     };
 
-    const { expose } = ctx;
-    expose({
-      tableRef,
-      componentRefs,
-      getComponentRef,
-      ...useEditable(props, ctx, tableRef)
-    });
-
     const ui = uiContext.get();
     const tableComp = resolveDynamicComponent(ui.table.name);
     const tableColumnCI = ui.tableColumn;
@@ -305,8 +297,9 @@ export default {
       const index = scope[ui.tableColumn.index];
 
       const slots = props.cellSlots && props.cellSlots[cellSlotName];
-      if (props.editable && props.editable?.options?.value?.enabled === true) {
-        const editable = props.editable.getEditableCell(index, item.key);
+      if (editableWrap.editable?.options?.value?.enabled === true) {
+        // if (props.editable && props.editable?.options?.value?.enabled === true) {
+        const editable = editableWrap.editable.getEditableCell(index, item.key);
         return (
           <fs-editable-cell
             ref={setRef}
@@ -324,6 +317,15 @@ export default {
       }
     };
 
+    const { expose } = ctx;
+    const editableWrap = useEditable(props, ctx, tableRef);
+    expose({
+      tableRef,
+      componentRefs,
+      getComponentRef,
+      ...editableWrap
+    });
+
     const renderMode = ui.table.renderMode;
     if (renderMode === "slot") {
       const computedTableSlots = computed(() => {
@@ -339,7 +341,7 @@ export default {
           [ui.table.data]: props.data
         };
         const tableRender = (
-          <tableComp ref={"tableRef"} {...ctx.attrs} {...events} {...dataSource} v-slots={computedTableSlots.value} />
+          <tableComp ref={tableRef} {...ctx.attrs} {...events} {...dataSource} v-slots={computedTableSlots.value} />
         );
         if (ui.table.vLoading) {
           const loading = resolveDirective(ui.table.vLoading);
@@ -367,7 +369,7 @@ export default {
         const dataSource = {
           [ui.table.data]: props.data
         };
-        return <tableComp ref={"tableRef"} {...ctx.attrs} columns={computedColumns.value} {...dataSource} />;
+        return <tableComp ref={tableRef} {...ctx.attrs} columns={computedColumns.value} {...dataSource} />;
       };
     }
   }

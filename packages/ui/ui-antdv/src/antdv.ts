@@ -293,7 +293,8 @@ export class Antdv implements UiInterface {
   formItem: FormItemCI = {
     name: "a-form-item",
     prop: "name",
-    label: "label"
+    label: "label",
+    rules: "rules"
   };
 
   option: OptionCI = {
@@ -513,6 +514,8 @@ export class Antdv implements UiInterface {
   upload: UploadCI = {
     name: "a-upload",
     type: "",
+    typeImageCard: "picture-card",
+    typeImage: "picture",
     getStatusFromEvent(event) {
       return event?.file?.status;
     },
