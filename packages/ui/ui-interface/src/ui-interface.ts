@@ -92,8 +92,9 @@ export interface CheckboxGroupCI extends CI {
 }
 export interface CheckboxCI extends CI {
   resolveEvent: Function;
-  value;
-  modelValue;
+  value: string;
+  modelValue: string;
+  onChange: Function
 }
 
 export interface CascaderCI extends CI {

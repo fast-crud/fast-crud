@@ -118,6 +118,9 @@ function buildTableColumns({ props, ctx, ui, getContextFn, componentRefs, render
   const columns = [];
 
   for (let column of props.columns) {
+    if (column.show === false) {
+      continue;
+    }
     const item = { ...column };
     item.dataIndex = column.key;
     columns.push(item);
@@ -345,22 +348,21 @@ export default {
         return tableRender;
       };
     } else {
+      const computedColumns = computed(() => {
+        return buildTableColumns({
+          props,
+          ctx,
+          ui,
+          getContextFn,
+          componentRefs,
+          renderRowHandle,
+          renderCellComponent
+        });
+      });
       return () => {
         if (props.show === false) {
           return;
         }
-
-        const computedColumns = computed(() => {
-          return buildTableColumns({
-            props,
-            ctx,
-            ui,
-            getContextFn,
-            componentRefs,
-            renderRowHandle,
-            renderCellComponent
-          });
-        });
 
         const dataSource = {
           [ui.table.data]: props.data

@@ -1,6 +1,6 @@
 <template>
   <component :is="$fsui.drawer.name" :title="_text.title" v-bind="drawerBind" append-to-body>
-    <div class="fs-drawer-wrapper">
+    <component :is="$fsui.drawer.hasContentWrap || 'div'" class="fs-drawer-wrapper" :title="_text.title">
       <!-- 全选 反选 -->
       <component :is="$fsui.card.name" shadow="never">
         <div class="component--list">
@@ -11,7 +11,9 @@
                 v-model="checkAll"
                 v-model:checked="checkAll"
                 :indeterminate="isIndeterminate"
-                @change="onCheckAllChange"
+                v-bind="checkAllModelValue"
+                @update:checked="onCheckAllChange"
+                @update:modelValue="onCheckAllChange"
               >
                 {{ showLength }} / {{ currentValue.length }}
               </component>
@@ -27,7 +29,7 @@
                   v-model:[$fsui.checkbox.modelValue]="element.show"
                   :disabled="element.disabled"
                   class="item-label"
-                  @change="showChange(index, $event)"
+                  @update:[$fsui.checkbox.modelValue]="showChange(index, $event)"
                 >
                   {{ element.label || element.title || element.key || _text.unnamed }}
                 </component>
@@ -53,11 +55,11 @@
           <fs-button type="primary" :icon="$fsui.icons.check" :text="_text.confirm" block @click="submit()" />
         </component>
       </component>
-    </div>
+    </component>
   </component>
 </template>
 
-<script lang="ts">
+<script>
 import draggable from "vuedraggable/src/vuedraggable";
 import _ from "lodash-es";
 import FsButton from "../../basic/fs-button";
@@ -120,16 +122,18 @@ export default {
       original: {},
       currentValue: [],
       checkAll: false,
-      indeterminate: false,
-      checkAllModelValue: {
-        [this.$fsui.checkbox.modelValue]: this.checkAll,
-        ["onUpdate:" + this.$fsui.checkbox.modelValue]: (v) => {
-          this.checkAll = v;
-        }
-      }
+      indeterminate: false
     };
   },
   computed: {
+    checkAllBind() {
+      return {
+        [this.$fsui.checkbox.modelValue]: this.checkAll,
+        ["onUpdate:" + this.$fsui.checkbox.modelValue]: (v) => {
+          this.onCheckAllChange(v);
+        }
+      };
+    },
     // 显示的数量
     showLength() {
       return this.currentValue.filter((e) => e.show === true).length;
@@ -212,9 +216,9 @@ export default {
     },
     // 全选和反选发生变化时触发
     onCheckAllChange(value) {
-      const checked = this.$fsui.checkbox.resolveEvent(value);
+      this.checkAll = value;
       this.currentValue = this.currentValue.map((e) => {
-        e.show = checked;
+        e.show = value;
         return e;
       });
     },

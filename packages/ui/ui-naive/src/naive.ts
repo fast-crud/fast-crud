@@ -306,10 +306,15 @@ export class Naive implements UiInterface {
   checkbox: CheckboxCI = {
     name: "n-checkbox",
     resolveEvent(e) {
-      return e.target.checked;
+      return e;
     },
     value: "value",
-    modelValue: "checked"
+    modelValue: "checked",
+    onChange(callback){
+      return {
+        "onUpdate:checked": callback
+      }
+    }
   };
 
   col: CI = {
@@ -322,9 +327,10 @@ export class Naive implements UiInterface {
 
   drawer: DrawerCI = {
     name: "n-drawer",
-    visible: "visible",
-    customClass: "wrapClassName",
-    width: "width"
+    visible: "show",
+    customClass: "class",
+    width: "width",
+    hasContentWrap:"n-drawer-content"
   };
 
   form: FormCI = {

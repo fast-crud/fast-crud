@@ -238,7 +238,7 @@ const crudOptions = {
     columns:{
         key:{
             search:{
-                labelWidth:200 //配置查询框的label宽度
+                labelWidth:200 //配置查询框的label宽度(此字段仅限element-plus,其他ui请查阅对应ui的文档)
             }
         }
     }
@@ -254,6 +254,24 @@ const crudOptions = {
 * 说明：查询排序号，数字越小越靠前排列。
 * 类型：number
 * 默认值： 1 ， 当配置0或负数则排到最前面，配置2则排到最后面
+
+
+## [key].search.col
+* 说明：col配置，el-col,a-col,n-col的配置
+* 类型：Object
+* 示例：
+```js
+const crudOptions = {
+    columns:{
+        key:{
+            search:{
+                col:{span:4} //占据一行的4格
+            }
+        }
+    }
+}
+```
+
 
 ## valueBuilder与valueResolve
 * 说明： 后台值与前端值不一致时解决方案

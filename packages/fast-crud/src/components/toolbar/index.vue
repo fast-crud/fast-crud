@@ -22,6 +22,7 @@ import traceUtil from "../../utils/util.trace";
 import { useI18n } from "../../locale";
 import FsSlotRender from "../render/fs-slot-render";
 import { Constants } from "../../utils/util.constants";
+import { uiContext } from "../../ui";
 
 /**
  * 工具条
@@ -82,13 +83,12 @@ export default {
   setup(props, ctx) {
     const { t } = useI18n();
     const columnsFilterRef = ref();
-    traceUtil.trace("fs-toolbar");
-    const { proxy } = getCurrentInstance();
+    const ui = uiContext.get();
     const computedButtons = computed(() => {
       const defaultButtons = {
         refresh: {
           type: "primary",
-          icon: proxy.$fsui.icons.refresh,
+          icon: ui.icons.refresh,
           title: t("fs.toolbar.refresh.title"), // '刷新',
           circle: true,
           click: () => {
@@ -97,7 +97,7 @@ export default {
         },
         search: {
           type: "primary",
-          icon: proxy.$fsui.icons.search,
+          icon: ui.icons.search,
           title: t("fs.toolbar.search.title"), // '查询显示',
           circle: true,
           click: () => {
@@ -106,7 +106,7 @@ export default {
         },
         compact: {
           type: "primary",
-          icon: proxy.$fsui.icons.compact,
+          icon: ui.icons.compact,
           title: t("fs.toolbar.compact.title"), // '紧凑模式',
           circle: true,
           click: () => {
@@ -116,7 +116,7 @@ export default {
         export: {
           show: false,
           type: "primary",
-          icon: proxy.$fsui.icons.export,
+          icon: ui.icons.export,
           title: t("fs.toolbar.export.title"), // '导出',
           circle: true,
           click: () => {
@@ -125,7 +125,7 @@ export default {
         },
         columns: {
           type: "primary",
-          icon: proxy.$fsui.icons.columnsFilter,
+          icon: ui.icons.columnsFilter,
           title: t("fs.toolbar.columns.title"), // '列设置',
           circle: true,
           click: () => {

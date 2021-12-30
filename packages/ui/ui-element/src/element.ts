@@ -205,7 +205,12 @@ export class Element implements UiInterface {
       return e;
     },
     modelValue: "modelValue",
-    value: "label"
+    value: "label",
+    onChange(callback){
+      return {
+        "onUpdate:modelValue": callback
+      }
+    }
   };
 
   drawer: DrawerCI = {

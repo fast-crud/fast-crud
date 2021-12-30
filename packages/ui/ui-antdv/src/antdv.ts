@@ -253,7 +253,12 @@ export class Antdv implements UiInterface {
       return e.target.checked;
     },
     value: "value",
-    modelValue: "checked"
+    modelValue: "checked",
+    onChange(callback){
+      return {
+        "onUpdate:checked": callback
+      }
+    }
   };
 
   col: CI = {
