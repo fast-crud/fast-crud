@@ -6,15 +6,7 @@
         <div class="component--list">
           <div key="__first__" class="component--list-item" flex="main:justify cross:center">
             <span :span="12">
-              <component
-                :is="$fsui.checkbox.name"
-                v-model="checkAll"
-                v-model:checked="checkAll"
-                :indeterminate="isIndeterminate"
-                v-bind="checkAllModelValue"
-                @update:checked="onCheckAllChange"
-                @update:modelValue="onCheckAllChange"
-              >
+              <component :is="$fsui.checkbox.name" :indeterminate="isIndeterminate" v-bind="checkAllBind">
                 {{ showLength }} / {{ currentValue.length }}
               </component>
             </span>
