@@ -1,12 +1,12 @@
 <template>
   <div class="fs-container">
     <div class="box">
-      <div class="inner">
+      <div class="inner" :style="computedInnerStyle">
         <div class="header">
           <!-- header -->
           <slot name="header"></slot>
         </div>
-        <div class="body">
+        <div class="body" :style="computedBodyStyle">
           <!-- body, 高度自适应 -->
           <slot></slot>
         </div>
@@ -19,14 +19,61 @@
   </div>
 </template>
 
-<script>
-import { defineComponent } from "vue";
-
+<script lang="ts">
+import { defineComponent, computed } from "vue";
+import _ from "lodash-es";
 /**
  * crud的容器，根据外部高度自适应
  */
 export default defineComponent({
-  name: "FsContainer"
+  name: "FsContainer",
+  props: {
+    /**
+     * 是否固定高度
+     */
+    fixedHeight: {
+      type: Boolean,
+      default: true
+    },
+    /**
+     * body的样式
+     */
+    bodyStyle: {
+      type: Object,
+      default: () => {
+        return {};
+      }
+    },
+    /**
+     * inner的样式
+     */
+    innerStyle: {
+      type: Object,
+      default: () => {
+        return {};
+      }
+    }
+  },
+  setup(props, ctx) {
+    const computedInnerStyle = computed(() => {
+      if (props.fixedHeight === false) {
+        return _.merge({ position: "relative" }, props.innerStyle);
+      }
+      return props.innerStyle;
+    });
+
+    const computedBodyStyle = computed(() => {
+      if (props.fixedHeight === false) {
+        return _.merge({ flex: "unset" }, props.bodyStyle);
+      }
+      return props.bodyStyle;
+    });
+
+    return {
+      computedInnerStyle,
+      computedBodyStyle
+    };
+  }
 });
 </script>
 
