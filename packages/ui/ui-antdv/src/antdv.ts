@@ -360,6 +360,12 @@ export class Antdv implements UiInterface {
     rebuildRenderScope: (scope) => {
       return scope;
     },
+    buildMaxHeight: (maxHeight) => {
+      return { scroll: { y: maxHeight }};
+    },
+    hasMaxHeight: (options) => {
+      return options?.scroll?.y != null;
+    },
     defaultRowKey: "id",
     fixedHeaderNeedComputeBodyHeight: true,
     headerDomSelector: ".ant-table-thead",

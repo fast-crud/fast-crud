@@ -433,6 +433,12 @@ export class Naive implements UiInterface {
     rebuildRenderScope: (row, index) => {
       return { row, index };
     },
+    buildMaxHeight: (maxHeight) => {
+      return { maxHeight};
+    },
+    hasMaxHeight: (options) => {
+      return options?.maxHeight != null;
+    },
     data: "data",
     defaultRowKey: (rowData) => {
       return rowData.id;

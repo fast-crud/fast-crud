@@ -173,10 +173,13 @@ function slotFilter(ctxSlots, keyPrefix) {
 
 function useFixedHeight(props, ctx, { tableRef, containerRef }) {
   const ui = uiContext.get();
+  if (ui.table.hasMaxHeight(props.table)) {
+    return {};
+  }
   if (!ui.table.fixedHeaderNeedComputeBodyHeight) {
     return {};
   }
-  const fixedOptions = reactive({ scroll: {} });
+  const maxHeightRef = ref(null);
 
   function computeBodyHeight() {
     const tableDom = tableRef?.value?.$el;
@@ -189,17 +192,7 @@ function useFixedHeight(props, ctx, { tableRef, containerRef }) {
     }
     const tableHeight = tableDom.getBoundingClientRect().height;
     const headHeight = headDom.getBoundingClientRect().height;
-    const maxHeight = tableHeight - headHeight - 2;
-    if (ui.type === "antdv") {
-      //antdv
-      fixedOptions.scroll.y = maxHeight;
-      if (props.table?.scroll?.fixed) {
-        fixedOptions.scroll.x = tableDom.getBoundingClientRect().width;
-      }
-    } else {
-      //naive
-      fixedOptions.maxHeight = maxHeight;
-    }
+    maxHeightRef.value = tableHeight - headHeight - 2;
   }
 
   function watchBodyHeightChange() {
@@ -221,19 +214,21 @@ function useFixedHeight(props, ctx, { tableRef, containerRef }) {
     await nextTick();
     watchBodyHeightChange();
   });
-  return { fixedOptions, computeBodyHeight };
+  return { maxHeightRef, computeBodyHeight };
 }
 
 function useTable(props, ctx) {
+  const ui = uiContext.get();
   const tableRef = ref();
   const containerRef = ref();
-  const fixedHeightRet = useFixedHeight(props, ctx, { tableRef, containerRef });
+  const { maxHeightRef, computeBodyHeight } = useFixedHeight(props, ctx, { tableRef, containerRef });
   const computedTable = computed(() => {
     // antdv naive 高度自适应， 如果用户有配置scroll，则优先使用用户配置的
-    const fixedHeight = merge({}, fixedHeightRet.fixedOptions, {
-      scroll: props.table.scroll
-    });
-    return { ...ctx.attrs, ...props.table, ...fixedHeight };
+    let fixedHeight = {};
+    if (maxHeightRef?.value != null) {
+      fixedHeight = ui.table.buildMaxHeight(maxHeightRef.value);
+    }
+    return { ...fixedHeight, ...ctx.attrs, ...props.table };
   });
 
   const computedToolbar = toRef(props, "toolbar");
@@ -271,7 +266,7 @@ function useTable(props, ctx) {
     computedFormSlots,
     computedSearchSlots,
     computedToolbarSlots,
-    computeBodyHeight: fixedHeightRet.computeBodyHeight,
+    computeBodyHeight,
     computedClass
   };
 }

@@ -340,6 +340,12 @@ export class Element implements UiInterface {
     renderMode: "slot",
     defaultRowKey: "id",
     fixedHeaderNeedComputeBodyHeight: false,
+    buildMaxHeight: (maxHeight) => {
+      return { maxHeight };
+    },
+    hasMaxHeight: (options) => {
+      return options?.maxHeight != null;
+    },
     headerDomSelector: "",
     vLoading: "loading",
     onChange({ onSortChange, onFilterChange }) {

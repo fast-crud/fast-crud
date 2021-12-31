@@ -71,6 +71,8 @@ export interface TableCI extends CI {
   data;
   fixedHeaderNeedComputeBodyHeight: boolean;
   headerDomSelector: string; //用于计算高度
+  buildMaxHeight: Function;
+  hasMaxHeight: Function;
   vLoading;
   onChange;
   /**
