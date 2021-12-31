@@ -276,9 +276,9 @@ export function useCrud(ctx: UseCrudProps) {
 
     const { buildColumns } = useColumns();
     //初始化columns，将crudOptions.columns里面的配置转化为crudBinding
-    userOptions = buildColumns(userOptions);
+    const bindOptions = buildColumns(userOptions);
     // 设置crudOptions Ref
-    crudBinding.value = userOptions;
+    crudBinding.value = bindOptions;
     logger.info("fast-crud inited, crudBinding=", crudBinding.value);
   }
 

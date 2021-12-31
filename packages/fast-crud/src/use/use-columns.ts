@@ -102,6 +102,7 @@ function buildOptionsColumnsMap(map = {}, columns) {
  * @param colTemplate
  */
 function buildTableColumn(colTemplate) {
+  debugger
   const item = colTemplate;
   const tableColumn = item.column || {};
   if (tableColumn.title == null) {
@@ -208,6 +209,9 @@ function buildFormOptions(crudOptions) {
 }
 
 function buildColumns(userOptions) {
+  _.forEach(userOptions.columns,(value,key)=>{
+    value.key = key;
+  })
   const columns = setupOptionsColumns(cloneDeep(userOptions.columns));
   const columnsMap = buildOptionsColumnsMap({}, columns);
 
