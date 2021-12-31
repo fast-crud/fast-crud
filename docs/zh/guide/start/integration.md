@@ -141,8 +141,7 @@ app.use(FsExtendsUploader, {
 //富文本编辑器
 app.use(FsExtendsEditor, {
     //富文本编辑器的公共配置
-    wangEditor:{},
-    quillEditor:{}
+    wangEditor:{}
 });
 ```
 扩展组件文档请参考[fast-extends](../advance/extends.md)

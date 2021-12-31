@@ -12,7 +12,7 @@ features:
 - title: 字段类型
   details: 丰富的字段类型，大幅减少代码量。
 - title: 多UI支持
-  details: 支持antdv、element-plus。
+  details: 支持antdv、element-plus、naive-ui。
 - title: 自定义
   details: 再困难的需求，也能实现。
 - title: 权限管理

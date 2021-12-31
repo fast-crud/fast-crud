@@ -84,10 +84,10 @@ const crudOptions= {
 通过扩展自定义组件，扩展自定义类型
 
 ### 5. 多UI支持
-支持Antdv、Element，你喜欢哪个就用哪个
+支持Antdv、ElementPlus、NaiveUI，你喜欢哪个就用哪个
 
 ## 请先了解
-本文档假设您已熟悉Vue3、antdvue或elementplus的基础知识
+本文档假设您已熟悉Vue3/antdvue/elementplus/naiveui等基础知识
 ### 1. Vue3
 Github: <https://github.com/vuejs/vue-next>  
 文档：<https://v3.cn.vuejs.org/guide/introduction.html>
@@ -100,5 +100,9 @@ Github: <https://github.com/element-plus/element-plus>
 Github: <https://github.com/vueComponent/ant-design-vue>  
 文档：<https://2x.antdv.com/components/overview/>
 
+
+### 4. NaiveUI
+Github: <https://github.com/TuSimple/naive-ui>  
+文档：<https://www.naiveui.com/>
 
 
