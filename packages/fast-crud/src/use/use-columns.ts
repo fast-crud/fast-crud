@@ -102,7 +102,6 @@ function buildOptionsColumnsMap(map = {}, columns) {
  * @param colTemplate
  */
 function buildTableColumn(colTemplate) {
-  debugger
   const item = colTemplate;
   const tableColumn = item.column || {};
   if (tableColumn.title == null) {
