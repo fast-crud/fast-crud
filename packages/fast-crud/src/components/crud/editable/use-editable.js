@@ -7,7 +7,6 @@ function useTableData(tableRef) {
   const ui = uiContext.get();
 
   function getData() {
-    debugger;
     if (tableRef.value) {
       return tableRef.value[ui.table.data];
     }
@@ -77,7 +76,6 @@ export function useEditable(props, ctx, tableRef) {
   });
 
   function createEditableCell(tableRow, key, index) {
-    debugger;
     function getValue(key) {
       return tableRow[key];
     }
@@ -223,7 +221,6 @@ export function useEditable(props, ctx, tableRef) {
       return tableData.getData();
     },
     (data) => {
-      debugger;
       if (options.value.enabled) {
         setupEditable(data);
       }
@@ -238,7 +235,6 @@ export function useEditable(props, ctx, tableRef) {
     },
     (value) => {
       if (value) {
-        debugger;
         if (tableData.getData()?.length > 0) {
           setupEditable();
         }

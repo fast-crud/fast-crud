@@ -11,41 +11,43 @@ src
   |--packages    
     |-- fast-crud                  //核心工程
     |-- fast-extends               //官方扩展组件
-    |-- fast-admin
-        |-- fs-admin-antdv         //Antdv版示例工程
-        |-- demo-element           //Element版示例工程,后续会改造成fs-admin-element
-
+    |-- fast-admin                 //fs-admin各个版本的submodule
+        |-- fs-admin-antdv         //Antdv版示例工程：https://gitee.com/fast-crud/fs-admin-antdv.git
+        |-- fs-admin-element       //ElementPlus版示例工程：https://gitee.com/fast-crud/fs-admin-element.git
+        |-- fs-admin-naive-ui      //NaiveUI版示例工程:https://gitee.com/fast-crud/fs-admin-naive-ui.git
+    |-- ui                         //UI适配
 ```
 
 ## 运行示例
 
 ### 基本示例运行
 
-* 下载源码
-```shell
-git clone https://gitee.com/fast-crud/fast-crud.git
-cd fast-crud
-# 同步fast-admin子模块
-git submodule update --init --recursive
-```
-
 * 运行antdv版示例
 ```shell
-cd packages/fast-admin/fs-admin-antdv
-npm install # or yarn instal
+git clone https://gitee.com/fast-crud/fs-admin-antdv.git
+cd fs-admin-antdv
+npm install # or yarn install
 npm run dev
 #启动成功后打开输出链接即可看到效果
 ```
 
 * 运行element示例
 ```shell
-cd packages/fast-admin/fs-admin-element
+git clone https://gitee.com/fast-crud/fs-admin-element.git
 cd fs-admin-element
-npm install # or yarn instal
+npm install # or yarn install
 npm run dev
 #启动成功后打开输出链接即可看到效果
 ```
 
+* 运行NaiveUI示例
+```shell
+git clone https://gitee.com/fast-crud/fs-admin-naive-ui.git
+cd fs-admin-naive-ui
+npm install # or yarn install
+npm run dev
+#启动成功后打开输出链接即可看到效果
+```
 
 
 ### 调试运行

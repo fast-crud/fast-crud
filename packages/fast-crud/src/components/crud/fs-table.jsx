@@ -226,6 +226,8 @@ export default {
     const tableComp = resolveDynamicComponent(ui.table.name);
     const tableColumnCI = ui.tableColumn;
 
+    const editableWrap = useEditable(props, ctx, tableRef);
+
     const getContextFn = (item, scope) => {
       const row = scope[tableColumnCI.row];
       const form = row;
@@ -296,7 +298,7 @@ export default {
 
       const index = scope[ui.tableColumn.index];
 
-      const slots = props.cellSlots && props.cellSlots[cellSlotName];
+      const cellSlots = props.cellSlots && props.cellSlots[cellSlotName];
       if (editableWrap.editable?.options?.value?.enabled === true) {
         // if (props.editable && props.editable?.options?.value?.enabled === true) {
         const editable = editableWrap.editable.getEditableCell(index, item.key);
@@ -308,17 +310,17 @@ export default {
             item={item}
             editable={editable}
             getScope={getScopeFn}
-            slots={slots}
+            slots={cellSlots}
             {...vModel}
           />
         );
       } else {
-        return <fs-cell ref={setRef} item={item} getScope={getScopeFn} slots={slots} {...vModel} />;
+        return <fs-cell ref={setRef} item={item} getScope={getScopeFn} slots={cellSlots} {...vModel} />;
       }
     };
 
     const { expose } = ctx;
-    const editableWrap = useEditable(props, ctx, tableRef);
+
     expose({
       tableRef,
       componentRefs,
@@ -361,6 +363,8 @@ export default {
           renderCellComponent
         });
       });
+
+
       return () => {
         if (props.show === false) {
           return;
@@ -369,7 +373,7 @@ export default {
         const dataSource = {
           [ui.table.data]: props.data
         };
-        return <tableComp ref={tableRef} {...ctx.attrs} columns={computedColumns.value} {...dataSource} />;
+        return <tableComp ref={tableRef} {...ctx.attrs} columns={computedColumns.value} {...dataSource} v-slots={props.slots} />;
       };
     }
   }

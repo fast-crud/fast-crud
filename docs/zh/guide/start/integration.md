@@ -16,20 +16,27 @@
 npm i  @fast-crud/fast-crud
 
 #安装ui，根据你选择的基础组件
-# element
+# element-plus
 npm i  @fast-crud/ui-element
 # or antdv
 npm i  @fast-crud/ui-antdv
+# or naive-ui
+npm i  @fast-crud/ui-naive
 
 
 ```
 ### 2.安装基础组件
 ```js
-//安装基础组件,二选一
+//安装基础组件,三选一
 // element 
-app.use(ElementPlus,{})
+import ElementPlus from 'element-plus'
+app.use(ElementPlus,{size:"small"})
 // 或者 antdv 
+import Antdv from 'ant-design-vue'
 app.use(Antdv)
+// 或者 naive
+import Naive from 'naive-ui'
+app.use(Naive)
 ```
 ### 3.引入
 
@@ -38,11 +45,13 @@ app.use(Antdv)
 import {FastCrud} from "@fast-crud/fast-crud";
 import "@fast-crud/fast-crud/dist/style.css";
 
-// 请选择ui: element 或 antdv。二选一，不支持动态切换
+// 请选择ui: element/ antdv /naive。三选一，不支持动态切换
 // element 
 import ui from "@fast-crud/ui-element";
 // antdv 
 import ui from "@fast-crud/ui-antdv";
+// naive 
+import ui from "@fast-crud/ui-naive";
 
 // 先安装ui
 app.use(ui); 
@@ -76,13 +85,39 @@ app.use(FastCrud, {
 });
  ```
 
+
 :::warning
 你后台接口返回的数据大概率与fast-crud所需要的数据结构是不一致的，所以你需要配置公共的`request`       
 具体请参考[request配置](/api/crud-options/request.html)    
 :::
 
+### 4. NaiveUi的额外操作
+如果你不使用naiveui，可以跳过此步骤    
+NaiveUI需要在`n-dialog-provider`、`n-notification-provider`、`n-message-provider`包裹的子组件中进行一次ui的初始化操作。
+```js
+// App.vue
+ <n-dialog-provider>
+    <n-notification-provider>
+        <n-message-provider>
+            <Application />
+            <slot slot="default"></slot>
+        </n-message-provider>
+    </n-notification-provider>
+</n-dialog-provider>
+```
 
-### 4. 安装扩展组件
+```js
+// Application.vue
+import UiNaive from '@fast-crud/ui-naive';
+export default defineComponent({
+    setup(){
+        // 初始化ui，必须写在setup里面,获取message、notification、dialog实例
+        UiNaive.init();
+    }
+})
+```
+
+### 5. 安装扩展组件
 
 如果你还需要文件上传、图片裁剪等组件   
 那么你还需要安装对应的扩展插件。
@@ -112,11 +147,11 @@ app.use(FsExtendsEditor, {
 ```
 扩展组件文档请参考[fast-extends](../advance/extends.md)
 
-### 5. 完成
+### 6. 完成
 现在`fast-crud`已经集成到你的项目中，你可以按照上一节学习的，在你的实际项目里开始你的crud开发了。
 
 ::: warning
-注意你必须让`<fs-crud></fs-crud>`外部容器具备高度，如果看不到表格你可以先给`fs-crud`设置一个`height="800px"`看看效果。
+注意:你必须让`<fs-crud></fs-crud>`外部容器具备高度，如果看不到表格你可以先给`fs-crud`设置一个`height="800px"`看看效果。
 :::
 
 ## starter
