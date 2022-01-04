@@ -79,8 +79,14 @@ const crudOptions = {
 参考组件配置[component](../common-options.md)
 
 ### [key].column.columnSetDisabled
-* 说明：在列设置中禁用改字段的勾选
+* 说明：在列设置中禁用该字段的勾选
 * 类型：Boolean
+
+### [key].column.show
+* 说明：是否显示该列,列设置中也是通过修改此字段来进行列的显示。
+* 类型：boolean
+* 默认值： true 
+
 
 ### [key].column.formatter
 * 说明：格式化显示
@@ -91,6 +97,9 @@ const crudOptions = {
 * 类型：number
 * 默认值： 1 ， 当配置0或负数则排到最前面，配置2则排到最后面
 * 场景：比如可以在commonOptions里面配置一个显示在最后面的公共时间列
+
+
+
 
 ### [key].column.cellRender
 * 说明：自定义单元格渲染。

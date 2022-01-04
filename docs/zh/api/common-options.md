@@ -24,8 +24,14 @@ const curdOptions = {
     }
 }
 ```
+
+### component.vModel
+* 说明：组件通过v-model绑定的字段名，在表单和列表中将数据绑定到组件的哪个字段上。
+* 类型：String
+
+
 ### component.onXxx
-* 说明：组件的事件监听（没有context）
+* 说明：组件的原始事件监听（没有context）
 * 类型：Function(event)
 * 示例：
 ```js
@@ -36,8 +42,8 @@ component:{
 }
 ```
 
-### component.on
-* 说明：组件的事件监听（参数为context,可以获取表单或行数据）
+### component.on.onXxx
+* 说明：组件的事件监听（对原始事件的包装，参数为context,可以获取表单或行数据）
 * 类型：Function(context)
 * 示例：
 ```js
