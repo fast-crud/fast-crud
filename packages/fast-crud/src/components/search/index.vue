@@ -529,9 +529,12 @@ export default {
       }
     }
     .fs-search-col {
-      margin: 1px 5px;
+      & > * {
+        margin: 0px 5px;
+      }
+      margin: 1px 0;
       &:first-child {
-        margin-left: 0;
+       // margin-left: 0;
       }
     }
 

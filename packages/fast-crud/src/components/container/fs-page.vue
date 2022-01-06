@@ -22,6 +22,7 @@ export default {
 <style lang="less">
 .fs-page {
   height: 100%;
+  width:100%;
   position: absolute;
   top: 0;
   right: 0;

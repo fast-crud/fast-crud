@@ -15,7 +15,8 @@
     "publish": "lerna publish --conventional-commits && npm run copylogs",
     "afterpublish": "npm run copylogs",
     "copylogs": "copyfiles \"packages/**/CHANGELOG.md\"  ./docs/zh/guide/other/changelogs/ -e **/node_modules/** && copyfiles \"CHANGELOG.md\"  ./docs/zh/guide/other/changelogs/",
-    "init": "git submodule update --init --recursive"
+    "init": "git submodule update --init --recursive",
+    "no-push": "lerna publish --no-push --conventional-commits && lerna publish && npm run copylogs"
   },
   "author": "Greper",
   "license": "MIT",

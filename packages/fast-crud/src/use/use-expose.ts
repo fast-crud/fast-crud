@@ -12,8 +12,12 @@ export type UseExposeProps = {
   crudBinding;
 };
 
-function useEditable({ expose }) {
-  const { crudBinding } = expose;
+export type UseEditableProps = {
+  crudExpose
+};
+
+function useEditable({ crudExpose }) {
+  const { crudBinding } = crudExpose;
   const { ui } = useUi();
   const { t } = useI18n();
   const editable = {
@@ -39,7 +43,7 @@ function useEditable({ expose }) {
      * 禁用编辑
      */
     disable() {
-      expose.getTableRef()?.editable.resume();
+      crudExpose.getTableRef()?.editable.resume();
       crudBinding.value.table.editable.enabled = false;
       crudBinding.value.rowHandle.active = "default";
     },
@@ -47,34 +51,34 @@ function useEditable({ expose }) {
      * 激活所有编辑
      */
     active() {
-      expose.getTableRef().editable.active();
+      crudExpose.getTableRef().editable.active();
     },
     /**
      * 退出编辑
      */
     inactive() {
-      expose.getTableRef().editable.inactive();
+      crudExpose.getTableRef().editable.inactive();
     },
     /**
      * 添加行
      */
     addRow(opts) {
-      expose.getTableRef().editable.addRow(opts);
+      crudExpose.getTableRef().editable.addRow(opts);
     },
     editCol(opts) {
-      expose.getTableRef().editable.editCol(opts);
+      crudExpose.getTableRef().editable.editCol(opts);
     },
     /**
      * 还原，取消编辑
      */
     resume() {
-      expose.getTableRef().editable.resume();
+      crudExpose.getTableRef().editable.resume();
     },
     removeRow(index) {
-      expose.getTableRef().editable.removeRow(index);
+      crudExpose.getTableRef().editable.removeRow(index);
     },
     getEditableRow(index) {
-      return expose.getTableRef()?.editable?.getEditableRow(index);
+      return crudExpose.getTableRef()?.editable?.getEditableRow(index);
     },
     async doSaveRow({ index }) {
       const editableRow = editable.getEditableRow(index);
@@ -117,12 +121,12 @@ function useEditable({ expose }) {
       } else {
         const rowData = row.getRowData(index);
         await crudBinding.value.request.delRequest({ row: rowData });
-        expose.doRefresh();
+        crudExpose.doRefresh();
       }
       ui.notification.success(t("fs.rowHandle.remove.success"));
     },
     getInstance() {
-      expose.getTableRef().editable;
+      crudExpose.getTableRef().editable;
     }
   };
   return editable;
@@ -136,7 +140,7 @@ export function useExpose(props: UseExposeProps): { expose: CrudExpose; crudExpo
   const { crudRef, crudBinding } = props;
   const { ui } = useUi();
   const { t } = useI18n();
-  const expose: CrudExpose = {
+  const crudExpose: CrudExpose = {
     crudRef,
     crudBinding,
 
@@ -144,15 +148,15 @@ export function useExpose(props: UseExposeProps): { expose: CrudExpose; crudExpo
       return crudRef.value.formWrapperRef;
     },
     getFormRef: () => {
-      const formWrapperRef = expose.getFormWrapperRef();
+      const formWrapperRef = crudExpose.getFormWrapperRef();
       return formWrapperRef?.formRef;
     },
     getFormData: () => {
-      const formRef = expose.getFormRef();
+      const formRef = crudExpose.getFormRef();
       return formRef?.getFormData();
     },
     getFormComponentRef(key, isAsync = false) {
-      const formRef = expose.getFormRef();
+      const formRef = crudExpose.getFormRef();
       return formRef?.getComponentRef(key, isAsync);
     },
     doValueBuilder(records) {
@@ -211,7 +215,7 @@ export function useExpose(props: UseExposeProps): { expose: CrudExpose; crudExpo
       }
       let searchFormData = {};
       if (crudRef.value) {
-        searchFormData = expose.getSearchFormData();
+        searchFormData = crudExpose.getSearchFormData();
       }
 
       const sort = crudBinding.value.sort || {};
@@ -249,7 +253,7 @@ export function useExpose(props: UseExposeProps): { expose: CrudExpose; crudExpo
       }
 
       //valueBuild
-      expose.doValueBuilder(records);
+      crudExpose.doValueBuilder(records);
 
       crudBinding.value.data = records;
       if (crudBinding.value.pagination) {
@@ -273,13 +277,13 @@ export function useExpose(props: UseExposeProps): { expose: CrudExpose; crudExpo
       logger.debug("dosearch:", opts);
       opts = merge({ goFirstPage: true }, opts);
       if (opts.goFirstPage) {
-        expose.doPageTurn(1);
+        crudExpose.doPageTurn(1);
       }
       if (opts.form && crudRef.value) {
         crudRef.value.setSearchFormData(opts);
       }
 
-      await expose.doRefresh();
+      await crudExpose.doRefresh();
     },
     /**
      * 获取FsTable实例
@@ -297,7 +301,7 @@ export function useExpose(props: UseExposeProps): { expose: CrudExpose; crudExpo
       crudBinding.value.data = data;
     },
     getTableDataRow(index) {
-      const data = expose.getTableData();
+      const data = crudExpose.getTableData();
       if (data == null) {
         throw new Error("table data is not init");
       }
@@ -312,7 +316,7 @@ export function useExpose(props: UseExposeProps): { expose: CrudExpose; crudExpo
      * @param row
      */
     doSelectCurrentRow({ row }) {
-      const tableRef = expose.getTableRef();
+      const tableRef = crudExpose.getTableRef();
       tableRef.value.setCurrentRow(row);
     },
     /**
@@ -333,7 +337,7 @@ export function useExpose(props: UseExposeProps): { expose: CrudExpose; crudExpo
       }
       await crudBinding.value.request.delRequest(context);
       ui.notification.success(t("fs.rowHandle.remove.success"));
-      await expose.doRefresh();
+      await crudExpose.doRefresh();
     },
     /**
      *
@@ -355,7 +359,7 @@ export function useExpose(props: UseExposeProps): { expose: CrudExpose; crudExpo
     async openEdit(context) {
       let row = context.row || context[ui.tableColumn.row];
       if (row == null && context.index != null) {
-        row = expose.getTableDataRow(context.index);
+        row = crudExpose.getTableDataRow(context.index);
       }
       const options = {
         mode: "edit",
@@ -368,7 +372,7 @@ export function useExpose(props: UseExposeProps): { expose: CrudExpose; crudExpo
     async openView(context) {
       let row = context.row || context[ui.tableColumn.row];
       if (row == null && context.index != null) {
-        row = expose.getTableDataRow(context.index);
+        row = crudExpose.getTableDataRow(context.index);
       }
       const options = {
         mode: "view",
@@ -380,6 +384,6 @@ export function useExpose(props: UseExposeProps): { expose: CrudExpose; crudExpo
     },
     editable: undefined
   };
-  expose.editable = useEditable({ expose });
-  return { expose, crudExpose: expose };
+  crudExpose.editable = useEditable({ crudExpose });
+  return { expose: crudExpose, crudExpose: crudExpose };
 }
