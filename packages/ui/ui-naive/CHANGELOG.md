@@ -3,6 +3,14 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [1.0.0-alpha.1](https://github.com/fast-crud/fast-crud/compare/v1.0.0-alpha.0...v1.0.0-alpha.1) (2022-01-06)
+
+**Note:** Version bump only for package @fast-crud/ui-naive
+
+
+
+
+
 ## [0.22.1](https://github.com/fast-crud/fast-crud/compare/v0.22.0...v0.22.1) (2021-11-29)
 
 

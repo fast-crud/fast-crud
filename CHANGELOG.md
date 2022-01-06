@@ -3,6 +3,18 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [1.0.0-alpha.1](https://github.com/fast-crud/fast-crud/compare/v1.0.0-alpha.0...v1.0.0-alpha.1) (2022-01-06)
+
+
+### Performance Improvements
+
+* naive-ui 改成本地mock ([48817d2](https://github.com/fast-crud/fast-crud/commit/48817d245b9180033322946909db0789f376f004))
+* naive-ui 改成本地mock ([710bfc7](https://github.com/fast-crud/fast-crud/commit/710bfc7d915b629000e0c23d65bafabee0553cfe))
+
+
+
+
+
 ## [0.22.1](https://github.com/fast-crud/fast-crud/compare/v0.22.0...v0.22.1) (2021-11-29)
 
 
