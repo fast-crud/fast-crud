@@ -6,7 +6,7 @@ It is easy to get started, has strong scalability, and has rich examples so that
 
 source :[Github](https://github.com/fast-crud/fast-crud)  /  [Gitee](https://gitee.com/fast-crud/fast-crud)   
 demo:
-[antdv](http://fast-crud.docmirror.cn/antdv/)  /  [element](http://fast-crud.docmirror.cn/element/)  / [vben-admin-starter](http://fast-crud.docmirror.cn/vben/)    
+[antdv](http://fast-crud.docmirror.cn/antdv/)  /  [element](http://fast-crud.docmirror.cn/element/)  /  [naive-ui](http://fast-crud.docmirror.cn/naive/)     
 document：http://fast-crud.docmirror.cn/
 
 <div style="display:flex;">

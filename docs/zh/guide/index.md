@@ -11,9 +11,10 @@ FastCrud 是基于Vue3的面向配置的crud开发框架，快速开发crud功�
 
 * 源码地址:[Github](https://github.com/fast-crud/fast-crud)  /  [Gitee](https://gitee.com/fast-crud/fast-crud)   
 * 示例地址:
-[antdv版](http://fast-crud.docmirror.cn/antdv/)  /  [element版](http://fast-crud.docmirror.cn/element/)    
+[antdv版](http://fast-crud.docmirror.cn/antdv/)  /  [element版](http://fast-crud.docmirror.cn/element/)   /  [naive-ui版](http://fast-crud.docmirror.cn/naive/)
 * starter:
-[vben-starter](http://fast-crud.docmirror.cn/vben/) 
+  [vben-starter](http://fast-crud.docmirror.cn/vben/) / 
+  [cool-admin-starter](http://fast-crud.docmirror.cn/cool/)
 
 [![lerna](https://img.shields.io/badge/maintained%20with-lerna-cc00ff.svg)](https://lerna.js.org/)
 
