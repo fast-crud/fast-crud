@@ -5,7 +5,7 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 # [1.0.0-alpha.1](https://github.com/fast-crud/fast-crud/compare/v1.0.0-alpha.0...v1.0.0-alpha.1) (2022-01-06)
 
-**Note:** Version bump only for package @fast-crud/ui-interface
+**Note:** Version bump only for package @fast-crud/ui-naive
 
 
 
@@ -24,7 +24,10 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 # [0.22.0](https://github.com/fast-crud/fast-crud/compare/v0.21.0...v0.22.0) (2021-11-09)
 
-**Note:** Version bump only for package @fast-crud/ui-interface
+
+### Features
+
+* 升级element最新版，采用新版element-plus/icon ([bb7ea32](https://github.com/fast-crud/fast-crud/commit/bb7ea326f23020d930f70929e06b03f6d176bb9d))
 
 
 
@@ -32,7 +35,15 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 # [0.21.0](https://github.com/fast-crud/fast-crud/compare/v0.20.1...v0.21.0) (2021-11-02)
 
-**Note:** Version bump only for package @fast-crud/ui-interface
+**Note:** Version bump only for package @fast-crud/ui-antdv
+
+
+
+
+
+## [0.20.1](https://github.com/fast-crud/fast-crud/compare/v0.20.0...v0.20.1) (2021-10-25)
+
+**Note:** Version bump only for package @fast-crud/ui-antdv
 
 
 
@@ -40,7 +51,7 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 # [0.20.0](https://github.com/fast-crud/fast-crud/compare/v0.18.1...v0.20.0) (2021-10-19)
 
-**Note:** Version bump only for package @fast-crud/ui-interface
+**Note:** Version bump only for package @fast-crud/ui-antdv
 
 
 
@@ -48,7 +59,7 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 # [0.19.0](https://github.com/fast-crud/fast-crud/compare/v0.18.1...v0.19.0) (2021-10-18)
 
-**Note:** Version bump only for package @fast-crud/ui-interface
+**Note:** Version bump only for package @fast-crud/ui-antdv
 
 
 
@@ -89,7 +100,7 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 ## [0.17.1](https://github.com/fast-crud/fast-crud/compare/v0.17.0...v0.17.1) (2021-08-04)
 
-**Note:** Version bump only for package @fast-crud/ui-interface
+**Note:** Version bump only for package @fast-crud/ui-antdv
 
 
 
@@ -120,7 +131,7 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 ## [0.15.1](https://github.com/fast-crud/fast-crud/compare/v0.15.0...v0.15.1) (2021-07-09)
 
-**Note:** Version bump only for package @fast-crud/ui-interface
+**Note:** Version bump only for package @fast-crud/ui-antdv
 
 
 
@@ -128,7 +139,7 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 # [0.15.0](https://github.com/fast-crud/fast-crud/compare/v0.14.0...v0.15.0) (2021-07-06)
 
-**Note:** Version bump only for package @fast-crud/ui-interface
+**Note:** Version bump only for package @fast-crud/ui-antdv
 
 
 
@@ -136,7 +147,7 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 # [0.14.0](https://github.com/fast-crud/fast-crud/compare/v0.13.0...v0.14.0) (2021-07-05)
 
-**Note:** Version bump only for package @fast-crud/ui-interface
+**Note:** Version bump only for package @fast-crud/ui-antdv
 
 
 
@@ -144,7 +155,7 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 # [0.13.0](https://github.com/fast-crud/fast-crud/compare/v0.12.0...v0.13.0) (2021-07-04)
 
-**Note:** Version bump only for package @fast-crud/ui-interface
+**Note:** Version bump only for package @fast-crud/ui-antdv
 
 
 
@@ -152,7 +163,7 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 # [0.12.0](https://github.com/fast-crud/fast-crud/compare/v0.11.0...v0.12.0) (2021-07-03)
 
-**Note:** Version bump only for package @fast-crud/ui-interface
+**Note:** Version bump only for package @fast-crud/ui-antdv
 
 
 
@@ -160,7 +171,7 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 # [0.11.0](https://github.com/fast-crud/fast-crud/compare/v0.10.4...v0.11.0) (2021-07-02)
 
-**Note:** Version bump only for package @fast-crud/ui-interface
+**Note:** Version bump only for package @fast-crud/ui-antdv
 
 
 
