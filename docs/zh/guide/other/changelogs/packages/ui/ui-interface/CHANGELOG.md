@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [1.0.0-alpha.3](https://github.com/fast-crud/fast-crud/compare/v1.0.0-alpha.2...v1.0.0-alpha.3) (2022-01-07)
+
+
+### Features
+
+* 页面内打开表单对话框 ([2f34260](https://github.com/fast-crud/fast-crud/commit/2f342609201fe4dc30de9458a58e65a8cf414e46))
+
+
+
+
+
 # [1.0.0-alpha.1](https://github.com/fast-crud/fast-crud/compare/v1.0.0-alpha.0...v1.0.0-alpha.1) (2022-01-06)
 
 **Note:** Version bump only for package @fast-crud/ui-interface
