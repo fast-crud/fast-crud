@@ -80,6 +80,13 @@ export class Antdv implements UiInterface {
     buildInitBind(is) {
       return {};
     },
+    buildInnerBind({getInnerWrapper}) {
+      return {
+        getContainer() {
+          return getInnerWrapper();
+        }
+      };
+    },
     name: "fs-form-wrapper"
   };
 

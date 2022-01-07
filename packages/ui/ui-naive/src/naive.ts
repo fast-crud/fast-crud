@@ -88,6 +88,9 @@ export class Naive implements UiInterface {
     buildInitBind(is) {
       return { preset: "card" };
     },
+    buildInnerBind({getInnerWrapper}) {
+      return { to:getInnerWrapper() };
+    },
     hasContentWrap(is) {
       if (is === "n-drawer") {
         return "n-drawer-content";

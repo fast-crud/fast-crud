@@ -16,6 +16,7 @@
         </div>
       </div>
     </div>
+    <slot name="box"></slot>
   </div>
 </template>
 
@@ -95,7 +96,7 @@ export default defineComponent({
     flex: 1;
     .inner {
       position: absolute;
-      width:100%;
+      width: 100%;
       top: 0;
       bottom: 0;
       display: flex;

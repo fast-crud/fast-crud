@@ -80,6 +80,9 @@ export class Element implements UiInterface {
     buildInitBind(is) {
       return {};
     },
+    buildInnerBind(){
+      return {}
+    },
     name: "fs-form-wrapper"
   };
 

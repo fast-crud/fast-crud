@@ -16,7 +16,8 @@ export default {
      * 表单配置
      * {
      *     wrapper:{ //表单包装配置
-     *         is: 'el-dialog'//el-dialog|a-modal|el-drawer|a-drawer
+     *         is: 'el-dialog'//el-dialog|a-modal|el-drawer|a-drawer,
+     *         inner:false //是否在页面内部打开
      *     }
      *     ...FsForm配置
      * }
@@ -25,15 +26,18 @@ export default {
     /**
      * 插槽
      */
-    slots: {}
+    slots: {},
+    inner:{},
+    innerWrapper: {}
   },
-  emits: ["reset", "submit", "validationError", "value-change", "open", "opened", "closed"],
+  emits: ["reset", "submit", "validationError", "value-change", "open", "opened", "closed", "inner-change"],
   setup(props, ctx) {
     const { t } = useI18n();
     const formWrapperOpen = ref(false);
     const formWrapperIs = ref();
     const formOptions = ref();
-    const formWrapper = ref();
+    const formWrapperBind = ref();
+    const formWrapperOpts = ref();
     const formRef = ref();
     const loading = ref(false);
 
@@ -48,8 +52,9 @@ export default {
       }
       title.value = wrapper.title;
       formWrapperIs.value = opts.wrapper.is;
-      formWrapper.value = {
-        ..._.omit(wrapper, "title", "onOpen", "onClosed", "onOpened", "is")
+      formWrapperOpts.value = wrapper;
+      formWrapperBind.value = {
+        ..._.omit(wrapper, "title", "onOpen", "onClosed", "onOpened", "is","inner")
       };
       //form的配置
       formOptions.value = {
@@ -63,7 +68,7 @@ export default {
       // 发射打开事件
       function buildEvent() {
         return {
-          wrapper: formWrapper.value,
+          wrapper: formWrapperBind.value,
           options: formOptions.value,
           formRef: formRef.value
         };
@@ -83,6 +88,11 @@ export default {
       nextTick(() => {
         onOpened();
       });
+
+      /**
+       * 是否内部打开对话框
+       */
+      ctx.emit("inner-change", !!formWrapperOpts.value.inner);
     };
     const close = () => {
       formWrapperOpen.value = false;
@@ -140,7 +150,7 @@ export default {
           loading: loading.value
         }
       };
-      return _.merge(defBtns, formWrapper.value?.buttons);
+      return _.merge(defBtns, formWrapperBind.value?.buttons);
     });
 
     onMounted(() => {
@@ -157,6 +167,19 @@ export default {
       fullscreen.value = !fullscreen.value;
     }
 
+    const ui = uiContext.get();
+    //内部打开dialog配置
+    const innerBind = computed(() => {
+      if (!formWrapperOpts.value.inner) {
+        return {};
+      }
+      return ui.formWrapper.buildInnerBind({
+        getInnerWrapper() {
+          return props.innerWrapper;
+        }
+      });
+    });
+
     return {
       close,
       onClosed,
@@ -169,18 +192,19 @@ export default {
       formOptions,
       formWrapperIs,
       formWrapperOpen,
-      formWrapper,
+      formWrapperBind,
       formRef,
       submit,
       computedButtons,
       loading,
       getFormData,
       setFormData,
-      onValueChange
+      onValueChange,
+      innerBind
     };
   },
   render() {
-    if (!this.formWrapper) {
+    if (!this.formWrapperBind) {
       return null;
     }
     const ui = uiContext.get();
@@ -269,7 +293,7 @@ export default {
       }
     };
     const vClosed = this.$fsui.formWrapper.buildOnClosedBind(is, this.onClosed);
-    const customClass = `fs-form-wrapper ${this.formWrapper.customClass || ""}  ${
+    const customClass = `fs-form-wrapper ${this.formWrapperBind.customClass || ""}  ${
       this.fullscreen ? "fs-fullscreen" : ""
     }`;
     const vCustomClass = {
@@ -284,10 +308,11 @@ export default {
     return (
       <formWrapperComp
         {...vCustomClass}
-        {...this.formWrapper}
+        {...this.formWrapperBind}
         {...vModel}
         {...vClosed}
         {...vFullScreen}
+        {...this.innerBind}
         v-slots={children}
       />
     );
@@ -346,11 +371,6 @@ export default {
 //for antdv
 
 .fs-form-wrapper {
-  &.fs-dialog-inner {
-    &.ant-modal {
-      margin-top: 50px;
-    }
-  }
   &.fs-fullscreen {
     &.ant-modal {
       width: 100% !important;
@@ -371,6 +391,14 @@ export default {
 }
 
 // for element
+.fs-form-inner-wrapper {
+  .el-overlay{
+    position: absolute;
+    .el-overlay-dialog{
+      position: absolute;
+    }
+  }
+}
 .fs-form-wrapper {
   .el-dialog__header {
     padding: 20px 20px;
@@ -426,5 +454,36 @@ export default {
       position: relative;
     }
   }
+}
+
+
+// inner
+// element 不需要
+
+// naive-ui
+.fs-form-inner-wrapper {
+  .n-modal-container{
+  position: unset;
+  left: unset;
+   top: unset;
+   height: unset;
+   width: unset
+}
+.n-modal-mask {
+position: absolute;
+}
+.n-modal-body-wrapper{
+position: absolute;
+}
+}
+
+// antdv
+.fs-form-inner-wrapper {
+.ant-modal-mask {
+position: absolute;
+}
+.ant-modal-wrap {
+position: absolute;
+}
 }
 </style>

@@ -51,12 +51,19 @@
       :data="data"
       :cell-slots="computedCellSlots"
     />
-    <!-- 编辑对话框 -->
-    <fs-form-wrapper
-      ref="formWrapperRef"
-      :slots="computedFormSlots"
-      @value-change="$emit('form-value-change', $event)"
-    />
+
+    <template #box>
+      <div ref="innerWrapperRef" class="fs-form-wrapper-container" :class="{ 'fs-form-inner-wrapper': isFormInner }">
+        <!-- 编辑对话框 -->
+        <fs-form-wrapper
+          ref="formWrapperRef"
+          :slots="computedFormSlots"
+          :inner-wrapper="innerWrapperRef"
+          @inner-change="onFormInnerChange"
+          @value-change="$emit('form-value-change', $event)"
+        />
+      </div>
+    </template>
 
     <template #footer>
       <div class="fs-crud-footer">
@@ -249,6 +256,13 @@ function useTable(props, ctx) {
     return clazz;
   });
 
+  const innerWrapperRef = ref();
+
+  const isFormInner = ref(false);
+  const onFormInnerChange = (value) => {
+    isFormInner.value = value;
+  };
+
   return {
     tableRef,
     containerRef,
@@ -256,11 +270,14 @@ function useTable(props, ctx) {
     computedToolbar,
     computedCellSlots,
     formWrapperRef,
+    isFormInner,
+    onFormInnerChange,
     computedFormSlots,
     computedSearchSlots,
     computedToolbarSlots,
     computeBodyHeight,
-    computedClass
+    computedClass,
+    innerWrapperRef
   };
 }
 
