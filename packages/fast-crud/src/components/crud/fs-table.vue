@@ -186,12 +186,15 @@ export default {
     /**
      * 操作列
      */
-    rowHandle: {},
+    rowHandle: {
+      type: Object
+    },
     /**
      * 是否显示表格
      */
     show: {
-      type: Boolean
+      type: Boolean,
+      default: true
     },
     /**
      * 表格数据

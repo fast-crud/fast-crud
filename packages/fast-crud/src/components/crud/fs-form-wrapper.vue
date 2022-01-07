@@ -298,9 +298,6 @@ export default {
 .fs-form-wrapper {
   display: flex;
   flex-direction: column;
-  &.fs-dialog-inner {
-    position: absolute;
-  }
   .fs-form-footer-btns {
     display: flex;
     margin-top: 20px;
@@ -349,6 +346,11 @@ export default {
 //for antdv
 
 .fs-form-wrapper {
+  &.fs-dialog-inner {
+    &.ant-modal {
+      margin-top: 50px;
+    }
+  }
   &.fs-fullscreen {
     &.ant-modal {
       width: 100% !important;
