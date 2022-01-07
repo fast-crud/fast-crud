@@ -4,10 +4,14 @@ import FsButton from "./basic/fs-button.vue";
 import FsIcon from "./basic/fs-icon.vue";
 import FsIconify from "./basic/fs-iconify.vue";
 import FsLoading from "./basic/fs-loading.vue";
+import FsBox from "./basic/fs-box.vue";
 import FsComponentRender from "./render/fs-component-render.vue";
 import FsSlotRender from "./render/fs-slot-render.vue";
-import FsBox from "./basic/fs-box.vue";
+import FsRender from "./render/fs-render.vue";
+
 import FsForm from "./crud/fs-form.vue";
+import FsFormItem from "./crud/fs-form-item.vue";
+import FsFormHelper from "./crud/fs-form-helper.vue";
 import FsFormWrapper from "./crud/fs-form-wrapper.vue";
 import FsCrud from "./fs-crud.vue";
 import FsRowHandle from "./crud/fs-row-handle.vue";
@@ -32,11 +36,14 @@ export {
   FsContainer,
   FsComponentRender,
   FsSlotRender,
+  FsRender,
   FsButton,
   FsLoading,
   FsIcon,
   FsIconify,
   FsForm,
+  FsFormItem,
+  FsFormHelper,
   FsFormWrapper,
   FsCrud,
   FsTable,

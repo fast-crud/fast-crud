@@ -80,6 +80,7 @@ export default {
         showTotal: (total) => t("fs.pagination.showTotal", [total]) //antdv
       },
       table: {
+        show: true,
         height: "100%",
         rowKey: ui.table.defaultRowKey,
         stripe: true,
