@@ -150,10 +150,16 @@ export default {
       type: Function,
       default: undefined
     },
+    /**
+     * 表单提交前处理（async）
+     */
     beforeSubmit: {
       type: Function,
       default: undefined
     },
+    /**
+     * 表单提交后处理（async）
+     */
     afterSubmit: {
       type: Function,
       default: undefined
@@ -380,14 +386,17 @@ export default {
       });
 
       if (props.beforeSubmit) {
-        props.beforeSubmit(submitScope);
+        const ret = await props.beforeSubmit(submitScope);
+        if(ret === false){
+          return;
+        }
       }
       if (props.doSubmit) {
         await props.doSubmit(submitScope);
       }
       ctx.emit("submit", submitScope);
       if (props.afterSubmit) {
-        props.afterSubmit(submitScope);
+        await props.afterSubmit(submitScope);
       }
     }
 

@@ -170,3 +170,13 @@
 * 说明: 提交表单时执行的方法（独立使用表单时，通过`formRef.submit()`可触发此方法）
 * 类型：async Function(context)
 * 默认：默认无需配置，通过`useCrud`自动生成
+
+
+## beforeSubmit
+* 说明: 表单提交前触发，返回false则中止提交
+* 类型：async Function(context)
+
+
+## doSubmit
+* 说明: 表单提交后触发
+* 类型：async Function(context)
