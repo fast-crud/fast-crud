@@ -37,7 +37,6 @@
 </template>
 <script>
 import { computed, defineComponent } from "vue";
-import FsButton from "../basic/fs-button";
 import _ from "lodash-es";
 import traceUtil from "../../utils/util.trace";
 import { useI18n } from "../../locale";
@@ -50,15 +49,13 @@ import { Constants } from "../../utils/util.constants";
  */
 export default defineComponent({
   name: "FsRowHandle",
-  components: {
-    // eslint-disable-next-line vue/no-unused-components
-    FsButton
-  },
   props: {
     /**
-     * 按钮折叠
+     * 按钮折叠配置
      */
-    dropdown: {},
+    dropdown: {
+      type: Object
+    },
     /**
      * 按钮配置
      * {
@@ -68,18 +65,23 @@ export default defineComponent({
      *   ...自定义
      * }
      */
-    buttons: {},
+    buttons: {
+      type: Object
+    },
     /**
      * 按钮分组,上面的buttons为默认分组
      *  {
      *    groupKey:{buttonKey:{},buttonKey2:{}}
      *  }
      */
-    group: {},
+    group: {
+      type: Object
+    },
     /**
      * 当前激活分组
      */
     active: {
+      type: String,
       default: "default"
     },
     /**

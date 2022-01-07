@@ -115,3 +115,23 @@ async pageRequest(opts){
   }
 }
 ```
+
+## infoRequest
+
+* 说明：详情请求,在add,edit,view对话框打开前，先通过infoRequest获取详情，作为初始表单，如果不配置则以表格数据作为初始值
+* 类型：async Function({mode,row}) : row
+* 示例：
+```js
+const crudOptions = {
+  request: {
+    infoRequest: async ({ mode, row }) => {
+      if(mode === 'edit'){
+          //编辑的时候去后台获取最新的详情
+          return await api.GetObj(row.id);
+      }   
+      //其他情况下直接使用表格中的行数据作为初始表单
+      return row;
+    };
+  }
+}
+```

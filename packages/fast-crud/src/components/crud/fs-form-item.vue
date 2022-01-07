@@ -52,16 +52,13 @@
   </component>
 </template>
 <script>
-import FsRender from "../render/fs-render";
 import { ref, computed } from "vue";
-import FsFormHelper from "./fs-form-helper.vue";
 import _ from "lodash-es";
 /**
  * form-item组件封装
  */
 export default {
   name: "FsFormItem",
-  components: { FsFormHelper, FsRender },
   props: {
     /**
      * 表单字段值(v-model)
@@ -81,16 +78,10 @@ export default {
       type: Function,
       default: undefined
     },
-    /**
-     * 获取上下文方法
-     */
     getContextFn: {
       type: Function,
       default: undefined
     },
-    /**
-     * helper配置
-     */
     helper: {
       type: Object
     }

@@ -1,3 +1,4 @@
+<script lang="jsx">
 import {
   getCurrentInstance,
   ref,
@@ -10,11 +11,7 @@ import {
   toRef
 } from "vue";
 import _ from "lodash-es";
-import FsRowHandle from "./fs-row-handle.vue";
-import FsComponentRender from "../render/fs-component-render";
-import "./fs-table.less";
 import { uiContext } from "../../ui";
-import { useCompute } from "../../use/use-compute";
 import { useEditable } from "./editable/use-editable";
 import logger from "../../utils/util.log";
 
@@ -165,12 +162,11 @@ function buildTableColumns({ props, ctx, ui, getContextFn, componentRefs, render
   return columns;
 }
 /**
- * table封装
+ * fs-table,表格封装
  * 支持el-table/a-table的参数
  */
 export default {
   name: "FsTable",
-  components: { FsComponentRender, FsRowHandle },
   props: {
     /**
      * table插槽
@@ -194,19 +190,22 @@ export default {
     /**
      * 是否显示表格
      */
-    show: {},
+    show: {
+      type: Boolean
+    },
     /**
      * 表格数据
      */
-    data: {},
+    data: {
+      type: Array
+    },
 
     /**
      * 行编辑，批量编辑
      */
-    editable: {},
-    /**
-     * 没啥用，过滤一下多余配置
-     */
+    editable: {
+      type: Object
+    },
     request: {}
   },
   emits: ["row-handle", "value-change", "pagination-change", "filter-change", "sort-change"],
@@ -364,7 +363,6 @@ export default {
         });
       });
 
-
       return () => {
         if (props.show === false) {
           return;
@@ -373,8 +371,44 @@ export default {
         const dataSource = {
           [ui.table.data]: props.data
         };
-        return <tableComp ref={tableRef} {...ctx.attrs} columns={computedColumns.value} {...dataSource} v-slots={props.slots} />;
+        return (
+          <tableComp
+            ref={tableRef}
+            {...ctx.attrs}
+            columns={computedColumns.value}
+            {...dataSource}
+            v-slots={props.slots}
+          />
+        );
       };
     }
   }
 };
+</script>
+<style lang="less">
+.fs-crud-table {
+  height: 100px;
+  &.ant-table-wrapper {
+  }
+  .ant-table-bordered {
+    border-bottom: 1px solid #eee;
+
+    .ant-table-content {
+    }
+  }
+
+  .fs-current-row {
+    background-color: #b0e2ff;
+    td {
+      background-color: unset;
+    }
+  }
+
+  &.el-table--small td {
+    padding: 2px 0;
+  }
+  .el-table__expanded-cell[class*="cell"] {
+    padding: 10px 50px;
+  }
+}
+</style>

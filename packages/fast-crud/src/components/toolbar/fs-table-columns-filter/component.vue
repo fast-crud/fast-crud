@@ -54,7 +54,6 @@
 <script>
 import draggable from "vuedraggable/src/vuedraggable";
 import _ from "lodash-es";
-import FsButton from "../../basic/fs-button";
 import FsTableColumnsFixedController from "../fs-table-columns-fixed-controller/component.vue";
 import TableStore from "../../../utils/util.store";
 import { useI18n } from "../../../locale";
@@ -70,7 +69,6 @@ export default {
   components: {
     // eslint-disable-next-line vue/no-unused-components
     draggable,
-    FsButton,
     FsTableColumnsFixedController
   },
   props: {

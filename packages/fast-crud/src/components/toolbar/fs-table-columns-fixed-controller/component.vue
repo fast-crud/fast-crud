@@ -22,12 +22,8 @@
 </template>
 
 <script>
-import FsButton from "../../basic/fs-button";
 export default {
   name: "FsTableColumnsFixedController",
-  components: {
-    FsButton
-  },
   props: {
     modelValue: {
       default: false

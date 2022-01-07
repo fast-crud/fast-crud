@@ -1,3 +1,4 @@
+<script lang="tsx">
 import { resolveDynamicComponent, defineComponent, computed } from "vue";
 import { useUi } from "../../use/use-ui";
 /**
@@ -52,3 +53,4 @@ export default defineComponent({
     };
   }
 });
+</script>

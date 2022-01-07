@@ -10,15 +10,28 @@
   </div>
 </template>
 <script>
-import FsRender from "../render/fs-render.jsx";
 /**
- * form-item组件封装
+ * 表单字段帮助说明组件
  */
 export default {
   name: "FsFormHelper",
-  components: { FsRender },
   props: {
-    helper: {},
+    /**
+     * 帮助说明, text: 说明文字, render: function(scope) 自定义渲染
+     */
+    helper: {
+      type: [
+        /**
+         * text: 说明文字,
+         * render: function , 自定义render
+         */
+        Object,
+        /**
+         * 说明文本
+         */
+        String
+      ]
+    },
     scope: {}
   }
 };

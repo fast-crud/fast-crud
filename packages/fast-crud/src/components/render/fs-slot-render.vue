@@ -1,20 +1,28 @@
-import { h } from "vue";
-import traceUtil from "../../utils/util.trace";
+<script lang="jsx">
+/**
+ * 插槽render组件
+ */
 export default {
   name: "FsSlotRender",
   inheritAttrs: false,
   props: {
+    /**
+     * 插槽
+     */
     slots: {
       type: Function
     },
+    /**
+     * 上下文
+     */
     scope: {
       type: Object
     }
   },
   setup(props) {
-    traceUtil.trace("fs-slot-render");
     return () => {
       return props.slots(props.scope);
     };
   }
 };
+</script>

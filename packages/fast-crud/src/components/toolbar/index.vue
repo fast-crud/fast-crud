@@ -15,12 +15,9 @@
 
 <script>
 import FsTableColumnsFilter from "./fs-table-columns-filter/component.vue";
-import FsButton from "../basic/fs-button";
 import _ from "lodash-es";
-import { ref, computed, getCurrentInstance } from "vue";
-import traceUtil from "../../utils/util.trace";
+import { ref, computed } from "vue";
 import { useI18n } from "../../locale";
-import FsSlotRender from "../render/fs-slot-render";
 import { Constants } from "../../utils/util.constants";
 import { uiContext } from "../../ui";
 
@@ -30,7 +27,7 @@ import { uiContext } from "../../ui";
 export default {
   name: "FsToolbar",
   // eslint-disable-next-line vue/no-unused-components
-  components: { FsTableColumnsFilter, FsButton, FsSlotRender },
+  components: { FsTableColumnsFilter },
   props: {
     /**
      * 按钮配置

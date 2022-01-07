@@ -1,6 +1,6 @@
+<script lang="tsx">
 import { resolveDynamicComponent, defineComponent, h } from "vue";
-import "./style.less";
-import { useUi } from "../../../use";
+import { useUi } from "../../use";
 
 /**
  * 按钮，支持el-button/a-button的配置
@@ -72,3 +72,31 @@ export default defineComponent({
     );
   }
 });
+</script>
+
+<style lang="less">
+.fs-button {
+  &.is-thin {
+    &.el-button--small,
+    &.el-button--small.is-round {
+      padding: 9px 9px;
+    }
+    &.el-button--mini,
+    &.el-button--mini.is-round {
+      padding: 7px 7px;
+    }
+    &.el-button [class*="el-icon-"] + span {
+      margin-left: 0;
+    }
+  }
+
+  &.ant-btn {
+    line-height: 0;
+  }
+  &.ant-btn > .anticon {
+    line-height: 0;
+    margin-left: 2px;
+    margin-right: 2px;
+  }
+}
+</style>

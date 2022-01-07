@@ -1,5 +1,5 @@
+<script lang="jsx">
 import { computed } from "vue";
-import "./fs-editable-cell.less";
 import { uiContext } from "../../../ui";
 import { useCompute } from "../../../use/use-compute";
 /**
@@ -108,3 +108,51 @@ export default {
     }
   }
 };
+</script>
+<style lang="less">
+.fs-crud-table {
+  .fs-cell-edit {
+    display: flex;
+    width: 100%;
+    align-items: center;
+    min-height: 23px;
+    .fs-cell-edit-dirty {
+      border-radius: 100px;
+      width: 5px;
+      height: 5px;
+      margin-left: -5px;
+      background: red;
+    }
+    .fs-cell-edit-input {
+      flex: 1;
+    }
+    .fs-cell-edit-action {
+      display: flex;
+      justify-content: flex-end;
+      align-items: center;
+      margin-left: 10px;
+      i,
+      .anticon {
+        width: 20px;
+        text-align: center;
+        font-size: 16px;
+        cursor: pointer;
+      }
+    }
+
+    .fs-cell-edit-icon {
+      visibility: hidden;
+    }
+    &:hover .fs-cell-edit-icon {
+      visibility: visible;
+    }
+
+    .el-radio {
+      margin-right: 5px;
+      .el-radio__label {
+        padding: 2px;
+      }
+    }
+  }
+}
+</style>

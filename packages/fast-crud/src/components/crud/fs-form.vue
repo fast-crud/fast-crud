@@ -88,11 +88,9 @@
 import { ref, unref, reactive, getCurrentInstance, toRaw, computed, onMounted } from "vue";
 import _ from "lodash-es";
 import { AsyncComputeValue, useCompute } from "../../use/use-compute";
-import FsRender from "../render/fs-render";
 import logger from "../../utils/util.log";
 import { uiContext } from "../../ui";
 import { useMerge } from "../../use/use-merge";
-import FsFormItem from "./fs-form-item.vue";
 import { Constants } from "../../utils/util.constants";
 
 /**
@@ -103,7 +101,6 @@ import { Constants } from "../../utils/util.constants";
  */
 export default {
   name: "FsForm",
-  components: { FsFormItem, FsRender },
   props: {
     /**
      * 初始表单数据
@@ -387,7 +384,7 @@ export default {
 
       if (props.beforeSubmit) {
         const ret = await props.beforeSubmit(submitScope);
-        if(ret === false){
+        if (ret === false) {
           return;
         }
       }

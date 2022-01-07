@@ -5,7 +5,7 @@
 </template>
 <script>
 /**
- * 单纯的包裹
+ * 单纯的包裹一个子组件
  */
 export default {
   name: "FsBox"

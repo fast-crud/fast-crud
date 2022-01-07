@@ -1,4 +1,7 @@
-import traceUtil from "../../utils/util.trace";
+<script lang="jsx">
+/**
+ * 自定义render组件
+ */
 export default {
   name: "FsRender",
   functional: true,
@@ -10,10 +13,9 @@ export default {
       type: Object
     }
   },
-  setup() {
-    traceUtil.trace("fs-render");
-  },
+  setup() {},
   render() {
     return this.renderFunc(this.scope);
   }
 };
+</script>

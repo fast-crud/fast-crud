@@ -1,5 +1,5 @@
+<script lang="jsx">
 import { useCompute } from "../../use/use-compute";
-import { toRef } from "vue";
 /**
  * 单元格显示组件
  */
@@ -45,3 +45,4 @@ export default {
     }
   }
 };
+</script>

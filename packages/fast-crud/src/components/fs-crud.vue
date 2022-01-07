@@ -78,14 +78,8 @@
   </fs-container>
 </template>
 <script>
-import { defineComponent, computed, provide, ref, toRef, getCurrentInstance, reactive, nextTick, onMounted } from "vue";
+import { defineComponent, computed, provide, ref, toRef, nextTick, onMounted } from "vue";
 import _ from "lodash-es";
-import FsContainer from "./container/fs-container.vue";
-import FsRowHandle from "./crud/fs-row-handle.vue";
-import FsFormWrapper from "./crud/fs-form-wrapper.jsx";
-import FsActionbar from "./actionbar/index.vue";
-import FsToolbar from "./toolbar/index.vue";
-import FsTable from "./crud/fs-table.jsx";
 import traceUtil from "../utils/util.trace";
 import { uiContext } from "../ui";
 import { useMerge } from "../use/use-merge";
@@ -98,7 +92,6 @@ function useProviders(props, ctx) {
     ctx.emit("update:columns", columns);
   });
 }
-
 function useSearch(props, ctx) {
   const searchRef = ref();
   const searchFormData = ref(_.cloneDeep(props.search.initialForm || {}));
@@ -276,14 +269,6 @@ function useTable(props, ctx) {
  */
 export default defineComponent({
   name: "FsCrud",
-  components: {
-    FsTable,
-    FsRowHandle,
-    FsContainer,
-    FsFormWrapper,
-    FsActionbar,
-    FsToolbar
-  },
   inheritAttrs: false,
   props: {
     /**

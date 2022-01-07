@@ -1,3 +1,4 @@
+<script lang="jsx">
 import {
   computed,
   getCurrentInstance,
@@ -22,6 +23,9 @@ function mergeEventHandles(target, eventName) {
   }
 }
 const htmlTags = ["div", "span", "a", "p", "pre", "li", "ol", "ul"];
+/**
+ * 组件动态渲染组件
+ */
 export default {
   name: "FsComponentRender",
   inheritAttrs: false,
@@ -200,3 +204,4 @@ export default {
     return <inputComp {...merged}>{this.childrenRendered()}</inputComp>;
   }
 };
+</script>

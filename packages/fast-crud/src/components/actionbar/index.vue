@@ -7,13 +7,11 @@
 </template>
 <script>
 import { defineComponent, toRef } from "vue";
-import FsButton from "../basic/fs-button";
 import traceUtil from "../../utils/util.trace";
 import { useCompute } from "../../use/use-compute";
 
 export default defineComponent({
   name: "FsActionbar",
-  components: { FsButton },
   props: {
     /**
      * 按钮配置

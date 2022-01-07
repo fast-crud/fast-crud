@@ -88,9 +88,6 @@
 <script>
 import { computed, nextTick, reactive, ref, unref, watch, onMounted } from "vue";
 import _ from "lodash-es";
-import fsButton from "../basic/fs-button";
-import FsComponentRender from "../../components/render/fs-component-render";
-import FsSlotRender from "../../components/render/fs-slot-render";
 import { useCompute } from "../../use/use-compute";
 import { uiContext } from "../../ui";
 import { useI18n } from "../../locale";
@@ -102,8 +99,6 @@ import { Constants } from "../../utils/util.constants";
  */
 export default {
   name: "FsSearch",
-  // eslint-disable-next-line vue/no-unused-components
-  components: { FsComponentRender, FsSlotRender, fsButton },
   inheritAttrs: false,
   props: {
     /**
@@ -149,6 +144,7 @@ export default {
     },
     /**
      * 自动查询，防抖设置
+     * 传false则关闭自动查询
      */
     debounce: {
       type: Object
@@ -534,7 +530,7 @@ export default {
       }
       margin: 1px 0;
       &:first-child {
-       // margin-left: 0;
+        // margin-left: 0;
       }
     }
 

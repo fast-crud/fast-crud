@@ -13,7 +13,7 @@ export type UseExposeProps = {
 };
 
 export type UseEditableProps = {
-  crudExpose
+  crudExpose;
 };
 
 function useEditable({ crudExpose }) {
@@ -159,8 +159,8 @@ export function useExpose(props: UseExposeProps): { expose: CrudExpose; crudExpo
       const formRef = crudExpose.getFormRef();
       return formRef?.getComponentRef(key, isAsync);
     },
-    doValueBuilder(records,columns) {
-      if(columns){
+    doValueBuilder(records, columns) {
+      if (columns) {
         columns = toRaw(crudBinding.value.columns);
       }
       logger.debug("doValueBuilder ,columns=", columns);
@@ -183,8 +183,8 @@ export function useExpose(props: UseExposeProps): { expose: CrudExpose; crudExpo
       });
       logger.debug("valueBuilder success:", records);
     },
-    doValueResolve({ form },columns) {
-      if(columns == null){
+    doValueResolve({ form }, columns) {
+      if (columns == null) {
         columns = toRaw(crudBinding.value.columns);
       }
       logger.debug("doValueResolve ,columns=", columns);
@@ -202,8 +202,8 @@ export function useExpose(props: UseExposeProps): { expose: CrudExpose; crudExpo
       logger.debug("valueResolve success:", form);
     },
     getSearchFormData() {
-      if(!crudRef.value){
-        return {}
+      if (!crudRef.value) {
+        return {};
       }
       return crudRef.value.getSearchFormData();
     },
@@ -221,12 +221,12 @@ export function useExpose(props: UseExposeProps): { expose: CrudExpose; crudExpo
           pageSize: crudBinding.value.pagination.pageSize
         };
       }
-      let searchFormData = _.cloneDeep(crudExpose.getSearchFormData())
+      const searchFormData = _.cloneDeep(crudExpose.getSearchFormData());
       //配置searchValueResolve
-      if(crudBinding.value?.search?.columns){
-        crudExpose.doValueResolve({form:searchFormData},toRaw(crudBinding.value.search.columns))
+      if (crudBinding.value?.search?.columns) {
+        crudExpose.doValueResolve({ form: searchFormData }, toRaw(crudBinding.value.search.columns));
       }
-      crudExpose.doValueResolve({form:searchFormData})
+      crudExpose.doValueResolve({ form: searchFormData });
 
       const sort = crudBinding.value.sort || {};
       let query = { page, form: searchFormData, sort };
@@ -358,9 +358,14 @@ export function useExpose(props: UseExposeProps): { expose: CrudExpose; crudExpo
       this.getFormWrapperRef().open(context);
     },
     async openAdd(context: any = {}) {
+      const mode = "add";
+      let row = context.row;
+      if (crudBinding.value?.request?.infoRequest) {
+        row = await crudBinding.value.request.infoRequest({ mode, row });
+      }
       const options = {
-        mode: "add",
-        initialForm: context.row || {},
+        mode,
+        initialForm: row || {},
         ...crudBinding.value.addForm
       };
       _.merge(options, context);
@@ -371,8 +376,12 @@ export function useExpose(props: UseExposeProps): { expose: CrudExpose; crudExpo
       if (row == null && context.index != null) {
         row = crudExpose.getTableDataRow(context.index);
       }
+      const mode = "edit";
+      if (crudBinding.value?.request?.infoRequest) {
+        row = await crudBinding.value.request.infoRequest({ mode, row });
+      }
       const options = {
-        mode: "edit",
+        mode,
         initialForm: row,
         ...crudBinding.value.editForm
       };
@@ -384,8 +393,12 @@ export function useExpose(props: UseExposeProps): { expose: CrudExpose; crudExpo
       if (row == null && context.index != null) {
         row = crudExpose.getTableDataRow(context.index);
       }
+      const mode = "view";
+      if (crudBinding.value?.request?.infoRequest) {
+        row = await crudBinding.value.request.infoRequest({ mode, row });
+      }
       const options = {
-        mode: "view",
+        mode,
         initialForm: row,
         ...crudBinding.value.viewForm
       };
