@@ -259,6 +259,27 @@ const crudOptions = {
 * 类型：Object
 参考组件配置[component](../common-options.md)
 
+
+### [key].search.valueResolve
+* 说明：查询字段值转化，doRefresh查询数据时会被执行
+* 类型：Function({form})
+```js
+const crudOptions ={
+  columns:{
+      test:{
+          search:{
+              valueResolve({key,value,form}){
+                  if(value!= null){
+                      //当后台需要的是int类型，输入的是string，就需要转化一下
+                      form[key] = parseInt(value)
+                  }
+              }
+          }
+      }
+  }   
+}
+```
+
 ### [key].search.order
 * 说明：查询排序号，数字越小越靠前排列。
 * 类型：number
