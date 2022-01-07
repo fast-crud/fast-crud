@@ -23,12 +23,12 @@ export type CrudExpose = {
    * 执行valueBuilder
    * @param records 表格数据列表
    */
-  doValueBuilder: (records) => void;
+  doValueBuilder: (records,columns ?: Object) => void;
   /**
    * 执行valueResolve
    * @param context { form }
    */
-  doValueResolve: (context: { form: any }) => void;
+  doValueResolve: (context: { form: any },columns ?: Object) => void;
   /**
    * 刷新列表数据
    */

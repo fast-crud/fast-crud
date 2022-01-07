@@ -159,9 +159,11 @@ export function useExpose(props: UseExposeProps): { expose: CrudExpose; crudExpo
       const formRef = crudExpose.getFormRef();
       return formRef?.getComponentRef(key, isAsync);
     },
-    doValueBuilder(records) {
-      const columns = toRaw(crudBinding.value.columns);
-      logger.debug("columns", columns);
+    doValueBuilder(records,columns) {
+      if(columns){
+        columns = toRaw(crudBinding.value.columns);
+      }
+      logger.debug("doValueBuilder ,columns=", columns);
       const valueBuilderColumns = _.filter(columns, (column) => {
         return column.valueBuilder != null;
       });
@@ -181,8 +183,11 @@ export function useExpose(props: UseExposeProps): { expose: CrudExpose; crudExpo
       });
       logger.debug("valueBuilder success:", records);
     },
-    doValueResolve({ form }) {
-      const columns = toRaw(crudBinding.value.columns);
+    doValueResolve({ form },columns) {
+      if(columns == null){
+        columns = toRaw(crudBinding.value.columns);
+      }
+      logger.debug("doValueResolve ,columns=", columns);
       _.forEach(columns, (column, key) => {
         if (column.valueResolve) {
           column.valueResolve({
@@ -197,6 +202,9 @@ export function useExpose(props: UseExposeProps): { expose: CrudExpose; crudExpo
       logger.debug("valueResolve success:", form);
     },
     getSearchFormData() {
+      if(!crudRef.value){
+        return {}
+      }
       return crudRef.value.getSearchFormData();
     },
     /**
@@ -213,10 +221,12 @@ export function useExpose(props: UseExposeProps): { expose: CrudExpose; crudExpo
           pageSize: crudBinding.value.pagination.pageSize
         };
       }
-      let searchFormData = {};
-      if (crudRef.value) {
-        searchFormData = crudExpose.getSearchFormData();
+      let searchFormData = _.cloneDeep(crudExpose.getSearchFormData())
+      //配置searchValueResolve
+      if(crudBinding.value?.search?.columns){
+        crudExpose.doValueResolve({form:searchFormData},toRaw(crudBinding.value.search.columns))
       }
+      crudExpose.doValueResolve({form:searchFormData})
 
       const sort = crudBinding.value.sort || {};
       let query = { page, form: searchFormData, sort };
@@ -274,7 +284,7 @@ export function useExpose(props: UseExposeProps): { expose: CrudExpose; crudExpo
      * }
      */
     async doSearch(opts) {
-      logger.debug("dosearch:", opts);
+      logger.debug("do search:", opts);
       opts = merge({ goFirstPage: true }, opts);
       if (opts.goFirstPage) {
         crudExpose.doPageTurn(1);
