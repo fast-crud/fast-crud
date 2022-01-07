@@ -3,6 +3,25 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [1.0.0-alpha.3](https://github.com/fast-crud/fast-crud/compare/v1.0.0-alpha.2...v1.0.0-alpha.3) (2022-01-07)
+
+
+### Bug Fixes
+
+* 修复table不显示的问题 ([ffd4b1c](https://github.com/fast-crud/fast-crud/commit/ffd4b1c11a826661c2a0e7f50bb6a345d6afc965))
+
+
+### Features
+
+* 新增一些组件的文档生成 ([9892016](https://github.com/fast-crud/fast-crud/commit/9892016e11b9e3214c08d30aefbe6a692fe0b7ee))
+* 页面内打开表单对话框 ([2f34260](https://github.com/fast-crud/fast-crud/commit/2f342609201fe4dc30de9458a58e65a8cf414e46))
+* form 增加beforeSubmit，和afterSubmit配置 ([aadc77d](https://github.com/fast-crud/fast-crud/commit/aadc77d473c6275578e58347892ac0328cf9698e))
+* search支持valueResolve ([6743580](https://github.com/fast-crud/fast-crud/commit/674358017310854d79e870beaa6a50041d55afc0))
+
+
+
+
+
 # [1.0.0-alpha.2](https://github.com/fast-crud/fast-crud/compare/v1.0.0-alpha.1...v1.0.0-alpha.2) (2022-01-06)
 
 
