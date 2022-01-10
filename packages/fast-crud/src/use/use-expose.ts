@@ -160,7 +160,7 @@ export function useExpose(props: UseExposeProps): { expose: CrudExpose; crudExpo
       return formRef?.getComponentRef(key, isAsync);
     },
     doValueBuilder(records, columns) {
-      if (columns) {
+      if (columns == null) {
         columns = toRaw(crudBinding.value.columns);
       }
       logger.debug("doValueBuilder ,columns=", columns);
