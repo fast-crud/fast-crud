@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [1.0.0-alpha.4](https://github.com/fast-crud/fast-crud/compare/v1.0.0-alpha.3...v1.0.0-alpha.4) (2022-01-10)
+
+
+### Bug Fixes
+
+* 修复valueBuilder失效的bug ([d413278](https://github.com/fast-crud/fast-crud/commit/d4132783280d8d69cdf4bb453a1f1abd3322d370))
+
+
+
+
+
 # [1.0.0-alpha.3](https://github.com/fast-crud/fast-crud/compare/v1.0.0-alpha.3...v1.0.0-alpha.3) (2022-01-07)
 
 

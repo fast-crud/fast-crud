@@ -1,6 +1,6 @@
 {
   "name": "@fast-crud/ui-naive",
-  "version": "1.0.0-alpha.3",
+  "version": "1.0.0-alpha.4",
   "description": "",
   "main": "./dist/ui-naive.umd.js",
   "module": "./dist/ui-naive.es.js",
@@ -12,10 +12,10 @@
   "license": "MIT",
   "dependencies": {
     "@ant-design/icons-vue": "^6.0.1",
-    "@fast-crud/ui-interface": "^1.0.0-alpha.3"
+    "@fast-crud/ui-interface": "^1.0.0-alpha.4"
   },
   "devDependencies": {
-    "@fast-crud/fast-crud": "^1.0.0-alpha.3",
+    "@fast-crud/fast-crud": "^1.0.0-alpha.4",
     "@rollup/plugin-strip": "^2.0.0",
     "@typescript-eslint/eslint-plugin": "^5.4.0",
     "@typescript-eslint/parser": "^5.4.0",
