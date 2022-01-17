@@ -149,16 +149,19 @@ function buildTableColumns({ props, ctx, ui, getContextFn, componentRefs, render
     }
   }
 
-  //操作列
-  let rowHandle = {
-    key: "_rowHandle",
-    ...props.rowHandle
-  };
-  rowHandle[ui.table.renderMethod] = (a, b, c) => {
-    const scope = ui.table.rebuildRenderScope(a, b, c);
-    return renderRowHandle(scope);
-  };
-  columns.push(rowHandle);
+  if (props.rowHandle?.show !== false) {
+    //操作列
+    let rowHandle = {
+      key: "_rowHandle",
+      ...props.rowHandle
+    };
+    rowHandle[ui.table.renderMethod] = (a, b, c) => {
+      const scope = ui.table.rebuildRenderScope(a, b, c);
+      return renderRowHandle(scope);
+    };
+    columns.push(rowHandle);
+  }
+
   return columns;
 }
 /**
