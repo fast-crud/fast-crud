@@ -3,6 +3,18 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [1.0.0-alpha.5](https://github.com/fast-crud/fast-crud/compare/v1.0.0-alpha.4...v1.0.0-alpha.5) (2022-01-17)
+
+
+### Bug Fixes
+
+* 修复服务端排序无效的bug ([a693746](https://github.com/fast-crud/fast-crud/commit/a693746d809f941a429af9bc33eb9c85bcfbafe1))
+* 修复rowHandle无法隐藏的bug ([f9786f7](https://github.com/fast-crud/fast-crud/commit/f9786f7c8489a3df8bf44ef34ff466acd83ca3fd))
+
+
+
+
+
 # [1.0.0-alpha.4](https://github.com/fast-crud/fast-crud/compare/v1.0.0-alpha.3...v1.0.0-alpha.4) (2022-01-10)
 
 

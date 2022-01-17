@@ -1,6 +1,6 @@
 {
   "name": "@fast-crud/ui-antdv",
-  "version": "1.0.0-alpha.4",
+  "version": "1.0.0-alpha.5",
   "description": "",
   "main": "./dist/ui-antdv.umd.js",
   "module": "./dist/ui-antdv.es.js",
@@ -15,7 +15,7 @@
   },
   "devDependencies": {
     "@ant-design/icons-vue": "^6.0.1",
-    "@fast-crud/fast-crud": "^1.0.0-alpha.4",
+    "@fast-crud/fast-crud": "^1.0.0-alpha.5",
     "@fast-crud/ui-interface": "*",
     "@rollup/plugin-strip": "^2.0.0",
     "@typescript-eslint/eslint-plugin": "^5.4.0",
