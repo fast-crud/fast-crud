@@ -381,6 +381,7 @@ export default {
           <tableComp
             ref={tableRef}
             {...ctx.attrs}
+            {...events}
             columns={computedColumns.value}
             {...dataSource}
             v-slots={props.slots}
