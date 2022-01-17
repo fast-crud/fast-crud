@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [1.0.0-alpha.5](https://github.com/fast-crud/fast-crud/compare/v1.0.0-alpha.4...v1.0.0-alpha.5) (2022-01-17)
+
+
+### Bug Fixes
+
+* 修复element文件上传加号错位的bug ([fdda181](https://github.com/fast-crud/fast-crud/commit/fdda1812550304abaa0b4e04b0276ed4807bdf96))
+
+
+
+
+
 # [1.0.0-alpha.4](https://github.com/fast-crud/fast-crud/compare/v1.0.0-alpha.3...v1.0.0-alpha.4) (2022-01-10)
 
 **Note:** Version bump only for package @fast-crud/fast-extends

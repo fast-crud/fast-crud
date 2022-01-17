@@ -3,6 +3,25 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [1.0.0-alpha.5](https://github.com/fast-crud/fast-crud/compare/v1.0.0-alpha.4...v1.0.0-alpha.5) (2022-01-17)
+
+
+### Bug Fixes
+
+* 修复服务端排序无效的bug ([a693746](https://github.com/fast-crud/fast-crud/commit/a693746d809f941a429af9bc33eb9c85bcfbafe1))
+* 修复切换size刷新两次的bug ([5a9eeec](https://github.com/fast-crud/fast-crud/commit/5a9eeec63d7840254a56ee23ec9f2164ec7c3b41))
+* 修复element文件上传加号错位的bug ([fdda181](https://github.com/fast-crud/fast-crud/commit/fdda1812550304abaa0b4e04b0276ed4807bdf96))
+* 修复rowHandle无法隐藏的bug ([f9786f7](https://github.com/fast-crud/fast-crud/commit/f9786f7c8489a3df8bf44ef34ff466acd83ca3fd))
+
+
+### Performance Improvements
+
+* 同步naive ui版本 ([9c6b7e0](https://github.com/fast-crud/fast-crud/commit/9c6b7e003885fe6e677819c648bf779d9970f1e0))
+
+
+
+
+
 # [1.0.0-alpha.4](https://github.com/fast-crud/fast-crud/compare/v1.0.0-alpha.3...v1.0.0-alpha.4) (2022-01-10)
 
 

@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [1.0.0-alpha.5](https://github.com/fast-crud/fast-crud/compare/v1.0.0-alpha.4...v1.0.0-alpha.5) (2022-01-17)
+
+
+### Bug Fixes
+
+* 修复切换size刷新两次的bug ([5a9eeec](https://github.com/fast-crud/fast-crud/commit/5a9eeec63d7840254a56ee23ec9f2164ec7c3b41))
+
+
+
+
+
 # [1.0.0-alpha.4](https://github.com/fast-crud/fast-crud/compare/v1.0.0-alpha.3...v1.0.0-alpha.4) (2022-01-10)
 
 **Note:** Version bump only for package @fast-crud/ui-antdv
