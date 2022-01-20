@@ -174,6 +174,13 @@ export function GetObj(id) {
 }
 
 ```  
+
+:::warning
+你后台接口返回的数据大概率与fast-crud所需要的数据结构是不一致的，所以你需要配置公共的`request`转化方法，将请求结果转化为`fast-crud`所需要的结构           
+具体请参考[request配置](/api/crud-options/request.html)    
+:::
+
+
 ### 4. mock数据
 如下为mock数据，实际开发中需要替换为你的真实后端接口    
 将如下代码保存为`views/test/myFirstCrud/mock.js`
