@@ -4,7 +4,7 @@
 
 
 ## transformQuery
-* 说明：pageRequest请求参数转换，当框架传入的`query`参数不符合`pageRequest`参数结构时，可配置此方法进行通用转换
+* 说明：`pageRequest`列表请求参数转换，当框架传入的`query`参数不符合`pageRequest`参数结构时，可配置此方法进行通用转换
 * 类型：Function({page,form,sort})
 * 参数：page:{pageSize:`每页条数`,currentPage:`当前页码`}
 * 参数：form:{`查询框获得的参数`}
@@ -14,6 +14,7 @@
 ```json5
 { //crudOptions
   request: {
+    // pageRequest请求参数转换
     transformQuery: ({ page, form, sort }) => {
       const order = sort == null?{}:{orderProp:sort.prop,orderAsc:sort.asc}
         //改造成你的后端所能接受的参数结构
@@ -23,27 +24,8 @@
 }
 ```
 
-## pageRequest 
-* 说明：页面数据请求
-* 类型：async Function(query)
-* 参数：query: `transformQuery`返回的参数，若`transformQuery`未配置，则为{page,form,sort}
-* 返回：res:{}
-* 示例：
-```json5
-{
-  request: {
-    pageReqest:async (query)=>{
-      const url = "/your/crud/page/request/url"
-      return axios({url,data:query});
-    }
-  }
-}
-
-```
-
-
 ## transformRes 
-* 说明：页面数据结果转换，当`pageRequest`返回的结构与下面“返回”不一致时，可以配置此方法将返回结果转换为本框架所需要的格式
+* 说明：`pageRequest`列表请求结果转换，当`pageRequest`返回的结构与下面“返回”不一致时，可以配置此方法将返回结果转换为本框架所需要的格式
 * 类型：Function(res)
 * 参数：res: pageRequest返回的结果
 * 返回：{records:[]`列表数据`,currentPage:number`当前页码`,pageSize:number`每页条数`,total:number`总记录数`}
@@ -51,6 +33,7 @@
 ```json5
 {
   request: {
+    // pageRequest请求结果转换
     transformRes: ({ res }) => {
       //将后端返回的结果，改造成fs所需要的结构
       return { currentPage: res.current, pageSize: res.size, ...res };
@@ -86,6 +69,30 @@ async pageRequest(opts){
   }
 }
 ```
+
+
+
+## pageRequest
+* 说明：页面数据请求
+* 类型：async Function(query)
+* 参数：query: `transformQuery`返回的参数，若`transformQuery`未配置，则为{page,form,sort}
+* 返回：res:{}
+* 示例：
+```js
+const pageRequest = async (query)=>{
+    const url = "/your/crud/page/request/url"
+    return axios({url,data:query});
+};
+// 所有demo里面都有的
+const crudOptions= {
+  request: {
+    pageReqest:pageRequest
+  }
+}
+
+```
+
+
 ## addRequest
 
 * 说明：添加对话框，点击保存后发出的请求
