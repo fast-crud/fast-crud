@@ -567,6 +567,7 @@ export class Antdv implements UiInterface {
   popover: PopoverCI = {
     name:"a-popover",
     contentSlotName: "content",
-    referenceSlotName: "default"
+    referenceSlotName: "default",
+    visible: "visible"
   }
 }

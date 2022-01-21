@@ -3,9 +3,11 @@
     <component :is="$fsui.row.name" class="fs-table-columns-filter-simple">
       <component :is="$fsui.col.name" :span="6" v-for="(element, key) in currentValue">
         <component
-            size="mini"
             :is="$fsui.checkbox.name"
             v-model:[$fsui.checkbox.modelValue]="element.show"
+            :disabled="element.disabled"
+            class="item-label"
+            @update:[$fsui.checkbox.modelValue]="showChange(index, $event)"
         />
         {{ element.label || element.title || element.key || _text.unnamed }}
       </component>
@@ -13,14 +15,12 @@
     <component :is="$fsui.divider.name"/>
     <component :is="$fsui.row.name">
         <fs-button
-            size="mini"
             type="primary"
             :icon="$fsui.icons.check"
             :text="_text.confirm"
-            @click="submit()"
+            @click="simpleSubmit()"
         />
         <fs-button
-            size="mini"
             :icon="$fsui.icons.refresh"
             :text="_text.reset"
             @click="reset"
@@ -100,6 +100,9 @@ export default {
     FsTableColumnsFixedController
   },
   props: {
+    show: {
+      type: Boolean
+    },
     mode: {
       type: String,
     },
@@ -116,7 +119,7 @@ export default {
       default: undefined
     }
   },
-  emits: ["update:columns"],
+  emits: ["update:columns", "update:show"],
   setup() {
     const { t } = useI18n();
     const ui = uiContext.get();
@@ -259,6 +262,11 @@ export default {
       const result = _.cloneDeep(this.currentValue);
       this.emit(result);
       this.active = false;
+    },
+
+    simpleSubmit(){
+      this.submit()
+      this.$emit("update:show", false)
     },
     emit(result) {
       this.$emit("update:columns", result);

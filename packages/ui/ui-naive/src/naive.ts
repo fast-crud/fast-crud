@@ -619,10 +619,11 @@ export class Naive implements UiInterface {
     trigger: "trigger"
   };
   divider: DividerCI = {
-    name: "el-divider",
+    name: "n-divider",
   };
   popover: PopoverCI = {
     name:"n-popover",
+    visible: 'show',
     contentSlotName: "default",
     referenceSlotName: "trigger"
   }

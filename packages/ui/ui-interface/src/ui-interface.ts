@@ -251,6 +251,7 @@ export interface PopoverCI extends CI {
   contentSlotName;
 
   referenceSlotName;
+  visible;
 }
 
 export interface Icons {
