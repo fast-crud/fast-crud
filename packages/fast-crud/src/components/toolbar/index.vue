@@ -2,26 +2,27 @@
   <div class="fs-toolbar">
     <template v-for="(item, key) of computedButtons" :key="key">
       <template v-if="item.show !== false">
-        <el-popover
-            :is="$fsui.popover.name"
-            v-if="key === 'columns' && columnsFilter && columnsFilter.mode === 'simple'"
-            :width="760"
-            trigger="click"
+        <component
+          :is="$fsui.popover.name"
+          v-if="key === 'columns' && columnsFilter && columnsFilter.mode === 'simple'"
+          placement="bottom"
+          :width="760"
+          trigger="click"
         >
-          <template v-slot:[popoverReferenceSlotName]>
+          <template #[popoverReferenceSlotName]>
             <fs-button v-bind="item" />
           </template>
-          <template v-slot:[popoverContentSlotName]>
+          <template #[popoverContentSlotName]>
             <fs-table-columns-filter
-                mode="simple"
-                v-if="columns"
-                v-bind="columnsFilter"
-                :columns="columns"
-                :storage="storage"
-                @update:columns="$emit('update:columns', $event)"
+              v-if="columns"
+              mode="simple"
+              v-bind="columnsFilter"
+              :columns="columns"
+              :storage="storage"
+              @update:columns="$emit('update:columns', $event)"
             />
           </template>
-        </el-popover>
+        </component>
         <fs-button v-else v-bind="item" @click="item.click()" />
       </template>
     </template>
@@ -105,8 +106,8 @@ export default {
     const { t } = useI18n();
     const columnsFilterRef = ref();
     const ui = uiContext.get();
-    const popoverReferenceSlotName = ui.popover.referenceSlotName
-    const popoverContentSlotName = ui.popover.contentSlotName
+    const popoverReferenceSlotName = ui.popover.referenceSlotName;
+    const popoverContentSlotName = ui.popover.contentSlotName;
     const computedButtons = computed(() => {
       const defaultButtons = {
         refresh: {

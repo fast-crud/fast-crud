@@ -1,33 +1,31 @@
 <template>
   <template v-if="mode === 'simple'">
-    <el-row :is="$fsui.row.name" class="fs-table-columns-filter-simple">
-      <el-col :span="6" v-for="(element, key) in currentValue">
-        <el-checkbox
+    <component :is="$fsui.row.name" class="fs-table-columns-filter-simple">
+      <component :is="$fsui.col.name" :span="6" v-for="(element, key) in currentValue">
+        <component
             size="mini"
             :is="$fsui.checkbox.name"
             v-model:[$fsui.checkbox.modelValue]="element.show"
-            :label="element.label || element.title || element.key || _text.unnamed"
         />
-      </el-col>
-    </el-row>
-    <el-divider :is="$fsui.divider.name"/>
-    <el-row :is="$fsui.row.name">
-      <fs-button
-          size="mini"
-          type="primary"
-          :icon="$fsui.icons.check"
-          :text="_text.confirm"
-          block
-          @click="submit()"
-      />
-      <fs-button
-          size="mini"
-          :icon="$fsui.icons.refresh"
-          :text="_text.reset"
-          block
-          @click="reset"
-      />
-    </el-row>
+        {{ element.label || element.title || element.key || _text.unnamed }}
+      </component>
+    </component>
+    <component :is="$fsui.divider.name"/>
+    <component :is="$fsui.row.name">
+        <fs-button
+            size="mini"
+            type="primary"
+            :icon="$fsui.icons.check"
+            :text="_text.confirm"
+            @click="submit()"
+        />
+        <fs-button
+            size="mini"
+            :icon="$fsui.icons.refresh"
+            :text="_text.reset"
+            @click="reset"
+        />
+    </component>
   </template>
   <component v-else :is="$fsui.drawer.name" :title="_text.title" v-bind="drawerBind" append-to-body>
     <component :is="$fsui.drawer.hasContentWrap || 'div'" class="fs-drawer-wrapper" :title="_text.title">
