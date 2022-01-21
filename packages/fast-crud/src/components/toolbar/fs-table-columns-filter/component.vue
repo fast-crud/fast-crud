@@ -1,33 +1,24 @@
 <template>
   <template v-if="mode === 'simple'">
     <component :is="$fsui.row.name" class="fs-table-columns-filter-simple">
-      <component :is="$fsui.col.name" :span="6" v-for="(element, key) in currentValue">
+      <component :is="$fsui.col.name" v-for="(element, key) in currentValue" :span="6">
         <component
-            :is="$fsui.checkbox.name"
-            v-model:[$fsui.checkbox.modelValue]="element.show"
-            :disabled="element.disabled"
-            class="item-label"
-            @update:[$fsui.checkbox.modelValue]="showChange(index, $event)"
+          :is="$fsui.checkbox.name"
+          v-model:[$fsui.checkbox.modelValue]="element.show"
+          :disabled="element.disabled"
+          class="item-label"
+          @update:[$fsui.checkbox.modelValue]="showChange(index, $event)"
         />
         {{ element.label || element.title || element.key || _text.unnamed }}
       </component>
     </component>
-    <component :is="$fsui.divider.name"/>
+    <component :is="$fsui.divider.name" />
     <component :is="$fsui.row.name">
-        <fs-button
-            type="primary"
-            :icon="$fsui.icons.check"
-            :text="_text.confirm"
-            @click="simpleSubmit()"
-        />
-        <fs-button
-            :icon="$fsui.icons.refresh"
-            :text="_text.reset"
-            @click="reset"
-        />
+      <fs-button type="primary" :icon="$fsui.icons.check" :text="_text.confirm" @click="simpleSubmit()" />
+      <fs-button :icon="$fsui.icons.refresh" :text="_text.reset" @click="simpleReset" />
     </component>
   </template>
-  <component v-else :is="$fsui.drawer.name" :title="_text.title" v-bind="drawerBind" append-to-body>
+  <component :is="$fsui.drawer.name" v-else :title="_text.title" v-bind="drawerBind" append-to-body>
     <component :is="$fsui.drawer.hasContentWrap || 'div'" class="fs-drawer-wrapper" :title="_text.title">
       <!-- 全选 反选 -->
       <component :is="$fsui.card.name" shadow="never">
@@ -104,7 +95,7 @@ export default {
       type: Boolean
     },
     mode: {
-      type: String,
+      type: String
     },
     columns: {
       type: Array
@@ -216,16 +207,16 @@ export default {
     buildColumns(value) {
       const columns = [];
       _.forEach(value, (item) => {
-            if (item.columnSetShow !== false) {
-              const column = {
-                key: item.key,
-                title: item.title,
-                show: item.show ?? true,
-                fixed: item.fixed ?? false,
-                disabled: item.columnSetDisabled ?? false
-              };
-              columns.push(column);
-            }
+        if (item.columnSetShow !== false) {
+          const column = {
+            key: item.key,
+            title: item.title,
+            show: item.show ?? true,
+            fixed: item.fixed ?? false,
+            disabled: item.columnSetDisabled ?? false
+          };
+          columns.push(column);
+        }
       });
       return columns;
     },
@@ -264,9 +255,13 @@ export default {
       this.active = false;
     },
 
-    simpleSubmit(){
-      this.submit()
-      this.$emit("update:show", false)
+    simpleSubmit() {
+      this.submit();
+      this.$emit("update:show", false);
+    },
+    simpleReset() {
+      this.reset();
+      this.$emit("update:show", false);
     },
     emit(result) {
       this.$emit("update:columns", result);
@@ -324,6 +319,9 @@ export default {
 };
 </script>
 <style lang="less">
+.fs-table-columns-filter-simple{
+  min-width: 760px;
+}
 .fs-table-columns-filter {
   :focus {
     outline: 0;
