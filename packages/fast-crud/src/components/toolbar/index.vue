@@ -11,15 +11,16 @@
           <template v-slot:[popoverReferenceSlotName]>
             <fs-button v-bind="item" />
           </template>
-          <fs-table-columns-filter
-              v-slot:[popoverContentSlotName]
-              mode="simple"
-              v-if="columns"
-              v-bind="columnsFilter"
-              :columns="columns"
-              :storage="storage"
-              @update:columns="$emit('update:columns', $event)"
-          />
+          <template v-slot:[popoverContentSlotName]>
+            <fs-table-columns-filter
+                mode="simple"
+                v-if="columns"
+                v-bind="columnsFilter"
+                :columns="columns"
+                :storage="storage"
+                @update:columns="$emit('update:columns', $event)"
+            />
+          </template>
         </el-popover>
         <fs-button v-else v-bind="item" @click="item.click()" />
       </template>
