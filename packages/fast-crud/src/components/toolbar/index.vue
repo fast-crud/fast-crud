@@ -1,7 +1,26 @@
 <template>
   <div class="fs-toolbar">
     <template v-for="(item, key) of computedButtons" :key="key">
-      <fs-button v-if="item.show !== false" v-bind="item" @click="item.click()" />
+      <template v-if="item.show !== false">
+        <el-popover
+            v-if="key === 'columns' && columnsFilter && columnsFilter.mode === 'simple'"
+            :width="760"
+            trigger="click"
+        >
+          <template #reference>
+            <fs-button v-bind="item" />
+          </template>
+          <fs-table-columns-filter
+              mode="simple"
+              v-if="columns"
+              v-bind="columnsFilter"
+              :columns="columns"
+              :storage="storage"
+              @update:columns="$emit('update:columns', $event)"
+          />
+        </el-popover>
+        <fs-button v-else v-bind="item" @click="item.click()" />
+      </template>
     </template>
     <fs-table-columns-filter
       v-if="columns"
@@ -74,7 +93,9 @@ export default {
     /**
      * 插槽
      */
-    slots: {}
+    slots: {},
+
+    columnsFilter: {}
   },
   emits: ["refresh", "update:search", "update:compact", "update:columns", "export"],
   setup(props, ctx) {

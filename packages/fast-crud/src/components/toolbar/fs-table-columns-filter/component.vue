@@ -1,5 +1,35 @@
 <template>
-  <component :is="$fsui.drawer.name" :title="_text.title" v-bind="drawerBind" append-to-body>
+  <template v-if="mode === 'simple'">
+    <el-row :is="$fsui.row.name" class="fs-table-columns-filter-simple">
+      <el-col :span="6" v-for="(element, key) in currentValue">
+        <el-checkbox
+            size="mini"
+            :is="$fsui.checkbox.name"
+            v-model:[$fsui.checkbox.modelValue]="element.show"
+            :label="element.label || element.title || element.key || _text.unnamed"
+        />
+      </el-col>
+    </el-row>
+    <el-divider :is="$fsui.divider.name"/>
+    <el-row :is="$fsui.row.name">
+      <fs-button
+          size="mini"
+          type="primary"
+          :icon="$fsui.icons.check"
+          :text="_text.confirm"
+          block
+          @click="submit()"
+      />
+      <fs-button
+          size="mini"
+          :icon="$fsui.icons.refresh"
+          :text="_text.reset"
+          block
+          @click="reset"
+      />
+    </el-row>
+  </template>
+  <component v-else :is="$fsui.drawer.name" :title="_text.title" v-bind="drawerBind" append-to-body>
     <component :is="$fsui.drawer.hasContentWrap || 'div'" class="fs-drawer-wrapper" :title="_text.title">
       <!-- 全选 反选 -->
       <component :is="$fsui.card.name" shadow="never">
@@ -72,6 +102,9 @@ export default {
     FsTableColumnsFixedController
   },
   props: {
+    mode: {
+      type: String,
+    },
     columns: {
       type: Array
     },
@@ -182,14 +215,16 @@ export default {
     buildColumns(value) {
       const columns = [];
       _.forEach(value, (item) => {
-        const column = {
-          key: item.key,
-          title: item.title,
-          show: item.show ?? true,
-          fixed: item.fixed ?? false,
-          disabled: item.columnSetDisabled ?? false
-        };
-        columns.push(column);
+            if (item.columnSetShow !== false) {
+              const column = {
+                key: item.key,
+                title: item.title,
+                show: item.show ?? true,
+                fixed: item.fixed ?? false,
+                disabled: item.columnSetDisabled ?? false
+              };
+              columns.push(column);
+            }
       });
       return columns;
     },
