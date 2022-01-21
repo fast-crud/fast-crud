@@ -43,7 +43,8 @@ import {
   PaginationCI,
   FormCI,
   TooltipCI,
-  OptionCI
+  OptionCI,
+  DividerCI
 } from "@fast-crud/ui-interface";
 import _ from "lodash-es";
 
@@ -615,5 +616,8 @@ export class Naive implements UiInterface {
     name: "n-tooltip",
     content: "default",
     trigger: "trigger"
+  };
+  divider: DividerCI = {
+    name: "el-divider",
   };
 }

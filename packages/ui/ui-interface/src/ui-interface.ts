@@ -237,6 +237,11 @@ export interface PaginationCI extends CI {
   total;
   pageCount;
 }
+
+export interface DividerCI extends CI {
+  name;
+}
+
 export interface Icons {
   refresh;
   search;

@@ -43,7 +43,7 @@ import {
   ButtonCI,
   PaginationCI
 } from "@fast-crud/ui-interface";
-import { FormCI, TooltipCI } from "../../ui-interface/src/ui-interface";
+import {DividerCI, FormCI, TooltipCI} from "../../ui-interface/src/ui-interface";
 export class Element implements UiInterface {
   constructor(target) {
     if (target) {
@@ -484,5 +484,8 @@ export class Element implements UiInterface {
     name: "el-tooltip",
     content: "content",
     trigger: "default"
+  };
+  divider: DividerCI = {
+    name: "el-divider",
   };
 }
