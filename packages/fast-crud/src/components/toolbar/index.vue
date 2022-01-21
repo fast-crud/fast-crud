@@ -3,14 +3,16 @@
     <template v-for="(item, key) of computedButtons" :key="key">
       <template v-if="item.show !== false">
         <el-popover
+            :is="$fsui.popover.name"
             v-if="key === 'columns' && columnsFilter && columnsFilter.mode === 'simple'"
             :width="760"
             trigger="click"
         >
-          <template #reference>
+          <template v-slot:[popoverReferenceSlotName]>
             <fs-button v-bind="item" />
           </template>
           <fs-table-columns-filter
+              v-slot:[popoverContentSlotName]
               mode="simple"
               v-if="columns"
               v-bind="columnsFilter"
@@ -102,6 +104,8 @@ export default {
     const { t } = useI18n();
     const columnsFilterRef = ref();
     const ui = uiContext.get();
+    const popoverReferenceSlotName = ui.popover.referenceSlotName
+    const popoverContentSlotName = ui.popover.contentSlotName
     const computedButtons = computed(() => {
       const defaultButtons = {
         refresh: {
@@ -182,7 +186,9 @@ export default {
     });
     return {
       columnsFilterRef,
-      computedButtons
+      computedButtons,
+      popoverReferenceSlotName,
+      popoverContentSlotName
     };
   }
 };

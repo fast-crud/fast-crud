@@ -44,7 +44,7 @@ import {
   ButtonCI,
   PaginationCI
 } from "@fast-crud/ui-interface";
-import {DividerCI, TooltipCI} from "../../ui-interface/src/ui-interface";
+import {DividerCI, PopoverCI, TooltipCI} from "../../ui-interface/src/ui-interface";
 
 export class Antdv implements UiInterface {
   constructor(target) {
@@ -564,4 +564,9 @@ export class Antdv implements UiInterface {
   divider: DividerCI = {
     name: "a-divider",
   };
+  popover: PopoverCI = {
+    name:"a-popover",
+    contentSlotName: "content",
+    referenceSlotName: "default"
+  }
 }

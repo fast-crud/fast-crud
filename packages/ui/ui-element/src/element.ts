@@ -43,7 +43,7 @@ import {
   ButtonCI,
   PaginationCI
 } from "@fast-crud/ui-interface";
-import {DividerCI, FormCI, TooltipCI} from "../../ui-interface/src/ui-interface";
+import {DividerCI, FormCI, PopoverCI, TooltipCI} from "../../ui-interface/src/ui-interface";
 export class Element implements UiInterface {
   constructor(target) {
     if (target) {
@@ -488,4 +488,9 @@ export class Element implements UiInterface {
   divider: DividerCI = {
     name: "el-divider",
   };
+  popover: PopoverCI = {
+    name:"el-popover",
+    contentSlotName: "default",
+    referenceSlotName: "reference"
+  }
 }

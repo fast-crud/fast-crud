@@ -44,7 +44,8 @@ import {
   FormCI,
   TooltipCI,
   OptionCI,
-  DividerCI
+  DividerCI,
+  PopoverCI
 } from "@fast-crud/ui-interface";
 import _ from "lodash-es";
 
@@ -620,4 +621,9 @@ export class Naive implements UiInterface {
   divider: DividerCI = {
     name: "el-divider",
   };
+  popover: PopoverCI = {
+    name:"n-popover",
+    contentSlotName: "default",
+    referenceSlotName: "trigger"
+  }
 }

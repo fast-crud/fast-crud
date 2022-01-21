@@ -242,6 +242,17 @@ export interface DividerCI extends CI {
   name;
 }
 
+export interface PopoverCI extends CI {
+  name;
+
+  /**
+   * 内容插槽
+   */
+  contentSlotName;
+
+  referenceSlotName;
+}
+
 export interface Icons {
   refresh;
   search;
@@ -322,4 +333,6 @@ export interface UiInterface {
   tabPane: TabPaneCI;
   collapse: CollapseCI;
   collapseItem: CollapseItemCI;
+  divider: DividerCI,
+  popover: PopoverCI,
 }
