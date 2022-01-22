@@ -36,3 +36,16 @@
 * 说明：当前是否紧凑模式
 * 类型：Boolean
 * 默认：`true`
+
+
+## columnsFilter
+* 说明：列设置配置
+* 类型：Object
+
+
+## columnsFilter.mode
+* 说明：列设置展示模式
+* 类型：string
+* 默认值： 无
+* 可选值：【simple(简单模式) | default（默认模式）】
+

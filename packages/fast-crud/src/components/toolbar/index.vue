@@ -101,6 +101,9 @@ export default {
      */
     slots: {},
 
+    /**
+     * 列设置配置
+     */
     columnsFilter: {}
   },
   emits: ["refresh", "update:search", "update:compact", "update:columns", "export"],
