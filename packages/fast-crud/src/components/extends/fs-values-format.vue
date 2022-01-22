@@ -11,8 +11,12 @@
         class="fs-tag"
         size="small"
         v-bind="item"
+        :icon="null"
         @click="doClick(item)"
       >
+        <template v-if="item.icon">
+          <fs-icon :icon="item.icon" class="fs-tag-icon" />
+        </template>
         {{ getLabel(item) }}
       </component>
     </template>
@@ -225,5 +229,7 @@ export default {
 <style>
 .fs-values-format .fs-tag {
   margin: 2px;
+  .fs-tag-icon{
+  }
 }
 </style>
