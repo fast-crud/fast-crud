@@ -3,6 +3,18 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [1.0.0-alpha.6](https://github.com/fast-crud/fast-crud/compare/v1.0.0-alpha.5...v1.0.0-alpha.6) (2022-01-22)
+
+
+### Features
+
+* 增加列设置简化模式示例及文档 ([0633cc5](https://github.com/fast-crud/fast-crud/commit/0633cc5b9e5787c6631346d9979b112110536214))
+* values-format支持iconify icon ([d1be55e](https://github.com/fast-crud/fast-crud/commit/d1be55e46eea715f8a36fdd9c6b1eb8f33daab35))
+
+
+
+
+
 # [1.0.0-alpha.5](https://github.com/fast-crud/fast-crud/compare/v1.0.0-alpha.4...v1.0.0-alpha.5) (2022-01-17)
 
 
