@@ -16,6 +16,7 @@
   },
   "devDependencies": {
     "@fast-crud/fast-crud": "^1.0.0-alpha.6",
+    "prettier": "^2.5.1",
     "@rollup/plugin-strip": "^2.0.0",
     "@typescript-eslint/eslint-plugin": "^5.4.0",
     "@typescript-eslint/parser": "^5.4.0",

@@ -90,8 +90,8 @@ export class Naive implements UiInterface {
     buildInitBind(is) {
       return { preset: "card" };
     },
-    buildInnerBind({getInnerWrapper}) {
-      return { to:getInnerWrapper() };
+    buildInnerBind({ getInnerWrapper }) {
+      return { to: getInnerWrapper() };
     },
     hasContentWrap(is) {
       if (is === "n-drawer") {
@@ -195,6 +195,7 @@ export class Naive implements UiInterface {
           title: context
         };
       }
+      context = Object.assign({ duration: 5000 }, context);
       type = type || context.type;
       if (type) {
         this.notification.get()[type](context);
@@ -439,7 +440,7 @@ export class Naive implements UiInterface {
       return { row, index };
     },
     buildMaxHeight: (maxHeight) => {
-      return { maxHeight};
+      return { maxHeight };
     },
     hasMaxHeight: (options) => {
       return options?.maxHeight != null;
@@ -619,12 +620,12 @@ export class Naive implements UiInterface {
     trigger: "trigger"
   };
   divider: DividerCI = {
-    name: "n-divider",
+    name: "n-divider"
   };
   popover: PopoverCI = {
-    name:"n-popover",
-    visible: 'show',
+    name: "n-popover",
+    visible: "show",
     contentSlotName: "default",
     referenceSlotName: "trigger"
-  }
+  };
 }
