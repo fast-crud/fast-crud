@@ -27,8 +27,11 @@ export default {
      * 插槽
      */
     slots: {},
-    inner:{},
-    innerWrapper: {}
+    inner: {},
+    innerWrapper: {},
+    submit: {
+      type: Function
+    }
   },
   emits: ["reset", "submit", "validationError", "value-change", "open", "opened", "closed", "inner-change"],
   setup(props, ctx) {
@@ -54,7 +57,7 @@ export default {
       formWrapperIs.value = opts.wrapper.is;
       formWrapperOpts.value = wrapper;
       formWrapperBind.value = {
-        ..._.omit(wrapper, "title", "onOpen", "onClosed", "onOpened", "is","inner")
+        ..._.omit(wrapper, "title", "onOpen", "onClosed", "onOpened", "is", "inner")
       };
       //form的配置
       formOptions.value = {
@@ -117,8 +120,12 @@ export default {
     async function submit() {
       loading.value = true;
       try {
-        await formRef.value.submit();
-        close();
+        if (props.submit) {
+          props.submit({formRef,close});
+        } else {
+          await formRef.value.submit();
+          close();
+        }
       } catch (e) {
         console.warn("submit error", e);
       } finally {
@@ -392,9 +399,9 @@ export default {
 
 // for element
 .fs-form-inner-wrapper {
-  .el-overlay{
+  .el-overlay {
     position: absolute;
-    .el-overlay-dialog{
+    .el-overlay-dialog {
       position: absolute;
     }
   }
@@ -456,34 +463,33 @@ export default {
   }
 }
 
-
 // inner
 // element 不需要
 
 // naive-ui
 .fs-form-inner-wrapper {
-  .n-modal-container{
-  position: unset;
-  left: unset;
-   top: unset;
-   height: unset;
-   width: unset
-}
-.n-modal-mask {
-position: absolute;
-}
-.n-modal-body-wrapper{
-position: absolute;
-}
+  .n-modal-container {
+    position: unset;
+    left: unset;
+    top: unset;
+    height: unset;
+    width: unset;
+  }
+  .n-modal-mask {
+    position: absolute;
+  }
+  .n-modal-body-wrapper {
+    position: absolute;
+  }
 }
 
 // antdv
 .fs-form-inner-wrapper {
-.ant-modal-mask {
-position: absolute;
-}
-.ant-modal-wrap {
-position: absolute;
-}
+  .ant-modal-mask {
+    position: absolute;
+  }
+  .ant-modal-wrap {
+    position: absolute;
+  }
 }
 </style>

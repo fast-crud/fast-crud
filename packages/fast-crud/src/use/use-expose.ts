@@ -120,7 +120,11 @@ function useEditable({ crudExpose }) {
         editable.removeRow(index);
       } else {
         const rowData = row.getRowData(index);
-        await crudBinding.value.request.delRequest({ row: rowData });
+        if (crudExpose.crudRef.value.modelValue) {
+          crudExpose.crudRef.value.modelValue.splice(index, 1);
+        } else {
+          await crudBinding.value.request.delRequest({ row: rowData });
+        }
         crudExpose.doRefresh();
       }
       ui.notification.success(t("fs.rowHandle.remove.success"));
@@ -234,23 +238,34 @@ export function useExpose(props: UseExposeProps): { expose: CrudExpose; crudExpo
         query = crudBinding.value.request.transformQuery(query);
       }
 
-      crudBinding.value.table.loading = true;
       let pageRes;
-      try {
-        logger.debug("pageRequest", query);
-        pageRes = await crudBinding.value.request.pageRequest(query);
-      } finally {
-        crudBinding.value.table.loading = false;
-      }
-      if (pageRes == null) {
-        logger.warn("pageRequest返回结果不能为空");
-        return;
-      }
-      if (crudBinding.value.request.transformRes) {
-        pageRes = crudBinding.value.request.transformRes({
-          res: pageRes,
-          query
+      if (props.crudRef.value.modelValue) {
+        pageRes = await new Promise((resolve) => {
+          nextTick(() => {
+            resolve({
+              records: props.crudRef.value.modelValue
+            });
+          });
         });
+      } else {
+        try {
+          crudBinding.value.table.loading = true;
+          logger.debug("pageRequest", query);
+          pageRes = await crudBinding.value.request.pageRequest(query);
+        } finally {
+          crudBinding.value.table.loading = false;
+        }
+        if (pageRes == null) {
+          logger.warn("pageRequest返回结果不能为空");
+          return;
+        }
+
+        if (crudBinding.value.request.transformRes) {
+          pageRes = crudBinding.value.request.transformRes({
+            res: pageRes,
+            query
+          });
+        }
       }
       const { currentPage = page[ui.pagination.currentPage], pageSize = page.pageSize, total } = pageRes;
       const { records } = pageRes;
@@ -345,7 +360,11 @@ export function useExpose(props: UseExposeProps): { expose: CrudExpose; crudExpo
         logger.info("delete canceled", e.message, e);
         return;
       }
-      await crudBinding.value.request.delRequest(context);
+      if (props.crudRef.value.modelValue) {
+        props.crudRef.value.modelValue.splice(context.index, 1);
+      } else {
+        await crudBinding.value.request.delRequest(context);
+      }
       ui.notification.success(t("fs.rowHandle.remove.success"));
       await crudExpose.doRefresh();
     },

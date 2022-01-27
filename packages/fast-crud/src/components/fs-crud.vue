@@ -2,7 +2,9 @@
   <fs-container ref="containerRef" v-bind="container" class="fs-crud-container" :class="computedClass">
     <template #header>
       <div class="fs-crud-header">
-        <div class="fs-header-top"><slot name="header-top"></slot></div>
+        <div class="fs-header-top">
+          <slot name="header-top"></slot>
+        </div>
         <div class="fs-crud-search">
           <fs-search
             ref="searchRef"
@@ -12,7 +14,9 @@
             @reset="onSearchReset"
           />
         </div>
-        <div class="fs-header-middle"><slot name="header-middle"></slot></div>
+        <div class="fs-header-middle">
+          <slot name="header-middle"></slot>
+        </div>
 
         <div v-if="actionbar && actionbar.show !== false" class="fs-crud-actionbar">
           <slot name="actionbar-left"></slot>
@@ -59,6 +63,7 @@
           ref="formWrapperRef"
           :slots="computedFormSlots"
           :inner-wrapper="innerWrapperRef"
+          :submit="submit"
           @inner-change="onFormInnerChange"
           @value-change="$emit('form-value-change', $event)"
         />
@@ -90,7 +95,9 @@ import _ from "lodash-es";
 import traceUtil from "../utils/util.trace";
 import { uiContext } from "../ui";
 import { useMerge } from "../use/use-merge";
+
 const { merge } = useMerge();
+
 function useProviders(props, ctx) {
   provide("get:columns", () => {
     return props.table.columns;
@@ -99,6 +106,7 @@ function useProviders(props, ctx) {
     ctx.emit("update:columns", columns);
   });
 }
+
 function useSearch(props, ctx) {
   const searchRef = ref();
   const searchFormData = ref(_.cloneDeep(props.search.initialForm || {}));
@@ -209,6 +217,7 @@ function useFixedHeight(props, ctx, { tableRef, containerRef }) {
     });
     observer.observe(tableWrapperDom); // 观测DOM元素
   }
+
   onMounted(async () => {
     await nextTick();
     await nextTick();
@@ -342,7 +351,11 @@ export default defineComponent({
     /**
      * 不要传到fs-table去
      */
-    form: {}
+    form: {},
+
+    modelValue: {
+      type: Array
+    }
   },
   emits: [
     "search-submit",
@@ -351,16 +364,37 @@ export default defineComponent({
     "update:search",
     "update:compact",
     "update:columns",
-    "form-value-change"
+    "form-value-change",
+    "update:modelValue"
   ],
   setup(props, ctx) {
     traceUtil.trace("fs-crud");
     useProviders();
     const search = useSearch(props, ctx);
     const table = useTable(props, ctx, search);
+    const submit = computed(() => {
+      if (props.modelValue) {
+        return function ({ formRef, close }) {
+          const newData = [...props.modelValue];
+
+          if (formRef.value.mode === "add") {
+            newData.push({ ...formRef.value.form });
+          } else if (formRef.value.mode === "edit") {
+            newData[formRef.value.index] = { ...newData[formRef.value.index], ...formRef.value.form };
+          }
+          close();
+          ctx.emit("update:modelValue", newData);
+          nextTick(() => {
+            ctx.emit("refresh");
+          });
+        };
+      }
+      return undefined;
+    });
     return {
       ...search,
-      ...table
+      ...table,
+      submit
     };
   }
 });
@@ -368,14 +402,17 @@ export default defineComponent({
 <style lang="less">
 .fs-crud-container {
   min-height: 300px;
+
   &.compact {
     .el-table--border {
       border-left: 0;
     }
+
     .fs-crud-header {
       padding-left: 10px;
       padding-right: 10px;
     }
+
     .fs-crud-footer {
       padding-left: 10px;
       padding-right: 10px;
@@ -390,6 +427,7 @@ export default defineComponent({
     .fs-header-top {
       width: 100%;
     }
+
     .fs-crud-search {
       width: 100%;
       grid-column: span 2;
@@ -399,9 +437,11 @@ export default defineComponent({
     .fs-header-middle {
       width: 100%;
     }
+
     .fs-header-bottom {
       width: 100%;
     }
+
     .fs-crud-actionbar {
       // padding-top: 5px;
       display: flex;
@@ -424,6 +464,7 @@ export default defineComponent({
 
   .fs-crud-footer {
     padding: 10px 0;
+
     .fs-crud-pagination {
       display: flex;
       flex-direction: row;
