@@ -199,9 +199,9 @@ export function useEditable(props, ctx, tableRef) {
 
     return editableRow;
   }
-  function unshiftEditableRow(rowData) {
-    editableRows.unshift({ cells: {} });
-    return createEditableRow(0, rowData);
+  function unshiftEditableRow(rowData, index) {
+    editableRows.splice(index, 0, { cells: {} });
+    return createEditableRow(index, rowData);
   }
   function setupEditable(data) {
     if (data == null) {
@@ -390,8 +390,21 @@ export function useEditable(props, ctx, tableRef) {
   let addIndex = 0;
   function addRow(opts = {}) {
     const row = opts.row || { [options.value.rowKey]: --addIndex };
-    tableData.unshift(row);
-    const firstRow = unshiftEditableRow(row);
+    if (opts.row === undefined) {
+      for (let i = 0; i < props.columns.length; i++) {
+        let value = props.columns[i].value;
+        if (value || value === 0) {
+          row[props.columns[i].key] = value
+        }
+      }
+    }
+    let index = 0;
+    if (props.editable.addRow) {
+      index = props.editable.addRow(tableData.getData(), row);
+    } else {
+      tableData.unshift(row);
+    }
+    const firstRow = unshiftEditableRow(row, index);
     firstRow.isAdd = true;
     firstRow.isEditing = true;
     firstRow.active();
