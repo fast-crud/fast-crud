@@ -7,11 +7,11 @@
         </div>
         <div class="fs-crud-search">
           <fs-search
-              ref="searchRef"
-              v-bind="search"
-              :slots="computedSearchSlots"
-              @search="onSearchSubmit"
-              @reset="onSearchReset"
+            ref="searchRef"
+            v-bind="search"
+            :slots="computedSearchSlots"
+            @search="onSearchSubmit"
+            @reset="onSearchReset"
           />
         </div>
         <div class="fs-header-middle">
@@ -20,22 +20,22 @@
 
         <div v-if="actionbar && actionbar.show !== false" class="fs-crud-actionbar">
           <slot name="actionbar-left"></slot>
-          <fs-actionbar v-bind="actionbar"/>
+          <fs-actionbar v-bind="actionbar" />
           <slot name="actionbar-right"></slot>
         </div>
 
         <div v-if="toolbar && toolbar.show !== false" class="fs-crud-toolbar">
           <slot name="toolbar-left"></slot>
           <fs-toolbar
-              v-bind="toolbar"
-              :slots="computedToolbarSlots"
-              :search="search.show"
-              :compact="toolbar.compact"
-              :columns="table.columns"
-              @update:search="$emit('update:search', $event)"
-              @update:compact="$emit('update:compact', $event)"
-              @update:columns="$emit('update:columns', $event)"
-              @refresh="$emit('refresh')"
+            v-bind="toolbar"
+            :slots="computedToolbarSlots"
+            :search="search.show"
+            :compact="toolbar.compact"
+            :columns="table.columns"
+            @update:search="$emit('update:search', $event)"
+            @update:compact="$emit('update:compact', $event)"
+            @update:columns="$emit('update:columns', $event)"
+            @refresh="$emit('refresh')"
           />
           <slot name="toolbar-right"></slot>
         </div>
@@ -48,24 +48,24 @@
     <slot></slot>
     <!-- table -->
     <fs-table
-        ref="tableRef"
-        class="fs-crud-table"
-        v-bind="computedTable"
-        :row-handle="rowHandle"
-        :data="data"
-        :cell-slots="computedCellSlots"
+      ref="tableRef"
+      class="fs-crud-table"
+      v-bind="computedTable"
+      :row-handle="rowHandle"
+      :data="data"
+      :cell-slots="computedCellSlots"
     />
 
     <template #box>
       <div ref="innerWrapperRef" class="fs-form-wrapper-container" :class="{ 'fs-form-inner-wrapper': isFormInner }">
         <!-- 编辑对话框 -->
         <fs-form-wrapper
-            ref="formWrapperRef"
-            :slots="computedFormSlots"
-            :inner-wrapper="innerWrapperRef"
-            :submit="submit"
-            @inner-change="onFormInnerChange"
-            @value-change="$emit('form-value-change', $event)"
+          ref="formWrapperRef"
+          :slots="computedFormSlots"
+          :inner-wrapper="innerWrapperRef"
+          :submit="submit"
+          @inner-change="onFormInnerChange"
+          @value-change="$emit('form-value-change', $event)"
         />
       </div>
     </template>
@@ -78,7 +78,7 @@
             <slot name="pagination-left"></slot>
           </div>
           <div class="fs-pagination">
-            <component :is="$fsui.pagination.name" v-if="pagination.show !== false" v-bind="pagination"/>
+            <component :is="$fsui.pagination.name" v-if="pagination.show !== false" v-bind="pagination" />
           </div>
           <div class="fs-pagination-right">
             <slot name="pagination-right"></slot>
@@ -90,13 +90,13 @@
   </fs-container>
 </template>
 <script>
-import {defineComponent, computed, provide, ref, toRef, nextTick, onMounted} from "vue";
+import { defineComponent, computed, provide, ref, toRef, nextTick, onMounted } from "vue";
 import _ from "lodash-es";
 import traceUtil from "../utils/util.trace";
-import {uiContext} from "../ui";
-import {useMerge} from "../use/use-merge";
+import { uiContext } from "../ui";
+import { useMerge } from "../use/use-merge";
 
-const {merge} = useMerge();
+const { merge } = useMerge();
 
 function useProviders(props, ctx) {
   provide("get:columns", () => {
@@ -142,7 +142,7 @@ function useSearch(props, ctx) {
    *    isMerge:false 是否与原有form值合并,
    * }
    */
-  function setSearchFormData({form, mergeForm = false}) {
+  function setSearchFormData({ form, mergeForm = false }) {
     const baseForm = {};
     if (mergeForm) {
       _.merge(baseForm, searchFormData.value, form);
@@ -179,7 +179,7 @@ function slotFilter(ctxSlots, keyPrefix) {
   return slots;
 }
 
-function useFixedHeight(props, ctx, {tableRef, containerRef}) {
+function useFixedHeight(props, ctx, { tableRef, containerRef }) {
   const ui = uiContext.get();
   if (ui.table.hasMaxHeight(props.table)) {
     return {};
@@ -223,21 +223,21 @@ function useFixedHeight(props, ctx, {tableRef, containerRef}) {
     await nextTick();
     watchBodyHeightChange();
   });
-  return {maxHeightRef, computeBodyHeight};
+  return { maxHeightRef, computeBodyHeight };
 }
 
 function useTable(props, ctx) {
   const ui = uiContext.get();
   const tableRef = ref();
   const containerRef = ref();
-  const {maxHeightRef, computeBodyHeight} = useFixedHeight(props, ctx, {tableRef, containerRef});
+  const { maxHeightRef, computeBodyHeight } = useFixedHeight(props, ctx, { tableRef, containerRef });
   const computedTable = computed(() => {
     // antdv naive 高度自适应， 如果用户有配置scroll，则优先使用用户配置的
     let fixedHeight = {};
     if (maxHeightRef?.value != null) {
       fixedHeight = ui.table.buildMaxHeight(maxHeightRef.value);
     }
-    return {...fixedHeight, ...ctx.attrs, ...props.table};
+    return { ...fixedHeight, ...ctx.attrs, ...props.table };
   });
 
   const computedToolbar = toRef(props, "toolbar");
@@ -258,7 +258,7 @@ function useTable(props, ctx) {
   const formWrapperRef = ref();
 
   const computedClass = computed(() => {
-    const clazz = {compact: props.toolbar.compact !== false};
+    const clazz = { compact: props.toolbar.compact !== false };
     if (props.customClass) {
       clazz[props.customClass] = true;
     }
@@ -374,13 +374,13 @@ export default defineComponent({
     const table = useTable(props, ctx, search);
     const submit = computed(() => {
       if (props.modelValue) {
-        return function ({formRef, close}) {
+        return function ({ formRef, close }) {
           const newData = [...props.modelValue];
 
           if (formRef.value.mode === "add") {
-            newData.push({...formRef.value.form});
+            newData.push({ ...formRef.value.form });
           } else if (formRef.value.mode === "edit") {
-            newData[formRef.value.index] = {...formRef.value.form};
+            newData[formRef.value.index] = { ...newData[formRef.value.index], ...formRef.value.form };
           }
           close();
           ctx.emit("update:modelValue", newData);

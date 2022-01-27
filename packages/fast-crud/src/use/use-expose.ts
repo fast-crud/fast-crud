@@ -120,7 +120,11 @@ function useEditable({ crudExpose }) {
         editable.removeRow(index);
       } else {
         const rowData = row.getRowData(index);
-        await crudBinding.value.request.delRequest({ row: rowData });
+        if (crudExpose.crudRef.value.modelValue) {
+          crudExpose.crudRef.value.modelValue.splice(index, 1);
+        } else {
+          await crudBinding.value.request.delRequest({ row: rowData });
+        }
         crudExpose.doRefresh();
       }
       ui.notification.success(t("fs.rowHandle.remove.success"));
@@ -357,10 +361,7 @@ export function useExpose(props: UseExposeProps): { expose: CrudExpose; crudExpo
         return;
       }
       if (props.crudRef.value.modelValue) {
-        await new Promise((resolve) => {
-          props.crudRef.value.modelValue.splice(context.index, 1);
-          resolve({});
-        });
+        props.crudRef.value.modelValue.splice(context.index, 1);
       } else {
         await crudBinding.value.request.delRequest(context);
       }
