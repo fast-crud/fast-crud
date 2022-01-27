@@ -394,7 +394,7 @@ export function useEditable(props, ctx, tableRef) {
       for (let i = 0; i < props.columns.length; i++) {
         let value = props.columns[i].value;
         if (value || value === 0) {
-          row[props.columns[i].key] = value
+          row[props.columns[i].key] = value;
         }
       }
     }
