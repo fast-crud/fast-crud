@@ -59,6 +59,7 @@
           ref="formWrapperRef"
           :slots="computedFormSlots"
           :inner-wrapper="innerWrapperRef"
+          :submit="submit"
           @inner-change="onFormInnerChange"
           @value-change="$emit('form-value-change', $event)"
         />
@@ -342,7 +343,9 @@ export default defineComponent({
     /**
      * 不要传到fs-table去
      */
-    form: {}
+    form: {},
+
+    modelValue: {},
   },
   emits: [
     "search-submit",
@@ -358,9 +361,19 @@ export default defineComponent({
     useProviders();
     const search = useSearch(props, ctx);
     const table = useTable(props, ctx, search);
+    const submit = computed(()=>{
+      if(props.modelValue){
+        return function ({formRef, close}){
+          console.log("aaaaaaaaaaaaaaaaaaaaaaaa", formRef)
+          return new Promise(resolve => {resolve({})})
+        }
+      }
+      return undefined;
+    })
     return {
       ...search,
-      ...table
+      ...table,
+      submit
     };
   }
 });
