@@ -398,6 +398,7 @@ export function useEditable(props, ctx, tableRef) {
         }
       }
     }
+
     let index = 0;
     if (props.editable.addRow) {
       index = props.editable.addRow(tableData.getData(), row);
