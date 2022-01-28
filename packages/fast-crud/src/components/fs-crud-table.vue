@@ -320,10 +320,6 @@ export default defineComponent({
 </script>
 <style lang="less">
 .fs-crud-table {
-  .fs-crud-header,
-  .fs-crud-container.compact .fs-crud-footer {
-    padding: 0 !important;
-  }
   min-height: 0;
 
   .box .inner {
