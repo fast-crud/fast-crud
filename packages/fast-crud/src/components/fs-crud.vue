@@ -406,9 +406,13 @@ export default defineComponent({
 });
 </script>
 <style lang="less">
-.fs-crud-table {
-  min-height: 0;
-
+//作为数据表格使用的预设样式，隐藏footer，表格高度碎记录数增加而增加
+.fs-crud-as-table {
+  min-height: 0 !important;
+  height: unset;
+  .fs-crud-footer {
+    display: none;
+  }
   .box .inner {
     position: static;
   }
