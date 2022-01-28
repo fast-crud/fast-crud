@@ -81,65 +81,6 @@ function useProviders(props, ctx) {
   });
 }
 
-function useSearch(props, ctx) {
-  const searchRef = ref();
-  const searchFormData = ref(_.cloneDeep(props.search.initialForm || {}));
-  const onSearchSubmit = async (e) => {
-    searchFormData.value = e.form;
-    if (props.search.doSearch) {
-      props.search.doSearch(e);
-      return;
-    }
-    ctx.emit("search-submit", e);
-  };
-
-  const onSearchReset = (e) => {
-    if (props.search.doReset) {
-      props.search.doReset(e);
-      return;
-    }
-    ctx.emit("search-reset", e);
-  };
-
-  const getSearchRef = () => {
-    return searchRef.value;
-  };
-
-  const getSearchFormData = () => {
-    return searchFormData.value;
-  };
-
-  /**
-   * 设置form值
-   * @param form form对象
-   * @param opts = {
-   *    isMerge:false 是否与原有form值合并,
-   * }
-   */
-  function setSearchFormData({ form, mergeForm = false }) {
-    const baseForm = {};
-    if (mergeForm) {
-      _.merge(baseForm, searchFormData.value, form);
-    } else {
-      _.merge(baseForm, form);
-    }
-    searchFormData.value = baseForm;
-    if (searchRef.value) {
-      searchRef.value.setForm(baseForm, false);
-    }
-  }
-
-  return {
-    searchRef,
-    searchFormData,
-    onSearchSubmit,
-    onSearchReset,
-    getSearchRef,
-    getSearchFormData,
-    setSearchFormData
-  };
-}
-
 function slotFilter(ctxSlots, keyPrefix) {
   if (!ctxSlots) {
     return {};
@@ -211,7 +152,7 @@ function useTable(props, ctx) {
     if (maxHeightRef?.value != null) {
       fixedHeight = ui.table.buildMaxHeight(maxHeightRef.value);
     }
-    return { ...ctx.attrs, ...props.table, maxHeight: null, height: null};
+    return { ...fixedHeight, ...ctx.attrs, ...props.table };
   });
 
   const computedToolbar = toRef(props, "toolbar");
@@ -344,8 +285,7 @@ export default defineComponent({
   setup(props, ctx) {
     traceUtil.trace("fs-crud");
     useProviders();
-    const search = useSearch(props, ctx);
-    const table = useTable(props, ctx, search);
+    const table = useTable(props, ctx);
     const submit = computed(() => {
       if (props.modelValue) {
         return function ({ formRef, close }) {
@@ -372,7 +312,6 @@ export default defineComponent({
       }
     );
     return {
-      ...search,
       ...table,
       submit
     };

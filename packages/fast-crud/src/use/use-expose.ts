@@ -209,7 +209,10 @@ export function useExpose(props: UseExposeProps): { expose: CrudExpose; crudExpo
       if (!crudRef.value) {
         return {};
       }
-      return crudRef.value.getSearchFormData();
+      if(crudRef.value.getSearchFormData) {
+        return crudRef.value.getSearchFormData();
+      }
+      return {}
     },
     /**
      * {form,mergeForm}
