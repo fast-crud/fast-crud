@@ -406,6 +406,14 @@ export default defineComponent({
 });
 </script>
 <style lang="less">
+.fs-crud-table {
+  min-height: 0;
+
+  .box .inner {
+    position: static;
+  }
+}
+
 .fs-crud-container {
   min-height: 300px;
 
