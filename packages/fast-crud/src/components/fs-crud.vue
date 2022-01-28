@@ -90,7 +90,7 @@
   </fs-container>
 </template>
 <script>
-import { defineComponent, computed, provide, ref, toRef, nextTick, onMounted } from "vue";
+import { defineComponent, computed, provide, ref, toRef, nextTick, onMounted, watch } from "vue";
 import _ from "lodash-es";
 import traceUtil from "../utils/util.trace";
 import { uiContext } from "../ui";
@@ -391,6 +391,12 @@ export default defineComponent({
       }
       return undefined;
     });
+    watch(
+      computed(() => props.modelValue),
+      () => {
+        ctx.emit("refresh");
+      }
+    );
     return {
       ...search,
       ...table,
