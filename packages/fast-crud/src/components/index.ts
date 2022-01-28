@@ -14,6 +14,7 @@ import FsFormItem from "./crud/fs-form-item.vue";
 import FsFormHelper from "./crud/fs-form-helper.vue";
 import FsFormWrapper from "./crud/fs-form-wrapper.vue";
 import FsCrud from "./fs-crud.vue";
+import FsCrudTable from "./fs-crud-table.vue";
 import FsRowHandle from "./crud/fs-row-handle.vue";
 import FsTable from "./crud/fs-table.vue";
 import FsCell from "./crud/fs-cell.vue";
@@ -62,5 +63,6 @@ export {
   FsDictSwitch,
   FsDateFormat,
   FsBox,
-  FsDictTree
+  FsDictTree,
+    FsCrudTable
 };
