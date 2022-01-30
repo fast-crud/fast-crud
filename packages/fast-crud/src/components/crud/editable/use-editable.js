@@ -196,10 +196,9 @@ export function useEditable(props, ctx, tableRef) {
       });
       return changed;
     };
-
     return editableRow;
   }
-  function unshiftEditableRow(rowData, index) {
+  function unshiftEditableRow(rowData, index = 0) {
     editableRows.splice(index, 0, { cells: {} });
     return createEditableRow(index, rowData);
   }
