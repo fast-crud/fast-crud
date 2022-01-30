@@ -121,7 +121,7 @@ export default {
       loading.value = true;
       try {
         if (props.submit) {
-          props.submit({formRef,close});
+          props.submit({ formRef, close });
         } else {
           await formRef.value.submit();
           close();
