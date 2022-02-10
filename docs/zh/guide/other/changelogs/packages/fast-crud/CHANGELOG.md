@@ -3,6 +3,18 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [1.0.0-alpha.7](https://github.com/fast-crud/fast-crud/compare/v1.0.0-alpha.6...v1.0.0-alpha.7) (2022-02-10)
+
+
+### Features
+
+* 本地编辑 ([ac80dbf](https://github.com/fast-crud/fast-crud/commit/ac80dbff3438fe3ef6a5503f631fb59419935ae8))
+* 本地编辑示例 ([5a96c34](https://github.com/fast-crud/fast-crud/commit/5a96c34080efec61a4e9e55f477e292df4b206eb))
+
+
+
+
+
 # [1.0.0-alpha.6](https://github.com/fast-crud/fast-crud/compare/v1.0.0-alpha.5...v1.0.0-alpha.6) (2022-01-22)
 
 
