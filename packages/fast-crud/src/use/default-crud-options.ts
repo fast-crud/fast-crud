@@ -6,6 +6,7 @@ export default {
     const ui = uiContext.get();
     return {
       mode:{},
+      data:[],
       search: {
         options: {
           ...ui.form.inlineLayout,
