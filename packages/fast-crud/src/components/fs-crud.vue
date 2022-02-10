@@ -63,7 +63,6 @@
           ref="formWrapperRef"
           :slots="computedFormSlots"
           :inner-wrapper="innerWrapperRef"
-          :submit="submit"
           @inner-change="onFormInnerChange"
           @value-change="$emit('form-value-change', $event)"
         />
@@ -353,9 +352,6 @@ export default defineComponent({
      */
     form: {},
 
-    modelValue: {
-      type: Array
-    }
   },
   emits: [
     "search-submit",
@@ -372,35 +368,34 @@ export default defineComponent({
     useProviders();
     const search = useSearch(props, ctx);
     const table = useTable(props, ctx, search);
-    const submit = computed(() => {
-      if (props.modelValue) {
-        return function ({ formRef, close }) {
-          const newData = [...props.modelValue];
-
-          if (formRef.value.mode === "add") {
-            newData.push({ ...formRef.value.form });
-          } else if (formRef.value.mode === "edit") {
-            newData[formRef.value.index] = { ...newData[formRef.value.index], ...formRef.value.form };
-          }
-          close();
-          ctx.emit("update:modelValue", newData);
-          nextTick(() => {
-            ctx.emit("refresh");
-          });
-        };
-      }
-      return undefined;
-    });
-    watch(
-      computed(() => props.modelValue),
-      () => {
-        ctx.emit("refresh");
-      }
-    );
+    // const submit = computed(() => {
+    //   if (props.modelValue) {
+    //     return function ({ formRef, close }) {
+    //       const newData = [...props.modelValue];
+    //
+    //       if (formRef.value.mode === "add") {
+    //         newData.push({ ...formRef.value.form });
+    //       } else if (formRef.value.mode === "edit") {
+    //         newData[formRef.value.index] = { ...newData[formRef.value.index], ...formRef.value.form };
+    //       }
+    //       close();
+    //       ctx.emit("update:modelValue", newData);
+    //       nextTick(() => {
+    //         ctx.emit("refresh");
+    //       });
+    //     };
+    //   }
+    //   return undefined;
+    // });
+    // watch(
+    //   computed(() => props.modelValue),
+    //   () => {
+    //     ctx.emit("refresh");
+    //   }
+    // );
     return {
       ...search,
       ...table,
-      submit
     };
   }
 });

@@ -11,6 +11,14 @@ import { useColumns } from "./use-columns";
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 const { merge, cloneDeep } = useMerge();
 export interface CrudOptions {
+  mode?:{
+    //模式名称: local,remote
+    name:string;
+    // 更新时是否merge
+    isMergeWhenUpdate:boolean;
+    // 添加时是否在列表最后插入
+    isAppendWhenAdd:boolean;
+  };
   table?: {};
   columns?: {};
   data?: [];
@@ -79,15 +87,24 @@ export function useCrud(ctx: UseCrudProps) {
       editForm: {
         async doSubmit(context) {
           doValueResolve(context);
-          await crudBinding.value.request.editRequest(context);
-          doRefresh();
+          if(options.mode?.name === 'local'){
+            expose.updateTableRow(context.index,context.form, options.mode.isMergeWhenUpdate)
+          }else{
+            await crudBinding.value.request.editRequest(context);
+            doRefresh();
+          }
         }
       },
       addForm: {
         async doSubmit(context) {
           doValueResolve(context);
-          await crudBinding.value.request.addRequest(context);
-          doRefresh();
+          if(options.mode?.name === 'local'){
+            const index = options.mode.isAppendWhenAdd ? expose.getTableData().length : 0;
+            expose.insertTableRow(index, context.form)
+          }else{
+            await crudBinding.value.request.addRequest(context);
+            doRefresh();
+          }
         }
       }
     };

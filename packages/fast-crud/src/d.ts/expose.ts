@@ -89,6 +89,24 @@ export type CrudExpose = {
    */
   setTableData: ([]) => void;
   /**
+   * 插入行
+   * @param index
+   * @param row
+   */
+  insertTableRow: (index:number, row:Object) => void;
+  /**
+   * 更新行
+   * @param index
+   * @param row
+   */
+  updateTableRow: (index:number, row:Object, merge:boolean) => void,
+  /**
+   * 删除行
+   * @param index
+   */
+  removeTableRow: (index:number) => void,
+
+  /**
    * 获取表格数据某一行
    */
   getTableDataRow: (index: number) => any;

@@ -120,12 +120,8 @@ export default {
     async function submit() {
       loading.value = true;
       try {
-        if (props.submit) {
-          props.submit({ formRef, close });
-        } else {
-          await formRef.value.submit();
-          close();
-        }
+        await formRef.value.submit();
+        close();
       } catch (e) {
         console.warn("submit error", e);
       } finally {
