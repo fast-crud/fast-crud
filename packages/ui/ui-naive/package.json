@@ -1,6 +1,6 @@
 {
   "name": "@fast-crud/ui-naive",
-  "version": "1.0.0-alpha.6",
+  "version": "1.0.0-alpha.7",
   "description": "",
   "main": "./dist/ui-naive.umd.js",
   "module": "./dist/ui-naive.es.js",
@@ -15,8 +15,7 @@
     "@fast-crud/ui-interface": "^1.0.0-alpha.6"
   },
   "devDependencies": {
-    "@fast-crud/fast-crud": "^1.0.0-alpha.6",
-    "prettier": "^2.5.1",
+    "@fast-crud/fast-crud": "^1.0.0-alpha.7",
     "@rollup/plugin-strip": "^2.0.0",
     "@typescript-eslint/eslint-plugin": "^5.4.0",
     "@typescript-eslint/parser": "^5.4.0",
@@ -36,6 +35,7 @@
     "lint-staged": "^12.1.2",
     "naive-ui": "^2.19.1",
     "postcss": "^8.2.6",
+    "prettier": "^2.5.1",
     "rollup-plugin-visualizer": "^5.3.6",
     "ts-node": "^10.1.0",
     "typescript": "4.5.2",
