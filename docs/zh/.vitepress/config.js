@@ -41,6 +41,7 @@ module.exports = {
                         {text: '字段类型', link: '/guide/advance/column-type'},
                         {text: '数据字典', link: '/guide/advance/dict'},
                         {text: '动态计算', link: '/guide/advance/compute'},
+                        {text: '自定义组件', link: '/guide/advance/custom-component'},
                         {text: '插槽', link: '/guide/advance/slots'},
                         {text: '扩展', link: '/guide/advance/extends'},
                         {text: '入门常见问题', link: '/guide/advance/improve'},

@@ -51,6 +51,7 @@ component:{ //组件配置
 
   //v-model绑定属性名，element一般为'modelValue'（可以不传）
   //antdv一般为'value'，必须要传
+  //也可以是其他支持v-model属性名，比如a-checkbox的checked属性
   vModel: 'modelValue', 
 
   disabled: false, //组件是否禁用
