@@ -93,6 +93,7 @@ import { uiContext } from "../../ui";
 import { useMerge } from "../../use/use-merge";
 import { Constants } from "../../utils/util.constants";
 
+
 /**
  * 配置化的表单组件
  * 暴露的方法：
@@ -274,6 +275,20 @@ export default {
     }
 
     doValueBuilder(form);
+
+    function doValueChange(key, value) {
+      const event = {key, value, formRef: proxy, ...scope.value, immediate: false};
+      ctx.emit("value-change", event);
+      let valueChange = props.columns[key].valueChange;
+      if (valueChange) {
+        if (valueChange instanceof Function) {
+          valueChange(event);
+        } else if (valueChange.handle) {
+          valueChange.handle(event);
+        }
+      }
+    }
+
     const formItemRefs = ref({});
 
     function getFormItemRef(key) {
@@ -400,9 +415,16 @@ export default {
     function getFormData() {
       return form;
     }
-    function setFormData(formData) {
+    function setFormData(formData, options={}) {
       doValueBuilder(formData);
       _.merge(form, formData);
+      const {valueChange} = options
+      if(valueChange){
+        _.forEach(props.columns, (column, key)=>{
+          const value = form[key]
+          doValueChange(key, value)
+        })
+      }
     }
 
     function mergeCol(col) {
@@ -434,16 +456,7 @@ export default {
       },
       set: (form, key, value) => {
         _.set(form, key, value);
-        const event = { key, value, formRef: proxy, ...scope.value, immediate: false };
-        ctx.emit("value-change", event);
-        let valueChange = props.columns[key].valueChange;
-        if (valueChange) {
-          if (valueChange instanceof Function) {
-            valueChange(event);
-          } else if (valueChange.handle) {
-            valueChange.handle(event);
-          }
-        }
+        doValueChange(key, value);
       },
       formRef,
       computedColumns,
