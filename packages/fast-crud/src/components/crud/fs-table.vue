@@ -265,7 +265,16 @@ export default {
 
     const renderRowHandle = (scope) => {
       scope.index = scope[ui.tableColumn.index];
-      return <fs-row-handle {...props.rowHandle} scope={scope} onHandle={onRowHandle} />;
+      const rowHandleSlotsName = "cell-rowHandle";
+      const rowHandleSlots = {};
+      if (props.cellSlots) {
+        for (let key in props.cellSlots) {
+          if (key.startsWith(rowHandleSlotsName)) {
+            rowHandleSlots[key] = props.cellSlots[key];
+          }
+        }
+      }
+      return <fs-row-handle {...props.rowHandle} scope={scope} onHandle={onRowHandle} v-slots={rowHandleSlots} />;
     };
 
     const renderCellComponent = (item, scope) => {

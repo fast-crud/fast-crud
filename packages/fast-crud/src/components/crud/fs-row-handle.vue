@@ -1,5 +1,6 @@
 <template>
   <div class="fs-row-handle">
+    <slot name="cell-rowHandle-left" v-bind="scope"></slot>
     <template v-for="(item, index) in computedHandleBtns" :key="index">
       <fs-button
         v-if="item.show !== false && !isDropdownBtn(item, index)"
@@ -8,6 +9,7 @@
         @click.stop="doClick(item)"
       />
     </template>
+    <slot name="cell-rowHandle-middle" v-bind="scope"></slot>
     <!-- 下拉按钮菜单 -->
     <span v-if="hasDropdownBtn" class="row-handle-btn fs-handle-row-dropdown">
       <component :is="$fsui.dropdown.name" v-bind="computedDropdownBinding">
@@ -33,6 +35,7 @@
         </template>
       </component>
     </span>
+    <slot name="cell-rowHandle-right" v-bind="scope"></slot>
   </div>
 </template>
 <script>

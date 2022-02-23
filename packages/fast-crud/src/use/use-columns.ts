@@ -170,7 +170,7 @@ function buildFormColumns(columns, formType) {
  * @param columnsMap
  * @param onComplete
  */
-function buildForm(baseOptions, formType, columnsMap, onComplete) {
+function buildForm(baseOptions, formType, columnsMap, onComplete?) {
   const formColumns = buildFormColumns(columnsMap, formType);
   const form = merge(cloneDeep(baseOptions.form), baseOptions[formType], { columns: formColumns });
   if (onComplete) {
@@ -208,9 +208,9 @@ function buildFormOptions(crudOptions) {
 }
 
 function buildColumns(userOptions) {
-  _.forEach(userOptions.columns,(value,key)=>{
+  _.forEach(userOptions.columns, (value, key) => {
     value.key = key;
-  })
+  });
   const columns = setupOptionsColumns(cloneDeep(userOptions.columns));
   const columnsMap = buildOptionsColumnsMap({}, columns);
 

@@ -229,6 +229,7 @@ export default {
           if (this.fullscreenEnabled) {
             fullScreenIcon = (
               <fs-icon
+                class="fs-fullscreen-icon"
                 onClick={this.toggleFullscreen}
                 icon={this.fullscreen ? ui.icons.fullScreen : ui.icons.unFullScreen}
               />
@@ -349,6 +350,9 @@ export default {
       & > * {
         cursor: pointer;
       }
+    }
+    .fs-fullscreen-icon {
+      cursor: pointer;
     }
   }
   &.fs-fullscreen {

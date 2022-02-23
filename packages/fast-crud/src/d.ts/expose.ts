@@ -23,12 +23,12 @@ export type CrudExpose = {
    * 执行valueBuilder
    * @param records 表格数据列表
    */
-  doValueBuilder: (records,columns ?: Object) => void;
+  doValueBuilder: (records, columns?: Object) => void;
   /**
    * 执行valueResolve
    * @param context { form }
    */
-  doValueResolve: (context: { form: any },columns ?: Object) => void;
+  doValueResolve: (context: { form: any }, columns?: Object) => void;
   /**
    * 刷新列表数据
    */
@@ -93,18 +93,18 @@ export type CrudExpose = {
    * @param index
    * @param row
    */
-  insertTableRow: (index:number, row:Object) => void;
+  insertTableRow: (index: number, row: Object) => void;
   /**
    * 更新行
    * @param index
    * @param row
    */
-  updateTableRow: (index:number, row:Object, merge:boolean) => void,
+  updateTableRow: (index: number, row: Object, merge: boolean) => void;
   /**
    * 删除行
    * @param index
    */
-  removeTableRow: (index:number) => void,
+  removeTableRow: (index: number) => void;
 
   /**
    * 获取表格数据某一行
