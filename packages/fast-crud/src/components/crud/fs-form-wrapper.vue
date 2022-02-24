@@ -27,11 +27,14 @@ export default {
      * 插槽
      */
     slots: {},
+    /**
+     * 是否在内部打开对话框
+     */
     inner: {},
+    /**
+     * 内部打开对话框的wrapper
+     */
     innerWrapper: {},
-    submit: {
-      type: Function
-    }
   },
   emits: ["reset", "submit", "validationError", "value-change", "open", "opened", "closed", "inner-change"],
   setup(props, ctx) {

@@ -9,8 +9,8 @@
 * 类型：Boolean
 * 默认：`true`
 
-## el-table,a-table参数
-* 说明：支持el-table，a-table参数
+## fs-table,el-table/a-table参数
+* 说明：支持fs-table, 以及el-table/a-table的参数
 ```json5
 {// crudOptions
     table:{
@@ -82,6 +82,21 @@
     onFilterChange(filters){
           // 你的过滤操作
           // 比如你想要服务端过滤，就可以修改查询表单，然后触发doSearch
+    }
+  }    
+    
+}
+```
+
+## onDataChange
+* 说明：列表数据变化事件
+* 类型：Function
+* 默认值：无
+```js
+{
+  table:{
+    onDataChange({data}){
+        //列表数据变化时的操作
     }
   }    
     

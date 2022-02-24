@@ -19,7 +19,10 @@ export interface CrudOptions {
     // 添加时是否在列表最后插入
     isAppendWhenAdd: boolean;
   };
-  table?: {};
+  table?: {
+    //列表数据变化事件
+    onDataChange:Function,
+  };
   columns?: {};
   data?: [];
   rowHandle?: {};
