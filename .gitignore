@@ -115,3 +115,4 @@ packages/vben-admin-thin-next
 /**/package-lock.json
 /**/.DS_Store
 /pnpm-lock.yaml
+/packages/fast-admin/fs-admin-element/package-lock.json
