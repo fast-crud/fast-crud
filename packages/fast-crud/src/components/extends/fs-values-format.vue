@@ -226,7 +226,7 @@ export default {
   }
 };
 </script>
-<style>
+<style lang="less">
 .fs-values-format .fs-tag {
   margin: 2px;
   .fs-tag-icon{
