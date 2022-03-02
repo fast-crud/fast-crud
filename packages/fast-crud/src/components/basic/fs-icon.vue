@@ -21,13 +21,24 @@ export default defineComponent({
     const { ui } = useUi();
     const computedRenderFunc = computed(() => {
       if (props.icon && props.icon?.indexOf(":") >= 0) {
+
+        if(props.icon.startsWith("svg:")){
+          const IconComp: any = resolveDynamicComponent("FsIconSvg");
+          //如果是svg图标
+          return () => {
+            //@ts-ignore
+            const name = props.icon.replace("svg:","")
+            return <IconComp icon={name} />;
+          };
+        }
+
         const IconComp: any = resolveDynamicComponent("FsIconify");
         //如果是iconify图标
         return () => {
           return <IconComp icon={props.icon} />;
         };
       }
-      //ui内置图标
+      //使用ui内置图标
       if (ui.icon.isComponent) {
         const IconComp: any = resolveDynamicComponent(props.icon);
         return () => {

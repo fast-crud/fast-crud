@@ -1,5 +1,5 @@
 <template>
-  <span ref="iconifyRef" class="fs-iconify anticon" :class="{ 'fs-iconify-spin': spin }"></span>
+  <span ref="iconifyRef" class="fs-iconify" :class="{ 'fs-iconify-spin': spin }"></span>
 </template>
 <script lang="ts">
 import { defineComponent, nextTick, onMounted, ref, unref, watch } from "vue";
@@ -53,7 +53,6 @@ export default defineComponent({
 .fs-iconify {
   display: inline-block;
   vertical-align: middle;
-
   &-spin {
     svg {
       animation: fsLoadingCircle 1s infinite linear;
