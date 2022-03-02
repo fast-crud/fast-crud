@@ -3,6 +3,30 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.0.1](https://github.com/fast-crud/fast-crud/compare/v1.0.0...v1.0.1) (2022-03-02)
+
+**Note:** Version bump only for package @fast-crud/fast-crud
+
+
+
+# [1.0.0](https://github.com/fast-crud/fast-crud/compare/v1.0.0-alpha.7...v1.0.0) (2022-03-02)
+
+
+### Bug Fixes
+
+* 修复element折叠左侧菜单显示文本的问题 ([e6da33a](https://github.com/fast-crud/fast-crud/commit/e6da33a73235d9b685f6ac6ae290c5e44a3464d1))
+
+
+### Features
+
+* 升级element-plus到2.0.2，修复合并单元格示例无效的问题 ([41e9556](https://github.com/fast-crud/fast-crud/commit/41e95568ff315d1cd0cccb0fc48cb3a17eae0f42))
+* antdv rowhandle插槽示例 ([390cb95](https://github.com/fast-crud/fast-crud/commit/390cb95f4b362a705a0bc7b8019fb7225db25818))
+* fs-icon支持svg ([6f9958c](https://github.com/fast-crud/fast-crud/commit/6f9958c4886615d4af3575f2f0e71539c54ee5f2))
+* rowHandle 支持插槽 ([b19ebcf](https://github.com/fast-crud/fast-crud/commit/b19ebcf79c272c04a15bcbcfc3b72b0eb8399553))
+* table 增加 data-change事件 ([291da67](https://github.com/fast-crud/fast-crud/commit/291da672bab55d38f6c1aa19de30b8f2a8ce5744))
+
+
+
 # [1.0.0-alpha.7](https://github.com/fast-crud/fast-crud/compare/v1.0.0-alpha.6...v1.0.0-alpha.7) (2022-02-10)
 
 
