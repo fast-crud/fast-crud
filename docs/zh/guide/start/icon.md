@@ -23,7 +23,7 @@ app.component("CheckOutlined",CheckOutlined)
 
 ## 二、使用`iconify`图标
 
-示例项目中大量使用了`iconify`图标，如果你想集成到你的项目中，请按如下步骤配置
+示例项目中使用了`iconify`图标，如果你想集成到你的项目中，请按如下步骤配置
 
 ### 1. 安装依赖
 
@@ -76,7 +76,7 @@ import "@purge-icons/generated";
 2. 选择图标放到购物车，并将图标添加到项目
 3. 选择Symbol方式导出
 4. 下载js，放到项目中，并在main.ts中import它
-5. 或者直接在`index.html`中引入`<script  src="//at.alicdn.com/t/fount_xxxxxxxx.js"/>`
+5. 或者直接在`index.html`中引入`<script  src="//at.alicdn.com/t/font_xxxxxxxx.js"/>`
 
 ![](../../../../images/iconfont.png)
 
