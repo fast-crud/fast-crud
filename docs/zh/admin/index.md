@@ -14,7 +14,7 @@
 
 
 ::: tip    
-以下帮助说明仅针对fs-admin-element 和fs-admin-antdv版本
+以下帮助说明仅针对fs-admin-element 和fs-admin-antdv版本     
 FsAdminNaiveUi的使用文档请参考原项目文档：[naive-admin](https://www.naiveadmin.com/home)   
 ::: 
 
