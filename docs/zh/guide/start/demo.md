@@ -68,3 +68,8 @@ gitee： https://gitee.com/fast-crud/fs-server-js
 如果你想要贡献代码，那你肯定想要在修改`fast-crud`源码后立即在示例中看到效果。    
 
 [本章节内容已移至贡献代码章节](../other/contribution.md)
+
+
+### 更多
+
+更多关于示例的相关说明：请前往[fs-admin](../../admin/index.md)

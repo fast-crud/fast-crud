@@ -4,6 +4,7 @@
 本项目核心为`fast-crud`，需要与`admin`项目结合使用。官方的示例项目就是一个简单的`admin`项目。
 
 
+
 ## 各版本源码地址
 [FsAdminAntdv](https://github.com/fast-crud/fs-admin-antdv)   
 
@@ -11,6 +12,11 @@
 
 [FsAdminNaiveUi](https://github.com/fast-crud/fs-admin-naive-ui)
 
+
+::: tip    
+以下帮助说明仅针对fs-admin-element 和fs-admin-antdv版本
+FsAdminNaiveUi的使用文档请参考原项目文档：[naive-admin](https://www.naiveadmin.com/home)   
+::: 
 
 ## 启动方法
 
