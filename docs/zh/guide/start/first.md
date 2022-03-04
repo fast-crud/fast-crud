@@ -129,6 +129,8 @@ export default function ({ expose }) {
 
 // 如下为mock请求，实际开发中需要替换为你的真实后端请求方法
 import { requestForMock } from "../../../api/service";
+// 请求真实后端
+// import { request } from "../../../api/service";
 
 const request = requestForMock;
 const apiPrefix = "/MyFirstCrud";

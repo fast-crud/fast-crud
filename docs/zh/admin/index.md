@@ -35,7 +35,56 @@
 
 ## Api请求
 
+api请求采用axios模块
+
+```js
+// mock请求
+import { requestForMock } from "/src/api/service";
+// 真实后端请求
+import { request } from "/src/api/service";
+```
+
 ## mock
+示例项目默认为mock数据
+
+如果要改成请求真实后端，请按如下步骤修改
+### 1、requestForMock改成request
+```js
+import { requestForMock } from "../../../api/service";
+// 改成请求真实后端 ↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓
+import { request } from "../../../api/service";
+```
+
+### 2. 修改ip和端口
+
+#### 2.1 开发环境
+```js
+//修改 vite.config.ts
+export function (){
+    
+    
+    return {
+        ...
+            server: {
+                proxy: {
+                // with options
+                "/api": {
+                    //  修改为你的本地后端服务地址↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓
+                    target: "http://127.0.0.1:7001"
+                }
+            }
+        }
+    };
+}
+
+```
+
+#### 2.2 生产环境
+```shell
+# 修改 .env.production 文件
+# 改为你的后端生产环境地址↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓
+VITE_APP_API=http://www.docmirror.cn:7001/api
+```
 
 ## Tabs页签
 

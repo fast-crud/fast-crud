@@ -50,6 +50,20 @@ npm run dev
 ```
 
 
+### 带权限模式运行
+
+目前仅 fs-admin-element 、fs-admin-antdv支持
+```shell
+npm run dev:pm
+```
+
+同时您需要启动后台
+ 
+后台项目地址： https://github.com/fast-crud/fs-server-js    
+gitee： https://gitee.com/fast-crud/fs-server-js
+
+如果需要连接你自己的权限管理接口，则需要按你自己的情况做适配改造
+
 ### 调试运行
 如果你想要贡献代码，那你肯定想要在修改`fast-crud`源码后立即在示例中看到效果。    
 
