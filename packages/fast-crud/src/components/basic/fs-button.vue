@@ -33,12 +33,14 @@ export default defineComponent({
     const { ui } = useUi();
     const icon: string | null | undefined = this.icon;
     const iconRight: string | null | undefined = this.iconRight;
+    let iconRender = <fs-icon icon={icon} />;
+    const isNaive = ui.type === "naive";
     const slots = {
       ...this.$slots,
       default: () => {
         const children: any = [];
-        if (icon) {
-          children.push(<fs-icon icon={icon} />);
+        if (icon && !isNaive) {
+          children.push(iconRender);
         }
         if (this.$slots.default) {
           children.push(this.$slots.default());
@@ -52,6 +54,9 @@ export default defineComponent({
         return children;
       }
     };
+    if (icon && isNaive) {
+      slots.icon = iconRender;
+    }
 
     const isCircle = this.circle ? ui.button.circle : {};
 
