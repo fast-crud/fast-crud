@@ -54,7 +54,7 @@ export default defineComponent({
         return children;
       }
     };
-    if (icon && isNaive) {
+    if (icon && isNaive && !slots.icon) {
       slots.icon = iconRender;
     }
 
