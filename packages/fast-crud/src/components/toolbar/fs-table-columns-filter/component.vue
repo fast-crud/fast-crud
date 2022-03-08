@@ -1,7 +1,7 @@
 <template>
   <template v-if="mode === 'simple'">
     <component :is="$fsui.row.name" class="fs-table-columns-filter-simple">
-      <component :is="$fsui.col.name" v-for="(element, key) in currentValue" :span="6">
+      <component :is="$fsui.col.name" v-for="(element, key) in currentValue" v-show="element.setShow" :span="6">
         <component
           :is="$fsui.checkbox.name"
           v-model:[$fsui.checkbox.modelValue]="element.show"
@@ -34,7 +34,7 @@
 
           <draggable v-model="currentValue" tag="transition-group" item-key="key">
             <template #item="{ element, index }">
-              <div class="component--list-item" flex="main:justify cross:center">
+              <div v-show="element.setShow" class="component--list-item" flex="main:justify cross:center">
                 <component
                   :is="$fsui.checkbox.name"
                   v-model:[$fsui.checkbox.modelValue]="element.show"
@@ -207,16 +207,15 @@ export default {
     buildColumns(value) {
       const columns = [];
       _.forEach(value, (item) => {
-        if (item.columnSetShow !== false) {
-          const column = {
-            key: item.key,
-            title: item.title,
-            show: item.show ?? true,
-            fixed: item.fixed ?? false,
-            disabled: item.columnSetDisabled ?? false
-          };
-          columns.push(column);
-        }
+        const column = {
+          key: item.key,
+          title: item.title,
+          show: item.show ?? true,
+          fixed: item.fixed ?? false,
+          setShow: item.columnSetShow !== false,
+          disabled: item.columnSetDisabled ?? false
+        };
+        columns.push(column);
       });
       return columns;
     },
