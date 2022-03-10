@@ -250,6 +250,11 @@ export default {
         this.saveOptionsToStorage(this.currentValue);
       }
       const result = _.cloneDeep(this.currentValue);
+      
+      //解决naive ui与列设置冲突的问题
+      result.forEach(column=>{
+        delete column.disabled
+      })
       this.emit(result);
       this.active = false;
     },
