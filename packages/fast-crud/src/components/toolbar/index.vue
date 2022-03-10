@@ -19,7 +19,7 @@
                 v-if="columns"
                 mode="simple"
                 v-bind="columnsFilter"
-                :columns="columns"
+                :columns="originalColumns"
                 :storage="storage"
                 @update:columns="$emit('update:columns', $event)"
             />
@@ -31,7 +31,7 @@
     <fs-table-columns-filter
         v-if="columns"
         ref="columnsFilterRef"
-        :columns="columns"
+        :columns="originalColumns"
         :storage="storage"
         @update:columns="$emit('update:columns', $event)"
     />
@@ -198,6 +198,14 @@ export default {
       computedButtons,
       popoverVisible
     };
+  },
+  data(){
+    return {
+      originalColumns: []
+    }
+  },
+  created(){
+    this.originalColumns = _.cloneDeep(this.columns)
   }
 };
 </script>
