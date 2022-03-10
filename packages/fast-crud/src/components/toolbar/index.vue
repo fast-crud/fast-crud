@@ -109,9 +109,6 @@ export default {
   },
   emits: ["refresh", "update:search", "update:compact", "update:columns", "export"],
   setup(props, ctx) {
-    const j = (v) => {
-      popoverVisible.value = v
-    }
     const {t} = useI18n();
     const columnsFilterRef = ref();
     const ui = uiContext.get();
