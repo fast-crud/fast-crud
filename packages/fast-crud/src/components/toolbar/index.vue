@@ -204,8 +204,13 @@ export default {
       originalColumns: []
     }
   },
-  created(){
-    this.originalColumns = _.cloneDeep(this.columns)
+  watch: {
+    columns: {
+      handler: function () {
+        this.originalColumns = { ...this.columns };
+      },
+      immediate: true
+    }
   }
 };
 </script>
