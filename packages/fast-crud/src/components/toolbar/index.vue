@@ -3,6 +3,7 @@
     <template v-for="(item, key) of computedButtons" :key="key">
       <template v-if="item.show !== false">
         <component
+            display-directive="show"
             v-model:[$fsui.popover.visible]="popoverVisible"
             :is="$fsui.popover.name"
             v-if="key === 'columns' && columnsFilter && columnsFilter.mode === 'simple'"
