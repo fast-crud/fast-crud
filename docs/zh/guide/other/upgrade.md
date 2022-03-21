@@ -11,6 +11,9 @@ npm update
 
 #或使用yarn 
 yarn upgrade
+
+#或手动选择升级版本
+yarn upgrade-interactive --latest
 ```
 
 ### 2.手动升级
