@@ -177,6 +177,6 @@
 * 类型：async Function(context)
 
 
-## doSubmit
+## afterSubmit
 * 说明: 表单提交后触发
 * 类型：async Function(context)
