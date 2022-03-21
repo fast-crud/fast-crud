@@ -33,7 +33,9 @@ export default defineComponent({
     const { ui } = useUi();
     const icon: string | null | undefined = this.icon;
     const iconRight: string | null | undefined = this.iconRight;
-    let iconRender = <fs-icon icon={icon} />;
+    let iconRender = ()=>{
+      return <fs-icon icon={icon} />;
+    }
     const isIconSlot = ui.type !== "element";
     const slots = {
       ...this.$slots,
