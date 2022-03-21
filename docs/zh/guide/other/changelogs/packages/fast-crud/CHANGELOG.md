@@ -3,6 +3,18 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.0.4](https://github.com/fast-crud/fast-crud/compare/v1.0.3...v1.0.4) (2022-03-14)
+
+
+### Bug Fixes
+
+* 去除无用代码 ([93d4b90](https://github.com/fast-crud/fast-crud/commit/93d4b9032d2af3d697088b194c92810c3a82570d))
+* 修复antdv菜单和按钮图标错位的问题 ([0610534](https://github.com/fast-crud/fast-crud/commit/06105343a6bc284bed042342f499e4b796ac7db9))
+
+
+
+
+
 ## [1.0.3](https://github.com/fast-crud/fast-crud/compare/v1.0.2...v1.0.3) (2022-03-10)
 
 

@@ -34,12 +34,12 @@ export default defineComponent({
     const icon: string | null | undefined = this.icon;
     const iconRight: string | null | undefined = this.iconRight;
     let iconRender = <fs-icon icon={icon} />;
-    const isNaive = ui.type === "naive";
+    const isIconSlot = ui.type !== "element";
     const slots = {
       ...this.$slots,
       default: () => {
         const children: any = [];
-        if (icon && !isNaive) {
+        if (icon && !isIconSlot) {
           children.push(iconRender);
         }
         if (this.$slots.default) {
@@ -54,8 +54,8 @@ export default defineComponent({
         return children;
       }
     };
-    if (icon && isNaive && !slots.icon) {
-      slots.icon = iconRender;
+    if (icon && isIconSlot && !slots["icon"]) {
+      slots["icon"] = iconRender;
     }
 
     const isCircle = this.circle ? ui.button.circle : {};
@@ -96,12 +96,14 @@ export default defineComponent({
   }
 
   &.ant-btn {
-    line-height: 0;
+    display: inline-flex;
+    flex-direction: row;
+    align-items: center;
   }
-  &.ant-btn > .anticon {
-    line-height: 0;
-    margin-left: 2px;
-    margin-right: 2px;
-  }
+  //&.ant-btn > .anticon {
+  //  line-height: 0;
+  //  margin-left: 2px;
+  //  margin-right: 2px;
+  //}
 }
 </style>

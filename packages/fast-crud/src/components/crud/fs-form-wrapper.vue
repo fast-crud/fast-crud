@@ -34,7 +34,7 @@ export default {
     /**
      * 内部打开对话框的wrapper
      */
-    innerWrapper: {},
+    innerWrapper: {}
   },
   emits: ["reset", "submit", "validationError", "value-change", "open", "opened", "closed", "inner-change"],
   setup(props, ctx) {
@@ -428,7 +428,7 @@ export default {
     border-bottom: 1px #eee solid;
   }
   .el-dialog__headerbtn {
-    top: 23px;
+    top: 22px;
   }
 
   .el-form-item__content {
