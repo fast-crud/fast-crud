@@ -21,7 +21,7 @@ yarn upgrade
 * @fast-crud/fast-crud:xxx
 * @fast-crud/fast-extends:xxx
 
-> 具体的版本号请查看`changelog`
+> 具体的版本号请查看 [changelog](./changelogs/CHANGELOG.md)
 
 ### 其他命令参考
 ```shell script
