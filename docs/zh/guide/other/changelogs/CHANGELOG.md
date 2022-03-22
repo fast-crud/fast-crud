@@ -3,6 +3,21 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.0.5](https://github.com/fast-crud/fast-crud/compare/v1.0.4...v1.0.5) (2022-03-22)
+
+
+### Bug Fixes
+
+* 修复刷新页面丢失query参数的bug ([499348a](https://github.com/fast-crud/fast-crud/commit/499348a136a205913d5e12bb02176a1a0982d875))
+* 修复antdv图标错位问题 ([887c876](https://github.com/fast-crud/fast-crud/commit/887c8763a0242d24632d038bc9fe410bb89c9830))
+* 修复button icon 报性能警告的问题 ([78240e9](https://github.com/fast-crud/fast-crud/commit/78240e99dd5b8e18fc3417c5390d7659047f2d02))
+* 修复element错位 ([8a59c97](https://github.com/fast-crud/fast-crud/commit/8a59c976f9785dee898a911e46126fa112c4cde9))
+* 修复element错位 ([35e46ea](https://github.com/fast-crud/fast-crud/commit/35e46ea507b085b937e83ee290d447191c1a11af))
+
+
+
+
+
 ## [1.0.4](https://github.com/fast-crud/fast-crud/compare/v1.0.3...v1.0.4) (2022-03-14)
 
 
