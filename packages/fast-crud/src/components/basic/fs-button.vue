@@ -101,6 +101,7 @@ export default defineComponent({
     display: inline-flex;
     flex-direction: row;
     align-items: center;
+    justify-content: center;
   }
   //&.ant-btn > .anticon {
   //  line-height: 0;
