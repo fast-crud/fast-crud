@@ -131,6 +131,9 @@ function useSearch(props, ctx) {
   };
 
   const getSearchFormData = () => {
+    if(searchRef.value){
+      searchFormData.value = searchRef.value.getForm()
+    }
     return searchFormData.value;
   };
 
