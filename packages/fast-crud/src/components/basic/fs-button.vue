@@ -39,7 +39,14 @@ export default defineComponent({
     const isIconSlot = ui.type !== "element";
     const slots = {
       ...this.$slots,
-      default: () => {
+    };
+    if(
+        icon && !isIconSlot
+        || this.$slots.default
+        || this.text
+        || iconRight
+    ){
+      slots.default = () => {
         const children: any = [];
         if (icon && !isIconSlot) {
           children.push(iconRender());
@@ -55,7 +62,7 @@ export default defineComponent({
         }
         return children;
       }
-    };
+    }
     if (icon && isIconSlot && !slots["icon"]) {
       slots["icon"] = iconRender;
     }
