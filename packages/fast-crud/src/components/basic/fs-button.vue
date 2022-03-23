@@ -42,7 +42,7 @@ export default defineComponent({
       default: () => {
         const children: any = [];
         if (icon && !isIconSlot) {
-          children.push(iconRender);
+          children.push(iconRender());
         }
         if (this.$slots.default) {
           children.push(this.$slots.default());
