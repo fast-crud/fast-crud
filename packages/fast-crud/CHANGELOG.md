@@ -3,6 +3,20 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.0.6](https://github.com/fast-crud/fast-crud/compare/v1.0.5...v1.0.6) (2022-03-23)
+
+
+### Bug Fixes
+
+* 修复element button 图标错乱问题 ([347694f](https://github.com/fast-crud/fast-crud/commit/347694fa305dc645be908d4ad6b5358792f52cd8))
+* 修复getSearchFormData无法获取默认值的问题 ([cd05002](https://github.com/fast-crud/fast-crud/commit/cd05002cbd204f822c1dae55a954009270450a1f))
+* 修复naive button 图标错乱问题 ([be28c9c](https://github.com/fast-crud/fast-crud/commit/be28c9c948188a704c8e886b7c82f405037948c1))
+* 优化第一次打开是iconfiy需要再次分析依赖的问题 ([1b941fb](https://github.com/fast-crud/fast-crud/commit/1b941fbd106fc2eb9283e0332f7516c5522f1c62))
+
+
+
+
+
 ## [1.0.5](https://github.com/fast-crud/fast-crud/compare/v1.0.4...v1.0.5) (2022-03-22)
 
 
