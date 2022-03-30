@@ -105,7 +105,6 @@ export default defineComponent({
         flex-shrink: 0;
       }
       .body {
-        overflow-y: auto;
         flex: 1;
       }
       .footer {
