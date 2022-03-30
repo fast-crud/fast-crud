@@ -3,6 +3,19 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.0.7](https://github.com/fast-crud/fast-crud/compare/v1.0.6...v1.0.7) (2022-03-30)
+
+
+### Bug Fixes
+
+* 去除意外的滚动条 ([b8fa2c7](https://github.com/fast-crud/fast-crud/commit/b8fa2c75ae4839e02ebd48354f69ef4f6e26660a))
+* 修复antdv 固定表头失效的问题 ([f2d0fa2](https://github.com/fast-crud/fast-crud/commit/f2d0fa2e53ed84b28bdd799a4c49915d67f2c402))
+* 修复antdv 列配置错位问题 ([18d1e82](https://github.com/fast-crud/fast-crud/commit/18d1e8285d0c729a3f65df79fd4d4856e944ff2c))
+
+
+
+
+
 ## [1.0.6](https://github.com/fast-crud/fast-crud/compare/v1.0.5...v1.0.6) (2022-03-23)
 
 
