@@ -41,7 +41,7 @@ function installSyncComponents(app, modules, excludes, pickNameExp, transform) {
     app.component(key, item.default);
   });
 }
-function transformFromGlob(modules, pickNameExp, transform) {
+function transformFromGlob(modules, pickNameExp?, transform?) {
   const components = {};
   if (pickNameExp == null) {
     pickNameExp = /.*\/(.+).(vue|jsx|tsx)/;
