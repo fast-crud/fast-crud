@@ -240,13 +240,13 @@ export class Element implements UiInterface {
   };
 
   treeSelect: TreeSelectCI = {
-    name: "null",
-    modelValue: "value",
-    clearable: "clearable",
-    options: "tree-data",
-    value: "value",
-    label: "label",
-    children: "children",
+    name: "el-tree-select",
+    modelValue: "modelValue",
+    clearable: "select.clearable",
+    options: "data",
+    value: "tree.value",
+    label: "tree.label",
+    children: "tree.children",
   };
 
   radio: RadioCI = {
