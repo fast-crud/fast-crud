@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [1.1.0](https://github.com/fast-crud/fast-crud/compare/v1.0.7...v1.1.0) (2022-04-22)
+
+
+### Features
+
+* antdv，element都升级到最新版，element支持tree-select ([644a217](https://github.com/fast-crud/fast-crud/commit/644a2172dd7d0c649f096ba074ec67aad70e0748))
+
+
+
+
+
 ## [1.0.7](https://github.com/fast-crud/fast-crud/compare/v1.0.6...v1.0.7) (2022-03-30)
 
 
