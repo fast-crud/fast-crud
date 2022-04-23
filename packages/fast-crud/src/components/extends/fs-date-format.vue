@@ -3,7 +3,7 @@
 </template>
 
 <script>
-import * as dayjs from "dayjs";
+import dayjs from "dayjs";
 /**
  * 日期格式化展示组件
  */

@@ -1,5 +1,5 @@
 import StringUtils from "../utils/util.string";
-import * as dayjs from "dayjs";
+import dayjs from "dayjs";
 import { useI18n } from "../locale";
 function doFormat(date, format) {
   if (StringUtils.isEmpty(date)) {
