@@ -217,7 +217,7 @@ export function useEditable(props, ctx, tableRef) {
 
   watch(
     () => {
-      return tableData.getData();
+      return props["data"];
     },
     (data) => {
       if (options.value.enabled) {
