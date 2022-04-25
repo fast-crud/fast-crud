@@ -126,11 +126,7 @@ function useEditable({ crudExpose }) {
           // do nothing
         } else {
           const rowData = row.getRowData(index);
-          if (crudExpose.crudRef.value.modelValue) {
-            crudExpose.crudRef.value.modelValue.splice(index, 1);
-          } else {
-            await crudBinding.value.request.delRequest({ row: rowData });
-          }
+          await crudBinding.value.request.delRequest({row: rowData});
           crudExpose.doRefresh();
         }
       }
@@ -249,33 +245,22 @@ export function useExpose(props: UseExposeProps): { expose: CrudExpose; crudExpo
       }
 
       let pageRes;
-      if (props.crudRef.value.modelValue) {
-        pageRes = await new Promise((resolve) => {
-          nextTick(() => {
-            resolve({
-              records: props.crudRef.value.modelValue
-            });
-          });
+      try {
+        crudBinding.value.table.loading = true;
+        logger.debug("pageRequest", query);
+        pageRes = await crudBinding.value.request.pageRequest(query);
+      } finally {
+        crudBinding.value.table.loading = false;
+      }
+      if (pageRes == null) {
+        logger.warn("pageRequest返回结果不能为空");
+        return;
+      }
+      if (crudBinding.value.request.transformRes) {
+        pageRes = crudBinding.value.request.transformRes({
+          res: pageRes,
+          query
         });
-      } else {
-        try {
-          crudBinding.value.table.loading = true;
-          logger.debug("pageRequest", query);
-          pageRes = await crudBinding.value.request.pageRequest(query);
-        } finally {
-          crudBinding.value.table.loading = false;
-        }
-        if (pageRes == null) {
-          logger.warn("pageRequest返回结果不能为空");
-          return;
-        }
-
-        if (crudBinding.value.request.transformRes) {
-          pageRes = crudBinding.value.request.transformRes({
-            res: pageRes,
-            query
-          });
-        }
       }
       const { currentPage = page[ui.pagination.currentPage], pageSize = page.pageSize, total } = pageRes;
       const { records } = pageRes;
