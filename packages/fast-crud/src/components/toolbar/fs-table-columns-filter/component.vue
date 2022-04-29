@@ -193,9 +193,11 @@ export default {
       const currentValue = [];
       for (const storedOption of storedOptions) {
         const found = this.currentValue.find((item) => item.key === storedOption.key);
-        found.fixed = storedOption.fixed;
-        found.show = storedOption.show;
-        currentValue.push(found);
+        if(found) {
+          found.fixed = storedOption.fixed;
+          found.show = storedOption.show;
+          currentValue.push(found);
+        }
       }
       this.currentValue = currentValue;
       this.$nextTick(() => {
