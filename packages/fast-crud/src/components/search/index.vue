@@ -393,6 +393,7 @@ export default {
     };
 
     const onInput = (item) => {
+      console.log("value input",item.key,item)
       if (item.autoSearchTrigger == null || item.autoSearchTrigger === "input") {
         doAutoSearch();
       }
@@ -405,6 +406,7 @@ export default {
 
     function onValueChanged(value, item) {
       const key = item.key;
+      console.log("value changed",key,value)
       _.set(form, key, value);
       if (item.valueChange) {
         const key = item.key;

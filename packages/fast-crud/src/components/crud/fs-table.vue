@@ -286,6 +286,7 @@ export default {
     };
 
     const renderCellComponent = (item, scope) => {
+      // console.log("render cell component",item.key,scope.record)
       const cellSlotName = "cell_" + item.key;
       scope.row = scope[tableColumnCI.row];
       const getScopeFn = () => {
