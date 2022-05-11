@@ -427,9 +427,6 @@ export default {
     padding: 20px 20px;
     border-bottom: 1px #eee solid;
   }
-  .el-dialog__headerbtn {
-    top: 22px;
-  }
 
   .el-form-item__content {
     .el-input {
