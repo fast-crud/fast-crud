@@ -1,17 +1,22 @@
 import _ from "lodash-es";
 import { reactive, computed, provide, nextTick, ref, watch } from "vue";
 import { uiContext } from "../../../ui";
+
 // import { useValidation } from "./validation/use-validation";
 
-function useTableData(tableRef) {
+function useTableData(props, tableRef) {
   const ui = uiContext.get();
 
   function getData() {
+    if (props.data) {
+      return props.data;
+    }
     if (tableRef.value) {
       return tableRef.value[ui.table.data];
     }
     return [];
   }
+
   return {
     getData,
     insert(index, row) {
@@ -28,10 +33,12 @@ function useTableData(tableRef) {
     }
   };
 }
+
 export function useEditable(props, ctx, tableRef) {
-  const tableData = useTableData(tableRef);
+  const tableData = useTableData(props, tableRef);
   const editableRows = reactive([]);
   const actionHistory = reactive([]);
+
   function editableRowsEach(call) {
     for (let i = 0; i < editableRows.length; i++) {
       const row = editableRows[i];
@@ -43,6 +50,7 @@ export function useEditable(props, ctx, tableRef) {
       }
     }
   }
+
   function editableEach(call) {
     editableRowsEach(({ rowData, row, cells, index }) => {
       _.forEach(cells, (cell, key) => {
@@ -50,6 +58,7 @@ export function useEditable(props, ctx, tableRef) {
       });
     });
   }
+
   // editable
   const options = computed(() => {
     return _.merge(
@@ -79,9 +88,11 @@ export function useEditable(props, ctx, tableRef) {
     function getValue(key) {
       return tableRow[key];
     }
+
     function setValue(key, value) {
       tableRow[key] = value;
     }
+
     const cell = reactive({
       isEditing: options.value.activeDefault,
       activeTrigger: options.value.activeTrigger
@@ -168,11 +179,13 @@ export function useEditable(props, ctx, tableRef) {
     editableRow.save = async ({ index, doSave }) => {
       const changed = editableRow.getChangeData(index);
       const row = tableData.get(index);
+
       function setData(newRow) {
         if (newRow) {
           _.merge(row, newRow);
         }
       }
+
       await doSave({ isAdd: editableRow.isAdd, index, changed, row, setData });
       editableRow.persist();
     };
@@ -198,10 +211,12 @@ export function useEditable(props, ctx, tableRef) {
     };
     return editableRow;
   }
+
   function unshiftEditableRow(rowData, index = 0) {
     editableRows.splice(index, 0, { cells: {} });
     return createEditableRow(index, rowData);
   }
+
   function setupEditable(data) {
     if (data == null) {
       data = tableData.getData();
@@ -257,6 +272,7 @@ export function useEditable(props, ctx, tableRef) {
       }
     }
   );
+
   function getEditableCell(index, key) {
     if (key == null || index < 0) {
       return {};
@@ -272,6 +288,7 @@ export function useEditable(props, ctx, tableRef) {
       cell.active({ exclusive: false });
     });
   }
+
   /**
    * 全部取消编辑状态
    */
@@ -345,6 +362,7 @@ export function useEditable(props, ctx, tableRef) {
       tableData.insert(index, dataRow);
     }
   }
+
   /**
    * 还原
    */
@@ -361,14 +379,17 @@ export function useEditable(props, ctx, tableRef) {
       cell.resume();
     });
   }
+
   async function submit(call) {
     inactive();
     const changed = getChangedData();
+
     function setData(list) {
       _.forEach(list, (row, index) => {
         _.merge(tableData.get(index), row);
       });
     }
+
     await call({ ...changed, setData });
     persist();
   }
@@ -387,6 +408,7 @@ export function useEditable(props, ctx, tableRef) {
   }
 
   let addIndex = 0;
+
   function addRow(opts = {}) {
     const row = opts.row || { [options.value.rowKey]: --addIndex };
     if (opts.row === undefined) {
