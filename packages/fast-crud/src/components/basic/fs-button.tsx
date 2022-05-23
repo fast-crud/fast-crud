@@ -1,6 +1,6 @@
-<script lang="tsx">
 import { resolveDynamicComponent, defineComponent, h } from "vue";
 import { useUi } from "../../use";
+import "./fs-button.less";
 
 /**
  * 按钮，支持el-button/a-button的配置
@@ -33,19 +33,14 @@ export default defineComponent({
     const { ui } = useUi();
     const icon: string | null | undefined = this.icon;
     const iconRight: string | null | undefined = this.iconRight;
-    let iconRender = ()=>{
+    const iconRender = () => {
       return <fs-icon icon={icon} />;
-    }
+    };
     const isIconSlot = ui.type !== "element";
     const slots = {
-      ...this.$slots,
+      ...this.$slots
     };
-    if(
-        icon && !isIconSlot
-        || this.$slots.default
-        || this.text
-        || iconRight
-    ){
+    if ((icon && !isIconSlot) || this.$slots.default || this.text || iconRight) {
       slots.default = () => {
         const children: any = [];
         if (icon && !isIconSlot) {
@@ -61,7 +56,7 @@ export default defineComponent({
           children.push(<fs-icon icon={iconRight} />);
         }
         return children;
-      }
+      };
     }
     if (icon && isIconSlot && !slots["icon"]) {
       //@ts-ignore
@@ -87,34 +82,3 @@ export default defineComponent({
     );
   }
 });
-</script>
-
-<style lang="less">
-.fs-button {
-  &.is-thin {
-    &.el-button--small,
-    &.el-button--small.is-round {
-      padding: 9px 9px;
-    }
-    &.el-button--mini,
-    &.el-button--mini.is-round {
-      padding: 7px 7px;
-    }
-    &.el-button [class*="el-icon-"] + span {
-      margin-left: 0;
-    }
-  }
-
-  &.ant-btn {
-    display: inline-flex;
-    flex-direction: row;
-    align-items: center;
-    justify-content: center;
-  }
-  //&.ant-btn > .anticon {
-  //  line-height: 0;
-  //  margin-left: 2px;
-  //  margin-right: 2px;
-  //}
-}
-</style>

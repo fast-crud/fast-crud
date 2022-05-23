@@ -1,0 +1,6 @@
+{
+  "entryPoints": ["./src/d.ts/index.ts"],
+  "out": "../../doc/api",
+  "exclude": "**/node_modules/**",
+  "plugin": ["typedoc-plugin-markdown"]
+}

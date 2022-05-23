@@ -1,4 +1,3 @@
-<script lang="jsx">
 import { resolveDynamicComponent, withDirectives } from "vue";
 
 /**
@@ -20,4 +19,3 @@ export default {
     return withDirectives(<div style={"width:30px;height:30px;"} />, [[this.loading]]);
   }
 };
-</script>

@@ -1,4 +1,3 @@
-<script lang="jsx">
 import {
   getCurrentInstance,
   ref,
@@ -12,11 +11,11 @@ import {
   watch
 } from "vue";
 import _ from "lodash-es";
-import {uiContext} from "../../ui";
-import {useEditable} from "./editable/use-editable";
+import { uiContext } from "../../ui";
+import { useEditable } from "./editable/use-editable";
 import logger from "../../utils/util.log";
-
-function buildTableSlots({props, ctx, ui, getContextFn, componentRefs, renderRowHandle, renderCellComponent}) {
+import "./fs-table.less";
+function buildTableSlots({ props, ctx, ui, getContextFn, componentRefs, renderRowHandle, renderCellComponent }) {
   const tableComp = resolveDynamicComponent(ui.table.name);
   const tableColumnComp = resolveDynamicComponent(ui.tableColumn.name);
   const tableColumnGroupComp = resolveDynamicComponent(ui.tableColumnGroup.name);
@@ -54,18 +53,18 @@ function buildTableSlots({props, ctx, ui, getContextFn, componentRefs, renderRow
           return renderCellComponent(item, scope);
         };
       }
-      const newItem = {...item};
+      const newItem = { ...item };
       delete newItem.children;
 
       return (
-          <currentTableColumnComp
-              ref={"tableColumnRef"}
-              {...newItem}
-              label={item.title}
-              prop={item.key}
-              dataIndex={item.key}
-              v-slots={cellSlots}
-          />
+        <currentTableColumnComp
+          ref={"tableColumnRef"}
+          {...newItem}
+          label={item.title}
+          prop={item.key}
+          dataIndex={item.key}
+          v-slots={cellSlots}
+        />
       );
     };
     _.forEach(props.columns, (item) => {
@@ -81,13 +80,13 @@ function buildTableSlots({props, ctx, ui, getContextFn, componentRefs, renderRow
         default: renderRowHandle
       };
       children.push(
-          <tableColumnComp
-              ref={"tableColumnRef"}
-              {...props.rowHandle}
-              label={props.rowHandle.title}
-              prop={props.rowHandle.key || "rowHandle"}
-              v-slots={rowHandleSlots}
-          />
+        <tableColumnComp
+          ref={"tableColumnRef"}
+          {...props.rowHandle}
+          label={props.rowHandle.title}
+          prop={props.rowHandle.key || "rowHandle"}
+          v-slots={rowHandleSlots}
+        />
       );
     }
     return children;
@@ -112,14 +111,14 @@ function buildTableSlots({props, ctx, ui, getContextFn, componentRefs, renderRow
  * @param renderRowHandle
  * @returns {*[]}
  */
-function buildTableColumns({props, ctx, ui, getContextFn, componentRefs, renderRowHandle, renderCellComponent}) {
+function buildTableColumns({ props, ctx, ui, getContextFn, componentRefs, renderRowHandle, renderCellComponent }) {
   const columns = [];
 
   for (let column of props.columns) {
     if (column.show === false) {
       continue;
     }
-    const item = {...column};
+    const item = { ...column };
     item.dataIndex = column.key;
     columns.push(item);
     if (column.children != null) {
@@ -129,7 +128,7 @@ function buildTableColumns({props, ctx, ui, getContextFn, componentRefs, renderR
     } else {
       //渲染组件
       const customRender = item[ui.table.renderMethod];
-      const newCol = {...item};
+      const newCol = { ...item };
       delete newCol[ui.table.renderMethod];
       if (!customRender) {
         //如果没有配置customRender 默认使用render cell component
@@ -216,7 +215,7 @@ export default {
     },
     request: {}
   },
-  emits: ["row-handle", "value-change", "pagination-change", "filter-change", "sort-change", 'data-change'],
+  emits: ["row-handle", "value-change", "pagination-change", "filter-change", "sort-change", "data-change"],
   setup(props, ctx) {
     const tableRef = ref();
     const componentRefs = ref([]);
@@ -229,11 +228,14 @@ export default {
       return cellRef?.getTargetRef();
     };
 
-    watch(() => {
-      return props.data
-    }, (value) => {
-      ctx.emit('data-change', {data: value})
-    })
+    watch(
+      () => {
+        return props.data;
+      },
+      (value) => {
+        ctx.emit("data-change", { data: value });
+      }
+    );
 
     const ui = uiContext.get();
     const tableComp = resolveDynamicComponent(ui.table.name);
@@ -282,7 +284,7 @@ export default {
           }
         }
       }
-      return <fs-row-handle {...props.rowHandle} scope={scope} onHandle={onRowHandle} v-slots={rowHandleSlots}/>;
+      return <fs-row-handle {...props.rowHandle} scope={scope} onHandle={onRowHandle} v-slots={rowHandleSlots} />;
     };
 
     const renderCellComponent = (item, scope) => {
@@ -326,23 +328,23 @@ export default {
         // if (props.editable && props.editable?.options?.value?.enabled === true) {
         const editable = editableWrap.editable.getEditableCell(index, item.key);
         return (
-            <fs-editable-cell
-                ref={setRef}
-                columnKey={item.key}
-                index={index}
-                item={item}
-                editable={editable}
-                getScope={getScopeFn}
-                slots={cellSlots}
-                {...vModel}
-            />
+          <fs-editable-cell
+            ref={setRef}
+            columnKey={item.key}
+            index={index}
+            item={item}
+            editable={editable}
+            getScope={getScopeFn}
+            slots={cellSlots}
+            {...vModel}
+          />
         );
       } else {
         return <fs-cell ref={setRef} item={item} getScope={getScopeFn} slots={cellSlots} {...vModel} />;
       }
     };
 
-    const {expose} = ctx;
+    const { expose } = ctx;
 
     expose({
       tableRef,
@@ -354,7 +356,7 @@ export default {
     const renderMode = ui.table.renderMode;
     if (renderMode === "slot") {
       const computedTableSlots = computed(() => {
-        return buildTableSlots({props, ctx, ui, getContextFn, componentRefs, renderRowHandle, renderCellComponent});
+        return buildTableSlots({ props, ctx, ui, getContextFn, componentRefs, renderRowHandle, renderCellComponent });
       });
 
       // 使用config render
@@ -366,7 +368,7 @@ export default {
           [ui.table.data]: props.data
         };
         const tableRender = (
-            <tableComp ref={tableRef} {...ctx.attrs} {...events} {...dataSource} v-slots={computedTableSlots.value}/>
+          <tableComp ref={tableRef} {...ctx.attrs} {...events} {...dataSource} v-slots={computedTableSlots.value} />
         );
         if (ui.table.vLoading) {
           const loading = resolveDirective(ui.table.vLoading);
@@ -396,48 +398,16 @@ export default {
           [ui.table.data]: props.data
         };
         return (
-            <tableComp
-                ref={tableRef}
-                {...ctx.attrs}
-                {...events}
-                columns={computedColumns.value}
-                {...dataSource}
-                v-slots={props.slots}
-            />
+          <tableComp
+            ref={tableRef}
+            {...ctx.attrs}
+            {...events}
+            columns={computedColumns.value}
+            {...dataSource}
+            v-slots={props.slots}
+          />
         );
       };
     }
   }
 };
-</script>
-<style lang="less">
-.fs-crud-table {
-  height: 100px;
-
-  &.ant-table-wrapper {
-  }
-
-  .ant-table-bordered {
-    border-bottom: 1px solid #eee;
-
-    .ant-table-content {
-    }
-  }
-
-  .fs-current-row {
-    background-color: #b0e2ff;
-
-    td {
-      background-color: unset;
-    }
-  }
-
-  &.el-table--small td {
-    padding: 2px 0;
-  }
-
-  .el-table__expanded-cell[class*="cell"] {
-    padding: 10px 50px;
-  }
-}
-</style>

@@ -1,4 +1,3 @@
-<script lang="jsx">
 /**
  * 插槽render组件
  */
@@ -25,4 +24,3 @@ export default {
     };
   }
 };
-</script>

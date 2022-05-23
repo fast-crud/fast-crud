@@ -123,12 +123,10 @@ module.exports = {
                             text: '基础组件', children: [
                                 {text: 'fs-page', link: "/api/components/crud/container/fs-page"},
                                 {text: 'fs-container', link: "/api/components/crud/container/fs-container"},
-                                {text: 'fs-button', link: "/api/components/crud/fs-table"},
-                                {text: 'fs-icon', link: "/api/components/crud/fs-table"},
-                                {text: 'fs-loading', link: "/api/components/crud/fs-loading"},
-                                {text: 'fs-component-render', link: "/api/components/crud/fs-component-render"},
-                                {text: 'fs-render', link: "/api/components/crud/fs-render"},
-                                {text: 'fs-slot-render', link: "/api/components/crud/fs-slot-render"},
+                                {text: 'fs-button', link: "/api/components/crud/basic/fs-button"},
+                                {text: 'fs-icon', link: "/api/components/crud/basic/fs-icon"},
+                                {text: 'fs-iconify', link: "/api/components/crud/basic/fs-iconify"},
+                                {text: 'fs-icon-svg', link: "/api/components/crud/basic/fs-icon-svg"},
                             ]
                         },
                         {
@@ -138,9 +136,8 @@ module.exports = {
                                 {text: 'fs-actionbar', link: "/api/components/crud/actionbar/index"},
                                 {text: 'fs-search', link: "/api/components/crud/search/index"},
                                 {text: 'fs-toolbar', link: "/api/components/crud/toolbar/index"},
-                                {text: 'fs-table', link: "/api/components/crud/fs-table"},
+                                {text: 'fs-table', link: "/api/components/crud/crud/fs-table"},
                                 {text: 'fs-row-handle', link: "/api/components/crud/crud/fs-row-handle"},
-                                {text: 'fs-cell', link: "/api/components/crud/crud/fs-cell"},
                                 {text: 'fs-form-wrapper', link: "/api/components/crud/crud/fs-form-wrapper"},
                                 {text: 'fs-form', link: "/api/components/crud/crud/fs-form"},
                                 {text: 'fs-form-item', link: "/api/components/crud/crud/fs-form-item"},
@@ -201,7 +198,7 @@ module.exports = {
                                     text: 'JsonEditor', children: [
                                         {
                                             text: "fs-json-editor",
-                                            link: '/api/components/extends/json/components/fs-json-editor/index'
+                                            link: '/api/components/extends/json/components/fs-json-editor'
                                         }
                                     ]
                                 }

@@ -20,8 +20,8 @@
     "rechangelog": "conventional-changelog -p angular -i CHANGELOG.md -s -r 0",
     "changelog": "conventional-changelog -p angular -i CHANGELOG.md -s",
     "no-push": "lerna publish --no-push --conventional-commits && lerna publish && npm run copylogs",
-    "checkout:main" : "git checkout main && cd ./packages/fast-admin/fs-admin-element && git checkout main && cd ../fs-admin-antdv && git checkout main  && cd ../fs-admin-naive-ui && git checkout main && cd ../../  ",
-    "checkout:dev" : "git checkout dev && cd ./packages/fast-admin/fs-admin-element && git checkout dev && cd ../fs-admin-antdv && git checkout dev  && cd ../fs-admin-naive-ui && git checkout dev && cd ../../  "
+    "checkout:main": "git checkout main && cd ./packages/fast-admin/fs-admin-element && git checkout main && cd ../fs-admin-antdv && git checkout main  && cd ../fs-admin-naive-ui && git checkout main && cd ../../  ",
+    "checkout:dev": "git checkout dev && cd ./packages/fast-admin/fs-admin-element && git checkout dev && cd ../fs-admin-antdv && git checkout dev  && cd ../fs-admin-naive-ui && git checkout dev && cd ../../  "
   },
   "author": "Greper",
   "license": "MIT",
@@ -29,6 +29,6 @@
     "copyfiles": "^2.4.1",
     "lerna": "^4.0.0",
     "vitepress": "^0.21.4",
-    "vue-docgen-cli": "^4.43.2"
+    "vue-docgen-cli": "^4.45.0"
   }
 }

@@ -61,6 +61,8 @@
     "stylelint-order": "^5.0.0",
     "ts-jest": "^27.0.3",
     "ts-node": "^10.1.0",
+    "typedoc": "^0.22.15",
+    "typedoc-plugin-markdown": "^3.12.1",
     "typescript": "4.5.2",
     "vite": "^2.0.4",
     "vite-plugin-compression": "^0.3.0",

@@ -1,4 +1,3 @@
-<script lang="tsx">
 import { resolveDynamicComponent, defineComponent, computed } from "vue";
 import { useUi } from "../../use/use-ui";
 /**
@@ -21,13 +20,12 @@ export default defineComponent({
     const { ui } = useUi();
     const computedRenderFunc = computed(() => {
       if (props.icon && props.icon?.indexOf(":") >= 0) {
-
-        if(props.icon.startsWith("svg:")){
+        if (props.icon.startsWith("svg:")) {
           const IconComp: any = resolveDynamicComponent("FsIconSvg");
           //如果是svg图标
           return () => {
             //@ts-ignore
-            const name = props.icon.replace("svg:","")
+            const name = props.icon.replace("svg:", "");
             return <IconComp icon={name} />;
           };
         }
@@ -64,4 +62,3 @@ export default defineComponent({
     };
   }
 });
-</script>

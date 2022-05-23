@@ -107,7 +107,7 @@ export default {
     },
     /**
      * 表单参数
-     * 支持el-form|a-form的属性
+     * 支持el-form | a-form的属性
      */
     options: {
       type: Object
@@ -119,7 +119,7 @@ export default {
       type: Object
     },
     /**
-     * 按钮配置
+     * 按钮配置,可以根据order排序
      * {search:{...FsButton},reset:{...FsButton}}
      */
     buttons: {

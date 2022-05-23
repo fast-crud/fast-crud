@@ -11,13 +11,13 @@
 
 ## Events
 
-| Event name        | Properties                                                                           | Description  |
-| ----------------- | ------------------------------------------------------------------------------------ | ------------ |
-| change            |                                                                                      |
-| update:modelValue |                                                                                      |
-| editor-change     |                                          |
-| text-change       |  | 文本变更事件 |
-| selection-change  |  |
-| ready             |                                                                                      |
+| Event name        | Properties                                                                            | Description |
+| ----------------- | ------------------------------------------------------------------------------------- | ----------- |
+| change            |                                                                                       |
+| update:modelValue |                                                                                       |
+| editor-change     | **<anonymous1>** `undefined` - undefined                                              |
+| text-change       | **<anonymous1>** `undefined` - undefined<br/>**<anonymous2>** `undefined` - undefined |
+| selection-change  | **<anonymous1>** `undefined` - undefined<br/>**<anonymous2>** `undefined` - undefined |
+| ready             |                                                                                       |
 
 ---

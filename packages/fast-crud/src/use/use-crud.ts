@@ -8,34 +8,10 @@ import { useI18n } from "../locale";
 import { CrudExpose } from "../d.ts";
 import { useCompute } from "./use-compute";
 import { useColumns } from "./use-columns";
+import { CrudOptions } from "../d.ts/crud";
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 const { merge, cloneDeep } = useMerge();
-export interface CrudOptions {
-  mode?: {
-    //模式名称: local,remote
-    name: string;
-    // 更新时是否merge
-    isMergeWhenUpdate: boolean;
-    // 添加时是否在列表最后插入
-    isAppendWhenAdd: boolean;
-  };
-  table?: {
-    //列表数据变化事件
-    onDataChange: Function;
-  };
-  columns?: {};
-  data?: [];
-  rowHandle?: {};
-  search?: {};
-  toolbar?: {};
-  actionbar?: {};
-  form?: {};
-  addForm?: {};
-  editForm?: {};
-  viewForm?: {};
-  pagination?: {};
-  request?: {};
-}
+
 export type UseCrudProps = {
   crudOptions: CrudOptions;
   /**

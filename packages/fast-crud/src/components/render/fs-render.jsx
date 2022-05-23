@@ -1,4 +1,3 @@
-<script lang="jsx">
 /**
  * 自定义render组件
  */
@@ -18,4 +17,3 @@ export default {
     return this.renderFunc(this.scope);
   }
 };
-</script>

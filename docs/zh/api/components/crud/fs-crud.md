@@ -18,6 +18,7 @@
 | pagination  | 翻页配置,支持 el-pagination\|a-pagination 配置 |       | -      |         |
 | container   | 容器配置，见 FsContainer                       |       | -      |         |
 | customClass | crud 包裹容器的 class                          |       | -      |         |
+| form        | 不要传到 fs-table 去                           |       | -      |         |
 
 ## Events
 
@@ -27,9 +28,10 @@
 | update:compact    |            |
 | update:columns    |            |
 | refresh           |            |
+| form-value-change |            |
 | search-submit     |            |
 | search-reset      |            |
-| form-value-change |            |
+| update:modelValue |            |
 
 ## Slots
 

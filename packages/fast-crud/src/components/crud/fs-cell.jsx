@@ -1,4 +1,3 @@
-<script lang="jsx">
 import { useCompute } from "../../use/use-compute";
 /**
  * 单元格显示组件
@@ -44,4 +43,3 @@ export default {
     }
   }
 };
-</script>

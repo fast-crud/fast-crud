@@ -1,4 +1,3 @@
-<script lang="jsx">
 import {
   computed,
   getCurrentInstance,
@@ -204,4 +203,3 @@ export default {
     return <inputComp {...merged}>{this.childrenRendered()}</inputComp>;
   }
 };
-</script>

@@ -1,4 +1,3 @@
-<script lang="jsx">
 import { computed, resolveDynamicComponent } from "vue";
 import { useDict } from "../../use/use-dict";
 import { useI18n } from "../../locale";
@@ -69,9 +68,3 @@ export default {
     );
   }
 };
-</script>
-<style lang="less">
-.ant-select-multiple {
-  min-width: 100px;
-}
-</style>

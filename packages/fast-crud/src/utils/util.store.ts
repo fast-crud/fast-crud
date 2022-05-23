@@ -1,4 +1,6 @@
 export default class TableStore {
+  key: string;
+  tableId: string;
   constructor({ $router, tableName, keyType }) {
     this.key = this.getItemKey($router, keyType);
     this.tableId = this.getTableId(tableName);
@@ -25,7 +27,7 @@ export default class TableStore {
   }
 
   clearTable() {
-    localStorage.setItem(this.tableId, null);
+    localStorage.removeItem(this.tableId);
   }
 
   updateTableValue(value, key) {
