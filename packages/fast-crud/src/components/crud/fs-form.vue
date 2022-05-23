@@ -93,7 +93,6 @@ import { uiContext } from "../../ui";
 import { useMerge } from "../../use/use-merge";
 import { Constants } from "../../utils/util.constants";
 
-
 /**
  * 配置化的表单组件
  * 暴露的方法：
@@ -140,6 +139,12 @@ export default {
     group: {
       type: Object,
       default: undefined
+    },
+    /**
+     * 重置按钮方法
+     */
+    doReset: {
+      type: Function
     },
     /**
      * 点击保存按钮时执行方法
@@ -277,7 +282,7 @@ export default {
     doValueBuilder(form);
 
     function doValueChange(key, value) {
-      const event = {key, value, formRef: proxy, ...scope.value, immediate: false};
+      const event = { key, value, formRef: proxy, ...scope.value, immediate: false };
       ctx.emit("value-change", event);
       let valueChange = props.columns[key].valueChange;
       if (valueChange) {
@@ -415,15 +420,15 @@ export default {
     function getFormData() {
       return form;
     }
-    function setFormData(formData, options={}) {
+    function setFormData(formData, options = {}) {
       doValueBuilder(formData);
       _.merge(form, formData);
-      const {valueChange} = options
-      if(valueChange){
-        _.forEach(props.columns, (column, key)=>{
-          const value = form[key]
-          doValueChange(key, value)
-        })
+      const { valueChange } = options;
+      if (valueChange) {
+        _.forEach(props.columns, (column, key) => {
+          const value = form[key];
+          doValueChange(key, value);
+        });
       }
     }
 
