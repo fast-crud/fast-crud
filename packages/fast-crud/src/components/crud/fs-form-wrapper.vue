@@ -3,6 +3,7 @@ import { ref, resolveDynamicComponent, computed, nextTick, onMounted } from "vue
 import _ from "lodash-es";
 import { useI18n } from "../../locale";
 import { uiContext } from "../../ui";
+import { Constants } from "../../utils/util.constants";
 
 /**
  * 表单对话框|抽屉
@@ -156,7 +157,20 @@ export default {
           loading: loading.value
         }
       };
-      return _.merge(defBtns, formWrapperBind.value?.buttons);
+      const buttons = _.merge(defBtns, formWrapperBind.value?.buttons);
+      const buttonsArr = [];
+      _.forEach(buttons, (value, key) => {
+        value.key = key;
+        buttonsArr.push(value);
+        if (value.onClick == null && value.click != null) {
+          value.onClick = () => {
+            value.click(value);
+          };
+        }
+      });
+      return _.sortBy(buttonsArr, (item) => {
+        return item.order ?? Constants.orderDefault;
+      });
     });
 
     onMounted(() => {
