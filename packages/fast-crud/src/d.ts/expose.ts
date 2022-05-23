@@ -67,6 +67,11 @@ export type CrudExpose = {
    * @param context = {...formWrapper.open的自定义参数}
    */
   openDialog: (context) => Promise<void>;
+
+  /**
+   *  获取查询组件ref
+   */
+  getSearchRef: () => any;
   /**
    * 获取查询表单数据
    * @param context

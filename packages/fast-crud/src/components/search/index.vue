@@ -50,25 +50,21 @@
                     </component>
                   </component>
                 </template>
+
+                <div v-if="slots['search-middle']" class="fs-search-col fs-search-middle">
+                  <component :is="$fsui.formItem.name">
+                    <fs-slot-render :slots="slots['search-middle']" :scope="{ form }" />
+                  </component>
+                </div>
+                <fs-search-buttons v-if="buttonsPosition === 'default'" :buttons="computedButtons"></fs-search-buttons>
+                <div v-if="slots['search-right']" class="fs-search-col fs-search-right">
+                  <component :is="$fsui.formItem.name">
+                    <fs-slot-render :slots="slots['search-right']" :scope="{ form }" />
+                  </component>
+                </div>
               </component>
             </div>
-            <div v-if="slots['search-middle']" class="fs-search-col fs-search-middle">
-              <component :is="$fsui.formItem.name">
-                <fs-slot-render :slots="slots['search-middle']" :scope="{ form }" />
-              </component>
-            </div>
-            <div class="fs-search-col fs-search-btns">
-              <component :is="$fsui.formItem.name">
-                <template v-for="(item, index) in computedButtons" :key="index">
-                  <fs-button v-if="item.show" v-bind="item" @click="item.click()" />
-                </template>
-              </component>
-            </div>
-            <div v-if="slots['search-right']" class="fs-search-col fs-search-right">
-              <component :is="$fsui.formItem.name">
-                <fs-slot-render :slots="slots['search-right']" :scope="{ form }" />
-              </component>
-            </div>
+            <fs-search-buttons v-if="buttonsPosition === 'bottom'" :buttons="computedButtons"></fs-search-buttons>
           </div>
 
           <div v-if="computedIsMultiLine" class="fs-search-action">
@@ -92,13 +88,14 @@ import { useCompute } from "../../use/use-compute";
 import { uiContext } from "../../ui";
 import { useI18n } from "../../locale";
 import logger from "../../utils/util.log";
-
+import FsSearchButtons from "./buttons.vue";
 import { Constants } from "../../utils/util.constants";
 /**
  * 查询框组件
  */
 export default {
   name: "FsSearch",
+  components: { FsSearchButtons },
   inheritAttrs: false,
   props: {
     /**
@@ -127,6 +124,13 @@ export default {
      */
     buttons: {
       type: Object
+    },
+    /**
+     * 按钮位置， default,bottom,right
+     */
+    buttonsPosition: {
+      type: String,
+      default: "default"
     },
     /**
      * 点击重置后是否立即触发查询
@@ -393,7 +397,7 @@ export default {
     };
 
     const onInput = (item) => {
-      console.log("value input",item.key,item)
+      console.log("value input", item.key, item);
       if (item.autoSearchTrigger == null || item.autoSearchTrigger === "input") {
         doAutoSearch();
       }
@@ -406,7 +410,7 @@ export default {
 
     function onValueChanged(value, item) {
       const key = item.key;
-      console.log("value changed",key,value)
+      console.log("value changed", key, value);
       _.set(form, key, value);
       if (item.valueChange) {
         const key = item.key;

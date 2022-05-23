@@ -21,7 +21,7 @@ export interface CrudOptions {
   };
   table?: {
     //列表数据变化事件
-    onDataChange:Function,
+    onDataChange: Function;
   };
   columns?: {};
   data?: [];

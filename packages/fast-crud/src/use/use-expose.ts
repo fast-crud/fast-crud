@@ -126,7 +126,7 @@ function useEditable({ crudExpose }) {
           // do nothing
         } else {
           const rowData = row.getRowData(index);
-          await crudBinding.value.request.delRequest({row: rowData});
+          await crudBinding.value.request.delRequest({ row: rowData });
           crudExpose.doRefresh();
         }
       }
@@ -222,6 +222,12 @@ export function useExpose(props: UseExposeProps): { expose: CrudExpose; crudExpo
      */
     setSearchFormData(context: { form: any; mergeForm?: boolean }) {
       crudRef.value.setSearchFormData(context);
+    },
+    /**
+     * 获取search组件ref
+     */
+    getSearchRef() {
+      return crudRef.value.getSearchRef();
     },
     async doRefresh() {
       let page;
