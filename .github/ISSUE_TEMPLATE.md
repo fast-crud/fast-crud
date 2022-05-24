@@ -19,11 +19,13 @@
 
 
 ## 二、当前使用的库版本
-1. fast-crud版本： `请您填写`
-2. 使用的ui库(中括号中输入x即选中，或者删除其他，仅保留你正使用的ui库)
-- [x] Antdv
-- [ ] ElementPlus
-- [ ] NaiveUI
+### 1. fast-crud版本：
+`请您填写fast-crud的版本`
+### 2. 使用的ui库以及版本
+`中括号中输入x即选中，或者删除其他，仅保留你正使用的ui库`
+- [x] Antdv (版本？)
+- [ ] ElementPlus（版本？）
+- [ ] NaiveUI（版本？）
 
 
 
