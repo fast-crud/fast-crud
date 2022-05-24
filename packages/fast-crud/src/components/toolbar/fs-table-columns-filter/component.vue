@@ -1,23 +1,31 @@
 <template>
+  <!-- 简单模式 -->
   <template v-if="mode === 'simple'">
     <component :is="$fsui.row.name" class="fs-table-columns-filter-simple">
-      <component :is="$fsui.col.name" v-for="(element, key) in currentValue" v-show="element.setShow" :span="6">
+      <component
+        :is="$fsui.col.name"
+        v-for="(element, key) in currentValue"
+        v-show="element.setShow"
+        :key="key"
+        :span="6"
+      >
         <component
-            :is="$fsui.checkbox.name"
-            v-model:[$fsui.checkbox.modelValue]="element.show"
-            :disabled="element.disabled"
-            class="item-label"
-            @update:[$fsui.checkbox.modelValue]="showChange(index, $event)"
+          :is="$fsui.checkbox.name"
+          v-model:[$fsui.checkbox.modelValue]="element.show"
+          :disabled="element.disabled"
+          class="item-label"
+          @update:[$fsui.checkbox.modelValue]="showChange(index, $event)"
         />
         {{ element.label || element.title || element.key || _text.unnamed }}
       </component>
     </component>
-    <component :is="$fsui.divider.name"/>
+    <component :is="$fsui.divider.name" />
     <component :is="$fsui.row.name">
-      <fs-button type="primary" :icon="$fsui.icons.check" :text="_text.confirm" @click="simpleSubmit()"/>
-      <fs-button :icon="$fsui.icons.refresh" :text="_text.reset" @click="simpleReset"/>
+      <fs-button type="primary" :icon="$fsui.icons.check" :text="_text.confirm" @click="simpleSubmit()" />
+      <fs-button :icon="$fsui.icons.refresh" :text="_text.reset" @click="simpleReset" />
     </component>
   </template>
+  <!-- 完全模式 -->
   <component :is="$fsui.drawer.name" v-else :title="_text.title" v-bind="drawerBind" append-to-body>
     <component :is="$fsui.drawer.hasContentWrap || 'div'" class="fs-drawer-wrapper" :title="_text.title">
       <!-- 全选 反选 -->
@@ -32,30 +40,29 @@
             <span class="title">{{ _text.fixed }} / {{ _text.order }}</span>
           </div>
 
-          <draggable v-model="currentValue" tag="transition-group" item-key="key">
+          <draggable v-model="currentValue" item-key="key">
             <template #item="{ element, index }">
               <div v-show="element.setShow" class="component--list-item" flex="main:justify cross:center">
                 <component
-                    :is="$fsui.checkbox.name"
-                    v-model:[$fsui.checkbox.modelValue]="element.show"
-                    :disabled="element.disabled"
-                    class="item-label"
-                    @update:[$fsui.checkbox.modelValue]="showChange(index, $event)"
+                  :is="$fsui.checkbox.name"
+                  v-model:[$fsui.checkbox.modelValue]="element.show"
+                  :disabled="element.disabled"
+                  class="item-label"
+                  @update:[$fsui.checkbox.modelValue]="showChange(index, $event)"
                 >
                   {{ element.label || element.title || element.key || _text.unnamed }}
                 </component>
                 <div class="item-right">
                   <fs-table-columns-fixed-controller
-                      v-model="element.fixed"
-                      flex-box="0"
-                      class="d2-mr-10"
-                      @change="fixedChange(index, $event)"
+                    v-model="element.fixed"
+                    flex-box="0"
+                    class="d2-mr-10"
+                    @change="fixedChange(index, $event)"
                   />
                   <div flex-box="0" class="component--list-item-handle handle">
-                    <fs-icon :icon="$fsui.icons.sort"/>
+                    <fs-icon :icon="$fsui.icons.sort" />
                   </div>
                 </div>
-
               </div>
             </template>
           </draggable>
@@ -63,10 +70,10 @@
       </component>
       <component :is="$fsui.row.name" class="fs-drawer-footer" :gutter="10">
         <component :is="$fsui.col.name" :span="12">
-          <fs-button :icon="$fsui.icons.refresh" :text="_text.reset" block @click="reset"/>
+          <fs-button :icon="$fsui.icons.refresh" :text="_text.reset" block @click="reset" />
         </component>
         <component :is="$fsui.col.name" :span="12">
-          <fs-button type="primary" :icon="$fsui.icons.check" :text="_text.confirm" block @click="submit()"/>
+          <fs-button type="primary" :icon="$fsui.icons.check" :text="_text.confirm" block @click="submit()" />
         </component>
       </component>
     </component>
@@ -74,16 +81,16 @@
 </template>
 
 <script>
-import draggable from "vuedraggable/src/vuedraggable";
+import draggable from "vuedraggable-es";
 import _ from "lodash-es";
 import FsTableColumnsFixedController from "../fs-table-columns-fixed-controller/component.vue";
 import TableStore from "../../../utils/util.store";
-import {useI18n} from "../../../locale";
-import {ref, computed} from "vue";
-import {uiContext} from "../../../ui";
-import {useMerge} from "../../../use/use-merge";
+import { useI18n } from "../../../locale";
+import { ref, computed } from "vue";
+import { uiContext } from "../../../ui";
+import { useMerge } from "../../../use/use-merge";
 
-const {cloneDeep} = useMerge();
+const { cloneDeep } = useMerge();
 // 输入 全部分表格列设置
 // 输出 要显示的表格列 + 每列的设置
 
@@ -116,7 +123,7 @@ export default {
   },
   emits: ["update:columns", "update:show"],
   setup() {
-    const {t} = useI18n();
+    const { t } = useI18n();
     const ui = uiContext.get();
     const active = ref(false);
     const drawerBind = computed(() => {
@@ -134,7 +141,7 @@ export default {
       active.value = true;
     };
 
-    return {t, drawerBind, active, start};
+    return { t, drawerBind, active, start };
   },
   data() {
     return {
@@ -193,7 +200,7 @@ export default {
       const currentValue = [];
       for (const storedOption of storedOptions) {
         const found = this.currentValue.find((item) => item.key === storedOption.key);
-        if(found) {
+        if (found) {
           found.fixed = storedOption.fixed;
           found.show = storedOption.show;
           currentValue.push(found);
@@ -258,9 +265,9 @@ export default {
       const result = _.cloneDeep(this.currentValue);
 
       //解决naive ui与列设置冲突的问题
-      result.forEach(column => {
-        delete column.disabled
-      })
+      result.forEach((column) => {
+        delete column.disabled;
+      });
       this.emit(result);
       this.active = false;
     },
@@ -381,7 +388,7 @@ export default {
 
     .item-label {
       flex: 1;
-      min-width:0;
+      min-width: 0;
 
       .ant-checkbox + span {
         white-space: nowrap;
@@ -389,7 +396,7 @@ export default {
         text-overflow: ellipsis;
       }
     }
-    .item-right{
+    .item-right {
       flex-shrink: 1;
       display: flex;
     }

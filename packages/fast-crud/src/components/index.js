@@ -1,7 +1,7 @@
 import FsPage from "./container/fs-page.vue";
 import FsContainer from "./container/fs-container.vue";
-import FsButton from "./basic/fs-button.js";
-import FsIcon from "./basic/fs-icon.js";
+import FsButton from "./basic/fs-button.tsx";
+import FsIcon from "./basic/fs-icon.tsx";
 import FsIconify from "./basic/fs-iconify.vue";
 import FsIconSvg from "./basic/fs-icon-svg.vue";
 

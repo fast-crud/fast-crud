@@ -19,7 +19,7 @@
     "deepdash-es": "5.3.5",
     "lodash-es": "^4.17.15",
     "lru-cache": "^6.0.0",
-    "vuedraggable": "^4.0.3"
+    "vuedraggable-es": "^4.1.0"
   },
   "devDependencies": {
     "@iconify/json": "^1.1.310",
