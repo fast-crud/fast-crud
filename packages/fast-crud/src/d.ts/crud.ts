@@ -8,38 +8,38 @@ export type ScopeContext = {
   componentRef;
 };
 
-export interface PageQuery {
+export type PageQuery = {
   page?: any;
   form?: any;
   sort?: any;
-}
+};
 
-export interface PageRes {
+export type PageRes = {
   currentPage?: number;
   pageSize?: number;
   total?: number;
   records?: Array<object>;
-}
+};
 
-export interface EditReq {
+export type EditReq = {
   form?: any;
   row?: any;
-}
+};
 
-export interface AddReq {
+export type AddReq = {
   form?: any;
-}
+};
 
-export interface DelReq {
+export type DelReq = {
   row?: any;
-}
+};
 
-export interface InfoReq {
+export type InfoReq = {
   mode?: string;
   row?: any;
-}
+};
 
-export interface RequestProp {
+export type RequestProp = {
   transformQuery?: (query: PageQuery) => object;
   transformRes?: ({ res, query }) => PageRes;
   editRequest?: (req: EditReq) => Promise<any>;
@@ -47,11 +47,11 @@ export interface RequestProp {
   addRequest?: (req: AddReq) => Promise<any>;
   delRequest?: (req: DelReq) => Promise<any>;
   infoRequest?: (req: InfoReq) => Promise<any>;
-}
+};
 
-export interface ComponentProps {
+export type ComponentProps = {
   [key: string]: any;
-}
+};
 export type TableProps = {
   //列表数据变化事件
   onDataChange: Function;

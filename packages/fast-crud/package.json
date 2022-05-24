@@ -8,7 +8,8 @@
     "build": "vite build && npm run copy-local",
     "copy-local": "copyfiles -f ./src/locale/lang/* ./dist/locale/lang",
     "test": "jest",
-    "lint-fix": "eslint --fix --ext .js --ext .jsx --ext .vue src/"
+    "lint-fix": "eslint --fix --ext .js --ext .jsx --ext .vue src/",
+    "typedoc": "typedoc --options ./typedoc.json"
   },
   "author": "Greper",
   "license": "MIT",
@@ -62,6 +63,7 @@
     "ts-jest": "^27.0.3",
     "ts-node": "^10.1.0",
     "typedoc": "^0.22.15",
+    "typedoc-github-wiki-theme": "^1.0.1",
     "typedoc-plugin-markdown": "^3.12.1",
     "typescript": "4.5.2",
     "vite": "^2.0.4",

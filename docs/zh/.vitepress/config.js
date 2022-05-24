@@ -114,6 +114,7 @@ module.exports = {
                             text: 'Expose暴露的方法',
                             link: '/api/expose'
                         },
+                        {text: 'd.ts', link: "http://fast-crud.docmirror.cn/d.ts/modules.html"},
                     ]
                 },
                 {
