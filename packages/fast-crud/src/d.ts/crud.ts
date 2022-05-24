@@ -39,6 +39,9 @@ export type InfoReq = {
   row?: any;
 };
 
+/**
+ * 请求配置
+ */
 export type RequestProp = {
   transformQuery?: (query: PageQuery) => object;
   transformRes?: ({ res, query }) => PageRes;
@@ -48,14 +51,58 @@ export type RequestProp = {
   delRequest?: (req: DelReq) => Promise<any>;
   infoRequest?: (req: InfoReq) => Promise<any>;
 };
-
+/**
+ * 组件配置
+ */
 export type ComponentProps = {
+  /**
+   * 组件的名称
+   */
+  name: string;
+  /**
+   * vmodel绑定的目标属性名
+   */
+  vModel: string;
+
+  /**
+   * 当原始组件名的参数被以上属性名占用时，可以配置在这里
+   * 例如:原始组件有一个叫name的属性，你想要配置它，则可以按如下配置
+   * ```
+   * component:{
+   *   name:"组件的名称"
+   *   props:{
+   *     name:"组件的name属性"  <-----------
+   *   }
+   * }
+   * ```
+   */
+  props: object;
+
+  /**
+   * 组件其他参数
+   * 事件：onXxx:(event)=>void 组件原始事件监听
+   *      on.onXxx:(context)=>void 组件事件监听(对原始事件包装)
+   * 样式：style、class等
+   */
   [key: string]: any;
 };
+/**
+ * 表格配置
+ */
 export type TableProps = {
-  //列表数据变化事件
+  /**
+   * 列表数据变化事件处理
+   */
   onDataChange: Function;
+
+  /**
+   * [x]-table组件的配置
+   */
+  [key: string]: any;
 };
+/**
+ * [x]-col的配置
+ */
 export type ColProps = {
   span?: number;
   [props: string]: any;
@@ -65,24 +112,60 @@ export type ColProps = {
  * 表单对话框配置
  */
 export type FormWrapperProps = {
+  /**
+   * 对话框使用什么组件，[el-dialog,a-modal,n-modal,el-drawer,a-drawer,n-drawer]
+   */
   is?: string;
+  /**
+   * 对话框打开前事件处理
+   * @param opts
+   */
   onOpen?: (opts) => void;
+  /**
+   * 对话框打开后事件处理
+   * @param opts
+   */
   onOpened?: (opts) => void;
+  /**
+   * 对话框关闭后事件处理
+   * @param opts
+   */
   onClosed?: (opts) => void;
 };
 /**
  * 表单分组-组配置
  */
 export type FormGroupItemProps = {
-  title?: string; //标题
-  label?: string; //element标题
-  header?: string; //antdv 标题
-  tab?: any; // a-tab-pane 参数
+  /**
+   * 分组标题（根据你使用的分组组件和组件库来确定标题）
+   */
+  title?: string;
+  /**
+   * 分组标题（根据你使用的分组组件和组件库来确定标题）
+   */
+  label?: string;
+  /**
+   * 分组标题（根据你使用的分组组件和组件库来确定标题）
+   */
+  header?: string;
+  /**
+   * [a|el|n]-tab-panel的参数
+   */
+  tab?: any;
+  /**
+   * 插槽，可以用来自定义标题
+   */
   slots?: {
-    //插槽，可以自定义标题
+    [key: string]: any;
   };
-  columns?: Array<string>; //该分组包含的字段keys
-  // 支持el-collapse-item，el-tab-pane，a-collapse-panel，a-tab-pane
+  /**
+   * 此分组包含哪些字段,keys数组
+   */
+  columns?: Array<string>;
+  /**
+   *  其他配置
+   *  支持el-collapse-item，el-tab-pane，a-collapse-panel，a-tab-pane 等组件的配置
+   */
   [key: string]: any;
 };
 
@@ -103,24 +186,73 @@ export type FormProps = {
    * 布局方式
    */
   display?: "flex" | "grid";
-  //a-col,e-col，n-col的配置
+  /**
+   * a-col,el-col，n-col的配置
+   * 可以配置跨列 {span:24}表示此字段占满一行
+   */
   col?: ColProps;
+  /**
+   * 字段组件之前render
+   * @param scope
+   */
   prefixRender?: (scope) => any;
+  /**
+   * 字段组件之后render
+   * @param scope
+   */
   suffixRender?: (scope) => any;
+  /**
+   * 表单对话框/抽屉配置
+   */
   wrapper?: FormWrapperProps;
+  /**
+   * 提交表单的方法（默认已经配置好，将会调用addRequest或者updateRequest）
+   */
   doSubmit?: () => Promise<any>;
-  beforeSubmit: () => Promise<any>;
-  afterSubmit: () => Promise<any>;
+  /**
+   * 提交前做一些操作
+   */
+  beforeSubmit: (context) => Promise<any>;
+  /**
+   * 提交后做一些操作
+   * @param context
+   */
+  afterSubmit: (context) => Promise<any>;
+  /**
+   * 表单重置时的操作
+   */
   doReset?: () => Promise<any>;
+  /**
+   * 表单分组配置
+   */
   group?: FormGroupProps;
+  /**
+   * 其他表单配置 [x]-form的配置
+   */
   [key: string]: any;
 };
 
+/**
+ * 表单字段帮助说明配置
+ */
 export type FormItemHelperProps = {
+  /**
+   * 自定义渲染帮助说明
+   * @param scope
+   */
   render?: (scope) => any;
+  /**
+   * 帮助文本
+   */
   text?: string;
+  /**
+   * 帮助说明所在的位置，[ undefined | label]
+   */
   position?: string;
-  tooltip?: string;
+  /**
+   * [a|el|n]-tooltip配置
+   */
+  tooltip?: object;
 };
 /**
  * 表单字段配置
@@ -131,7 +263,7 @@ export type FormItemProps = {
    */
   component?: ComponentProps;
   /**
-   * 表单字段 [a|e|n]-col的配置
+   * 表单字段 [a|el|n]-col的配置
    * 一般用来配置跨列：{span:24} 占满一行
    */
   col?: ColProps;
@@ -144,6 +276,13 @@ export type FormItemProps = {
    */
   helper?: string | FormItemHelperProps;
   order?: number;
+};
+
+/**
+ * crud外部容器配置
+ */
+export type ContainerProps = {
+  [key: string]: any;
 };
 
 /**
@@ -186,8 +325,20 @@ export type ButtonProps = {
    * 序号
    */
   order?: number;
+
   /**
-   * 其他按钮配置 [a|e|n]-button的配置，请查看对应ui组件的文档
+   * 是否折叠此按钮，仅当rowHandle时有效
+   * 当配置为true，将会收起到dropdown中
+   */
+  dropdown?: boolean;
+
+  /**
+   * 点击事件
+   */
+  click: () => void;
+
+  /**
+   * 其他按钮配置 [a|el|n]-button的配置，请查看对应ui组件的文档
    */
   [key: string]: any;
 };
@@ -219,7 +370,7 @@ export type SearchProps = {
    */
   layout?: string;
   /**
-   * 查询表单参数 ,[a|e|n]-form的参数
+   * 查询表单参数 ,[a|el|n]-form的参数
    */
   options?: any;
   /**
@@ -246,11 +397,11 @@ export type SearchItemProps = {
    */
   order?: number;
   /**
-   * [a|e|n]-col的配置
+   * [a|el|n]-col的配置
    */
   col?: ColProps;
   /**
-   * 其他[a|e|n]-form-item的配置
+   * 其他[a|el|n]-form-item的配置
    */
   [key: string]: any;
 };
@@ -312,15 +463,15 @@ export type ColumnCompositionProps = {
    */
   form?: FormItemProps;
   /**
-   * 添加表单字段配置（与上面form合并）
+   * 添加表单字段配置（与form合并）
    */
   addForm?: FormItemProps;
   /**
-   * 编辑表单字段配置（与上面form合并）
+   * 编辑表单字段配置（与form合并）
    */
   editForm?: FormItemProps;
   /**
-   * 查看表单字段配置（与上面form合并）
+   * 查看表单字段配置（与form合并）
    */
   viewForm?: FormItemProps;
   /**
@@ -352,6 +503,72 @@ export type ColumnCompositionProps = {
   [key: string]: any;
 };
 
+/**
+ * 底部翻页条配置
+ */
+export type PaginationProps = {
+  /**
+   * 是否显示pagination
+   */
+  show?: boolean;
+  /**
+   * [x]-pagination组件的其他配置
+   */
+  [key: string]: any;
+};
+
+/**
+ * 操作列配置
+ */
+export type RowHandleProps = {
+  /**
+   * 是否显示操作列
+   */
+  show?: boolean;
+  /**
+   * 操作列按钮配置
+   */
+  buttons?: {
+    [key: string]: ButtonProps;
+  };
+
+  dropdown?: {
+    /**
+     * 更多按钮
+     */
+    more?: ButtonProps;
+
+    [key: string]: any;
+  };
+
+  /**
+   * 额外的按钮组
+   * 激活时就显示，没激活的不显示
+   * 同一时间只能激活一组
+   */
+  group?: {
+    /**
+     * 按钮组组key
+     */
+    [groupKey: string]: {
+      /**
+       * 按钮
+       */
+      [buttonKey: string]: ButtonProps;
+    };
+  };
+
+  /**
+   * 当前激活是哪个分组
+   * 默认为default，激活的buttons里面配置的按钮组
+   */
+  active?: string;
+
+  /**
+   * 其他配置
+   */
+  [key: string]: any;
+};
 /**
  * crud配置
  */
@@ -394,7 +611,7 @@ export type CrudOptions = {
   /**
    * 操作列配置
    */
-  rowHandle?: {};
+  rowHandle?: RowHandleProps;
   /**
    * 查询框配置
    */
@@ -426,11 +643,16 @@ export type CrudOptions = {
   /**
    * 底部翻页组件配置
    */
-  pagination?: {};
+  pagination?: PaginationProps;
   /**
    * http请求配置
    */
   request?: RequestProp;
+
+  /**
+   * crud外部容器配置
+   */
+  container?: ContainerProps;
   /**
    * 其他配置
    */
