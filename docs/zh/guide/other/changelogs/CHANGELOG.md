@@ -3,6 +3,28 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [1.2.0](https://github.com/fast-crud/fast-crud/compare/v1.1.2...v1.2.0) (2022-05-24)
+
+
+### Bug Fixes
+
+* 给fs-form增加doReset参数 ([6e991d2](https://github.com/fast-crud/fast-crud/commit/6e991d272d9e33add023ed869d8e40bbfd9cf55b))
+* 修复列设置无法打开的问题 ([db1bff0](https://github.com/fast-crud/fast-crud/commit/db1bff096975bf70a22530eb514153304e4018f0))
+* 修复console.log被drop之后报错的问题 ([74305a2](https://github.com/fast-crud/fast-crud/commit/74305a2cdbe08bfc1cfb362088afe60a4b404149))
+* 修复element弹出窗口close错位问题 ([d58a4da](https://github.com/fast-crud/fast-crud/commit/d58a4da8261f790b36e2a2c826b2490255b47c1e))
+* 增加重置示例 ([a3d75ba](https://github.com/fast-crud/fast-crud/commit/a3d75ba3858d457922ea3f84aeb79a20878c5e07))
+* 增加重置示例 ([ecbde2e](https://github.com/fast-crud/fast-crud/commit/ecbde2ec8d96104d5e25e046b0951ec35c298044))
+* 增加buttonsPosition=[default,bottom]配置 ([734ef99](https://github.com/fast-crud/fast-crud/commit/734ef99bd441f575d184dee2d14950688b732793))
+
+
+### Features
+
+* CrudProps与CrudExpose完善 ([78c27ce](https://github.com/fast-crud/fast-crud/commit/78c27ce6fa9737bfe5139db4d817c1dbdf3de150))
+
+
+
+
+
 ## [1.1.2](https://github.com/fast-crud/fast-crud/compare/v1.1.1...v1.1.2) (2022-04-26)
 
 **Note:** Version bump only for package fast-crud-root
