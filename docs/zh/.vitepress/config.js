@@ -113,8 +113,7 @@ module.exports = {
                         {
                             text: 'Expose暴露的方法',
                             link: '/api/expose'
-                        },
-                        {text: 'd.ts', link: "http://fast-crud.docmirror.cn/d.ts/modules.html"},
+                        }
                     ]
                 },
                 {
@@ -214,6 +213,7 @@ module.exports = {
             {text: '首页', link: '/'},
             {text: '指南', link: '/guide/'},
             {text: 'API', link: '/api/'},
+            {text:"d.ts",link:"http://fast-crud.docmirror.cn/d.ts/modules.html"},
             {text: 'FsAdmin', link: '/admin/'},
             {text: '示例', link: '/demo/'},
             {text: 'github', link: 'https://github.com/fast-crud/fast-crud'},
