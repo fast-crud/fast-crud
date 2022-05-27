@@ -26,9 +26,27 @@ export default {
   components: { FsUploader },
   inheritAttrs: false,
   props: {
+    /**
+     * value
+     */
     modelValue: {},
-    limit: {},
-    sizeLimit: {},
+    /**
+     * 文件类型限制, 例如： *.jpg,*.png
+     */
+    limit: {
+      type: String
+    },
+    /**
+     * 文件大小限制，单位：字节
+     * 可以直接传一个数字，也可以传 {limit:number,tip:'自定义提示文本'}
+     */
+    sizeLimit: {
+      type: [Number, Object]
+    },
+    /**
+     * 构建url的方法
+     * 后台返回key之后，将其build成一个可访问的url，用于反显
+     */
     buildUrl: {
       default() {
         return (value) => {
@@ -39,11 +57,33 @@ export default {
     /**
      * 上传按钮配置，参考FsButton参数
      */
-    button: {},
-    listType: {},
-    beforeUpload: {},
-    uploader: {},
-    preview: {},
+    button: {
+      type: Object
+    },
+    /**
+     * 展示模式，对应[x]-uploader组件的 listType参数
+     */
+    listType: {
+      type: String
+    },
+    /**
+     * 上传前的判断操作
+     */
+    beforeUpload: {
+      type: Function
+    },
+    /**
+     * fs-uploader的配置
+     */
+    uploader: {
+      type: Object
+    },
+    /**
+     * 预览配置
+     */
+    preview: {
+      type: Object
+    },
     /**
      * 返回值类型
      */
