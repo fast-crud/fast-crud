@@ -21,6 +21,10 @@ import { uiContext, useI18n } from "@fast-crud/fast-crud";
 import _ from "lodash-es";
 import FsUploader from "./fs-uploader.vue";
 
+/**
+ * 文件上传组件
+ * 支持对应ui库的[x]-file-uploader组件的配置
+ */
 export default {
   name: "FsFileUploader",
   components: { FsUploader },
@@ -31,7 +35,7 @@ export default {
      */
     modelValue: {},
     /**
-     * 文件类型限制, 例如： *.jpg,*.png
+     * 限制文件数量
      */
     limit: {
       type: String
