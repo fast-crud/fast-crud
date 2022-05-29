@@ -40,7 +40,7 @@
 <img src="../images/starter/vben.png" style="height:200px;margin-right:10px"> 
 <img src="../images/starter/fs-in-vben.png" style="height:200px;">
 </div>
-<center>fs-in-vben</center>
+
 <br/>
 
 
@@ -65,7 +65,7 @@
 <img src="../images/starter/cool.png" style="height:200px;margin-right:10px"> 
 <img src="../images/starter/fs-in-cool.png" style="height:200px;">
 </div>
-<center>fs-in-cool</center>
+
 <br/>
 
 #### 3) SCUI
@@ -77,7 +77,7 @@
 <img src="../images/starter/scui.png" style="height:200px;margin-right:10px"> 
 <img src="../images/starter/fs-in-scui.png" style="height:200px;">
 </div>
-<center>fs-in-scui</center>
+
 <br/>
 
 
@@ -94,7 +94,7 @@
 <img src="../images/starter/naive1.png" style="height:200px;">
 </div>
 
-<center>fs-in-naive</center>
+
 <br/>
 
 
