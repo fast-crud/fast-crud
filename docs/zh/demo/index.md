@@ -20,26 +20,30 @@
 
 * vben-admin : 
   [预览](http://fast-crud.docmirror.cn/vben/) /
-  [starter源码](https://github.com/fast-crud/fs-in-vben-starter)
+  [starter源码](https://github.com/fast-crud/fs-in-vben-starter) /   
   [原项目地址](https://github.com/anncwb/vue-vben-admin)
    
 
 ### 基于element-plus
 * fs-admin-element :
   [预览](http://fast-crud.docmirror.cn/element/) /
-  [源码](https://github.com/fast-crud/fs-admin-element/)
+  [源码](https://github.com/fast-crud/fs-admin-element/) 
 
 * cool-admin-vue
   [预览](http://fast-crud.docmirror.cn/cool/) /
   [start源码](https://gitee.com/fast-crud/fs-in-cool-admin-vue) /
   [原项目源码](https://github.com/cool-team-official/cool-admin-vue)
 
-
+* SCUI
+  [预览](http://fast-crud.docmirror.cn/scui/#/fastcrud) /
+  [start源码](https://gitee.com/fast-crud/fs-in-SCUI) /
+  [原项目源码](https://gitee.com/lolicode/scui)
+    
 
 ### 基于NaiveUi
 * fs-admin-naive-ui :
   [预览](http://fast-crud.docmirror.cn/naive/) /
-  [源码](https://github.com/fast-crud/fs-admin-naive-ui/)
+  [源码](https://github.com/fast-crud/fs-admin-naive-ui/)  /
   [原项目源码](https://github.com/jekip/naive-ui-admin)
 
 
