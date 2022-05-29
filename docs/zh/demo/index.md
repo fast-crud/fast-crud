@@ -103,4 +103,4 @@
 
 
 ## 三、 starter如何升级
-请参考升级教程 [脚手架升级](http://localhost:3000/guide/other/upgrade.html#fs-admin或者starter升级)
+请参考升级教程 [脚手架升级](../guide/other/upgrade.html#fs-admin或者starter升级)
