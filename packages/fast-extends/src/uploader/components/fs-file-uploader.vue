@@ -456,9 +456,6 @@ export default {
   .el-upload--picture-card {
     width: 100px;
     height: 100px;
-    i {
-      margin-top: 36px;
-    }
   }
   &.fs-file-uploader-limit {
     .el-upload--picture-card {
