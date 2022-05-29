@@ -26,12 +26,16 @@
 <br/>
 
 #### 1) fs-admin-antdv :
+轻量级admin，功能单一  
+
   [预览](http://fast-crud.docmirror.cn/antdv/) /
   [源码](https://github.com/fast-crud/fs-admin-antdv/)
 
 <br/>
 
 #### 2) vben-admin : 
+重量级admin，功能全面，但笨重 
+
   [预览](http://fast-crud.docmirror.cn/vben/) /
   [starter源码](https://github.com/fast-crud/fs-in-vben-starter) /
   [原项目地址](https://github.com/anncwb/vue-vben-admin) /
@@ -50,13 +54,15 @@
 <br/>
 
 ####  1) fs-admin-element :
-  [预览](http://fast-crud.docmirror.cn/element/) /
+轻量级admin，功能单一  
+[预览](http://fast-crud.docmirror.cn/element/) /
   [源码](https://github.com/fast-crud/fs-admin-element/) 
 
 
 <br/>
 
 #### 2)  cool-admin-vue
+ 还行   
   [预览](http://fast-crud.docmirror.cn/cool/) /
   [start源码](https://gitee.com/fast-crud/fs-in-cool-admin-vue) /
   [原项目源码](https://github.com/cool-team-official/cool-admin-vue)
@@ -69,6 +75,9 @@
 <br/>
 
 #### 3) SCUI
+
+还不错，基于webpack，无eslint，无ts
+
   [预览](http://fast-crud.docmirror.cn/scui/#/fastcrud) /
   [start源码](https://gitee.com/fast-crud/fs-in-SCUI) /
   [原项目源码](https://gitee.com/lolicode/scui)
@@ -82,6 +91,7 @@
 
 
 ### 3. 基于NaiveUi
+比较推荐的一款admin
 <br/>
 
 #### 1) fs-admin-naive-ui :
