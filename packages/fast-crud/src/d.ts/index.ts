@@ -1,2 +1,2 @@
 export * from "./expose";
-export * from "./types";
+export * from "./crud";

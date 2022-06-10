@@ -5,8 +5,8 @@ FastCrud 是基于Vue3的面向配置的crud开发框架，快速开发crud功�
 继承并优化了D2CrudPlus的设计思想，入门简单，可扩展性强，丰富的示例，让你可以快速完成搬砖任务，更多的时间划水吹逼。
 
 源码地址:[Github](https://github.com/fast-crud/fast-crud)  /  [Gitee](https://gitee.com/fast-crud/fast-crud)   
-示例地址:
-[antdv版](http://fast-crud.docmirror.cn/antdv/)  /  [element版](http://fast-crud.docmirror.cn/element/)  / [naive-ui版](http://fast-crud.docmirror.cn/naive/)
+
+示例地址: [演示预览](http://fast-crud.docmirror.cn/demo/)  
 
 文档地址：http://fast-crud.docmirror.cn/
 
@@ -87,7 +87,7 @@ const crudOptions= {
 通过扩展自定义组件，扩展自定义类型
 
 ### 5. 多UI支持
-支持Antdv、Element，你喜欢哪个就用哪个
+支持Antdv、Element、NaiveUI，你喜欢哪个就用哪个
 
 
 
@@ -97,7 +97,7 @@ const crudOptions= {
 
 ## 依赖
 ### ui组件库
-* [Antdv 2x](https://github.com/vueComponent/ant-design-vue) 、[Element-Plus](https://github.com/element-plus/element-plus) 二选一
+* [Antdv 3x](https://github.com/vueComponent/ant-design-vue) 、[Element-Plus](https://github.com/element-plus/element-plus) 、[NaiveUI](https://github.com/TuSimple/naive-ui) 三选一
 
 ### 基于
 * [vue](https://github.com/vuejs/vue-next) 

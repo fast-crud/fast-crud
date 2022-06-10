@@ -1,6 +1,6 @@
 {
   "name": "@fast-crud/ui-element",
-  "version": "1.1.2",
+  "version": "1.2.0",
   "description": "",
   "main": "./dist/ui-element.umd.js",
   "module": "./dist/ui-element.es.js",
@@ -16,7 +16,7 @@
     "@fast-crud/ui-interface": "^1.0.2"
   },
   "devDependencies": {
-    "@fast-crud/fast-crud": "^1.1.2",
+    "@fast-crud/fast-crud": "^1.2.0",
     "@rollup/plugin-strip": "^2.0.0",
     "@typescript-eslint/eslint-plugin": "^5.4.0",
     "@typescript-eslint/parser": "^5.4.0",
@@ -25,7 +25,7 @@
     "@vitejs/plugin-vue-jsx": "^1.1.2",
     "@vue/compiler-sfc": "^3.0.7",
     "@vue/test-utils": "^2.0.0-rc.4",
-    "element-plus": "^2.1.9",
+    "element-plus": "^2.2.2",
     "eslint": "^8.3.0",
     "eslint-config-prettier": "^8.1.0",
     "eslint-plugin-import": "^2.20.2",
@@ -43,5 +43,5 @@
     "vue": ">=3.0.0",
     "vue-eslint-parser": "^8.0.1"
   },
-  "gitHead": "383c3293c82b64bb224d61da4b6372760363060e"
+  "gitHead": "56c12be51a9145655f6d5705f97b653dcff37b9b"
 }

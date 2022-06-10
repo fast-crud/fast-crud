@@ -55,7 +55,7 @@
 }
 ```
 
-::: warn
+::: warning
 `dropdown.atLeast` 将在1.x版中废弃
 :::
 
@@ -63,10 +63,8 @@
 ## group
 * 说明：按钮分组配置
 * 类型：Object
-  [antdv版](http://fast-crud.docmirror.cn/antdv/#/crud/form/group)
-  [element版](http://fast-crud.docmirror.cn/element/#/crud/form/group)
 ```json5
-{ // rowHandle.dropdown
+{ // rowHandle
   group: {
     yourGroupKey: {
       buttonKey1: {}, //按钮配置

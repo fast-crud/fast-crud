@@ -28,6 +28,12 @@
 [FsButton](../common-options)
 
 
+## buttonsPosition
+* 说明：按钮位置
+* 类型：string，可选【default，bottom】
+* 默认：`default`
+
+
 ## columns
 * 说明：查询字段配置
 * 类型：Object

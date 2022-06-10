@@ -3,38 +3,38 @@
     <template v-for="(item, key) of computedButtons" :key="key">
       <template v-if="item.show !== false">
         <component
-            display-directive="show"
-            v-model:[$fsui.popover.visible]="popoverVisible"
-            :is="$fsui.popover.name"
-            v-if="key === 'columns' && columnsFilter && columnsFilter.mode === 'simple'"
-            placement="bottom"
-            :width="760"
-            trigger="click"
+          :is="$fsui.popover.name"
+          v-if="key === 'columns' && columnsFilter && columnsFilter.mode === 'simple'"
+          v-model:[$fsui.popover.visible]="popoverVisible"
+          display-directive="show"
+          placement="bottom"
+          :width="760"
+          trigger="click"
         >
           <template #[$fsui.popover.referenceSlotName]>
-            <fs-button v-bind="item"/>
+            <fs-button v-bind="item" />
           </template>
           <template #[$fsui.popover.contentSlotName]>
             <fs-table-columns-filter
-                v-model:show="popoverVisible"
-                v-if="columns"
-                mode="simple"
-                v-bind="columnsFilter"
-                :columns="columns"
-                :storage="storage"
-                @update:columns="$emit('update:columns', $event)"
+              v-if="columns"
+              v-model:show="popoverVisible"
+              mode="simple"
+              v-bind="columnsFilter"
+              :columns="columns"
+              :storage="storage"
+              @update:columns="$emit('update:columns', $event)"
             />
           </template>
         </component>
-        <fs-button v-else v-bind="item" @click="item.click()"/>
+        <fs-button v-else v-bind="item" @click="item.click()" />
       </template>
     </template>
     <fs-table-columns-filter
-        v-if="columns"
-        ref="columnsFilterRef"
-        :columns="columns"
-        :storage="storage"
-        @update:columns="$emit('update:columns', $event)"
+      v-if="columns"
+      ref="columnsFilterRef"
+      :columns="columns"
+      :storage="storage"
+      @update:columns="$emit('update:columns', $event)"
     />
   </div>
 </template>
@@ -42,10 +42,10 @@
 <script>
 import FsTableColumnsFilter from "./fs-table-columns-filter/component.vue";
 import _ from "lodash-es";
-import {ref, computed} from "vue";
-import {useI18n} from "../../locale";
-import {Constants} from "../../utils/util.constants";
-import {uiContext} from "../../ui";
+import { ref, computed } from "vue";
+import { useI18n } from "../../locale";
+import { Constants } from "../../utils/util.constants";
+import { uiContext } from "../../ui";
 
 /**
  * 工具条
@@ -53,7 +53,7 @@ import {uiContext} from "../../ui";
 export default {
   name: "FsToolbar",
   // eslint-disable-next-line vue/no-unused-components
-  components: {FsTableColumnsFilter},
+  components: { FsTableColumnsFilter },
   props: {
     /**
      * 按钮配置
@@ -109,7 +109,7 @@ export default {
   },
   emits: ["refresh", "update:search", "update:compact", "update:columns", "export"],
   setup(props, ctx) {
-    const {t} = useI18n();
+    const { t } = useI18n();
     const columnsFilterRef = ref();
     const ui = uiContext.get();
     const computedButtons = computed(() => {
@@ -190,7 +190,7 @@ export default {
       });
       return sortedButtons;
     });
-    const popoverVisible = ref(false)
+    const popoverVisible = ref(false);
     return {
       columnsFilterRef,
       computedButtons,

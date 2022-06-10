@@ -1,6 +1,6 @@
 {
   "name": "@fast-crud/fast-crud",
-  "version": "1.1.2",
+  "version": "1.2.0",
   "private": false,
   "main": "./dist/fast-crud.umd.js",
   "module": "./dist/fast-crud.es.js",
@@ -8,7 +8,8 @@
     "build": "vite build && npm run copy-local",
     "copy-local": "copyfiles -f ./src/locale/lang/* ./dist/locale/lang",
     "test": "jest",
-    "lint-fix": "eslint --fix --ext .js --ext .jsx --ext .vue src/"
+    "lint-fix": "eslint --fix --ext .js --ext .jsx --ext .vue src/",
+    "typedoc": "typedoc --options ./typedoc.json"
   },
   "author": "Greper",
   "license": "MIT",
@@ -18,7 +19,7 @@
     "deepdash-es": "5.3.5",
     "lodash-es": "^4.17.15",
     "lru-cache": "^6.0.0",
-    "vuedraggable": "^4.0.3"
+    "vuedraggable-es": "^4.1.0"
   },
   "devDependencies": {
     "@iconify/json": "^1.1.310",
@@ -61,6 +62,9 @@
     "stylelint-order": "^5.0.0",
     "ts-jest": "^27.0.3",
     "ts-node": "^10.1.0",
+    "typedoc": "^0.22.15",
+    "typedoc-github-wiki-theme": "^1.0.1",
+    "typedoc-plugin-markdown": "^3.12.1",
     "typescript": "4.5.2",
     "vite": "^2.0.4",
     "vite-plugin-compression": "^0.3.0",
@@ -68,5 +72,5 @@
     "vue-eslint-parser": "^8.0.1",
     "vue-jest": "^5.0.0-alpha.7"
   },
-  "gitHead": "383c3293c82b64bb224d61da4b6372760363060e"
+  "gitHead": "56c12be51a9145655f6d5705f97b653dcff37b9b"
 }

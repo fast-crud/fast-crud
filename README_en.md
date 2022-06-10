@@ -5,8 +5,7 @@ FastCrud is an options-oriented crud development framework based on vue3. It can
 It is easy to get started, has strong scalability, and has rich examples so that you can quickly complete the task of moving bricks.
 
 source :[Github](https://github.com/fast-crud/fast-crud)  /  [Gitee](https://gitee.com/fast-crud/fast-crud)   
-demo:
-[antdv](http://fast-crud.docmirror.cn/antdv/)  /  [element](http://fast-crud.docmirror.cn/element/)  /  [naive-ui](http://fast-crud.docmirror.cn/naive/)     
+demo: [demo list](http://fast-crud.docmirror.cn/demo/)   
 document：http://fast-crud.docmirror.cn/
 
 <div style="display:flex;">
@@ -111,8 +110,9 @@ Libaries and demos are build using vitejs
 
 
 ### UI library
-[Antdv](https://github.com/vueComponent/ant-design-vue)   
-[Element-Plus](https://github.com/element-plus/element-plus)     
+[Antdv](https://github.com/vueComponent/ant-design-vue)     
+[Element-Plus](https://github.com/element-plus/element-plus)  
+[NaiveUI](https://github.com/TuSimple/naive-ui)  
 Choose one of them
 
 

@@ -31,6 +31,7 @@
     ]
   },
   "include": [
+    "packages/fast-crud/src/d.ts/*.ts",
     "src/**/*.ts",
     "src/**/*.tsx",
     "src/**/*.vue",
@@ -39,5 +40,17 @@
   ],
   "exclude": [
     "node_modules"
-  ]
+  ],
+  "typedocOptions": {
+    "entryPoints": ["./packages/fast-crud/src/d.ts/index.ts"],
+    "out": "./docs/zh/api/d.ts",
+    "includeDeclarations": true,
+    "excludeExternals": true,
+    "excludePrivate": true,
+    "excludeProtected": true,
+    "toc": true,
+    "hideGenerator": true,
+    "theme": "markdown",
+    "readme": "./INTRO.md"
+  }
 }
