@@ -42,7 +42,7 @@ export default defineComponent({
     const slots = {
       ...this.$slots
     };
-    if ((icon && !isIconSlot) || this.$slots.default || this.text || iconRight) {
+    if ((icon && !isIconSlot && !isIconProp) || this.$slots.default || this.text || iconRight) {
       slots.default = () => {
         const children: any = [];
         if (icon && !isIconSlot && !isIconProp) {
@@ -60,13 +60,14 @@ export default defineComponent({
         return children;
       };
     }
-    if (icon && isIconSlot && !slots["icon"]) {
-      //@ts-ignore
-      slots["icon"] = iconRender;
-    }
-    if (icon && isIconProp && !slots["icon"]) {
-      //@ts-ignore
-      iconProp = iconRender;
+    if (icon) {
+      if (isIconSlot && !slots["icon"]) {
+        //@ts-ignore
+        slots["icon"] = iconRender;
+      } else if (isIconProp && !slots["icon"]) {
+        //@ts-ignore
+        iconProp = iconRender;
+      }
     }
 
     const isCircle = this.circle ? ui.button.circle : {};
