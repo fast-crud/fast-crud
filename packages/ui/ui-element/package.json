@@ -12,11 +12,11 @@
   "author": "Greper",
   "license": "MIT",
   "dependencies": {
-    "@element-plus/icons": "^0.0.11",
     "@fast-crud/ui-interface": "^1.0.2"
   },
   "devDependencies": {
     "@fast-crud/fast-crud": "^1.2.0",
+    "@element-plus/icons-vue": "^2.0.4",
     "@rollup/plugin-strip": "^2.0.0",
     "@typescript-eslint/eslint-plugin": "^5.4.0",
     "@typescript-eslint/parser": "^5.4.0",

@@ -73,19 +73,18 @@ export default defineComponent({
 
     const buttonComp: any = resolveDynamicComponent(ui.button.name);
 
-    return h(
-      buttonComp,
-      {
-        ...this.$attrs,
-        ...isCircle,
-        icon: iconProp,
-        //icon,
-        class: {
-          "fs-button": true,
-          "is-thin": !this.text && !this.$slots.default
-        }
-      },
-      slots
-    );
+    const btnProps = {
+      ...this.$attrs,
+      ...isCircle,
+      //icon,
+      class: {
+        "fs-button": true,
+        "is-thin": !this.text && !this.$slots.default
+      }
+    };
+    if (iconProp) {
+      btnProps.icon = iconProp;
+    }
+    return h(buttonComp, btnProps, slots);
   }
 });
