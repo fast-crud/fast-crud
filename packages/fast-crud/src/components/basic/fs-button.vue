@@ -37,6 +37,8 @@ export default defineComponent({
       return <fs-icon icon={icon} />;
     }
     const isIconSlot = ui.type !== "element";
+    const isIconProp = ui.type === "element";
+    let iconProp = undefined;
     const slots = {
       ...this.$slots,
     };
@@ -48,7 +50,7 @@ export default defineComponent({
     ){
       slots.default = () => {
         const children: any = [];
-        if (icon && !isIconSlot) {
+        if (icon && !isIconSlot && !isIconProp) {
           children.push(iconRender());
         }
         if (this.$slots.default) {
@@ -67,6 +69,10 @@ export default defineComponent({
       //@ts-ignore
       slots["icon"] = iconRender;
     }
+    if (icon && isIconProp && !slots["icon"]) {
+      //@ts-ignore
+      iconProp = iconRender;
+    }
 
     const isCircle = this.circle ? ui.button.circle : {};
 
@@ -77,6 +83,7 @@ export default defineComponent({
       {
         ...this.$attrs,
         ...isCircle,
+        icon: iconProp,
         //icon,
         class: {
           "fs-button": true,
