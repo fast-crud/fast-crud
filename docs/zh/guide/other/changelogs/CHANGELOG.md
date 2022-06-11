@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.2.1](https://github.com/fast-crud/fast-crud/compare/v1.2.0...v1.2.1) (2022-06-11)
+
+
+### Bug Fixes
+
+* 修复element图片预览的问题，图片加号错位问题 ([4ef13d6](https://github.com/fast-crud/fast-crud/commit/4ef13d6924e82eeea005a90594460bb49fdde815))
+
+
+
+
+
 # [1.2.0](https://github.com/fast-crud/fast-crud/compare/v1.1.2...v1.2.0) (2022-05-24)
 
 
