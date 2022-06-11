@@ -66,7 +66,7 @@ export default defineComponent({
         slots["icon"] = iconRender;
       } else if (isIconProp && !slots["icon"]) {
         //@ts-ignore
-        iconProp = iconRender;
+        iconProp = iconRender();
       }
     }
 
