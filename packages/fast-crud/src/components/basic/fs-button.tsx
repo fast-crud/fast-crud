@@ -37,13 +37,15 @@ export default defineComponent({
       return <fs-icon icon={icon} />;
     };
     const isIconSlot = ui.type !== "element";
+    const isIconProp = ui.type === "element";
+    let iconProp = undefined;
     const slots = {
       ...this.$slots
     };
-    if ((icon && !isIconSlot) || this.$slots.default || this.text || iconRight) {
+    if ((icon && !isIconSlot && !isIconProp) || this.$slots.default || this.text || iconRight) {
       slots.default = () => {
         const children: any = [];
-        if (icon && !isIconSlot) {
+        if (icon && !isIconSlot && !isIconProp) {
           children.push(iconRender());
         }
         if (this.$slots.default) {
@@ -58,27 +60,32 @@ export default defineComponent({
         return children;
       };
     }
-    if (icon && isIconSlot && !slots["icon"]) {
-      //@ts-ignore
-      slots["icon"] = iconRender;
+    if (icon) {
+      if (isIconSlot && !slots["icon"]) {
+        //@ts-ignore
+        slots["icon"] = iconRender;
+      } else if (isIconProp && !slots["icon"]) {
+        //@ts-ignore
+        iconProp = iconRender();
+      }
     }
 
     const isCircle = this.circle ? ui.button.circle : {};
 
     const buttonComp: any = resolveDynamicComponent(ui.button.name);
 
-    return h(
-      buttonComp,
-      {
-        ...this.$attrs,
-        ...isCircle,
-        //icon,
-        class: {
-          "fs-button": true,
-          "is-thin": !this.text && !this.$slots.default
-        }
-      },
-      slots
-    );
+    const btnProps = {
+      ...this.$attrs,
+      ...isCircle,
+      //icon,
+      class: {
+        "fs-button": true,
+        "is-thin": !this.text && !this.$slots.default
+      }
+    };
+    if (iconProp) {
+      btnProps.icon = iconProp;
+    }
+    return h(buttonComp, btnProps, slots);
   }
 });

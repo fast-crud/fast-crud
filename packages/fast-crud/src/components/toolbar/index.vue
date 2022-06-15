@@ -12,7 +12,7 @@
           trigger="click"
         >
           <template #[$fsui.popover.referenceSlotName]>
-            <fs-button v-bind="item" />
+            <fs-button @click="popoverVisible = !popoverVisible" v-bind="item" />
           </template>
           <template #[$fsui.popover.contentSlotName]>
             <fs-table-columns-filter
