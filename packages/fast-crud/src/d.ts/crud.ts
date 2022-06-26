@@ -275,7 +275,18 @@ export type FormItemProps = {
    * 帮助提示配置
    */
   helper?: string | FormItemHelperProps;
+  /**
+   * 排序号
+   */
   order?: number;
+  /**
+   * 是否显示此字段
+   */
+  show?: boolean;
+  /**
+   * 是否是空白占位栏
+   */
+  blank?: boolean;
 };
 
 /**

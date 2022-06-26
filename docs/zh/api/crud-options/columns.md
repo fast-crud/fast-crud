@@ -210,6 +210,20 @@ columns:{
 * 类型：number
 * 默认值： 1 ， 当配置0或负数则排到最前面，配置2则排到最后面
 
+
+### [key].form.show
+* 说明：表单里是否显示该字段。
+* 类型：boolean
+* 默认值： true
+
+
+
+### [key].form.blank
+* 说明：是否改字段占一个空白位置。
+* 类型：boolean
+* 默认值： false
+
+
 ## [key].addForm
 * 说明：该字段在添加表单里面的配置
 * 类型：Object

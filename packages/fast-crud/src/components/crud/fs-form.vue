@@ -15,7 +15,7 @@
       <template v-for="item in computedDefaultColumns" :key="item.key">
         <component :is="$fsui.col.name" v-if="item.show !== false" class="fs-col" v-bind="mergeCol(item.col)">
           <fs-form-item
-            v-if="item.show !== false"
+            v-if="item.blank !== true"
             :ref="
               (el) => {
                 if (el) {
@@ -62,7 +62,7 @@
               v-bind="mergeCol(computedColumns[key].col)"
             >
               <fs-form-item
-                v-if="computedColumns[key].show !== false"
+                v-if="computedColumns[key].blank !== true"
                 :ref="
                   (el) => {
                     if (el) {
