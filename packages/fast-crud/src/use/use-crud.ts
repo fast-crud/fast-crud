@@ -146,6 +146,7 @@ export function useCrud(ctx: UseCrudProps) {
             if (column.key === item.key) {
               merge(column, item);
               columns.push(column);
+              return;
             }
           }
         });

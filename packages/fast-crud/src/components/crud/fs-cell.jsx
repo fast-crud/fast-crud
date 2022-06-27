@@ -16,8 +16,8 @@ export default {
   },
   setup(props) {
     const { doComputed } = useCompute();
-    const computedComponent = doComputed(props.item.component, props.getScope);
     return (props, ctx) => {
+      const computedComponent = doComputed(props.item.component, props.getScope);
       if (props.slots) {
         return <span class={"fs-cell"}>{props.slots(props.getScope())}</span>;
       } else if (props.item.formatter) {

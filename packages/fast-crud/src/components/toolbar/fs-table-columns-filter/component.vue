@@ -235,9 +235,12 @@ export default {
     // fixed 变化时触发
     fixedChange(index, value) {
       if (value) this.currentValue[index].show = true;
-      if (value === "left") this.currentValue.unshift(this.currentValue.splice(index, 1)[0]);
-      if (value === "right") this.currentValue.push(this.currentValue.splice(index, 1)[0]);
-
+      if (value === "left") {
+        this.currentValue.unshift(this.currentValue.splice(index, 1)[0]);
+      }
+      if (value === "right") {
+        this.currentValue.push(this.currentValue.splice(index, 1)[0]);
+      }
       this.showChange();
     },
     showChange() {
