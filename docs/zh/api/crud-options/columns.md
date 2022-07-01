@@ -82,6 +82,11 @@ const crudOptions = {
 * 说明：在列设置中禁用该字段的勾选
 * 类型：Boolean
 
+### [key].column.columnSetShow
+* 说明：在列设置中显示该字段的勾选
+* 类型：Boolean
+
+
 ### [key].column.show
 * 说明：是否显示该列,列设置中也是通过修改此字段来进行列的显示。
 * 类型：boolean
@@ -110,7 +115,7 @@ const crudOptions = {
        key:{
             column:{
                 cellRender(scope){
-                    return <div>{{scope.value}}</div>
+                    return <div>{scope.value}</div>
                 }
             }
        }
