@@ -6,23 +6,29 @@ function getCallerInfo() {
 
 const blank = (...args) => {};
 
+function logInfo(...args) {
+  // @ts-ignore
+  // eslint-disable-next-line prefer-rest-params
+  console.log.apply(this, arguments);
+}
+function logWarn(...args) {
+  // @ts-ignore
+  // eslint-disable-next-line prefer-rest-params
+  console.warn.apply(this, arguments);
+}
+function logError(...args) {
+  // @ts-ignore
+  // eslint-disable-next-line prefer-rest-params
+  console.error.apply(this, arguments);
+}
 const error = (...args) => {
-  if (!console.error) {
-    return;
-  }
-  console.error("[error]", ...args);
+  logError("[error]", ...args);
 };
 const warn = (...args) => {
-  if (!console.warn) {
-    return;
-  }
-  console.warn("[warn]", ...args);
+  logWarn("[warn]", ...args);
 };
 const info = (...args) => {
-  if (!console.log) {
-    return;
-  }
-  console.log("[info]", ...args);
+  logInfo("[info]", ...args);
 };
 const debug = (...args) => {
   if (!console.log) {
@@ -30,9 +36,11 @@ const debug = (...args) => {
   }
   const callerInfo = getCallerInfo();
   if (DEBUG_WITH_CALLER) {
-    console.log("[debug]", ...args, "\n", callerInfo);
+    const log = ["[debug]", ...args, "\n", callerInfo];
+    logInfo(log);
   } else {
-    console.log("[debug]", ...args);
+    const log = ["[debug]", ...args];
+    logInfo(log);
   }
 };
 const logger = {
