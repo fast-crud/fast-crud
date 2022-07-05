@@ -224,7 +224,7 @@ columns:{
 
 
 ### [key].form.blank
-* 说明：是否改字段占一个空白位置。
+* 说明：是否该字段占一个空白位置。
 * 类型：boolean
 * 默认值： false
 
