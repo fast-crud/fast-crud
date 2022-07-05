@@ -3,6 +3,22 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.2.3](https://github.com/fast-crud/fast-crud/compare/v1.2.2...v1.2.3) (2022-07-05)
+
+
+### Bug Fixes
+
+* 修复配置esbuild.pure =['console.log'] 报...异常的问题 ([fad8a57](https://github.com/fast-crud/fast-crud/commit/fad8a577b5121e151bb9946e4ccde155e8f63e2e))
+
+
+### Performance Improvements
+
+* 新增表单字段空白占位配置：key.form.blank ([4b47258](https://github.com/fast-crud/fast-crud/commit/4b4725828bdb083a4b82ffa066aab3b7fa26fedc))
+
+
+
+
+
 ## [1.2.2](https://github.com/fast-crud/fast-crud/compare/v1.2.1...v1.2.2) (2022-06-11)
 
 **Note:** Version bump only for package @fast-crud/fast-crud
