@@ -7,4 +7,3 @@
 
 2、 加作者好友
 <div style="display: flex; justify-content:space-around;"><img height="200px" src="https://gitee.com/fast-crud/fast-crud/raw/main/images/me.png"></div>
-
