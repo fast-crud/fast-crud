@@ -98,6 +98,7 @@ export function useDict(props, ctx, vModel = "modelValue") {
         if (ctx.attrs.onDictChange) {
           const scope = getCurrentScope();
           ctx.attrs.onDictChange({ dict, ...scope });
+          ctx.emit("dict-change", { dict, ...scope });
         }
       },
       {

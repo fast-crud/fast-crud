@@ -15,6 +15,7 @@ export default {
     dict: {},
     options: {}
   },
+  emits: ["dict-change"],
   setup(props, ctx) {
     const ui = uiContext.get();
     return {

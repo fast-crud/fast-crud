@@ -47,6 +47,7 @@ export default {
       }
     }
   },
+  emits: ["dict-change"],
   setup(props, ctx) {
     const ui = uiContext.get();
     return {

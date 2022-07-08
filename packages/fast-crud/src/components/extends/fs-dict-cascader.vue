@@ -21,6 +21,7 @@ export default {
      */
     options: { type: Array }
   },
+  emits: ["dict-change"],
   setup(props, ctx) {
     const dictUseRet = useDict(props, ctx);
     const { ui } = useUi();

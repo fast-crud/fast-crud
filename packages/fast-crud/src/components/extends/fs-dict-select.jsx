@@ -27,6 +27,7 @@ export default {
      */
     slots: {}
   },
+  emits: ["dict-change"],
   // render () {
   //   return this.renderFunc({ data: this.data, dataMap: this.dataMap, scope: this.scope, attrs: this.$attrs })
   // },
