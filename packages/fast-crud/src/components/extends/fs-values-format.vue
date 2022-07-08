@@ -128,7 +128,7 @@ export default {
      */
     defaultLabel: {}
   },
-  emits: ["click"],
+  emits: ["click", "dict-change"],
   setup(props, ctx) {
     // trace.trace("values-format");
     // console.log("values-format init", props.modelValue);
@@ -229,7 +229,7 @@ export default {
 <style lang="less">
 .fs-values-format .fs-tag {
   margin: 2px;
-  .fs-tag-icon{
+  .fs-tag-icon {
   }
 }
 </style>

@@ -54,6 +54,7 @@ export default {
       require: false
     }
   },
+  emits: ["dict-change"],
   setup(props, ctx) {
     const dict = useDict(props, ctx);
     if (props.dict?.getNodesByValues) {

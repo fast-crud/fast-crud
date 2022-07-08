@@ -95,11 +95,11 @@ export function useDict(props, ctx, vModel = "modelValue") {
         return dict?.data;
       },
       () => {
+        const scope = getCurrentScope();
         if (ctx.attrs.onDictChange) {
-          const scope = getCurrentScope();
-          ctx.attrs.onDictChange({ dict, ...scope });
-          ctx.emit("dict-change", { dict, ...scope });
+          // ctx.attrs.onDictChange({ dict, ...scope });
         }
+        ctx.emit("dict-change", { dict, ...scope });
       },
       {
         immediate: true
