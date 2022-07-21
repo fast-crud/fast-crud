@@ -58,11 +58,11 @@ export type ComponentProps = {
   /**
    * 组件的名称
    */
-  name: string;
+  name?: string;
   /**
    * vmodel绑定的目标属性名
    */
-  vModel: string;
+  vModel?: string;
 
   /**
    * 当原始组件名的参数被以上属性名占用时，可以配置在这里
@@ -76,7 +76,7 @@ export type ComponentProps = {
    * }
    * ```
    */
-  props: object;
+  props?: object;
 
   /**
    * 组件其他参数
@@ -93,7 +93,7 @@ export type TableProps = {
   /**
    * 列表数据变化事件处理
    */
-  onDataChange: Function;
+  onDataChange?: Function;
 
   /**
    * [x]-table组件的配置
@@ -174,7 +174,7 @@ export type FormGroupItemProps = {
  */
 export type FormGroupProps = {
   type?: string;
-  groups: {
+  groups?: {
     [key: string]: FormGroupItemProps;
   };
 };
@@ -212,12 +212,12 @@ export type FormProps = {
   /**
    * 提交前做一些操作
    */
-  beforeSubmit: (context) => Promise<any>;
+  beforeSubmit?: (context) => Promise<any>;
   /**
    * 提交后做一些操作
    * @param context
    */
-  afterSubmit: (context) => Promise<any>;
+  afterSubmit?: (context) => Promise<any>;
   /**
    * 表单重置时的操作
    */
@@ -303,7 +303,7 @@ export type ToolbarProps = {
   /**
    * 按钮配置
    */
-  buttons: {
+  buttons?: {
     /**
      * 按钮key: 按钮配置
      */
@@ -346,7 +346,7 @@ export type ButtonProps = {
   /**
    * 点击事件
    */
-  click: () => void;
+  click?: () => void;
 
   /**
    * 其他按钮配置 [a|el|n]-button的配置，请查看对应ui组件的文档
@@ -354,7 +354,7 @@ export type ButtonProps = {
   [key: string]: any;
 };
 export type ActionbarProps = {
-  buttons: {
+  buttons?: {
     [key: string]: ButtonProps;
   };
 };
@@ -500,14 +500,14 @@ export type ColumnCompositionProps = {
    * @param index
    * @param mode
    */
-  valueBuilder: ({ value, key, row, form, index, mode }) => void;
+  valueBuilder?: ({ value, key, row, form, index, mode }) => void;
   /**
    * 值解析器，表单提交前执行
    * 表单输出的值可能不是后台所需要的值，所以需要在提交前做一层转化
    * 即：row[key]=后台能所需要的值
    * @param context
    */
-  valueResolve: (context: any) => void;
+  valueResolve?: (context: any) => void;
   /**
    * 其他配置
    */
@@ -591,15 +591,15 @@ export type CrudOptions = {
     /**
      * 模式名称: local,remote
      */
-    name: string;
+    name?: string;
     /**
      *  更新时是否将表单值merge到行数据中
      */
-    isMergeWhenUpdate: boolean;
+    isMergeWhenUpdate?: boolean;
     /**
      * 添加时是否在列表最后插入
      */
-    isAppendWhenAdd: boolean;
+    isAppendWhenAdd?: boolean;
     [key: string]: any;
   };
   /**
