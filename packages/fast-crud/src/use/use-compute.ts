@@ -35,7 +35,12 @@ function findComputeValues(target, excludes, isAsync) {
       return false;
     }
     return true;
-  });
+  },
+    {
+        // https://deepdash.io/#eachdeep-foreachdeep
+        checkCircular: true
+    }
+  );
 
   return foundMap;
 }
