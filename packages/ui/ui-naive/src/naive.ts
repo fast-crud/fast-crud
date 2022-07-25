@@ -47,7 +47,6 @@ import {
   DividerCI,
   PopoverCI
 } from "@fast-crud/ui-interface";
-import _ from "lodash-es";
 
 export class Naive implements UiInterface {
   constructor(target) {

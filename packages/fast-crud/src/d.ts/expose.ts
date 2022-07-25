@@ -104,7 +104,7 @@ export type CrudExpose = {
    * @param index
    * @param row
    */
-  updateTableRow: (index: number, row: Object, merge: boolean) => void;
+  updateTableRow: (index: number, row: Object, merge?: boolean) => void;
   /**
    * 删除行
    * @param index

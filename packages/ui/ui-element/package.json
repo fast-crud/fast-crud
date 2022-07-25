@@ -4,6 +4,7 @@
   "description": "",
   "main": "./dist/ui-element.umd.js",
   "module": "./dist/ui-element.es.js",
+  "types": "./dist/es/index.d.ts",
   "scripts": {
     "build": "vite build",
     "test": "jest",
@@ -41,7 +42,9 @@
     "vite": "^2.6.9",
     "vite-plugin-compression": "^0.3.0",
     "vue": ">=3.0.0",
-    "vue-eslint-parser": "^8.0.1"
+    "vue-eslint-parser": "^8.0.1",
+    "vue-tsc": "^0.38.9",
+    "@rollup/plugin-typescript": "^8.3.3"
   },
   "gitHead": "56c12be51a9145655f6d5705f97b653dcff37b9b"
 }

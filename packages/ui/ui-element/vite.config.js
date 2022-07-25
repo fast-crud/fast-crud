@@ -3,6 +3,7 @@ import vueJsx from "@vitejs/plugin-vue-jsx";
 import path from "path";
 import visualizer from "rollup-plugin-visualizer";
 import strip from "@rollup/plugin-strip";
+import typescript from "@rollup/plugin-typescript";
 const { resolve } = path;
 // https://vitejs.dev/config/
 export default {
@@ -24,7 +25,14 @@ export default {
       //   main: resolve(__dirname, "src/index.js"),
       //   en: resolve(__dirname, "src/local/lang/en.js"),
       // },
-      plugins: [strip(), visualizer()],
+      plugins: [strip(), visualizer(),typescript({
+        target: "es2020",
+        rootDir: "src",
+        declaration: true,
+        declarationDir: "dist/es",
+        exclude: "./node_modules/**",
+        allowSyntheticDefaultImports: true
+      })],
       // make sure to externalize deps that shouldn't be bundled
       // into your library
       external: ["vue", "@fast-crud/fast-crud", "element-plus", "@element-plus/icons-vue"],

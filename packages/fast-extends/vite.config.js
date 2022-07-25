@@ -1,6 +1,6 @@
 import vue from "@vitejs/plugin-vue";
 import vueJsx from "@vitejs/plugin-vue-jsx";
-
+import typescript from "@rollup/plugin-typescript";
 import path from "path";
 import _ from "lodash";
 import visualizer from "rollup-plugin-visualizer";
@@ -59,7 +59,18 @@ export default ({ command, mode }) => {
       sourcemap: true,
       // minify: false,
       rollupOptions: {
-        plugins: [strip(), visualizer()],
+        plugins: [
+          strip(),
+          visualizer()
+          // typescript({
+          //   target: "es2020",
+          //   rootDir: "src",
+          //   declaration: true,
+          //   declarationDir: "dist/es",
+          //   exclude: "./node_modules/**",
+          //   allowSyntheticDefaultImports: true
+          // })
+        ],
         // make sure to externalize deps that shouldn't be bundled
         // into your library
         external: [

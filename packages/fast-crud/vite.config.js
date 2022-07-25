@@ -3,6 +3,7 @@ import vueJsx from "@vitejs/plugin-vue-jsx";
 import path from "path";
 import visualizer from "rollup-plugin-visualizer";
 import strip from "@rollup/plugin-strip";
+import typescript from "@rollup/plugin-typescript";
 const { resolve } = path;
 // https://vitejs.dev/config/
 export default {
@@ -29,7 +30,15 @@ export default {
           //不移除console
           functions: ["console.log1", "assert.*"]
         }),
-        visualizer()
+        visualizer(),
+        typescript({
+          target: "es2020",
+          rootDir: "src",
+          declaration: true,
+          declarationDir: "dist/es",
+          exclude: "./node_modules/**",
+          allowSyntheticDefaultImports: true
+        })
       ],
       // make sure to externalize deps that shouldn't be bundled
       // into your library
