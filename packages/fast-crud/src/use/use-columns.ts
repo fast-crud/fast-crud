@@ -212,6 +212,7 @@ function buildColumns(userOptions) {
     value.key = key;
   });
   const columns = setupOptionsColumns(cloneDeep(userOptions.columns));
+  userOptions.columns = columns;
   const columnsMap = buildOptionsColumnsMap({}, columns);
 
   userOptions.table.columns = buildTableColumns(cloneDeep(columns));
