@@ -38,7 +38,6 @@ export default function () {
           limit: 1,
           listType: ui.upload.typeImageCard,
           accept: ".png,.jpeg,.jpg,.ico,.bmp,.gif,.webp,.svg",
-          showFileList: false
         }
       },
       column: {
