@@ -13,8 +13,11 @@ function merge(target, ...sources) {
    * @param srcValue 覆盖对象
    */
   function customizer(objValue, srcValue) {
+    if (srcValue == null) {
+      return;
+    }
     // 如果被合并对象为数组，则直接被覆盖对象覆盖，只要覆盖对象不为空
-    if (_.isArray(objValue) && srcValue != null) {
+    if (_.isArray(objValue)) {
       return srcValue;
     }
 
