@@ -3,6 +3,24 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.2.4](https://github.com/fast-crud/fast-crud/compare/v1.2.3...v1.2.4) (2022-07-27)
+
+
+### Bug Fixes
+
+* 修复自定义type不支持valueResolve、valueBuilder的bug ([74294b2](https://github.com/fast-crud/fast-crud/commit/74294b262ec8cb597c60a3a0795c86e660dfa4ad))
+* 修复avatar-uploader不显示组件的bug ([0765b92](https://github.com/fast-crud/fast-crud/commit/0765b9228e0c09d9e5e23d5d47644545a3cbf471))
+
+
+### Performance Improvements
+
+* dict组件增加dict-change事件 ([ab4416c](https://github.com/fast-crud/fast-crud/commit/ab4416ccbfba99fdb771bbfd3f36c5fa7d67727b))
+* dict组件增加dict-change事件 ([4bf8cc4](https://github.com/fast-crud/fast-crud/commit/4bf8cc425d89a17e01c8150139b1c04f5443cd6e))
+
+
+
+
+
 ## [1.2.3](https://github.com/fast-crud/fast-crud/compare/v1.2.2...v1.2.3) (2022-07-05)
 
 

@@ -1,6 +1,6 @@
 {
   "name": "@fast-crud/ui-antdv",
-  "version": "1.2.3",
+  "version": "1.2.4",
   "description": "",
   "main": "./dist/ui-antdv.umd.js",
   "module": "./dist/ui-antdv.es.js",
@@ -12,13 +12,14 @@
   "author": "Greper",
   "license": "MIT",
   "dependencies": {
-    "@fast-crud/ui-interface": "^1.0.2"
+    "@fast-crud/ui-interface": "^1.2.4"
   },
   "devDependencies": {
     "@ant-design/icons-vue": "^6.0.1",
-    "@fast-crud/fast-crud": "^1.2.3",
+    "@fast-crud/fast-crud": "^1.2.4",
     "@fast-crud/ui-interface": "*",
     "@rollup/plugin-strip": "^2.0.0",
+    "@rollup/plugin-typescript": "^8.3.3",
     "@typescript-eslint/eslint-plugin": "^5.4.0",
     "@typescript-eslint/parser": "^5.4.0",
     "@vitejs/plugin-legacy": "^1.4.4",
@@ -43,8 +44,7 @@
     "vite-plugin-compression": "^0.3.0",
     "vue": ">=3.0.0",
     "vue-eslint-parser": "^8.0.1",
-    "vue-tsc": "^0.38.9",
-    "@rollup/plugin-typescript": "^8.3.3"
+    "vue-tsc": "^0.38.9"
   },
   "gitHead": "56c12be51a9145655f6d5705f97b653dcff37b9b"
 }

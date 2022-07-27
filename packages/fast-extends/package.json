@@ -1,6 +1,6 @@
 {
   "name": "@fast-crud/fast-extends",
-  "version": "1.2.3",
+  "version": "1.2.4",
   "private": false,
   "main": "./dist/fast-extends.umd.js",
   "module": "./dist/fast-extends.es.js",
@@ -32,11 +32,12 @@
     "wangeditor": "^4.7.5"
   },
   "devDependencies": {
-    "@fast-crud/fast-crud": "^1.2.3",
+    "@fast-crud/fast-crud": "^1.2.4",
     "@iconify/json": "^1.1.376",
     "@ls-lint/ls-lint": "^1.9.2",
     "@rollup/plugin-commonjs": "^21.0.1",
     "@rollup/plugin-strip": "^2.0.0",
+    "@rollup/plugin-typescript": "^8.3.3",
     "@types/chai": "^4.2.11",
     "@types/mocha": "^9.0.0",
     "@typescript-eslint/eslint-plugin": "^5.4.0",
@@ -73,8 +74,7 @@
     "vite-plugin-compression": "^0.3.0",
     "vue": ">=3.0.0",
     "vue-eslint-parser": "^8.0.1",
-    "vue-tsc": "^0.38.9",
-    "@rollup/plugin-typescript": "^8.3.3"
+    "vue-tsc": "^0.38.9"
   },
   "gitHead": "56c12be51a9145655f6d5705f97b653dcff37b9b"
 }
