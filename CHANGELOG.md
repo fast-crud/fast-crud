@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.2.7](https://github.com/fast-crud/fast-crud/compare/v1.2.6...v1.2.7) (2022-07-27)
+
+
+### Bug Fixes
+
+* 修复rowhandler 无法配置居中的问题 ([7811ffd](https://github.com/fast-crud/fast-crud/commit/7811ffd0c42e2cad9ba3992806885c0efac8d329))
+
+
+
+
+
 ## [1.2.6](https://github.com/fast-crud/fast-crud/compare/v1.2.5...v1.2.6) (2022-07-27)
 
 **Note:** Version bump only for package fast-crud-root
