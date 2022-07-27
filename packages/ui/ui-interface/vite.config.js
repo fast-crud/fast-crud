@@ -27,15 +27,15 @@ export default {
       // },
       plugins: [
         strip(),
-        visualizer(),
-        typescript({
-          target: "es2020",
-          rootDir: "src",
-          declaration: true,
-          declarationDir: "dist/es",
-          exclude: "./node_modules/**",
-          allowSyntheticDefaultImports: true
-        })
+        visualizer()
+        // typescript({
+        //   target: "es2020",
+        //   rootDir: "src",
+        //   declaration: true,
+        //   declarationDir: "dist/es",
+        //   exclude: "./node_modules/**",
+        //   allowSyntheticDefaultImports: true
+        // })
       ],
       // make sure to externalize deps that shouldn't be bundled
       // into your library

@@ -25,14 +25,18 @@ export default {
       //   main: resolve(__dirname, "src/index.js"),
       //   en: resolve(__dirname, "src/local/lang/en.js"),
       // },
-      plugins: [strip(), visualizer(),typescript({
-        target: "es2020",
-        rootDir: "src",
-        declaration: true,
-        declarationDir: "dist/es",
-        exclude: "./node_modules/**",
-        allowSyntheticDefaultImports: true
-      })],
+      plugins: [
+        strip(),
+        visualizer()
+        // typescript({
+        //   target: "es2020",
+        //   rootDir: "src",
+        //   declaration: true,
+        //   declarationDir: "dist/es",
+        //   exclude: "./node_modules/**",
+        //   allowSyntheticDefaultImports: true
+        // })
+      ],
       // make sure to externalize deps that shouldn't be bundled
       // into your library
       external: ["vue", "@fast-crud/fast-crud", "naive-ui", "@ant-design/icons-vue"],
@@ -43,7 +47,7 @@ export default {
           vue: "Vue",
           "@fast-crud/fast-crud": "FastCrud",
           "ant-design-vue": "Antdv",
-          "naive-ui":"Naive",
+          "naive-ui": "Naive",
           "@ant-design/icons-vue": "IconsVue"
         }
       }
