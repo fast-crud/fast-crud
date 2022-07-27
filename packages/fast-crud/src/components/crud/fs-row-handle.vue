@@ -244,7 +244,7 @@ export default defineComponent({
 
 <style lang="less">
 .fs-row-handle {
-  display: flex;
+  // display: flex ; // 这里不能用flex，否则会破坏align:center配置
   flex-wrap: wrap;
   .row-handle-btn {
     margin: 2px;
