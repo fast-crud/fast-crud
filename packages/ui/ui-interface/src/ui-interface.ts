@@ -96,7 +96,7 @@ export interface CheckboxCI extends CI {
   resolveEvent: Function;
   value: string;
   modelValue: string;
-  onChange: Function
+  onChange: Function;
 }
 
 export interface CascaderCI extends CI {
@@ -177,7 +177,7 @@ export interface FormWrapperCI extends CI {
   titleSlotName: string;
   buildWidthBind: (is, width: any) => {};
   buildInitBind: (is) => {};
-  buildInnerBind:(opts:any)=>{};
+  buildInnerBind: (opts: any) => {};
   hasContentWrap: (is) => string;
 }
 export interface DatePickerCI extends CI {
@@ -334,6 +334,6 @@ export interface UiInterface {
   tabPane: TabPaneCI;
   collapse: CollapseCI;
   collapseItem: CollapseItemCI;
-  divider: DividerCI,
-  popover: PopoverCI,
+  divider: DividerCI;
+  popover: PopoverCI;
 }
