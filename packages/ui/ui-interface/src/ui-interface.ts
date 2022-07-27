@@ -68,6 +68,7 @@ export interface TableColumnCI extends CI {
 }
 
 export interface TableCI extends CI {
+  defaultRowKey: string;
   data;
   fixedHeaderNeedComputeBodyHeight: boolean;
   headerDomSelector: string; //用于计算高度

@@ -84,6 +84,7 @@ export default defineComponent({
       }
     };
     if (iconProp) {
+      // @ts-ignore
       btnProps.icon = iconProp;
     }
     return h(buttonComp, btnProps, slots);
