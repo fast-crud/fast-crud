@@ -3,6 +3,33 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.2.6](https://github.com/fast-crud/fast-crud/compare/v1.2.5...v1.2.6) (2022-07-27)
+
+**Note:** Version bump only for package @fast-crud/fast-extends
+
+
+
+
+
+## [1.2.5](https://github.com/fast-crud/fast-crud/compare/v1.2.4...v1.2.5) (2022-07-27)
+
+**Note:** Version bump only for package @fast-crud/fast-extends
+
+
+
+
+
+## [1.2.4](https://github.com/fast-crud/fast-crud/compare/v1.2.3...v1.2.4) (2022-07-27)
+
+
+### Bug Fixes
+
+* 修复avatar-uploader不显示组件的bug ([0765b92](https://github.com/fast-crud/fast-crud/commit/0765b9228e0c09d9e5e23d5d47644545a3cbf471))
+
+
+
+
+
 ## [1.2.3](https://github.com/fast-crud/fast-crud/compare/v1.2.2...v1.2.3) (2022-07-05)
 
 **Note:** Version bump only for package @fast-crud/fast-extends
