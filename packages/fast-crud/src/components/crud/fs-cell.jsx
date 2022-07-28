@@ -1,4 +1,5 @@
 import { useCompute } from "../../use/use-compute";
+import { computed } from "vue";
 /**
  * 单元格显示组件
  */
@@ -16,8 +17,11 @@ export default {
   },
   setup(props) {
     const { doComputed } = useCompute();
+    const computedPropsComponent = computed(() => {
+      return props.item.component;
+    });
+    const computedComponent = doComputed(computedPropsComponent, props.getScope);
     return (props, ctx) => {
-      const computedComponent = doComputed(props.item.component, props.getScope);
       if (props.slots) {
         return <span class={"fs-cell"}>{props.slots(props.getScope())}</span>;
       } else if (props.item.formatter) {
@@ -27,10 +31,11 @@ export default {
       } else if (props.item.render) {
         console.warn("column.render 配置已废弃，请使用column.cellRender代替");
         return <span class={"fs-cell"}>{props.item.render(props.getScope())}</span>;
-      } else if (props.item.component?.name) {
+      } else if (computedComponent.value?.name) {
         if (computedComponent.value?.show === false) {
           return;
         }
+        console.log("computedComponent:", JSON.stringify(computedComponent.value));
         return <fs-component-render ref={"targetRef"} {...computedComponent.value} scope={props.getScope()} />;
       } else {
         return <span class={"fs-cell"}> {props.getScope().value}</span>;
