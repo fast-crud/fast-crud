@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.2.8](https://github.com/fast-crud/fast-crud/compare/v1.2.7...v1.2.8) (2022-07-28)
+
+
+### Bug Fixes
+
+* 修复列设置后，单元格配置无效的bug ([9aae340](https://github.com/fast-crud/fast-crud/commit/9aae340c89ac3517104b4bf98b8c7517bb4db840))
+
+
+
+
+
 ## [1.2.7](https://github.com/fast-crud/fast-crud/compare/v1.2.6...v1.2.7) (2022-07-27)
 
 
