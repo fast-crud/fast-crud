@@ -248,6 +248,7 @@ export default defineComponent({
   flex-wrap: wrap;
   .row-handle-btn {
     margin: 2px;
+    display: inline-flex;
     &.el-button {
       margin: 2px;
     }
