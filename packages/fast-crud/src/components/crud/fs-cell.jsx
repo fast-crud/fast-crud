@@ -35,7 +35,6 @@ export default {
         if (computedComponent.value?.show === false) {
           return;
         }
-        console.log("computedComponent:", JSON.stringify(computedComponent.value));
         return <fs-component-render ref={"targetRef"} {...computedComponent.value} scope={props.getScope()} />;
       } else {
         return <span class={"fs-cell"}> {props.getScope().value}</span>;
