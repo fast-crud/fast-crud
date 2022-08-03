@@ -12,7 +12,7 @@
           trigger="click"
         >
           <template #[$fsui.popover.referenceSlotName]>
-            <fs-button @click="popoverVisible = !popoverVisible" v-bind="item" />
+            <fs-button @click="handleSimpleClick" v-bind="item" />
           </template>
           <template #[$fsui.popover.contentSlotName]>
             <fs-table-columns-filter
@@ -191,10 +191,17 @@ export default {
       return sortedButtons;
     });
     const popoverVisible = ref(false);
+    const handleSimpleClick = () => {
+      if(ui.type === "element") {
+        return
+      }
+      popoverVisible.value = !popoverVisible.value
+    }
     return {
       columnsFilterRef,
       computedButtons,
-      popoverVisible
+      popoverVisible,
+      handleSimpleClick
     };
   }
 };
