@@ -3,6 +3,22 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.2.9](https://github.com/fast-crud/fast-crud/compare/v1.2.8...v1.2.9) (2022-08-08)
+
+
+### Bug Fixes
+
+* 修复rowHandle的更多按钮没有对齐的问题 ([f59bca1](https://github.com/fast-crud/fast-crud/commit/f59bca176eacd5aae6d544aa101e2e82f0324d8b))
+
+
+### Performance Improvements
+
+* 移除多余的log ([75c2881](https://github.com/fast-crud/fast-crud/commit/75c28810bd1cd7c0b2e567c4bfb7fc6ce1db445f))
+
+
+
+
+
 ## [1.2.8](https://github.com/fast-crud/fast-crud/compare/v1.2.7...v1.2.8) (2022-07-28)
 
 
