@@ -12,7 +12,7 @@
     <!-- row -->
     <component :is="$fsui.row.name" class="fs-row">
       <!-- col -->
-      <template v-for="item in computedDefaultColumns" :key="item.key">
+      <template v-for="item in computedDefaultColumns" :key="item?.key">
         <component :is="$fsui.col.name" v-if="item.show !== false" class="fs-col" v-bind="mergeCol(item.col)">
           <fs-form-item
             v-if="item.blank !== true"
@@ -62,7 +62,7 @@
               v-bind="mergeCol(computedColumns[key]?.col)"
             >
               <fs-form-item
-                v-if="computedColumns[key]?.blank !== true"
+                v-if="computedColumns[key] && computedColumns[key]?.blank !== true"
                 :ref="
                   (el) => {
                     if (el) {
@@ -92,6 +92,7 @@ import logger from "../../utils/util.log";
 import { uiContext } from "../../ui";
 import { useMerge } from "../../use/use-merge";
 import { Constants } from "../../utils/util.constants";
+import { utils } from "../../index";
 
 /**
  * 配置化的表单组件
@@ -324,6 +325,9 @@ export default {
       const groupedKeys = new Set();
       _.forEach(group?.groups, (groupItem) => {
         _.forEach(groupItem.columns, (item) => {
+          if (computedColumns.value[item] == null) {
+            utils.logger.warn("无效的分组字段：" + item);
+          }
           groupedKeys.add(item);
         });
       });
