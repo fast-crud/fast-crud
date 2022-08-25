@@ -3,6 +3,23 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.2.10](https://github.com/fast-crud/fast-crud/compare/v1.2.9...v1.2.10) (2022-08-25)
+
+
+### Bug Fixes
+
+* 修复group配置没有的字段报空指针异常的问题 ([438d0ad](https://github.com/fast-crud/fast-crud/commit/438d0ad741172b77884c712381952c06147c6e77))
+* 修复group配置没有的字段报空指针异常的问题 ([96dcc2d](https://github.com/fast-crud/fast-crud/commit/96dcc2d1d2ccf00d7414602d18e2ae095bed5d8b))
+
+
+### Performance Improvements
+
+* **表单分组:** 当分组下所有的字段都配置了隐藏时，整个分组直接隐藏 ([76b20d3](https://github.com/fast-crud/fast-crud/commit/76b20d3a7e3233d4c483cd862e3a77b88c2546fc))
+
+
+
+
+
 ## [1.2.9](https://github.com/fast-crud/fast-crud/compare/v1.2.8...v1.2.9) (2022-08-08)
 
 
