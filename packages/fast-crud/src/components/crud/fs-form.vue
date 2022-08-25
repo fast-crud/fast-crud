@@ -59,10 +59,10 @@
               :is="$fsui.col.name"
               v-if="computedColumns[key]?.show !== false"
               class="fs-col"
-              v-bind="mergeCol(computedColumns[key].col)"
+              v-bind="mergeCol(computedColumns[key]?.col)"
             >
               <fs-form-item
-                v-if="computedColumns[key].blank !== true"
+                v-if="computedColumns[key]?.blank !== true"
                 :ref="
                   (el) => {
                     if (el) {
