@@ -13,7 +13,7 @@
     <component :is="$fsui.row.name" class="fs-row">
       <!-- col -->
       <template v-for="item in computedDefaultColumns" :key="item?.key">
-        <component :is="$fsui.col.name" v-if="item.show !== false" class="fs-col" v-bind="mergeCol(item.col)">
+        <component :is="$fsui.col.name" v-if="formItemShow(item)" class="fs-col" v-bind="mergeCol(item.col)">
           <fs-form-item
             v-if="item.blank !== true"
             :ref="
@@ -40,46 +40,47 @@
       style="width: 100%"
       v-bind="computedGroup"
     >
-      <component
-        :is="computedGroup.wrapper.child"
-        v-for="(groupItem, groupKey) of computedGroup.groups"
-        :key="groupKey"
-        :[$fsui.collapse.keyName]="groupKey"
-        v-bind="groupItem"
-      >
-        <!-- tabPane的slots -->
-        <template v-for="(item, slotName) of groupItem.slots" :key="slotName" #[slotName]="scope">
-          <fs-render :render-func="item" :scope="scope" />
-        </template>
-        <!-- row -->
-        <component :is="$fsui.row.name" class="fs-row">
-          <!-- col -->
-          <template v-for="key in groupItem.columns" :key="key">
-            <component
-              :is="$fsui.col.name"
-              v-if="computedColumns[key]?.show !== false"
-              class="fs-col"
-              v-bind="mergeCol(computedColumns[key]?.col)"
-            >
-              <fs-form-item
-                v-if="computedColumns[key] && computedColumns[key]?.blank !== true"
-                :ref="
-                  (el) => {
-                    if (el) {
-                      formItemRefs[key] = el;
-                    }
-                  }
-                "
-                :item="computedColumns[key]"
-                :model-value="get(form, key)"
-                :form-slot="slots['form_' + key]"
-                :get-context-fn="getContextFn"
-                @update:modelValue="set(form, key, $event)"
-              />
-            </component>
+      <template v-for="(groupItem, groupKey) of computedGroup.groups" :key="groupKey">
+        <component
+          :is="computedGroup.wrapper.child"
+          v-if="groupItemShow(groupItem)"
+          :[$fsui.collapse.keyName]="groupKey"
+          v-bind="groupItem"
+        >
+          <!-- tabPane的slots -->
+          <template v-for="(item, slotName) of groupItem.slots" :key="slotName" #[slotName]="scope">
+            <fs-render :render-func="item" :scope="scope" />
           </template>
+          <!-- row -->
+          <component :is="$fsui.row.name" class="fs-row">
+            <!-- col -->
+            <template v-for="key in groupItem.columns" :key="key">
+              <component
+                :is="$fsui.col.name"
+                v-if="formItemShow(computedColumns[key])"
+                class="fs-col"
+                v-bind="mergeCol(computedColumns[key]?.col)"
+              >
+                <fs-form-item
+                  v-if="computedColumns[key] && computedColumns[key]?.blank !== true"
+                  :ref="
+                    (el) => {
+                      if (el) {
+                        formItemRefs[key] = el;
+                      }
+                    }
+                  "
+                  :item="computedColumns[key]"
+                  :model-value="get(form, key)"
+                  :form-slot="slots['form_' + key]"
+                  :get-context-fn="getContextFn"
+                  @update:modelValue="set(form, key, $event)"
+                />
+              </component>
+            </template>
+          </component>
         </component>
-      </component>
+      </template>
     </component>
   </component>
 </template>
@@ -459,6 +460,29 @@ export default {
         }
       });
     });
+
+    function formItemShow(item) {
+      if (item && item.show !== false) {
+        return true;
+      }
+      return false;
+    }
+    function groupItemShow(groupItem) {
+      if (!groupItem.columns) {
+        return false;
+      }
+
+      for (let key of groupItem.columns) {
+        if (computedColumns.value[key] == null) {
+          continue;
+        }
+        const isFieldShow = formItemShow(computedColumns.value[key]);
+        if (isFieldShow) {
+          return true;
+        }
+      }
+      return false;
+    }
     return {
       get: (form, key) => {
         return _.get(form, key);
@@ -483,7 +507,9 @@ export default {
       getComponentRef,
       mergeCol,
       computedGroup,
-      getContextFn
+      getContextFn,
+      formItemShow,
+      groupItemShow
     };
   }
 };
