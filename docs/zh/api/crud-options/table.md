@@ -88,14 +88,14 @@
 }
 ```
 
-## onDataChange
-* 说明：列表数据变化事件
+## onRefreshed
+* 说明：doRefresh之后触发
 * 类型：Function
 * 默认值：无
 ```js
 {
   table:{
-    onDataChange({data}){
+    onRefreshed(){
         //列表数据变化时的操作
     }
   }    
