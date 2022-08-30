@@ -91,11 +91,6 @@ export type ComponentProps = {
  */
 export type TableProps = {
   /**
-   * 列表数据变化事件处理
-   */
-  onDataChange?: Function;
-
-  /**
    * 调用doRefresh完成之后触发
    */
   onRefreshed?: Function;
