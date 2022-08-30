@@ -96,6 +96,11 @@ export type TableProps = {
   onDataChange?: Function;
 
   /**
+   * 调用doRefresh完成之后触发
+   */
+  onRefreshed?: Function;
+
+  /**
    * [x]-table组件的配置
    */
   [key: string]: any;

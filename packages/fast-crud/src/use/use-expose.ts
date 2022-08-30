@@ -287,6 +287,9 @@ export function useExpose(props: UseExposeProps): { expose: CrudExpose; crudExpo
         crudBinding.value.pagination.pageSize = pageSize;
         crudBinding.value.pagination[ui.pagination.total] = total || records.length;
       }
+      if (crudBinding.value.table.onRefreshed) {
+        crudBinding.value.table.onRefreshed();
+      }
     },
     doPageTurn(no: number) {
       crudBinding.value.pagination[ui.pagination.currentPage] = no;
@@ -316,6 +319,17 @@ export function useExpose(props: UseExposeProps): { expose: CrudExpose; crudExpo
      */
     getTableRef() {
       return crudRef.value?.tableRef;
+    },
+    /**
+     * 获取x-Table实例
+     */
+    getBaseTableRef() {
+      const tableRef = this.getTableRef();
+      if (tableRef == null) {
+        logger.warn("fs-table还未挂载");
+        return;
+      }
+      return tableRef.value.tableRef;
     },
     /**
      * 获取表格数据

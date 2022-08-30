@@ -86,6 +86,11 @@ export type CrudExpose = {
    */
   getTableRef: () => any;
   /**
+   * 获取x-table的实例
+   */
+  getBaseTableRef: () => any;
+
+  /**
    * 获取表格数据
    */
   getTableData: () => [];
