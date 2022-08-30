@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [1.3.0](https://github.com/fast-crud/fast-crud/compare/v1.2.10...v1.3.0) (2022-08-30)
+
+
+### Features
+
+* 增加onRefreshed事件 ([9cb0a12](https://github.com/fast-crud/fast-crud/commit/9cb0a1210a8a29d6f2125dab674c75e29e742cd6))
+
+
+
+
+
 ## [1.2.10](https://github.com/fast-crud/fast-crud/compare/v1.2.9...v1.2.10) (2022-08-25)
 
 
