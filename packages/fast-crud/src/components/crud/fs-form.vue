@@ -483,6 +483,7 @@ export default {
       }
       return false;
     }
+
     return {
       get: (form, key) => {
         return _.get(form, key);

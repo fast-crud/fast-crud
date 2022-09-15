@@ -74,7 +74,7 @@ const crudOptions= {
             form: {
                 component: {
                     //局部引用子表格，要用shallowRef包裹
-                    name: shallowRef(YourCustomComponet),
+                    name: shallowRef(YourCustomComponent),
                     vModel: "modelValue",
                     on:{
                         //处理自定义事件
