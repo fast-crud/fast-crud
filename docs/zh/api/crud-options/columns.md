@@ -73,6 +73,28 @@ const crudOptions = {
 }
 ```
 
+
+### [key].column.[对应ui组件配置]
+* 说明：column下支持 el-table-column 或 a-table-column的全部配置
+* 文档： [el-table-column](https://element-plus.gitee.io/#/zh-CN/component/table#table-column-attributes) | [a-table-column](https://2x.antdv.com/components/table-cn#API)
+* 示例：
+```js
+{ //crudOptions
+    columns:{
+       key:{
+            column:{
+                width: 200, //列宽
+                minWidth: 100 //最小列宽
+                align：'center', //对齐方式
+                fixed: 'left' //固定列
+            }
+       }
+    }   
+}
+
+```
+
+
 ### [key].column.component
 * 说明：单元格组件配置
 * 类型：Object
@@ -124,30 +146,11 @@ const crudOptions = {
 
 ```
 
-### [key].column.[el-table-column | a-table-column的配置]
-* 说明：column下支持 el-table-column 或 a-table-column的全部配置
-* 文档： [el-table-column](https://element-plus.gitee.io/#/zh-CN/component/table#table-column-attributes) | [a-table-column](https://2x.antdv.com/components/table-cn#API)
-* 示例：
-```js
-{ //crudOptions
-    columns:{
-       key:{
-            column:{
-                width: 200, //列宽
-                minWidth: 100 //最小列宽
-                align：'center', //对齐方式
-                fixed: 'left' //固定列
-            }
-       }
-    }   
-}
 
-```
 
 ## [key].form
 * 说明：该字段在表单里面的配置
 * 类型：Object
-* 支持：el-form-item，a-for-item
 * 示例：
 ```json5
 { // crudOptions.columns
@@ -157,7 +160,22 @@ const crudOptions = {
       component: {}, //组件配置
       rules: [], //校验规则
       col: {span: 12} //分栏配置
-      //此处支持 el-form-item / a-form-item的配置
+      //此处支持更多 el-form-item / a-form-item的配置
+    } 
+  }
+}
+```
+## [key].form[对应ui组件的配置]
+* 说明：对应的ui组件的配置
+* 类型：Object
+* 支持：el-form-item，a-for-item
+* 示例：
+```json5
+{ // crudOptions.columns
+  key: { //字段key
+    form: {
+      title: '字段在表单里的label',
+      //此处支持更多 el-form-item / a-form-item的配置
     } 
   }
 }
@@ -257,8 +275,9 @@ columns:{
 * 配置同`[key].form`
 >初始化时会与`[key].form`合并，然后放入`crudOptions.search.columns[key]`
 
-## [key].search.xxx
+## [key].search[对应ui组件的配置]
 * 说明：formItem配置，支持el-form-item,a-form-item,n-form-item的配置
+* 配置： 具体配置请根据你使用的ui库，前往对应ui库的文档查找相应组件的配置
 * 类型：Object
 * 示例：
 ```js

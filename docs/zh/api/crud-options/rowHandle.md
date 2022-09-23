@@ -4,12 +4,27 @@
 
 更多配置请参考[FsRowHandle](../components/crud/crud/fs-row-handle.md)    
 支持 el-table-column / a-table-column 配置
+
+
+## 对应ui组件的table-column的配置
+* 支持： el-table-column / a-table-column / n-table-column的配置
+* 配置： 具体配置请根据你使用的ui库，前往对应ui库的文档查找相应组件的配置
+* 示例：
+```json5
+{ //crudOptions
+  rowHandle: {
+      align: 'center' //文本居中
+  }
+}
+```
+
 ## show
 * 说明：显示或隐藏查询框
 * 类型：Boolean
 * 默认：`true`
 * 示例： [antdv版](http://fast-crud.docmirror.cn/antdv/#/crud/feature/hide)
   [element版](http://fast-crud.docmirror.cn/element/#/crud/feature/hide)
+  [naive版](http://fast-crud.docmirror.cn/naive/#/crud/feature/hide)
 
 
 ## buttons

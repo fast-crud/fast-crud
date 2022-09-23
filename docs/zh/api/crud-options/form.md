@@ -18,6 +18,22 @@
 </el-form>
 ```
 
+
+
+## 对应ui库form的配置
+* 说明: 支持`el-form`|`a-form` | `n-form` 配置
+* 配置： 具体配置请根据你使用的ui库，前往对应ui库的文档查找相应组件的配置
+* 类型：Object
+* 示例: [antdv](http://fast-crud.docmirror.cn/antdv/#/form/independent) |  [element](http://fast-crud.docmirror.cn/element/#/form/independent)
+```json5
+//element
+{ // crudOptions.form
+    labelPosition: "right",
+    labelWidth: "100px", //
+    //更多配置请查看对应ui库文档，form表单章节
+}
+```
+
 ## display
 * 说明: 表单布局方式
 * 类型：String
@@ -57,18 +73,6 @@
 }
 ```
 
-## el-form,a-form配置
-* 说明: 支持`el-form`|`a-form`配置
-* 类型：Object
-* 示例: [antdv](http://fast-crud.docmirror.cn/antdv/#/form/independent) |  [element](http://fast-crud.docmirror.cn/element/#/form/independent)
-```json5
-//element
-{ // crudOptions.form
-    labelPosition: "right",
-    labelWidth: "100px", //
-    //更多配置请查看antdv文档，form表单章节
-}
-```
 
 ```json5
 //antdv
@@ -79,31 +83,6 @@
     //更多配置请查看element-plus文档，form表单章节
 }
 ```
-
-
-## wrapper
-* 说明: 表单容器配置（`对话框`或`抽屉`）
-* 类型：Object
-* 参考：支持el-dialog，el-drawer，a-modal，a-drawer的配置，取决于[wrapper.is](#wrapper-is)配置
-
-### wrapper .is
-* 说明: 确定表单容器组件
-* 类型：String
-* 默认：el-dialog / a-modal
-* 可选：el-dialog / el-drawer / a-modal / a-drawer
-
-### wrapper .onOpen
-* 说明: 对话框打开事件处理方法
-* 类型：Function
-
-### wrapper .onOpened
-* 说明: 对话框打开完成事件处理方法
-* 类型：Function
-
-### wrapper .onClosed
-* 说明: 对话框关闭事件处理方法
-* 类型：Function
-
 
 ## columns
 * 说明: 字段列配置。（FastCrud初始化时会通过`crudOptions.columns.[key].form`的配置自动生成，无需配置）
@@ -180,3 +159,42 @@
 ## afterSubmit
 * 说明: 表单提交后触发
 * 类型：async Function(context)
+
+
+## wrapper(表单容器：dialog/drawer)
+* 说明: 表单容器配置的配置（`对话框dialog`或`抽屉drawer`）
+* 类型：Object
+
+### wrapper.is
+* 说明: 确定表单容器组件
+* 类型：String
+* 默认：el-dialog / a-modal
+* 可选：el-dialog / el-drawer / a-modal / a-drawer
+
+## 对应ui库对话框或抽屉组件的参数
+* 支持： 支持el-dialog，el-drawer，a-modal，a-drawer的配置，取决于[wrapper.is](#wrapper-is)配置
+* 配置： 具体配置请根据你使用的ui库，前往对应ui库的文档查找相应组件的配置
+* 示例：
+
+```json5
+
+{ //crudOptions
+  form: {
+    wrapper: {
+      size: '800px' //antdv对话框的宽度
+    }
+  }
+}
+```
+
+### wrapper.onOpen
+* 说明: 对话框打开事件处理方法
+* 类型：Function
+
+### wrapper.onOpened
+* 说明: 对话框打开完成事件处理方法
+* 类型：Function
+
+### wrapper.onClosed
+* 说明: 对话框关闭事件处理方法
+* 类型：Function
