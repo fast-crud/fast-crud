@@ -1,6 +1,6 @@
 {
   "name": "@fast-crud/ui-antdv",
-  "version": "1.4.0",
+  "version": "1.4.1",
   "description": "",
   "main": "./dist/ui-antdv.umd.js",
   "module": "./dist/ui-antdv.es.js",
@@ -16,7 +16,7 @@
   },
   "devDependencies": {
     "@ant-design/icons-vue": "^6.0.1",
-    "@fast-crud/fast-crud": "^1.4.0",
+    "@fast-crud/fast-crud": "^1.4.1",
     "@fast-crud/ui-interface": "*",
     "@rollup/plugin-strip": "^2.0.0",
     "@rollup/plugin-typescript": "^8.3.3",
