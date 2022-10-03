@@ -1,6 +1,6 @@
 # columns【字段配置】
 * 说明：字段配置
-* 类型：Object:{[字段key]:Object}
+* 类型：`Object:{[字段key]:Object}`
 * 示例：
 ```js
 const crudOptions = {
@@ -60,7 +60,7 @@ const crudOptions = {
 * 说明：该字段的列配置
 * 类型：Object
 * 示例：
-```json5
+```json
 {//crudOptions
     columns: {
         key: {
@@ -74,7 +74,7 @@ const crudOptions = {
 ```
 
 
-### [key].column.[对应ui组件配置]
+## [key].column.[对应ui组件配置]
 * 说明：column下支持 el-table-column 或 a-table-column的全部配置
 * 文档： [el-table-column](https://element-plus.gitee.io/#/zh-CN/component/table#table-column-attributes) | [a-table-column](https://2x.antdv.com/components/table-cn#API)
 * 示例：
@@ -95,31 +95,31 @@ const crudOptions = {
 ```
 
 
-### [key].column.component
+## [key].column.component
 * 说明：单元格组件配置
 * 类型：Object
 参考组件配置[component](../common-options.md)
 
-### [key].column.columnSetDisabled
+## [key].column.columnSetDisabled
 * 说明：在列设置中禁用该字段的勾选
 * 类型：Boolean
 
-### [key].column.columnSetShow
+## [key].column.columnSetShow
 * 说明：在列设置中显示该字段的勾选
 * 类型：Boolean
 
 
-### [key].column.show
+## [key].column.show
 * 说明：是否显示该列,列设置中也是通过修改此字段来进行列的显示。
 * 类型：boolean
 * 默认值： true 
 
 
-### [key].column.formatter
+## [key].column.formatter
 * 说明：格式化显示
 * 类型：Function(context):String
 
-### [key].column.order
+## [key].column.order
 * 说明：列排序号，数字越小越靠前排列。
 * 类型：number
 * 默认值： 1 ， 当配置0或负数则排到最前面，配置2则排到最后面
@@ -128,7 +128,7 @@ const crudOptions = {
 
 
 
-### [key].column.cellRender
+## [key].column.cellRender
 * 说明：自定义单元格渲染。
 * 类型：Function(scope)
 ```js
@@ -152,7 +152,7 @@ const crudOptions = {
 * 说明：该字段在表单里面的配置
 * 类型：Object
 * 示例：
-```json5
+```json
 { // crudOptions.columns
   key: { //字段key
     form: {
@@ -170,7 +170,7 @@ const crudOptions = {
 * 类型：Object
 * 支持：el-form-item，a-for-item
 * 示例：
-```json5
+```json
 { // crudOptions.columns
   key: { //字段key
     form: {
@@ -181,19 +181,19 @@ const crudOptions = {
 }
 ```
 
-### [key].form.component
+## [key].form.component
 * 说明：表单输入组件配置
 * 类型：Object
 参考组件配置[component](../common-options.md)
 
 
-### [key].form.col
+## [key].form.col
 * 说明：表单字段col配置
 * 类型：Object
 * 默认：{span:12}
 * 同[form.col](form#col)
 
-### [key].form.value
+## [key].form.value
 * 说明：该字段的默认值
 * 类型：any
 * 注意：此处配置了默认值，会被search复制过去，一般来说，search是不需要默认值的，此时需要配置search.value=null进行取消。
@@ -208,7 +208,7 @@ columns:{
 
 ```
 
-### [key].form.helper
+## [key].form.helper
 * 说明：字段的帮助说明，显示在组件的下方
 * 类型：string | { render:()=>{} }
 ```
@@ -228,20 +228,20 @@ columns:{
 
 ```
 
-### [key].form.order
+## [key].form.order
 * 说明：表单字段排序号，数字越小越靠前排列。
 * 类型：number
 * 默认值： 1 ， 当配置0或负数则排到最前面，配置2则排到最后面
 
 
-### [key].form.show
+## [key].form.show
 * 说明：表单里是否显示该字段。
 * 类型：boolean
 * 默认值： true
 
 
 
-### [key].form.blank
+## [key].form.blank
 * 说明：是否该字段占一个空白位置。
 * 类型：boolean
 * 默认值： false
@@ -292,13 +292,13 @@ const crudOptions = {
 }
 ```
 
-### [key].search.component
+## [key].search.component
 * 说明：查询框字段组件配置
 * 类型：Object
 参考组件配置[component](../common-options.md)
 
 
-### [key].search.valueResolve
+## [key].search.valueResolve
 * 说明：查询字段值转化，doRefresh查询数据时会被执行
 * 类型：Function({form})
 ```js
@@ -318,7 +318,7 @@ const crudOptions ={
 }
 ```
 
-### [key].search.order
+## [key].search.order
 * 说明：查询排序号，数字越小越靠前排列。
 * 类型：number
 * 默认值： 1 ， 当配置0或负数则排到最前面，配置2则排到最后面

@@ -1,6 +1,11 @@
 module.exports = {
+
     title: 'FastCrud',
     description: '面向配置的CRUD编程.',
+    //Add a wildcard at the end of the search
+    wildcard: false,
+    //The length of the result search preview item
+    previewLength: 62,
     head: [
         [
             'meta',
@@ -16,7 +21,8 @@ module.exports = {
 
     themeConfig: {
         algolia: {
-            apiKey: '4c3df6ffd511f104fe912603ff34106b',
+            appId: 'MS0LML0LJG',
+            apiKey: 'ecac70321429d9aed9d3c61f2448bc17',
             indexName: 'fast-crud'
         },
         // search: true,
@@ -24,7 +30,7 @@ module.exports = {
             '/guide/': [
                 {
                     text: '指南',
-                    children: [
+                    items: [
                         {text: '介绍', link: '/guide/'},
                         {text: '启动示例', link: '/guide/start/demo'},
                         {text: '第一个CRUD', link: '/guide/start/first'},
@@ -35,7 +41,7 @@ module.exports = {
                 },
                 {
                     text: '进阶',
-                    children: [
+                    items: [
                         {text: '基于配置', link: '/guide/advance/options'},
                         {text: '字段配置', link: '/guide/advance/component'},
                         {text: '字段类型', link: '/guide/advance/column-type'},
@@ -49,7 +55,7 @@ module.exports = {
                 },
                 {
                     text: '其他',
-                    children: [
+                    items: [
                         {text: '升级', link: '/guide/other/upgrade'},
                         {text: '贡献代码', link: '/guide/other/contribution'},
                         {text: 'changelogs', link: '/guide/other/changelogs/index'},
@@ -59,7 +65,7 @@ module.exports = {
                 },
                 {
                     text: 'ChangeLogs',
-                    children: [
+                    items: [
                         {text: 'main', link: '/guide/other/changelogs/CHANGELOG'},
                         {text: 'fast-crud', link: '/guide/other/changelogs/packages/fast-crud/CHANGELOG'},
                         {
@@ -74,14 +80,14 @@ module.exports = {
             '/api/': [
                 {
                     text: "配置",
-                    children: [
+                    items: [
                         {
                             text: 'InstallOptions',
                             link: '/api/install-options'
                         },
                         {
                             text: 'CrudOptions',
-                            children: [
+                            items: [
                                 {text: '概览', link: '/api/crud-options/index'},
                                 {text: 'request', link: '/api/crud-options/request'},
                                 {text: 'columns', link: '/api/crud-options/columns'},
@@ -118,9 +124,9 @@ module.exports = {
                 },
                 {
                     text: '组件',
-                    children: [
+                    items: [
                         {
-                            text: '基础组件', children: [
+                            text: '基础组件', items: [
                                 {text: 'fs-page', link: "/api/components/crud/container/fs-page"},
                                 {text: 'fs-container', link: "/api/components/crud/container/fs-container"},
                                 {text: 'fs-button', link: "/api/components/crud/basic/fs-button"},
@@ -131,7 +137,7 @@ module.exports = {
                         },
                         {
                             text: 'crud组件',
-                            children: [
+                            items: [
                                 {text: 'fs-crud', link: "/api/components/crud/fs-crud"},
                                 {text: 'fs-actionbar', link: "/api/components/crud/actionbar/index"},
                                 {text: 'fs-search', link: "/api/components/crud/search/index"},
@@ -145,7 +151,7 @@ module.exports = {
                             ]
                         },
                         {
-                            text: '业务组件', children: [
+                            text: '业务组件', items: [
                                 {text: 'fs-date-format', link: "/api/components/crud/extends/fs-date-format"},
                                 {text: 'fs-dict-cascader', link: "/api/components/crud/extends/fs-dict-cascader"},
                                 {
@@ -161,9 +167,9 @@ module.exports = {
                             ]
                         },
                         {
-                            text: '扩展组件', children: [
+                            text: '扩展组件', items: [
                                 {
-                                    text: '上传组件', children: [
+                                    text: '上传组件', items: [
                                         {
                                             text: "fs-cropper",
                                             link: '/api/components/extends/uploader/components/fs-cropper'
@@ -187,7 +193,7 @@ module.exports = {
                                     ]
                                 },
                                 {
-                                    text: '富文本编辑器', children: [
+                                    text: '富文本编辑器', items: [
                                         {
                                             text: "fs-editor-wang",
                                             link: '/api/components/extends/editor/components/fs-editor-wang/index'
@@ -195,7 +201,7 @@ module.exports = {
                                     ]
                                 },
                                 {
-                                    text: 'JsonEditor', children: [
+                                    text: 'JsonEditor', items: [
                                         {
                                             text: "fs-json-editor",
                                             link: '/api/components/extends/json/components/fs-json-editor'
