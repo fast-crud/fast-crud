@@ -6,8 +6,8 @@
   "module": "./dist/fast-crud.mjs",
   "exports": {
     ".": {
-      "import": "./dist/my-lib.mjs",
-      "require": "./dist/my-lib.umd.js"
+      "import": "./dist/fast-crud.mjs",
+      "require": "./dist/fast-crud.umd.js"
     }
   },
   "types": "./dist/es/index.d.ts",
@@ -83,5 +83,5 @@
     "vue-jest": "^5.0.0-alpha.7",
     "vue-tsc": "^0.40.13"
   },
-  "gitHead": "204d01e6d386543454238ca7f8f3ae36da5d153f"
+  "gitHead": "3a0c4034bdaa07c99ed46fcd8c27edbbe483f196"
 }
