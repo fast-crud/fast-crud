@@ -7,4 +7,3 @@
 * [dict](./dict.md)
 * [types](./types.md)
 * [expose](./expose.md)
-* [components](./components/)

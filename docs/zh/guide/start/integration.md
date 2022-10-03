@@ -153,7 +153,105 @@ app.use(FsExtendsEditor, {
 注意:你必须让`<fs-crud></fs-crud>`外部容器具备高度，如果看不到表格你可以先给`fs-crud`设置一个`height="800px"`看看效果。
 :::
 
+
+以下是一个简单的示例页面，你可以直接复制粘贴到test.vue中，将其添加到路由中打开，即可看到测试效果
+```vue
+<template>
+  <fs-page>
+    <fs-crud ref="crudRef" v-bind="crudBinding" />
+  </fs-page>
+</template>
+
+<script>
+import { defineComponent, ref, onMounted } from "vue";
+import { useCrud } from "@fast-crud/fast-crud";
+import createCrudOptions from "./crud";
+import { useExpose } from "@fast-crud/fast-crud";
+import _ from 'lodash-es'
+
+export default function ({ expose }) {
+  const records = [{id:1,name:'王小虎'}]
+  const pageRequest = async (query) => {
+    return {
+      records, currentPage:1,pageSize:1,total:1
+    }
+  };
+  const editRequest = async ({ form, row }) => {
+    const target = records.find(item=>{return form.id === item.id})
+    _.merge(target,form)
+    return target;
+  };
+  const delRequest = async ({ row }) => {
+    _.remove(records,item=>{return item.id === row.id})
+  };
+
+  const addRequest = async ({ form }) => {
+    const id = _.maxBy(records,item=>{return item.id})
+    form.id = id+1
+    return records.push(form)
+  };
+  return {
+    crudOptions: {
+      request: {
+        pageRequest,
+        addRequest,
+        editRequest,
+        delRequest
+      },
+      columns: {
+        name: {
+          title: "姓名",
+          type: "text",
+          search: {show: true},
+          form: {
+            component: {
+              maxlength: 20
+            }
+          }
+        },
+      }
+    }
+  };
+}
+
+
+export default defineComponent({
+  name: "FsCrudTest",
+  setup() {
+    // crud组件的ref
+    const crudRef = ref();
+    // crud 配置的ref
+    const crudBinding = ref();
+    // 暴露的方法
+    const { expose } = useExpose({ crudRef, crudBinding });
+    // 你的crud配置
+    const { crudOptions } = createCrudOptions({ expose });
+    // 初始化crud配置
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars,no-unused-vars
+    const { resetCrudOptions } = useCrud({ expose, crudOptions });
+    // 你可以调用此方法，重新初始化crud配置
+    // resetCrudOptions(options)
+
+    // 页面打开后获取列表数据
+    onMounted(() => {
+      expose.doRefresh();
+    });
+
+    return {
+      crudBinding,
+      crudRef
+    };
+  }
+});
+</script>
+
+
+
+
+```
+
+
 ## starter
 自己手动集成挺麻烦的？以下提供了当下流行的`admin`框架与`fast-crud`集成好的`starter`，开箱即用
 
-* [vben-admin](http://fast-crud.docmirror.cn/vben/)  
+* [脚手架项目列表](http://fast-crud.docmirror.cn/demo/#二、admin脚手架starter)  
