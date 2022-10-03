@@ -43,7 +43,7 @@ import {
   ButtonCI,
   PaginationCI
 } from "@fast-crud/ui-interface";
-import {DividerCI, FormCI, PopoverCI, TooltipCI} from "../../ui-interface/src/ui-interface";
+import { DividerCI, FormCI, PopoverCI, TooltipCI } from "../../ui-interface/src/ui-interface";
 export class Element implements UiInterface {
   constructor(target) {
     if (target) {
@@ -69,8 +69,8 @@ export class Element implements UiInterface {
 
   formWrapper: FormWrapperCI = {
     visible: "modelValue",
-    customClass: "customClass",
-    titleSlotName: "title",
+    customClass: "class",
+    titleSlotName: "header",
     buildOnClosedBind(is: string, onClosed: Function) {
       return { onClosed };
     },
@@ -80,8 +80,8 @@ export class Element implements UiInterface {
     buildInitBind(is) {
       return {};
     },
-    buildInnerBind(){
-      return {}
+    buildInnerBind() {
+      return {};
     },
     name: "fs-form-wrapper"
   };
@@ -89,10 +89,10 @@ export class Element implements UiInterface {
   messageBox: MessageBoxCI = {
     name: "el-message-box",
     get: undefined,
-    open: async (context) => {
+    open: async context => {
       return this.messageBox.get(context);
     },
-    confirm: async (context) => {
+    confirm: async context => {
       return this.messageBox.get(context);
     }
   };
@@ -100,19 +100,19 @@ export class Element implements UiInterface {
   message: MessageCI = {
     get: undefined,
     name: "el-message",
-    open: (context) => {
+    open: context => {
       this.message.get.open(context);
     },
-    success: (msg) => {
+    success: msg => {
       this.message.get.success(msg);
     },
-    error: (msg) => {
+    error: msg => {
       this.message.get.error(msg);
     },
-    warn: (msg) => {
+    warn: msg => {
       this.message.get.warning(msg);
     },
-    info: (msg) => {
+    info: msg => {
       this.message.get(msg);
     }
   };
@@ -120,19 +120,19 @@ export class Element implements UiInterface {
   notification: NotificationCI = {
     get: undefined,
     name: "el-notification",
-    open: (context) => {
+    open: context => {
       this.notification.get.open(context);
     },
-    success: (msg) => {
+    success: msg => {
       this.notification.get.success(msg);
     },
-    error: (msg) => {
+    error: msg => {
       this.notification.get.error(msg);
     },
-    warn: (msg) => {
+    warn: msg => {
       this.notification.get.warn(msg);
     },
-    info: (msg) => {
+    info: msg => {
       this.notification.get.success(msg);
     }
   };
@@ -209,17 +209,17 @@ export class Element implements UiInterface {
     },
     modelValue: "modelValue",
     value: "label",
-    onChange(callback){
+    onChange(callback) {
       return {
         "onUpdate:modelValue": callback
-      }
+      };
     }
   };
 
   drawer: DrawerCI = {
     name: "el-drawer",
     visible: "modelValue",
-    customClass: "custom-class",
+    customClass: "class",
     width: "size"
   };
 
@@ -246,7 +246,7 @@ export class Element implements UiInterface {
     options: "data",
     value: "tree.value",
     label: "tree.label",
-    children: "tree.children",
+    children: "tree.children"
   };
 
   radio: RadioCI = {
@@ -279,7 +279,7 @@ export class Element implements UiInterface {
     resetWrap: (formRef, { form, initialForm }) => {
       formRef.resetFields();
     },
-    validateWrap: async (formRef) => {
+    validateWrap: async formRef => {
       return formRef.validate();
     }
   };
@@ -296,7 +296,7 @@ export class Element implements UiInterface {
     textType: { type: "text" },
     linkType: { type: "text" },
     circle: { circle: true },
-    colors: (type) => {
+    colors: type => {
       return { type };
     }
   };
@@ -343,10 +343,10 @@ export class Element implements UiInterface {
     renderMode: "slot",
     defaultRowKey: "id",
     fixedHeaderNeedComputeBodyHeight: false,
-    buildMaxHeight: (maxHeight) => {
+    buildMaxHeight: maxHeight => {
       return { maxHeight };
     },
-    hasMaxHeight: (options) => {
+    hasMaxHeight: options => {
       return options?.maxHeight != null;
     },
     headerDomSelector: "",
@@ -438,7 +438,7 @@ export class Element implements UiInterface {
   };
   image: ImageCI = {
     name: "el-image",
-    buildPreviewList: (urls) => {
+    buildPreviewList: urls => {
       return { "preview-src-list": urls };
     }
   };
@@ -486,12 +486,12 @@ export class Element implements UiInterface {
     trigger: "default"
   };
   divider: DividerCI = {
-    name: "el-divider",
+    name: "el-divider"
   };
   popover: PopoverCI = {
-    name:"el-popover",
+    name: "el-popover",
     contentSlotName: "default",
     referenceSlotName: "reference",
     visible: "visible"
-  }
+  };
 }

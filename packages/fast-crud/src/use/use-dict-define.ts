@@ -3,7 +3,16 @@ import { useMerge } from "./use-merge";
 import logger from "../utils/util.log";
 import { reactive } from "vue";
 import LRU from "lru-cache";
-const DictGlobalCache = new LRU(100); //全局cache， sets just the max size
+const DictGlobalCache = new LRU({
+  max: 500,
+  maxSize: 5000,
+  ttl: 1000 * 60 * 30,
+  sizeCalculation: (value, key) => {
+    // return an positive integer which is the size of the item,
+    // if a positive integer is not returned, will use 0 as the size.
+    return 1
+  },
+}); //全局cache， sets just the max size
 
 const { UnMergeable } = useMerge();
 
