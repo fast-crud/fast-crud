@@ -143,7 +143,14 @@ export function useEditable(props, ctx, tableRef) {
   function createEditableRow(index, rowData) {
     const cells = {};
     _.forEach(props.columns, (item) => {
-      cells[item.key] = createEditableCell(rowData, item.key, index);
+      const config = item.editable ?? {};
+      let disabled = config.disabled ?? false;
+      if (disabled instanceof Function) {
+        disabled = config.disabled({ column: item, index, row: rowData });
+      }
+      if (disabled !== true) {
+        cells[item.key] = createEditableCell(rowData, item.key, index);
+      }
     });
     const editableRow = (editableRows[index] = reactive({ cells }));
 
