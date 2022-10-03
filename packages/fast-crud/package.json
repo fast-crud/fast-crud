@@ -4,12 +4,6 @@
   "private": false,
   "main": "./dist/fast-crud.umd.js",
   "module": "./dist/fast-crud.mjs",
-  "exports": {
-    ".": {
-      "import": "./dist/fast-crud.mjs",
-      "require": "./dist/fast-crud.umd.js"
-    }
-  },
   "types": "./dist/es/index.d.ts",
   "scripts": {
     "tsc": "vue-tsc --noEmit --skipLibCheck",
