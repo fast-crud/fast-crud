@@ -154,7 +154,7 @@ app.use(FsExtendsEditor, {
 :::
 
 
-以下是一个简单的示例页面，你可以直接复制粘贴到test.vue中，将其添加到路由中打开，即可看到测试效果
+以下是一个简单的示例页面，你可以直接复制粘贴到`test.vue`，将其添加到路由中打开，即可看到测试效果
 ```vue
 <template>
   <fs-page>
@@ -165,19 +165,19 @@ app.use(FsExtendsEditor, {
 <script>
 import { defineComponent, ref, onMounted } from "vue";
 import { useCrud } from "@fast-crud/fast-crud";
-import createCrudOptions from "./crud";
 import { useExpose } from "@fast-crud/fast-crud";
 import _ from 'lodash-es'
 
-export default function ({ expose }) {
-  const records = [{id:1,name:'王小虎'}]
+//此处为crudOptions配置
+const createCrudOptions = function ({ expose }) {
+  const records = [{id:1,name:'Hello World'}]
   const pageRequest = async (query) => {
     return {
-      records, currentPage:1,pageSize:1,total:1
+      records, currentPage:1,pageSize:20,total:records.length
     }
   };
   const editRequest = async ({ form, row }) => {
-    const target = records.find(item=>{return form.id === item.id})
+    const target = _.find(records,item=>{return row.id === item.id})
     _.merge(target,form)
     return target;
   };
@@ -186,9 +186,10 @@ export default function ({ expose }) {
   };
 
   const addRequest = async ({ form }) => {
-    const id = _.maxBy(records,item=>{return item.id})
-    form.id = id+1
-    return records.push(form)
+    const maxRecord = _.maxBy(records,item=>{return item.id})
+    form.id = (maxRecord?.id||0)+1
+    records.push(form)
+    return form
   };
   return {
     crudOptions: {
@@ -214,9 +215,9 @@ export default function ({ expose }) {
   };
 }
 
-
+//此处为组件定义
 export default defineComponent({
-  name: "FsCrudTest",
+  name: "FsCrudFirst",
   setup() {
     // crud组件的ref
     const crudRef = ref();
@@ -244,10 +245,6 @@ export default defineComponent({
   }
 });
 </script>
-
-
-
-
 ```
 
 
