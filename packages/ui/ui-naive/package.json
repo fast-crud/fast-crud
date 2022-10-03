@@ -1,6 +1,6 @@
 {
   "name": "@fast-crud/ui-naive",
-  "version": "1.4.1",
+  "version": "1.4.2",
   "description": "",
   "main": "./dist/ui-naive.umd.js",
   "module": "./dist/ui-naive.es.js",
@@ -16,7 +16,7 @@
     "@fast-crud/ui-interface": "^1.4.0"
   },
   "devDependencies": {
-    "@fast-crud/fast-crud": "^1.4.1",
+    "@fast-crud/fast-crud": "^1.4.2",
     "@rollup/plugin-strip": "^2.0.0",
     "@rollup/plugin-typescript": "^8.3.3",
     "@typescript-eslint/eslint-plugin": "^5.4.0",
