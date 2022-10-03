@@ -3,6 +3,22 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [1.4.0](https://github.com/fast-crud/fast-crud/compare/v1.3.0...v1.4.0) (2022-10-03)
+
+
+### Features
+
+* 升级fs依赖版本 ([ace6c7d](https://github.com/fast-crud/fast-crud/commit/ace6c7d76350da618761c6bcef4ac34a13ff5548))
+
+
+### Performance Improvements
+
+* 示例增加对话框内显示crud ([2fd916d](https://github.com/fast-crud/fast-crud/commit/2fd916da71ee798a22133af45083536b5e2e715b))
+
+
+
+
+
 # [1.3.0](https://github.com/fast-crud/fast-crud/compare/v1.2.10...v1.3.0) (2022-08-30)
 
 **Note:** Version bump only for package @fast-crud/ui-element
