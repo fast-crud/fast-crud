@@ -69,7 +69,7 @@ export class Element implements UiInterface {
 
   formWrapper: FormWrapperCI = {
     visible: "modelValue",
-    customClass: "class",
+    customClass: "customClass",
     titleSlotName: "header",
     buildOnClosedBind(is: string, onClosed: Function) {
       return { onClosed };
