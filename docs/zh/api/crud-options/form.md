@@ -181,7 +181,7 @@
 { //crudOptions
   form: {
     wrapper: {
-      size: '800px' //antdv对话框的宽度
+      width: '800px' //antdv对话框的宽度
     }
   }
 }
