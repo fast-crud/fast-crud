@@ -50,6 +50,7 @@ module.exports = {
                         {text: '自定义组件', link: '/guide/advance/custom-component'},
                         {text: '插槽', link: '/guide/advance/slots'},
                         {text: '扩展', link: '/guide/advance/extends'},
+                        {text: '权限控制', link: '/guide/advance/permission'},
                         {text: '入门常见问题', link: '/guide/advance/improve'},
                     ],
                 },
