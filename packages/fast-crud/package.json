@@ -3,7 +3,13 @@
   "version": "1.4.0",
   "private": false,
   "main": "./dist/fast-crud.umd.js",
-  "module": "./dist/fast-crud.es.js",
+  "module": "./dist/fast-crud.mjs",
+  "exports": {
+    ".": {
+      "import": "./dist/my-lib.mjs",
+      "require": "./dist/my-lib.umd.js"
+    }
+  },
   "types": "./dist/es/index.d.ts",
   "scripts": {
     "tsc": "vue-tsc --noEmit --skipLibCheck",
