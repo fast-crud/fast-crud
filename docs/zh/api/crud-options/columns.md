@@ -147,6 +147,27 @@ const crudOptions = {
 ```
 
 
+## [key].column.editable.disabled
+* 说明：定义列是否支持行编辑。
+* 类型：boolean / Function(scope)
+```js
+{ //crudOptions
+    columns:{
+       key:{
+            column:{
+                editable:{
+                    disabled: true, //直接配置boolean ，也可以配置方法根据条件判断
+                    disabled: ({column,index,data}){
+                        return index % 2 ===0
+                    }
+                }
+            }
+       }
+    }   
+}
+
+```
+
 
 ## [key].form
 * 说明：该字段在表单里面的配置
