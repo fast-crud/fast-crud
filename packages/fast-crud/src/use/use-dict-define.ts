@@ -3,7 +3,7 @@ import { useMerge } from "./use-merge";
 import logger from "../utils/util.log";
 import { reactive } from "vue";
 import LRU from "lru-cache";
-const DictGlobalCache = new LRU({
+const DictGlobalCache = new LRU<string,any>({
   max: 500,
   maxSize: 5000,
   ttl: 1000 * 60 * 30,
@@ -122,6 +122,7 @@ class Dict extends UnMergeable {
         let cached = null;
 
         if (cacheKey) {
+          // @ts-ignore
           cached = DictGlobalCache.get(cacheKey);
         }
         if (cached) {
