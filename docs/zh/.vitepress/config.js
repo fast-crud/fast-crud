@@ -22,8 +22,8 @@ module.exports = {
     themeConfig: {
         algolia: {
             appId: 'MS0LML0LJG',
-            apiKey: 'ecac70321429d9aed9d3c61f2448bc17',
-            indexName: 'fast-crud'
+            apiKey: 'f84fe913d9e34f1c1427e69a64152c2d',
+            indexName: 'crawler_fast-crud'
         },
         // search: true,
         sidebar: {
