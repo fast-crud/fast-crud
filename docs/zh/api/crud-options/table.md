@@ -32,6 +32,14 @@
 ## loading
 * 说明：当前是否加载中
 * 类型：Boolean
+* 示例：自定义显示loading
+```vue
+<fs-crud ref="crudRef" v-bind="crudBinding">
+    <template #default>
+        <div class="loading" v-if="crudBinding.table.loading"></div>
+    </template>
+</fs-crud>
+```
 
 ## slots
 * 说明：table插槽
