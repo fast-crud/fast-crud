@@ -25,7 +25,7 @@
 ## 路由与菜单
 `/src/router/source/` 目录下配置，每一项具备路由和菜单的双重功能
 
-```json5
+```json
 {
         title: "基本特性", //路由或菜单标题
         name: "basis", //路由名称

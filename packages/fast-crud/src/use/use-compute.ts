@@ -14,31 +14,33 @@ function isSyncCompute(value) {
 function findComputeValues(target, excludes, isAsync) {
   const foundMap = {};
   const checkFunc = isAsync ? isAsyncCompute : isSyncCompute;
-  eachDeep(target, (value, key, parent, context) => {
-    if (checkFunc(value)) {
-      // @ts-ignore
-      const path: string = context.path;
-      if (excludes) {
-        for (const exclude of excludes) {
-          if (typeof exclude === "string") {
-            if (path.startsWith(exclude)) {
-              return false;
-            }
-          } else if (exclude instanceof RegExp) {
-            if (exclude.test(path)) {
-              return true;
+  eachDeep(
+    target,
+    (value, key, parent, context) => {
+      if (checkFunc(value)) {
+        // @ts-ignore
+        const path: string = context.path;
+        if (excludes) {
+          for (const exclude of excludes) {
+            if (typeof exclude === "string") {
+              if (path.startsWith(exclude)) {
+                return false;
+              }
+            } else if (exclude instanceof RegExp) {
+              if (exclude.test(path)) {
+                return true;
+              }
             }
           }
         }
+        foundMap[path] = value;
+        return false;
       }
-      foundMap[path] = value;
-      return false;
-    }
-    return true;
-  },
+      return true;
+    },
     {
-        // https://deepdash.io/#eachdeep-foreachdeep
-        checkCircular: true
+      // https://deepdash.io/#eachdeep-foreachdeep
+      checkCircular: true
     }
   );
 

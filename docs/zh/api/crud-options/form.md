@@ -25,7 +25,7 @@
 * 配置： 具体配置请根据你使用的ui库，前往对应ui库的文档查找相应组件的配置
 * 类型：Object
 * 示例: [antdv](http://fast-crud.docmirror.cn/antdv/#/form/independent) |  [element](http://fast-crud.docmirror.cn/element/#/form/independent)
-```json5
+```json
 //element
 { // crudOptions.form
     labelPosition: "right",
@@ -74,7 +74,7 @@
 ```
 
 
-```json5
+```json
 //antdv
 { //crudOptions.form
     labelAlign: "right",
@@ -89,7 +89,7 @@
 * 类型：Object
 * 示例：
 
-```json5
+```json
 { //crudOptions.form.columns
   columnKey: {
     title: '字段名',
@@ -106,7 +106,7 @@
 [antdv-tabs](http://fast-crud.docmirror.cn/antdv/#/form/group-tabs) | 
 [element-collapse](http://fast-crud.docmirror.cn/element/#/form/group) | 
 [element-tabs](http://fast-crud.docmirror.cn/element/#/form/group-tabs)
-```json5
+```json
 { // crudOptions.form
     group: {
       type: "collapse", //or tabs
@@ -120,16 +120,16 @@
     }
 }
 ```
-### group.type
+## group.type
 * 说明: 表单分组组件类型
 * 类型：String
 * 默认：collapse
 * 可选值： collapse，tabs
 
-### group.groups
+## group.groups
 * 说明: 分组配置
-* 类型：Object:{[groupKey]:Object}
-```json5
+* 类型：`Object:{[groupKey]:Object}`
+```json
 {  //crudOptions.form.group.groups
   groupKey: { //分组key，可随意命名
      // 此处支持el-collapse-item，el-tab-pane，a-collapse-panel，a-tab-pane
@@ -165,7 +165,7 @@
 * 说明: 表单容器配置的配置（`对话框dialog`或`抽屉drawer`）
 * 类型：Object
 
-### wrapper.is
+## wrapper.is
 * 说明: 确定表单容器组件
 * 类型：String
 * 默认：el-dialog / a-modal
@@ -176,25 +176,25 @@
 * 配置： 具体配置请根据你使用的ui库，前往对应ui库的文档查找相应组件的配置
 * 示例：
 
-```json5
+```json
 
 { //crudOptions
   form: {
     wrapper: {
-      size: '800px' //antdv对话框的宽度
+      width: '800px' //antdv对话框的宽度
     }
   }
 }
 ```
 
-### wrapper.onOpen
+## wrapper.onOpen
 * 说明: 对话框打开事件处理方法
 * 类型：Function
 
-### wrapper.onOpened
+## wrapper.onOpened
 * 说明: 对话框打开完成事件处理方法
 * 类型：Function
 
-### wrapper.onClosed
+## wrapper.onClosed
 * 说明: 对话框关闭事件处理方法
 * 类型：Function

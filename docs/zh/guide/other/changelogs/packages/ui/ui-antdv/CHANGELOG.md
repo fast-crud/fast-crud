@@ -3,6 +3,30 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.4.2](https://github.com/fast-crud/fast-crud/compare/v1.4.1...v1.4.2) (2022-10-03)
+
+**Note:** Version bump only for package @fast-crud/ui-antdv
+
+
+
+
+
+## [1.4.1](https://github.com/fast-crud/fast-crud/compare/v1.4.0...v1.4.1) (2022-10-03)
+
+**Note:** Version bump only for package @fast-crud/ui-antdv
+
+
+
+
+
+# [1.4.0](https://github.com/fast-crud/fast-crud/compare/v1.3.0...v1.4.0) (2022-10-03)
+
+**Note:** Version bump only for package @fast-crud/ui-antdv
+
+
+
+
+
 # [1.3.0](https://github.com/fast-crud/fast-crud/compare/v1.2.10...v1.3.0) (2022-08-30)
 
 **Note:** Version bump only for package @fast-crud/ui-antdv

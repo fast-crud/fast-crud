@@ -10,7 +10,7 @@
 * 支持： el-table-column / a-table-column / n-table-column的配置
 * 配置： 具体配置请根据你使用的ui库，前往对应ui库的文档查找相应组件的配置
 * 示例：
-```json5
+```json
 { //crudOptions
   rowHandle: {
       align: 'center' //文本居中
@@ -34,7 +34,7 @@
   [element版](http://fast-crud.docmirror.cn/element/#/crud/feature/dropdown)
 * 默认：
 * 相关：[FsButton配置](../common-options.md#buttons)
-```json5
+```json
 { //crudOptions
   rowHandle: {
     buttons: {
@@ -60,7 +60,7 @@
 * 类型：Object
 * 示例： [antdv版](http://fast-crud.docmirror.cn/antdv/#/crud/feature/dropdown)
   [element版](http://fast-crud.docmirror.cn/element/#/crud/feature/dropdown)
-```json5
+```json
 { // rowHandle.dropdown
   dropdown: {
     atLeast: 2, //当按钮大于2个时，多余的按钮将会被折叠,[注意：此参数将在1.x版中废弃]
@@ -78,7 +78,7 @@
 ## group
 * 说明：按钮分组配置
 * 类型：Object
-```json5
+```json
 { // rowHandle
   group: {
     yourGroupKey: {

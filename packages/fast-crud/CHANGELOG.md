@@ -3,6 +3,40 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.4.2](https://github.com/fast-crud/fast-crud/compare/v1.4.1...v1.4.2) (2022-10-03)
+
+**Note:** Version bump only for package @fast-crud/fast-crud
+
+
+
+
+
+## [1.4.1](https://github.com/fast-crud/fast-crud/compare/v1.4.0...v1.4.1) (2022-10-03)
+
+**Note:** Version bump only for package @fast-crud/fast-crud
+
+
+
+
+
+# [1.4.0](https://github.com/fast-crud/fast-crud/compare/v1.3.0...v1.4.0) (2022-10-03)
+
+
+### Bug Fixes
+
+* 修复fs-container的body被内部元素撑大的bug ([ad24ef8](https://github.com/fast-crud/fast-crud/commit/ad24ef82a3bfbb30e5436222f70b253a126c7801))
+
+
+### Features
+
+* 升级依赖版本 ([876272e](https://github.com/fast-crud/fast-crud/commit/876272e3f7ac56a05913b2f97625f5e83995a250))
+* 升级fs依赖版本 ([ace6c7d](https://github.com/fast-crud/fast-crud/commit/ace6c7d76350da618761c6bcef4ac34a13ff5548))
+* 行编辑支持禁止某列编辑 ([35324b5](https://github.com/fast-crud/fast-crud/commit/35324b51559f95072daeb1f282c0944a5d2004d5))
+
+
+
+
+
 # [1.3.0](https://github.com/fast-crud/fast-crud/compare/v1.2.10...v1.3.0) (2022-08-30)
 
 

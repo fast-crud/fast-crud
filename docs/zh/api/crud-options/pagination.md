@@ -11,7 +11,7 @@
 * 配置： 具体配置请根据你使用的ui库，前往对应ui库的文档查找相应组件的配置
 * 示例：
 
-```json5
+```json
 {
   //crudOptions
   "pagination": {

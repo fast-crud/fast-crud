@@ -1,6 +1,5 @@
 import vue from "@vitejs/plugin-vue";
 import vueJsx from "@vitejs/plugin-vue-jsx";
-import typescript from "@rollup/plugin-typescript";
 import path from "path";
 import _ from "lodash";
 import visualizer from "rollup-plugin-visualizer";

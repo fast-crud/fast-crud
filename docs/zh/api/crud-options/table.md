@@ -12,7 +12,7 @@
 ## 对应ui库的table组件的参数
 * 说明：支持fs-table/el-table/a-table/n-table的参数
 * 配置： 具体配置请根据你使用的ui库，前往对应ui库的文档查找相应组件的配置
-```json5
+```json
 {// crudOptions
     table:{
           border: true,
@@ -32,6 +32,14 @@
 ## loading
 * 说明：当前是否加载中
 * 类型：Boolean
+* 示例：自定义显示loading
+```vue
+<fs-crud ref="crudRef" v-bind="crudBinding">
+    <template #default>
+        <div class="loading" v-if="crudBinding.table.loading"></div>
+    </template>
+</fs-crud>
+```
 
 ## slots
 * 说明：table插槽

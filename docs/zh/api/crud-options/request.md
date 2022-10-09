@@ -11,8 +11,8 @@
 * 参数：sort:{prop:`排序字段key`,order:`string,升序还是降序`,asc:`boolean，是否升序`}
 * 返回：query：`pageRequest所需要的参数`
 * 示例：
-```json5
-{ //crudOptions
+```js
+const crudOptions={ 
   request: {
     // pageRequest请求参数转换
     transformQuery: ({ page, form, sort }) => {
@@ -30,8 +30,8 @@
 * 参数：res: pageRequest返回的结果
 * 返回：{records:[]`列表数据`,currentPage:number`当前页码`,pageSize:number`每页条数`,total:number`总记录数`}
 * 示例：
-```json5
-{
+```js
+const crudOptions= {
   request: {
     // pageRequest请求结果转换
     transformRes: ({ res }) => {
@@ -53,13 +53,14 @@ async pageRequest(opts){
    // newRet = {records,currentPage,pageSize,total}
    return newRet;
 }
+```
 :::
 
 ## editRequest
 * 说明：编辑对话框，点击保存后发出的保存修改的请求
 * 类型：async Function({ form, row })
 * 示例：
-```json5
+```json
 {
   request: {
     editRequest:async ({ form, row }) => {
@@ -75,7 +76,7 @@ async pageRequest(opts){
 ## pageRequest
 * 说明：页面数据请求
 * 类型：async Function(query)
-* 参数：query: `transformQuery`返回的参数，若`transformQuery`未配置，则为{page,form,sort}
+* 参数：query: `transformQuery`返回的参数，若`transformQuery`未配置，则为`{page,form,sort}`
 * 返回：res:{}
 * 示例：
 ```js
@@ -98,7 +99,7 @@ const crudOptions= {
 * 说明：添加对话框，点击保存后发出的请求
 * 类型：async Function({ form })
 * 示例：
-```json5
+```json
 {
   request: {
     addRequest: async ({ form }) => {
@@ -113,7 +114,7 @@ const crudOptions= {
 * 说明：操作列，点击删除按钮发出的请求
 * 类型：async Function({row})
 * 示例：
-```json5
+```json
 {
   request: {
     delRequest: async ({ row }) => {

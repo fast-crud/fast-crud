@@ -27,7 +27,7 @@
   </template>
   <!-- 完全模式 -->
   <component :is="$fsui.drawer.name" v-else :title="_text.title" v-bind="drawerBind" append-to-body>
-    <component :is="$fsui.drawer.hasContentWrap || 'div'" class="fs-drawer-wrapper" :title="_text.title">
+    <component :is="$fsui.drawer.hasContentWrap || 'div'" class="fs-drawer-wrapper fs-table-columns-filter" :title="_text.title">
       <!-- 全选 反选 -->
       <component :is="$fsui.card.name" shadow="never">
         <div class="component--list">
@@ -128,7 +128,6 @@ export default {
     const active = ref(false);
     const drawerBind = computed(() => {
       return {
-        [ui.drawer.customClass]: "fs-table-columns-filter",
         [ui.drawer.visible]: active.value,
         ["onUpdate:" + ui.drawer.visible]: (e) => {
           active.value = e;

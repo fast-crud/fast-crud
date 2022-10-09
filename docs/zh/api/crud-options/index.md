@@ -23,7 +23,7 @@ const crudOptions ={
     data:{},        //列表数据，无需配置，自动从pageRequest中获取 
     rowHandle:{},   //操作列配置，对应fs-row-handle
     form:{          //表单的公共配置,对应el-form，a-form配置
-        wrapper:{}  //表单外部容器的配置，对应el-dialog,el-drawer,a-model,a-draer的配置
+        wrapper:{}  //表单外部容器的配置，对应el-dialog,el-drawer,a-model,a-drawer的配置
     },       
     viewForm:{},    //查看表单的独立配置
     editForm:{},    //编辑表单的独立配置
@@ -34,4 +34,5 @@ const crudOptions ={
 
 ```
 
+## 页面布局
 ![](../../images/struct.png)
