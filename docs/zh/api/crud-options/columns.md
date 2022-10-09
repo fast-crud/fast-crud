@@ -174,12 +174,17 @@ const crudOptions = {
 { // crudOptions.columns
   key: { //字段key
     form: {
-      title: '字段在表单里的label',
+      label: '字段在表单里的label',
       //此处支持更多 el-form-item / a-form-item的配置
     } 
   }
 }
 ```
+
+### [key].form.label
+* 说明：表单字段label
+* 类型：string
+
 
 ### [key].form.component
 * 说明：表单输入组件配置
