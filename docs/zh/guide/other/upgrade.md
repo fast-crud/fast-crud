@@ -103,8 +103,8 @@ git fetch upstream
 3.  合并到你自己的开发分支上
 ```shell
 git merge upstream/main
-# 这一步建议在idea、vscode或者其他git管理工具上进行操作，因为涉及到解决冲突部分     
-# idea 请参考下图进行操作
+# 这一步建议在idea、webstorm、vscode或者其他git管理工具上进行操作，因为涉及到解决冲突部分     
+# idea、webstorm 请参考下图进行操作
 ```
 
 ![](../../../../images/merge-upgreade.png)
