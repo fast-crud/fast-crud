@@ -38,7 +38,7 @@ export default {
      * 限制文件数量
      */
     limit: {
-      type: String
+      type: Number
     },
     /**
      * 文件大小限制，单位：字节
