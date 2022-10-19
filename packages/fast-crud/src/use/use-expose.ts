@@ -390,8 +390,6 @@ export function useExpose(props: UseExposeProps): { expose: CrudExpose; crudExpo
           });
         }
       } catch (e) {
-        // @ts-ignore
-        logger.info("delete canceled", e.message, e);
         if (removeProps.onCanceled) {
           await removeProps.onCanceled(context);
         }
