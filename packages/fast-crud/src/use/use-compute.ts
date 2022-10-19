@@ -81,8 +81,13 @@ function doComputed(target, getContextFn, excludes, userComputedFn) {
     target = target();
   }
 
-  const targetRef = ref(target);
-  const raw = toRaw(targetRef);
+  let raw;
+  if (isRef(target)) {
+    raw = toRaw(target.value);
+  } else {
+    raw = toRaw(target);
+  }
+
   const dependValues = findComputeValues(raw, excludes, false);
 
   const dependAsyncValues = findComputeValues(raw, excludes, true);
@@ -91,7 +96,10 @@ function doComputed(target, getContextFn, excludes, userComputedFn) {
   const asyncValuesMap = doAsyncCompute(dependAsyncValues, getContextFn);
 
   return computed(() => {
-    let targetValue = targetRef.value;
+    let targetValue = target;
+    if (isRef(target)) {
+      targetValue = target.value;
+    }
     if (asyncCount > 0 || syncCount > 0) {
       targetValue = cloneDeep(targetValue);
       if (syncCount > 0) {
