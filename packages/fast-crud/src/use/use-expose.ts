@@ -5,7 +5,7 @@ import logger from "../utils/util.log";
 import { useMerge } from "../use/use-merge";
 import { useUi } from "../use/use-ui";
 import { useI18n } from "../locale";
-import { RemoveProps } from "/src/d.ts";
+import { ColumnProps, RemoveProps } from "/src/d.ts";
 
 const { merge } = useMerge();
 export type UseExposeProps = {
@@ -196,7 +196,7 @@ export function useExpose(props: UseExposeProps): { expose: CrudExpose; crudExpo
         columns = toRaw(crudBinding.value.columns);
       }
       logger.debug("doValueResolve ,columns=", columns);
-      _.forEach(columns, (column, key) => {
+      _.forEach(columns, (column: ColumnProps, key) => {
         if (column.valueResolve) {
           column.valueResolve({
             value: form[key],

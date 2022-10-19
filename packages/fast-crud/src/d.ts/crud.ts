@@ -506,6 +506,27 @@ export type ColumnProps = {
 };
 
 /**
+ * valueBuild参数
+ */
+export type ValueBuilderProps = {
+  value: any;
+  key: string;
+  row?: any;
+  form?: any;
+  index: number;
+  mode?: string;
+  column?: any;
+};
+export type ValueResolveProps = {
+  value: any;
+  key: string;
+  row?: any;
+  form?: any;
+  index: number;
+  mode?: string;
+  column?: any;
+};
+/**
  * 列综合配置
  */
 export type ColumnCompositionProps = {
@@ -541,21 +562,16 @@ export type ColumnCompositionProps = {
    * 值构建器，pageRequest之后执行
    * 从pageRequest获取到的字段数据值可能并不是组件能够识别的值，所以需要将其做一层转化
    * 即row[key]=字段组件能够识别的值
-   * @param value
-   * @param key
-   * @param row
-   * @param form
-   * @param index
-   * @param mode
+   * @param context
    */
-  valueBuilder?: ({ value, key, row, form, index, mode }) => void;
+  valueBuilder?: (context: ValueBuilderProps) => void;
   /**
    * 值解析器，表单提交前执行
    * 表单输出的值可能不是后台所需要的值，所以需要在提交前做一层转化
    * 即：row[key]=后台能所需要的值
    * @param context
    */
-  valueResolve?: (context: any) => void;
+  valueResolve?: (context: ValueResolveProps) => void;
   /**
    * 其他配置
    */
