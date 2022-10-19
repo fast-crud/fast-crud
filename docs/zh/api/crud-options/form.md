@@ -161,6 +161,23 @@
 * 类型：async Function(context)
 
 
+## valueChange
+* 说明: 值变化触发
+* 类型：(context)=>void | {immediate:boolean,handle:(context)=>void}    
+* 示例：   
+```js
+crudOptions = { //
+  form: {
+    valueChange:{
+        immediate:true, //是否立即执行一次
+        handle(context){
+            //值变化后的处理
+        }
+    }
+  }
+}
+```
+
 ## wrapper(表单容器：dialog/drawer)
 * 说明: 表单容器配置的配置（`对话框dialog`或`抽屉drawer`）
 * 类型：Object
