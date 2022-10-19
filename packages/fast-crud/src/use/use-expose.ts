@@ -5,6 +5,7 @@ import logger from "../utils/util.log";
 import { useMerge } from "../use/use-merge";
 import { useUi } from "../use/use-ui";
 import { useI18n } from "../locale";
+import { RemoveProps } from "/src/d.ts";
 
 const { merge } = useMerge();
 export type UseExposeProps = {
@@ -377,24 +378,43 @@ export function useExpose(props: UseExposeProps): { expose: CrudExpose; crudExpo
      * @param context
      */
     async doRemove(context = {}) {
+      const removeProps: RemoveProps = crudBinding.value.table.remove ?? {};
       try {
-        await ui.messageBox.confirm({
-          title: t("fs.rowHandle.remove.confirmTitle"), // '提示',
-          message: t("fs.rowHandle.remove.confirmMessage"), // '确定要删除此记录吗?',
-          type: "warn"
-        });
+        if (removeProps.confirmFn) {
+          await removeProps.confirmFn(context);
+        } else {
+          await ui.messageBox.confirm({
+            title: removeProps.confirmTitle || t("fs.rowHandle.remove.confirmTitle"), // '提示',
+            message: removeProps.confirmMessage || t("fs.rowHandle.remove.confirmMessage"), // '确定要删除此记录吗?',
+            type: "warn"
+          });
+        }
       } catch (e) {
         // @ts-ignore
         logger.info("delete canceled", e.message, e);
+        if (removeProps.onCanceled) {
+          await removeProps.onCanceled(context);
+        }
         return;
       }
+      let res = null;
       if (crudBinding.value.mode?.name === "local") {
         crudExpose.removeTableRow(context.index);
       } else {
-        await crudBinding.value.request.delRequest(context);
+        res = await crudBinding.value.request.delRequest(context);
       }
-      ui.notification.success(t("fs.rowHandle.remove.success"));
-      await crudExpose.doRefresh();
+
+      if (removeProps.showSuccessNotification !== false) {
+        ui.notification.success(t("fs.rowHandle.remove.success"));
+      }
+
+      if (removeProps.refreshTable !== false) {
+        await crudExpose.doRefresh();
+      }
+
+      if (removeProps.onRemoved) {
+        await removeProps.onRemoved({ ...context, res });
+      }
     },
     /**
      *

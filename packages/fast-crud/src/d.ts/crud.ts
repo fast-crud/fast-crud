@@ -86,6 +86,49 @@ export type ComponentProps = {
    */
   [key: string]: any;
 };
+
+/**
+ * 删除操作配置
+ */
+export type RemoveProps = {
+  /**
+   * 自定义确认删除，抛出异常则取消
+   * @param context
+   */
+  confirmFn?: (context) => Promise<any>;
+  /**
+   * 自定义删除确认标题
+   * confirm未配置时生效
+   */
+  confirmTitle?: string;
+  /**
+   * 自定义删除确认内容
+   * confirm未配置时生效
+   */
+  confirmMessage?: string;
+
+  /**
+   * 删除后刷新列表
+   */
+  refreshTable: boolean;
+
+  /**
+   * 显示成功提示
+   */
+  showSuccessNotification: boolean;
+
+  /**
+   * 当取消删除时
+   * @param context
+   */
+  onCanceled?: (context) => Promise<any>;
+
+  /**
+   * 删除成功后的操作
+   * @param context
+   */
+  onRemoved?: (context) => Promise<any>;
+};
 /**
  * 表格配置
  */
@@ -94,6 +137,11 @@ export type TableProps = {
    * 调用doRefresh完成之后触发
    */
   onRefreshed?: Function;
+
+  /**
+   * 删除配置
+   */
+  remove?: RemoveProps;
 
   /**
    * [x]-table组件的配置

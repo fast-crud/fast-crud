@@ -2,6 +2,7 @@ import _ from "lodash-es";
 import { computed, ref, toRaw, watch, isRef } from "vue";
 import getEachDeep from "deepdash-es/getEachDeep";
 import { useMerge } from "./use-merge";
+import { ComputeContext } from "/src/d.ts/compute";
 const { cloneDeep } = useMerge();
 const eachDeep = getEachDeep(_);
 
@@ -121,7 +122,7 @@ function doComputed(target, getContextFn, excludes, userComputedFn) {
 }
 
 export class ComputeValue {
-  computeFn;
+  computeFn: (context: ComputeContext) => any;
   constructor(computeFn) {
     this.computeFn = computeFn;
   }
