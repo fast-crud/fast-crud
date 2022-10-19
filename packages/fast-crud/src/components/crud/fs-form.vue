@@ -414,7 +414,8 @@ export default {
         }
       }
       if (props.doSubmit) {
-        await props.doSubmit(submitScope);
+        const res = await props.doSubmit(submitScope);
+        submitScope.res = res;
       }
       ctx.emit("submit", submitScope);
       if (props.afterSubmit) {
