@@ -256,20 +256,27 @@ export type FormProps = {
   /**
    * 提交表单的方法（默认已经配置好，将会调用addRequest或者updateRequest）
    */
-  doSubmit?: () => Promise<any>;
+  doSubmit?: (context: any) => Promise<any>;
   /**
    * 提交前做一些操作
    */
-  beforeSubmit?: (context) => Promise<any>;
+  beforeSubmit?: (context: any) => Promise<any>;
   /**
    * 提交后做一些操作
    * @param context
    */
-  afterSubmit?: (context) => Promise<any>;
+  afterSubmit?: (context: any) => Promise<any>;
+
+  /**
+   * 值变化后的操作
+   * @param context
+   */
+  valueChange?: (context) => void | { immediate?: boolean; handle?: (context) => void };
   /**
    * 表单重置时的操作
    */
   doReset?: () => Promise<any>;
+
   /**
    * 表单分组配置
    */
