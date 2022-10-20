@@ -22,22 +22,49 @@ export default {
     });
     const computedComponent = doComputed(computedPropsComponent, props.getScope);
     return (props, ctx) => {
+      let title = props.item.showTitle;
+      if (title === true) {
+        title = props.getScope().value;
+      }
       if (props.slots) {
-        return <span class={"fs-cell"}>{props.slots(props.getScope())}</span>;
+        return (
+          <span class={"fs-cell"} title={title}>
+            {props.slots(props.getScope())}
+          </span>
+        );
       } else if (props.item.formatter) {
-        return <span class={"fs-cell"}>{props.item.formatter(props.getScope())}</span>;
+        return (
+          <span class={"fs-cell"} title={title}>
+            {props.item.formatter(props.getScope())}
+          </span>
+        );
       } else if (props.item.cellRender) {
-        return <span class={"fs-cell"}>{props.item.cellRender(props.getScope())}</span>;
+        return (
+          <span class={"fs-cell"} title={title}>
+            {props.item.cellRender(props.getScope())}
+          </span>
+        );
       } else if (props.item.render) {
         console.warn("column.render 配置已废弃，请使用column.cellRender代替");
-        return <span class={"fs-cell"}>{props.item.render(props.getScope())}</span>;
+        return (
+          <span class={"fs-cell"} title={title}>
+            {props.item.render(props.getScope())}
+          </span>
+        );
       } else if (computedComponent.value?.name) {
         if (computedComponent.value?.show === false) {
           return;
         }
-        return <fs-component-render ref={"targetRef"} {...computedComponent.value} scope={props.getScope()} />;
+        return (
+          <fs-component-render title={title} ref={"targetRef"} {...computedComponent.value} scope={props.getScope()} />
+        );
       } else {
-        return <span class={"fs-cell"}> {props.getScope().value}</span>;
+        return (
+          <span class={"fs-cell"} title={title}>
+            {" "}
+            {props.getScope().value}
+          </span>
+        );
       }
     };
   },
