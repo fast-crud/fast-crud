@@ -83,14 +83,14 @@ export default {
       default: undefined
     },
     helper: {
-      type: Object
+      type: [String, Object]
     }
   },
   emits: ["update:modelValue"],
   setup(props, ctx) {
     const componentRenderRef = ref();
     function buildItemScope(item) {
-      const scope = props.getContextFn();
+      const scope = props.getContextFn ? props.getContextFn() : {};
       return { value: props.modelValue, key: item.key, ...scope };
     }
 
