@@ -58,7 +58,7 @@ export type ComponentProps = {
   /**
    * 组件的名称
    */
-  name?: string;
+  name?: string | object;
   /**
    * vmodel绑定的目标属性名
    */
@@ -76,7 +76,16 @@ export type ComponentProps = {
    * }
    * ```
    */
-  props?: object;
+  props?: {
+    [key: string]: any;
+  };
+
+  /**
+   * 组件事件监听
+   */
+  on?: {
+    [key: string]: (context?: any) => void;
+  };
 
   /**
    * 组件其他参数
