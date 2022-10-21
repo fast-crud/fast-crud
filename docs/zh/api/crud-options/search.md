@@ -62,3 +62,7 @@
 * 说明：表单参数
 * 类型：Object
 * 支持：el-form,a-form的参数
+
+
+## 更多参数
+* 说明：更多参数见：[FsSearch](/api/components/crud/search/index.md)组件文档
