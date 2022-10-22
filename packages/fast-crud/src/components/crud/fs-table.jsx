@@ -297,14 +297,8 @@ export default {
           scope[tableColumnCI.row][item.key] = value;
           const newScope = getContextFn(item, scope);
           ctx.emit("value-change", newScope);
-          const key = newScope.key;
-          for (let column of props.columns) {
-            if (column.key === key) {
-              if (column.valueChange) {
-                column.valueChange(newScope);
-              }
-              break;
-            }
+          if (item.valueChange) {
+            item.valueChange(newScope);
           }
         }
       };

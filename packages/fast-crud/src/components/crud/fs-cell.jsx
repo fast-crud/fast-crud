@@ -23,8 +23,9 @@ export default {
     const computedComponent = doComputed(computedPropsComponent, props.getScope);
     const cellRender = (props, ctx) => {
       let title = props.item.showTitle;
+      let value = props.getScope().value;
       if (title === true) {
-        title = props.getScope().value;
+        title = value;
       }
       const cellContentRender = (slot) => {
         return (
@@ -49,7 +50,7 @@ export default {
           <fs-component-render title={title} ref={"targetRef"} {...computedComponent.value} scope={props.getScope()} />
         );
       } else {
-        return cellContentRender(props.getScope().value);
+        return cellContentRender(value);
       }
     };
 
