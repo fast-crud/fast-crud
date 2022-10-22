@@ -37,7 +37,7 @@ const debug = (...args) => {
   const callerInfo = getCallerInfo();
   if (DEBUG_WITH_CALLER) {
     const log = ["[debug]", ...args, "\n", callerInfo];
-    logInfo(log);
+    logInfo(...log);
   } else {
     const log = ["[debug]", ...args];
     logInfo(...log);
