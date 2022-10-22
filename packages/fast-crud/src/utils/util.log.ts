@@ -40,7 +40,7 @@ const debug = (...args) => {
     logInfo(log);
   } else {
     const log = ["[debug]", ...args];
-    logInfo(log);
+    logInfo(...log);
   }
 };
 const logger = {
