@@ -3,6 +3,22 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [1.5.0](https://github.com/fast-crud/fast-crud/compare/v1.4.2...v1.5.0) (2022-10-25)
+
+
+### Bug Fixes
+
+* 修复属性类型错误 ([a202884](https://github.com/fast-crud/fast-crud/commit/a20288438da21e451311bca9bb0eacb1ec64092e))
+
+
+### Features
+
+* extends 增加文本复制组件 ([129f30f](https://github.com/fast-crud/fast-crud/commit/129f30f755dd918651fd25203be4719128f831fe))
+
+
+
+
+
 ## [1.4.2](https://github.com/fast-crud/fast-crud/compare/v1.4.1...v1.4.2) (2022-10-03)
 
 **Note:** Version bump only for package @fast-crud/fast-extends

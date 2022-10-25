@@ -3,6 +3,40 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [1.5.0](https://github.com/fast-crud/fast-crud/compare/v1.4.2...v1.5.0) (2022-10-25)
+
+
+### Bug Fixes
+
+* 修复报错后影响其他页面加载的问题 ([589ecb9](https://github.com/fast-crud/fast-crud/commit/589ecb97b660121ba8d276e485dbb48e5c1b829c))
+* 修复多级表头不显示列表内容的bug ([51f7234](https://github.com/fast-crud/fast-crud/commit/51f7234ab830f042670219423802e4affc625397))
+* 修复属性类型错误 ([a202884](https://github.com/fast-crud/fast-crud/commit/a20288438da21e451311bca9bb0eacb1ec64092e))
+* 修复setFormData错误 ([ad07021](https://github.com/fast-crud/fast-crud/commit/ad0702154e85e72fcdab90c3a0f2a78c3c5988fe))
+
+
+### Features
+
+* 支持深度数据 ([3ca871e](https://github.com/fast-crud/fast-crud/commit/3ca871e2c3a16e76cb1c526fdbf4b77a4c06b342))
+* extends 增加文本复制组件 ([129f30f](https://github.com/fast-crud/fast-crud/commit/129f30f755dd918651fd25203be4719128f831fe))
+* fs-page组件外层增加fs-page-container包裹，防止出现样式错乱 ([72766a5](https://github.com/fast-crud/fast-crud/commit/72766a5d7c7306f18f57a86d0f84439522648b0c))
+
+
+### Performance Improvements
+
+* 表单提交成功后，将返回值放到afterSubmit的context中 ([9023be0](https://github.com/fast-crud/fast-crud/commit/9023be01aec6aa3d5c87ef92443ad795e6d202ff))
+* 独立使用表单示例优化 ([c00c86e](https://github.com/fast-crud/fast-crud/commit/c00c86e47c561bbc6eb449fc8d91065566b63cc6))
+* 优化value change ([91a6cc2](https://github.com/fast-crud/fast-crud/commit/91a6cc214e9a70910d41b229f7666f3f9dc71c68))
+* 自定义删除示例 ([6c39300](https://github.com/fast-crud/fast-crud/commit/6c39300d0cf132e35cdd5f7d16fe186bc04db598))
+* 自定义删除示例 ([7d4413c](https://github.com/fast-crud/fast-crud/commit/7d4413cceb709767f715b300ff6b93ef000dee89))
+* antdv 调整列宽示例 ([fe88b30](https://github.com/fast-crud/fast-crud/commit/fe88b30de07a69d7abd3e8ba2d2c6d3ea9e88433))
+* column showTitle ([53c9617](https://github.com/fast-crud/fast-crud/commit/53c9617b75b49b9fb6f5a5b2e6c0b821d21886c6))
+* compute参数增加类型定义 ([494f349](https://github.com/fast-crud/fast-crud/commit/494f349b59c3cc4de9ef1a4308cd3936532f744e))
+* fs-page恢复回absolute ([d38f5ad](https://github.com/fast-crud/fast-crud/commit/d38f5ade13761ffdef76cb44a8acc1ffa4c478d2))
+
+
+
+
+
 ## [1.4.2](https://github.com/fast-crud/fast-crud/compare/v1.4.1...v1.4.2) (2022-10-03)
 
 **Note:** Version bump only for package fast-crud-root
