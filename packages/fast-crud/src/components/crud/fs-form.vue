@@ -252,13 +252,16 @@ export default {
 
     // 初始数据赋值
     _.each(computedColumns.value, (item, key) => {
-      form[key] = undefined;
+      _.set(form, key, undefined);
       const defValue = unref(item.value);
       if (defValue !== undefined) {
-        form[key] = defValue;
+        _.set(form, key, defValue);
       }
-      if (initialForm && initialForm[key] !== undefined) {
-        form[key] = initialForm[key];
+      if (initialForm) {
+        const value = _.get(initialForm, key);
+        if (!!value) {
+          _.set(form, key, value);
+        }
       }
     });
     //form.valueBuilder
@@ -267,7 +270,7 @@ export default {
         return;
       }
       _.each(computedColumns.value, (item, key) => {
-        let value = form[key];
+        let value = _.get(form, key);
         if (item.valueBuilder) {
           item.valueBuilder({
             value,

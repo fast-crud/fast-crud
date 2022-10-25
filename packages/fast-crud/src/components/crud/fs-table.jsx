@@ -248,7 +248,7 @@ export default {
       return {
         ...scope,
         key: item.key,
-        value: row[item.key],
+        value: _.get(row, item.key),
         row,
         form,
         getComponentRef: (key) => {
@@ -292,9 +292,9 @@ export default {
         return getContextFn(item, scope);
       };
       const vModel = {
-        modelValue: scope[tableColumnCI.row][item.key],
+        modelValue: _.get(scope[tableColumnCI.row], item.key),
         "onUpdate:modelValue": (value) => {
-          scope[tableColumnCI.row][item.key] = value;
+          _.set(scope[tableColumnCI.row], item.key, value);
           const newScope = getContextFn(item, scope);
           ctx.emit("value-change", newScope);
           if (item.valueChange) {
