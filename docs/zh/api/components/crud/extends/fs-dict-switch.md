@@ -10,4 +10,10 @@
 | dict      |             |      | -      |         |
 | options   |             |      | -      |         |
 
+## Events
+
+| Event name  | Properties | Description |
+| ----------- | ---------- | ----------- |
+| dict-change |            |
+
 ---

@@ -12,4 +12,10 @@
 | optionName  | 选项的组件名称              | string | -      |           |
 | optionProps | 选项的属性                  | object | -      | {}        |
 
+## Events
+
+| Event name  | Properties | Description |
+| ----------- | ---------- | ----------- |
+| dict-change |            |
+
 ---

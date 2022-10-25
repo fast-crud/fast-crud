@@ -28,7 +28,10 @@ const Font = Quill.import("formats/font");
 Font.whitelist = fonts; // 将字体加入到白名单
 Quill.register(Font, true);
 
-// quill富文本编辑器
+/**
+ * quill富文本编辑器
+ * 有些问题，不建议使用
+ */
 export default {
   name: "FsEditorQuill",
   props: {

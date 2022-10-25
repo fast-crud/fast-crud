@@ -19,8 +19,9 @@
 
 ## Events
 
-| Event name | Properties | Description |
-| ---------- | ---------- | ----------- |
-| click      |            |
+| Event name  | Properties | Description |
+| ----------- | ---------- | ----------- |
+| click       |            |
+| dict-change |            |
 
 ---
