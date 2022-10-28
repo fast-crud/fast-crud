@@ -12,6 +12,7 @@ export type PageQuery = {
   page?: any;
   form?: any;
   sort?: any;
+  [key: string]: any;
 };
 
 export type PageRes = {
@@ -19,24 +20,29 @@ export type PageRes = {
   pageSize?: number;
   total?: number;
   records?: Array<object>;
+  [key: string]: any;
 };
 
 export type EditReq = {
   form?: any;
   row?: any;
+  [key: string]: any;
 };
 
 export type AddReq = {
   form?: any;
+  [key: string]: any;
 };
 
 export type DelReq = {
   row?: any;
+  [key: string]: any;
 };
 
 export type InfoReq = {
   mode?: string;
   row?: any;
+  [key: string]: any;
 };
 
 /**
@@ -50,6 +56,7 @@ export type RequestProp = {
   addRequest?: (req: AddReq) => Promise<any>;
   delRequest?: (req: DelReq) => Promise<any>;
   infoRequest?: (req: InfoReq) => Promise<any>;
+  [key: string]: any;
 };
 /**
  * 组件配置
@@ -137,6 +144,8 @@ export type RemoveProps = {
    * @param context
    */
   onRemoved?: (context) => Promise<any>;
+
+  [key: string]: any;
 };
 /**
  * 表格配置
@@ -188,6 +197,11 @@ export type FormWrapperProps = {
    * @param opts
    */
   onClosed?: (opts) => void;
+
+  /**
+   * 对应对话框组件的配置
+   */
+  [key: string]: any;
 };
 /**
  * 表单分组-组配置
@@ -234,6 +248,7 @@ export type FormGroupProps = {
   groups?: {
     [key: string]: FormGroupItemProps;
   };
+  [key: string]: any;
 };
 /**
  * 表单配置
@@ -317,6 +332,8 @@ export type FormItemHelperProps = {
    * [a|el|n]-tooltip配置
    */
   tooltip?: object;
+
+  [key: string]: any;
 };
 /**
  * 表单字段配置
@@ -351,6 +368,8 @@ export type FormItemProps = {
    * 是否是空白占位栏
    */
   blank?: boolean;
+
+  [key: string]: any;
 };
 
 /**
@@ -373,6 +392,8 @@ export type ToolbarProps = {
      */
     [key: string]: ButtonProps;
   };
+
+  [key: string]: any;
 };
 
 /**
@@ -421,6 +442,8 @@ export type ActionbarProps = {
   buttons?: {
     [key: string]: ButtonProps;
   };
+
+  [key: string]: any;
 };
 /**
  * 查询框配置
