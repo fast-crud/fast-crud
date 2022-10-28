@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.5.1](https://github.com/fast-crud/fast-crud/compare/v1.5.0...v1.5.1) (2022-10-28)
+
+
+### Bug Fixes
+
+* 修复d.ts某些地方飘红的问题 ([17f5503](https://github.com/fast-crud/fast-crud/commit/17f55033eb2dec2e2404ebef9115858211b1c412))
+
+
+
+
+
 # [1.5.0](https://github.com/fast-crud/fast-crud/compare/v1.4.2...v1.5.0) (2022-10-25)
 
 

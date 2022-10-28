@@ -1,6 +1,6 @@
 {
   "name": "@fast-crud/ui-element",
-  "version": "1.5.0",
+  "version": "1.5.1",
   "description": "",
   "main": "./dist/ui-element.umd.js",
   "module": "./dist/ui-element.es.js",
@@ -17,7 +17,7 @@
   },
   "devDependencies": {
     "@element-plus/icons-vue": "^2.0.4",
-    "@fast-crud/fast-crud": "^1.5.0",
+    "@fast-crud/fast-crud": "^1.5.1",
     "@rollup/plugin-strip": "^2.0.0",
     "@rollup/plugin-typescript": "^8.3.3",
     "@typescript-eslint/eslint-plugin": "^5.4.0",
