@@ -12,6 +12,10 @@ import { uiContext } from "../../ui";
 export default {
   name: "FsDictSwitch",
   props: {
+    /**
+     * 字典第一个为开启
+     * 第二个为关闭
+     */
     dict: {},
     options: {}
   },
