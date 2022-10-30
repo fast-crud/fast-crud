@@ -448,12 +448,12 @@ export class Antdv implements UiInterface {
     name: "a-input-number"
   };
   switch: SwitchCI = {
-    activeColor: "active-color",
+    activeColor: "checkedColor",
     activeText: "checkedChildren",
-    activeValue: "active-value",
-    inactiveColor: "inactive-color",
+    activeValue: "checkedValue",
+    inactiveColor: "unCheckedColor",
     inactiveText: "unCheckedChildren",
-    inactiveValue: "inactive-value",
+    inactiveValue: "unCheckedValue",
     modelValue: "checked",
     name: "a-switch"
   };
