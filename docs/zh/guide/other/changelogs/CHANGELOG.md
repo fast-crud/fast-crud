@@ -3,6 +3,20 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.5.1](https://github.com/fast-crud/fast-crud/compare/v1.5.0...v1.5.1) (2022-10-28)
+
+
+### Bug Fixes
+
+* 修复d.ts某些地方飘红的问题 ([17f5503](https://github.com/fast-crud/fast-crud/commit/17f55033eb2dec2e2404ebef9115858211b1c412))
+* 移除suspense组件，会导致上传组件（异步组件）不正常 ([86b5c1a](https://github.com/fast-crud/fast-crud/commit/86b5c1a7bfab41e85d4df5a731ab89db40fc8f93))
+* 移除suspense组件，会导致上传组件（异步组件）不正常 ([f8959ee](https://github.com/fast-crud/fast-crud/commit/f8959ee75b9aeb87a6935eab673f235f3284fdcf))
+* 移除suspense组件，会导致上传组件（异步组件）不正常 ([49d72c2](https://github.com/fast-crud/fast-crud/commit/49d72c26f47d0aa28165270d788638d65ac1babe))
+
+
+
+
+
 # [1.5.0](https://github.com/fast-crud/fast-crud/compare/v1.4.2...v1.5.0) (2022-10-25)
 
 

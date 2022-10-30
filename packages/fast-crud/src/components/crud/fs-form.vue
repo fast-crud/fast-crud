@@ -86,9 +86,9 @@
 </template>
 
 <script>
-import { ref, unref, reactive, getCurrentInstance, toRaw, computed, onMounted } from "vue";
+import { computed, getCurrentInstance, onMounted, reactive, ref, toRaw, unref } from "vue";
 import _ from "lodash-es";
-import { AsyncComputeValue, useCompute } from "../../use/use-compute";
+import { useCompute } from "../../use/use-compute";
 import logger from "../../utils/util.log";
 import { uiContext } from "../../ui";
 import { useMerge } from "../../use/use-merge";
@@ -345,14 +345,13 @@ export default {
         wrapper.parent = ui.tabs.name;
         wrapper.child = ui.tabPane.name;
       }
-      const merged = merge(
+      return merge(
         {
           wrapper,
           groupedKeys
         },
         group
       );
-      return merged;
     });
 
     const computedDefaultColumns = computed(() => {
