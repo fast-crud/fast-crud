@@ -340,6 +340,10 @@ export type FormItemHelperProps = {
  */
 export type FormItemProps = {
   /**
+   * 字段label
+   */
+  title?: string;
+  /**
    * 表单字段组件配置
    */
   component?: ComponentProps;
