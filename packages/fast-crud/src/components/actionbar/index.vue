@@ -5,10 +5,10 @@
     </template>
   </div>
 </template>
-<script>
-import { defineComponent, toRef } from "vue";
-import traceUtil from "../../utils/util.trace";
-import { useCompute } from "../../use/use-compute";
+<script lant="ts">
+import { defineComponent, computed } from "vue";
+import _ from "lodash-es";
+import { Constants } from "../../utils/util.constants";
 
 export default defineComponent({
   name: "FsActionbar",
@@ -27,7 +27,6 @@ export default defineComponent({
   },
   emits: ["action"],
   setup(props, ctx) {
-    traceUtil.trace("fs-actionbar");
     function onClick(key, value, $event) {
       const e = { key, btn: value, $event };
       if (value.click) {
@@ -40,12 +39,27 @@ export default defineComponent({
       }
       ctx.emit("action", e);
     }
-    const { doComputed } = useCompute();
-    const getScopeFn = () => {
-      return {};
-    };
-    const refButtons = toRef(props, "buttons");
-    const computedButtons = doComputed(refButtons, getScopeFn);
+    const computedButtons = computed(() => {
+      let sortArr = [];
+      for (let key in props.buttons) {
+        sortArr.push({
+          ...props.buttons[key],
+          _key: key
+        });
+      }
+      sortArr = _.sortBy(sortArr, (item) => {
+        return item.order ?? Constants.orderDefault;
+      });
+
+      const sortedButtons = {};
+
+      sortArr.forEach((item) => {
+        let _key = item._key;
+        delete item._key;
+        sortedButtons[_key] = item;
+      });
+      return sortedButtons;
+    });
     return {
       onClick,
       computedButtons
