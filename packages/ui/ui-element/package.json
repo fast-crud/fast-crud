@@ -15,9 +15,12 @@
   "dependencies": {
     "@fast-crud/ui-interface": "^1.5.0"
   },
-  "devDependencies": {
+  "peerDependencies": {
     "@element-plus/icons-vue": "^2.0.4",
     "@fast-crud/fast-crud": "^1.5.1",
+    "element-plus": "^2.2.12"
+  },
+  "devDependencies": {
     "@rollup/plugin-strip": "^2.0.0",
     "@rollup/plugin-typescript": "^8.3.3",
     "@typescript-eslint/eslint-plugin": "^5.4.0",
@@ -27,7 +30,6 @@
     "@vitejs/plugin-vue-jsx": "^1.1.2",
     "@vue/compiler-sfc": "^3.0.7",
     "@vue/test-utils": "^2.0.0-rc.4",
-    "element-plus": "^2.2.12",
     "eslint": "^8.3.0",
     "eslint-config-prettier": "^8.1.0",
     "eslint-plugin-import": "^2.20.2",
