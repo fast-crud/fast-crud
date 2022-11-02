@@ -346,7 +346,7 @@ export type ButtonProps = {
   /**
    * 点击事件
    */
-  click?: () => void;
+  click?: (context: any) => void;
 
   /**
    * 其他按钮配置 [a|el|n]-button的配置，请查看对应ui组件的文档
