@@ -136,7 +136,7 @@ export default {
       return formRef.value?.getFormData();
     }
     function setFormData(form) {
-      formRef.value = form;
+      formRef.value?.setFormData(form);
     }
 
     const computedButtons = computed(() => {

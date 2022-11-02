@@ -1,3 +1,5 @@
+import { ColumnCompositionProps, ColumnProps } from "./crud";
+
 export type CrudExpose = {
   crudRef;
   crudBinding;
@@ -23,12 +25,12 @@ export type CrudExpose = {
    * 执行valueBuilder
    * @param records 表格数据列表
    */
-  doValueBuilder: (records, columns?: Object) => void;
+  doValueBuilder: (records, columns?: any) => void;
   /**
    * 执行valueResolve
    * @param context { form }
    */
-  doValueResolve: (context: { form: any }, columns?: Object) => void;
+  doValueResolve: (context: { form: any }, columns?: any) => void;
   /**
    * 刷新列表数据
    */

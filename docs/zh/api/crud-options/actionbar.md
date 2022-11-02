@@ -14,7 +14,7 @@
 * 说明：按钮配置
 * 类型：Object
 * 默认： {add:{...FsButton}}
-* 相关：[FsButton配置](../common-options.md#buttons)
+* 相关：[按钮组配置](../common-options.md#buttons)
 * 示例：
 ```
 { //crudOptions.actionbar.buttons

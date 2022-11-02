@@ -1,20 +1,11 @@
-import {
-  getCurrentInstance,
-  ref,
-  computed,
-  reactive,
-  provide,
-  resolveDirective,
-  resolveDynamicComponent,
-  withDirectives,
-  toRef,
-  watch
-} from "vue";
+import { computed, ref, resolveDirective, resolveDynamicComponent, watch, withDirectives } from "vue";
 import _ from "lodash-es";
 import { uiContext } from "../../ui";
 import { useEditable } from "./editable/use-editable";
 import logger from "../../utils/util.log";
+import utilLog from "../../utils/util.log";
 import "./fs-table.less";
+
 function buildTableSlots({ props, ctx, ui, getContextFn, componentRefs, renderRowHandle, renderCellComponent }) {
   const tableComp = resolveDynamicComponent(ui.table.name);
   const tableColumnComp = resolveDynamicComponent(ui.tableColumn.name);
@@ -111,10 +102,12 @@ function buildTableSlots({ props, ctx, ui, getContextFn, componentRefs, renderRo
  * @param renderRowHandle
  * @returns {*[]}
  */
-function buildTableColumns({ props, ctx, ui, getContextFn, componentRefs, renderRowHandle, renderCellComponent }) {
+function buildTableColumns(options) {
+  const { props, ctx, ui, getContextFn, componentRefs, renderRowHandle, renderCellComponent } = options;
+  let originalColumns = options.columns ?? [];
   const columns = [];
 
-  for (let column of props.columns) {
+  for (let column of originalColumns) {
     if (column.show === false) {
       continue;
     }
@@ -123,6 +116,9 @@ function buildTableColumns({ props, ctx, ui, getContextFn, componentRefs, render
     columns.push(item);
     if (column.children != null) {
       // 表头分组
+      const childOptions = { ...options, columns: column.children };
+      delete childOptions.renderRowHandle;
+      item.children = buildTableColumns(childOptions);
     } else if (column.type != null) {
       // 特定列 selection 和 expand
     } else {
@@ -149,7 +145,7 @@ function buildTableColumns({ props, ctx, ui, getContextFn, componentRefs, render
     }
   }
 
-  if (props.rowHandle?.show !== false) {
+  if (renderRowHandle && props.rowHandle?.show !== false) {
     //操作列
     let rowHandle = {
       key: "_rowHandle",
@@ -162,6 +158,7 @@ function buildTableColumns({ props, ctx, ui, getContextFn, componentRefs, render
     columns.push(rowHandle);
   }
 
+  utilLog.debug("table columns:", columns);
   return columns;
 }
 
@@ -251,7 +248,7 @@ export default {
       return {
         ...scope,
         key: item.key,
-        value: row[item.key],
+        value: _.get(row, item.key),
         row,
         form,
         getComponentRef: (key) => {
@@ -295,19 +292,13 @@ export default {
         return getContextFn(item, scope);
       };
       const vModel = {
-        modelValue: scope[tableColumnCI.row][item.key],
+        modelValue: _.get(scope[tableColumnCI.row], item.key),
         "onUpdate:modelValue": (value) => {
-          scope[tableColumnCI.row][item.key] = value;
+          _.set(scope[tableColumnCI.row], item.key, value);
           const newScope = getContextFn(item, scope);
           ctx.emit("value-change", newScope);
-          const key = newScope.key;
-          for (let column of props.columns) {
-            if (column.key === key) {
-              if (column.valueChange) {
-                column.valueChange(newScope);
-              }
-              break;
-            }
+          if (item.valueChange) {
+            item.valueChange(newScope);
           }
         }
       };
@@ -385,7 +376,8 @@ export default {
           getContextFn,
           componentRefs,
           renderRowHandle,
-          renderCellComponent
+          renderCellComponent,
+          columns: props.columns
         });
       });
 

@@ -86,9 +86,9 @@
 </template>
 
 <script>
-import { ref, unref, reactive, getCurrentInstance, toRaw, computed, onMounted } from "vue";
+import { computed, getCurrentInstance, onMounted, reactive, ref, toRaw, unref } from "vue";
 import _ from "lodash-es";
-import { AsyncComputeValue, useCompute } from "../../use/use-compute";
+import { useCompute } from "../../use/use-compute";
 import logger from "../../utils/util.log";
 import { uiContext } from "../../ui";
 import { useMerge } from "../../use/use-merge";
@@ -252,13 +252,16 @@ export default {
 
     // 初始数据赋值
     _.each(computedColumns.value, (item, key) => {
-      form[key] = undefined;
+      _.set(form, key, undefined);
       const defValue = unref(item.value);
       if (defValue !== undefined) {
-        form[key] = defValue;
+        _.set(form, key, defValue);
       }
-      if (initialForm && initialForm[key] !== undefined) {
-        form[key] = initialForm[key];
+      if (initialForm) {
+        const value = _.get(initialForm, key);
+        if (!!value) {
+          _.set(form, key, value);
+        }
       }
     });
     //form.valueBuilder
@@ -267,7 +270,7 @@ export default {
         return;
       }
       _.each(computedColumns.value, (item, key) => {
-        let value = form[key];
+        let value = _.get(form, key);
         if (item.valueBuilder) {
           item.valueBuilder({
             value,
@@ -342,14 +345,13 @@ export default {
         wrapper.parent = ui.tabs.name;
         wrapper.child = ui.tabPane.name;
       }
-      const merged = merge(
+      return merge(
         {
           wrapper,
           groupedKeys
         },
         group
       );
-      return merged;
     });
 
     const computedDefaultColumns = computed(() => {
@@ -414,7 +416,8 @@ export default {
         }
       }
       if (props.doSubmit) {
-        await props.doSubmit(submitScope);
+        const res = await props.doSubmit(submitScope);
+        submitScope.res = res;
       }
       ctx.emit("submit", submitScope);
       if (props.afterSubmit) {

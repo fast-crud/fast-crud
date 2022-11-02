@@ -12,6 +12,7 @@ export type PageQuery = {
   page?: any;
   form?: any;
   sort?: any;
+  [key: string]: any;
 };
 
 export type PageRes = {
@@ -19,24 +20,29 @@ export type PageRes = {
   pageSize?: number;
   total?: number;
   records?: Array<object>;
+  [key: string]: any;
 };
 
 export type EditReq = {
   form?: any;
   row?: any;
+  [key: string]: any;
 };
 
 export type AddReq = {
   form?: any;
+  [key: string]: any;
 };
 
 export type DelReq = {
   row?: any;
+  [key: string]: any;
 };
 
 export type InfoReq = {
   mode?: string;
   row?: any;
+  [key: string]: any;
 };
 
 /**
@@ -50,6 +56,7 @@ export type RequestProp = {
   addRequest?: (req: AddReq) => Promise<any>;
   delRequest?: (req: DelReq) => Promise<any>;
   infoRequest?: (req: InfoReq) => Promise<any>;
+  [key: string]: any;
 };
 /**
  * 组件配置
@@ -58,7 +65,7 @@ export type ComponentProps = {
   /**
    * 组件的名称
    */
-  name?: string;
+  name?: string | object;
   /**
    * vmodel绑定的目标属性名
    */
@@ -76,7 +83,16 @@ export type ComponentProps = {
    * }
    * ```
    */
-  props?: object;
+  props?: {
+    [key: string]: any;
+  };
+
+  /**
+   * 组件事件监听
+   */
+  on?: {
+    [key: string]: (context?: any) => void;
+  };
 
   /**
    * 组件其他参数
@@ -84,6 +100,51 @@ export type ComponentProps = {
    *      on.onXxx:(context)=>void 组件事件监听(对原始事件包装)
    * 样式：style、class等
    */
+  [key: string]: any;
+};
+
+/**
+ * 删除操作配置
+ */
+export type RemoveProps = {
+  /**
+   * 自定义确认删除，抛出异常则取消
+   * @param context
+   */
+  confirmFn?: (context) => Promise<any>;
+  /**
+   * 自定义删除确认标题
+   * confirm未配置时生效
+   */
+  confirmTitle?: string;
+  /**
+   * 自定义删除确认内容
+   * confirm未配置时生效
+   */
+  confirmMessage?: string;
+
+  /**
+   * 删除后刷新列表
+   */
+  refreshTable: boolean;
+
+  /**
+   * 显示成功提示
+   */
+  showSuccessNotification: boolean;
+
+  /**
+   * 当取消删除时
+   * @param context
+   */
+  onCanceled?: (context) => Promise<any>;
+
+  /**
+   * 删除成功后的操作
+   * @param context
+   */
+  onRemoved?: (context) => Promise<any>;
+
   [key: string]: any;
 };
 /**
@@ -94,6 +155,11 @@ export type TableProps = {
    * 调用doRefresh完成之后触发
    */
   onRefreshed?: Function;
+
+  /**
+   * 删除配置
+   */
+  remove?: RemoveProps;
 
   /**
    * [x]-table组件的配置
@@ -131,6 +197,11 @@ export type FormWrapperProps = {
    * @param opts
    */
   onClosed?: (opts) => void;
+
+  /**
+   * 对应对话框组件的配置
+   */
+  [key: string]: any;
 };
 /**
  * 表单分组-组配置
@@ -177,6 +248,7 @@ export type FormGroupProps = {
   groups?: {
     [key: string]: FormGroupItemProps;
   };
+  [key: string]: any;
 };
 /**
  * 表单配置
@@ -208,20 +280,27 @@ export type FormProps = {
   /**
    * 提交表单的方法（默认已经配置好，将会调用addRequest或者updateRequest）
    */
-  doSubmit?: () => Promise<any>;
+  doSubmit?: (context: any) => Promise<any>;
   /**
    * 提交前做一些操作
    */
-  beforeSubmit?: (context) => Promise<any>;
+  beforeSubmit?: (context: any) => Promise<any>;
   /**
    * 提交后做一些操作
    * @param context
    */
-  afterSubmit?: (context) => Promise<any>;
+  afterSubmit?: (context: any) => Promise<any>;
+
+  /**
+   * 值变化后的操作
+   * @param context
+   */
+  valueChange?: (context) => void | { immediate?: boolean; handle?: (context) => void };
   /**
    * 表单重置时的操作
    */
   doReset?: () => Promise<any>;
+
   /**
    * 表单分组配置
    */
@@ -253,11 +332,17 @@ export type FormItemHelperProps = {
    * [a|el|n]-tooltip配置
    */
   tooltip?: object;
+
+  [key: string]: any;
 };
 /**
  * 表单字段配置
  */
 export type FormItemProps = {
+  /**
+   * 字段label
+   */
+  title?: string;
   /**
    * 表单字段组件配置
    */
@@ -287,6 +372,8 @@ export type FormItemProps = {
    * 是否是空白占位栏
    */
   blank?: boolean;
+
+  [key: string]: any;
 };
 
 /**
@@ -309,6 +396,8 @@ export type ToolbarProps = {
      */
     [key: string]: ButtonProps;
   };
+
+  [key: string]: any;
 };
 
 /**
@@ -357,6 +446,8 @@ export type ActionbarProps = {
   buttons?: {
     [key: string]: ButtonProps;
   };
+
+  [key: string]: any;
 };
 /**
  * 查询框配置
@@ -458,6 +549,27 @@ export type ColumnProps = {
 };
 
 /**
+ * valueBuild参数
+ */
+export type ValueBuilderProps = {
+  value: any;
+  key: string;
+  row?: any;
+  form?: any;
+  index: number;
+  mode?: string;
+  column?: any;
+};
+export type ValueResolveProps = {
+  value: any;
+  key: string;
+  row?: any;
+  form?: any;
+  index: number;
+  mode?: string;
+  column?: any;
+};
+/**
  * 列综合配置
  */
 export type ColumnCompositionProps = {
@@ -493,21 +605,16 @@ export type ColumnCompositionProps = {
    * 值构建器，pageRequest之后执行
    * 从pageRequest获取到的字段数据值可能并不是组件能够识别的值，所以需要将其做一层转化
    * 即row[key]=字段组件能够识别的值
-   * @param value
-   * @param key
-   * @param row
-   * @param form
-   * @param index
-   * @param mode
+   * @param context
    */
-  valueBuilder?: ({ value, key, row, form, index, mode }) => void;
+  valueBuilder?: (context: ValueBuilderProps) => void;
   /**
    * 值解析器，表单提交前执行
    * 表单输出的值可能不是后台所需要的值，所以需要在提交前做一层转化
    * 即：row[key]=后台能所需要的值
    * @param context
    */
-  valueResolve?: (context: any) => void;
+  valueResolve?: (context: ValueResolveProps) => void;
   /**
    * 其他配置
    */

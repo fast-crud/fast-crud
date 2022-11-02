@@ -108,6 +108,66 @@
         //列表数据变化时的操作
     }
   }    
-    
 }
 ```
+
+
+## remove
+* 说明：删除相关配置
+* 类型：Object
+
+
+## remove.confirmFn
+* 说明：自定义确认，返回promise，resolve为确认，reject为取消
+* 类型：`(context)=>Promise<void>`
+* 默认值：无
+```js
+{
+  table:{
+    remove:{
+        confirmFn(context){
+          return new Promise((resolve, reject)=>{
+              Modal.confirm({
+                  content:"确定删除此数据吗",
+                  ok(){
+                      resolve()
+                  },
+                  cancel(){
+                      reject()
+                  }
+              })
+          })   
+        } 
+    }
+  }    
+}
+```
+
+
+
+## remove.confirmTitle
+* 说明：删除确认框的标题，当confirmFn未配置时生效
+* 类型：string
+
+## remove.confirmMessage
+* 说明：删除确认框内容，当confirmFn未配置时生效
+* 类型：string
+
+## remove.showSuccessNotification
+* 说明：是否显示成功删除提示
+* 类型：boolean
+* 默认值： true
+
+## remove.refreshTable
+* 说明：删除后是否刷新表格
+* 类型：boolean
+* 默认值： true
+
+
+## remove.onCanceled
+* 说明：取消后的操作
+* 类型：`(context)=>Promise<any>`
+
+## remove.onRemoved
+* 说明：删除后的操作
+* 类型：`(context)=>Promise<any>`

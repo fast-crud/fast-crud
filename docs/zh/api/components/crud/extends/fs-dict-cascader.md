@@ -10,4 +10,10 @@
 | dict      | 字典配置                    |       | -      |         |
 | options   | 选项，比 dict.data 优先级高 | array | -      |         |
 
+## Events
+
+| Event name  | Properties | Description |
+| ----------- | ---------- | ----------- |
+| dict-change |            |
+
 ---

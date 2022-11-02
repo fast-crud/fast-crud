@@ -84,6 +84,7 @@ component:{
 ## FsButton【按钮配置】
 * 说明：按钮配置
 * 类型：Object
+* 相关：[fs-button](./components/crud/basic/fs-button.md)
 * 示例：
 ```
  rowHandle:{
@@ -92,6 +93,7 @@ component:{
         title:"查看",//鼠标停留显示的信息
         icon:"", //图标
         iconRight:"", //右侧图标
+        circle:false,//是否圆形按钮
         type:"", //a-button，el-button的类型
         style:{},
         disabled:false,

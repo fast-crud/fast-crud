@@ -1,5 +1,5 @@
 import { useCompute } from "../../use/use-compute";
-import { computed } from "vue";
+import { computed, render, withDirectives } from "vue";
 /**
  * 单元格显示组件
  */
@@ -21,25 +21,40 @@ export default {
       return props.item.component;
     });
     const computedComponent = doComputed(computedPropsComponent, props.getScope);
-    return (props, ctx) => {
+    const cellRender = (props, ctx) => {
+      let title = props.item.showTitle;
+      let value = props.getScope().value;
+      if (title === true) {
+        title = value;
+      }
+      const cellContentRender = (slot) => {
+        return (
+          <span className={"fs-cell"} title={title}>
+            {slot}
+          </span>
+        );
+      };
       if (props.slots) {
-        return <span class={"fs-cell"}>{props.slots(props.getScope())}</span>;
+        return cellContentRender(props.slots(props.getScope()));
       } else if (props.item.formatter) {
-        return <span class={"fs-cell"}>{props.item.formatter(props.getScope())}</span>;
+        return cellContentRender(props.item.formatter(props.getScope()));
       } else if (props.item.cellRender) {
-        return <span class={"fs-cell"}>{props.item.cellRender(props.getScope())}</span>;
+        return cellContentRender(props.item.cellRender(props.getScope()));
       } else if (props.item.render) {
         console.warn("column.render 配置已废弃，请使用column.cellRender代替");
-        return <span class={"fs-cell"}>{props.item.render(props.getScope())}</span>;
       } else if (computedComponent.value?.name) {
         if (computedComponent.value?.show === false) {
           return;
         }
-        return <fs-component-render ref={"targetRef"} {...computedComponent.value} scope={props.getScope()} />;
+        return (
+          <fs-component-render title={title} ref={"targetRef"} {...computedComponent.value} scope={props.getScope()} />
+        );
       } else {
-        return <span class={"fs-cell"}> {props.getScope().value}</span>;
+        return cellContentRender(value);
       }
     };
+
+    return cellRender;
   },
   methods: {
     getTargetRef() {

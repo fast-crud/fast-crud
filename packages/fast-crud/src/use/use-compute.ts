@@ -2,6 +2,7 @@ import _ from "lodash-es";
 import { computed, ref, toRaw, watch, isRef } from "vue";
 import getEachDeep from "deepdash-es/getEachDeep";
 import { useMerge } from "./use-merge";
+import { ComputeContext } from "/src/d.ts/compute";
 const { cloneDeep } = useMerge();
 const eachDeep = getEachDeep(_);
 
@@ -81,10 +82,13 @@ function doComputed(target, getContextFn, excludes, userComputedFn) {
     target = target();
   }
 
-  if (!isRef(target)) {
-    target = ref(target);
+  let raw;
+  if (isRef(target)) {
+    raw = toRaw(target.value);
+  } else {
+    raw = toRaw(target);
   }
-  const raw = toRaw(target.value);
+
   const dependValues = findComputeValues(raw, excludes, false);
 
   const dependAsyncValues = findComputeValues(raw, excludes, true);
@@ -93,7 +97,10 @@ function doComputed(target, getContextFn, excludes, userComputedFn) {
   const asyncValuesMap = doAsyncCompute(dependAsyncValues, getContextFn);
 
   return computed(() => {
-    let targetValue = target.value;
+    let targetValue = target;
+    if (isRef(target)) {
+      targetValue = target.value;
+    }
     if (asyncCount > 0 || syncCount > 0) {
       targetValue = cloneDeep(targetValue);
       if (syncCount > 0) {
@@ -115,7 +122,7 @@ function doComputed(target, getContextFn, excludes, userComputedFn) {
 }
 
 export class ComputeValue {
-  computeFn;
+  computeFn: (context: ComputeContext) => any;
   constructor(computeFn) {
     this.computeFn = computeFn;
   }

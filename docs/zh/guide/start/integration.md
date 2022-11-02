@@ -9,36 +9,56 @@
 在开始着手集成之前，如果你还没有运行过demo，建议您先运行demo项目，在里面[开发一个crud](./first)感受一下
 
 :::
-### 1.安装
+
+### 1.准备vue3项目
+如果你还没有vue3项目，可以根据[vitejs的教程创建一个](http://www.vitejs.net/guide/#scaffolding-your-first-vite-project)
+
+```shell
+npm install -g pnpm
+pnpm create vite my-vue-app -- --template vue
+```
+
+### 2.安装依赖
 
 ```shell script
 #安装fast-crud
-npm i  @fast-crud/fast-crud
+cd my-vue-app
+pnpm i  @fast-crud/fast-crud
+pnpm i  @fast-crud/fast-extends
 
-#安装ui，根据你选择的基础组件
+#安装ui，根据你选择的基础组件 三选一
 # element-plus
-npm i  @fast-crud/ui-element
+pnpm i  element-plus
+pnpm i  @fast-crud/ui-element
 # or antdv
-npm i  @fast-crud/ui-antdv
+pnpm i  ant-design-vue
+pnpm i  @fast-crud/ui-antdv
 # or naive-ui
-npm i  @fast-crud/ui-naive
+pnpm i  naive-ui
+pnpm i  @fast-crud/ui-naive
 
 
 ```
-### 2.安装基础组件
+### 3.安装基础组件
+此部分的安装需要参考对应的ui库文档    
+
 ```js
 //安装基础组件,三选一
 // element 
 import ElementPlus from 'element-plus'
-app.use(ElementPlus,{size:"small"})
+import zhCn from "element-plus/es/locale/lang/zh-cn";
+import "element-plus/dist/index.css";
+import "dayjs/locale/zh-cn";
+app.use(ElementPlus,{size:"small",locale: zhCn})
 // 或者 antdv 
 import Antdv from 'ant-design-vue'
+import "ant-design-vue/dist/antd.less";
 app.use(Antdv)
 // 或者 naive
 import Naive from 'naive-ui'
 app.use(Naive)
 ```
-### 3.引入
+### 4.引入
 
  ```javascript
 // 引入fast-crud
@@ -91,7 +111,7 @@ app.use(FastCrud, {
 具体请参考[request配置](/api/crud-options/request.html)    
 :::
 
-### 4. NaiveUi的额外操作
+### 5. NaiveUi的额外操作
 如果你不使用naiveui，可以跳过此步骤    
 NaiveUI需要在`n-dialog-provider`、`n-notification-provider`、`n-message-provider`包裹的子组件中进行一次ui的初始化操作。
 ```js
@@ -117,7 +137,7 @@ export default defineComponent({
 })
 ```
 
-### 5. 安装扩展组件
+### 6. 安装扩展组件
 
 如果你还需要文件上传、图片裁剪等组件   
 那么你还需要安装对应的扩展插件。
@@ -127,7 +147,7 @@ export default defineComponent({
 npm install @fast-crud/fast-extends
 ```
 ```js
-import { FsExtendsUploader,FsExtendsEditor } from "@fast-crud/extends-uploader";
+import { FsExtendsUploader,FsExtendsEditor } from "@fast-crud/fast-extends";
 import "@fast-crud/fast-extends/dist/style.css";
 //文件上传
 app.use(FsExtendsUploader, {
@@ -146,15 +166,15 @@ app.use(FsExtendsEditor, {
 ```
 扩展组件文档请参考[fast-extends](../advance/extends.md)
 
-### 6. 完成
+### 7. 完成
 现在`fast-crud`已经集成到你的项目中，你可以按照上一节学习的，在你的实际项目里开始你的crud开发了。
 
 ::: warning
 注意:你必须让`<fs-crud></fs-crud>`外部容器具备高度，如果看不到表格你可以先给`fs-crud`设置一个`height="800px"`看看效果。
 :::
 
-
-以下是一个简单的示例页面，你可以直接复制粘贴到`test.vue`，将其添加到路由中打开，即可看到测试效果
+### 8. 写一个 hello world
+以下是一个简单的示例页面，你可以直接复制粘贴到`HelloWorld.vue`，将其添加到路由中打开，即可看到测试效果
 ```vue
 <template>
   <fs-page>
@@ -217,7 +237,7 @@ const createCrudOptions = function ({ expose }) {
 
 //此处为组件定义
 export default defineComponent({
-  name: "FsCrudFirst",
+  name: "HelloWorld",
   setup() {
     // crud组件的ref
     const crudRef = ref();

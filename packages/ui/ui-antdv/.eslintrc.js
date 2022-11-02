@@ -16,10 +16,15 @@ module.exports = {
       tsx: true
     }
   },
-  extends: ["plugin:vue/vue3-recommended", "plugin:@typescript-eslint/recommended", "plugin:prettier/recommended", "prettier"],
+  extends: [
+    "plugin:vue/vue3-recommended",
+    "plugin:@typescript-eslint/recommended",
+    "plugin:prettier/recommended",
+    "prettier"
+  ],
   rules: {
     // "comma-dangle": "off",
-    // "max-len": [0, 160, 2, { ignoreUrls: true }],
+    "max-len": [0, 160, 2, { ignoreUrls: true }],
     "@typescript-eslint/ban-ts-ignore": "off",
     "@typescript-eslint/explicit-function-return-type": "off",
     "@typescript-eslint/no-explicit-any": "off",

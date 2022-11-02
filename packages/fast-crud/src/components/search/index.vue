@@ -151,7 +151,7 @@ export default {
      * 传false则关闭自动查询
      */
     debounce: {
-      type: Object
+      type: [Boolean, Object]
     },
     /**
      * 插槽

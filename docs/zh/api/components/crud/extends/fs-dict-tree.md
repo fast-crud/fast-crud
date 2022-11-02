@@ -11,4 +11,10 @@
 | options     | 可选项，比 dict.data 优先级高 | array  | -      |         |
 | placeholder | placeholder                   | string | -      |         |
 
+## Events
+
+| Event name  | Properties | Description |
+| ----------- | ---------- | ----------- |
+| dict-change |            |
+
 ---

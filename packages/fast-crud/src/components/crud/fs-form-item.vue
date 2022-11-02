@@ -1,10 +1,12 @@
 <template>
   <component
     :is="$fsui.formItem.name"
+    v-if="item"
     class="fs-form-item"
-    :[$fsui.formItem.prop]="item?.key"
+    :[$fsui.formItem.prop]="computedKey"
     v-bind="item"
-    :path="item?.key"
+    :path="item.key"
+    :rule-path="item.key"
   >
     <template #label>
       {{ item.label || item.title }}
@@ -83,14 +85,14 @@ export default {
       default: undefined
     },
     helper: {
-      type: Object
+      type: [String, Object]
     }
   },
   emits: ["update:modelValue"],
   setup(props, ctx) {
     const componentRenderRef = ref();
     function buildItemScope(item) {
-      const scope = props.getContextFn();
+      const scope = props.getContextFn ? props.getContextFn() : {};
       return { value: props.modelValue, key: item.key, ...scope };
     }
 
@@ -110,13 +112,23 @@ export default {
     const computedHelperTooltip = computed(() => {
       return _.merge({}, props.item.helper?.tooltip, props.helper?.tooltip);
     });
+    const computedKey = computed(() => {
+      if (props.item == null) {
+        return;
+      }
+      if (props.item.key.indexOf(".") >= 0) {
+        return props.item.key.split(".");
+      }
+      return props.item.key;
+    });
     return {
       updateModelValue,
       buildItemScope,
       getComponentRef,
       componentRenderRef,
       computedHelperPosition,
-      computedHelperTooltip
+      computedHelperTooltip,
+      computedKey
     };
   }
 };

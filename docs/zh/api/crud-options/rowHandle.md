@@ -33,7 +33,7 @@
 * 示例： [antdv版](http://fast-crud.docmirror.cn/antdv/#/crud/feature/dropdown)
   [element版](http://fast-crud.docmirror.cn/element/#/crud/feature/dropdown)
 * 默认：
-* 相关：[FsButton配置](../common-options.md#buttons)
+* 相关：[按钮组配置](../common-options.md#buttons)
 ```json
 { //crudOptions
   rowHandle: {
@@ -78,6 +78,7 @@
 ## group
 * 说明：按钮分组配置
 * 类型：Object
+* 示例： 请参考行编辑，点击`编辑`时，会切换到`保存取消`按钮组，点击保存或取消，则切换回`编辑删除`按钮组
 ```json
 { // rowHandle
   group: {

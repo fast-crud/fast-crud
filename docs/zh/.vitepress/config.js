@@ -208,6 +208,14 @@ module.exports = {
                                             link: '/api/components/extends/json/components/fs-json-editor'
                                         }
                                     ]
+                                },
+                                {
+                                    text: 'Copyable', items: [
+                                        {
+                                            text: "fs-copyable",
+                                            link: '/api/components/extends/copyable/components/fs-copyable'
+                                        }
+                                    ]
                                 }
                             ]
                         },

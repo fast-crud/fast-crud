@@ -11,4 +11,10 @@
 | multiple   | 是否多选                                                                                                                  | boolean       | -      | false     |
 | dict       | 数据字典                                                                                                                  | object        | -      | undefined |
 
+## Events
+
+| Event name  | Properties | Description |
+| ----------- | ---------- | ----------- |
+| dict-change |            |
+
 ---

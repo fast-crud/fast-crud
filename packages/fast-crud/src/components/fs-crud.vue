@@ -94,6 +94,7 @@ import _ from "lodash-es";
 import traceUtil from "../utils/util.trace";
 import { uiContext } from "../ui";
 import { useMerge } from "../use/use-merge";
+import utilLog from "../utils/util.log";
 
 const { merge } = useMerge();
 
@@ -203,6 +204,8 @@ function useFixedHeight(props, ctx, { tableRef, containerRef }) {
     const tableHeight = tableDom.getBoundingClientRect().height;
     const headHeight = headDom.getBoundingClientRect().height;
     maxHeightRef.value = tableHeight - headHeight - 2;
+
+    utilLog.debug("table max height recomputed ", maxHeightRef.value);
   }
 
   function watchBodyHeightChange() {
@@ -212,6 +215,7 @@ function useFixedHeight(props, ctx, { tableRef, containerRef }) {
     }
     const tableWrapperDom = containerDom.querySelector(".inner .body");
     const observer = new ResizeObserver(function (entries) {
+      utilLog.debug("table resized", entries);
       // 每次被观测的元素尺寸发生改变这里都会执行
       if (entries.length > 0 && entries[0].contentRect.height > 0) {
         computeBodyHeight();

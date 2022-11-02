@@ -69,8 +69,9 @@ export function useCrud(ctx: UseCrudProps) {
           if (options.mode?.name === "local") {
             expose.updateTableRow(context.index, context.form, options.mode.isMergeWhenUpdate);
           } else {
-            await crudBinding.value.request.editRequest(context);
+            const res = await crudBinding.value.request.editRequest(context);
             doRefresh();
+            return res;
           }
         }
       },
@@ -81,8 +82,9 @@ export function useCrud(ctx: UseCrudProps) {
             const index = options.mode.isAppendWhenAdd ? expose.getTableData().length : 0;
             expose.insertTableRow(index, context.form);
           } else {
-            await crudBinding.value.request.addRequest(context);
+            const res = await crudBinding.value.request.addRequest(context);
             doRefresh();
+            return res;
           }
         }
       }

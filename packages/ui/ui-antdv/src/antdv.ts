@@ -44,7 +44,7 @@ import {
   ButtonCI,
   PaginationCI
 } from "@fast-crud/ui-interface";
-import {DividerCI, PopoverCI, TooltipCI} from "../../ui-interface/src/ui-interface";
+import { DividerCI, PopoverCI, TooltipCI } from "../../ui-interface/src/ui-interface";
 
 export class Antdv implements UiInterface {
   constructor(target) {
@@ -448,12 +448,12 @@ export class Antdv implements UiInterface {
     name: "a-input-number"
   };
   switch: SwitchCI = {
-    activeColor: "active-color",
+    activeColor: "checkedColor",
     activeText: "checkedChildren",
-    activeValue: "active-value",
-    inactiveColor: "inactive-color",
+    activeValue: "checkedValue",
+    inactiveColor: "unCheckedColor",
     inactiveText: "unCheckedChildren",
-    inactiveValue: "inactive-value",
+    inactiveValue: "unCheckedValue",
     modelValue: "checked",
     name: "a-switch"
   };
@@ -562,12 +562,12 @@ export class Antdv implements UiInterface {
     trigger: "default"
   };
   divider: DividerCI = {
-    name: "a-divider",
+    name: "a-divider"
   };
   popover: PopoverCI = {
-    name:"a-popover",
+    name: "a-popover",
     contentSlotName: "content",
     referenceSlotName: "default",
     visible: "visible"
-  }
+  };
 }
