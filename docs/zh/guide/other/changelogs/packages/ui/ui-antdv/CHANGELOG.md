@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.5.2](https://github.com/fast-crud/fast-crud/compare/v1.5.1...v1.5.2) (2022-11-03)
+
+
+### Bug Fixes
+
+* 修复dict-switch  dict的value配置无效的bug ([5f40591](https://github.com/fast-crud/fast-crud/commit/5f405912f1d17c1682d9106af6fb51252d06c054))
+
+
+
+
+
 ## [1.5.1](https://github.com/fast-crud/fast-crud/compare/v1.5.0...v1.5.1) (2022-10-28)
 
 **Note:** Version bump only for package @fast-crud/ui-antdv
