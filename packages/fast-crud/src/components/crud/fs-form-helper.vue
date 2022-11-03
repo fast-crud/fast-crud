@@ -1,12 +1,10 @@
 <template>
   <div class="fs-form-helper">
-    <template v-if="typeof helper === 'string'">{{ helper }}</template>
+    <pre v-if="typeof helper === 'string'">{{ helper }}</pre>
     <template v-else-if="helper.render">
       <fs-render :render-func="helper.render" :scope="scope" />
     </template>
-    <template v-else-if="helper.text">
-      {{ helper.text }}
-    </template>
+    <pre v-else-if="helper.text">{{ helper.text }}</pre>
   </div>
 </template>
 <script>
@@ -33,6 +31,16 @@ export default {
       ]
     },
     scope: {}
-  }
+  },
+  setup(props) {}
 };
 </script>
+<style lang="less">
+.fs-form-helper {
+  color: #878787;
+  font-size: 12px;
+  pre {
+    font-family: inherit;
+  }
+}
+</style>
