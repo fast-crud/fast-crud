@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.5.3](https://github.com/fast-crud/fast-crud/compare/v1.5.2...v1.5.3) (2022-11-03)
+
+
+### Bug Fixes
+
+* 修复值为0时表单不能赋值的bug ([50715aa](https://github.com/fast-crud/fast-crud/commit/50715aaa89091173ef1fb2c7342d799d27d9cf07))
+
+
+
+
+
 ## [1.5.2](https://github.com/fast-crud/fast-crud/compare/v1.5.1...v1.5.2) (2022-11-03)
 
 
