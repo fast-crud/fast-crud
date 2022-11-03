@@ -1,6 +1,6 @@
 {
   "name": "@fast-crud/fast-extends",
-  "version": "1.5.1",
+  "version": "1.5.2",
   "private": false,
   "main": "./dist/fast-extends.umd.js",
   "module": "./dist/fast-extends.es.js",
@@ -34,7 +34,7 @@
     "wangeditor": "^4.7.5"
   },
   "devDependencies": {
-    "@fast-crud/fast-crud": "^1.5.1",
+    "@fast-crud/fast-crud": "^1.5.2",
     "@iconify/json": "^1.1.376",
     "@ls-lint/ls-lint": "^1.9.2",
     "@rollup/plugin-commonjs": "^21.0.1",

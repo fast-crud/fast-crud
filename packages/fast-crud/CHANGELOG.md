@@ -3,6 +3,25 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.5.2](https://github.com/fast-crud/fast-crud/compare/v1.5.1...v1.5.2) (2022-11-03)
+
+
+### Bug Fixes
+
+* 修复buttons click options报错的问题 ([5169ca9](https://github.com/fast-crud/fast-crud/commit/5169ca9dcd1b6ab084a22baee2719ccbf165a243))
+* helper icon调整 ([1e011ae](https://github.com/fast-crud/fast-crud/commit/1e011ae54515631234c32b9dfdf931e8afd9127d))
+
+
+### Performance Improvements
+
+* 优化antdv的labelWidth设置，优化grid布局示例 ([3516af6](https://github.com/fast-crud/fast-crud/commit/3516af67315b9169d1379e924aafe59f88cff225))
+* 优化grid布局示例 ([8998e60](https://github.com/fast-crud/fast-crud/commit/8998e60abcd2788e05402278d9975a9488b488a4))
+* actionbar 支持order ([c950997](https://github.com/fast-crud/fast-crud/commit/c950997d285c44064f4b2606612fbb4d97a0d083))
+
+
+
+
+
 ## [1.5.1](https://github.com/fast-crud/fast-crud/compare/v1.5.0...v1.5.1) (2022-10-28)
 
 
