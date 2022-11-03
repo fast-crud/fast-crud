@@ -9,7 +9,7 @@
     :rule-path="item.key"
   >
     <template #label>
-      {{ item.label || item.title }}
+      <span>{{ item.label || item.title }}</span>
 
       <component
         :is="$fsui.tooltip.name"
@@ -22,7 +22,9 @@
           </span>
         </template>
         <template #[$fsui.tooltip.trigger]>
-          <fs-icon class="fs-form-item-label-icon" :icon="$fsui.icons.question"></fs-icon>
+          <span class="fs-form-item-label-icon">
+            <fs-icon class="fs-form-item-label-icon-inner" :icon="$fsui.icons.question"></fs-icon>
+          </span>
         </template>
       </component>
     </template>
@@ -138,8 +140,21 @@ export default {
 
 <style lang="less">
 .fs-form-item {
+  .ant-form-item-label {
+    line-height: 1;
+  }
+  .el-form-item {
+    .fs-form-item-label-icon {
+      line-height: 1;
+      height: inherit;
+    }
+  }
   .fs-form-item-label-icon {
     margin: 0 2px;
+    .fs-form-item-label-icon-inner {
+      line-height: inherit;
+      height: inherit;
+    }
   }
   .fs-form-item-content {
     display: flex;
