@@ -259,7 +259,7 @@ export default {
       }
       if (initialForm) {
         const value = _.get(initialForm, key);
-        if (!!value) {
+        if (value != null) {
           _.set(form, key, value);
         }
       }
