@@ -17,7 +17,9 @@
         v-bind="computedHelperTooltip"
       >
         <template #[$fsui.tooltip.content]>
-          <fs-form-helper :helper="item.helper" :scope="buildItemScope(item)" />
+          <span class="fs-form-helper-tooltip">
+            <fs-form-helper :helper="item.helper" :scope="buildItemScope(item)" />
+          </span>
         </template>
         <template #[$fsui.tooltip.trigger]>
           <fs-icon class="fs-form-item-label-icon" :icon="$fsui.icons.question"></fs-icon>
@@ -152,6 +154,11 @@ export default {
         flex: 1;
       }
     }
+  }
+}
+.fs-form-helper-tooltip {
+  .fs-form-helper {
+    color: inherit;
   }
 }
 </style>

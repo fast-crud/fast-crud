@@ -534,6 +534,7 @@ export default {
     // gap: 0 20px; //列间距 20px
     .fs-col {
       max-width: 100%;
+      width: 100%;
     }
 
     // antdv
@@ -561,12 +562,6 @@ export default {
   flex-wrap: wrap;
   .fs-row {
     width: 100%;
-  }
-
-  .fs-form-helper {
-    color: #7d7d7d;
-    font-size: 12px;
-    line-height: 1.5;
   }
 }
 </style>

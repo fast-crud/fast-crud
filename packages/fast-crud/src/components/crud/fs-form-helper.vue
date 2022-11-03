@@ -37,7 +37,9 @@ export default {
 </script>
 <style lang="less">
 .fs-form-helper {
-  color: #878787;
+  color: #7e7e7e;
+  line-height: 1.3;
+  margin-top: 2px;
   font-size: 12px;
   pre {
     font-family: inherit;
