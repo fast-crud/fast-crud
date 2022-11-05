@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.5.4](https://github.com/fast-crud/fast-crud/compare/v1.5.3...v1.5.4) (2022-11-05)
+
+
+### Performance Improvements
+
+* tab分组表单校验失败后在tab签上显示错误 ([bc673fb](https://github.com/fast-crud/fast-crud/commit/bc673fbbe79ff3d851133dbab2118db3deeb00d8))
+
+
+
+
+
 ## [1.5.2](https://github.com/fast-crud/fast-crud/compare/v1.5.1...v1.5.2) (2022-11-03)
 
 
