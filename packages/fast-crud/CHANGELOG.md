@@ -3,6 +3,23 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.5.4](https://github.com/fast-crud/fast-crud/compare/v1.5.3...v1.5.4) (2022-11-05)
+
+
+### Bug Fixes
+
+* 修复自动查询失效的bug ([9640150](https://github.com/fast-crud/fast-crud/commit/96401509ef447c2d14c65d65e2a5e5bd9f59cf83))
+* dict 动态添加data选项，value-format无法动态监听变化的问题 ([5346d57](https://github.com/fast-crud/fast-crud/commit/5346d5737627702fc2e821db173a5dbdb65e226c))
+
+
+### Performance Improvements
+
+* tab分组表单校验失败后在tab签上显示错误 ([bc673fb](https://github.com/fast-crud/fast-crud/commit/bc673fbbe79ff3d851133dbab2118db3deeb00d8))
+
+
+
+
+
 ## [1.5.3](https://github.com/fast-crud/fast-crud/compare/v1.5.2...v1.5.3) (2022-11-03)
 
 

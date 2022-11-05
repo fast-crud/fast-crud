@@ -3,6 +3,14 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.5.4](https://github.com/fast-crud/fast-crud/compare/v1.5.3...v1.5.4) (2022-11-05)
+
+**Note:** Version bump only for package @fast-crud/fast-extends
+
+
+
+
+
 ## [1.5.3](https://github.com/fast-crud/fast-crud/compare/v1.5.2...v1.5.3) (2022-11-03)
 
 **Note:** Version bump only for package @fast-crud/fast-extends
