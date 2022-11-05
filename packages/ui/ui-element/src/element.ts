@@ -47,9 +47,9 @@ import { DividerCI, FormCI, PopoverCI, TooltipCI } from "../../ui-interface/src/
 export class Element implements UiInterface {
   constructor(target) {
     if (target) {
-      this.notification.get = target.Notification;
-      this.message.get = target.Message;
-      this.messageBox.get = target.MessageBox;
+      this.notification.instance = target.Notification;
+      this.message.instance = target.Message;
+      this.messageBox.instance = target.MessageBox;
     }
   }
 
@@ -88,52 +88,52 @@ export class Element implements UiInterface {
 
   messageBox: MessageBoxCI = {
     name: "el-message-box",
-    get: undefined,
+    instance: undefined,
     open: async context => {
-      return this.messageBox.get(context);
+      return this.messageBox.instance(context);
     },
     confirm: async context => {
-      return this.messageBox.get(context);
+      return this.messageBox.instance(context);
     }
   };
 
   message: MessageCI = {
-    get: undefined,
+    instance: undefined,
     name: "el-message",
     open: context => {
-      this.message.get.open(context);
+      this.message.instance.open(context);
     },
     success: msg => {
-      this.message.get.success(msg);
+      this.message.instance.success(msg);
     },
     error: msg => {
-      this.message.get.error(msg);
+      this.message.instance.error(msg);
     },
     warn: msg => {
-      this.message.get.warning(msg);
+      this.message.instance.warning(msg);
     },
     info: msg => {
-      this.message.get(msg);
+      this.message.instance(msg);
     }
   };
 
   notification: NotificationCI = {
-    get: undefined,
+    instance: undefined,
     name: "el-notification",
     open: context => {
-      this.notification.get.open(context);
+      this.notification.instance.open(context);
     },
     success: msg => {
-      this.notification.get.success(msg);
+      this.notification.instance.success(msg);
     },
     error: msg => {
-      this.notification.get.error(msg);
+      this.notification.instance.error(msg);
     },
     warn: msg => {
-      this.notification.get.warn(msg);
+      this.notification.instance.warn(msg);
     },
     info: msg => {
-      this.notification.get.success(msg);
+      this.notification.instance.success(msg);
     }
   };
 
@@ -281,6 +281,16 @@ export class Element implements UiInterface {
     },
     validateWrap: async formRef => {
       return formRef.validate();
+    },
+    transformValidateErrors: (e: Error) => {
+      // @ts-ignore
+      const errorFields = e.code;
+      const errors = {};
+      for (const errorField of errorFields) {
+        const name = errorField.field;
+        errors[name] = true;
+      }
+      return errors;
     }
   };
 

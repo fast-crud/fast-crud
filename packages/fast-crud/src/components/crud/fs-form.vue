@@ -5,7 +5,8 @@
     class="fs-form"
     :class="{
       'fs-form-grid': display === 'grid',
-      'fs-form-flex': display === 'flex'
+      'fs-form-flex': display === 'flex',
+      'fs-form-invalid': validRef === false
     }"
     :model="form"
   >
@@ -46,10 +47,10 @@
           v-if="groupItemShow(groupItem)"
           :[$fsui.collapse.keyName]="groupKey"
           v-bind="groupItem"
+          :class="{ 'fs-form-group-error': errorsRef['group.' + groupKey] }"
         >
-          <!-- tabPane的slots -->
           <template v-for="(item, slotName) of groupItem.slots" :key="slotName" #[slotName]="scope">
-            <fs-render :render-func="item" :scope="scope" />
+            <fs-render :render-func="item" :scope="{ ...scope, hasError: errorsRef['group.' + groupKey] }" />
           </template>
           <!-- row -->
           <component :is="$fsui.row.name" class="fs-row">
@@ -326,13 +327,14 @@ export default {
         return {};
       }
       //找出没有添加进分组的字段
-      const groupedKeys = new Set();
-      _.forEach(group?.groups, (groupItem) => {
+      const groupedKeys = {};
+      _.forEach(group?.groups, (groupItem, key) => {
         _.forEach(groupItem.columns, (item) => {
           if (computedColumns.value[item] == null) {
             utils.logger.warn("无效的分组字段：" + item);
+            return;
           }
-          groupedKeys.add(item);
+          groupedKeys[item] = key;
         });
       });
 
@@ -362,7 +364,7 @@ export default {
         if (value.order == null) {
           value.order = Constants.orderDefault;
         }
-        if (!computedGroup.value?.groupedKeys?.has(key)) {
+        if (computedGroup.value?.groupedKeys == null || computedGroup.value?.groupedKeys[key] == null) {
           columns.push(value);
         }
         value.col = mergeCol(value.col);
@@ -389,12 +391,31 @@ export default {
       ctx.emit("reset");
     }
 
-    async function submit() {
-      const valid = await ui.form.validateWrap(formRef.value);
-      if (!valid) {
-        ctx.emit("validationError", scope.value);
-        return;
+    const validRef = ref();
+    const errorsRef = ref({});
+
+    function fillGroupError(fieldErrors) {
+      for (let key in fieldErrors) {
+        const group = computedGroup.value.groupedKeys[key];
+        if (group != null) {
+          fieldErrors["group." + group] = true;
+        }
       }
+    }
+    async function submit() {
+      try {
+        errorsRef.value = {};
+        await ui.form.validateWrap(formRef.value);
+        validRef.value = true;
+      } catch (e) {
+        validRef.value = false;
+        const validateErrors = ui.form.transformValidateErrors(e);
+        fillGroupError(validateErrors);
+        errorsRef.value = validateErrors;
+        ctx.emit("validationError", scope.value);
+        throw e;
+      }
+
       const formData = _.cloneDeep(toRaw(form));
       const submitScope = { ...scope.value, form: formData };
       logger.debug("form submit", JSON.stringify(form));
@@ -495,6 +516,8 @@ export default {
         _.set(form, key, value);
         doValueChange(key, value);
       },
+      validRef,
+      errorsRef,
       formRef,
       computedColumns,
       computedDefaultColumns,
@@ -525,6 +548,9 @@ export default {
     margin-top: 10px;
     padding-left: 30px;
     padding-right: 30px;
+  }
+
+  .fs-form-invalid {
   }
 }
 .fs-form-grid {
