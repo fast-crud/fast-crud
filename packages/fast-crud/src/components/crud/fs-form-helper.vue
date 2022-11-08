@@ -43,6 +43,8 @@ export default {
   font-size: 12px;
   pre {
     font-family: inherit;
+    white-space: pre-wrap;
+    word-wrap: break-word;
   }
 }
 </style>
