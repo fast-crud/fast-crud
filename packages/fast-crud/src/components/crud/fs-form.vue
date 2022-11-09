@@ -10,10 +10,10 @@
     :model="form"
   >
     <!-- row -->
-    <component :is="$fsui.row.name" class="fs-row">
+    <component :is="$fsui.row.name" class="fs-row" v-bind="row">
       <!-- col -->
       <template v-for="item in computedDefaultColumns" :key="item?.key">
-        <component :is="$fsui.col.name" v-if="formItemShow(item)" class="fs-col" v-bind="mergeCol(item.col)">
+        <component :is="$fsui.col.name" v-if="formItemShow(item)" class="fs-col" v-bind="item.col">
           <fs-form-item
             v-if="item.blank !== true"
             :ref="
