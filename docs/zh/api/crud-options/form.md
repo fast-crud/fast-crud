@@ -49,6 +49,11 @@
 * 类型：Object
 * 默认：`{span:12}` 一行显示两个字段，分两列布局（如果配置`{span:24}`，则为单列布局）
 
+## row
+* 说明: `el-row`|`a-row`配置,可以配置`gutter`
+* 类型：Object
+
+
 ## prefixRender
 * 说明: 可以在字段组件前面自定义渲染
 * 类型：Function
