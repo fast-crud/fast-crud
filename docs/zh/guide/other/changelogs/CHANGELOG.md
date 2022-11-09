@@ -3,6 +3,55 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.5.4](https://github.com/fast-crud/fast-crud/compare/v1.5.3...v1.5.4) (2022-11-05)
+
+
+### Bug Fixes
+
+* 修复自动查询失效的bug ([9640150](https://github.com/fast-crud/fast-crud/commit/96401509ef447c2d14c65d65e2a5e5bd9f59cf83))
+* dict 动态添加data选项，value-format无法动态监听变化的问题 ([5346d57](https://github.com/fast-crud/fast-crud/commit/5346d5737627702fc2e821db173a5dbdb65e226c))
+
+
+### Performance Improvements
+
+* tab分组表单校验失败后在tab签上显示错误 ([bc673fb](https://github.com/fast-crud/fast-crud/commit/bc673fbbe79ff3d851133dbab2118db3deeb00d8))
+
+
+
+
+
+## [1.5.3](https://github.com/fast-crud/fast-crud/compare/v1.5.2...v1.5.3) (2022-11-03)
+
+
+### Bug Fixes
+
+* 修复值为0时表单不能赋值的bug ([50715aa](https://github.com/fast-crud/fast-crud/commit/50715aaa89091173ef1fb2c7342d799d27d9cf07))
+
+
+
+
+
+## [1.5.2](https://github.com/fast-crud/fast-crud/compare/v1.5.1...v1.5.2) (2022-11-03)
+
+
+### Bug Fixes
+
+* 修复buttons click options报错的问题 ([5169ca9](https://github.com/fast-crud/fast-crud/commit/5169ca9dcd1b6ab084a22baee2719ccbf165a243))
+* 修复dict-switch  dict的value配置无效的bug ([5f40591](https://github.com/fast-crud/fast-crud/commit/5f405912f1d17c1682d9106af6fb51252d06c054))
+* helper icon调整 ([1e011ae](https://github.com/fast-crud/fast-crud/commit/1e011ae54515631234c32b9dfdf931e8afd9127d))
+
+
+### Performance Improvements
+
+* 优化antdv的labelWidth设置，优化grid布局示例 ([3516af6](https://github.com/fast-crud/fast-crud/commit/3516af67315b9169d1379e924aafe59f88cff225))
+* 优化grid布局示例 ([8998e60](https://github.com/fast-crud/fast-crud/commit/8998e60abcd2788e05402278d9975a9488b488a4))
+* actionbar 支持order ([c950997](https://github.com/fast-crud/fast-crud/commit/c950997d285c44064f4b2606612fbb4d97a0d083))
+* extends增加人性化时间格式化组件 ([c296780](https://github.com/fast-crud/fast-crud/commit/c2967809c341516e4de5aa0247f13c9a0172c460))
+
+
+
+
+
 ## [1.5.1](https://github.com/fast-crud/fast-crud/compare/v1.5.0...v1.5.1) (2022-10-28)
 
 

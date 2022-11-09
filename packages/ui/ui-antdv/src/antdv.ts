@@ -48,9 +48,9 @@ import { DividerCI, PopoverCI, TooltipCI } from "../../ui-interface/src/ui-inter
 
 export class Antdv implements UiInterface {
   constructor(target) {
-    this.notification.get = target.Notification;
-    this.message.get = target.Message;
-    this.messageBox.get = target.MessageBox;
+    this.notification.instance = target.Notification;
+    this.message.instance = target.Message;
+    this.messageBox.instance = target.MessageBox;
   }
 
   type = "antdv";
@@ -92,7 +92,7 @@ export class Antdv implements UiInterface {
 
   messageBox: MessageBoxCI = {
     name: "a-model",
-    get: undefined,
+    instance: undefined,
     open: context => {
       return this.messageBox.confirm(context);
     },
@@ -113,20 +113,20 @@ export class Antdv implements UiInterface {
           onOk,
           onCancel
         };
-        this.messageBox.get.confirm(newContext);
+        this.messageBox.instance.confirm(newContext);
       });
     }
   };
 
   message: MessageCI = {
-    get: undefined,
+    instance: undefined,
     name: "a-message",
     open: (type, context) => {
       let content = context;
       if (typeof context !== "string") {
         content = context.message || context.content;
       }
-      this.message.get[type](content);
+      this.message.instance[type](content);
     },
     success: context => {
       this.message.open("success", context);
@@ -143,7 +143,7 @@ export class Antdv implements UiInterface {
   };
 
   notification: NotificationCI = {
-    get: undefined,
+    instance: undefined,
     name: "a-notification",
     open: (type, context) => {
       if (typeof context === "string") {
@@ -153,9 +153,9 @@ export class Antdv implements UiInterface {
       }
       type = type || context.type;
       if (type) {
-        this.notification.get[type](context);
+        this.notification.instance[type](context);
       } else {
-        this.notification.get.open(context);
+        this.notification.instance.open(context);
       }
     },
     success: context => {
@@ -294,6 +294,17 @@ export class Antdv implements UiInterface {
     },
     validateWrap: async formRef => {
       return formRef.validate();
+    },
+    transformValidateErrors: (e: Error) => {
+      // @ts-ignore
+      const errorFields = e.errorFields;
+      const errors = {};
+      for (const errorField of errorFields) {
+        for (const name of errorField.name) {
+          errors[name] = true;
+        }
+      }
+      return errors;
     }
   };
 

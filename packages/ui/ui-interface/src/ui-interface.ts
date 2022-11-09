@@ -7,6 +7,7 @@ export interface FormCI {
   inlineLayout: Object;
   resetWrap: Function;
   validateWrap: Function;
+  transformValidateErrors: (e:Error) => { [key: string]: any }
 }
 export interface SelectCI extends CI {
   modelValue;
@@ -52,12 +53,16 @@ export interface DialogCI extends CI {
   footer: Function;
   buildOnClosedBind: Function;
   customClass;
+  titleSlotName?:string;
+  buildWidthBind?:any;
+  buildInitBind?:any;
 }
 
 export interface DrawerCI extends CI {
   visible;
   customClass;
   width;
+  hasContentWrap?:string;
 }
 
 export interface TableColumnCI extends CI {
@@ -68,7 +73,7 @@ export interface TableColumnCI extends CI {
 }
 
 export interface TableCI extends CI {
-  defaultRowKey: string;
+  defaultRowKey?: (string|((rowData:any)=>any));
   data;
   fixedHeaderNeedComputeBodyHeight: boolean;
   headerDomSelector: string; //用于计算高度
@@ -83,11 +88,11 @@ export interface TableCI extends CI {
   /**
    * render的方法名
    */
-  renderMethod: string;
+  renderMethod?: string;
   /**
    * render 方法触发时的参数构建出一个scope
    */
-  rebuildRenderScope: Function;
+  rebuildRenderScope?: Function;
 }
 
 export interface CheckboxGroupCI extends CI {
@@ -128,6 +133,8 @@ export interface MessageCI extends CI {
   error;
   warn;
   info;
+  instance:any;
+  getInstance?:any
 }
 
 export type MessageBoxContextType = {
@@ -141,6 +148,8 @@ export type MessageBoxOpenType = (context: MessageBoxContextType) => Promise<voi
 export interface MessageBoxCI extends CI {
   open: MessageBoxOpenType;
   confirm: MessageBoxOpenType;
+  instance:any;
+  getInstance?:any
 }
 export interface NotificationCI extends CI {
   open;
@@ -148,10 +157,12 @@ export interface NotificationCI extends CI {
   error;
   warn;
   info;
+  instance:any;
+  getInstance?:any
 }
 export interface IconCI extends CI {
   isComponent: boolean;
-  circle: Record<string, any>;
+  circle?: Record<string, any>;
 }
 export interface FormItemCI extends CI {
   prop: string;
@@ -179,7 +190,7 @@ export interface FormWrapperCI extends CI {
   buildWidthBind: (is, width: any) => {};
   buildInitBind: (is) => {};
   buildInnerBind: (opts: any) => {};
-  hasContentWrap: (is) => string;
+  hasContentWrap?: (is) => string|undefined;
 }
 export interface DatePickerCI extends CI {
   modelValue;
@@ -195,9 +206,9 @@ export interface DropdownCI extends CI {
    * 选项的渲染模式，slot or config
    */
   renderMode: string;
-  value: string;
-  label: string;
-  children: string;
+  value?: string;
+  label?: string;
+  children?: string;
 }
 export interface DropdownMenuCI extends CI {
   command: Function;

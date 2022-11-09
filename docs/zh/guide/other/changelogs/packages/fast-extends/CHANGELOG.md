@@ -3,6 +3,33 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.5.4](https://github.com/fast-crud/fast-crud/compare/v1.5.3...v1.5.4) (2022-11-05)
+
+**Note:** Version bump only for package @fast-crud/fast-extends
+
+
+
+
+
+## [1.5.3](https://github.com/fast-crud/fast-crud/compare/v1.5.2...v1.5.3) (2022-11-03)
+
+**Note:** Version bump only for package @fast-crud/fast-extends
+
+
+
+
+
+## [1.5.2](https://github.com/fast-crud/fast-crud/compare/v1.5.1...v1.5.2) (2022-11-03)
+
+
+### Performance Improvements
+
+* extends增加人性化时间格式化组件 ([c296780](https://github.com/fast-crud/fast-crud/commit/c2967809c341516e4de5aa0247f13c9a0172c460))
+
+
+
+
+
 ## [1.5.1](https://github.com/fast-crud/fast-crud/compare/v1.5.0...v1.5.1) (2022-10-28)
 
 **Note:** Version bump only for package @fast-crud/fast-extends
