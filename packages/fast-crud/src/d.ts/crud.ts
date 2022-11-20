@@ -373,6 +373,11 @@ export type FormItemProps = {
    */
   blank?: boolean;
 
+  /**
+   * 是否提交给后台
+   */
+  submit?: boolean;
+
   [key: string]: any;
 };
 
@@ -380,6 +385,10 @@ export type FormItemProps = {
  * crud外部容器配置
  */
 export type ContainerProps = {
+  /**
+   * 布局容器组件名称
+   */
+  is?: string;
   [key: string]: any;
 };
 
