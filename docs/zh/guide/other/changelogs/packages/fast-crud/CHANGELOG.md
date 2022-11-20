@@ -3,6 +3,39 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.6.1](https://github.com/fast-crud/fast-crud/compare/v1.6.0...v1.6.1) (2022-11-20)
+
+**Note:** Version bump only for package @fast-crud/fast-crud
+
+
+
+
+
+# [1.6.0](https://github.com/fast-crud/fast-crud/compare/v1.5.4...v1.6.0) (2022-11-20)
+
+
+### Bug Fixes
+
+* 修复刷新后compute失效的bug ([a9f4e1d](https://github.com/fast-crud/fast-crud/commit/a9f4e1db64e290d00bd4fe182b4c0a012005d724))
+* 修复local模式下调用pageRequest报错的bug ([8ed92bf](https://github.com/fast-crud/fast-crud/commit/8ed92bffc70da38d3fbb59bf2435770d3e09d5b7))
+* helper换行 ([053c355](https://github.com/fast-crud/fast-crud/commit/053c3553a43d586d0b934d26e9b3189048a4ec19))
+* search的valueChange支持object模式 ([133da11](https://github.com/fast-crud/fast-crud/commit/133da1130583417205c86e93bc03ce021ba82234))
+
+
+### Features
+
+* 支持配置表单字段不提交后台key.form.submit ([0b77875](https://github.com/fast-crud/fast-crud/commit/0b77875eed96d7894d40bdcbd59b05d43f5d7da8))
+* 支持自定义布局，支持Card布局 ([879e212](https://github.com/fast-crud/fast-crud/commit/879e2125f3125433f3cd3ef7a50dddb2381a7450))
+
+
+### Performance Improvements
+
+* form 增加row配置 ([1305207](https://github.com/fast-crud/fast-crud/commit/130520755745e4fb4c60994104a43b4fb5879390))
+
+
+
+
+
 ## [1.5.4](https://github.com/fast-crud/fast-crud/compare/v1.5.3...v1.5.4) (2022-11-05)
 
 
