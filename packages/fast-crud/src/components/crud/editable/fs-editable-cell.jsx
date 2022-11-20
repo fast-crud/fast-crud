@@ -13,12 +13,7 @@ export default {
      * 组件配置
      */
     item: {},
-    /**
-     * 获取scope参数方法
-     */
-    getScope: {
-      type: Function
-    },
+    scope: {},
     index: {},
     columnKey: {},
     editable: {}
@@ -33,11 +28,13 @@ export default {
       return () => {};
     }
 
-    const refForm = computed(() => {
+    const getFormRefFunc = () => {
       return props.editable?.getForm();
-    });
+    };
 
-    let computedForm = doComputed(refForm, props.getScope);
+    let computedForm = doComputed(getFormRefFunc, () => {
+      return props.scope;
+    });
 
     let computedIsEditable = computed(() => {
       return computedForm.value && computedForm.value.show !== false && props.editable?.isEditable();
@@ -45,7 +42,7 @@ export default {
 
     return () => {
       if (!computedIsEditable.value) {
-        return <fs-cell ref={"targetRef"} item={props.item} getScope={props.getScope} {...ctx.attrs} />;
+        return <fs-cell ref={"targetRef"} item={props.item} scope={props.scope} {...ctx.attrs} />;
       }
       const editable = props.editable;
 

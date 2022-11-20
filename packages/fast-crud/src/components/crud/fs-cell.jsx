@@ -8,22 +8,24 @@ export default {
   props: {
     item: {},
     /**
-     * 获取scope参数方法
+     * scope
      */
-    getScope: {
-      type: Function
-    },
+    scope: {},
     slots: {}
   },
   setup(props) {
     const { doComputed } = useCompute();
-    const computedPropsComponent = computed(() => {
+    const computedPropsComponent = () => {
       return props.item.component;
-    });
-    const computedComponent = doComputed(computedPropsComponent, props.getScope);
-    const cellRender = (props, ctx) => {
+    };
+    const getScope = () => {
+      return props.scope;
+    };
+    const computedComponent = doComputed(computedPropsComponent, getScope);
+    const cellRender = () => {
+      // console.log("vs ", p.item.key, p.getScope().value, props.getScope().value);
       let title = props.item.showTitle;
-      let value = props.getScope().value;
+      let value = props.scope.value;
       if (title === true) {
         title = value;
       }
@@ -35,20 +37,18 @@ export default {
         );
       };
       if (props.slots) {
-        return cellContentRender(props.slots(props.getScope()));
+        return cellContentRender(props.slots(props.scope));
       } else if (props.item.formatter) {
-        return cellContentRender(props.item.formatter(props.getScope()));
+        return cellContentRender(props.item.formatter(props.scope));
       } else if (props.item.cellRender) {
-        return cellContentRender(props.item.cellRender(props.getScope()));
+        return cellContentRender(props.item.cellRender(props.scope));
       } else if (props.item.render) {
         console.warn("column.render 配置已废弃，请使用column.cellRender代替");
       } else if (computedComponent.value?.name) {
         if (computedComponent.value?.show === false) {
           return;
         }
-        return (
-          <fs-component-render title={title} ref={"targetRef"} {...computedComponent.value} scope={props.getScope()} />
-        );
+        return <fs-component-render title={title} ref={"targetRef"} {...computedComponent.value} scope={props.scope} />;
       } else {
         return cellContentRender(value);
       }

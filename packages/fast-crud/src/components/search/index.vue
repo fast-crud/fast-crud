@@ -231,39 +231,46 @@ export default {
         logger.warn("search.value配置不支持AsyncCompute类型的动态计算");
       }
     });
-    const computedColumns = doComputed(props.columns, getContextFn, null, (value) => {
-      if (!props.validate) {
-        //如果关闭validate则去掉rules
-        _.forEach(value, (item) => {
-          delete item.rules;
-        });
-      }
-      // 合并col
-      if (props.col) {
+    const computedColumns = doComputed(
+      () => {
+        return props.columns;
+      },
+      getContextFn,
+      null,
+      (value) => {
+        if (!props.validate) {
+          //如果关闭validate则去掉rules
+          _.forEach(value, (item) => {
+            delete item.rules;
+          });
+        }
+        // 合并col
+        if (props.col) {
+          _.forEach(value, (v, key) => {
+            v.col = _.merge({}, props.col, v.col);
+          });
+        }
+
+        //字段排序
+        let sortArr = [];
         _.forEach(value, (v, key) => {
-          v.col = _.merge({}, props.col, v.col);
+          v._key = key;
+          sortArr.push(v);
         });
+        sortArr = _.sortBy(sortArr, (item) => {
+          return item.order ?? Constants.orderDefault;
+        });
+
+        const sortedColumns = {};
+
+        sortArr.forEach((item) => {
+          let _key = item._key;
+          delete item._key;
+          sortedColumns[_key] = item;
+        });
+        return sortedColumns;
       }
-
-      //字段排序
-      let sortArr = [];
-      _.forEach(value, (v, key) => {
-        v._key = key;
-        sortArr.push(v);
-      });
-      sortArr = _.sortBy(sortArr, (item) => {
-        return item.order ?? Constants.orderDefault;
-      });
-
-      const sortedColumns = {};
-
-      sortArr.forEach((item) => {
-        let _key = item._key;
-        delete item._key;
-        sortedColumns[_key] = item;
-      });
-      return sortedColumns;
-    });
+    );
 
     //默认值
     _.forEach(computedColumns.value, (column, key) => {

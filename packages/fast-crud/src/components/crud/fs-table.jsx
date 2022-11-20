@@ -6,7 +6,7 @@ import logger from "../../utils/util.log";
 import utilLog from "../../utils/util.log";
 import "./fs-table.less";
 
-function buildTableSlots({ props, ctx, ui, getContextFn, componentRefs, renderRowHandle, renderCellComponent }) {
+function buildTableSlots({ props, ui, renderRowHandle, renderCellComponent }) {
   const tableComp = resolveDynamicComponent(ui.table.name);
   const tableColumnComp = resolveDynamicComponent(ui.tableColumn.name);
   const tableColumnGroupComp = resolveDynamicComponent(ui.tableColumnGroup.name);
@@ -288,14 +288,14 @@ export default {
       // console.log("render cell component",item.key,scope.record)
       const cellSlotName = "cell_" + item.key;
       scope.row = scope[tableColumnCI.row];
-      const getScopeFn = () => {
-        return getContextFn(item, scope);
-      };
+      // const getScopeFn = () => {
+      //   return getContextFn(item, scope);
+      // };
+      const newScope = getContextFn(item, scope);
       const vModel = {
         modelValue: _.get(scope[tableColumnCI.row], item.key),
         "onUpdate:modelValue": (value) => {
           _.set(scope[tableColumnCI.row], item.key, value);
-          const newScope = getContextFn(item, scope);
           ctx.emit("value-change", newScope);
           if (item.valueChange) {
             item.valueChange(newScope);
@@ -325,13 +325,13 @@ export default {
             index={index}
             item={item}
             editable={editable}
-            getScope={getScopeFn}
+            scope={newScope}
             slots={cellSlots}
             {...vModel}
           />
         );
       } else {
-        return <fs-cell ref={setRef} item={item} getScope={getScopeFn} slots={cellSlots} {...vModel} />;
+        return <fs-cell ref={setRef} item={item} scope={newScope} slots={cellSlots} {...vModel} />;
       }
     };
 
@@ -347,7 +347,7 @@ export default {
     const renderMode = ui.table.renderMode;
     if (renderMode === "slot") {
       const computedTableSlots = computed(() => {
-        return buildTableSlots({ props, ctx, ui, getContextFn, componentRefs, renderRowHandle, renderCellComponent });
+        return buildTableSlots({ props, ui, renderRowHandle, renderCellComponent });
       });
 
       // 使用config render

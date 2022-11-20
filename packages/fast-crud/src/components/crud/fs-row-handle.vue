@@ -116,11 +116,16 @@ export default defineComponent({
         group: props.group
       };
     });
-    const computeProps = doComputed(pickedProps, () => {
-      const index = props.scope[ui.tableColumn.index];
-      const row = props.scope[ui.tableColumn.row];
-      return { ...props.scope, index, row };
-    });
+    const computeProps = doComputed(
+      () => {
+        return pickedProps.value;
+      },
+      () => {
+        const index = props.scope[ui.tableColumn.index];
+        const row = props.scope[ui.tableColumn.row];
+        return { ...props.scope, index, row };
+      }
+    );
 
     //const computeProps = { value: props };
     const computedHandleBtns = computed(() => {

@@ -14,6 +14,9 @@ function isSyncCompute(value) {
 }
 function findComputeValues(target, excludes, isAsync) {
   const foundMap = {};
+  if (target == null) {
+    return foundMap;
+  }
   const checkFunc = isAsync ? isAsyncCompute : isSyncCompute;
   eachDeep(
     target,
@@ -68,56 +71,41 @@ function setAsyncComputeValue(target, asyncValuesMap) {
   });
 }
 
-function doComputed(target, getContextFn, excludes, userComputedFn) {
-  //console.assert(target != null, "doComputed:targetRef 不能为空");
-  if (target == null) {
-    return computed(() => {
-      if (userComputedFn) {
-        return userComputedFn(null);
-      }
-      return null;
-    });
-  }
-  if (target instanceof Function) {
-    target = target();
-  }
+function doComputed(getTargetFunc, getContextFn, excludes, userComputedFn) {
+  const dependValues = computed(() => {
+    const target = getTargetFunc();
+    return findComputeValues(target, excludes, false);
+  });
 
-  let raw;
-  if (isRef(target)) {
-    raw = toRaw(target.value);
-  } else {
-    raw = toRaw(target);
-  }
-
-  const dependValues = findComputeValues(raw, excludes, false);
-
-  const dependAsyncValues = findComputeValues(raw, excludes, true);
-  const asyncCount = Object.keys(dependAsyncValues).length;
-  const syncCount = Object.keys(dependValues).length;
-  const asyncValuesMap = doAsyncCompute(dependAsyncValues, getContextFn);
+  const dependAsyncValues = computed(() => {
+    const target = getTargetFunc();
+    return findComputeValues(target, excludes, true);
+  });
+  //TODO computed
+  const asyncValuesMap = doAsyncCompute(dependAsyncValues.value, getContextFn);
 
   return computed(() => {
-    let targetValue = target;
-    if (isRef(target)) {
-      targetValue = target.value;
-    }
+    let target = getTargetFunc();
+    const asyncCount = Object.keys(dependAsyncValues.value).length;
+    const syncCount = Object.keys(dependValues.value).length;
+
     if (asyncCount > 0 || syncCount > 0) {
-      targetValue = cloneDeep(targetValue);
+      target = cloneDeep(target);
       if (syncCount > 0) {
-        _.forEach(dependValues, (value, key) => {
+        _.forEach(dependValues.value, (value, key) => {
           const context = getContextFn ? getContextFn(key, value) : {};
-          _.set(targetValue, key, value.computeFn(context));
+          _.set(target, key, value.computeFn(context));
         });
       }
       if (asyncCount > 0) {
-        setAsyncComputeValue(targetValue, asyncValuesMap);
+        setAsyncComputeValue(target, asyncValuesMap);
       }
     }
 
     if (userComputedFn) {
-      return userComputedFn(targetValue);
+      return userComputedFn(target);
     }
-    return targetValue;
+    return target;
   });
 }
 

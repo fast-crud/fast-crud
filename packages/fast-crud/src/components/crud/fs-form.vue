@@ -249,7 +249,9 @@ export default {
       }
     });
 
-    const computedColumns = doComputed(props.columns, getContextFn);
+    const computedColumns = doComputed(() => {
+      return props.columns;
+    }, getContextFn);
 
     // 初始数据赋值
     _.each(computedColumns.value, (item, key) => {
@@ -322,39 +324,46 @@ export default {
     }
 
     //构建分组数据
-    const computedGroup = doComputed(props.group, getContextFn(), null, (group) => {
-      if (!group) {
-        return {};
-      }
-      //找出没有添加进分组的字段
-      const groupedKeys = {};
-      _.forEach(group?.groups, (groupItem, key) => {
-        _.forEach(groupItem.columns, (item) => {
-          if (computedColumns.value[item] == null) {
-            utils.logger.warn("无效的分组字段：" + item);
-            return;
-          }
-          groupedKeys[item] = key;
+    const computedGroup = doComputed(
+      () => {
+        return props.group;
+      },
+      getContextFn(),
+      null,
+      (group) => {
+        if (!group) {
+          return {};
+        }
+        //找出没有添加进分组的字段
+        const groupedKeys = {};
+        _.forEach(group?.groups, (groupItem, key) => {
+          _.forEach(groupItem.columns, (item) => {
+            if (computedColumns.value[item] == null) {
+              utils.logger.warn("无效的分组字段：" + item);
+              return;
+            }
+            groupedKeys[item] = key;
+          });
         });
-      });
 
-      const type = group.groupType;
-      let wrapper = {
-        parent: ui.collapse.name,
-        child: ui.collapseItem.name
-      };
-      if (type === "tabs") {
-        wrapper.parent = ui.tabs.name;
-        wrapper.child = ui.tabPane.name;
+        const type = group.groupType;
+        let wrapper = {
+          parent: ui.collapse.name,
+          child: ui.collapseItem.name
+        };
+        if (type === "tabs") {
+          wrapper.parent = ui.tabs.name;
+          wrapper.child = ui.tabPane.name;
+        }
+        return merge(
+          {
+            wrapper,
+            groupedKeys
+          },
+          group
+        );
       }
-      return merge(
-        {
-          wrapper,
-          groupedKeys
-        },
-        group
-      );
-    });
+    );
 
     const computedDefaultColumns = computed(() => {
       const columns = [];
