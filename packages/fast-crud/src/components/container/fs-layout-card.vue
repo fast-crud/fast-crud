@@ -4,7 +4,7 @@
       <div class="fs-header-top">
         <slot name="header-top"></slot>
       </div>
-      <component :is="$fsui.card.name">
+      <component :is="cardComponentName">
         <slot name="search"></slot>
       </component>
       <div class="fs-header-bottom">
@@ -12,7 +12,7 @@
       </div>
     </template>
 
-    <component :is="$fsui.card.name" class="fs-layout-card-body">
+    <component :is="cardComponentName" class="fs-layout-card-body">
       <template #title>
         <div class="top-bar">
           <slot name="actionbar"></slot>
@@ -44,7 +44,8 @@
 </template>
 
 <script lang="ts">
-import { computed, defineComponent, inject } from "vue";
+import { computed, defineComponent, inject, ref } from "vue";
+import { useUi } from "../../use/use-ui";
 /**
  * card布局
  */
@@ -53,12 +54,19 @@ export default defineComponent({
   setup() {
     const getCrudBinding = inject("get:crudBinding");
     const searchShow = computed(() => {
+      if (getCrudBinding == null) {
+        return true;
+      }
       // @ts-ignore
       return getCrudBinding()?.search?.show;
     });
 
+    const { ui } = useUi();
+
+    const cardComponentName = ref(ui.card.name);
     return {
-      searchShow
+      searchShow,
+      cardComponentName
     };
   }
 });
