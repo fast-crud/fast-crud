@@ -255,6 +255,9 @@ export function useExpose(props: UseExposeProps): { expose: CrudExpose; crudExpo
       try {
         crudBinding.value.table.loading = true;
         logger.debug("pageRequest", query);
+        if (crudBinding.value.request.pageRequest == null) {
+          return;
+        }
         pageRes = await crudBinding.value.request.pageRequest(query);
       } finally {
         crudBinding.value.table.loading = false;
