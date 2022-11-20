@@ -26,8 +26,7 @@ export default {
       return props.scope;
     };
     const computedComponent = doComputed(computedPropsComponent, getScope);
-    const cellRender = () => {
-      // console.log("vs ", p.item.key, p.getScope().value, props.getScope().value);
+    return () => {
       let title = props.item.showTitle;
       let value = props.scope.value;
       if (title === true) {
@@ -57,8 +56,6 @@ export default {
         return cellContentRender(value);
       }
     };
-
-    return cellRender;
   },
   methods: {
     getTargetRef() {

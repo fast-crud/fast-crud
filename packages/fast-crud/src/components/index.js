@@ -1,5 +1,8 @@
 import FsPage from "./container/fs-page.vue";
 import FsContainer from "./container/fs-container.vue";
+import FsLayoutDefault from "./container/fs-layout-default.vue";
+import FsLayoutCard from "./container/fs-layout-card.vue";
+
 import FsButton from "./basic/fs-button.tsx";
 import FsIcon from "./basic/fs-icon.tsx";
 import FsIconify from "./basic/fs-iconify.vue";
@@ -36,6 +39,8 @@ import FsDictTree from "./extends/fs-dict-tree.vue";
 export {
   FsPage,
   FsContainer,
+  FsLayoutDefault,
+  FsLayoutCard,
   FsComponentRender,
   FsSlotRender,
   FsRender,

@@ -48,6 +48,7 @@ module.exports = {
                         {text: '数据字典', link: '/guide/advance/dict'},
                         {text: '动态计算', link: '/guide/advance/compute'},
                         {text: '自定义组件', link: '/guide/advance/custom-component'},
+                        {text: '页面布局', link: '/guide/advance/layout'},
                         {text: '插槽', link: '/guide/advance/slots'},
                         {text: '扩展', link: '/guide/advance/extends'},
                         {text: '权限控制', link: '/guide/advance/permission'},

@@ -1,62 +1,73 @@
 <template>
-  <fs-container ref="containerRef" v-bind="container" class="fs-crud-container" :class="computedClass">
-    <template #header>
-      <div class="fs-crud-header">
-        <div class="fs-header-top">
-          <slot name="header-top"></slot>
-        </div>
-        <div class="fs-crud-search">
-          <fs-search
-            ref="searchRef"
-            v-bind="search"
-            :slots="computedSearchSlots"
-            @search="onSearchSubmit"
-            @reset="onSearchReset"
-          />
-        </div>
-        <div class="fs-header-middle">
-          <slot name="header-middle"></slot>
-        </div>
+  <component
+    :is="container?.is || 'fs-layout-default'"
+    ref="containerRef"
+    v-bind="container"
+    class="fs-crud-container"
+    :class="computedClass"
+  >
+    <slot></slot>
 
-        <div v-if="actionbar && actionbar.show !== false" class="fs-crud-actionbar">
-          <slot name="actionbar-left"></slot>
-          <fs-actionbar v-bind="actionbar" />
-          <slot name="actionbar-right"></slot>
-        </div>
+    <template #header-top>
+      <slot name="header-top"></slot>
+    </template>
+    <template #header-bottom>
+      <slot name="header-bottom"></slot>
+    </template>
+    <template #header-middle>
+      <slot name="header-middle"></slot>
+    </template>
 
-        <div v-if="toolbar && toolbar.show !== false" class="fs-crud-toolbar">
-          <slot name="toolbar-left"></slot>
-          <fs-toolbar
-            v-bind="toolbar"
-            :slots="computedToolbarSlots"
-            :search="search.show"
-            :compact="toolbar.compact"
-            :columns="table.columns"
-            @update:search="$emit('update:search', $event)"
-            @update:compact="$emit('update:compact', $event)"
-            @update:columns="$emit('update:columns', $event)"
-            @refresh="$emit('refresh')"
-          />
-          <slot name="toolbar-right"></slot>
-        </div>
-        <div class="fs-header-bottom">
-          <slot name="header-bottom"></slot>
-        </div>
+    <template #search>
+      <div class="fs-crud-search">
+        <fs-search
+          ref="searchRef"
+          v-bind="search"
+          :slots="computedSearchSlots"
+          @search="onSearchSubmit"
+          @reset="onSearchReset"
+        />
       </div>
     </template>
-    <!-- 默认插槽 -->
-    <slot></slot>
-    <!-- table -->
-    <fs-table
-      ref="tableRef"
-      class="fs-crud-table"
-      v-bind="computedTable"
-      :row-handle="rowHandle"
-      :data="data"
-      :cell-slots="computedCellSlots"
-    />
 
-    <template #box>
+    <template #actionbar>
+      <div v-if="actionbar && actionbar.show !== false" class="fs-crud-actionbar">
+        <slot name="actionbar-left"></slot>
+        <fs-actionbar v-bind="actionbar" />
+        <slot name="actionbar-right"></slot>
+      </div>
+    </template>
+
+    <template #toolbar>
+      <div v-if="toolbar && toolbar.show !== false" class="fs-crud-toolbar">
+        <slot name="toolbar-left"></slot>
+        <fs-toolbar
+          v-bind="toolbar"
+          :slots="computedToolbarSlots"
+          :search="search.show"
+          :compact="toolbar.compact"
+          :columns="table.columns"
+          @update:search="$emit('update:search', $event)"
+          @update:compact="$emit('update:compact', $event)"
+          @update:columns="$emit('update:columns', $event)"
+          @refresh="$emit('refresh')"
+        />
+        <slot name="toolbar-right"></slot>
+      </div>
+    </template>
+
+    <template #table>
+      <fs-table
+        ref="tableRef"
+        class="fs-crud-table"
+        v-bind="computedTable"
+        :row-handle="rowHandle"
+        :data="data"
+        :cell-slots="computedCellSlots"
+      />
+    </template>
+
+    <template #form>
       <div ref="innerWrapperRef" class="fs-form-wrapper-container" :class="{ 'fs-form-inner-wrapper': isFormInner }">
         <!-- 编辑对话框 -->
         <fs-form-wrapper
@@ -69,24 +80,27 @@
       </div>
     </template>
 
-    <template #footer>
-      <div class="fs-crud-footer">
-        <slot name="footer-top"></slot>
-        <div class="fs-crud-pagination">
-          <div class="fs-pagination-left">
-            <slot name="pagination-left"></slot>
-          </div>
-          <div class="fs-pagination">
-            <component :is="$fsui.pagination.name" v-if="pagination.show !== false" v-bind="pagination" />
-          </div>
-          <div class="fs-pagination-right">
-            <slot name="pagination-right"></slot>
-          </div>
+    <template #pagination>
+      <div class="fs-crud-pagination">
+        <div class="fs-pagination-left">
+          <slot name="pagination-left"></slot>
         </div>
-        <slot name="footer-bottom"></slot>
+        <div class="fs-pagination">
+          <component :is="$fsui.pagination.name" v-if="pagination.show !== false" v-bind="pagination" />
+        </div>
+        <div class="fs-pagination-right">
+          <slot name="pagination-right"></slot>
+        </div>
       </div>
     </template>
-  </fs-container>
+
+    <template #footer-top>
+      <slot name="footer-top"></slot>
+    </template>
+    <template #footer-bottom>
+      <slot name="footer-bottom"></slot>
+    </template>
+  </component>
 </template>
 <script>
 import { defineComponent, computed, provide, ref, toRef, nextTick, onMounted, watch } from "vue";
@@ -104,6 +118,10 @@ function useProviders(props, ctx) {
   });
   provide("update:columns", (columns) => {
     ctx.emit("update:columns", columns);
+  });
+
+  provide("get:crudBinding", () => {
+    return props;
   });
 }
 
@@ -209,11 +227,11 @@ function useFixedHeight(props, ctx, { tableRef, containerRef }) {
   }
 
   function watchBodyHeightChange() {
-    const containerDom = containerRef.value.$el;
-    if (containerDom == null) {
+    const tableDom = tableRef.value.$el;
+    if (tableDom == null) {
       return;
     }
-    const tableWrapperDom = containerDom.querySelector(".inner .body");
+    const tableWrapperDom = tableDom.parentNode;
     const observer = new ResizeObserver(function (entries) {
       utilLog.debug("table resized", entries);
       // 每次被观测的元素尺寸发生改变这里都会执行
@@ -371,7 +389,7 @@ export default defineComponent({
   ],
   setup(props, ctx) {
     traceUtil.trace("fs-crud");
-    useProviders();
+    useProviders(props, ctx);
     const search = useSearch(props, ctx);
     const table = useTable(props, ctx, search);
     return {
