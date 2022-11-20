@@ -1,6 +1,6 @@
 {
   "name": "@fast-crud/ui-naive",
-  "version": "1.5.4",
+  "version": "1.6.0",
   "description": "",
   "main": "./dist/ui-naive.umd.js",
   "module": "./dist/ui-naive.es.js",
@@ -12,11 +12,11 @@
   "author": "Greper",
   "license": "MIT",
   "dependencies": {
-    "@fast-crud/ui-interface": "^1.5.4"
+    "@fast-crud/ui-interface": "^1.6.0"
   },
   "peerDependencies": {
     "@ant-design/icons-vue": "^6.0.1",
-    "@fast-crud/fast-crud": "^1.5.1"
+    "@fast-crud/fast-crud": "*"
   },
   "devDependencies": {
     "@rollup/plugin-strip": "^2.0.0",
