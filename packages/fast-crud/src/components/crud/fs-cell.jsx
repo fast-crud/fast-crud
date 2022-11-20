@@ -10,7 +10,11 @@ export default {
     /**
      * scope
      */
-    scope: {},
+    scope: {
+      default() {
+        return {};
+      }
+    },
     slots: {}
   },
   setup(props) {

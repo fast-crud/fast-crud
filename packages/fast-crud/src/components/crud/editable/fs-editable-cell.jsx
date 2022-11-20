@@ -92,7 +92,7 @@ export default {
         <div key={props.index} class={"fs-cell-edit"} {...activeTrigger}>
           <div class={"fs-cell-edit-input"}>
             {dirty}
-            <fs-cell ref={"targetRef"} item={props.item} getScope={props.getScope} {...ctx.attrs} />
+            <fs-cell ref={"targetRef"} item={props.item} scope={props.scope} {...ctx.attrs} />
           </div>
           {actions}
         </div>
