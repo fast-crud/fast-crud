@@ -268,6 +268,10 @@ columns:{
 * 类型：boolean
 * 默认值： true
 
+## [key].form.submit
+* 说明：该字段是否提交到后台，为false时不提交。
+* 类型：boolean
+* 默认值： true
 
 
 ## [key].form.blank

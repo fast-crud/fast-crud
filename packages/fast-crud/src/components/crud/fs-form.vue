@@ -429,7 +429,7 @@ export default {
       const submitScope = { ...scope.value, form: formData };
       logger.debug("form submit", JSON.stringify(form));
       _.each(props.columns, (item, key) => {
-        let value = formData[key];
+        let value = _.get(formData, key);
         if (item.valueResolve) {
           item.valueResolve({
             value,
@@ -445,6 +445,14 @@ export default {
           return;
         }
       }
+
+      //移除不允许提交的字段
+      _.each(props.columns, (item, key) => {
+        if (item.submit === false) {
+          _.unset(formData, key);
+        }
+      });
+
       if (props.doSubmit) {
         const res = await props.doSubmit(submitScope);
         submitScope.res = res;
