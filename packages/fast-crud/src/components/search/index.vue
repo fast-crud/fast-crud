@@ -424,7 +424,8 @@ export default {
         const key = item.key;
         const value = form[key];
         const componentRef = getComponentRef(key);
-        item.valueChange({ key, value, componentRef, ...getContextFn() });
+        const valueChange = item.valueChange instanceof Function ? item.valueChange : item.valueChange.handle;
+        valueChange({ key, value, componentRef, ...getContextFn() });
       }
       if (!item.autoSearchTrigger || item.autoSearchTrigger === "change") {
         doAutoSearch();
