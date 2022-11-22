@@ -128,7 +128,7 @@ const crudOptions= {
 ### 依赖
 * [vue](https://github.com/vuejs/vue-next) 
 * [vue-router](https://github.com/vuejs/vue-router-next)
-* [antdv 2x](https://github.com/vueComponent/ant-design-vue)
+* [antdv 3x](https://github.com/vueComponent/ant-design-vue)
 * [vitejs](https://github.com/vitejs/vite)
 * [pinia](https://github.com/posva/pinia)
 * [purge-icons](https://github.com/antfu/purge-icons)
