@@ -169,7 +169,7 @@
 
 ## valueChange
 * 说明: 值变化触发
-* 类型：(context)=>void | {immediate:boolean,handle:(context)=>void}    
+* 类型：`(context)=>void | {immediate:boolean,handle:(context)=>void}` 
 * 示例：   
 ```js
 crudOptions = { //

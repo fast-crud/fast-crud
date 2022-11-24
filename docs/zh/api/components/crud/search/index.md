@@ -13,7 +13,7 @@
 | buttonsPosition  | 按钮位置， default,bottom,right                                             | string          | -      | "default"                          |
 | searchAfterReset | 点击重置后是否立即触发查询                                                  | boolean         | -      | true                               |
 | autoSearch       | 是否开启自动查询                                                            | boolean         | -      | true                               |
-| debounce         | 自动查询，防抖设置<br/>传 false 则关闭自动查询                              | boolean\|object | -      |                                    |
+| debounce         | 自动查询，防抖设置<br/>传 false 则关闭自动查询                              | boolean\|object | -      | undefined                          |
 | slots            | 插槽                                                                        |                 | -      | function() {<br/> return {};<br/>} |
 | show             | 是否显示查询框                                                              | boolean         | -      | true                               |
 | validate         | 是否启用校验                                                                | boolean         | -      | false                              |

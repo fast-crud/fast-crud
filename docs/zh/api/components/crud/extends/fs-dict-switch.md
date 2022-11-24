@@ -5,10 +5,10 @@
 
 ## Props
 
-| Prop name | Description | Type | Values | Default |
-| --------- | ----------- | ---- | ------ | ------- |
-| dict      |             |      | -      |         |
-| options   |             |      | -      |         |
+| Prop name | Description                       | Type | Values | Default |
+| --------- | --------------------------------- | ---- | ------ | ------- |
+| dict      | 字典第一个为开启<br/>第二个为关闭 |      | -      |         |
+| options   |                                   |      | -      |         |
 
 ## Events
 

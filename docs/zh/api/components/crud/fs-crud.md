@@ -37,17 +37,17 @@
 
 | Name             | Description | Bindings |
 | ---------------- | ----------- | -------- |
+| default          |             |          |
 | header-top       |             |          |
+| header-bottom    |             |          |
 | header-middle    |             |          |
 | actionbar-left   |             |          |
 | actionbar-right  |             |          |
 | toolbar-left     |             |          |
 | toolbar-right    |             |          |
-| header-bottom    |             |          |
-| default          |             |          |
-| footer-top       |             |          |
 | pagination-left  |             |          |
 | pagination-right |             |          |
+| footer-top       |             |          |
 | footer-bottom    |             |          |
 
 ---

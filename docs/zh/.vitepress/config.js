@@ -133,6 +133,8 @@ module.exports = {
                             text: '基础组件', items: [
                                 {text: 'fs-page', link: "/api/components/crud/container/fs-page"},
                                 {text: 'fs-container', link: "/api/components/crud/container/fs-container"},
+                                {text: 'fs-layout-default', link: "/api/components/crud/container/fs-layout-default"},
+                                {text: 'fs-layout-card', link: "/api/components/crud/container/fs-layout-card"},
                                 {text: 'fs-button', link: "/api/components/crud/basic/fs-button"},
                                 {text: 'fs-icon', link: "/api/components/crud/basic/fs-icon"},
                                 {text: 'fs-iconify', link: "/api/components/crud/basic/fs-iconify"},
