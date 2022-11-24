@@ -25,6 +25,7 @@
 * 配置： 具体配置请根据你使用的ui库，前往对应ui库的文档查找相应组件的配置
 * 类型：Object
 * 示例: [antdv](http://fast-crud.docmirror.cn/antdv/#/form/independent) |  [element](http://fast-crud.docmirror.cn/element/#/form/independent)
+* 
 ```json
 //element
 { // crudOptions.form
@@ -183,7 +184,7 @@ crudOptions = { //
 }
 ```
 
-## wrapper(表单容器：dialog/drawer)
+## wrapper(表单容器,dialog/drawer)
 * 说明: 表单容器配置的配置（`对话框dialog`或`抽屉drawer`）
 * 类型：Object
 

@@ -23,7 +23,8 @@ module.exports = {
         algolia: {
             appId: 'MS0LML0LJG',
             apiKey: 'f84fe913d9e34f1c1427e69a64152c2d',
-            indexName: 'crawler_fast-crud'
+            indexName: 'crawler_fast-crud',
+            schedule: 'every 1 day at 3:00 pm',
         },
         // search: true,
         sidebar: {
@@ -35,6 +36,7 @@ module.exports = {
                         {text: '启动示例', link: '/guide/start/demo'},
                         {text: '第一个CRUD', link: '/guide/start/first'},
                         {text: '集成到你的项目', link: '/guide/start/integration'},
+                        {text: '配置与组件的对应关系', link: '/guide/start/struct'},
                         {text: '国际化', link: '/guide/start/i18n'},
                         {text: '图标', link: '/guide/start/icon'}
                     ],
