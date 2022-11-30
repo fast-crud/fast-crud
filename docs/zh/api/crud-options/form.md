@@ -151,6 +151,12 @@
 }
 ```
 
+
+## initialForm
+* 说明: 表单的初始数据
+* 类型：Object
+
+
 ## doSubmit
 * 说明: 提交表单时执行的方法（独立使用表单时，通过`formRef.submit()`可触发此方法）
 * 类型：async Function(context)
