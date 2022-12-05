@@ -25,7 +25,10 @@ export default {
     /**
      * select组件的插槽
      */
-    slots: {}
+    slots: {},
+    renderLabel: {
+      type: Function
+    }
   },
   emits: ["dict-change"],
   // render () {
@@ -49,7 +52,7 @@ export default {
       //naive ui
       //以options参数作为options
       const options = this.computedOptions || [];
-      return <selectComp placeholder={this.computedPlaceholder} options={options} />;
+      return <selectComp placeholder={this.computedPlaceholder} options={options} renderLabel={this.renderLabel} />;
     }
     // options 为子组件
     const options = [];
@@ -57,7 +60,7 @@ export default {
     for (const item of this.computedOptions) {
       const option = (
         <optionComp {...item} value={this.getValue(item)} label={this.getLabel(item)}>
-          {this.getLabel(item)}
+          {this.renderLabel ? this.renderLabel(item) : this.getLabel(item)}
         </optionComp>
       );
       options.push(option);
