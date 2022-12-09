@@ -2,6 +2,7 @@
   <span ref="iconifyRef" class="fs-iconify" :class="{ 'fs-iconify-spin': spin }"></span>
 </template>
 <script lang="ts">
+import _ from "lodash-es";
 import { defineComponent, nextTick, onMounted, ref, unref, watch } from "vue";
 /**
  * iconify 按需加载图标组件
@@ -24,9 +25,8 @@ export default defineComponent({
       default: false
     }
   },
-  setup(props) {
+  setup(props, ctx) {
     const iconifyRef = ref(null);
-
     const update = async () => {
       if (!props.icon) return;
 
@@ -50,9 +50,9 @@ export default defineComponent({
 });
 </script>
 <style lang="less">
-.fs-iconify {
-  display: inline-block;
-  vertical-align: middle;
+span.fs-iconify {
+  display: inline-flex !important;
+  align-items: center;
   &-spin {
     svg {
       animation: fsLoadingCircle 1s infinite linear;

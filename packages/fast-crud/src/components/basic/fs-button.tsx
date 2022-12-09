@@ -19,7 +19,7 @@ export default defineComponent({
     /**
      * 图标
      */
-    icon: { type: String, default: "", required: false },
+    icon: { type: [String, Object], default: "", required: false },
     /**
      * 右边的图标
      */
@@ -31,10 +31,17 @@ export default defineComponent({
   },
   render() {
     const { ui } = useUi();
-    const icon: string | null | undefined = this.icon;
+    const icon: string | null | undefined | object = this.icon;
     const iconRight: string | null | undefined = this.iconRight;
     const iconRender = () => {
-      return <fs-icon icon={icon} />;
+      if (icon == null) {
+        return;
+      }
+      if (typeof icon === "string") {
+        return <fs-icon icon={icon} />;
+      } else {
+        return <fs-icon {...icon} />;
+      }
     };
     const isIconSlot = ui.type !== "element";
     const isIconProp = ui.type === "element";

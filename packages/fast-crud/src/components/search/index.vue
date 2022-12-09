@@ -333,10 +333,8 @@ export default {
 
     const computedButtons = computed(() => {
       const btns = [];
-      const defBtnOptions = { search: {}, reset: {} };
-      _.merge(defBtnOptions, props.buttons);
-      if (defBtnOptions.search) {
-        btns.push({
+      const defBtnOptions = {
+        search: {
           show: true,
           type: "primary",
           disabled: false,
@@ -344,22 +342,23 @@ export default {
             doSearch();
           },
           order: 1,
-          text: t("fs.search.search.text"), // '查询',
-          ...defBtnOptions.search
-        });
-      }
-      if (defBtnOptions.reset) {
-        btns.push({
+          text: t("fs.search.search.text") // '查询',
+        },
+        reset: {
           show: true,
           disabled: false,
           click: () => {
             doReset();
           },
           text: t("fs.search.reset.text"), // '重置',
-          order: 2,
-          ...defBtnOptions.reset
-        });
+          order: 2
+        }
+      };
+      _.merge(defBtnOptions, props.buttons);
+      for (let key in defBtnOptions) {
+        btns.push(defBtnOptions[key]);
       }
+
       btns.sort((a, b) => {
         return a.order - b.order;
       });
