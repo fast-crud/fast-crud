@@ -231,6 +231,10 @@ export function useExpose(props: UseExposeProps): { expose: CrudExpose; crudExpo
       return crudRef.value.getSearchRef();
     },
     async doRefresh() {
+      if (crudBinding.value.request.pageRequest == null) {
+        return;
+      }
+
       let page;
       if (crudBinding.value.pagination) {
         page = {
@@ -255,9 +259,6 @@ export function useExpose(props: UseExposeProps): { expose: CrudExpose; crudExpo
       try {
         crudBinding.value.table.loading = true;
         logger.debug("pageRequest", query);
-        if (crudBinding.value.request.pageRequest == null) {
-          return;
-        }
         pageRes = await crudBinding.value.request.pageRequest(query);
       } finally {
         crudBinding.value.table.loading = false;
