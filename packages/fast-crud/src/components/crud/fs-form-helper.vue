@@ -39,12 +39,15 @@ export default {
 .fs-form-helper {
   color: #7e7e7e;
   line-height: 1.3;
-  margin-top: 2px;
+  margin-top: 4px;
+  margin-bottom: 6px;
+
   font-size: 12px;
   pre {
     font-family: inherit;
     white-space: pre-wrap;
     word-wrap: break-word;
+    margin-bottom: 0px;
   }
 }
 </style>

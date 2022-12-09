@@ -134,6 +134,7 @@ const crudOptions = {
 ## [key].column.cellRender
 * 说明：自定义单元格渲染。
 * 类型：Function(scope)
+* 相关：[jsx/tsx文档](https://cn.vuejs.org/guide/extras/render-function.html#jsx-tsx)
 ```js
 { //crudOptions
     columns:{

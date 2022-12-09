@@ -1,4 +1,4 @@
 export default {
   wangEditor: {},
-  quillEditor: {}
+  wangEditor5:{editorConfig:{},toolbarConfig:{}},
 };

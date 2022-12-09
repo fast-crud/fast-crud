@@ -203,6 +203,9 @@ module.exports = {
                                         {
                                             text: "fs-editor-wang",
                                             link: '/api/components/extends/editor/components/fs-editor-wang/index'
+                                        },{
+                                            text: "fs-editor-wang5",
+                                            link: '/api/components/extends/editor/components/fs-editor-wang5/index'
                                         }
                                     ]
                                 },

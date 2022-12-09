@@ -102,3 +102,8 @@ component:{
 }
 ```
 
+
+## xxxRender
+* 说明：文档中所有带render的配置都是指jsx/tsx渲染，请参考vue的jsx文档
+* 类型：Function
+* 相关：[jsx/tsx文档](https://cn.vuejs.org/guide/extras/render-function.html#jsx-tsx)

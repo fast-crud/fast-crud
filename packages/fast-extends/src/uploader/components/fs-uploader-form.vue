@@ -35,6 +35,7 @@ async function doUpload({ file, fileName, onProgress, options }) {
   const ajaxOptions = {
     file,
     onProgress,
+    timeout:60000,
     ...options
   };
   delete ajaxOptions.uploadRequest;

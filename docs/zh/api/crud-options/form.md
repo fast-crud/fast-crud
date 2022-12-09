@@ -59,6 +59,7 @@
 * 说明: 可以在字段组件前面自定义渲染
 * 类型：Function
 * 默认：无
+* 相关：[jsx/tsx文档](https://cn.vuejs.org/guide/extras/render-function.html#jsx-tsx)
 ```js
 { // crudOptions.form
     prefixRender(scope){
@@ -71,6 +72,7 @@
 * 说明: 可以在字段组件后面自定义渲染
 * 类型：Function
 * 默认：无
+* 相关：[jsx/tsx文档](https://cn.vuejs.org/guide/extras/render-function.html#jsx-tsx)
 ```js
 { // crudOptions.form
     suffixRender(scope){

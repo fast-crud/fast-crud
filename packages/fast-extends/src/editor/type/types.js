@@ -3,8 +3,8 @@ export default function () {
     "editor-wang": {
       form: { component: { name: "fs-editor-wang" } }
     },
-    "editor-quill": {
-      form: { component: { name: "fs-editor-quill" } }
-    }
+    "editor-wang5": {
+      form: { component: { name: "fs-editor-wang5" } }
+    },
   };
 }

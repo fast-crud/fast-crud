@@ -7,6 +7,7 @@
 </template>
 
 <script>
+
 import WangEditor from "wangeditor";
 import wangConfig from "./utils/config";
 import defaultConfig from "../../type/config";

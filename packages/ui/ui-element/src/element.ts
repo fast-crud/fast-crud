@@ -284,7 +284,7 @@ export class Element implements UiInterface {
     },
     transformValidateErrors: (e: Error) => {
       // @ts-ignore
-      const errorFields = e.code;
+      const errorFields = e.code || e.validation || {};
       const errors = {};
       for (const errorField of errorFields) {
         const name = errorField.field;

@@ -36,6 +36,7 @@ export default function upload(option, onSuccess, onError) {
   const xhr = new XMLHttpRequest();
   const action = option.action;
 
+  xhr.timeout = option.timeout;
   if (xhr.upload) {
     xhr.upload.onprogress = function progress(e) {
       if (e.total > 0) {

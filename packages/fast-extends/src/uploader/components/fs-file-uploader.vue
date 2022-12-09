@@ -199,13 +199,11 @@ export default {
     }
 
     function handleChange(file, list) {
-      console.log("handleChange", list, fileList.value);
       fileListLocal.value = list;
       emitValue(list);
     }
 
     function handleSuccess(res, file, list) {
-      console.log("success", res, file, list);
       ctx.emit("success", { res, file, fileList: list });
       handleChange(file, list);
     }
@@ -285,7 +283,6 @@ export default {
       return await uploaderRef?.upload(option);
     }
     async function customRequest(context) {
-      console.log("custom Request", context);
       const { file, onProgress, onSuccess, onError } = context;
       const option = {
         file,
@@ -367,12 +364,7 @@ export default {
         beforeUpload,
         listType: props.listType,
         onChange: (change) => {
-          console.log("changed", change);
           const { file, fileList } = change;
-          let status = file?.status;
-          if (status !== "done" && status !== "removed") {
-            return;
-          }
           handleChange(file, fileList);
         },
         onPreview: handlePreview
@@ -491,6 +483,9 @@ export default {
     }
   }
 
+  .el-upload{
+    justify-content: left;
+  }
   // element
   .el-upload-list--picture-card .el-upload-list__item {
     width: 100px;
@@ -500,6 +495,7 @@ export default {
   .el-upload--picture-card {
     width: 100px;
     height: 100px;
+    justify-content: center;
   }
   &.fs-file-uploader-limit {
     .el-upload--picture-card {

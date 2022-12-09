@@ -404,8 +404,11 @@ export default {
     const errorsRef = ref({});
 
     function fillGroupError(fieldErrors) {
+      if (!computedGroup.value?.groupedKeys) {
+        return;
+      }
       for (let key in fieldErrors) {
-        const group = computedGroup.value.groupedKeys[key];
+        const group = computedGroup.value?.groupedKeys[key];
         if (group != null) {
           fieldErrors["group." + group] = true;
         }
