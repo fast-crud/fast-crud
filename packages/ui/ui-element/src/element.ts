@@ -43,6 +43,7 @@ import {
   ButtonCI,
   PaginationCI
 } from "@fast-crud/ui-interface";
+import _ from "lodash-es";
 import { DividerCI, FormCI, PopoverCI, TooltipCI } from "../../ui-interface/src/ui-interface";
 export class Element implements UiInterface {
   constructor(target) {
@@ -277,7 +278,16 @@ export class Element implements UiInterface {
       inline: true
     },
     resetWrap: (formRef, { form, initialForm }) => {
-      formRef.resetFields();
+      // formRef.resetFields();
+      const entries = _.entries(form);
+      for (const entry of entries) {
+        const initialValue = _.get(initialForm, entry[0]);
+        if (initialValue == null) {
+          _.unset(form, entry[0]);
+        } else {
+          _.set(form, entry[0], entry[1]);
+        }
+      }
     },
     validateWrap: async formRef => {
       return formRef.validate();
