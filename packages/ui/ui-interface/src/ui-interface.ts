@@ -218,7 +218,7 @@ export interface DropdownItemCI extends CI {
 }
 export type ImageGroupCI = CI;
 export interface ImageCI extends CI {
-  buildPreviewList;
+  buildPreviewBind;
 }
 export type ProgressCI = CI;
 export interface LoadingCI extends CI {

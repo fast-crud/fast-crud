@@ -525,8 +525,13 @@ export class Antdv implements UiInterface {
   };
   image: ImageCI = {
     name: "a-image",
-    buildPreviewList: () => {
-      return {};
+    buildPreviewBind: ({ url, urls, previewUrl, previewUrls }) => {
+      debugger;
+      return {
+        preview: {
+          src: previewUrl
+        }
+      };
     }
   };
   progress: ProgressCI = {

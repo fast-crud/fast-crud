@@ -23,7 +23,7 @@ export default defineComponent({
     /**
      * 右边的图标
      */
-    iconRight: { type: String, default: "", required: false },
+    iconRight: { type: [String, Object], default: "", required: false },
     /**
      * 是否圆形按钮，text需配置为null
      */
@@ -32,15 +32,15 @@ export default defineComponent({
   render() {
     const { ui } = useUi();
     const icon: string | null | undefined | object = this.icon;
-    const iconRight: string | null | undefined = this.iconRight;
-    const iconRender = () => {
+    const iconRight: string | null | undefined | object = this.iconRight;
+    const iconRender = (icon, iconClass = "fs-button-icon") => {
       if (icon == null) {
         return;
       }
       if (typeof icon === "string") {
-        return <fs-icon icon={icon} />;
+        return <fs-icon icon={icon} class={iconClass} />;
       } else {
-        return <fs-icon {...icon} />;
+        return <fs-icon {...icon} class={iconClass} />;
       }
     };
     const isIconSlot = ui.type !== "element";
@@ -53,7 +53,7 @@ export default defineComponent({
       slots.default = () => {
         const children: any = [];
         if (icon && !isIconSlot && !isIconProp) {
-          children.push(iconRender());
+          children.push(iconRender(icon));
         }
         if (this.$slots.default) {
           children.push(this.$slots.default());
@@ -62,7 +62,7 @@ export default defineComponent({
           children.push(this.text);
         }
         if (iconRight) {
-          children.push(<fs-icon icon={iconRight} />);
+          children.push(iconRender(iconRight, "fs-button-icon-right"));
         }
         return children;
       };
@@ -70,10 +70,12 @@ export default defineComponent({
     if (icon) {
       if (isIconSlot && !slots["icon"]) {
         //@ts-ignore
-        slots["icon"] = iconRender;
+        slots["icon"] = () => {
+          return iconRender(icon);
+        };
       } else if (isIconProp && !slots["icon"]) {
         //@ts-ignore
-        iconProp = iconRender();
+        iconProp = iconRender(icon);
       }
     }
 

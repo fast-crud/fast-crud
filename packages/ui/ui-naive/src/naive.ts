@@ -74,7 +74,7 @@ export class Naive implements UiInterface {
         return { afterClose: onClosed };
       } else if (is === "n-drawer") {
         return {
-          afterVisibleChange: visible => {
+          afterVisibleChange: (visible) => {
             if (visible === false) {
               onClosed(visible);
             }
@@ -113,10 +113,10 @@ export class Naive implements UiInterface {
         return this.instance;
       }
     },
-    open: context => {
+    open: (context) => {
       return this.messageBox.getInstance().info(context);
     },
-    confirm: context => {
+    confirm: (context) => {
       return new Promise<void>((resolve, reject) => {
         function onOk() {
           resolve();
@@ -161,16 +161,16 @@ export class Naive implements UiInterface {
       }
       this.message.getInstance()[type](content);
     },
-    success: context => {
+    success: (context) => {
       this.message.open("success", context);
     },
-    error: context => {
+    error: (context) => {
       this.message.open("error", context);
     },
-    warn: context => {
+    warn: (context) => {
       this.message.open("warn", context);
     },
-    info: context => {
+    info: (context) => {
       this.message.open("info", context);
     }
   };
@@ -202,16 +202,16 @@ export class Naive implements UiInterface {
         this.notification.getInstance().open(context);
       }
     },
-    success: context => {
+    success: (context) => {
       this.notification.open("success", context);
     },
-    error: context => {
+    error: (context) => {
       this.notification.open("error", context);
     },
-    warn: context => {
+    warn: (context) => {
       this.notification.open("warn", context);
     },
-    info: context => {
+    info: (context) => {
       this.notification.open("info", context);
     }
   };
@@ -274,7 +274,7 @@ export class Naive implements UiInterface {
     textType: { type: "text", quaternary: true },
     linkType: { type: "text", quaternary: true, tag: "a", vModel: "text", target: "_blank", textColor: "#2080f0" },
     circle: { circle: true },
-    colors: type => {
+    colors: (type) => {
       if (type === "danger") {
         return { type: "error" };
       }
@@ -354,7 +354,7 @@ export class Naive implements UiInterface {
         }
       }
     },
-    validateWrap: async formRef => {
+    validateWrap: async (formRef) => {
       return new Promise((resolve, reject) => {
         formRef.validate((errors: Array<any>) => {
           if (!errors || errors.length === 0) {
@@ -391,12 +391,12 @@ export class Naive implements UiInterface {
     onChange({ setCurrentPage, setPageSize, doAfterChange }) {
       return {
         // antd 页码改动回调
-        "onUpdate:page": page => {
+        "onUpdate:page": (page) => {
           console.log("update page", page);
           setCurrentPage(page);
           doAfterChange();
         },
-        "onUpdate:pageSize": pageSize => {
+        "onUpdate:pageSize": (pageSize) => {
           console.log("update page size", pageSize);
           setPageSize(pageSize);
           doAfterChange();
@@ -441,14 +441,14 @@ export class Naive implements UiInterface {
     rebuildRenderScope: (row, index) => {
       return { row, index };
     },
-    buildMaxHeight: maxHeight => {
+    buildMaxHeight: (maxHeight) => {
       return { maxHeight };
     },
-    hasMaxHeight: options => {
+    hasMaxHeight: (options) => {
       return options?.maxHeight != null;
     },
     data: "data",
-    defaultRowKey: rowData => {
+    defaultRowKey: (rowData) => {
       return rowData.id;
     },
     fixedHeaderNeedComputeBodyHeight: true,
@@ -546,7 +546,7 @@ export class Naive implements UiInterface {
   };
   dropdown: DropdownCI = {
     name: "n-dropdown",
-    command: handler => {
+    command: (handler) => {
       return { onSelect: handler };
     },
     slotName: null,
@@ -557,7 +557,7 @@ export class Naive implements UiInterface {
   };
   dropdownMenu: DropdownMenuCI = {
     name: "n-menu",
-    command: callback => {
+    command: (callback) => {
       return {
         onClick($event) {
           callback($event.key);
@@ -574,8 +574,8 @@ export class Naive implements UiInterface {
   };
   image: ImageCI = {
     name: "n-image",
-    buildPreviewList: () => {
-      return {};
+    buildPreviewBind: ({ url, urls, previewUrl, previewUrls }) => {
+      return { "preview-src": previewUrl };
     }
   };
   progress: ProgressCI = {

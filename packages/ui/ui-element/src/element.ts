@@ -448,8 +448,8 @@ export class Element implements UiInterface {
   };
   image: ImageCI = {
     name: "el-image",
-    buildPreviewList: urls => {
-      return { "preview-src-list": urls };
+    buildPreviewBind: ({ url, urls, previewUrl, previewUrls, index }) => {
+      return { "preview-src-list": previewUrls, "initial-index": index };
     }
   };
   progress: ProgressCI = {

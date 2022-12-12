@@ -90,6 +90,7 @@ export default {
     },
     /**
      * 返回值类型
+     * 支持：`[url,key,object]`
      */
     valueType: {
       type: String, // url ,key, object
@@ -480,6 +481,14 @@ export default {
   &.fs-file-uploader-limit {
     .ant-upload-select-picture-card {
       display: none;
+    }
+  }
+  .ant-upload-list-item-actions{
+    display: flex;
+    align-items: center;
+    > a{
+      display: flex;
+      align-items: center;
     }
   }
 
