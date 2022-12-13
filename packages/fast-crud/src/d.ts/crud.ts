@@ -1,9 +1,12 @@
-import { ColumnsFilterProps } from "/src/components/toolbar/fs-table-columns-filter/component.vue";
+import { ColumnsFilterComponentProps } from "/src/components/toolbar/fs-table-columns-filter/props";
+import { ToolbarComponentProps } from "/src/components/toolbar/props";
 
 export type ScopeContext = {
   key;
   value;
   form;
+
+  row;
   index;
   mode;
   getComponentRef: Function;
@@ -398,20 +401,8 @@ export type ContainerProps = {
  * 工具条配置
  */
 export type ToolbarProps = {
-  /**
-   * 按钮配置
-   */
-  buttons?: {
-    /**
-     * 按钮key: 按钮配置
-     */
-    [key: string]: ButtonProps;
-  };
-
-  columnsFilter?: ColumnsFilterProps;
-
   [key: string]: any;
-};
+} & ToolbarComponentProps;
 
 /**
  * 按钮配置
@@ -737,7 +728,6 @@ export type CrudOptions = {
      */
     [prop: string]: ColumnCompositionProps;
   };
-
 } & CrudBinding;
 
 /**

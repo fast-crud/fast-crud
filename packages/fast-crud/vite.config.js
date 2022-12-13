@@ -52,7 +52,7 @@ export default {
           dayjs: "dayjs",
           "vue-i18n": "VueI18n",
           vuedraggable: "vuedraggable",
-          "vue-router": VueRouter
+          "vue-router": 'VueRouter'
         }
       }
     }

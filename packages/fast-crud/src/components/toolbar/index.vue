@@ -12,7 +12,7 @@
           trigger="click"
         >
           <template #[$fsui.popover.referenceSlotName]>
-            <fs-button @click="handleSimpleClick" v-bind="item" />
+            <fs-button v-bind="item" @click="handleSimpleClick" />
           </template>
           <template #[$fsui.popover.contentSlotName]>
             <fs-table-columns-filter
@@ -40,7 +40,7 @@
 </template>
 
 <script>
-import FsTableColumnsFilter from "./fs-table-columns-filter/component.vue";
+import FsTableColumnsFilter from "./fs-table-columns-filter/index.vue";
 import _ from "lodash-es";
 import { ref, computed } from "vue";
 import { useI18n } from "../../locale";
@@ -192,11 +192,11 @@ export default {
     });
     const popoverVisible = ref(false);
     const handleSimpleClick = () => {
-      if(ui.type === "element") {
-        return
+      if (ui.type === "element") {
+        return;
       }
-      popoverVisible.value = !popoverVisible.value
-    }
+      popoverVisible.value = !popoverVisible.value;
+    };
     return {
       columnsFilterRef,
       computedButtons,

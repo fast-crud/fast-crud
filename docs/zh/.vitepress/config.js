@@ -148,6 +148,8 @@ module.exports = {
                                 {text: 'fs-actionbar', link: "/api/components/crud/actionbar/index"},
                                 {text: 'fs-search', link: "/api/components/crud/search/index"},
                                 {text: 'fs-toolbar', link: "/api/components/crud/toolbar/index"},
+                                {text: 'fs-table-columns-filter', link: "/api/components/crud/toolbar/fs-table-columns-filter/index"},
+                                {text: 'fs-toolbar', link: "/api/components/crud/toolbar/index"},
                                 {text: 'fs-table', link: "/api/components/crud/crud/fs-table"},
                                 {text: 'fs-row-handle', link: "/api/components/crud/crud/fs-row-handle"},
                                 {text: 'fs-form-wrapper', link: "/api/components/crud/crud/fs-form-wrapper"},

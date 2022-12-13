@@ -1,45 +1,44 @@
 <template>
   <!-- 简单模式 -->
   <template v-if="mode === 'simple'">
-    <component :is="$fsui.row.name" class="fs-table-columns-filter-simple">
-      <component
-        :is="$fsui.col.name"
-        v-for="(element, key) in currentValue"
-        v-show="element.__show"
-        :key="key"
-        :span="6"
-      >
+    <component :is="ui.row.name" class="fs-table-columns-filter-simple">
+      <component :is="ui.col.name" v-for="(element, key) in currentValue" v-show="element.__show" :key="key" :span="6">
         <component
-          :is="$fsui.checkbox.name"
-          v-model:[$fsui.checkbox.modelValue]="element.show"
+          :is="ui.checkbox.name"
+          v-model:[ui.checkbox.modelValue]="element.show"
           :disabled="element.__disabled"
           class="item-label"
-          @update:[$fsui.checkbox.modelValue]="showChange(index, $event)"
+          @update:[ui.checkbox.modelValue]="showChange"
         >
           {{ element.label || element.title || element.key || _text.unnamed }}
         </component>
-
       </component>
     </component>
-    <component :is="$fsui.divider.name" />
-    <component :is="$fsui.row.name">
-      <fs-button style="margin-right:5px" type="primary" :icon="$fsui.icons.check" :text="_text.confirm" @click="simpleSubmit()" />
-      <fs-button :icon="$fsui.icons.refresh" :text="_text.reset" @click="simpleReset" />
+    <component :is="ui.divider.name" />
+    <component :is="ui.row.name">
+      <fs-button
+        style="margin-right: 5px"
+        type="primary"
+        :icon="ui.icons.check"
+        :text="_text.confirm"
+        @click="simpleSubmit()"
+      />
+      <fs-button :icon="ui.icons.refresh" :text="_text.reset" @click="simpleReset" />
     </component>
   </template>
   <!-- 完全模式 -->
-  <component :is="$fsui.drawer.name" v-else :title="_text.title" v-bind="drawerBind" append-to-body>
+  <component :is="ui.drawer.name" v-else :title="_text.title" v-bind="drawerBind" append-to-body>
     <component
-      :is="$fsui.drawer.hasContentWrap || 'div'"
+      :is="ui.drawer.hasContentWrap || 'div'"
       class="fs-drawer-wrapper fs-table-columns-filter"
       :title="_text.title"
     >
-      <component :is="$fsui.card.name" shadow="never">
+      <component :is="ui.card.name" shadow="never">
         <div class="component--list">
           <div key="__first__" class="component--list-item" flex="main:justify cross:center">
             <span :span="12">
               <!-- 全选 反选 -->
-              <component :is="$fsui.checkbox.name" :indeterminate="isIndeterminate" v-bind="checkAllBind">
+              <component :is="ui.checkbox.name" :indeterminate="isIndeterminate" v-bind="checkAllBind">
                 {{ showLength }} / {{ allLength }}
               </component>
             </span>
@@ -50,11 +49,11 @@
             <template #item="{ element, index }">
               <div v-show="element.__show" class="component--list-item" flex="main:justify cross:center">
                 <component
-                  :is="$fsui.checkbox.name"
-                  v-model:[$fsui.checkbox.modelValue]="element.show"
+                  :is="ui.checkbox.name"
+                  v-model:[ui.checkbox.modelValue]="element.show"
                   :disabled="element.__disabled"
                   class="item-label"
-                  @update:[$fsui.checkbox.modelValue]="showChange(index, $event)"
+                  @update:[ui.checkbox.modelValue]="showChange"
                 >
                   {{ element.label || element.title || element.key || _text.unnamed }}
                 </component>
@@ -66,7 +65,7 @@
                     @change="fixedChange(index, $event)"
                   />
                   <div flex-box="0" class="component--list-item-handle handle">
-                    <fs-icon :icon="$fsui.icons.sort" />
+                    <fs-icon :icon="ui.icons.sort" />
                   </div>
                 </div>
               </div>
@@ -74,12 +73,12 @@
           </draggable>
         </div>
       </component>
-      <component :is="$fsui.row.name" class="fs-drawer-footer" :gutter="10">
-        <component :is="$fsui.col.name" :span="12">
-          <fs-button :icon="$fsui.icons.refresh" :text="_text.reset" block @click="reset" />
+      <component :is="ui.row.name" class="fs-drawer-footer" :gutter="10">
+        <component :is="ui.col.name" :span="12">
+          <fs-button :icon="ui.icons.refresh" :text="_text.reset" block @click="reset" />
         </component>
-        <component :is="$fsui.col.name" :span="12">
-          <fs-button type="primary" :icon="$fsui.icons.check" :text="_text.confirm" block @click="submit()" />
+        <component :is="ui.col.name" :span="12">
+          <fs-button type="primary" :icon="ui.icons.check" :text="_text.confirm" block @click="submit(false)" />
         </component>
       </component>
     </component>
@@ -87,35 +86,73 @@
 </template>
 
 <script lang="ts" setup>
+/**
+ * FsTableColumnsFilter，列设置组件
+ */
 import draggable from "vuedraggable-es";
 import _ from "lodash-es";
-import FsTableColumnsFixedController from "../fs-table-columns-fixed-controller/component.vue";
+import FsTableColumnsFixedController from "../fs-table-columns-fixed-controller/index.vue";
 import TableStore from "../../../utils/util.store";
 import { useI18n } from "../../../locale";
-import {ref, computed, nextTick, Ref, watch} from "vue";
+import { ref, computed, nextTick, Ref, watch } from "vue";
 import { uiContext } from "../../../ui";
 import { useMerge } from "../../../use/use-merge";
 import { useRoute } from "vue-router";
 
 const { cloneDeep } = useMerge();
-
-export interface ColumnsFilterProps {
+//https://cn.vuejs.org/guide/typescript/composition-api.html#typing-component-props
+//https://github.com/vuejs/core/issues/4294
+//vue限制，无法通过import直接引入interface
+interface ColumnsFilterProps {
+  /**
+   * 是否显示列设置抽屉
+   */
   show?: boolean;
+  /**
+   * 模式，default,simple
+   */
   mode?: string;
+  /**
+   * 列数据
+   */
   columns?: any[];
+  /**
+   * 是否保存设置
+   */
   storage?: boolean | string;
+  /**
+   * 文本设置
+   */
   text?: {
+    /**
+     * 标题
+     */
     title?: string;
+    /**
+     * 固定
+     */
     fixed?: string;
+    /**
+     * 排序
+     */
     order?: string;
+    /**
+     * 重置
+     */
     reset?: string;
+    /**
+     * 确认
+     */
     confirm?: string;
+    /**
+     * 未命名
+     */
     unnamed?: string;
   };
 }
-
 const props = withDefaults(defineProps<ColumnsFilterProps>(), {
-  storage: true
+  storage: true,
+  mode: "default"
 });
 const emit = defineEmits(["update:columns", "update:show"]);
 
@@ -137,13 +174,13 @@ const start = () => {
 };
 
 const original = ref({});
-const currentValue:Ref<any[]> = ref([]);
+const currentValue: Ref<any[]> = ref([]);
 const checkAll = ref(false);
 const indeterminate = ref(false);
 // 全选和反选发生变化时触发
 function onCheckAllChange(value) {
   checkAll.value = value;
-  currentValue.value = currentValue.value.map((e:any) => {
+  currentValue.value = currentValue.value.map((e: any) => {
     if (!e.__show || e.__disabled) {
       return e;
     }
@@ -185,7 +222,7 @@ const _text = computed(() => {
 });
 
 function buildOriginalColumns(value) {
-  const columns:any = [];
+  const columns: any = [];
   _.forEach(value, (item) => {
     const column = {
       key: item.key,
@@ -229,7 +266,7 @@ function reset() {
   clearThisStorage();
 }
 // 确认
-function submit(noSave) {
+function submit(noSave = false) {
   if (noSave !== true) {
     saveOptionsToStorage(currentValue.value);
   }
@@ -276,7 +313,7 @@ function saveOptionsToStorage(value) {
     return;
   }
 
-  const storedOptions:any = [];
+  const storedOptions: any = [];
   for (let i = 0; i < value.length; i++) {
     const item = value[i];
     storedOptions.push(item);
@@ -295,9 +332,9 @@ function clearThisStorage() {
 }
 
 function getColumnsHash(columns) {
-  const keys:any = [];
+  const keys: any = [];
   for (const item of columns) {
-    const target = _.pick(item,'key','__show','__disabled');
+    const target = _.pick(item, "key", "__show", "__disabled");
     keys.push(JSON.stringify(target));
   }
   keys.sort();
@@ -327,7 +364,7 @@ const init = () => {
       // 如果字段列有过修改，则不使用本地设置
       return;
     }
-    const curValue:any = [];
+    const curValue: any = [];
     for (const storedOption of storedOptions) {
       const found = currentValue.value.find((item) => item.key === storedOption.key);
       if (found) {
@@ -346,12 +383,12 @@ const init = () => {
 init();
 defineExpose({
   start
-})
+});
 </script>
 <style lang="less">
 .fs-table-columns-filter-simple {
   min-width: 760px;
-  padding-top:20px;
+  padding-top: 20px;
 }
 
 .fs-table-columns-filter {
