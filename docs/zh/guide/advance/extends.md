@@ -14,6 +14,7 @@
 * FsExtendsEditor: 富文本编辑器 
 * FsExtendsJson: Json编辑器
 * FsExtendsCopyable: 文本复制到剪贴板
+* FsExtendsTime: 时间格式人性化组件
 
 ## 第三方扩展包
 * 等你来开发哟 ღ( ´･ᴗ･` )

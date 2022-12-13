@@ -144,13 +144,13 @@ export default {
       default: undefined
     },
     /**
-     * 重置按钮方法
+     * 重置表单后的操作
      */
     doReset: {
       type: Function
     },
     /**
-     * 点击保存按钮时执行方法
+     * 点击保存按钮时执行操作（async）
      */
     doSubmit: {
       type: Function,

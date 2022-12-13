@@ -113,29 +113,22 @@ app.use(FastCrud, {
 
 ### 5. NaiveUi的额外操作
 如果你不使用naiveui，可以跳过此步骤    
-NaiveUI需要在`n-dialog-provider`、`n-notification-provider`、`n-message-provider`包裹的子组件中进行一次ui的初始化操作。
+NaiveUI需要在合适的位置（比如App.vue）使用`<fs-ui-context>`,`fs-ui-context`必须处于`message、notification、dialog等provider`之下。        
+主要是让fs-crud拥有`message、notification、dialog`的能力    
+
 ```js
 // App.vue
  <n-dialog-provider>
     <n-notification-provider>
         <n-message-provider>
-            <Application />
-            <slot slot="default"></slot>
+            <fs-ui-context>   《《《《---------------这里
+                <RouterView />
+            </fs-ui-context>
         </n-message-provider>
     </n-notification-provider>
 </n-dialog-provider>
 ```
 
-```js
-// Application.vue
-import UiNaive from '@fast-crud/ui-naive';
-export default defineComponent({
-    setup(){
-        // 初始化ui，必须写在setup里面,获取message、notification、dialog实例
-        UiNaive.init();
-    }
-})
-```
 
 ### 6. 安装扩展组件
 
