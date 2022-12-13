@@ -2,8 +2,10 @@ import { useMessage, useDialog, useNotification } from "naive-ui";
 import { uiContext } from "@fast-crud/fast-crud";
 import setupIcons from "./icons";
 import { Naive } from "./naive";
+import FsUiContext from "./fs-ui-context.vue";
 export default {
   install(app) {
+    app.component("FsUiContext", FsUiContext);
     const naiveUi = new Naive();
     uiContext.set(naiveUi);
 
