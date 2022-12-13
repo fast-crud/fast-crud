@@ -15,13 +15,15 @@
           :disabled="element.__disabled"
           class="item-label"
           @update:[$fsui.checkbox.modelValue]="showChange(index, $event)"
-        />
-        {{ element.label || element.title || element.key || _text.unnamed }}
+        >
+          {{ element.label || element.title || element.key || _text.unnamed }}
+        </component>
+
       </component>
     </component>
     <component :is="$fsui.divider.name" />
     <component :is="$fsui.row.name">
-      <fs-button type="primary" :icon="$fsui.icons.check" :text="_text.confirm" @click="simpleSubmit()" />
+      <fs-button style="margin-right:5px" type="primary" :icon="$fsui.icons.check" :text="_text.confirm" @click="simpleSubmit()" />
       <fs-button :icon="$fsui.icons.refresh" :text="_text.reset" @click="simpleReset" />
     </component>
   </template>
@@ -183,7 +185,6 @@ const _text = computed(() => {
 });
 
 function buildOriginalColumns(value) {
-  console.log('value',value)
   const columns:any = [];
   _.forEach(value, (item) => {
     const column = {
@@ -306,7 +307,6 @@ function getColumnsHash(columns) {
   }
   return hash;
 }
-console.log('columns',props.columns)
 watch(
   () => {
     return props.columns;
@@ -318,7 +318,6 @@ watch(
 
 const init = () => {
   original.value = buildOriginalColumns(props.columns);
-  console.log(' original.value ', original.value )
   setCurrentValue(props.columns);
   const storedOptions = getOptionsFromStorage();
   if (storedOptions) {
@@ -352,6 +351,7 @@ defineExpose({
 <style lang="less">
 .fs-table-columns-filter-simple {
   min-width: 760px;
+  padding-top:20px;
 }
 
 .fs-table-columns-filter {
