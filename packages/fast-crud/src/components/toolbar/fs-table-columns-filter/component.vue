@@ -5,14 +5,14 @@
       <component
         :is="$fsui.col.name"
         v-for="(element, key) in currentValue"
-        v-show="element.setShow"
+        v-show="element.__show"
         :key="key"
         :span="6"
       >
         <component
           :is="$fsui.checkbox.name"
           v-model:[$fsui.checkbox.modelValue]="element.show"
-          :disabled="element.disabled"
+          :disabled="element.__disabled"
           class="item-label"
           @update:[$fsui.checkbox.modelValue]="showChange(index, $event)"
         />
@@ -27,14 +27,18 @@
   </template>
   <!-- 完全模式 -->
   <component :is="$fsui.drawer.name" v-else :title="_text.title" v-bind="drawerBind" append-to-body>
-    <component :is="$fsui.drawer.hasContentWrap || 'div'" class="fs-drawer-wrapper fs-table-columns-filter" :title="_text.title">
-      <!-- 全选 反选 -->
+    <component
+      :is="$fsui.drawer.hasContentWrap || 'div'"
+      class="fs-drawer-wrapper fs-table-columns-filter"
+      :title="_text.title"
+    >
       <component :is="$fsui.card.name" shadow="never">
         <div class="component--list">
           <div key="__first__" class="component--list-item" flex="main:justify cross:center">
             <span :span="12">
+              <!-- 全选 反选 -->
               <component :is="$fsui.checkbox.name" :indeterminate="isIndeterminate" v-bind="checkAllBind">
-                {{ showLength }} / {{ currentValue.length }}
+                {{ showLength }} / {{ allLength }}
               </component>
             </span>
             <span class="title">{{ _text.fixed }} / {{ _text.order }}</span>
@@ -42,11 +46,11 @@
 
           <draggable v-model="currentValue" item-key="key">
             <template #item="{ element, index }">
-              <div v-show="element.setShow" class="component--list-item" flex="main:justify cross:center">
+              <div v-show="element.__show" class="component--list-item" flex="main:justify cross:center">
                 <component
                   :is="$fsui.checkbox.name"
                   v-model:[$fsui.checkbox.modelValue]="element.show"
-                  :disabled="element.disabled"
+                  :disabled="element.__disabled"
                   class="item-label"
                   @update:[$fsui.checkbox.modelValue]="showChange(index, $event)"
                 >
@@ -80,262 +84,270 @@
   </component>
 </template>
 
-<script>
+<script lang="ts" setup>
 import draggable from "vuedraggable-es";
 import _ from "lodash-es";
 import FsTableColumnsFixedController from "../fs-table-columns-fixed-controller/component.vue";
 import TableStore from "../../../utils/util.store";
 import { useI18n } from "../../../locale";
-import { ref, computed } from "vue";
+import {ref, computed, nextTick, Ref, watch} from "vue";
 import { uiContext } from "../../../ui";
 import { useMerge } from "../../../use/use-merge";
+import { useRoute } from "vue-router";
 
 const { cloneDeep } = useMerge();
-// 输入 全部分表格列设置
-// 输出 要显示的表格列 + 每列的设置
 
-export default {
-  name: "FsTableColumnsFilter",
-  components: {
-    // eslint-disable-next-line vue/no-unused-components
-    draggable,
-    FsTableColumnsFixedController
-  },
-  props: {
-    show: {
-      type: Boolean
+export interface ColumnsFilterProps {
+  show?: boolean;
+  mode?: string;
+  columns?: any[];
+  storage?: boolean | string;
+  text?: {
+    title?: string;
+    fixed?: string;
+    order?: string;
+    reset?: string;
+    confirm?: string;
+    unnamed?: string;
+  };
+}
+
+const props = withDefaults(defineProps<ColumnsFilterProps>(), {
+  storage: true
+});
+const emit = defineEmits(["update:columns", "update:show"]);
+
+const { t } = useI18n();
+const ui = uiContext.get();
+const active = ref(false);
+const drawerBind = computed(() => {
+  return {
+    [ui.drawer.visible]: active.value,
+    ["onUpdate:" + ui.drawer.visible]: (e) => {
+      active.value = e;
     },
-    mode: {
-      type: String
-    },
-    columns: {
-      type: Array
-    },
-    storage: {
-      type: [Boolean, String],
-      default: true,
-      required: false
-    },
-    text: {
-      type: Object,
-      default: undefined
+    [ui.drawer.width]: "300px"
+  };
+});
+
+const start = () => {
+  active.value = true;
+};
+
+const original = ref({});
+const currentValue:Ref<any[]> = ref([]);
+const checkAll = ref(false);
+const indeterminate = ref(false);
+// 全选和反选发生变化时触发
+function onCheckAllChange(value) {
+  checkAll.value = value;
+  currentValue.value = currentValue.value.map((e:any) => {
+    if (!e.__show || e.__disabled) {
+      return e;
     }
-  },
-  emits: ["update:columns", "update:show"],
-  setup() {
-    const { t } = useI18n();
-    const ui = uiContext.get();
-    const active = ref(false);
-    const drawerBind = computed(() => {
-      return {
-        [ui.drawer.visible]: active.value,
-        ["onUpdate:" + ui.drawer.visible]: (e) => {
-          active.value = e;
-        },
-        [ui.drawer.width]: "300px"
-      };
+    e.show = value;
+    return e;
+  });
+}
+
+const checkAllBind = computed(() => {
+  return {
+    [ui.checkbox.modelValue]: checkAll.value,
+    ["onUpdate:" + ui.checkbox.modelValue]: (v) => {
+      onCheckAllChange(v);
+    }
+  };
+});
+
+const showLength = computed(() => {
+  return currentValue.value.filter((e) => e.__show && e.show === true).length;
+});
+const allLength = computed(() => {
+  return currentValue.value.filter((e) => e.__show).length;
+});
+const isIndeterminate = computed(() => {
+  return showLength.value > 0 && showLength.value < allLength.value;
+});
+
+const _text = computed(() => {
+  const def = {
+    title: t("fs.toolbar.columnFilter.title"),
+    fixed: t("fs.toolbar.columnFilter.fixed"),
+    order: t("fs.toolbar.columnFilter.order"),
+    reset: t("fs.toolbar.columnFilter.reset"),
+    confirm: t("fs.toolbar.columnFilter.confirm"),
+    unnamed: t("fs.toolbar.columnFilter.unnamed")
+  };
+  _.merge(def, props.text);
+  return def;
+});
+
+function buildOriginalColumns(value) {
+  console.log('value',value)
+  const columns:any = [];
+  _.forEach(value, (item) => {
+    const column = {
+      key: item.key,
+      title: item.title,
+      fixed: item.fixed ?? false,
+      show: item.show ?? true,
+      __show: item.columnSetShow !== false,
+      __disabled: item.columnSetDisabled ?? false
+    };
+    columns.push(column);
+  });
+  return columns;
+}
+
+function setCurrentValue(value) {
+  currentValue.value = buildOriginalColumns(value);
+  checkAll.value = showLength.value > 0;
+}
+
+// fixed 变化时触发
+function fixedChange(index, value) {
+  if (value) {
+    currentValue.value[index].show = true;
+  }
+  if (value === "left") {
+    currentValue.value.unshift(currentValue.value.splice(index, 1)[0]);
+  }
+  if (value === "right") {
+    currentValue.value.push(currentValue.value.splice(index, 1)[0]);
+  }
+  showChange();
+}
+function showChange() {
+  checkAll.value = showLength.value > 0;
+}
+
+// 还原
+function reset() {
+  currentValue.value = _.cloneDeep(original.value);
+  submit(true);
+  clearThisStorage();
+}
+// 确认
+function submit(noSave) {
+  if (noSave !== true) {
+    saveOptionsToStorage(currentValue.value);
+  }
+  const result = _.cloneDeep(currentValue.value);
+
+  //解决naive ui与列设置冲突的问题
+  result.forEach((column) => {
+    delete column.__disabled;
+    delete column.__show;
+  });
+
+  doEmit(result);
+  active.value = false;
+}
+
+function simpleSubmit() {
+  submit(false);
+  emit("update:show", false);
+}
+function simpleReset() {
+  reset();
+  emit("update:show", false);
+}
+
+function doEmit(result) {
+  emit("update:columns", result);
+}
+
+const storageTableStore = ref();
+function getStorageTable() {
+  if (storageTableStore.value == null) {
+    const route = useRoute();
+    storageTableStore.value = new TableStore({
+      $router: route,
+      tableName: "columnsFilter",
+      keyType: props.storage
     });
+  }
+  return storageTableStore.value;
+}
 
-    const start = () => {
-      active.value = true;
-    };
+function saveOptionsToStorage(value) {
+  if (props.storage === false) {
+    return;
+  }
 
-    return { t, drawerBind, active, start };
+  const storedOptions:any = [];
+  for (let i = 0; i < value.length; i++) {
+    const item = value[i];
+    storedOptions.push(item);
+  }
+  getStorageTable().updateTableValue(storedOptions);
+}
+
+function getOptionsFromStorage() {
+  if (props.storage === false) {
+    return;
+  }
+  return getStorageTable().getTableValue();
+}
+function clearThisStorage() {
+  getStorageTable().clearTableValue();
+}
+
+function getColumnsHash(columns) {
+  const keys:any = [];
+  for (const item of columns) {
+    const target = _.pick(item,'key','__show','__disabled');
+    keys.push(JSON.stringify(target));
+  }
+  keys.sort();
+  let hash = "";
+  for (const key of keys) {
+    hash += key;
+  }
+  return hash;
+}
+console.log('columns',props.columns)
+watch(
+  () => {
+    return props.columns;
   },
-  data() {
-    return {
-      original: {},
-      currentValue: [],
-      checkAll: false,
-      indeterminate: false
-    };
-  },
-  computed: {
-    checkAllBind() {
-      return {
-        [this.$fsui.checkbox.modelValue]: this.checkAll,
-        ["onUpdate:" + this.$fsui.checkbox.modelValue]: (v) => {
-          this.onCheckAllChange(v);
-        }
-      };
-    },
-    // 显示的数量
-    showLength() {
-      return this.currentValue.filter((e) => e.show === true).length;
-    },
-    isIndeterminate() {
-      return this.showLength > 0 && this.showLength < this.currentValue.length;
-    },
-    _text() {
-      const def = {
-        title: this.t("fs.toolbar.columnFilter.title"),
-        fixed: this.t("fs.toolbar.columnFilter.fixed"),
-        order: this.t("fs.toolbar.columnFilter.order"),
-        reset: this.t("fs.toolbar.columnFilter.reset"),
-        confirm: this.t("fs.toolbar.columnFilter.confirm"),
-        unnamed: this.t("fs.toolbar.columnFilter.unnamed")
-      };
-      _.merge(def, this.text);
-      return def;
+  (value) => {
+    setCurrentValue(value);
+  }
+);
+
+const init = () => {
+  original.value = buildOriginalColumns(props.columns);
+  console.log(' original.value ', original.value )
+  setCurrentValue(props.columns);
+  const storedOptions = getOptionsFromStorage();
+  if (storedOptions) {
+    const storeHash = getColumnsHash(storedOptions);
+    const optionHash = getColumnsHash(original.value);
+    if (optionHash !== storeHash) {
+      // 如果字段列有过修改，则不使用本地设置
+      return;
     }
-  },
-  watch: {
-    columns(value) {
-      this.setCurrentValue(value);
+    const curValue:any = [];
+    for (const storedOption of storedOptions) {
+      const found = currentValue.value.find((item) => item.key === storedOption.key);
+      if (found) {
+        found.fixed = storedOption.fixed;
+        found.show = storedOption.show;
+        curValue.push(found);
+      }
     }
-  },
-  created() {
-    this.original = this.buildColumns(this.columns);
-    this.setCurrentValue(this.columns);
-    const storedOptions = this.getOptionsFromStorage();
-    if (storedOptions) {
-      const storeHash = this.getColumnsHash(storedOptions);
-      const optionHash = this.getColumnsHash(this.original);
-      if (optionHash !== storeHash) {
-        // 如果字段列有过修改，则不使用本地设置
-        return;
-      }
-
-      const currentValue = [];
-      for (const storedOption of storedOptions) {
-        const found = this.currentValue.find((item) => item.key === storedOption.key);
-        if (found) {
-          found.fixed = storedOption.fixed;
-          found.show = storedOption.show;
-          currentValue.push(found);
-        }
-      }
-      this.currentValue = currentValue;
-      this.$nextTick(() => {
-        this.submit(true);
-      });
-    }
-  },
-  methods: {
-    setCurrentValue(value) {
-      this.currentValue = this.buildColumns(value);
-      this.checkAll = this.showLength > 0;
-    },
-    buildColumns(value) {
-      const columns = [];
-      _.forEach(value, (item) => {
-        const column = {
-          key: item.key,
-          title: item.title,
-          show: item.show ?? true,
-          fixed: item.fixed ?? false,
-          setShow: item.columnSetShow !== false,
-          disabled: item.columnSetDisabled ?? false
-        };
-        columns.push(column);
-      });
-      return columns;
-    },
-    // fixed 变化时触发
-    fixedChange(index, value) {
-      if (value) this.currentValue[index].show = true;
-      if (value === "left") {
-        this.currentValue.unshift(this.currentValue.splice(index, 1)[0]);
-      }
-      if (value === "right") {
-        this.currentValue.push(this.currentValue.splice(index, 1)[0]);
-      }
-      this.showChange();
-    },
-    showChange() {
-      this.checkAll = this.showLength > 0;
-    },
-    // 全选和反选发生变化时触发
-    onCheckAllChange(value) {
-      this.checkAll = value;
-      this.currentValue = this.currentValue.map((e) => {
-        e.show = value;
-        return e;
-      });
-    },
-    // 还原
-    reset() {
-      this.currentValue = _.cloneDeep(this.original);
-      this.submit(true);
-      this.clearThisStorage();
-    },
-    // 确认
-    submit(noSave) {
-      if (noSave !== true) {
-        this.saveOptionsToStorage(this.currentValue);
-      }
-      const result = _.cloneDeep(this.currentValue);
-
-      //解决naive ui与列设置冲突的问题
-      result.forEach((column) => {
-        delete column.disabled;
-      });
-      this.emit(result);
-      this.active = false;
-    },
-
-    simpleSubmit() {
-      this.submit();
-      this.$emit("update:show", false);
-    },
-    simpleReset() {
-      this.reset();
-      this.$emit("update:show", false);
-    },
-    emit(result) {
-      this.$emit("update:columns", result);
-    },
-    saveOptionsToStorage(value) {
-      if (this.storage === false) {
-        return;
-      }
-
-      const storedOptions = [];
-      for (let i = 0; i < value.length; i++) {
-        const item = value[i];
-        const target = {
-          key: item.key,
-          show: item.show != null ? item.show : true,
-          fixed: item.fixed
-        };
-        storedOptions.push(target);
-      }
-      this.storedOptions = storedOptions;
-      this.getStorageTable().updateTableValue(storedOptions);
-    },
-    getOptionsFromStorage() {
-      if (this.storage === false) {
-        return;
-      }
-      return this.getStorageTable().getTableValue();
-    },
-    clearThisStorage() {
-      this.getStorageTable().clearTableValue();
-    },
-    getStorageTable() {
-      if (this.StorageTableStore == null) {
-        this.StorageTableStore = new TableStore({
-          $router: this.$route,
-          tableName: "columnsFilter",
-          keyType: this.storage
-        });
-      }
-      return this.StorageTableStore;
-    },
-    getColumnsHash(columns) {
-      const keys = [];
-      for (const item of columns) {
-        keys.push(item);
-      }
-      keys.sort();
-      let hash = "";
-      for (const key of keys) {
-        hash += key;
-      }
-      return hash;
-    }
+    currentValue.value = curValue;
+    nextTick(() => {
+      submit(true);
+    });
   }
 };
+
+init();
+defineExpose({
+  start
+})
 </script>
 <style lang="less">
 .fs-table-columns-filter-simple {

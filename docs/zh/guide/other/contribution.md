@@ -4,6 +4,8 @@
 ## 1. fork仓库
 请通过github fork。
 
+fork `https://github.com/fast-crud/fast-crud`      
+
 ## 2. 调试方式运行demo
 通过调试方式运行demo，可以在修改`fast-crud`源码后立即在示例中看到效果。
 

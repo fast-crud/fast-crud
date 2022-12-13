@@ -152,6 +152,7 @@ export function useCrud(ctx: UseCrudProps) {
             }
           }
         });
+        
         crudBinding.value.table.columns = columns;
       },
       onRefresh() {

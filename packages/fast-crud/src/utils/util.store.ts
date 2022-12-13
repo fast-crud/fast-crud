@@ -30,14 +30,10 @@ export default class TableStore {
     localStorage.removeItem(this.tableId);
   }
 
-  updateTableValue(value, key) {
+  updateTableValue(value, key = this.key) {
     let table = this.getTable();
     if (table == null) {
       table = {};
-    }
-
-    if (key == null) {
-      key = this.key;
     }
     table[key] = value;
     this.saveTable(table);

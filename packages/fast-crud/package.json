@@ -24,6 +24,7 @@
     "vuedraggable-es": "^4.1.1"
   },
   "devDependencies": {
+    "vue-router": "^4.1.5",
     "@iconify/json": "^2.1.117",
     "@ls-lint/ls-lint": "^1.11.2",
     "@rollup/plugin-strip": "^2.0.0",

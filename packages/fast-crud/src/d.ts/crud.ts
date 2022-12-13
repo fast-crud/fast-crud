@@ -1,3 +1,5 @@
+import { ColumnsFilterProps } from "/src/components/toolbar/fs-table-columns-filter/component.vue";
+
 export type ScopeContext = {
   key;
   value;
@@ -406,6 +408,8 @@ export type ToolbarProps = {
     [key: string]: ButtonProps;
   };
 
+  columnsFilter?: ColumnsFilterProps;
+
   [key: string]: any;
 };
 
@@ -521,6 +525,7 @@ export type SearchItemProps = {
  * 单元格配置
  */
 export type ColumnProps = {
+  key?: string;
   /**
    * 单元格组件配置
    */
@@ -551,6 +556,11 @@ export type ColumnProps = {
    * @param scope
    */
   cellRender?: (scope) => any;
+
+  /**
+   * 多级表头
+   */
+  children?: ColumnProps[];
   /**
    * 其他x-table-column配置
    */
@@ -719,10 +729,6 @@ export type CrudOptions = {
     [key: string]: any;
   };
   /**
-   * 表格配置
-   */
-  table?: TableProps;
-  /**
    * 列配置
    */
   columns?: {
@@ -731,10 +737,21 @@ export type CrudOptions = {
      */
     [prop: string]: ColumnCompositionProps;
   };
+
+} & CrudBinding;
+
+/**
+ * crudBinding
+ */
+export type CrudBinding = {
+  /**
+   * 表格配置
+   */
+  table?: TableProps;
   /**
    * 列表数据，一般会从pageRequest之后更新
    */
-  data?: [];
+  data?: any[];
   /**
    * 操作列配置
    */

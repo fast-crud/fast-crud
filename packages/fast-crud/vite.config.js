@@ -42,7 +42,7 @@ export default {
       ],
       // make sure to externalize deps that shouldn't be bundled
       // into your library
-      external: ["vue", "lodash-es", "dayjs", "vue-i18n", "vuedraggable"],
+      external: ["vue", "lodash-es", "dayjs", "vue-i18n", "vuedraggable", "vue-router"],
       output: {
         // Provide global variables to use in the UMD build
         // for externalized deps
@@ -51,7 +51,8 @@ export default {
           "lodash-es": "_",
           dayjs: "dayjs",
           "vue-i18n": "VueI18n",
-          vuedraggable: "vuedraggable"
+          vuedraggable: "vuedraggable",
+          "vue-router": VueRouter
         }
       }
     }
