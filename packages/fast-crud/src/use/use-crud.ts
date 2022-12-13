@@ -5,10 +5,12 @@ import { useMerge } from "./use-merge";
 import logger from "../utils/util.log";
 import { uiContext } from "../ui";
 import { useI18n } from "../locale";
-import { CrudExpose } from "../d.ts";
+import { CrudBinding, CrudExpose } from "../d.ts";
 import { useCompute } from "./use-compute";
 import { useColumns } from "./use-columns";
 import { CrudOptions } from "../d.ts/crud";
+import { Ref, ref } from "vue";
+import { useExpose } from "./use-expose";
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 const { merge, cloneDeep } = useMerge();
 
@@ -152,7 +154,7 @@ export function useCrud(ctx: UseCrudProps) {
             }
           }
         });
-        
+
         crudBinding.value.table.columns = columns;
       },
       onRefresh() {
@@ -295,5 +297,61 @@ export function useCrud(ctx: UseCrudProps) {
   return {
     resetCrudOptions,
     appendBindingOptions
+  };
+}
+
+export type UseFsRet = {
+  crudRef: Ref;
+
+  crudOptions: CrudOptions;
+
+  crudBinding: Ref<CrudBinding>;
+  crudExpose: CrudExpose;
+
+  /**
+   * 其他从createCrudOptions自定义返回的参数
+   */
+  [key: string]: any;
+};
+
+export type CreateCrudOptionsProps = {
+  crudExpose: CrudExpose;
+
+  expose: CrudExpose;
+  /**
+   * 其他从createCrudOptions自定义返回的参数
+   */
+  [key: string]: any;
+};
+export type CreateCrudOptionsRet = {
+  crudOptions: CrudOptions;
+  /**
+   * 其他从createCrudOptions自定义返回的参数
+   */
+  [key: string]: any;
+};
+type UseFsProps = {
+  createCrudOptions: (CreateCrudOptionsRet) => CreateCrudOptionsRet;
+};
+export function useFs(props: UseFsProps): UseFsRet {
+  const { createCrudOptions } = props;
+  const crudRef = ref();
+  // crud 配置的ref
+  const crudBinding: Ref<CrudBinding> = ref({});
+  // 暴露的方法
+  const { crudExpose } = useExpose({ crudRef, crudBinding });
+  // 你的crud配置
+  const crudOptionsRet = createCrudOptions({ crudExpose, expose: crudExpose });
+
+  const { crudOptions } = crudOptionsRet;
+  // 初始化crud配置
+  const useCrudRet = useCrud({ crudExpose, crudOptions });
+
+  return {
+    ...crudOptionsRet,
+    ...useCrudRet,
+    crudRef,
+    crudExpose,
+    crudBinding
   };
 }
