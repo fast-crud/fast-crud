@@ -1,7 +1,7 @@
-import { resolveDynamicComponent, defineComponent, h } from "vue";
+import { resolveDynamicComponent, defineComponent, h, computed } from "vue";
 import { useUi } from "../../use";
 import "./fs-button.less";
-
+import _ from "lodash-es";
 /**
  * 按钮，支持el-button/a-button的配置
  */
@@ -27,12 +27,18 @@ export default defineComponent({
     /**
      * 是否圆形按钮，text需配置为null
      */
-    circle: { type: Boolean, default: false, required: false }
+    circle: { type: Boolean, default: false, required: false },
+
+    /**
+     * tooltip配置，为空不显示tooltip
+     */
+    tooltip: {
+      type: Object,
+      default: undefined
+    }
   },
-  render() {
+  setup(props, ctx) {
     const { ui } = useUi();
-    const icon: string | null | undefined | object = this.icon;
-    const iconRight: string | null | undefined | object = this.iconRight;
     const iconRender = (icon, iconClass = "fs-button-icon") => {
       if (icon == null) {
         return;
@@ -43,59 +49,82 @@ export default defineComponent({
         return <fs-icon {...icon} class={iconClass} />;
       }
     };
-    const isIconSlot = ui.type !== "element";
-    const isIconProp = ui.type === "element";
-    let iconProp = undefined;
-    const slots = {
-      ...this.$slots
-    };
-    if ((icon && !isIconSlot && !isIconProp) || this.$slots.default || this.text || iconRight) {
-      slots.default = () => {
-        const children: any = [];
-        if (icon && !isIconSlot && !isIconProp) {
-          children.push(iconRender(icon));
-        }
-        if (this.$slots.default) {
-          children.push(this.$slots.default());
-        }
-        if (this.text) {
-          children.push(this.text);
-        }
-        if (iconRight) {
-          children.push(iconRender(iconRight, "fs-button-icon-right"));
-        }
-        return children;
+    const renderBtn = () => {
+      const icon: string | null | undefined | object = props.icon;
+      const iconRight: string | null | undefined | object = props.iconRight;
+
+      const isIconSlot = ui.type !== "element";
+      const isIconProp = !isIconSlot;
+      let iconProp = undefined;
+      const slots = {
+        ...ctx.slots
       };
-    }
-    if (icon) {
-      if (isIconSlot && !slots["icon"]) {
-        //@ts-ignore
-        slots["icon"] = () => {
-          return iconRender(icon);
+      if ((icon && !isIconSlot && !isIconProp) || ctx.slots.default || props.text || iconRight) {
+        slots.default = () => {
+          const children: any = [];
+          if (icon && !isIconSlot && !isIconProp) {
+            children.push(iconRender(icon));
+          }
+          if (ctx.slots.default) {
+            children.push(ctx.slots.default());
+          }
+          if (props.text) {
+            children.push(props.text);
+          }
+          if (iconRight) {
+            children.push(iconRender(iconRight, "fs-button-icon-right"));
+          }
+          return children;
         };
-      } else if (isIconProp && !slots["icon"]) {
-        //@ts-ignore
-        iconProp = iconRender(icon);
       }
-    }
-
-    const isCircle = this.circle ? ui.button.circle : {};
-
-    const buttonComp: any = resolveDynamicComponent(ui.button.name);
-
-    const btnProps = {
-      ...this.$attrs,
-      ...isCircle,
-      //icon,
-      class: {
-        "fs-button": true,
-        "is-thin": !this.text && !this.$slots.default
+      if (icon) {
+        if (isIconSlot && !slots["icon"]) {
+          //@ts-ignore
+          slots["icon"] = () => {
+            return iconRender(icon);
+          };
+        } else if (isIconProp && !slots["icon"]) {
+          //@ts-ignore
+          iconProp = iconRender(icon);
+        }
       }
+
+      const isCircle = props.circle ? ui.button.circle : {};
+
+      const buttonComp: any = resolveDynamicComponent(ui.button.name);
+
+      const btnProps = {
+        ...ctx.attrs,
+        ...isCircle,
+        //icon,
+        class: {
+          "fs-button": true,
+          "is-thin": !props.text && !ctx.slots.default
+        }
+      };
+      if (iconProp) {
+        // @ts-ignore
+        btnProps.icon = iconProp;
+      }
+      return h(buttonComp, btnProps, slots);
     };
-    if (iconProp) {
-      // @ts-ignore
-      btnProps.icon = iconProp;
+
+    if (!props.tooltip) {
+      return renderBtn;
     }
-    return h(buttonComp, btnProps, slots);
+
+    // render tooltip
+    const tooltipComp: any = resolveDynamicComponent(ui.tooltip.name);
+
+    const computeTooltipProps = computed(() => {
+      return _.omit(props.tooltip, "slots");
+    });
+    return () => {
+      const slots = {
+        ...props.tooltip?.slots,
+        default: renderBtn
+      };
+      return <tooltipComp {...computeTooltipProps.value}>{slots}</tooltipComp>;
+    };
   }
 });

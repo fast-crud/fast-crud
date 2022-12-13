@@ -267,7 +267,7 @@ function reset() {
 }
 // 确认
 function submit(noSave = false) {
-  if (noSave !== true) {
+  if (!noSave) {
     saveOptionsToStorage(currentValue.value);
   }
   const result = _.cloneDeep(currentValue.value);

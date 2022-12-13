@@ -1,15 +1,43 @@
-import { ColumnsFilterComponentProps } from "/src/components/toolbar/fs-table-columns-filter/props";
 import { ToolbarComponentProps } from "/src/components/toolbar/props";
 
 export type ScopeContext = {
-  key;
-  value;
-  form;
+  /**
+   * 字段key
+   */
+  key: string;
+  /**
+   * 字段值
+   */
+  value: any;
+  /**
+   * 表单数据
+   */
+  form: any;
 
-  row;
-  index;
-  mode;
-  getComponentRef: Function;
+  /**
+   * 行数据
+   */
+  row: any;
+
+  /**
+   * naive ui 有record
+   */
+  record?: any;
+  /**
+   * 第几行
+   */
+  index: number;
+  /**
+   * 表单模式,add,view,edit
+   */
+  mode: string;
+  /**
+   * 获取其他字段组件ref
+   */
+  getComponentRef: (key: string) => any;
+  /**
+   * 当前字段组件的ref
+   */
   componentRef;
 };
 
