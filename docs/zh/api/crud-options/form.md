@@ -217,7 +217,10 @@ crudOptions = { //
   }
 }
 ```
-
+## wrapper.title
+* 说明: 对话框标题
+* 类型：string
+* 
 ## wrapper.onOpen
 * 说明: 对话框打开事件处理方法
 * 类型：Function
