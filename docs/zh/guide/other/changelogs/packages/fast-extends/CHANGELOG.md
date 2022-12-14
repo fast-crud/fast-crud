@@ -3,6 +3,22 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [1.7.0](https://github.com/fast-crud/fast-crud/compare/v1.6.1...v1.7.0) (2022-12-14)
+
+
+### Bug Fixes
+
+* 修复文件上传的一些bug ([52cbfff](https://github.com/fast-crud/fast-crud/commit/52cbfff33d85e9e2ae9dc71346e8ade8837a1221))
+
+
+### Performance Improvements
+
+* image-format支持预览原图 ([5b94c17](https://github.com/fast-crud/fast-crud/commit/5b94c17a4ba60d7721cce44bfcf162d65dea535d))
+
+
+
+
+
 ## [1.6.1](https://github.com/fast-crud/fast-crud/compare/v1.6.0...v1.6.1) (2022-11-20)
 
 **Note:** Version bump only for package @fast-crud/fast-extends

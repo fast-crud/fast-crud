@@ -3,6 +3,23 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [1.7.0](https://github.com/fast-crud/fast-crud/compare/v1.6.1...v1.7.0) (2022-12-14)
+
+
+### Bug Fixes
+
+* 修复多级数据 search reset 错误的问题 ([4db5c0f](https://github.com/fast-crud/fast-crud/commit/4db5c0f0d3527577df42092df05de1b81a4f165d))
+
+
+### Performance Improvements
+
+* 菜单增加操作列 ([4b328ce](https://github.com/fast-crud/fast-crud/commit/4b328cede397990308d94e6f91ba88597a7ac552))
+* image-format支持预览原图 ([5b94c17](https://github.com/fast-crud/fast-crud/commit/5b94c17a4ba60d7721cce44bfcf162d65dea535d))
+
+
+
+
+
 ## [1.6.1](https://github.com/fast-crud/fast-crud/compare/v1.6.0...v1.6.1) (2022-11-20)
 
 **Note:** Version bump only for package @fast-crud/ui-naive
