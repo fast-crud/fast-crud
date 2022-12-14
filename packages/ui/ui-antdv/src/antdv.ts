@@ -42,9 +42,11 @@ import {
   CollapseCI,
   CollapseItemCI,
   ButtonCI,
-  PaginationCI
+  PaginationCI,
+  DividerCI,
+  PopoverCI,
+  TooltipCI
 } from "@fast-crud/ui-interface";
-import { DividerCI, PopoverCI, TooltipCI } from "../../ui-interface/src/ui-interface";
 import _ from "lodash-es";
 export class Antdv implements UiInterface {
   constructor(target) {

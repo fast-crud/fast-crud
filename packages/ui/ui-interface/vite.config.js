@@ -4,6 +4,7 @@ import path from "path";
 import visualizer from "rollup-plugin-visualizer";
 import strip from "@rollup/plugin-strip";
 const { resolve } = path;
+import typescript from "@rollup/plugin-typescript";
 // https://vitejs.dev/config/
 export default {
   plugins: [vueJsx(), vue()],
@@ -26,15 +27,15 @@ export default {
       // },
       plugins: [
         strip(),
-        visualizer()
-        // typescript({
-        //   target: "es2020",
-        //   rootDir: "src",
-        //   declaration: true,
-        //   declarationDir: "dist/es",
-        //   exclude: "./node_modules/**",
-        //   allowSyntheticDefaultImports: true
-        // })
+        visualizer(),
+        typescript({
+          target: "es2020",
+          rootDir: "src",
+          declaration: true,
+          declarationDir: "dist/d",
+          exclude: "./node_modules/**",
+          allowSyntheticDefaultImports: true
+        })
       ],
       // make sure to externalize deps that shouldn't be bundled
       // into your library

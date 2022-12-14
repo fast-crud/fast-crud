@@ -3,8 +3,8 @@
   "version": "1.7.0",
   "private": false,
   "main": "./dist/fast-extends.umd.js",
-  "module": "./dist/fast-extends.es.js",
-  "types": "./dist/es/index.d.ts",
+  "module": "./dist/fast-extends.mjs",
+  "types": "./dist/d/index.d.ts",
   "scripts": {
     "build:all": "npm run build:type && npm run build && npm run copy:index",
     "build": " npm run build:umd && npm run build:es",

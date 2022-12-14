@@ -4,7 +4,7 @@
   "private": false,
   "main": "./dist/fast-crud.umd.js",
   "module": "./dist/fast-crud.mjs",
-  "types": "./dist/es/index.d.ts",
+  "types": "./dist/d/index.d.ts",
   "scripts": {
     "tsc": "vue-tsc --noEmit --skipLibCheck",
     "build": "npm run tsc && vite build && npm run copy-local",

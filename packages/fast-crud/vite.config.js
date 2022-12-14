@@ -35,7 +35,7 @@ export default {
           target: "es2020",
           rootDir: "src",
           declaration: true,
-          declarationDir: "dist/es",
+          declarationDir: "dist/d",
           exclude: "./node_modules/**",
           allowSyntheticDefaultImports: true
         })

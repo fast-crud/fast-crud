@@ -4,7 +4,7 @@
   "description": "",
   "main": "./dist/ui-naive.umd.js",
   "module": "./dist/ui-naive.mjs",
-  "types": "./dist/es/index.d.ts",
+  "types": "./dist/d/index.d.ts",
   "scripts": {
     "tsc": "vue-tsc --noEmit --skipLibCheck",
     "build": "npm run tsc && vite build",
@@ -25,6 +25,7 @@
     "@typescript-eslint/eslint-plugin": "^5.46.1",
     "@typescript-eslint/parser": "^5.46.1",
     "@vicons/antd": "^0.12.0",
+    "@types/lodash-es": "^4.17.6",
     "@vitejs/plugin-legacy": "^3.0.1",
     "@vitejs/plugin-vue": "^4.0.0",
     "@vitejs/plugin-vue-jsx": "^3.0.0",

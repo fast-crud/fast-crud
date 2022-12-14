@@ -41,10 +41,14 @@ import {
   CollapseCI,
   CollapseItemCI,
   ButtonCI,
-  PaginationCI
+  PaginationCI,
+  DividerCI,
+  FormCI,
+  PopoverCI,
+  TooltipCI
 } from "@fast-crud/ui-interface";
+// @ts-ignore
 import _ from "lodash-es";
-import { DividerCI, FormCI, PopoverCI, TooltipCI } from "../../ui-interface/src/ui-interface";
 export class Element implements UiInterface {
   constructor(target) {
     if (target) {
