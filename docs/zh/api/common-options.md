@@ -97,6 +97,14 @@ component:{
         type:"", //a-button，el-button的类型
         style:{},
         disabled:false,
+        tooltip:{ //tooltip的属性
+            title //a-tooltip 提示内容
+            slots:{ //tooltip插槽
+                default(){
+                    return "n-tooltip的提示内容"
+                }
+            }
+        },
         ...// a-button,el-button的其他配置
     },
 }

@@ -119,10 +119,11 @@ export default defineComponent({
     const computeTooltipProps = computed(() => {
       return _.omit(props.tooltip, "slots");
     });
+    const triggerSlotName = ui.tooltip.trigger;
     return () => {
       const slots = {
         ...props.tooltip?.slots,
-        default: renderBtn
+        [triggerSlotName]: renderBtn
       };
       return <tooltipComp {...computeTooltipProps.value}>{slots}</tooltipComp>;
     };

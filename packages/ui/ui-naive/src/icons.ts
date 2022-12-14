@@ -29,6 +29,7 @@ import {
   DownOutlined,
   EyeOutlined,
   QuestionCircleOutlined
+  // @ts-ignore
 } from "@ant-design/icons-vue";
 
 const icons = {
@@ -64,7 +65,7 @@ const icons = {
   QuestionCircleOutlined
 };
 export default function (app) {
-  for (let key in icons) {
+  for (const key in icons) {
     app.component(key, icons[key]);
   }
 }

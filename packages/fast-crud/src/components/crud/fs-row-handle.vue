@@ -251,12 +251,12 @@ export default defineComponent({
 .fs-row-handle {
   // display: flex ; // 这里不能用flex，否则会破坏align:center配置
   flex-wrap: wrap;
-  .row-handle-btn {
+  .el-button + .el-button {
+    margin-left: 2px;
+  }
+  & > * {
     margin: 2px;
     display: inline-flex;
-    &.el-button {
-      margin: 2px;
-    }
   }
   .fs-row-handle-dropdown-item {
     display: flex;

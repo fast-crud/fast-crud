@@ -16,10 +16,10 @@
     "@fast-crud/ui-interface": "^1.6.1"
   },
   "peerDependencies": {
-    "@ant-design/icons-vue": "^6.0.1",
     "@fast-crud/fast-crud": "^2.*"
   },
   "devDependencies": {
+    "@ant-design/icons-vue": "^6.0.1",
     "@rollup/plugin-strip": "^3.0.1",
     "@rollup/plugin-typescript": "^10.0.1",
     "@typescript-eslint/eslint-plugin": "^5.46.1",

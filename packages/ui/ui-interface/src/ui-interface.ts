@@ -7,7 +7,7 @@ export interface FormCI {
   inlineLayout: Object;
   resetWrap: Function;
   validateWrap: Function;
-  transformValidateErrors: (e:Error) => { [key: string]: any }
+  transformValidateErrors: (e: Error) => { [key: string]: any };
 }
 export interface SelectCI extends CI {
   modelValue;
@@ -53,16 +53,16 @@ export interface DialogCI extends CI {
   footer: Function;
   buildOnClosedBind: Function;
   customClass;
-  titleSlotName?:string;
-  buildWidthBind?:any;
-  buildInitBind?:any;
+  titleSlotName?: string;
+  buildWidthBind?: any;
+  buildInitBind?: any;
 }
 
 export interface DrawerCI extends CI {
   visible;
   customClass;
   width;
-  hasContentWrap?:string;
+  hasContentWrap?: string;
 }
 
 export interface TableColumnCI extends CI {
@@ -73,7 +73,7 @@ export interface TableColumnCI extends CI {
 }
 
 export interface TableCI extends CI {
-  defaultRowKey?: (string|((rowData:any)=>any));
+  defaultRowKey?: string | ((rowData: any) => any);
   data;
   fixedHeaderNeedComputeBodyHeight: boolean;
   headerDomSelector: string; //用于计算高度
@@ -133,8 +133,8 @@ export interface MessageCI extends CI {
   error;
   warn;
   info;
-  instance:any;
-  getInstance?:any
+  instance: any;
+  getInstance?: any;
 }
 
 export type MessageBoxContextType = {
@@ -148,8 +148,8 @@ export type MessageBoxOpenType = (context: MessageBoxContextType) => Promise<voi
 export interface MessageBoxCI extends CI {
   open: MessageBoxOpenType;
   confirm: MessageBoxOpenType;
-  instance:any;
-  getInstance?:any
+  instance: any;
+  getInstance?: any;
 }
 export interface NotificationCI extends CI {
   open;
@@ -157,8 +157,8 @@ export interface NotificationCI extends CI {
   error;
   warn;
   info;
-  instance:any;
-  getInstance?:any
+  instance: any;
+  getInstance?: any;
 }
 export interface IconCI extends CI {
   isComponent: boolean;
@@ -190,7 +190,7 @@ export interface FormWrapperCI extends CI {
   buildWidthBind: (is, width: any) => {};
   buildInitBind: (is) => {};
   buildInnerBind: (opts: any) => {};
-  hasContentWrap?: (is) => string|undefined;
+  hasContentWrap?: (is) => string | undefined;
 }
 export interface DatePickerCI extends CI {
   modelValue;
