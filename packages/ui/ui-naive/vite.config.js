@@ -3,6 +3,7 @@ import vueJsx from "@vitejs/plugin-vue-jsx";
 import path from "path";
 import visualizer from "rollup-plugin-visualizer";
 import strip from "@rollup/plugin-strip";
+import typescript from "@rollup/plugin-typescript";
 const { resolve } = path;
 // https://vitejs.dev/config/
 export default {
@@ -13,8 +14,8 @@ export default {
   },
   build: {
     lib: {
-      entry: resolve(__dirname, "src/index.js"),
-      name: "antdv"
+      entry: resolve(__dirname, "src/index.ts"),
+      name: "naive"
     },
     // cssCodeSplit: true,
     sourcemap: "inline",
@@ -26,15 +27,15 @@ export default {
       // },
       plugins: [
         strip(),
-        visualizer()
-        // typescript({
-        //   target: "es2020",
-        //   rootDir: "src",
-        //   declaration: true,
-        //   declarationDir: "dist/es",
-        //   exclude: "./node_modules/**",
-        //   allowSyntheticDefaultImports: true
-        // })
+        visualizer(),
+        typescript({
+          target: "es2020",
+          rootDir: "src",
+          declaration: true,
+          declarationDir: "dist/es",
+          exclude: "./node_modules/**",
+          allowSyntheticDefaultImports: true
+        })
       ],
       // make sure to externalize deps that shouldn't be bundled
       // into your library
