@@ -3,6 +3,18 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.7.1](https://github.com/fast-crud/fast-crud/compare/v1.7.0...v1.7.1) (2022-12-14)
+
+
+### Performance Improvements
+
+* 调整ui-*、extends的d.ts编译目录 ([4749dac](https://github.com/fast-crud/fast-crud/commit/4749dac48979f654143e6e8e3f0edf936e80311c))
+* extends ts化 ([671ccaf](https://github.com/fast-crud/fast-crud/commit/671ccaffb518c2d6102585f92780e1f77b9131e3))
+
+
+
+
+
 # [1.7.0](https://github.com/fast-crud/fast-crud/compare/v1.6.1...v1.7.0) (2022-12-14)
 
 
