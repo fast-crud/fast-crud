@@ -12,8 +12,8 @@
 | initialForm  | 初始表单数据                                                                                                                                      | object | -      | {}        |
 | columns      | 字段模版<br/>{<br/> key:{<br/> title: "字段名称",<br/> component:{<br/> name:"组件名称"<br/> ...组件参数<br/> }<br/> }<br/>}                      | object | -      | undefined |
 | group        | 字段分组<br/>{<br/> type:'xxx', //分组展示类型<br/> groups:{ //分组数据<br/> groupKey:{ title:'xxx',columns:['fieldKey','fieldKey']}<br/> }<br/>} | object | -      | undefined |
-| doReset      | 重置按钮方法                                                                                                                                      | func   | -      |           |
-| doSubmit     | 点击保存按钮时执行方法                                                                                                                            | func   | -      | undefined |
+| doReset      | 重置表单后的操作                                                                                                                                  | func   | -      |           |
+| doSubmit     | 点击保存按钮时执行操作（async）                                                                                                                   | func   | -      | undefined |
 | beforeSubmit | 表单提交前处理（async）                                                                                                                           | func   | -      | undefined |
 | afterSubmit  | 表单提交后处理（async）                                                                                                                           | func   | -      | undefined |
 | slots        | 插槽内容                                                                                                                                          | object | -      | {}        |

@@ -124,29 +124,17 @@ interface ColumnsFilterProps {
    * 文本设置
    */
   text?: {
-    /**
-     * 标题
-     */
+    //标题
     title?: string;
-    /**
-     * 固定
-     */
+    //固定
     fixed?: string;
-    /**
-     * 排序
-     */
+    //排序
     order?: string;
-    /**
-     * 重置
-     */
+    // 重置
     reset?: string;
-    /**
-     * 确认
-     */
+    //确认
     confirm?: string;
-    /**
-     * 未命名
-     */
+    //未命名
     unnamed?: string;
   };
 }
