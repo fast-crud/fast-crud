@@ -3,6 +3,32 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [1.7.0](https://github.com/fast-crud/fast-crud/compare/v1.6.1...v1.7.0) (2022-12-14)
+
+
+### Bug Fixes
+
+* 调整doRefresh中pageRequest判空的的时机 ([d2c7c90](https://github.com/fast-crud/fast-crud/commit/d2c7c901fef01284b00d2a935d289ff0b317d7b1))
+* 修复文件上传的一些bug ([52cbfff](https://github.com/fast-crud/fast-crud/commit/52cbfff33d85e9e2ae9dc71346e8ade8837a1221))
+* 修复search无法自定义按钮的bug ([e265f9b](https://github.com/fast-crud/fast-crud/commit/e265f9b45753b64fd367667f7f8d3402fffcab13))
+* 优化列设置，修复勾选问题 ([f93d0ff](https://github.com/fast-crud/fast-crud/commit/f93d0ffdc488e79b651f55ae664e8281b35992be))
+
+
+### Features
+
+* button支持tooltip ([b40ee32](https://github.com/fast-crud/fast-crud/commit/b40ee321cc2d667392d38eb2384eda6fd82411f5))
+
+
+### Performance Improvements
+
+* 菜单增加操作列 ([4b328ce](https://github.com/fast-crud/fast-crud/commit/4b328cede397990308d94e6f91ba88597a7ac552))
+* 通过useFs来简化fs-crud的初始化过程 ([76b3c80](https://github.com/fast-crud/fast-crud/commit/76b3c807f6586cc895323860893d1e8bf8c62ad1))
+* image-format支持预览原图 ([5b94c17](https://github.com/fast-crud/fast-crud/commit/5b94c17a4ba60d7721cce44bfcf162d65dea535d))
+
+
+
+
+
 ## [1.6.1](https://github.com/fast-crud/fast-crud/compare/v1.6.0...v1.6.1) (2022-11-20)
 
 **Note:** Version bump only for package @fast-crud/fast-crud
