@@ -14,7 +14,8 @@
   "author": "Greper",
   "license": "MIT",
   "dependencies": {
-    "@fast-crud/ui-interface": "^1.7.0"
+    "@fast-crud/ui-interface": "^1.7.0",
+    "lodash-es": "^4.17.21"
   },
   "peerDependencies": {
     "@element-plus/icons-vue": "^2.0.4",
@@ -24,6 +25,7 @@
   "devDependencies": {
     "@rollup/plugin-strip": "^3.0.1",
     "@rollup/plugin-typescript": "^10.0.1",
+    "@types/lodash-es": "^4.17.6",
     "@typescript-eslint/eslint-plugin": "^5.46.1",
     "@typescript-eslint/parser": "^5.46.1",
     "@vitejs/plugin-legacy": "^3.0.1",
@@ -31,7 +33,6 @@
     "@vitejs/plugin-vue-jsx": "^3.0.0",
     "@vue/compiler-sfc": "^3.2.45",
     "@vue/test-utils": "^2.2.6",
-    "@types/lodash-es": "^4.17.6",
     "eslint": "^8.29.0",
     "eslint-config-prettier": "^8.1.0",
     "eslint-plugin-import": "^2.20.2",

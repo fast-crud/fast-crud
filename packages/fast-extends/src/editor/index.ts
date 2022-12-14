@@ -1,10 +1,11 @@
 import ExtendsType from "./type";
 export * from "./type";
 import { utils } from "@fast-crud/fast-crud";
+// @ts-ignore
 const asyncModules = import.meta.glob("./components/*/*.vue");
 const FsUploaderComponents = {
   install(app) {
-    utils.vite.installAsyncComponents(app, asyncModules, null, /^.*\/([^\/]+)\/.*.vue$/);
+    utils.vite.installAsyncComponents(app, asyncModules, null, /^.*\/([^\/]+)\/.*.vue$/, null);
   }
 };
 
