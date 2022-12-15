@@ -101,6 +101,7 @@ export default {
   setup(props, ctx) {
     const ui = uiContext.get();
     const { t } = useI18n();
+    // uploader 的 modelValue
     const fileList = ref([]);
     const currentValue = ref();
     const fileListLocal = ref([]);
@@ -134,7 +135,6 @@ export default {
       return value[props.valueType];
     }
     function initValue(value) {
-      console.log("init value", value);
       const array = [];
       if (value == null || value.length === 0) {
         fileList.value = array;
@@ -151,7 +151,7 @@ export default {
     }
 
     initValue(props.modelValue);
-    fileListLocal.value = fileList.value;
+    updateLocalFileList(fileList.value);
 
     function onChange(value) {
       ctx.emit("change", value);
@@ -200,7 +200,7 @@ export default {
     }
 
     function handleChange(file, list) {
-      fileListLocal.value = list;
+      updateLocalFileList(list);
       emitValue(list);
     }
 
@@ -260,8 +260,7 @@ export default {
       }
     }
 
-    const beforeUpload = async (file, list) => {
-      console.log("before upload", file, fileList);
+    const beforeUpload = async (file) => {
       if (props.beforeUpload) {
         const ret = await props.beforeUpload({ file, fileList: fileListLocal.value });
         if (ret === false) {
@@ -270,10 +269,11 @@ export default {
       }
       checkLimit();
       checkSizeLimit(file);
-
-      // fileList.value = [...fileList.value, file];
-      fileListLocal.value = fileList.value;
     };
+
+    function updateLocalFileList(list) {
+      fileListLocal.value = list;
+    }
 
     async function doUpload(option) {
       option.options = props.uploader;
@@ -483,16 +483,16 @@ export default {
       display: none;
     }
   }
-  .ant-upload-list-item-actions{
+  .ant-upload-list-item-actions {
     display: flex;
     align-items: center;
-    > a{
+    > a {
       display: flex;
       align-items: center;
     }
   }
 
-  .el-upload{
+  .el-upload {
     justify-content: left;
   }
   // element

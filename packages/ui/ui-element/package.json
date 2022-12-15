@@ -17,12 +17,10 @@
     "@fast-crud/ui-interface": "^1.7.1",
     "lodash-es": "^4.17.21"
   },
-  "peerDependencies": {
-    "@element-plus/icons-vue": "^2.0.4",
-    "@fast-crud/fast-crud": "*",
-    "element-plus": "^2.2.12"
-  },
   "devDependencies": {
+    "@element-plus/icons-vue": "^2.*",
+    "@fast-crud/fast-crud": "^1.*",
+    "element-plus": "^2.*",
     "@rollup/plugin-strip": "^3.0.1",
     "@rollup/plugin-typescript": "^10.0.1",
     "@types/lodash-es": "^4.17.6",
