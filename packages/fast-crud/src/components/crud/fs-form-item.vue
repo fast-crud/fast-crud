@@ -18,7 +18,7 @@
       >
         <template #[$fsui.tooltip.content]>
           <span class="fs-form-helper-tooltip">
-            <fs-form-helper :helper="item.helper" :scope="buildItemScope(item)" />
+            <fs-form-helper :helper="item.helper" :scope="scopeComputed" />
           </span>
         </template>
         <template #[$fsui.tooltip.trigger]>
@@ -30,29 +30,25 @@
     </template>
     <div class="fs-form-item-content">
       <div class="fs-form-item-render">
-        <fs-render v-if="item.prefixRender" :render-func="item.prefixRender" :scope="buildItemScope(item)" />
+        <fs-render v-if="item.prefixRender" :render-func="item.prefixRender" :scope="scopeComputed" />
         <div class="fs-form-item-component">
-          <fs-slot-render v-if="formSlot" :slots="formSlot" :scope="buildItemScope(item)" />
+          <fs-slot-render v-if="formSlot" :slots="formSlot" :scope="scopeComputed" />
           <template v-else-if="item.component?.show !== false">
-            <fs-render
-              v-if="item.component?.render"
-              :render-func="item.component.render"
-              :scope="buildItemScope(item)"
-            />
+            <fs-render v-if="item.component?.render" :render-func="item.component.render" :scope="scopeComputed" />
             <fs-component-render
               v-else
               ref="componentRenderRef"
               v-bind="item.component"
               :model-value="modelValue"
-              :scope="buildItemScope(item)"
+              :scope="scopeComputed"
               @update:modelValue="updateModelValue"
             />
           </template>
         </div>
-        <fs-render v-if="item.suffixRender" :render-func="item.suffixRender" :scope="buildItemScope(item)" />
+        <fs-render v-if="item.suffixRender" :render-func="item.suffixRender" :scope="scopeComputed" />
       </div>
       <template v-if="item.helper && computedHelperPosition !== 'label'">
-        <fs-form-helper :helper="item.helper" :scope="buildItemScope(item)" />
+        <fs-form-helper :helper="item.helper" :scope="scopeComputed" />
       </template>
     </div>
   </component>
@@ -95,10 +91,10 @@ export default {
   emits: ["update:modelValue"],
   setup(props, ctx) {
     const componentRenderRef = ref();
-    function buildItemScope(item) {
+    const scopeComputed = computed(() => {
       const scope = props.getContextFn ? props.getContextFn() : {};
-      return { value: props.modelValue, key: item.key, ...scope };
-    }
+      return { value: props.modelValue, key: props.item.key, ...scope };
+    });
 
     function updateModelValue(value) {
       ctx.emit("update:modelValue", value);
@@ -127,7 +123,7 @@ export default {
     });
     return {
       updateModelValue,
-      buildItemScope,
+      scopeComputed,
       getComponentRef,
       componentRenderRef,
       computedHelperPosition,

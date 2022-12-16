@@ -46,11 +46,46 @@ showTableRef.value = true
 > 开发过程中但凡遇到需要根据表单数据或者行数据参与动态计算的，用`compute`或者`asyncCompute`就对了
 
 
+
 * 方法：compute(Function(context))
 * context： [上下文](#context【上下文】)，一般包含`row`/`form`/`index`/`getComponentRef`
 * return: 返回计算后的配置值
 
-示例：
+
+示例1：      
+可应用于某个组件需要多个输入参数的场景       
+比如：每一条记录是一种设备，不同的设备温度的上限和下限不一样，我们一个滑动输入组件，用来显示设备温度。
+
+```js
+const records = [
+    {name:"内部水温",temp:"50",max:100,min:0},
+    {name:"外壳温度",temp:"300",max:1000,min:-10},
+]
+```
+```js
+
+import { useCompute } from "@fast-crud/fast-crud";
+const {compute} = useCompute()
+const crudOptions={
+    columns:{
+        temp:{
+            title:"温度",
+            column:{
+                name:"a-slider",
+                // 此处温度的上限和下限由每一行的max和min字段决定
+                max: compute(({row})=>{
+                    return row.max
+                }),
+                min: compute(({row})=>{
+                    return row.min
+                })
+            }
+        },
+    }
+}
+```
+
+示例2：
 ```js
 import { useCompute } from "@fast-crud/fast-crud";
 const {compute} = useCompute()

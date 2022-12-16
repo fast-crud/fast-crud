@@ -13,6 +13,9 @@ const { dict, setDictRequest } = useDictDefine();
 const { ComputeValue, compute, asyncCompute } = useCompute();
 export { ComputeValue, compute, asyncCompute, dict, utils, useI18n, uiContext };
 export * from "./d.ts/index";
+
+import * as directives from "./directives";
+export * from "./directives";
 export const FastCrud = {
   install(app, options) {
     if (options?.ui) {
@@ -31,6 +34,11 @@ export const FastCrud = {
     for (const key in components) {
       const com = components[key];
       app.component(key, com);
+    }
+
+    for (const key in directives) {
+      const d = directives[key];
+      app.use(d);
     }
 
     types.install();

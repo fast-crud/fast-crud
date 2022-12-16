@@ -58,6 +58,13 @@ export default {
         };
       }
     },
+    buildUrls: {
+      default() {
+        return async (urls) => {
+          return urls;
+        };
+      }
+    },
     /**
      * 上传按钮配置，参考FsButton参数
      */

@@ -71,8 +71,7 @@ export default {
      * modelValue的属性名
      */
     vModel: {
-      type: String,
-      Object
+      type: String
     },
     /**
      * 组件参数，会与attrs合并
