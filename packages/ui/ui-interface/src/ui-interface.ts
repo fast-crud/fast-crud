@@ -226,6 +226,7 @@ export interface LoadingCI extends CI {
   type;
 }
 export interface UploadCI extends CI {
+  id: string;
   name;
   type;
   typeImageCard: string;
@@ -234,6 +235,7 @@ export interface UploadCI extends CI {
   getFileListFromEvent;
   status;
   limitAdd;
+  isSuccess: (fileItem: any) => Boolean;
 }
 export interface ButtonCI extends CI {
   name: string;

@@ -10,7 +10,7 @@ function merge(target, ...sources) {
   /**
    * 如果目标为不可合并对象，比如array、unMergeable、ref,则直接覆盖不合并
    * @param objValue 被合并对象
-   * @param srcValue 覆盖对象
+   * @param srcValue 来源对象
    */
   function customizer(objValue, srcValue) {
     if (srcValue == null) {
@@ -18,7 +18,8 @@ function merge(target, ...sources) {
     }
     // 如果被合并对象为数组，则直接被覆盖对象覆盖，只要覆盖对象不为空
     if (_.isArray(objValue)) {
-      return srcValue;
+      //原对象如果是数组
+      return srcValue; //来源对象
     }
 
     if (isUnMergeable(srcValue)) {

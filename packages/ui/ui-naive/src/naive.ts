@@ -160,6 +160,7 @@ export class Naive implements UiInterface {
       if (typeof context !== "string") {
         content = context.message || context.content;
       }
+      debugger;
       this.message.getInstance()[type](content);
     },
     success: (context) => {
@@ -169,7 +170,7 @@ export class Naive implements UiInterface {
       this.message.open("error", context);
     },
     warn: (context) => {
-      this.message.open("warn", context);
+      this.message.open("warning", context);
     },
     info: (context) => {
       this.message.open("info", context);
@@ -596,6 +597,7 @@ export class Naive implements UiInterface {
     type: "component"
   };
   upload: UploadCI = {
+    id: "id",
     name: "n-upload",
     type: "",
     typeImageCard: "image-card",
@@ -607,10 +609,13 @@ export class Naive implements UiInterface {
       return event?.fileList;
     },
     status: {
-      success: "done",
+      success: "finished",
       uploading: "uploading"
     },
-    limitAdd: 0
+    limitAdd: 0,
+    isSuccess(fileItem) {
+      return fileItem.status == null || fileItem.status === "finished";
+    }
   };
   tabs: TabsCI = {
     name: "n-tabs"

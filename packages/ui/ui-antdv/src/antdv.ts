@@ -537,7 +537,6 @@ export class Antdv implements UiInterface {
   image: ImageCI = {
     name: "a-image",
     buildPreviewBind: ({ url, urls, previewUrl, previewUrls }) => {
-      debugger;
       return {
         preview: {
           src: previewUrl
@@ -553,6 +552,7 @@ export class Antdv implements UiInterface {
     type: "component"
   };
   upload: UploadCI = {
+    id: "uid",
     name: "a-upload",
     type: "",
     typeImageCard: "picture-card",
@@ -566,6 +566,9 @@ export class Antdv implements UiInterface {
     status: {
       success: "done",
       uploading: "uploading"
+    },
+    isSuccess(fileItem) {
+      return fileItem.status == null || fileItem.status === "done";
     },
     limitAdd: 0
   };

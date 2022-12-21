@@ -28,7 +28,10 @@ import { ref, watch } from "vue";
 export default {
   name: "FsFilesFormat",
   props: {
-    // 值
+    /**
+     * 文件列表
+     * 支持格式： url , {url} , [url1,url2] ,  [{url:url1},{url:url2}]
+     */
     modelValue: {
       require: true
     },
@@ -45,7 +48,7 @@ export default {
     a: {},
     // tag配置
     tag: {},
-    // 构建下载url方法
+    // 构建下载url方法，支持异步
     buildUrl: {
       type: Function,
       default: function (value) {

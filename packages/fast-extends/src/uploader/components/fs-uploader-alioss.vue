@@ -67,7 +67,6 @@ async function doUpload({ file, fileName, onProgress, options }) {
   let result = { url: options.domain + "/" + key, key: key };
   if (options.successHandle) {
     result = await options.successHandle(result);
-    return result;
   }
   return result;
 

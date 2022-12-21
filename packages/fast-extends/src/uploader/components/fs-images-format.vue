@@ -76,6 +76,7 @@ export default {
     }
   },
   setup(props, ctx) {
+    const { ui } = useUi();
     type ImageItem = {
       value?: any;
       url?: string;
@@ -229,10 +230,11 @@ export default {
         if (value) {
           imageListRef.value = await buildImageListByUrls(value);
         }
+      },
+      {
+        immediate: true
       }
     );
-
-    const { ui } = useUi();
 
     return { imageListRef };
   }

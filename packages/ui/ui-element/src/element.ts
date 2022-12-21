@@ -474,6 +474,7 @@ export class Element implements UiInterface {
     type: "directive"
   };
   upload: UploadCI = {
+    id: "uid",
     name: "el-upload",
     type: "",
     typeImageCard: "picture-card",
@@ -487,6 +488,9 @@ export class Element implements UiInterface {
     status: {
       success: "success",
       uploading: "uploading"
+    },
+    isSuccess(fileItem) {
+      return fileItem.status === "success";
     },
     limitAdd: 1
   };
