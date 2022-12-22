@@ -217,6 +217,14 @@ crudOptions = { //
   }
 }
 ```
+
+
+## wrapper.draggable
+* 说明: 是否支持拖拽
+* 类型：boolean
+* 默认：true
+
+
 ## wrapper.title
 * 说明: 对话框标题
 * 类型：string
