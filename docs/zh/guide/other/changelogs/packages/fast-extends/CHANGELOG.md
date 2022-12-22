@@ -3,6 +3,22 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [1.8.0](https://github.com/fast-crud/fast-crud/compare/v1.7.2...v1.8.0) (2022-12-22)
+
+
+### Features
+
+* 优化uploader扩展组件，buildUrl支持异步方法 ([a09f05d](https://github.com/fast-crud/fast-crud/commit/a09f05deed495675cb9a5cc36bc9ea530a44da08))
+
+
+### Performance Improvements
+
+* image-format 的buildUrl支持异步 ([58229a2](https://github.com/fast-crud/fast-crud/commit/58229a28a6c0480e5f100cb8c66a35d0aa93026c))
+
+
+
+
+
 ## [1.7.2](https://github.com/fast-crud/fast-crud/compare/v1.7.1...v1.7.2) (2022-12-15)
 
 
