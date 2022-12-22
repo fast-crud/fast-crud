@@ -3,6 +3,18 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [1.8.0](https://github.com/fast-crud/fast-crud/compare/v1.7.2...v1.8.0) (2022-12-22)
+
+
+### Features
+
+* 对话框支持拖拽 ([1f41d13](https://github.com/fast-crud/fast-crud/commit/1f41d134268848d60b967caf25aa4d5add286b18))
+* 优化uploader扩展组件，buildUrl支持异步方法 ([a09f05d](https://github.com/fast-crud/fast-crud/commit/a09f05deed495675cb9a5cc36bc9ea530a44da08))
+
+
+
+
+
 ## [1.7.2](https://github.com/fast-crud/fast-crud/compare/v1.7.1...v1.7.2) (2022-12-15)
 
 
