@@ -4,6 +4,8 @@ import { useI18n } from "../../locale";
 import { uiContext } from "../../ui";
 import { Constants } from "../../utils/util.constants";
 import "./fs-form-wrapper.less";
+import { useDrag } from "../../use";
+
 /**
  * 表单对话框|抽屉
  * 暴露方法：
@@ -17,6 +19,7 @@ export default {
      * {
      *     wrapper:{ //表单包装配置
      *         is: 'el-dialog'//el-dialog|a-modal|el-drawer|a-drawer,
+     *         draggable: false, //是否支持拖动
      *         inner:false //是否在页面内部打开
      *     }
      *     ...FsForm配置
@@ -50,6 +53,8 @@ export default {
     const emitOnClosed = ref();
     const emitOnOpened = ref();
     const title = ref();
+    const formWrapperId = parseInt(Math.random() * 1000000);
+    const formWrapperIdClass = "fs-form-wrapper_" + formWrapperId;
     const open = (opts) => {
       //提取formrapper的配置
       const { wrapper } = opts;
@@ -59,9 +64,14 @@ export default {
       title.value = wrapper.title;
       formWrapperIs.value = opts.wrapper.is;
       formWrapperOpts.value = wrapper;
+      const customClassKey = ui.formWrapper.customClass(formWrapperIs.value);
+      let customClass = `fs-form-wrapper ${formWrapperIdClass} ${wrapper[customClassKey] || ""} `;
+
       formWrapperBind.value = {
-        ..._.omit(wrapper, "title", "onOpen", "onClosed", "onOpened", "is", "inner")
+        ..._.omit(wrapper, "title", "onOpen", "onClosed", "onOpened", "is", "inner"),
+        [customClassKey]: customClass
       };
+
       //form的配置
       formOptions.value = {
         ..._.omit(opts, "wrapper"),
@@ -113,6 +123,14 @@ export default {
     const onOpened = () => {
       if (emitOnOpened.value) {
         emitOnOpened.value();
+      }
+      if (formWrapperBind.value.draggable) {
+        const { dragModal } = useDrag();
+        dragModal({
+          getModal: () => {
+            return document.querySelector(`.${formWrapperIdClass}`);
+          }
+        });
       }
     };
 
@@ -200,6 +218,8 @@ export default {
     });
 
     return {
+      formWrapperId,
+      formWrapperIdClass,
       close,
       onClosed,
       onOpened,
@@ -305,19 +325,20 @@ export default {
       }
     }
 
-    const visible = this.$fsui.formWrapper.visible;
+    const visible = ui.formWrapper.visible;
     const vModel = {
       [visible]: this.formWrapperOpen,
       ["onUpdate:" + visible]: (value) => {
         this.formWrapperOpen = value;
       }
     };
-    const vClosed = this.$fsui.formWrapper.buildOnClosedBind(is, this.onClosed);
-    const customClass = `fs-form-wrapper ${this.formWrapperBind.customClass || ""}  ${
-      this.fullscreen ? "fs-fullscreen" : ""
-    }`;
+    const vClosed = ui.formWrapper.buildOnClosedBind(is, this.onClosed);
+
+    const customClassKey = ui.formWrapper.customClass(is);
+    const fullscreenClassKey = this.fullscreen ? "fs-fullscreen" : "";
+    const customClass = `${fullscreenClassKey} ${this.formWrapperBind[customClassKey] || ""}`;
     const vCustomClass = {
-      [this.$fsui.formWrapper.customClass]: customClass
+      [customClassKey]: customClass
     };
 
     const vFullScreen = {
@@ -327,8 +348,8 @@ export default {
     const formWrapperComp = resolveDynamicComponent(is);
     return (
       <formWrapperComp
-        {...vCustomClass}
         {...this.formWrapperBind}
+        {...vCustomClass}
         {...vModel}
         {...vClosed}
         {...vFullScreen}

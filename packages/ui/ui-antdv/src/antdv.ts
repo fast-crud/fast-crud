@@ -60,7 +60,9 @@ export class Antdv implements UiInterface {
 
   formWrapper: FormWrapperCI = {
     visible: "visible",
-    customClass: "class",
+    customClass: () => {
+      return "class";
+    },
     titleSlotName: "title",
     buildOnClosedBind(is, onClosed: Function): {} {
       if (is === "a-modal") {

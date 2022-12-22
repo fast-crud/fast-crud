@@ -38,6 +38,7 @@ export default {
           is: ui.dialog.name,
           ...ui.formWrapper.buildWidthBind(ui.dialog.name, "960px"),
           ...ui.formWrapper.buildInitBind(ui.dialog.name),
+          draggable: true,
           destroyOnClose: true, // antdv
           ...ui.dialog.footer() // antdv
         }

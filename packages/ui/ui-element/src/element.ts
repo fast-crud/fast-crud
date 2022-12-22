@@ -74,7 +74,13 @@ export class Element implements UiInterface {
 
   formWrapper: FormWrapperCI = {
     visible: "modelValue",
-    customClass: "customClass",
+    customClass: (is: string) => {
+      if (is === "el-dialog") {
+        return "class";
+      } else {
+        return "customClass";
+      }
+    },
     titleSlotName: "header",
     buildOnClosedBind(is: string, onClosed: Function) {
       return { onClosed };

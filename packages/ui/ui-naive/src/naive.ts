@@ -68,7 +68,9 @@ export class Naive implements UiInterface {
 
   formWrapper: FormWrapperCI = {
     visible: "show",
-    customClass: "class",
+    customClass: (is: string) => {
+      return "class";
+    },
     titleSlotName: "header",
     buildOnClosedBind(is, onClosed: Function): {} {
       if (is === "n-modal") {

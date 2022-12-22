@@ -7,3 +7,4 @@ export * from "./use-ui";
 export * from "./use-expose";
 export * from "./use-merge";
 export * from "./use-columns";
+export * from "./use-drag";

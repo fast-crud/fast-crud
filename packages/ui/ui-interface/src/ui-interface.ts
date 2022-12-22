@@ -184,13 +184,13 @@ export interface TagCI extends CI {
 
 export interface FormWrapperCI extends CI {
   visible: string;
-  buildOnClosedBind: (is, onClose: Function) => {};
-  customClass: string;
+  buildOnClosedBind: (is: string, onClose: Function) => {};
+  customClass: (is: string) => string;
   titleSlotName: string;
-  buildWidthBind: (is, width: any) => {};
-  buildInitBind: (is) => {};
+  buildWidthBind: (is: string, width: any) => {};
+  buildInitBind: (is: string) => {};
   buildInnerBind: (opts: any) => {};
-  hasContentWrap?: (is) => string | undefined;
+  hasContentWrap?: (is: string) => string | undefined;
 }
 export interface DatePickerCI extends CI {
   modelValue;
