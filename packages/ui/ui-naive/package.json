@@ -16,7 +16,7 @@
     "@fast-crud/ui-interface": "^1.8.0"
   },
   "peerDependencies": {
-    "@fast-crud/fast-crud": "^2.*"
+    "@fast-crud/fast-crud": "^1.*"
   },
   "devDependencies": {
     "@ant-design/icons-vue": "^6.0.1",
