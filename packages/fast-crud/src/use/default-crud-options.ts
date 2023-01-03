@@ -2,7 +2,7 @@ import { uiContext } from "../ui";
 export default {
   // eslint-disable-next-line @typescript-eslint/no-empty-function,@typescript-eslint/no-unused-vars
   commonOptions(ctx) {},
-  defaultOptions({ t, crudBinding }) {
+  defaultOptions({ t }) {
     const ui = uiContext.get();
     return {
       mode: {},
@@ -14,9 +14,6 @@ export default {
           showFeedback: false
         },
         collapse: true,
-        ["onUpdate:collapse"]: (value) => {
-          crudBinding.value.search.collapse = value;
-        },
         show: true,
         buttons: {
           search: {

@@ -129,7 +129,10 @@ export function useCrud(ctx: UseCrudProps) {
   function useSearch() {
     return {
       search: {
-        doSearch
+        doSearch,
+        ["onUpdate:collapse"]: (value) => {
+          crudBinding.value.search.collapse = value;
+        }
       }
     };
   }
@@ -263,7 +266,7 @@ export function useCrud(ctx: UseCrudProps) {
 
   function resetCrudOptions(options) {
     const userOptions = merge(
-      defaultCrudOptions.defaultOptions({ t, crudBinding }),
+      defaultCrudOptions.defaultOptions({ t }),
       usePagination(),
       useFormSubmit(),
       useRowHandle(),
