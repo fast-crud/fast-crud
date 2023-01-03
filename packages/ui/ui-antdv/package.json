@@ -1,6 +1,6 @@
 {
   "name": "@fast-crud/ui-antdv",
-  "version": "1.8.0",
+  "version": "1.8.1",
   "description": "",
   "main": "./dist/ui-antdv.umd.js",
   "module": "./dist/ui-antdv.mjs",
@@ -13,7 +13,7 @@
   "author": "Greper",
   "license": "MIT",
   "dependencies": {
-    "@fast-crud/ui-interface": "^1.8.0"
+    "@fast-crud/ui-interface": "^1.8.1"
   },
   "peerDependencies": {
     "@ant-design/icons-vue": "^6.0.1",
