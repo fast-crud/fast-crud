@@ -3,6 +3,19 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.8.1](https://github.com/fast-crud/fast-crud/compare/v1.8.0...v1.8.1) (2023-01-03)
+
+
+### Bug Fixes
+
+* 修复查询框多行模式折叠配置无效的bug ([7a42cd0](https://github.com/fast-crud/fast-crud/commit/7a42cd095b0fd602756d339c1bccd2f411d475ce))
+* 修复naive-ui依赖fs版本问题 ([6a53752](https://github.com/fast-crud/fast-crud/commit/6a53752599a3813016f28f974366c475ae73a2b4))
+* 移除buttonsPosition参数 ([ccada57](https://github.com/fast-crud/fast-crud/commit/ccada57c5491e91ffbc6b1d8435254fe03a85d68))
+
+
+
+
+
 # [1.8.0](https://github.com/fast-crud/fast-crud/compare/v1.7.2...v1.8.0) (2022-12-22)
 
 

@@ -3,6 +3,14 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.8.1](https://github.com/fast-crud/fast-crud/compare/v1.8.0...v1.8.1) (2023-01-03)
+
+**Note:** Version bump only for package @fast-crud/ui-interface
+
+
+
+
+
 # [1.8.0](https://github.com/fast-crud/fast-crud/compare/v1.7.2...v1.8.0) (2022-12-22)
 
 
