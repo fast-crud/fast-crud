@@ -49,6 +49,7 @@ component:{
 ```js
 component:{
     on:{
+        // 注意：必须要on前缀
         onClick({value,key,row,form,getComponentRef}){
             console.log('点击事件',key,value,row,form)
         }
