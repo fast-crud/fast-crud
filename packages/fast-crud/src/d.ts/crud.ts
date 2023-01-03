@@ -496,10 +496,6 @@ export type SearchProps = {
     [key: string]: ButtonProps;
   };
   /**
-   * 按钮的位置 【default , bottom】
-   */
-  buttonsPosition?: string;
-  /**
    * 布局方式：【single-line单行, multi-line多行】
    */
   layout?: string;

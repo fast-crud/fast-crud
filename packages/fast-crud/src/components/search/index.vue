@@ -56,7 +56,7 @@
                     <fs-slot-render :slots="slots['search-middle']" :scope="{ form }" />
                   </component>
                 </div>
-                <fs-search-buttons v-if="buttonsPosition === 'default'" :buttons="computedButtons"></fs-search-buttons>
+                <fs-search-buttons v-if="!computedIsMultiLine" :buttons="computedButtons"></fs-search-buttons>
                 <div v-if="slots['search-right']" class="fs-search-col fs-search-right">
                   <component :is="$fsui.formItem.name">
                     <fs-slot-render :slots="slots['search-right']" :scope="{ form }" />
@@ -64,7 +64,7 @@
                 </div>
               </component>
             </div>
-            <fs-search-buttons v-if="buttonsPosition === 'bottom'" :buttons="computedButtons"></fs-search-buttons>
+            <fs-search-buttons v-if="computedIsMultiLine" :buttons="computedButtons"></fs-search-buttons>
           </div>
 
           <div v-if="computedIsMultiLine" class="fs-search-action">
@@ -121,13 +121,6 @@ export default {
      */
     buttons: {
       type: Object
-    },
-    /**
-     * 按钮位置， default,bottom,right
-     */
-    buttonsPosition: {
-      type: String,
-      default: "default"
     },
     /**
      * 点击重置后是否立即触发查询
