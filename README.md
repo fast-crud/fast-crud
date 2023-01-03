@@ -107,8 +107,8 @@ const crudOptions= {
 <div style="display: flex; justify-content:space-around;"><img style="height:160px" src="./images/me.png"></div>
 
 ## 捐赠
-媳妇儿说：“一天到晚搞开源，也不管管老婆孩子！！！”        
-拜托各位捐赠支持一下，让媳妇儿开心开心，我也能有更多时间进行开源项目，感谢！
+媳妇儿说：“一天到晚搞开源，也不管管老婆孩子！😡😡😡”        
+拜托各位捐赠支持一下，让媳妇儿开心开心，我也能有更多时间进行开源项目，感谢🙏🙏🙏
 <div style="display: flex; justify-content:space-around;"><img style="height:360px"  src="./images/donate.png"></div>
 
 ## 依赖
