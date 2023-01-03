@@ -106,6 +106,10 @@ const crudOptions= {
 2、 加作者好友
 <div style="display: flex; justify-content:space-around;"><img height="200px" src="./images/me.png"></div>
 
+## 捐赠
+媳妇儿说：“一天到晚搞开源，也不管管老婆孩子！！！”        
+拜托各位捐赠支持一下，让媳妇儿开心开心，我也能有更多时间进行开源项目，感谢！
+![](donate.png)
 
 ## 依赖
 ### ui组件库
