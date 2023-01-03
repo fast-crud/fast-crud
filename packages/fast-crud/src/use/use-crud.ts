@@ -263,7 +263,7 @@ export function useCrud(ctx: UseCrudProps) {
 
   function resetCrudOptions(options) {
     const userOptions = merge(
-      defaultCrudOptions.defaultOptions({ t }),
+      defaultCrudOptions.defaultOptions({ t, crudBinding }),
       usePagination(),
       useFormSubmit(),
       useRowHandle(),

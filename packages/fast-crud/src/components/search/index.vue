@@ -15,7 +15,7 @@
           <div class="fs-search-main">
             <div
               class="fs-search-columns"
-              :class="{ 'fs-search-collapse': collapseRef }"
+              :class="{ 'fs-search-collapse': collapse }"
               :style="{ height: computedColumnBoxHeight }"
             >
               <component :is="$fsui.row.name" ref="columnsRowRef">
@@ -69,10 +69,7 @@
 
           <div v-if="computedIsMultiLine" class="fs-search-action">
             <component :is="$fsui.formItem.name">
-              <fs-button
-                :icon="collapseRef ? 'ion:caret-up-outline' : 'ion:caret-down-outline'"
-                @click="toggleCollapse"
-              />
+              <fs-button :icon="collapse ? 'ion:caret-up-outline' : 'ion:caret-down-outline'" @click="toggleCollapse" />
             </component>
           </div>
         </div>
@@ -203,7 +200,9 @@ export default {
     /**
      * 重置事件
      **/
-    "reset"
+    "reset",
+    "collapse",
+    "update:collapse"
   ],
   setup(props, ctx) {
     // 异步setup需要放在第一个await之前
@@ -440,21 +439,13 @@ export default {
 
     //-----多行模式折叠
 
-    const collapseRef = ref(false);
     const columnsRowRef = ref();
     const columnsBoxHeightRef = ref(0);
     const columnsLineHeightRef = ref(0);
-    watch(
-      () => {
-        return props.collapse;
-      },
-      (value) => {
-        collapseRef.value = value;
-      }
-    );
 
     const toggleCollapse = () => {
-      collapseRef.value = !collapseRef.value;
+      ctx.emit("update:collapse", !props.collapse);
+      ctx.emit("collapse", !props.collapse);
     };
 
     const computedColName = computed(() => {
@@ -472,7 +463,7 @@ export default {
       if (!computedIsMultiLine.value) {
         return "auto";
       }
-      if (collapseRef.value) {
+      if (props.collapse) {
         return columnsLineHeightRef.value ? columnsLineHeightRef.value + "px" : "";
       } else {
         return columnsBoxHeightRef.value ? columnsBoxHeightRef.value + "px" : "";
@@ -499,7 +490,6 @@ export default {
       computedColumns,
       computedButtons,
       computedRules,
-      collapseRef,
       columnsRowRef,
       computedColumnBoxHeight,
       computedColName,
