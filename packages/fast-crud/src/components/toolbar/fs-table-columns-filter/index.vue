@@ -29,11 +29,7 @@
   </template>
   <!-- 完全模式 -->
   <component :is="ui.drawer.name" v-else :title="_text.title" v-bind="drawerBind" append-to-body>
-    <component
-      :is="ui.drawer.hasContentWrap || 'div'"
-      class="fs-drawer-wrapper fs-table-columns-filter"
-      :title="_text.title"
-    >
+    <component :is="ui.drawer.hasContentWrap || 'div'" class="fs-drawer-wrapper fs-table-columns-filter">
       <component :is="ui.card.name" shadow="never">
         <div class="component--list">
           <div key="__first__" class="component--list-item" flex="main:justify cross:center">
@@ -48,13 +44,17 @@
 
           <draggable v-model="currentValue" item-key="key">
             <template #item="{ element, index }">
-              <div v-show="element.__show" class="component--list-item" flex="main:justify cross:center">
+              <div
+                v-show="element.__show"
+                :title="buildText(element)"
+                class="component--list-item"
+                flex="main:justify cross:center"
+              >
                 <component
                   :is="ui.checkbox.name"
                   v-model:[ui.checkbox.modelValue]="element.show"
                   :disabled="element.__disabled"
                   class="item-label"
-                  :title="buildText(element)"
                   @update:[ui.checkbox.modelValue]="showChange"
                 >
                   {{ buildText(element) }}
