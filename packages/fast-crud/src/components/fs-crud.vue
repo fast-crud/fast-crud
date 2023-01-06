@@ -2,8 +2,8 @@
   <component
     :is="container?.is || 'fs-layout-default'"
     ref="containerRef"
-    v-bind="container"
     class="fs-crud-container"
+    v-bind="container"
     :class="computedClass"
   >
     <slot></slot>
@@ -324,7 +324,12 @@ export default defineComponent({
     /**
      * 表格配置，见FsTable
      */
-    table: {},
+    table: {
+      type: Object,
+      default() {
+        return {};
+      }
+    },
     /**
      * 表格数据
      */
@@ -334,39 +339,84 @@ export default defineComponent({
     /**
      * 操作列配置，见FsRowHandle
      */
-    rowHandle: {},
+    rowHandle: {
+      type: Object,
+      default() {
+        return {};
+      }
+    },
     /**
      * 查询框配置，见FsSearch
      */
-    search: {},
+    search: {
+      type: Object,
+      default() {
+        return {};
+      }
+    },
     /**
      * 工具条配置，见FsToolbar
      */
-    toolbar: {},
+    toolbar: {
+      type: Object,
+      default() {
+        return {};
+      }
+    },
     /**
      * 动作条配置，见FsActionbar
      */
-    actionbar: {},
+    actionbar: {
+      type: Object,
+      default() {
+        return {};
+      }
+    },
     /**
      * 添加表单对话框配置，见FsFormWrapper
      */
-    addForm: {},
+    addForm: {
+      type: Object,
+      default() {
+        return {};
+      }
+    },
     /**
      * 编辑表单对话框配置，见FsFormWrapper
      */
-    editForm: {},
+    editForm: {
+      type: Object,
+      default() {
+        return {};
+      }
+    },
     /**
      * 查看表单对话框配置，见FsFormWrapper
      */
-    viewForm: {},
+    viewForm: {
+      type: Object,
+      default() {
+        return {};
+      }
+    },
     /**
      * 翻页配置,支持el-pagination|a-pagination配置
      */
-    pagination: {},
+    pagination: {
+      type: Object,
+      default() {
+        return {};
+      }
+    },
     /**
      * 容器配置，见FsContainer
      */
-    container: {},
+    container: {
+      type: Object,
+      default() {
+        return {};
+      }
+    },
 
     /**
      * crud包裹容器的class
@@ -375,7 +425,12 @@ export default defineComponent({
     /**
      * 不要传到fs-table去
      */
-    form: {}
+    form: {
+      type: Object,
+      default() {
+        return {};
+      }
+    }
   },
   emits: [
     "search-submit",
