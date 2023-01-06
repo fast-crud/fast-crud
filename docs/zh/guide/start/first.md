@@ -229,29 +229,46 @@ export default mock;
 
 ### 5. 添加路由和菜单
 
-在`src/router/resources.js`中增加路由菜单配置
+在`src/router/modules/crud.ts`中增加路由菜单配置
 
 ```js
-// src/router/resources.js
-const resources = [
+// src/router/modules/crud.js
+export const crudResources = [
     {
-        title: "myFirstCrud",
-        name: "myFirstCrud",
-        path: "/test/myFirstCrud",
-        component: "/test/myFirstCrud.vue"
+        title: "CRUD示例",
+        name: "crud",
+        path: "/crud",
+        redirect: "/crud/basis",
+        meta: {
+            icon: "ion:apps-sharp"
+        },
+        children: [
+            // ↓↓↓↓↓↓↓↓↓在此位置增加路由配置↓↓↓↓↓↓↓↓↓↓
+            {
+                title: "myFirstCrud",
+                name: "myFirstCrud",
+                path: "/test/myFirstCrud",
+                component: "/test/myFirstCrud.vue"
+            },
+        ]
     }
 ]
+
 ```
+
+::: tip   
+你也可以在`src/router/resource/modules`目录中仿照`crud.ts`新增你自己的顶级菜单,将其加入`framework.ts`的`children`中即可。
+:::
 
 ### 6. 看看效果
 
 启动demo，访问`myFirstCrud`查看效果
 
-恭喜你，你已经完成了第一个crud功能的开发
+恭喜，你已经完成了第一个crud功能的开发
 
 ## 实际项目中开发CRUD
 
 在实际项目开发中，通常在`示例`的`views`中找一个合适的crud复制到你的项目的`views`，然后再根据需求修改即可    
 ::: warning
-需要修改api.js的`requestForMock`为`request`，这样才会去调用你的真实后端接口
+注意：需要修改api.js的`requestForMock`为`request`，这样才会去调用你的真实后端接口
 :::
