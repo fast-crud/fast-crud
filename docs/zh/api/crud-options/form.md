@@ -155,7 +155,8 @@
 
 
 ## initialForm
-* 说明: 表单的初始数据
+* 说明: 表单的初始数据， 
+* 注意：仅在独立使用表单组件时有效，fs-crud中会被行数据代替，你可以在字段中配置columns.key.form.value=默认值
 * 类型：Object
 
 
