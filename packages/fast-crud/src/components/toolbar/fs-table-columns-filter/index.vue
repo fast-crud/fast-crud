@@ -8,9 +8,10 @@
           v-model:[ui.checkbox.modelValue]="element.show"
           :disabled="element.__disabled"
           class="item-label"
+          :title="buildText(element)"
           @update:[ui.checkbox.modelValue]="showChange"
         >
-          {{ element.label || element.title || element.key || _text.unnamed }}
+          {{ buildText(element) }}
         </component>
       </component>
     </component>
@@ -53,9 +54,10 @@
                   v-model:[ui.checkbox.modelValue]="element.show"
                   :disabled="element.__disabled"
                   class="item-label"
+                  :title="buildText(element)"
                   @update:[ui.checkbox.modelValue]="showChange"
                 >
-                  {{ element.label || element.title || element.key || _text.unnamed }}
+                  {{ buildText(element) }}
                 </component>
                 <div class="item-right">
                   <fs-table-columns-fixed-controller
@@ -372,6 +374,10 @@ init();
 defineExpose({
   start
 });
+
+function buildText(element) {
+  return element.label || element.title || element.key || _text.value.unnamed;
+}
 </script>
 <style lang="less">
 .fs-table-columns-filter-simple {
