@@ -77,7 +77,6 @@ async function dragModalForNaive(opts: DragModalOptions) {
     dragDom.style.transform = "translate(0px, 0px)";
     // 获取到的值带px 正则匹配替换
     let styL, styT, dragDomWidth, dragDomHeight;
-    debugger;
     //注意在ie中 第一次获取到的值为组件自带50% 移动之后赋值为px
     if (sty.left.includes("%")) {
       styL = +document.body.clientWidth * (+sty.left.replace(/%/g, "") / 100);
