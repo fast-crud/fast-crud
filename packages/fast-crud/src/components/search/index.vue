@@ -309,6 +309,7 @@ export default {
     }
 
     function doReset() {
+      debugger;
       ui.form.resetWrap(searchFormRef.value, { form, initialForm: createInitialForm() });
 
       if (props.reset) {

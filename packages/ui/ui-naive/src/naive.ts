@@ -355,7 +355,7 @@ export class Naive implements UiInterface {
         if (initialValue == null) {
           _.unset(form, entry[0]);
         } else {
-          _.set(form, entry[0], entry[1]);
+          _.set(form, entry[0], initialValue);
         }
       }
       // const keys = Object.keys(form);
