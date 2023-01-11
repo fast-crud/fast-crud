@@ -348,25 +348,25 @@ export class Naive implements UiInterface {
       inline: true,
       labelPlacement: "left"
     },
-    resetWrap: (formRef, { form, initialForm }) => {
-      const entries = _.entries(form);
-      for (const entry of entries) {
-        const initialValue = _.get(initialForm, entry[0]);
-        if (initialValue == null) {
-          _.unset(form, entry[0]);
-        } else {
-          _.set(form, entry[0], initialValue);
-        }
-      }
-      // const keys = Object.keys(form);
-      // for (const key of keys) {
-      //   if (initialForm[key] != null) {
-      //     form[key] = initialForm[key];
-      //   } else {
-      //     delete form[key];
-      //   }
-      // }
-    },
+    // resetWrap: (formRef, { form, initialForm }) => {
+    //   const entries = _.entries(form);
+    //   for (const entry of entries) {
+    //     const initialValue = _.get(initialForm, entry[0]);
+    //     if (initialValue == null) {
+    //       _.unset(form, entry[0]);
+    //     } else {
+    //       _.set(form, entry[0], initialValue);
+    //     }
+    //   }
+    //   // const keys = Object.keys(form);
+    //   // for (const key of keys) {
+    //   //   if (initialForm[key] != null) {
+    //   //     form[key] = initialForm[key];
+    //   //   } else {
+    //   //     delete form[key];
+    //   //   }
+    //   // }
+    // },
     validateWrap: async (formRef) => {
       return new Promise((resolve, reject) => {
         formRef.validate((errors: Array<any>) => {

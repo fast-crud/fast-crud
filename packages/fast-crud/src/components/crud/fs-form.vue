@@ -393,7 +393,18 @@ export default {
       return _.cloneDeep(props.initialForm || {});
     }
     async function reset() {
-      ui.form.resetWrap(formRef.value, { form, initialForm: createInitialForm() });
+      // ui.form.resetWrap(formRef.value, { form, initialForm: createInitialForm() });
+      const initialForm = createInitialForm();
+      const entries = _.entries(form);
+      for (const entry of entries) {
+        const initialValue = _.get(initialForm, entry[0]);
+        if (initialValue == null) {
+          _.unset(form, entry[0]);
+        } else {
+          _.set(form, entry[0], initialValue);
+        }
+      }
+
       if (props.doReset) {
         await props.doReset(scope.value);
       }

@@ -5,7 +5,7 @@ export interface CI {
 export interface FormCI {
   name;
   inlineLayout: Object;
-  resetWrap: Function;
+  // resetWrap: Function;
   validateWrap: Function;
   transformValidateErrors: (e: Error) => { [key: string]: any };
 }
