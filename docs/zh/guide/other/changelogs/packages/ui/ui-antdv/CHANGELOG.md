@@ -3,6 +3,18 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.8.3](https://github.com/fast-crud/fast-crud/compare/v1.8.2...v1.8.3) (2023-01-11)
+
+
+### Bug Fixes
+
+* 修复search 重置失败的bug ([7aeeb10](https://github.com/fast-crud/fast-crud/commit/7aeeb10b5491604643477861bcef8df3b176fce7))
+* 移除form.resetWrap 接口方法 ([f3fa08f](https://github.com/fast-crud/fast-crud/commit/f3fa08f24f4bcfdd6b433961cf8964b7b46884af))
+
+
+
+
+
 ## [1.8.1](https://github.com/fast-crud/fast-crud/compare/v1.8.0...v1.8.1) (2023-01-03)
 
 **Note:** Version bump only for package @fast-crud/ui-antdv
