@@ -3,6 +3,23 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.8.2](https://github.com/fast-crud/fast-crud/compare/v1.8.1...v1.8.2) (2023-01-11)
+
+
+### Bug Fixes
+
+* 给search、pagination等默认值，避免空指针异常 ([b35067a](https://github.com/fast-crud/fast-crud/commit/b35067a6e17cd8f1bc343de82773e7a30a03baab))
+* 列设置title显示错误的bug ([1d3b486](https://github.com/fast-crud/fast-crud/commit/1d3b486b2f25030d5898b5ec13f065cf71a88c57))
+
+
+### Performance Improvements
+
+* 表单增加单列模式示例 ([4c75590](https://github.com/fast-crud/fast-crud/commit/4c75590d54d2c5f08df0920a1c9653518de03534))
+
+
+
+
+
 ## [1.8.1](https://github.com/fast-crud/fast-crud/compare/v1.8.0...v1.8.1) (2023-01-03)
 
 
