@@ -204,7 +204,7 @@ crudOptions = { //
 * 可选：el-dialog / el-drawer / a-modal / a-drawer
 
 ## 对应ui库对话框或抽屉组件的参数
-* 支持： 支持el-dialog，el-drawer，a-modal，a-drawer的配置，取决于[wrapper.is](#wrapper-is)配置
+* 支持： 支持fs-form-wrapper，el-dialog，el-drawer，a-modal，a-drawer的配置，取决于[wrapper.is](#wrapper-is)配置
 * 配置： 具体配置请根据你使用的ui库，前往对应ui库的文档查找相应组件的配置
 * 示例：
 
@@ -229,7 +229,13 @@ crudOptions = { //
 ## wrapper.title
 * 说明: 对话框标题
 * 类型：string
-* 
+
+## wrapper.buttons
+* 说明: 对话框按钮配置
+* 类型：object
+* 更多：[按钮组配置](../common-options.md#buttons)
+
+
 ## wrapper.onOpen
 * 说明: 对话框打开事件处理方法
 * 类型：Function
