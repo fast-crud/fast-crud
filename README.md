@@ -4,13 +4,7 @@
 FastCrud 是基于Vue3的面向配置的crud开发框架，快速开发crud功能，可作为低代码平台的基础框架。   
 继承并优化了D2CrudPlus的设计思想，入门简单，可扩展性强，丰富的示例，让你可以快速完成搬砖任务，更多的时间划水吹逼。
 
-源码地址:[Github](https://github.com/fast-crud/fast-crud)  /  [Gitee](https://gitee.com/fast-crud/fast-crud)   
-
-示例地址: [演示预览](http://fast-crud.docmirror.cn/demo/)  
-
-文档地址：http://fast-crud.docmirror.cn/
-
-<div style="display:flex;">
+<div>
 <a href="https://gitee.com/fast-crud/fast-crud" target="_blank"
   ><img src="https://gitee.com/fast-crud/fast-crud/badge/star.svg?theme=dark" alt="star"
 /></a>  
@@ -19,10 +13,18 @@ FastCrud 是基于Vue3的面向配置的crud开发框架，快速开发crud功�
 /></a>
 </div>
 
+源码地址:[Github](https://github.com/fast-crud/fast-crud)  /  [Gitee](https://gitee.com/fast-crud/fast-crud)   
+
+示例地址: [演示预览](http://fast-crud.docmirror.cn/demo/)  
+
+文档地址：http://fast-crud.docmirror.cn/
+
+
+
 
 
 >
-> 注意：被项目的主要目标是实现一个`fs-crud`组件，帮助快速开发crud功能，`admin脚手架`并不是本项目的重点，你可以直接使用示例中的[`fs-admin`](http://fast-crud.docmirror.cn/admin/)，也可以采用其他的[`admin开源项目`](https://github.com/search?q=vue3+admin)，然后集成[`fast-crud`](http://fast-crud.docmirror.cn/guide/start/integration.html)
+> 注意：本项目的主要目标是实现一个`fs-crud`组件，帮助快速开发crud功能，`admin脚手架`并不是本项目的重点，你可以直接使用示例中的[`fs-admin`](http://fast-crud.docmirror.cn/admin/)，也可以采用其他的[`admin开源项目`](https://github.com/search?q=vue3+admin)，然后集成[`fast-crud`](http://fast-crud.docmirror.cn/guide/start/integration.html)
 >
 ## 开发crud，快如闪电
 1、只需简单编写crud配置
