@@ -1,6 +1,13 @@
 # 集成到你的项目中
 
-接下来介绍如何将`fast-crud`集成到你的`vue3`项目中
+本项目只是一个帮助快速开发crud功能`fs-crud`组件，一般需要在`admin管理后台框架中`集成它来使用
+
+接下来介绍如何将`fast-crud`集成到你的`vue3 admin`项目中
+
+::: warning   
+注意：`admin管理后台框架`并不是本项目的重点，你可以直接使用示例中的[`fs-admin`](http://fast-crud.docmirror.cn/admin/)，也可以采用其他的[`admin开源项目`](https://github.com/search?q=vue3+admin)，然后集成[`fast-crud`](http://fast-crud.docmirror.cn/guide/start/integration.html)
+
+:::
 
 ## 集成步骤
 
