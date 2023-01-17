@@ -23,19 +23,20 @@
 请前往 [start](../guide/start/demo.md)
 
 ## 路由与菜单
-`/src/router/source/` 目录下配置，每一项具备路由和菜单的双重功能
+`/src/router/source/modules` 目录下配置，每一项具备路由和菜单的双重功能
 
-```json
-{
-        title: "基本特性", //路由或菜单标题
-        name: "basis", //路由名称
-        path: "/crud/basis", //路由路径
-        redirect: "/crud/basis/i18n", //路由跳转
-        meta: {
-          isMenu: true, //是否是菜单，=false则为纯路由配置，不在左侧菜单显示
-          icon: "ion:disc-outline" //菜单图标
-        },
-        children: [] //子路由
+```js
+const routeItem = {
+    title: "基本特性",//路由或菜单标题
+    name: "basis",//路由名称
+    path: "/crud/basis", //路由路径
+    redirect: "/crud/basis/i18n",//路由跳转
+    meta: { //额外的配置
+        "cache": true, //是否缓存页面
+        "isMenu": true, //是否是菜单，=false则为纯路由配置，不在左侧菜单显示
+        "icon": "ion:disc-outline" //菜单图标
+    },
+    children: []//子路由
 }
 ```
 
@@ -94,8 +95,112 @@ VITE_APP_API=http://www.docmirror.cn:7001/api
 
 ## Tabs页签
 
+tabs页签由 [pageStore](https://github.com/fast-crud/fs-admin-antdv/blob/main/src/store/modules/page.ts) 控制
+
+```js
+const pageStore = usePageStore();
+
+/**
+ * @class opened
+ * @description 新增一个 tag (打开一个页面)
+ * @param {Object} context
+ * @param {Object} payload new tag info
+ */
+pageStore.add({ tag, params, query, fullPath })
+/**
+ * @class current
+ * @description 打开一个新的页面
+ * @param {Object} context
+ * @param {Object} payload 从路由钩子的 to 对象上获取 { name, params, query, fullPath, meta } 路由信息
+ */
+pageStore.open({ name, params, query, fullPath, meta })
+
+/**
+ * @class opened
+ * @description 关闭一个 tag (关闭一个页面)
+ * @param {Object} context
+ * @param {Object} payload { tagName: 要关闭的标签名字 }
+ */
+pageStore.close({ tagName });
+/**
+ * @class opened
+ * @description 关闭当前标签右边的标签
+ * @param opts
+ */
+pageStore.closeRight(opts = {})
+/**
+ * @class opened
+ * @description 关闭当前标签右边的标签
+ * @param opts
+ */
+pageStore.closeRight(opts = {})
+
+/**
+ * @class opened
+ * @description 关闭当前激活之外的 tag
+ * @param opts
+ */
+pageStore.closeOther()
+
+/**
+ * @class opened
+ * @description 关闭所有 tag
+ * @param {Object} context
+ */
+pageStore.closeAll()
+
+/**
+ * @class keepAlive
+ * @description 从已经打开的页面记录中更新需要缓存的页面记录
+ * @param {Object} state state
+ */
+pageStore.keepAliveRefresh()
+```
+## 页面缓存
+
+页面缓存的效果是：切换页面tabs标签，回到之前打开过的页面，不会重新加载页面数据。
+
+要实现页面缓存需要同时满足以下两个条件：
+
+* 页面组件需要有 name 属性并且 name 属性的值要与当前页面在路由信息中的 name 字段一致。
+* 页面路由设置中要指定 `meta: { cache: true }`
+
+
+下面是两段示例代码,注意箭头指向的行。    
+页面组件：
+```vue
+<template>
+  <fs-page>
+    我会被缓存
+  </fs-page>
+</template>
+
+<script>
+export default {
+  name: 'foo-page'      // <-----------
+}
+</script>
+
+```
+该页面组件在路由中的数据：
+```js
+const routeItem = {
+    path: '/foo/page',
+    name: 'foo-page',   // <-----------
+    meta: {
+        title: '这是一个会被缓存的页面',
+        cache: true     // <-----------
+    },
+    component: () => import('page/foo/page.vue')
+}
+```
+
 ## 国际化
 
+请参考 [i18n](../guide/start/i18n.md)
+
 ## 图标
+请参考 [icon](../guide/start/icon.md)
 
 ## 主题颜色
+暂不支持
