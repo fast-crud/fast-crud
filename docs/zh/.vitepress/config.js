@@ -36,7 +36,6 @@ module.exports = {
                         {text: '启动示例', link: '/guide/start/demo'},
                         {text: '第一个CRUD', link: '/guide/start/first'},
                         {text: '集成到你的项目', link: '/guide/start/integration'},
-                        {text: '配置与组件的对应关系', link: '/guide/start/struct'},
                         {text: '国际化', link: '/guide/start/i18n'},
                         {text: '图标', link: '/guide/start/icon'}
                     ],
@@ -45,6 +44,7 @@ module.exports = {
                     text: '进阶',
                     items: [
                         {text: '基于配置', link: '/guide/advance/options'},
+                        {text: '配置与组件的对应关系', link: '/guide/start/struct'},
                         {text: '字段配置', link: '/guide/advance/component'},
                         {text: '字段类型', link: '/guide/advance/column-type'},
                         {text: '数据字典', link: '/guide/advance/dict'},
