@@ -19,7 +19,7 @@ FastCrud 是基于Vue3的面向配置的crud开发框架，快速开发crud功�
 [![lerna](https://img.shields.io/badge/maintained%20with-lerna-cc00ff.svg)](https://lerna.js.org/)
 
 
-::: warning   
+::: tip   
 注意：本项目的主要目标是实现一个`fs-crud`组件，帮助快速开发crud功能，`admin脚手架`并不是本项目的重点。     
 你可以通过如下几种方式使用`fast-crud`
  * 直接使用示例中的 [fs-admin](http://fast-crud.docmirror.cn/admin/) ，特点是简单    
