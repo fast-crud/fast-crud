@@ -20,7 +20,11 @@ FastCrud 是基于Vue3的面向配置的crud开发框架，快速开发crud功�
 
 
 ::: warning   
- 注意：本项目的主要目标是实现一个`fs-crud`组件，帮助快速开发crud功能，`admin管理后台框架`并不是本项目的重点，你可以直接使用示例中的[`fs-admin`](http://fast-crud.docmirror.cn/admin/)，也可以采用其他的[`admin开源项目`](https://github.com/search?q=vue3+admin)，然后集成[`fast-crud`](http://fast-crud.docmirror.cn/guide/start/integration.html)
+注意：本项目的主要目标是实现一个`fs-crud`组件，帮助快速开发crud功能，`admin脚手架`并不是本项目的重点。     
+你可以通过如下几种方式使用`fast-crud`
+ * 直接使用示例中的[`fs-admin`](http://fast-crud.docmirror.cn/admin/)，特点是简单
+ * 也可以采用其他的[`admin开源项目`](https://github.com/search?q=vue3+admin)，然后集成[`fast-crud`](http://fast-crud.docmirror.cn/guide/start/integration.html)
+ * 我们也挑选了一些比较好的`admin项目`集成`fast-crud`之后做成了[admin-starter](http://fast-crud.docmirror.cn/demo/#二、admin脚手架starter)，助你快速上手
 
 :::
 
