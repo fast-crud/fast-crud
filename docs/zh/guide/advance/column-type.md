@@ -43,10 +43,18 @@ columns:{
         type:'dict-select'
     }
 }
-
 ```
+
+
 ::: tip
 你可以通过[字段类型列表](/api/types.md)查看字段类型包含了哪些具体配置
+:::
+
+::: tip
+
+你还可以通过`fast-crud`初始化日志查看最终生成的配置具体是什么  
+![](../..//images/crud-init-log.jpg)
+
 :::
 
 
