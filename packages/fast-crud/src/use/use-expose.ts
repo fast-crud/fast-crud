@@ -293,7 +293,9 @@ export function useExpose(props: UseExposeProps): { expose: CrudExpose; crudExpo
         crudBinding.value.pagination[ui.pagination.total] = total || records.length;
       }
       if (crudBinding.value?.table?.onRefreshed) {
-        crudBinding.value.table.onRefreshed();
+        crudBinding.value.table.onRefreshed({
+          data: records
+        });
       }
     },
     doPageTurn(no: number) {
