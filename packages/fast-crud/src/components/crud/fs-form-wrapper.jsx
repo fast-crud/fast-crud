@@ -78,9 +78,6 @@ export default {
         slots: props.slots
       };
 
-      // 打开表单对话框
-      formWrapperOpen.value = true;
-
       // 发射打开事件
       function buildEvent() {
         return {
@@ -101,10 +98,12 @@ export default {
         }
       };
 
-      nextTick(() => {
+      // 打开表单对话框
+      nextTick(async () => {
+        formWrapperOpen.value = true;
+        await nextTick();
         onOpened();
       });
-
       /**
        * 是否内部打开对话框
        */
