@@ -9,7 +9,12 @@
     :rule-path="item.key"
   >
     <template #label>
-      <span>{{ item.label || item.title }}</span>
+      <span v-if="computedLabelIsRender">
+        <fs-render :render-func="computedLabelRender"></fs-render>
+      </span>
+      <span v-else>
+        {{ computedLabel }}
+      </span>
 
       <component
         :is="$fsui.tooltip.name"
@@ -56,11 +61,13 @@
 <script>
 import { ref, computed } from "vue";
 import _ from "lodash-es";
+import FsRender from "../render/fs-render.jsx";
 /**
  * form-item组件封装
  */
 export default {
   name: "FsFormItem",
+  components: { FsRender },
   props: {
     /**
      * 表单字段值(v-model)
@@ -121,6 +128,18 @@ export default {
       }
       return props.item.key;
     });
+
+    const computedLabel = computed(() => {
+      return props.item.label || props.item.title;
+    });
+    const computedLabelIsRender = computed(() => {
+      return computedLabel.value instanceof Function;
+    });
+
+    const computedLabelRender = () => {
+      return computedLabel.value(scopeComputed.value);
+    };
+
     return {
       updateModelValue,
       scopeComputed,
@@ -128,7 +147,10 @@ export default {
       componentRenderRef,
       computedHelperPosition,
       computedHelperTooltip,
-      computedKey
+      computedKey,
+      computedLabelIsRender,
+      computedLabel,
+      computedLabelRender
     };
   }
 };
