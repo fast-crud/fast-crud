@@ -107,6 +107,7 @@ module.exports = {
                                 {text: 'rowHandle', link: '/api/crud-options/rowHandle'},
                                 {text: 'pagination', link: '/api/crud-options/pagination'},
                                 {text: 'container', link: '/api/crud-options/container'},
+                                {text: 'settings', link: '/api/crud-options/settings'},
                             ]
                         },
                         {

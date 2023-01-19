@@ -13,7 +13,7 @@ export default function () {
     },
     "dict-select": {
       search: { autoSearchTrigger: "change" },
-      column: { component: { name: "fs-values-format" } },
+      column: { component: { name: "fs-values-format", vModel: "modelValue" } },
       form: {
         component: {
           name: "fs-dict-select",
@@ -37,7 +37,7 @@ export default function () {
           [ui.select.clearable]: true
         }
       },
-      column: { component: { name: "fs-values-format" } }
+      column: { component: { name: "fs-values-format", vModel: "modelValue" } }
     },
     "dict-checkbox": {
       search: {
@@ -51,7 +51,7 @@ export default function () {
           [ui.select.clearable]: true
         }
       },
-      column: { component: { name: "fs-values-format" } }
+      column: { component: { name: "fs-values-format", vModel: "modelValue" } }
     },
     "dict-switch": {
       search: {
@@ -65,7 +65,7 @@ export default function () {
           [ui.select.clearable]: true
         }
       },
-      column: { component: { name: "fs-values-format" } }
+      column: { component: { name: "fs-values-format", vModel: "modelValue" } }
     }
   };
 }

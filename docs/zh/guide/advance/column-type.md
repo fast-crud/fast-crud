@@ -227,5 +227,52 @@ selectType.column.component.color='auto'  //修改官方的字段类型，设置
 [官方字段类型列表](../../api/types.md)
 
 
+
+## 字段merge插件
+
+当你想自定义columns额外处理方法时可以使用 `registerMergeColumnPlugin` 来注册字段merge插件。   
+可以帮助你实现类似`dict`公共属性的功能
+
+```js
+import { useColumns,MergeColumnPlugin } from '@fast-crud/fast-crud'
+
+// 跟上面一样，不要写在页面里，这个也是全局的，要写在vue.use(FastCrud)之后
+
+const { registerMergeColumnPlugin } = useColumns();
+registerMergeColumnPlugin({
+    name: 'readonly-plugin',
+    order: 1,
+    handle: (columnProps: ColumnCompositionProps={},crudOptions:any={}) => {
+        // 你可以在此处做你自己的处理
+        // 比如你可以定义一个readonly的公共属性，处理该字段只读，不能编辑
+        if (columnProps.readonly) {
+            // 合并column配置
+            _.merge(columnProps, {
+                form: {show: false},
+                viewForm: {show: true},
+            });
+        }
+        return columnProps;
+    }
+})
+
+```
+
+使用这个`readonly`配置
+```js
+const crudOptions = {
+    columns:{
+        key:{
+            title:"测试",
+            type:'text',
+            //在这里使用这个自定义配置
+            // 效果就是，在添加和编辑时都看不到这个字段
+            readonly:true  
+        }
+    }
+}
+```
+
+
 ## 更多
 你可能还想了解 [扩展](./extends.md)

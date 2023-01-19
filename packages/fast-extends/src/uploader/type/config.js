@@ -42,7 +42,7 @@ export default {
   },
   form: {
     successHandle(ret) {
-      //处理后端返回，转化为组件所需要的格式：{url:xxxx}
+      //处理后端返回，转化为组件所需要的格式：{url:xxxx,key:xxx}
       return ret;
     },
     action: undefined,

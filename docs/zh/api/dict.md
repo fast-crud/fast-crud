@@ -7,12 +7,12 @@
 * 默认：false
 
 ### prototype
-* 说明：是否是原型模式
+* 说明：是否是原型模式，每个组件都会初始化自己的dict实例，都会发出字典请求
 * 类型：Boolean
 * 默认：false
 
 ### url
-* 说明：是否是原型模式
+* 说明：字典的请求url，也是全局缓存的key
 * 类型：String | Function({dict,...context}):String
 * 默认：false
 

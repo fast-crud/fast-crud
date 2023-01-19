@@ -187,7 +187,7 @@ export type TableProps = {
   /**
    * 调用doRefresh完成之后触发
    */
-  onRefreshed?: Function;
+  onRefreshed?: (context: { data: any[] }) => void;
 
   /**
    * 删除配置
@@ -725,6 +725,9 @@ export type RowHandleProps = {
  * crud配置
  */
 export type CrudOptions = {
+  setting?: {
+    viewFormUseCellComponent?: false;
+  };
   /**
    * 模式
    */

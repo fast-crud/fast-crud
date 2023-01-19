@@ -11,6 +11,7 @@
     "skipLibCheck": true,
     "esModuleInterop": true,
     "allowSyntheticDefaultImports": true,
+    "strictNullChecks" :false,
     "sourceMap": true,
     "baseUrl": ".",
     "outDir": "./dist/ts",

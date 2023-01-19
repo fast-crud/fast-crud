@@ -16,7 +16,7 @@ const crudOptions = {
 ## [key].title
 
 * 说明：字段名称
-* 类型：String
+* 类型：String 
 
 可以通过如下配置在不同的位置覆盖这里配置的字段名称
 ```js
@@ -206,9 +206,21 @@ const crudOptions = {
 }
 ```
 
-## [key].form.label
-* 说明：表单字段label
-* 类型：string
+## [key].form.label 
+* 说明：表单字段label ,也可以配置为 `[key].form.title`
+* 类型：string | render(context)
+* 默认：默认继承 `columns.[key].title`
+
+```js
+// 下面是render方式自定义字段label
+{ // crudOptions.columns.[key]
+    form:{
+        title(context){
+            return <div style={{'color':red}}> 字段名称 <div>
+        }
+    }
+}
+```
 
 
 ### [key].form.component
@@ -220,13 +232,11 @@ const crudOptions = {
 ## [key].form.col
 * 说明：表单字段col配置
 * 类型：Object
-* 默认：{span:12}
-* 同[form.col](form#col)
+* 默认：{span:12} ，继承 [crudOptions.form.col](form#col)
 
 ## [key].form.value
 * 说明：该字段的默认值
 * 类型：any
-* 注意：此处配置了默认值，会被search复制过去，一般来说，search是不需要默认值的，此时需要配置search.value=null进行取消。
 ```
 columns:{
     fieldKey:{
@@ -237,6 +247,9 @@ columns:{
 }
 
 ```
+::: warning   
+注意：此处配置了默认值，会被search复制过去，一般来说，search是不需要默认值的，此时需要配置search.value=null进行取消。
+:::
 
 ## [key].form.helper
 * 说明：字段的帮助说明，显示在组件的下方
