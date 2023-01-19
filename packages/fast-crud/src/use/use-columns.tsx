@@ -5,11 +5,27 @@ import defaultCrudOptions from "./default-crud-options";
 import _ from "lodash-es";
 import { reactive } from "vue";
 import { useI18n } from "../locale";
+import logger from "../utils/util.log";
+import { ColumnCompositionProps, CrudOptions } from "../d.ts";
 const { merge, cloneDeep } = useMerge();
 // mergeColumnPlugin 注册
-const mergeColumnPlugins: Array<Function> = [];
-export function registerMergeColumnPlugin(mergeFn) {
-  mergeColumnPlugins.push(mergeFn);
+
+export type MergeColumnPlugin = {
+  name: string;
+  handle: (columnProps: any, crudOptions: any) => {};
+  order: number;
+};
+
+const mergeColumnPlugins: MergeColumnPlugin[] = [];
+export function registerMergeColumnPlugin(plugin: MergeColumnPlugin) {
+  _.remove(mergeColumnPlugins, (item) => {
+    return item.name === plugin.name;
+  });
+  mergeColumnPlugins.push(plugin);
+  mergeColumnPlugins.sort((a, b) => {
+    return a.order - b.order;
+  });
+  logger.debug("mergeColumnPlugin register success: current:", plugin, "registered:", mergeColumnPlugins);
 }
 function mergeColumnDict(item) {
   // copy dict
@@ -45,9 +61,29 @@ function mergeColumnType(item) {
   item = merge(base, item);
   return item;
 }
-registerMergeColumnPlugin(mergeColumnType);
-registerMergeColumnPlugin(mergeColumnDict);
 
+const viewFormUseCellComponentPlugin = {
+  name: "viewFormUseCellComponent",
+  order: 10,
+  handle: (columnProps: ColumnCompositionProps = {}, crudOptions: CrudOptions = {}) => {
+    debugger;
+    if (!crudOptions.settings?.viewFormUseCellComponent) {
+      return columnProps;
+    }
+    // 让viewForm的组件使用cell组件
+    const columnComponent = columnProps.column?.component || {};
+    if (columnProps.type === "text") {
+      columnComponent.render = ({ value }) => {
+        return <span>{value}</span>;
+      };
+    }
+    merge(columnProps, { viewForm: { component: columnComponent } });
+    return columnProps;
+  }
+};
+registerMergeColumnPlugin({ name: "type", handle: mergeColumnType, order: -2 });
+registerMergeColumnPlugin({ name: "dict", handle: mergeColumnDict, order: -1 });
+registerMergeColumnPlugin(viewFormUseCellComponentPlugin);
 /**
  * 排序
  * @param arr
@@ -63,16 +99,16 @@ function doArraySort(arr) {
  * 将dict和fieldType合并
  * @param columns
  */
-function setupOptionsColumns(columns) {
+function setupOptionsColumns(columns, userOptions: CrudOptions) {
   const initedColumns = {};
   _.forEach(columns, (item, key) => {
     item.key = key;
     if (item.children) {
-      item.children = setupOptionsColumns(item.children);
+      item.children = setupOptionsColumns(item.children, userOptions);
     } else {
       //执行mergePlugin，复制type，复制dict
       for (const plugin of mergeColumnPlugins) {
-        item = plugin(item);
+        item = plugin.handle(item, userOptions);
       }
     }
     initedColumns[key] = item;
@@ -202,7 +238,7 @@ function buildFormOptions(crudOptions) {
     defaultCrudOptions.commonOptions({}),
     crudOptions
   );
-  const initedColumns = setupOptionsColumns(cloneDeep(userOptions.columns));
+  const initedColumns = setupOptionsColumns(cloneDeep(userOptions.columns), userOptions);
   const columnsMap = buildOptionsColumnsMap({}, initedColumns);
   return buildForm(userOptions, "form", columnsMap);
 }
@@ -211,7 +247,7 @@ function buildColumns(userOptions) {
   _.forEach(userOptions.columns, (value, key) => {
     value.key = key;
   });
-  const columns = setupOptionsColumns(cloneDeep(userOptions.columns));
+  const columns = setupOptionsColumns(cloneDeep(userOptions.columns), userOptions);
   userOptions.columns = columns;
   const columnsMap = buildOptionsColumnsMap({}, columns);
 
@@ -243,6 +279,7 @@ function buildColumns(userOptions) {
 export function useColumns() {
   return {
     buildFormOptions,
-    buildColumns
+    buildColumns,
+    registerMergeColumnPlugin
   };
 }
