@@ -8,19 +8,27 @@
 动态计算主要用于解决配置需要动态变化的问题. 是fs-crud最重要的特性之一   
 
 配置动态变化可以有如下4种方式实现：    
-1. 直接修改`crudBinding`对应的属性值。比如`crudBinding.search.show=false`即可隐藏查询框。
+1. 直接修改`crudBinding`对应的属性值。比如`crudBinding.value.search.show=false`即可隐藏查询框。
 2. 给属性配置`ref、computed`类型的值，通过修改`ref.value`，就能够动态变化。
 3. `compute` 同步计算，类似`computed`，不同的是它可以根据上下文进行动态计算。
 4. `asyncCompute`异步计算，基于`watch 和 computed`实现,与`compute`相比,它支持异步计算。 
- 
-本节将详细介绍后三种动态计算方式  
 
-## 动态计算demo地址
-[antdv版](http://fast-crud.docmirror.cn/antdv/#/crud/basis/compute)  |
-[element版](http://fast-crud.docmirror.cn/element/#/crud/basis/compute) |
-[naiveui版](http://fast-crud.docmirror.cn/naive/#/crud/basis/compute)
+## 1. 直接修改crudBinding
 
-## ref和computed【ref引用】
+直接修改crudBinding内的值是最简单粗暴的动态方式，它需要对crudBinding结构有一些了解。      
+你可以从以下途径了解crudBinding数据结构：
+1. [crudBinding数据结构文档](/d.ts/types/CrudBinding.html)
+2. 通过`fast-crud`初始化日志查看 
+   ![](../..//images/crud-init-log.jpg)
+
+```js
+// 使用示例
+// 可以动态隐藏查询框
+crudBinding.value.search.show=false
+```
+
+
+## 2. ref和computed【ref引用】
 给`crudOptions`里的属性配置`ref或者computed`即可实现全局动态变化。     
 你只需保存`ref`的引用，然后通过修改`ref.value`，达到动态修改的目的。    
 ```js
@@ -41,7 +49,7 @@ showTableRef.value = true
 
 ```
 
-## compute 【同步计算】
+## 3. compute 【同步计算】
 > 注意后面没有`d`，基于`vue`的`computed`，用法类似，不同的是它支持上下文参数      
 > 开发过程中但凡遇到需要根据表单数据或者行数据参与动态计算的，用`compute`或者`asyncCompute`就对了
 
@@ -85,25 +93,12 @@ const crudOptions={
 }
 ```
 
-示例2：
-```js
-import { useCompute } from "@fast-crud/fast-crud";
-const {compute} = useCompute()
-const crudOptions: {
-    form:{
-        // 根据当前上下文动态计算form.show的值
-        show: compute((context)=>{
-            return context.form.xxx === yyy;
-        })
-    }
-}
-```
-
-
-比如很常见的需求：        
+示例2：   
+很常见的需求：        
 一个用户表，有个用户类型字段`userType`,可能的值为：`公司`或`个人`。     
 我们要实现，当选择`公司`时，需要额外`上传营业执照`、`填写信用代码`的功能。    
 就需要在`userType`字段选中`公司`的时候，将`上传营业执照`和`信用代码`的输入框显示出来。选择`个人`时则不显示。
+
 ```js
 import {useCompute} from '@fast-crud/fast-crud'
 const {compute} = useCompute()
@@ -142,7 +137,10 @@ const crudOptions = {
 
 ```
 
-## asyncCompute 【异步计算】
+用户类型（userType）是一个下拉选择框，当用户选择不同的值时会改变`form.userType`的值，同时会触发`businessLicenceImg`和`businessLicenceCode`这两个字段中`form.show`的重新计算。
+从而让`营业执照上传`和`营业执照号码`根据`userType`的值不同而显隐。
+
+## 4. asyncCompute 【异步计算】
 当我们要计算的值需要从网络请求或者从其他地方异步获取时可以使用此方法配置
 
 * 方法：asyncCompute({watch?,asyncFn})
@@ -220,3 +218,10 @@ context = {
 使用动态计算会失去配置合并特性，无法与公共配置和基础配置进行合并。     
 建议只在末端配置上使用动态计算
 :::
+
+
+
+## 动态计算demo地址
+[antdv版](http://fast-crud.docmirror.cn/antdv/#/crud/basis/compute)  |
+[element版](http://fast-crud.docmirror.cn/element/#/crud/basis/compute) |
+[naiveui版](http://fast-crud.docmirror.cn/naive/#/crud/basis/compute)
