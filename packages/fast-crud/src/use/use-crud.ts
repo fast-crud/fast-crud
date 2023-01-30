@@ -326,6 +326,7 @@ export type CreateCrudOptionsProps = {
    */
   [key: string]: any;
 };
+
 export type CreateCrudOptionsRet = {
   crudOptions: CrudOptions;
   /**
@@ -333,8 +334,8 @@ export type CreateCrudOptionsRet = {
    */
   [key: string]: any;
 };
-type UseFsProps = {
-  createCrudOptions: (CreateCrudOptionsRet) => CreateCrudOptionsRet;
+export type UseFsProps = {
+  createCrudOptions: (props?: CreateCrudOptionsProps) => CreateCrudOptionsRet;
 };
 export function useFs(props: UseFsProps): UseFsRet {
   const { createCrudOptions } = props;

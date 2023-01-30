@@ -66,7 +66,6 @@ const viewFormUseCellComponentPlugin = {
   name: "viewFormUseCellComponent",
   order: 10,
   handle: (columnProps: ColumnCompositionProps = {}, crudOptions: CrudOptions = {}) => {
-    debugger;
     if (!crudOptions.settings?.viewFormUseCellComponent) {
       return columnProps;
     }
