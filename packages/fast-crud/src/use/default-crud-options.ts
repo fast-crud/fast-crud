@@ -1,8 +1,12 @@
 import { uiContext } from "../ui";
+import { UseCrudProps } from "/src/use/use-crud";
+import { CrudOptions } from "/src/d.ts";
 export default {
-  // eslint-disable-next-line @typescript-eslint/no-empty-function,@typescript-eslint/no-unused-vars
-  commonOptions(ctx) {},
-  defaultOptions({ t }) {
+  commonOptions(ctx?: UseCrudProps): any {
+    return {};
+  },
+  defaultOptions(opts: { t: any }): CrudOptions {
+    const { t } = opts;
     const ui = uiContext.get();
     return {
       mode: {},
@@ -81,7 +85,7 @@ export default {
         showSizeChanger: true, // antdv
         showQuickJumper: true, // antdv
         showSizePicker: true, // naive
-        showTotal: (total) => t("fs.pagination.showTotal", [total]) //antdv
+        showTotal: (total: number) => t("fs.pagination.showTotal", [total]) //antdv
       },
       table: {
         show: true,

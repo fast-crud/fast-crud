@@ -5,7 +5,7 @@ import { useMerge } from "./use-merge";
 import logger from "../utils/util.log";
 import { uiContext } from "../ui";
 import { useI18n } from "../locale";
-import { CrudBinding, CrudExpose } from "../d.ts";
+import { CrudBinding, CrudExpose, ScopeContext } from "../d.ts";
 import { useCompute } from "./use-compute";
 import { useColumns } from "./use-columns";
 import { CrudOptions } from "../d.ts/crud";
@@ -45,10 +45,10 @@ export function useCrud(ctx: UseCrudProps) {
 
   function usePagination() {
     const events = ui.pagination.onChange({
-      setCurrentPage(current) {
+      setCurrentPage(current: number) {
         crudBinding.value.pagination[ui.pagination.currentPage] = current;
       },
-      setPageSize(pageSize) {
+      setPageSize(pageSize: number) {
         crudBinding.value.pagination.pageSize = pageSize;
         crudBinding.value.pagination[ui.pagination.currentPage] = 1; //重置页码到1
       },
@@ -66,7 +66,7 @@ export function useCrud(ctx: UseCrudProps) {
   function useFormSubmit() {
     return {
       editForm: {
-        async doSubmit(context) {
+        async doSubmit(context: any) {
           doValueResolve(context);
           if (options.mode?.name === "local") {
             expose.updateTableRow(context.index, context.form, options.mode.isMergeWhenUpdate);
@@ -78,7 +78,7 @@ export function useCrud(ctx: UseCrudProps) {
         }
       },
       addForm: {
-        async doSubmit(context) {
+        async doSubmit(context: any) {
           doValueResolve(context);
           if (options.mode?.name === "local") {
             const index = options.mode.isAppendWhenAdd ? expose.getTableData().length : 0;
@@ -98,13 +98,13 @@ export function useCrud(ctx: UseCrudProps) {
       rowHandle: {
         buttons: {
           remove: {
-            click: async (context) => {
+            click: async (context: any) => {
               context.row = context[ui.tableColumn.row];
               await expose.doRemove(context);
             }
           },
           edit: {
-            click: async (context) => {
+            click: async (context: any) => {
               context.row = context[ui.tableColumn.row];
               await expose.openEdit({
                 row: context.row,
@@ -113,7 +113,7 @@ export function useCrud(ctx: UseCrudProps) {
             }
           },
           view: {
-            click: async (context) => {
+            click: async (context: any) => {
               context.row = context[ui.tableColumn.row];
               await expose.openView({
                 row: context.row,
@@ -130,7 +130,7 @@ export function useCrud(ctx: UseCrudProps) {
     return {
       search: {
         doSearch,
-        ["onUpdate:collapse"]: (value) => {
+        ["onUpdate:collapse"]: (value: any) => {
           crudBinding.value.search.collapse = value;
         }
       }
@@ -139,13 +139,13 @@ export function useCrud(ctx: UseCrudProps) {
 
   function useEvent() {
     return {
-      "onUpdate:search"(value) {
+      "onUpdate:search"(value: any) {
         crudBinding.value.search.show = value;
       },
-      "onUpdate:compact"(value) {
+      "onUpdate:compact"(value: any) {
         crudBinding.value.toolbar.compact = value;
       },
-      "onUpdate:columns"(value) {
+      "onUpdate:columns"(value: any) {
         const original = crudBinding.value.table.columns;
         const columns: Array<any> = [];
         _.forEach(value, (item) => {
@@ -169,7 +169,8 @@ export function useCrud(ctx: UseCrudProps) {
   function useTable() {
     return {
       table: {
-        onSortChange({ isServerSort, prop, asc, order }) {
+        onSortChange(sortChange: { isServerSort: boolean; prop: any; asc: any; order: any }) {
+          const { isServerSort, prop, asc, order } = sortChange;
           crudBinding.value.sort = isServerSort ? { prop, order, asc } : null;
           expose.doRefresh();
         }
@@ -213,7 +214,8 @@ export function useCrud(ctx: UseCrudProps) {
             remove: {
               text: "删除",
               ...ui.button.colors("danger"),
-              click: ({ index }) => {
+              click: (context: ScopeContext) => {
+                const { index } = context;
                 expose.editable.doRemoveRow({ index });
               }
             }
@@ -221,40 +223,48 @@ export function useCrud(ctx: UseCrudProps) {
           editRow: {
             edit: {
               text: "编辑",
-              loading: compute(({ index }) => {
+              loading: compute((context: ScopeContext) => {
+                const { index } = context;
                 const editableRow = expose.editable.getEditableRow(index);
                 return !!editableRow?.isLoading;
               }),
-              click: ({ index }) => {
+              click: (context: ScopeContext) => {
+                const { index } = context;
                 expose.editable.getEditableRow(index)?.active();
               },
-              show: compute(({ index }) => {
+              show: compute((context: ScopeContext) => {
+                const { index } = context;
                 return !expose.editable?.getEditableRow(index)?.isEditing;
               })
             },
             save: {
               text: "保存",
               loading: false,
-              click: ({ index }) => {
+              click: (context: ScopeContext) => {
+                const { index } = context;
                 expose.editable.doSaveRow({ index });
               },
-              show: compute(({ index }) => {
+              show: compute((context: ScopeContext) => {
+                const { index } = context;
                 return !!expose.editable?.getEditableRow(index)?.isEditing;
               })
             },
             cancel: {
               text: "取消",
-              click: async ({ index }) => {
+              click: async (context: ScopeContext) => {
+                const { index } = context;
                 await expose.editable?.doCancelRow({ index });
               },
-              show: compute(({ index }) => {
+              show: compute((context: ScopeContext) => {
+                const { index } = context;
                 return !!expose.editable?.getEditableRow(index)?.isEditing;
               })
             },
             remove: {
               text: "删除",
               ...ui.button.colors("danger"),
-              click: async ({ index }) => {
+              click: async (context: ScopeContext) => {
+                const { index } = context;
                 expose.editable?.doRemoveRow({ index });
               }
             }
@@ -264,7 +274,7 @@ export function useCrud(ctx: UseCrudProps) {
     };
   }
 
-  function resetCrudOptions(options) {
+  function resetCrudOptions(options: CrudOptions) {
     const userOptions = merge(
       defaultCrudOptions.defaultOptions({ t }),
       usePagination(),
@@ -293,7 +303,7 @@ export function useCrud(ctx: UseCrudProps) {
    * 追加配置,注意是覆盖crudBinding的结构，而不是crudOptions的结构
    * @param overOptions
    */
-  function appendBindingOptions(overOptions) {
+  function appendBindingOptions(overOptions: CrudOptions) {
     merge(crudBinding.value, overOptions);
   }
 
@@ -321,10 +331,6 @@ export type CreateCrudOptionsProps = {
   crudExpose: CrudExpose;
 
   expose: CrudExpose;
-  /**
-   * 其他从createCrudOptions自定义返回的参数
-   */
-  [key: string]: any;
 };
 
 export type CreateCrudOptionsRet = {
@@ -335,8 +341,10 @@ export type CreateCrudOptionsRet = {
   [key: string]: any;
 };
 export type UseFsProps = {
-  createCrudOptions: (props?: CreateCrudOptionsProps) => CreateCrudOptionsRet;
+  createCrudOptions: CreateCrudOptions;
 };
+export type CreateCrudOptions = (props?: CreateCrudOptionsProps) => CreateCrudOptionsRet;
+
 export function useFs(props: UseFsProps): UseFsRet {
   const { createCrudOptions } = props;
   const crudRef = ref();
@@ -346,10 +354,8 @@ export function useFs(props: UseFsProps): UseFsRet {
   const { crudExpose } = useExpose({ crudRef, crudBinding });
   // 你的crud配置
   const crudOptionsRet = createCrudOptions({ crudExpose, expose: crudExpose });
-
-  const { crudOptions } = crudOptionsRet;
   // 初始化crud配置
-  const useCrudRet = useCrud({ crudExpose, crudOptions });
+  const useCrudRet = useCrud({ crudExpose, ...crudOptionsRet });
 
   return {
     ...crudOptionsRet,

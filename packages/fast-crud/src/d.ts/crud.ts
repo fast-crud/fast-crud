@@ -38,7 +38,7 @@ export type ScopeContext = {
   /**
    * 当前字段组件的ref
    */
-  componentRef;
+  componentRef: any;
 };
 
 export type PageQuery = {
@@ -78,17 +78,40 @@ export type InfoReq = {
   [key: string]: any;
 };
 
+export type UserPageRes = {
+  res: any;
+  query: any;
+
+  [key: string]: any;
+};
+
+/**
+ * 用户自定义的后台翻页参数
+ */
+export type UserPageQuery = {
+  [key: string]: any;
+};
+
+export type TransformQuery = (query: PageQuery) => UserPageQuery;
+export type TransformRes = (userPageRes: UserPageRes) => PageRes;
+export type PageRequest = (query: UserPageQuery) => Promise<UserPageRes>;
+export type EditRequest = (req: EditReq) => Promise<any>;
+export type AddRequest = (req: AddReq) => Promise<any>;
+export type DelRequest = (req: DelReq) => Promise<any>;
+export type InfoRequest = (req: InfoReq) => Promise<any>;
+
 /**
  * 请求配置
  */
 export type RequestProp = {
-  transformQuery?: (query: PageQuery) => object;
-  transformRes?: ({ res, query }) => PageRes;
-  editRequest?: (req: EditReq) => Promise<any>;
-  pageRequest?: (query: any) => Promise<any>;
-  addRequest?: (req: AddReq) => Promise<any>;
-  delRequest?: (req: DelReq) => Promise<any>;
-  infoRequest?: (req: InfoReq) => Promise<any>;
+  transformQuery?: TransformQuery;
+  transformRes?: TransformRes;
+  pageRequest?: PageRequest;
+  addRequest?: AddRequest;
+  editRequest?: EditRequest;
+  delRequest?: DelRequest;
+  infoRequest?: InfoRequest;
+
   [key: string]: any;
 };
 /**
@@ -136,6 +159,7 @@ export type ComponentProps = {
   [key: string]: any;
 };
 
+export type RemoveConfirmFn = (context: any) => Promise<any>;
 /**
  * 删除操作配置
  */
@@ -144,7 +168,7 @@ export type RemoveProps = {
    * 自定义确认删除，抛出异常则取消
    * @param context
    */
-  confirmFn?: (context) => Promise<any>;
+  confirmFn?: RemoveConfirmFn;
   /**
    * 自定义删除确认标题
    * confirm未配置时生效
@@ -170,13 +194,13 @@ export type RemoveProps = {
    * 当取消删除时
    * @param context
    */
-  onCanceled?: (context) => Promise<any>;
+  onCanceled?: (context: any) => Promise<any>;
 
   /**
    * 删除成功后的操作
    * @param context
    */
-  onRemoved?: (context) => Promise<any>;
+  onRemoved?: (context: any) => Promise<any>;
 
   [key: string]: any;
 };
@@ -219,17 +243,17 @@ export type FormWrapperProps = {
    * 对话框打开前事件处理
    * @param opts
    */
-  onOpen?: (opts) => void;
+  onOpen?: (opts: any) => void;
   /**
    * 对话框打开后事件处理
    * @param opts
    */
-  onOpened?: (opts) => void;
+  onOpened?: (opts: any) => void;
   /**
    * 对话框关闭后事件处理
    * @param opts
    */
-  onClosed?: (opts) => void;
+  onClosed?: (opts: any) => void;
 
   /**
    * 对应对话框组件的配置
@@ -300,12 +324,12 @@ export type FormProps = {
    * 字段组件之前render
    * @param scope
    */
-  prefixRender?: (scope) => any;
+  prefixRender?: (scope: any) => any;
   /**
    * 字段组件之后render
    * @param scope
    */
-  suffixRender?: (scope) => any;
+  suffixRender?: (scope: any) => any;
   /**
    * 表单对话框/抽屉配置
    */
@@ -328,7 +352,7 @@ export type FormProps = {
    * 值变化后的操作
    * @param context
    */
-  valueChange?: (context) => void | { immediate?: boolean; handle?: (context) => void };
+  valueChange?: (context: any) => void | { immediate?: boolean; handle?: (context: any) => void };
   /**
    * 表单重置时的操作
    */
@@ -352,7 +376,7 @@ export type FormItemHelperProps = {
    * 自定义渲染帮助说明
    * @param scope
    */
-  render?: (scope) => any;
+  render?: (scope: any) => any;
   /**
    * 帮助文本
    */
@@ -439,7 +463,7 @@ export type ButtonProps = {
   /**
    * 按钮文本
    */
-  text?: string;
+  text?: string | null;
   /**
    * 图标
    * [图标的使用](/guide/start/icon.html)
@@ -565,12 +589,12 @@ export type ColumnProps = {
    * 格式化方法，比如格式化一下时间
    * @param scope
    */
-  formatter?: (scope) => string;
+  formatter?: (scope: any) => string;
   /**
    * 自定义render方法
    * @param scope
    */
-  cellRender?: (scope) => any;
+  cellRender?: (scope: any) => any;
 
   /**
    * 多级表头
@@ -721,6 +745,13 @@ export type RowHandleProps = {
    */
   [key: string]: any;
 };
+
+export type CompositionColumns = {
+  /**
+   * 字段key:对应的列综合配置
+   */
+  [prop: string]: ColumnCompositionProps;
+};
 /**
  * crud配置
  */
@@ -749,12 +780,7 @@ export type CrudOptions = {
   /**
    * 列配置
    */
-  columns?: {
-    /**
-     * 字段key:对应的列综合配置
-     */
-    [prop: string]: ColumnCompositionProps;
-  };
+  columns?: CompositionColumns;
 } & CrudBinding;
 
 /**

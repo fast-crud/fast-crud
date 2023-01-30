@@ -1,8 +1,9 @@
-import { ColumnCompositionProps, ColumnProps } from "./crud";
+import { CrudBinding } from "./crud";
+import { Ref } from "vue";
 
 export type CrudExpose = {
-  crudRef;
-  crudBinding;
+  crudRef: Ref;
+  crudBinding: Ref<CrudBinding>;
   /**
    * 获取FsFormWrapper的实例
    */
@@ -25,7 +26,7 @@ export type CrudExpose = {
    * 执行valueBuilder
    * @param records 表格数据列表
    */
-  doValueBuilder: (records, columns?: any) => void;
+  doValueBuilder: (records: any[], columns?: any) => void;
   /**
    * 执行valueResolve
    * @param context { form }
@@ -48,27 +49,27 @@ export type CrudExpose = {
    * 删除行按钮点击
    * @param context = {index,row,...} , delRequest的请求参数
    */
-  doRemove: (context) => Promise<void>;
+  doRemove: (context: any) => Promise<void>;
   /**
    * 打开编辑对话框
    * @param context = {index,row,...formWrapper.open的自定义参数}
    */
-  openEdit: (context) => Promise<void>;
+  openEdit: (context: any) => Promise<void>;
   /**
    * 打开添加对话框
    *  @param context = {row,...formWrapper.open的自定义参数}
    */
-  openAdd: (context) => Promise<void>;
+  openAdd: (context: any) => Promise<void>;
   /**
    * 打开查看对话框
    *  @param context = {index,row,...formWrapper.open的自定义参数}
    */
-  openView: (context) => Promise<void>;
+  openView: (context: any) => Promise<void>;
   /**
    * 打开对话框
    * @param context = {...formWrapper.open的自定义参数}
    */
-  openDialog: (context) => Promise<void>;
+  openDialog: (context: any) => Promise<void>;
 
   /**
    *  获取查询组件ref
@@ -82,7 +83,7 @@ export type CrudExpose = {
   /**
    * 重新设置查询表单数据
    */
-  setSearchFormData: (context: { form; mergeForm?: boolean }) => void;
+  setSearchFormData: (context: { form: any; mergeForm?: boolean }) => void;
   /**
    * 获取FsTable的实例
    */
@@ -126,7 +127,7 @@ export type CrudExpose = {
    * 选中某一行
    * @param context = {row}
    */
-  doSelectCurrentRow: (context: { row }) => void;
+  doSelectCurrentRow: (context: { row: any }) => void;
   /**
    * 行编辑
    */

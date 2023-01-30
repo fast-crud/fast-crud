@@ -6,7 +6,7 @@ import _ from "lodash-es";
 import { reactive } from "vue";
 import { useI18n } from "../locale";
 import logger from "../utils/util.log";
-import { ColumnCompositionProps, CrudOptions } from "../d.ts";
+import { ColumnCompositionProps, CompositionColumns, CrudOptions, ScopeContext } from "../d.ts";
 const { merge, cloneDeep } = useMerge();
 // mergeColumnPlugin 注册
 
@@ -14,6 +14,10 @@ export type MergeColumnPlugin = {
   name: string;
   handle: (columnProps: any, crudOptions: any) => {};
   order: number;
+};
+
+export type CompositionColumnsMap = {
+  [key: string]: ColumnCompositionProps;
 };
 
 const mergeColumnPlugins: MergeColumnPlugin[] = [];
@@ -27,7 +31,7 @@ export function registerMergeColumnPlugin(plugin: MergeColumnPlugin) {
   });
   logger.debug("mergeColumnPlugin register success: current:", plugin, "registered:", mergeColumnPlugins);
 }
-function mergeColumnDict(item) {
+function mergeColumnDict(item: ColumnCompositionProps) {
   // copy dict
   if (item.dict) {
     if (item.column?.component) {
@@ -41,7 +45,7 @@ function mergeColumnDict(item) {
   }
   return item;
 }
-function mergeColumnType(item) {
+function mergeColumnType(item: ColumnCompositionProps) {
   if (!item.type) {
     return item;
   }
@@ -72,7 +76,8 @@ const viewFormUseCellComponentPlugin = {
     // 让viewForm的组件使用cell组件
     const columnComponent = columnProps.column?.component || {};
     if (columnProps.type === "text") {
-      columnComponent.render = ({ value }) => {
+      columnComponent.render = (context: ScopeContext) => {
+        const { value } = context;
         return <span>{value}</span>;
       };
     }
@@ -87,7 +92,7 @@ registerMergeColumnPlugin(viewFormUseCellComponentPlugin);
  * 排序
  * @param arr
  */
-function doArraySort(arr) {
+function doArraySort(arr: any) {
   return _.sortBy(arr, (item) => {
     return item.order ?? Constants.orderDefault;
   });
@@ -97,9 +102,10 @@ function doArraySort(arr) {
  * 初始化用户配置的列
  * 将dict和fieldType合并
  * @param columns
+ * @param userOptions
  */
-function setupOptionsColumns(columns, userOptions: CrudOptions) {
-  const initedColumns = {};
+function setupOptionsColumns(columns: ColumnCompositionProps[], userOptions: CrudOptions) {
+  const initedColumns: any = {};
   _.forEach(columns, (item, key) => {
     item.key = key;
     if (item.children) {
@@ -121,7 +127,7 @@ function setupOptionsColumns(columns, userOptions: CrudOptions) {
  * @param map
  * @param columns
  */
-function buildOptionsColumnsMap(map = {}, columns) {
+function buildOptionsColumnsMap(map: CompositionColumnsMap = {}, columns: ColumnCompositionProps) {
   _.forEach(columns, (item, key) => {
     if (item.children) {
       buildOptionsColumnsMap(map, item.children);
@@ -136,7 +142,7 @@ function buildOptionsColumnsMap(map = {}, columns) {
  * 构建table单个列
  * @param colTemplate
  */
-function buildTableColumn(colTemplate) {
+function buildTableColumn(colTemplate: any) {
   const item = colTemplate;
   const tableColumn = item.column || {};
   if (tableColumn.title == null) {
@@ -153,7 +159,7 @@ function buildTableColumn(colTemplate) {
  * 构建列表表头配置
  * @param columns
  */
-function buildTableColumns(columns) {
+function buildTableColumns(columns: CompositionColumnsMap) {
   const tableColumns: any = [];
   //合并为tableColumns
   _.forEach(columns, (item) => {
@@ -169,7 +175,7 @@ function buildTableColumns(columns) {
  * @param map
  * @param columns
  */
-function buildTableColumnsMap(map = {}, columns) {
+function buildTableColumnsMap(map: CompositionColumnsMap = {}, columns: CompositionColumns) {
   _.forEach(columns, (item) => {
     map[item.key] = item;
     if (item.children && item.children.length > 0) {
@@ -184,9 +190,9 @@ function buildTableColumnsMap(map = {}, columns) {
  * @param columns
  * @param formType
  */
-function buildFormColumns(columns, formType) {
+function buildFormColumns(columns: CompositionColumns, formType: string) {
   // 合并form
-  const formColumns = {};
+  const formColumns: any = {};
   _.forEach(columns, (item) => {
     const formColumn = cloneDeep(item[formType]) || {};
     if (formType === "form" && formColumn.title == null) {
@@ -205,7 +211,12 @@ function buildFormColumns(columns, formType) {
  * @param columnsMap
  * @param onComplete
  */
-function buildForm(baseOptions, formType, columnsMap, onComplete?) {
+function buildForm(
+  baseOptions: CrudOptions,
+  formType: string,
+  columnsMap: CompositionColumnsMap,
+  onComplete?: (form: any) => void
+) {
   const formColumns = buildFormColumns(columnsMap, formType);
   const form = merge(cloneDeep(baseOptions.form), baseOptions[formType], { columns: formColumns });
   if (onComplete) {
@@ -220,9 +231,9 @@ function buildForm(baseOptions, formType, columnsMap, onComplete?) {
  * @param formType
  * @param columnsMap
  */
-function buildSearchForm(baseOptions, formType = "search", columnsMap) {
+function buildSearchForm(baseOptions: CrudOptions, formType = "search", columnsMap: CompositionColumnsMap) {
   const searchColumns = buildFormColumns(columnsMap, formType);
-  const formColumnsForSearch = {};
+  const formColumnsForSearch: any = {};
   _.forEach(cloneDeep(baseOptions.form.columns), (item, key) => {
     formColumnsForSearch[key] = _.pick(item, ["component", "valueChange", "title", "key", "label"]);
   });
@@ -230,11 +241,11 @@ function buildSearchForm(baseOptions, formType = "search", columnsMap) {
   return merge({ columns: formColumnsForSearch }, { columns: searchColumns }, baseOptions.search);
 }
 
-function buildFormOptions(crudOptions) {
+function buildFormOptions(crudOptions: CrudOptions) {
   const { t } = useI18n();
   const userOptions = merge(
     defaultCrudOptions.defaultOptions({ t }),
-    defaultCrudOptions.commonOptions({}),
+    defaultCrudOptions.commonOptions({ crudOptions }),
     crudOptions
   );
   const initedColumns = setupOptionsColumns(cloneDeep(userOptions.columns), userOptions);
@@ -242,7 +253,7 @@ function buildFormOptions(crudOptions) {
   return buildForm(userOptions, "form", columnsMap);
 }
 
-function buildColumns(userOptions) {
+function buildColumns(userOptions: CrudOptions) {
   _.forEach(userOptions.columns, (value, key) => {
     value.key = key;
   });

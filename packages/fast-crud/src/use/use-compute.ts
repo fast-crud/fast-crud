@@ -4,16 +4,17 @@ import getEachDeep from "deepdash-es/getEachDeep";
 import { useMerge } from "./use-merge";
 import { ComputeContext } from "/src/d.ts/compute";
 const { cloneDeep } = useMerge();
+// @ts-ignore
 const eachDeep = getEachDeep(_);
 
-function isAsyncCompute(value) {
+function isAsyncCompute(value: any) {
   return value instanceof AsyncComputeValue;
 }
-function isSyncCompute(value) {
+function isSyncCompute(value: any) {
   return value instanceof ComputeValue;
 }
-function findComputeValues(target, excludes, isAsync) {
-  const foundMap = {};
+function findComputeValues(target: any, excludes: any[], isAsync: boolean) {
+  const foundMap: any = {};
   if (target == null) {
     return foundMap;
   }
@@ -51,18 +52,18 @@ function findComputeValues(target, excludes, isAsync) {
   return foundMap;
 }
 
-function doAsyncCompute(dependAsyncValues, getContextFn) {
+function doAsyncCompute(dependAsyncValues: any, getContextFn: (key: string, value: any) => any) {
   if (dependAsyncValues == null || Object.keys(dependAsyncValues).length <= 0) {
     return null;
   }
-  const asyncValueMap = {};
+  const asyncValueMap: any = {};
   _.forEach(dependAsyncValues, (item, key) => {
     asyncValueMap[key] = item.buildAsyncRef(getContextFn);
   });
   return asyncValueMap;
 }
 
-function setAsyncComputeValue(target, asyncValuesMap) {
+function setAsyncComputeValue(target: any, asyncValuesMap: any) {
   if (asyncValuesMap == null || Object.keys(asyncValuesMap).length <= 0) {
     return;
   }
@@ -71,7 +72,12 @@ function setAsyncComputeValue(target, asyncValuesMap) {
   });
 }
 
-function doComputed(getTargetFunc, getContextFn, excludes, userComputedFn) {
+function doComputed(
+  getTargetFunc: any,
+  getContextFn: (key: string, value: any) => any,
+  excludes: any[],
+  userComputedFn: (target: any) => any
+) {
   const dependValues = computed(() => {
     const target = getTargetFunc();
     return findComputeValues(target, excludes, false);
@@ -109,18 +115,19 @@ function doComputed(getTargetFunc, getContextFn, excludes, userComputedFn) {
   });
 }
 
+export type ComputeFn = (context: ComputeContext) => any;
 export class ComputeValue {
-  computeFn: (context: ComputeContext) => any;
-  constructor(computeFn) {
+  computeFn: ComputeFn;
+  constructor(computeFn: ComputeFn) {
     this.computeFn = computeFn;
   }
 
-  static create(computeFn) {
+  static create(computeFn: ComputeFn) {
     return new ComputeValue(computeFn);
   }
 }
 
-function compute(computeFn) {
+function compute(computeFn: ComputeFn) {
   return ComputeValue.create(computeFn);
 }
 

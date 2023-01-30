@@ -6,3 +6,9 @@ export type FileItem = {
   key?: string;
   size?: string;
 };
+
+export type UploadRequestProps = {
+  action?: string;
+  file: File;
+  onProgress: (progress: { percent: number }) => void;
+};

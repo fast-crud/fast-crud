@@ -26,6 +26,7 @@
   "author": "Greper",
   "license": "MIT",
   "devDependencies": {
+    "@types/lodash-es": "^4.17.6",
     "copyfiles": "^2.4.1",
     "lerna": "^6.1.0",
     "markdown-it": "^13.0.1",
