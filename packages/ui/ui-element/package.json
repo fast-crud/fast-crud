@@ -1,6 +1,6 @@
 {
   "name": "@fast-crud/ui-element",
-  "version": "1.8.4",
+  "version": "1.8.5",
   "description": "",
   "main": "./dist/ui-element.umd.js",
   "module": "./dist/ui-element.mjs",
@@ -19,7 +19,7 @@
   },
   "devDependencies": {
     "@element-plus/icons-vue": "^2.*",
-    "@fast-crud/fast-crud": "^1.8.4",
+    "@fast-crud/fast-crud": "^1.8.5",
     "@rollup/plugin-strip": "^3.0.1",
     "@rollup/plugin-typescript": "^10.0.1",
     "@types/lodash-es": "^4.17.6",
