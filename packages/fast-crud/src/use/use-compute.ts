@@ -127,21 +127,29 @@ export class ComputeValue {
   }
 }
 
-function compute(computeFn: ComputeFn) {
+function compute(computeFn: ComputeFn): any {
   return ComputeValue.create(computeFn);
 }
 
+export type GetContextFn = () => any;
+
+export type AsyncComputeOptions = {
+  watch: (getContextFn: GetContextFn) => any;
+  asyncFn: (value: any, getContextFn: GetContextFn) => any;
+  defaultValue?: any;
+};
 export class AsyncComputeValue {
   watch;
   asyncFn;
   defaultValue?;
-  constructor({ watch, asyncFn, defaultValue }: { watch; asyncFn; defaultValue? }) {
+  constructor(options: AsyncComputeOptions) {
+    const { watch, asyncFn, defaultValue } = options;
     this.watch = watch;
     this.asyncFn = asyncFn;
     this.defaultValue = defaultValue;
   }
 
-  buildAsyncRef(getContextFn) {
+  buildAsyncRef(getContextFn: GetContextFn) {
     getContextFn = getContextFn || function () {};
     const asyncRef = ref(this.defaultValue);
     const computedValue = computed(() => {
@@ -164,8 +172,8 @@ export class AsyncComputeValue {
     return asyncRef;
   }
 }
-function asyncCompute({ watch, asyncFn }) {
-  return new AsyncComputeValue({ watch, asyncFn });
+function asyncCompute(options: AsyncComputeOptions) {
+  return new AsyncComputeValue(options);
 }
 export function useCompute() {
   return {

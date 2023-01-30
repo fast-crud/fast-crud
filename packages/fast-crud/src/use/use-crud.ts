@@ -5,7 +5,7 @@ import { useMerge } from "./use-merge";
 import logger from "../utils/util.log";
 import { uiContext } from "../ui";
 import { useI18n } from "../locale";
-import { CrudBinding, CrudExpose, ScopeContext } from "../d.ts";
+import {ComputeContext, CrudBinding, CrudExpose, ScopeContext} from "../d.ts";
 import { useCompute } from "./use-compute";
 import { useColumns } from "./use-columns";
 import { CrudOptions } from "../d.ts/crud";
@@ -223,7 +223,7 @@ export function useCrud(ctx: UseCrudProps) {
           editRow: {
             edit: {
               text: "编辑",
-              loading: compute((context: ScopeContext) => {
+              loading: compute((context: ComputeContext) => {
                 const { index } = context;
                 const editableRow = expose.editable.getEditableRow(index);
                 return !!editableRow?.isLoading;
@@ -232,7 +232,7 @@ export function useCrud(ctx: UseCrudProps) {
                 const { index } = context;
                 expose.editable.getEditableRow(index)?.active();
               },
-              show: compute((context: ScopeContext) => {
+              show: compute((context: ComputeContext) => {
                 const { index } = context;
                 return !expose.editable?.getEditableRow(index)?.isEditing;
               })
@@ -244,7 +244,7 @@ export function useCrud(ctx: UseCrudProps) {
                 const { index } = context;
                 expose.editable.doSaveRow({ index });
               },
-              show: compute((context: ScopeContext) => {
+              show: compute((context: ComputeContext) => {
                 const { index } = context;
                 return !!expose.editable?.getEditableRow(index)?.isEditing;
               })
@@ -255,7 +255,7 @@ export function useCrud(ctx: UseCrudProps) {
                 const { index } = context;
                 await expose.editable?.doCancelRow({ index });
               },
-              show: compute((context: ScopeContext) => {
+              show: compute((context: ComputeContext) => {
                 const { index } = context;
                 return !!expose.editable?.getEditableRow(index)?.isEditing;
               })
@@ -331,6 +331,8 @@ export type CreateCrudOptionsProps = {
   crudExpose: CrudExpose;
 
   expose: CrudExpose;
+
+  [key: string]: any;
 };
 
 export type CreateCrudOptionsRet = {
