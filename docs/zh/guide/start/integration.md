@@ -184,13 +184,15 @@ app.use(FsExtendsEditor, {
 
 <script>
 import { defineComponent, ref, onMounted } from "vue";
-import { useCrud } from "@fast-crud/fast-crud";
-import { useExpose } from "@fast-crud/fast-crud";
+import { CrudBinding, useFs } from '@fast-crud/fast-crud';
 import _ from 'lodash-es'
 
 //此处为crudOptions配置
 const createCrudOptions = function ({ expose }) {
   const records = [{id:1,name:'Hello World'}]
+  
+  // 此处4个request对应添删改查的后端请求。
+  // 当前是本地示例，你需要改成使用axios等http客户端向后端发出请求
   const pageRequest = async (query) => {
     return {
       records, currentPage:1,pageSize:20,total:records.length
@@ -211,6 +213,8 @@ const createCrudOptions = function ({ expose }) {
     records.push(form)
     return form
   };
+  
+  // 此处编辑 crudOptions 配置
   return {
     crudOptions: {
       request: {
@@ -239,26 +243,16 @@ const createCrudOptions = function ({ expose }) {
 export default defineComponent({
   name: "HelloWorld",
   setup() {
-    // crud组件的ref
-    const crudRef = ref();
-    // crud 配置的ref
-    const crudBinding = ref();
-    // 暴露的方法
-    const { expose } = useExpose({ crudRef, crudBinding });
-    // 你的crud配置
-    const { crudOptions } = createCrudOptions({ expose });
-    // 初始化crud配置
-    // eslint-disable-next-line @typescript-eslint/no-unused-vars,no-unused-vars
-    const { resetCrudOptions } = useCrud({ expose, crudOptions });
-    // 你可以调用此方法，重新初始化crud配置
-    // resetCrudOptions(options)
-
-    // 页面打开后获取列表数据
+    // fs-crud 初始化
+    const { crudRef, crudBinding, crudExpose } = useFs({ createCrudOptions });
+    
     onMounted(() => {
-      expose.doRefresh();
+      // 页面打开后立即加载列表数据
+      crudExpose.doRefresh();
     });
 
     return {
+      // 给 template 使用
       crudBinding,
       crudRef
     };
