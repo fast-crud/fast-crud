@@ -1,4 +1,4 @@
-import { daterangeFormatter, datetimerangeFormatter, shortcuts } from "../functions";
+import { daterangeFormatter, datetimerangeFormatter } from "../functions";
 import { uiContext } from "../../ui";
 
 export default function () {

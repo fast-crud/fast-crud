@@ -96,11 +96,11 @@ export type CrudExpose = {
   /**
    * 获取表格数据
    */
-  getTableData: () => [];
+  getTableData: () => any[];
   /**
    * 重新设置表格数据
    */
-  setTableData: ([]) => void;
+  setTableData: (data: any[]) => void;
   /**
    * 插入行
    * @param index

@@ -1,6 +1,6 @@
 import zhCN from "./lang/zh-cn";
 import _ from "lodash-es";
-function t(key, args) {
+function t(key: string, args: any) {
   let value = _.get(zhCN, key);
   if (value == null) {
     return key;
@@ -14,11 +14,11 @@ function t(key, args) {
   return value.replace("{n}", args);
 }
 class I18n {
-  vueI18nInstance = null;
-  t(key, args) {
+  vueI18nInstance: any = null;
+  t(key: string, args: any) {
     return t(key, args);
   }
-  setVueI18n(instance) {
+  setVueI18n(instance: any) {
     this.vueI18nInstance = instance;
   }
 }

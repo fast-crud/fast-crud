@@ -3,8 +3,8 @@ import FsContainer from "./container/fs-container.vue";
 import FsLayoutDefault from "./container/fs-layout-default.vue";
 import FsLayoutCard from "./container/fs-layout-card.vue";
 
-import FsButton from "./basic/fs-button.tsx";
-import FsIcon from "./basic/fs-icon.tsx";
+import FsButton from "./basic/fs-button";
+import FsIcon from "./basic/fs-icon";
 import FsIconify from "./basic/fs-iconify.vue";
 import FsIconSvg from "./basic/fs-icon-svg.vue";
 
@@ -22,7 +22,7 @@ import FsCrud from "./fs-crud.vue";
 import FsRowHandle from "./crud/fs-row-handle.vue";
 import FsTable from "./crud/fs-table.jsx";
 import FsCell from "./crud/fs-cell";
-import FsEditableCell from "./crud/editable/fs-editable-cell.jsx";
+import FsEditableCell from "./crud/editable/fs-editable-cell";
 import FsActionbar from "./actionbar/index.vue";
 import FsToolbar from "./toolbar/index.vue";
 import FsSearch from "./search/index.vue";

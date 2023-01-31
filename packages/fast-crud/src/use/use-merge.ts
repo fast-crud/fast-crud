@@ -1,18 +1,18 @@
 import _ from "lodash-es";
 import { isRef } from "vue";
-function isUnMergeable(srcValue) {
+function isUnMergeable(srcValue: any) {
   return srcValue != null && (srcValue instanceof UnMergeable || isRef(srcValue));
 }
-function isUnCloneable(value) {
+function isUnCloneable(value: any) {
   return isUnMergeable(value) && !value.cloneable;
 }
-function merge(target, ...sources) {
+function merge(target: any, ...sources: any) {
   /**
    * 如果目标为不可合并对象，比如array、unMergeable、ref,则直接覆盖不合并
    * @param objValue 被合并对象
    * @param srcValue 来源对象
    */
-  function customizer(objValue, srcValue) {
+  function customizer(objValue: any, srcValue: any) {
     if (srcValue == null) {
       return;
     }
@@ -39,11 +39,11 @@ function merge(target, ...sources) {
   return _.mergeWith(target, ...sources, customizer);
 }
 
-function cloneDeep(target) {
+function cloneDeep(target: any) {
   if (isUnCloneable(target)) {
     return target;
   }
-  function customizer(value) {
+  function customizer(value: any) {
     if (isUnCloneable(value)) {
       return value;
     }
@@ -54,7 +54,7 @@ function cloneDeep(target) {
 class UnMergeable {
   cloneable = false;
 
-  setCloneable(cloneable) {
+  setCloneable(cloneable: any) {
     this.cloneable = cloneable;
   }
 }

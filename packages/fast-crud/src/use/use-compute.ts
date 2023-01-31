@@ -75,8 +75,8 @@ function setAsyncComputeValue(target: any, asyncValuesMap: any) {
 function doComputed(
   getTargetFunc: any,
   getContextFn: (key: string, value: any) => any,
-  excludes: any[],
-  userComputedFn: (target: any) => any
+  excludes?: any[],
+  userComputedFn?: (target: any) => any
 ) {
   const dependValues = computed(() => {
     const target = getTargetFunc();

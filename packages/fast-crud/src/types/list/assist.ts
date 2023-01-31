@@ -5,7 +5,7 @@ function antdvColspan(ui, labelSpan) {
 }
 
 /**
- * 辅助type
+ * 辅助type 可以废弃，antdv已经有更好的方式做跨列配置
  */
 export default function () {
   const ui = uiContext.get();

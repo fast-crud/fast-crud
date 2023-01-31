@@ -183,12 +183,12 @@ export type RemoveProps = {
   /**
    * 删除后刷新列表
    */
-  refreshTable: boolean;
+  refreshTable?: boolean;
 
   /**
    * 显示成功提示
    */
-  showSuccessNotification: boolean;
+  showSuccessNotification?: boolean;
 
   /**
    * 当取消删除时
