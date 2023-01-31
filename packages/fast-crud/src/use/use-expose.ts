@@ -1,23 +1,28 @@
-import { toRaw, nextTick } from "vue";
+import { Ref, toRaw } from "vue";
 import { CrudExpose } from "../d.ts/expose";
 import _ from "lodash-es";
 import logger from "../utils/util.log";
 import { useMerge } from "../use/use-merge";
 import { useUi } from "../use/use-ui";
 import { useI18n } from "../locale";
-import { ColumnProps, RemoveProps } from "/src/d.ts";
+import { ColumnProps, CrudBinding, RemoveProps } from "/src/d.ts";
 
 const { merge } = useMerge();
 export type UseExposeProps = {
-  crudRef;
-  crudBinding;
+  crudRef: Ref;
+  crudBinding: Ref<CrudBinding>;
 };
 
 export type UseEditableProps = {
-  crudExpose;
+  crudExpose: CrudExpose;
 };
 
-function useEditable({ crudExpose }) {
+export type EditableOnEnabledProps = {
+  editable: any;
+};
+
+function useEditable(props: UseEditableProps) {
+  const { crudExpose } = props;
   const { crudBinding } = crudExpose;
   const { ui } = useUi();
   const { t } = useI18n();
@@ -27,7 +32,7 @@ function useEditable({ crudExpose }) {
      * @param opts
      * @param onEnabled 默认根据mode切换rowHandle.active,[editRow,editable]
      */
-    async enable(opts, onEnabled: Function) {
+    async enable(opts: any, onEnabled: (opts: EditableOnEnabledProps) => void) {
       const editableOpts = crudBinding.value.table.editable;
       _.merge(editableOpts, { enabled: true }, opts);
       if (onEnabled) {
