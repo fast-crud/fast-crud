@@ -216,6 +216,9 @@ class Dict extends UnMergeable {
         cached.loaded = false;
         cached.loading = true;
         const dictData = await getFromRemote();
+        if (!(dictData instanceof Array)) {
+          logger.warn("dict data 格式有误，期望格式为数组，实际格式为：", dictData);
+        }
         cached.data = dictData;
         cached.loaded = true;
         cached.loading = false;
