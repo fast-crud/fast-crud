@@ -95,12 +95,11 @@
 /**
  * FsTableColumnsFilter，列设置组件
  */
-import draggable from "vuedraggable-es";
 import _ from "lodash-es";
 import FsTableColumnsFixedController from "../fs-table-columns-fixed-controller/index.vue";
 import TableStore from "../../../utils/util.store";
 import { useI18n } from "../../../locale";
-import { ref, computed, nextTick, Ref, watch } from "vue";
+import { computed, nextTick, ref, Ref, watch } from "vue";
 import { uiContext } from "../../../ui";
 import { useMerge } from "../../../use/use-merge";
 import { useRoute } from "vue-router";
@@ -156,7 +155,7 @@ const active = ref(false);
 const drawerBind = computed(() => {
   return {
     [ui.drawer.visible]: active.value,
-    ["onUpdate:" + ui.drawer.visible]: (e) => {
+    ["onUpdate:" + ui.drawer.visible]: (e: any) => {
       active.value = e;
     },
     [ui.drawer.width]: "300px"
@@ -167,12 +166,12 @@ const start = () => {
   active.value = true;
 };
 
-const original = ref({});
+const original = ref([]);
 const currentValue: Ref<any[]> = ref([]);
 const checkAll = ref(false);
 const indeterminate = ref(false);
 // 全选和反选发生变化时触发
-function onCheckAllChange(value) {
+function onCheckAllChange(value: any) {
   checkAll.value = value;
   currentValue.value = currentValue.value.map((e: any) => {
     if (!e.__show || e.__disabled) {
@@ -186,7 +185,7 @@ function onCheckAllChange(value) {
 const checkAllBind = computed(() => {
   return {
     [ui.checkbox.modelValue]: checkAll.value,
-    ["onUpdate:" + ui.checkbox.modelValue]: (v) => {
+    ["onUpdate:" + ui.checkbox.modelValue]: (v: any) => {
       onCheckAllChange(v);
     }
   };
@@ -215,8 +214,8 @@ const _text = computed(() => {
   return def;
 });
 
-function buildOriginalColumns(value) {
-  const columns: any = [];
+function buildOriginalColumns(value: any) {
+  const columns: any[] = [];
   _.forEach(value, (item) => {
     const column = {
       key: item.key,
@@ -231,13 +230,13 @@ function buildOriginalColumns(value) {
   return columns;
 }
 
-function setCurrentValue(value) {
+function setCurrentValue(value: any) {
   currentValue.value = buildOriginalColumns(value);
   checkAll.value = showLength.value > 0;
 }
 
 // fixed 变化时触发
-function fixedChange(index, value) {
+function fixedChange(index: number, value: any) {
   if (value) {
     currentValue.value[index].show = true;
   }
@@ -285,7 +284,7 @@ function simpleReset() {
   emit("update:show", false);
 }
 
-function doEmit(result) {
+function doEmit(result: any) {
   emit("update:columns", result);
 }
 
@@ -302,7 +301,7 @@ function getStorageTable() {
   return storageTableStore.value;
 }
 
-function saveOptionsToStorage(value) {
+function saveOptionsToStorage(value: any) {
   if (props.storage === false) {
     return;
   }
@@ -325,7 +324,7 @@ function clearThisStorage() {
   getStorageTable().clearTableValue();
 }
 
-function getColumnsHash(columns) {
+function getColumnsHash(columns: any) {
   const keys: any = [];
   for (const item of columns) {
     const target = _.pick(item, "key", "__show", "__disabled");
@@ -379,7 +378,7 @@ defineExpose({
   start
 });
 
-function buildText(element) {
+function buildText(element: any) {
   return element.label || element.title || element.key || _text.value.unnamed;
 }
 </script>

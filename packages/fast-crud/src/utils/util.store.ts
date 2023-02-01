@@ -1,7 +1,7 @@
 export default class TableStore {
   key: string;
   tableId: string;
-  constructor(opts: { $router: any; tableName: string; keyType: string }) {
+  constructor(opts: { $router: any; tableName: string; keyType: string | boolean }) {
     const { $router, tableName, keyType } = opts;
     this.key = this.getItemKey($router, keyType);
     this.tableId = this.getTableId(tableName);

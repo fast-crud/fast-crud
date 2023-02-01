@@ -1,13 +1,3 @@
-<style lang="less">
-.fs-table-columns-fixed-controller {
-  .fs-button {
-    padding: 2px !important;
-    font-size: 10px;
-    min-height: auto;
-  }
-}
-</style>
-
 <template>
   <component :is="$fsui.buttonGroup.name" class="fs-table-columns-fixed-controller">
     <fs-button
@@ -56,3 +46,13 @@ export default {
   }
 };
 </script>
+
+<style lang="less">
+.fs-table-columns-fixed-controller {
+  .fs-button {
+    padding: 2px !important;
+    font-size: 10px;
+    min-height: auto;
+  }
+}
+</style>
