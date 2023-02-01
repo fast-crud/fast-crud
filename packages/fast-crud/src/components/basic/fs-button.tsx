@@ -39,7 +39,7 @@ export default defineComponent({
   },
   setup(props, ctx) {
     const { ui } = useUi();
-    const iconRender = (icon, iconClass = "fs-button-icon") => {
+    const iconRender = (icon: any, iconClass = "fs-button-icon") => {
       if (icon == null) {
         return;
       }

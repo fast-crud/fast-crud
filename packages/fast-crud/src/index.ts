@@ -9,13 +9,14 @@ import { i18n, useI18n } from "./locale/";
 import { uiContext } from "./ui";
 export * from "./ui";
 import { useDictDefine, useCompute } from "./use";
+import { App } from "vue";
 const { dict, setDictRequest } = useDictDefine();
 const { ComputeValue, compute, asyncCompute } = useCompute();
 export { ComputeValue, compute, asyncCompute, dict, utils, useI18n, uiContext };
 export * from "./d.ts/index";
 
 export const FastCrud = {
-  install(app, options) {
+  install(app: App, options: any) {
     if (options?.ui) {
       uiContext.set(options.ui);
     }
@@ -30,6 +31,7 @@ export const FastCrud = {
       i18n.setVueI18n(options.i18n);
     }
     for (const key in components) {
+      // @ts-ignore
       const com = components[key];
       app.component(key, com);
     }

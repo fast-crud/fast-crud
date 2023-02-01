@@ -1,7 +1,7 @@
 import { getCurrentInstance, computed, reactive, watch, inject } from "vue";
 import _ from "lodash-es";
 import { uiContext } from "../ui";
-export function useDict(props, ctx, vModel = "modelValue") {
+export function useDict(props: any, ctx: any, vModel = "modelValue") {
   const ui = uiContext.get();
   let dict = props.dict;
   if (dict) {
@@ -112,31 +112,31 @@ export function useDict(props, ctx, vModel = "modelValue") {
     return getDict()?.data;
   };
 
-  const getPropValue = (item, prop) => {
+  const getPropValue = (item: any, prop: any) => {
     let attr = prop;
     if (getDict()) {
       attr = getDict()[prop];
     }
     return item[attr];
   };
-  const removePropValue = (item, prop) => {
+  const removePropValue = (item: any, prop: any) => {
     let attr = prop;
     if (getDict()) {
       attr = getDict()[prop];
     }
     delete item[attr];
   };
-  const getValue = (item) => {
+  const getValue = (item: any) => {
     return getPropValue(item, "value");
   };
 
-  const getChildren = (item) => {
+  const getChildren = (item: any) => {
     return getPropValue(item, "children");
   };
-  const getLabel = (item) => {
+  const getLabel = (item: any) => {
     return getPropValue(item, "label");
   };
-  const getColor = (item) => {
+  const getColor = (item: any) => {
     return getPropValue(item, "color");
   };
 

@@ -1,9 +1,6 @@
 {
-  "packages": [
-    "packages/*",
-    "packages/extends/*",
-    "packages/ui/*"
-  ],
+  "$schema": "node_modules/lerna/schemas/lerna-schema.json",
+  "useWorkspaces": true,
   "command": {
     "bootstrap": {
       "npmClientArgs": [
@@ -12,5 +9,5 @@
     }
   },
   "npmClient": "yarn",
-  "version": "1.8.3"
+  "version": "1.8.5"
 }

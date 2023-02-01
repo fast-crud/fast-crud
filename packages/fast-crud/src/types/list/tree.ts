@@ -4,7 +4,7 @@ export default function () {
   return {
     "dict-tree": {
       search: { autoSearchTrigger: "change" },
-      column: { component: { name: "fs-values-format" , vModel: "modelValue" } },
+      column: { component: { name: "fs-values-format", vModel: "modelValue" } },
       form: {
         component: {
           name: "fs-dict-tree",

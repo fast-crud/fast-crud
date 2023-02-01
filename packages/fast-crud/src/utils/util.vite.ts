@@ -1,7 +1,7 @@
 import { defineAsyncComponent } from "vue";
 import _ from "lodash-es";
 
-function createAsyncComponent(es) {
+function createAsyncComponent(es: any) {
   return defineAsyncComponent({
     loader: es,
     onError(error, retry, fail, attempts) {
@@ -17,12 +17,12 @@ function createAsyncComponent(es) {
     }
   });
 }
-function installAsyncComponent(app, name, es, options) {
+function installAsyncComponent(app: any, name: string, es: any, options: any) {
   const asyncComponent = createAsyncComponent(es);
   app.component(name, asyncComponent, options);
 }
 
-function installAsyncComponents(app, modules, excludes, pickNameExp, transform) {
+function installAsyncComponents(app: any, modules: any, excludes: any, pickNameExp: any, transform: any) {
   const imports = transformFromGlob(modules, pickNameExp, transform);
   _.forEach(imports, (item, key) => {
     if (excludes && excludes.indexOf(key) != -1) {
@@ -32,17 +32,17 @@ function installAsyncComponents(app, modules, excludes, pickNameExp, transform) 
   });
 }
 
-function installSyncComponents(app, modules, excludes, pickNameExp, transform) {
-  const imports = transformFromGlob(modules, pickNameExp, transform);
-  _.forEach(imports, (item, key) => {
+function installSyncComponents(app: any, modules: any, excludes: any, pickNameExp: any, transform: any) {
+  const imports: any = transformFromGlob(modules, pickNameExp, transform);
+  _.forEach(imports, (item: any, key) => {
     if (excludes && excludes.indexOf(key)) {
       return;
     }
     app.component(key, item.default);
   });
 }
-function transformFromGlob(modules, pickNameExp?, transform?) {
-  const components = {};
+function transformFromGlob(modules: any, pickNameExp?: any, transform?: any) {
+  const components: any = {};
   if (pickNameExp == null) {
     pickNameExp = /.*\/(.+).(vue|jsx|tsx)/;
   }
@@ -67,18 +67,18 @@ function transformFromGlob(modules, pickNameExp?, transform?) {
   return components;
 }
 
-function loadAsyncComponentFromGlob(modules) {
-  const imports = transformFromGlob(modules);
-  const map = {};
+function loadAsyncComponentFromGlob(modules: any) {
+  const imports: any = transformFromGlob(modules);
+  const map: any = {};
   _.forEach(imports, (item, key) => {
     map[key] = createAsyncComponent(item);
   });
   return map;
 }
 
-function loadComponentFromGlob(modules) {
+function loadComponentFromGlob(modules: any) {
   const imports = transformFromGlob(modules);
-  const map = {};
+  const map: any = {};
   _.forEach(imports, (item, key) => {
     map[key] = item.default;
   });

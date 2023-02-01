@@ -4,33 +4,33 @@ function getCallerInfo() {
   return e.stack?.split("\n")[3];
 }
 
-const blank = (...args) => {};
+const blank = (...args: any) => {};
 
-function logInfo(...args) {
+function logInfo(...args: any) {
   // @ts-ignore
   // eslint-disable-next-line prefer-rest-params
   console.log.apply(this, arguments);
 }
-function logWarn(...args) {
+function logWarn(...args: any) {
   // @ts-ignore
   // eslint-disable-next-line prefer-rest-params
   console.warn.apply(this, arguments);
 }
-function logError(...args) {
+function logError(...args: any) {
   // @ts-ignore
   // eslint-disable-next-line prefer-rest-params
   console.error.apply(this, arguments);
 }
-const error = (...args) => {
+const error = (...args: any) => {
   logError("[error]", ...args);
 };
-const warn = (...args) => {
+const warn = (...args: any) => {
   logWarn("[warn]", ...args);
 };
-const info = (...args) => {
+const info = (...args: any) => {
   logInfo("[info]", ...args);
 };
-const debug = (...args) => {
+const debug = (...args: any) => {
   if (!console.log) {
     return;
   }

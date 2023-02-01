@@ -3,6 +3,32 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.8.5](https://github.com/fast-crud/fast-crud/compare/v1.8.4...v1.8.5) (2023-01-30)
+
+**Note:** Version bump only for package fast-crud-root
+
+
+
+
+
+## [1.8.4](https://github.com/fast-crud/fast-crud/compare/v1.8.3...v1.8.4) (2023-01-19)
+
+
+### Bug Fixes
+
+* 表单label支持render ([1c039d6](https://github.com/fast-crud/fast-crud/commit/1c039d66ebefc357e823b5d37788df758ab01057))
+* 修复表单第一次弹出生硬的问题 ([d8bf83d](https://github.com/fast-crud/fast-crud/commit/d8bf83d398450b547e5644706c94d24c99aa1634))
+
+
+### Performance Improvements
+
+* columnMergePlugin使用示例 ([8b626ce](https://github.com/fast-crud/fast-crud/commit/8b626ce76824b783fbed78cf1408d1e7d9be3e60))
+* viewForm 支持使用cell组件显示， viewFormUseCellComponent ([82addf3](https://github.com/fast-crud/fast-crud/commit/82addf3262f5c4b5e6a91a3305ebe8de1e1572a5))
+
+
+
+
+
 ## [1.8.3](https://github.com/fast-crud/fast-crud/compare/v1.8.2...v1.8.3) (2023-01-11)
 
 

@@ -18,7 +18,7 @@ export default {
     columnKey: {},
     editable: {}
   },
-  setup(props, ctx) {
+  setup(props: any, ctx: any) {
     const ui = uiContext.get();
     // const getEditable = inject("get:editable");
     const { doComputed } = useCompute();
@@ -32,11 +32,11 @@ export default {
       return props.editable?.getForm();
     };
 
-    let computedForm = doComputed(getFormRefFunc, () => {
+    const computedForm = doComputed(getFormRefFunc, () => {
       return props.scope;
     });
 
-    let computedIsEditable = computed(() => {
+    const computedIsEditable = computed(() => {
       return computedForm.value && computedForm.value.show !== false && props.editable?.isEditable();
     });
 
@@ -100,7 +100,9 @@ export default {
     };
   },
   methods: {
+    //@ts-ignore
     getTargetRef() {
+      //@ts-ignore
       return this.$refs.targetRef?.getTargetRef();
     }
   }

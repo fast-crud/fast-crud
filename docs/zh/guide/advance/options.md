@@ -6,9 +6,11 @@
 
 ### crudOptions
 使用`fast-crud`，你只需要掌握如何配置正确的`crudOptions`，即可完成一个`crud`的开发工作。       
-其中  [**字段配置**](./component.md)  是重点，它就在下一章节，一定要看    
-当你不知道`crudOptions`有什么参数时，请参考 [CrudOptionsAPI文档](../../api/crud-options/index.md) 
+其中  [**字段配置**](./component.md)  是重点，一定要看      
 
+当你不知道`crudOptions`有什么参数时，请参考如下文档：
+* [CrudOptions API文档](../../api/crud-options/index.md) 
+* [CrudOptions typedoc文档](/d.ts/types/CrudOptions.html)
 
 
 ### useCrud
@@ -16,8 +18,6 @@
 转化过程主要做了两件事：    
 1. 用户的`crudOptions`与公共配置、基础配置进行合并
 2. 将`columns`里面的`form`,`column`,`search`等配置分散到`table.columns`,`form.columns`,`search.columns`中去
-
-
 
 
 

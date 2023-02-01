@@ -1,12 +1,13 @@
 export default class TableStore {
   key: string;
   tableId: string;
-  constructor({ $router, tableName, keyType }) {
+  constructor(opts: { $router: any; tableName: string; keyType: string | boolean }) {
+    const { $router, tableName, keyType } = opts;
     this.key = this.getItemKey($router, keyType);
     this.tableId = this.getTableId(tableName);
   }
 
-  getTableId(name) {
+  getTableId(name: string) {
     const prefix = "fs-crud";
     if (name && typeof name === "string") {
       return prefix + "." + name;
@@ -22,7 +23,7 @@ export default class TableStore {
     return JSON.parse(saved);
   }
 
-  saveTable(table) {
+  saveTable(table: any) {
     localStorage.setItem(this.tableId, JSON.stringify(table));
   }
 
@@ -30,7 +31,7 @@ export default class TableStore {
     localStorage.removeItem(this.tableId);
   }
 
-  updateTableValue(value, key = this.key) {
+  updateTableValue(value: any, key = this.key) {
     let table = this.getTable();
     if (table == null) {
       table = {};
@@ -39,7 +40,7 @@ export default class TableStore {
     this.saveTable(table);
   }
 
-  getItemKey($route, keyType) {
+  getItemKey($route: any, keyType: any) {
     let key = location.href;
     if ($route) {
       key = $route.path;
@@ -50,7 +51,7 @@ export default class TableStore {
     return key + "." + keyType;
   }
 
-  getTableValue(key) {
+  getTableValue(key?: string) {
     const table = this.getTable();
     if (table == null) {
       return null;
@@ -61,7 +62,7 @@ export default class TableStore {
     return table[key];
   }
 
-  clearTableValue(key) {
+  clearTableValue(key?: string) {
     const table = this.getTable();
     if (table == null) {
       return;

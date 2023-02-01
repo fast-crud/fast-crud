@@ -1,7 +1,7 @@
-function isEmpty(value) {
+function isEmpty(value?: string | null) {
   return value == null || value === "";
 }
-function isAllEmpty(...values) {
+function isAllEmpty(...values: any) {
   for (const value of values) {
     if (value == null || value === "") {
     } else {
@@ -10,7 +10,7 @@ function isAllEmpty(...values) {
   }
   return false;
 }
-function hasEmpty(...values) {
+function hasEmpty(...values: any) {
   for (const value of values) {
     if (value == null || value === "") {
       return true;

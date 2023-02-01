@@ -7,17 +7,17 @@ _.forEach(typeList, (value: any) => {
   defaultTypeCreators.push(value.default);
 });
 
-const defaultTypes = {};
+const defaultTypes: any = {};
 
 function getTypes() {
   return defaultTypes;
 }
 
-function getType(key) {
+function getType(key: string) {
   return defaultTypes[key];
 }
 
-function addTypes(newTypes) {
+function addTypes(newTypes: any) {
   for (const key in newTypes) {
     defaultTypes[key] = newTypes[key];
   }

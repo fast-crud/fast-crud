@@ -7,7 +7,7 @@ export default function () {
         }
       },
       column: {
-        formatter(row, column, value) {
+        formatter(row: any, column: any, value: any) {
           let ret = "";
           if (value != null) {
             if (value.callingCode != null) {

@@ -16,12 +16,12 @@ const DictGlobalCache = new LRU<string, any>({
 
 const { UnMergeable } = useMerge();
 
-function setDictRequest(request) {
+function setDictRequest(request: any) {
   dictRequest = request;
 }
 
 // eslint-disable-next-line @typescript-eslint/no-unused-vars,no-unused-vars
-let dictRequest = async ({ url, dict }) => {
+let dictRequest = async (opts: any): Promise<any> => {
   logger.warn("请配置 app.use(FsCrud,{dictRequest:(context)=>{ 你的字典请求方法 }})");
   return [];
 };
@@ -45,14 +45,14 @@ class Dict extends UnMergeable {
   isTree = false;
   data: null | Array<any> = null;
   originalData: undefined | Array<any> = undefined;
-  dataMap = {};
+  dataMap: any = {};
   loading = false;
   custom = {};
   getNodesByValues: undefined | Function = undefined;
   cacheNodes = {};
   onReady: undefined | Function = undefined;
   notifies: Array<any> = []; //loadDict成功后的通知
-  constructor(dict) {
+  constructor(dict: any) {
     super();
 
     // 设置为不可枚举,就不会在clone的时候复制值，导致不会loadDict的bug
@@ -80,7 +80,7 @@ class Dict extends UnMergeable {
     return this.url instanceof Function || this.getData instanceof Function || this.prototype;
   }
 
-  setData(data) {
+  setData(data: any[]) {
     this.data = data;
     this.toMap();
   }
@@ -89,12 +89,12 @@ class Dict extends UnMergeable {
    * 加载字典
    * @param context 当prototype=true时会传入
    */
-  async loadDict(context?) {
+  async loadDict(context?: any) {
     let notify: Function | null = null;
     if (this.loading) {
       //如果正在加载中，则等待加载完成
       const ret = new Promise((resolve) => {
-        notify = (data) => {
+        notify = (data: any) => {
           resolve(data);
         };
       });
@@ -157,7 +157,7 @@ class Dict extends UnMergeable {
     }
   }
 
-  async reloadDict(context?) {
+  async reloadDict(context?: any) {
     this.clear();
     return this.loadDict(context);
   }
@@ -167,10 +167,10 @@ class Dict extends UnMergeable {
     this.dataMap = {};
   }
 
-  async getRemoteDictData(context?) {
+  async getRemoteDictData(context?: any) {
     let getFromRemote;
     let cacheKey;
-    let url;
+    let url: any;
     if (this.url) {
       url = this.url;
       if (url instanceof Function) {
@@ -205,7 +205,7 @@ class Dict extends UnMergeable {
         return cached.data;
       } else if (cached.loading) {
         return new Promise((resolve) => {
-          const callback = (data) => {
+          const callback = (data: any) => {
             resolve(data);
           };
           cached.callback.push(callback);
@@ -216,6 +216,9 @@ class Dict extends UnMergeable {
         cached.loaded = false;
         cached.loading = true;
         const dictData = await getFromRemote();
+        if (!(dictData instanceof Array)) {
+          logger.warn("dict data 格式有误，期望格式为数组，实际格式为：", dictData);
+        }
         cached.data = dictData;
         cached.loaded = true;
         cached.loading = false;
@@ -244,7 +247,7 @@ class Dict extends UnMergeable {
     // }
     this.dataMap = map;
   }
-  buildMap(map, list) {
+  buildMap(map: any, list: any) {
     _.forEach(list, (item) => {
       map[this.getValue(item)] = item;
       if (this.isTree && this.getChildren(item)) {
@@ -253,16 +256,16 @@ class Dict extends UnMergeable {
     });
   }
 
-  getValue(item) {
+  getValue(item: any) {
     return item[this.value];
   }
-  getLabel(item) {
+  getLabel(item: any) {
     return item[this.label];
   }
-  getChildren(item) {
+  getChildren(item: any) {
     return item[this.children];
   }
-  getColor(item) {
+  getColor(item: any) {
     return item[this.color];
   }
   getDictData() {
@@ -273,11 +276,11 @@ class Dict extends UnMergeable {
     return this.dataMap;
   }
 
-  getNodeByValue(value) {
+  getNodeByValue(value: any) {
     return this.dataMap[value];
   }
 
-  getNodesFromDataMap(value) {
+  getNodesFromDataMap(value: any) {
     if (value == null) {
       return [];
     }
@@ -298,7 +301,7 @@ class Dict extends UnMergeable {
   }
 }
 
-function dict(config) {
+function dict(config: any) {
   const ret = reactive(new Dict(config));
   if (!ret.prototype && ret.immediate) {
     ret.loadDict();

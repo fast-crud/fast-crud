@@ -1,7 +1,7 @@
 # fast-crud
 [English](./README_en.md) | [简体中文](./README.md)
 
-FastCrud 是基于Vue3的面向配置的crud开发框架，快速开发crud功能，可作为低代码平台的基础框架。   
+FastCrud（简称fs） 是基于Vue3的面向配置的crud开发框架，快速开发crud功能，可作为低代码平台的基础框架。   
 继承并优化了D2CrudPlus的设计思想，入门简单，可扩展性强，丰富的示例，让你可以快速完成搬砖任务，更多的时间划水吹逼。
 
 <div>
@@ -109,15 +109,33 @@ const crudOptions= {
 欢迎bug反馈，需求建议，技术交流等（请备注fs）
 
 1、 加群
-<div style="display: flex; justify-content:space-around;"><img style="height:230px" src="./images/qq_group.png"></div>
+
+<p align="center">
+<img height=230 src="./images/wxqrcode.png">
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+<img height=230 src="./images/qq_group.png">
+</p>
+<p align="center">
+微信群
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+QQ群
+</p>
 
 2、 加作者好友
-<div style="display: flex; justify-content:space-around;"><img style="height:160px" src="./images/me.png"></div>
+<p align="center">
+<img height="230" src="./images/me.png">
+</p>
 
 ## 捐赠
 媳妇儿说：“一天到晚搞开源，也不管管老婆孩子！😡😡😡”        
 拜托各位捐赠支持一下，让媳妇儿开心开心，我也能有更多时间进行开源项目，感谢🙏🙏🙏
-<div style="display: flex; justify-content:space-around;"><img style="height:360px"  src="./images/donate.png"></div>
+<p align="center">
+<img height="380" src="./images/donate.png">
+</p>
 
 ## 依赖
 ### ui组件库

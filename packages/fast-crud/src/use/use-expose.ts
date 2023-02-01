@@ -1,23 +1,28 @@
-import { toRaw, nextTick } from "vue";
+import { Ref, toRaw } from "vue";
 import { CrudExpose } from "../d.ts/expose";
 import _ from "lodash-es";
 import logger from "../utils/util.log";
 import { useMerge } from "../use/use-merge";
 import { useUi } from "../use/use-ui";
 import { useI18n } from "../locale";
-import { ColumnProps, RemoveProps } from "/src/d.ts";
+import { ColumnProps, CrudBinding, RemoveProps, UserPageQuery } from "/src/d.ts";
 
 const { merge } = useMerge();
 export type UseExposeProps = {
-  crudRef;
-  crudBinding;
+  crudRef: Ref;
+  crudBinding: Ref<CrudBinding>;
 };
 
 export type UseEditableProps = {
-  crudExpose;
+  crudExpose: CrudExpose;
 };
 
-function useEditable({ crudExpose }) {
+export type EditableOnEnabledProps = {
+  editable: any;
+};
+
+function useEditable(props: UseEditableProps) {
+  const { crudExpose } = props;
   const { crudBinding } = crudExpose;
   const { ui } = useUi();
   const { t } = useI18n();
@@ -27,7 +32,7 @@ function useEditable({ crudExpose }) {
      * @param opts
      * @param onEnabled 默认根据mode切换rowHandle.active,[editRow,editable]
      */
-    async enable(opts, onEnabled: Function) {
+    async enable(opts: any, onEnabled: (opts: EditableOnEnabledProps) => void) {
       const editableOpts = crudBinding.value.table.editable;
       _.merge(editableOpts, { enabled: true }, opts);
       if (onEnabled) {
@@ -63,10 +68,10 @@ function useEditable({ crudExpose }) {
     /**
      * 添加行
      */
-    addRow(opts) {
+    addRow(opts: any) {
       crudExpose.getTableRef().editable.addRow(opts);
     },
-    editCol(opts) {
+    editCol(opts: any) {
       crudExpose.getTableRef().editable.editCol(opts);
     },
     /**
@@ -75,18 +80,20 @@ function useEditable({ crudExpose }) {
     resume() {
       crudExpose.getTableRef().editable.resume();
     },
-    removeRow(index) {
+    removeRow(index: number) {
       crudExpose.getTableRef().editable.removeRow(index);
     },
-    getEditableRow(index) {
+    getEditableRow(index: number) {
       return crudExpose.getTableRef()?.editable?.getEditableRow(index);
     },
-    async doSaveRow({ index }) {
+    async doSaveRow(opts: { index: number }) {
+      const { index } = opts;
       const editableRow = editable.getEditableRow(index);
       editableRow.save({
         index,
-        async doSave({ isAdd, changed, row, setData }) {
-          if (crudBinding.value.mode.name === "local") {
+        async doSave(opts: { isAdd: boolean; changed: boolean; row: any; setData: (data: any) => void }) {
+          const { isAdd, changed, row, setData } = opts;
+          if (crudBinding.value?.mode?.name === "local") {
             return;
           }
           try {
@@ -103,11 +110,13 @@ function useEditable({ crudExpose }) {
         }
       });
     },
-    async doCancelRow({ index }) {
+    async doCancelRow(opts: { index: number }) {
+      const { index } = opts;
       const editableRow = editable.getEditableRow(index);
       editableRow.inactive();
     },
-    async doRemoveRow({ index }) {
+    async doRemoveRow(opts: { index: number }) {
+      const { index } = opts;
       try {
         await ui.messageBox.confirm({
           title: t("fs.rowHandle.remove.confirmTitle"), // '提示',
@@ -235,7 +244,7 @@ export function useExpose(props: UseExposeProps): { expose: CrudExpose; crudExpo
         return;
       }
 
-      let page;
+      let page: any;
       if (crudBinding.value.pagination) {
         page = {
           currentPage: crudBinding.value.pagination[ui.pagination.currentPage],
@@ -250,7 +259,7 @@ export function useExpose(props: UseExposeProps): { expose: CrudExpose; crudExpo
       crudExpose.doValueResolve({ form: searchFormData });
 
       const sort = crudBinding.value.sort || {};
-      let query = { page, form: searchFormData, sort };
+      let query: UserPageQuery = { page, form: searchFormData, sort };
       if (crudBinding.value.request.transformQuery) {
         query = crudBinding.value.request.transformQuery(query);
       }
@@ -344,7 +353,7 @@ export function useExpose(props: UseExposeProps): { expose: CrudExpose; crudExpo
     getTableData() {
       return crudBinding.value.data;
     },
-    setTableData(data) {
+    setTableData(data: any[]) {
       crudBinding.value.data = data;
     },
     insertTableRow(index, row) {

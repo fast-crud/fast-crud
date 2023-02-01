@@ -12,7 +12,7 @@
     "docgen:extends": "vue-docgen -c docgen/extends.config.js",
     "docgen:all": "npm run docgen:crud && npm run docgen:extends",
     "prepublishOnly": "lerna run build --scope */ui-* --scope @fast-crud/fast-crud --scope @fast-crud/fast-extends",
-    "publish": "npm run prepublishOnly  && lerna publish --conventional-commits && npm run copylogs",
+    "publish": "npm run prepublishOnly  && lerna publish --conventional-commits --no-private && npm run copylogs",
     "publish:canary": "lerna publish --canary --conventional-commits && npm run copylogs",
     "afterpublish": "npm run copylogs",
     "copylogs": "copyfiles \"packages/**/CHANGELOG.md\"  ./docs/zh/guide/other/changelogs/ -e **/node_modules/** && copyfiles \"CHANGELOG.md\"  ./docs/zh/guide/other/changelogs/",
@@ -26,6 +26,7 @@
   "author": "Greper",
   "license": "MIT",
   "devDependencies": {
+    "@types/lodash-es": "^4.17.6",
     "copyfiles": "^2.4.1",
     "lerna": "^6.1.0",
     "markdown-it": "^13.0.1",
@@ -37,5 +38,8 @@
   },
   "dependencies": {
     "typescript": "^4.9.4"
-  }
+  },
+  "workspaces": [
+    "packages/**"
+  ]
 }

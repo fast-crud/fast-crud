@@ -1,45 +1,44 @@
 <template>
   <span :class="['fs-icon-svg', spin && 'fs-icon-spin']">
     <svg class="fs-icon-svg-content" aria-hidden="true">
-       <use :xlink:href="symbolId"></use>
-     </svg>
+      <use :xlink:href="symbolId"></use>
+    </svg>
   </span>
-
 </template>
 <script lang="ts">
-import type {CSSProperties} from 'vue';
-import {defineComponent, computed} from 'vue';
+import type { CSSProperties } from "vue";
+import { defineComponent, computed } from "vue";
 
 export default defineComponent({
-  name: 'FsSvgIcon',
+  name: "FsSvgIcon",
   props: {
     icon: {
       type: String,
-      required: true,
+      required: true
     },
     size: {
       type: [Number, String],
-      default: 16,
+      default: 16
     },
     spin: {
       type: Boolean,
-      default: false,
-    },
+      default: false
+    }
   },
   setup(props) {
     const symbolId = computed(() => `#${props.icon}`);
 
     const getStyle = computed((): CSSProperties => {
-      const {size} = props;
+      const { size } = props;
       let s = `${size}`;
-      s = `${s.replace('px', '')}px`;
+      s = `${s.replace("px", "")}px`;
       return {
         width: s,
-        height: s,
+        height: s
       };
     });
-    return {symbolId, getStyle};
-  },
+    return { symbolId, getStyle };
+  }
 });
 </script>
 <style lang="less">

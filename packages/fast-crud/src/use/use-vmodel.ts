@@ -1,8 +1,8 @@
 import { reactive } from "vue";
-export function useVModel(props, ctx, vModel) {
+export function useVModel(props: any, ctx: any, vModel: string) {
   return reactive({
     [vModel]: props.modelValue,
-    ["onUpdate:" + vModel]: (value) => {
+    ["onUpdate:" + vModel]: (value: any) => {
       ctx.emit("onUpdate:modelValue", value);
     }
   });

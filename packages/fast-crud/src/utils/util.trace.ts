@@ -6,7 +6,7 @@
 // import { onRenderTracked, onRenderTriggered } from "vue";
 export default {
   // eslint-disable-next-line @typescript-eslint/no-unused-vars,no-unused-vars
-  trace(name) {
+  trace(name: string) {
     //   onRenderTracked((event) => {
     //     console.log("状态跟踪track----------->", name, event.key, event.target, event.type, event);
     //   });
