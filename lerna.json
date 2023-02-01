@@ -2,7 +2,8 @@
   "packages": [
     "packages/*",
     "packages/extends/*",
-    "packages/ui/*"
+    "packages/ui/*",
+    "packages/fast-admin/*"
   ],
   "command": {
     "bootstrap": {
