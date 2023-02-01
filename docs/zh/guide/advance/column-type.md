@@ -231,7 +231,7 @@ selectType.column.component.color='auto'  //修改官方的字段类型，设置
 ## 字段merge插件
 
 当你想自定义columns额外处理方法时可以使用 `registerMergeColumnPlugin` 来注册字段merge插件。   
-可以帮助你实现类似`dict`公共属性的功能
+可以帮助你实现类似`dict`、`type`等公共属性的功能
 
 ```js
 import { useColumns,MergeColumnPlugin } from '@fast-crud/fast-crud'

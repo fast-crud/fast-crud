@@ -29,6 +29,7 @@ export default ({ command, mode }) => {
   const options = {
     plugins: [vueJsx(), vue()],
     esbuild: {
+      drop: command === "build" ? ["debugger"] : [],
       jsxFactory: "h",
       jsxFragment: "Fragment"
     },
