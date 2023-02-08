@@ -24,6 +24,7 @@
     "@vue/compiler-sfc": "^3.2.45",
     "@vue/test-utils": "^2.2.6",
     "eslint": "^8.29.0",
+    "@types/node": "^18.8.0",
     "eslint-config-prettier": "^8.1.0",
     "eslint-plugin-import": "^2.20.2",
     "eslint-plugin-node": "^11.1.0",
