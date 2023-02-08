@@ -1,6 +1,10 @@
 {
-  "$schema": "node_modules/lerna/schemas/lerna-schema.json",
-  "useWorkspaces": true,
+  "packages": [
+    "packages/*",
+    "packages/extends/*",
+    "packages/ui/*",
+    "packages/fast-admin/*"
+  ],
   "command": {
     "bootstrap": {
       "npmClientArgs": [
