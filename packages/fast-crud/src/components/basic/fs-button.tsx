@@ -7,6 +7,7 @@ import _ from "lodash-es";
  */
 export default defineComponent({
   name: "FsButton",
+  inheritAttrs: false,
   props: {
     /**
      * 文字
