@@ -15,11 +15,9 @@
   "dependencies": {
     "@fast-crud/ui-interface": "^1.8.4"
   },
-  "peerDependencies": {
-    "@ant-design/icons-vue": "^6.0.1",
-    "@fast-crud/fast-crud": "*"
-  },
   "devDependencies": {
+    "@ant-design/icons-vue": "^6.0.1",
+    "@fast-crud/fast-crud": "*",
     "@rollup/plugin-strip": "^3.0.1",
     "@rollup/plugin-typescript": "^10.0.1",
     "@types/lodash-es": "^4.17.6",
