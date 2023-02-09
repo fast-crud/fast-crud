@@ -3,6 +3,18 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [1.9.0](https://github.com/fast-crud/fast-crud/compare/v1.8.5...v1.9.0) (2023-02-09)
+
+
+### Performance Improvements
+
+* 自动remove debugger配置 ([adbe940](https://github.com/fast-crud/fast-crud/commit/adbe940f60e82a800fb66c572b66462af013e450))
+
+
+
+
+
+
 ## [1.8.5](https://github.com/fast-crud/fast-crud/compare/v1.8.4...v1.8.5) (2023-01-30)
 
 **Note:** Version bump only for package @fast-crud/ui-element

@@ -3,6 +3,29 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [1.9.0](https://github.com/fast-crud/fast-crud/compare/v1.8.5...v1.9.0) (2023-02-09)
+
+
+### Bug Fixes
+
+* 列设置 n-drawer 丢失title的问题 ([dfcd31f](https://github.com/fast-crud/fast-crud/commit/dfcd31ff2872ce1ef47c40facd4b88796e434bd9))
+* 修复 button 配置tooltip之后触发两次点击的bug ([f355031](https://github.com/fast-crud/fast-crud/commit/f3550311719c7ec3a4ea68aaf66f7fd1949663e4))
+
+
+### Features
+
+* noImplicitAny: true ([47c444b](https://github.com/fast-crud/fast-crud/commit/47c444b026cbd57a8edf53f50ce16e9074d87971))
+
+
+### Performance Improvements
+
+* dict 获取data格式错误时，添加警告 ([9092d1f](https://github.com/fast-crud/fast-crud/commit/9092d1f4f78691609e3bdcaf2022a931d71d4959))
+
+
+
+
+
+
 ## [1.8.5](https://github.com/fast-crud/fast-crud/compare/v1.8.4...v1.8.5) (2023-01-30)
 
 **Note:** Version bump only for package @fast-crud/fast-crud
