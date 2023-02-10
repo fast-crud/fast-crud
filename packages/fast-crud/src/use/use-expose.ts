@@ -367,7 +367,7 @@ export function useExpose(props: UseExposeProps): { expose: CrudExpose; crudExpo
       }
     },
     removeTableRow(index) {
-      crudBinding.value.data.splice(index);
+      crudBinding.value.data.splice(index, 1);
     },
     getTableDataRow(index) {
       const data = crudExpose.getTableData();
