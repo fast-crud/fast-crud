@@ -16,6 +16,5 @@ export default {
     });
     setupIcons(app);
     uiContext.set(elementUi);
-    console.log("element installed");
   }
 };
