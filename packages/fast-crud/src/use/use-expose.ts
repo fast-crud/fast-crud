@@ -167,7 +167,7 @@ export function useExpose(props: UseExposeProps): { expose: CrudExpose; crudExpo
     getFormRef: () => {
       const formWrapperRef = crudExpose.getFormWrapperRef();
       if (formWrapperRef == null || formWrapperRef?.formRef == null) {
-        logger.error("编辑对话框还未打开，无法获取FormRef");
+        logger.error("当前无法获取FormRef，请在编辑对话框已打开的状态下调用此方法");
         return;
       }
       return formWrapperRef?.formRef;
