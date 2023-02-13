@@ -15,6 +15,5 @@ export default {
     uiContext.set(antdvUi);
 
     setupIcons(app);
-    console.log("antdv installed");
   }
 };

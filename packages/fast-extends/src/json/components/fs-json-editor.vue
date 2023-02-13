@@ -102,7 +102,7 @@ export default {
     });
 
     function expandAll() {
-      console.log(state.editor.getMode());
+      // console.log(state.editor.getMode());
       if (props.expandedOnStart && state.expandedModes.includes(state.editor.getMode())) {
         (state.editor as any).expandAll();
       }

@@ -405,12 +405,10 @@ export class Naive implements UiInterface {
       return {
         // antd 页码改动回调
         "onUpdate:page": (page) => {
-          console.log("update page", page);
           setCurrentPage(page);
           doAfterChange();
         },
         "onUpdate:pageSize": (pageSize) => {
-          console.log("update page size", pageSize);
           setPageSize(pageSize);
           doAfterChange();
         }

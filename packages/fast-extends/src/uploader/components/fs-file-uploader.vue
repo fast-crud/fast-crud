@@ -207,7 +207,6 @@ export default {
       ctx.emit("change", value);
     }
     function onInput(value) {
-      console.log("on input :", value);
       currentValue.value = value;
       ctx.emit("update:modelValue", value);
     }
@@ -235,7 +234,6 @@ export default {
     }
 
     function handleChange(file, list) {
-      console.log("on change:", list);
       updateFileList(list);
       emitValue(list);
     }
