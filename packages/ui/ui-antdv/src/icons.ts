@@ -27,7 +27,9 @@ import {
   RedoOutlined,
   LikeOutlined,
   DownOutlined,
-  QuestionCircleOutlined
+  QuestionCircleOutlined,
+  CaretUpOutlined,
+  CaretDownOutlined
 } from "@ant-design/icons-vue";
 
 const icons = {
@@ -59,10 +61,12 @@ const icons = {
   RedoOutlined,
   LikeOutlined,
   DownOutlined,
-  QuestionCircleOutlined
+  QuestionCircleOutlined,
+  CaretUpOutlined,
+  CaretDownOutlined
 };
-export default function (app) {
-  for (let key in icons) {
+export default function(app) {
+  for (const key in icons) {
     app.component(key, icons[key]);
   }
 }

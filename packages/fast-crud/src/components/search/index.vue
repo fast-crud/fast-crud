@@ -69,7 +69,7 @@
 
           <div v-if="computedIsMultiLine" class="fs-search-action">
             <component :is="$fsui.formItem.name">
-              <fs-button :icon="collapse ? 'ion:caret-up-outline' : 'ion:caret-down-outline'" @click="toggleCollapse" />
+              <fs-button :icon="collapse ? $fsui.icons.caretUp : $fsui.icons.caretDown" @click="toggleCollapse" />
             </component>
           </div>
         </div>

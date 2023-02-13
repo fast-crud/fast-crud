@@ -269,31 +269,33 @@ export interface PopoverCI extends CI {
 }
 
 export interface Icons {
-  refresh;
-  search;
-  compact;
-  columnsFilter;
-  add;
-  edit;
-  remove;
-  export;
-  check;
-  sort;
-  close;
-  left;
-  right;
-  arrowLeft;
-  arrowRight;
-  more;
-  plus;
-  zoomIn;
-  zoomOut;
-  refreshLeft;
-  refreshRight;
-  upload;
-  fullScreen;
-  unFullScreen;
-  question;
+  refresh: string;
+  search: string;
+  compact: string;
+  columnsFilter: string;
+  add: string;
+  edit: string;
+  remove: string;
+  export: string;
+  check: string;
+  sort: string;
+  close: string;
+  left: string;
+  right: string;
+  arrowLeft: string;
+  arrowRight: string;
+  more: string;
+  plus: string;
+  zoomIn: string;
+  zoomOut: string;
+  refreshLeft: string;
+  refreshRight: string;
+  upload: string;
+  fullScreen: string;
+  unFullScreen: string;
+  question: string;
+  caretUp: string;
+  caretDown: string;
 }
 export interface UiInterface {
   modelValue: string;

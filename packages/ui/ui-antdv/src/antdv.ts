@@ -206,7 +206,9 @@ export class Antdv implements UiInterface {
     upload: "UploadOutlined",
     fullScreen: "CompressOutlined",
     unFullScreen: "ExpandOutlined",
-    question: "QuestionCircleOutlined"
+    question: "QuestionCircleOutlined",
+    caretUp: "CaretUpOutlined",
+    caretDown: "CaretDownOutlined"
   };
 
   dialog: DialogCI = {
