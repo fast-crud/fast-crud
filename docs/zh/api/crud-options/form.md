@@ -234,7 +234,18 @@ crudOptions = { //
 * 说明: 对话框按钮配置
 * 类型：object
 * 更多：[按钮组配置](../common-options.md#buttons)
-
+```json5
+{
+  form:{
+    wrapper: {
+      buttons: {
+        ok: {}, // fs-button配置
+        cancel: {}
+      }
+    }
+  }
+}
+```
 
 ## wrapper.onOpen
 * 说明: 对话框打开事件处理方法

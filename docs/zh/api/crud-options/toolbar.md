@@ -30,6 +30,7 @@
     export:{},
     // 列设置按钮
     columns:{}
+    //自定义button
 }
 ```
 ## compact

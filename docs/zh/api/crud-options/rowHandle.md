@@ -49,6 +49,7 @@
       },
       edit:{order:1}, //编辑按钮
       remove:{order:1},//删除按钮
+      
       custom:{},//自定义按钮，可以任意命名,任意数量
     }
   }
@@ -79,11 +80,23 @@
 * 说明：按钮分组配置
 * 类型：Object
 * 示例： 请参考行编辑，点击`编辑`时，会切换到`保存取消`按钮组，点击保存或取消，则切换回`编辑删除`按钮组
+
 ```json
-{ // rowHandle
+{
+  // rowHandle
   group: {
-    yourGroupKey: {
-      buttonKey1: {}, //按钮配置
+    editable: { //自由编辑模式
+      "remove": {} //按钮配置
+    },
+    "editRow": { //行编辑模式
+      "edit": {}, //进入编辑
+      "save": {}, //保存
+      "cancel": {}, //退出编辑
+      "remove": {} //删除
+    },
+    yourGroupKey: { //自定义group
+      buttonKey1: {},
+      //按钮配置
       buttonKey2: {}
     }
   }
