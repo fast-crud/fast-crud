@@ -54,43 +54,16 @@
 * 说明: `el-row`|`a-row`配置,可以配置`gutter`
 * 类型：Object
 
-
-## prefixRender
-* 说明: 可以在字段组件前面自定义渲染
-* 类型：Function
-* 默认：无
-* 相关：[jsx/tsx文档](https://cn.vuejs.org/guide/extras/render-function.html#jsx-tsx)
-```js
-{ // crudOptions.form
-    prefixRender(scope){
-        return <div>组件的前面</div>
-    }
-}
-```
-
-## suffixRender
-* 说明: 可以在字段组件后面自定义渲染
-* 类型：Function
-* 默认：无
-* 相关：[jsx/tsx文档](https://cn.vuejs.org/guide/extras/render-function.html#jsx-tsx)
-```js
-{ // crudOptions.form
-    suffixRender(scope){
-        return <div>组件的后面</div>
-    }
-}
-```
-
-
 ```json
 //antdv
 { //crudOptions.form
     labelAlign: "right",
     labelCol: { span: 8},
     wrapperCol: {span: 14 },
-    //更多配置请查看element-plus文档，form表单章节
 }
 ```
+
+
 
 ## columns
 * 说明: 字段列配置。（FastCrud初始化时会通过`crudOptions.columns.[key].form`的配置自动生成，无需配置）
