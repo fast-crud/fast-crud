@@ -57,13 +57,31 @@ component:{
 }
 ```
 
+
+### component.slots
+* 说明：组件的插槽
+* 示例： 
+```js
+//本示例演示，输入框后缀插槽里面放入一个图标
+component:{
+    name:"a-input"
+    slots:{
+        suffix:{
+            return <fs-icon icon={"ion:eye-outline"}/>
+        }
+    }
+}
+```
+
 ### component.[xxx]
-* 说明：组件的属性
-* 示例：`options:[]`
+* 说明：组件的其他属性，你需要到对应组件的文档中查找该组件支持哪些属性
+* 
 
 ### component.props.[xxx]
 * 说明：组件的属性（同上）
 * 区别：当组件的属性与上面所列的属性名称（name、vModel、on、props等等）有冲突时，可以配置在`props`下
+
+
 
 
 ## buttons
