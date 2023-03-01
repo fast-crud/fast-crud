@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.9.2](https://github.com/fast-crud/fast-crud/compare/v1.9.1...v1.9.2) (2023-03-01)
+
+
+### Bug Fixes
+
+* dict没有的值，默认显示value ([268ea48](https://github.com/fast-crud/fast-crud/commit/268ea481995ddb1b45fc2a8851f6ac0ff7fe0acd))
+
+
+
+
+
 ## [1.9.1](https://github.com/fast-crud/fast-crud/compare/v1.9.0...v1.9.1) (2023-03-01)
 
 
