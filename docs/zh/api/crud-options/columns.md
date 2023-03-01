@@ -320,6 +320,32 @@ columns:{
 }
 ```
 
+## [key].form.topRender
+* 说明: 可以在字段组件上面自定义渲染
+* 类型：Function
+* 默认：无
+* 相关：[jsx/tsx文档](https://cn.vuejs.org/guide/extras/render-function.html#jsx-tsx)
+```js
+{ // crudOptions.cloumns.[key].form
+    topRender(scope){
+        return <div>组件的上面</div>
+    }
+}
+```
+
+## [key].form.bottomRender
+* 说明: 可以在字段组件下面自定义渲染
+* 类型：Function
+* 默认：无
+* 相关：[jsx/tsx文档](https://cn.vuejs.org/guide/extras/render-function.html#jsx-tsx)
+```js
+{ // crudOptions.cloumns.[key].form
+    bottomRender(scope){
+        return <div>组件的下面</div>
+    }
+}
+```
+
 
 ## [key].addForm
 * 说明：该字段在添加表单里面的配置

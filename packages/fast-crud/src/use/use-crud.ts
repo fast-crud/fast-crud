@@ -5,7 +5,7 @@ import { useMerge } from "./use-merge";
 import logger from "../utils/util.log";
 import { uiContext } from "../ui";
 import { useI18n } from "../locale";
-import {ComputeContext, CrudBinding, CrudExpose, ScopeContext} from "../d.ts";
+import { ComputeContext, CrudBinding, CrudExpose, ScopeContext } from "../d.ts";
 import { useCompute } from "./use-compute";
 import { useColumns } from "./use-columns";
 import { CrudOptions } from "../d.ts/crud";

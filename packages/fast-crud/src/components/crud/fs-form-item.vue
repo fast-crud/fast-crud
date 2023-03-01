@@ -34,6 +34,7 @@
       </component>
     </template>
     <div class="fs-form-item-content">
+      <fs-render v-if="item.topRender" :render-func="item.topRender" :scope="scopeComputed" />
       <div class="fs-form-item-render">
         <fs-render v-if="item.prefixRender" :render-func="item.prefixRender" :scope="scopeComputed" />
         <div class="fs-form-item-component">
@@ -52,6 +53,7 @@
         </div>
         <fs-render v-if="item.suffixRender" :render-func="item.suffixRender" :scope="scopeComputed" />
       </div>
+      <fs-render v-if="item.bottomRender" :render-func="item.bottomRender" :scope="scopeComputed" />
       <template v-if="item.helper && computedHelperPosition !== 'label'">
         <fs-form-helper :helper="item.helper" :scope="scopeComputed" />
       </template>
