@@ -1,6 +1,6 @@
 {
   "name": "@fast-crud/ui-naive",
-  "version": "1.9.0",
+  "version": "1.9.1",
   "description": "",
   "main": "./dist/ui-naive.umd.js",
   "module": "./dist/ui-naive.mjs",
@@ -13,7 +13,7 @@
   "author": "Greper",
   "license": "MIT",
   "dependencies": {
-    "@fast-crud/ui-interface": "^1.9.0"
+    "@fast-crud/ui-interface": "^1.9.1"
   },
   "peerDependencies": {
     "@fast-crud/fast-crud": "^1.*"

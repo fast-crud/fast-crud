@@ -3,6 +3,18 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.9.1](https://github.com/fast-crud/fast-crud/compare/v1.9.0...v1.9.1) (2023-03-01)
+
+
+### Performance Improvements
+
+* getFormRef 增加需要打开对话框的警告提示 ([671f440](https://github.com/fast-crud/fast-crud/commit/671f4400d17ff17ec206ea717447df7e21347b39))
+
+
+
+
+
+
 # [1.9.0](https://github.com/fast-crud/fast-crud/compare/v1.8.5...v1.9.0) (2023-02-09)
 
 
