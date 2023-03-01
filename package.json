@@ -1,7 +1,7 @@
 {
   "name": "fast-crud-root",
-  "version": "1.8.5",
-  "private": true,
+  "version": "1.9.0",
+  "private": false,
   "scripts": {
     "bootstrap": "lerna bootstrap --hoist",
     "docs:dev": "vitepress dev docs/zh",
@@ -12,7 +12,7 @@
     "docgen:extends": "vue-docgen -c docgen/extends.config.js",
     "docgen:all": "npm run docgen:crud && npm run docgen:extends",
     "prepublishOnly": "lerna run build --scope */ui-* --scope @fast-crud/fast-crud --scope @fast-crud/fast-extends",
-    "publish": "npm run prepublishOnly  && lerna publish --conventional-commits  && npm run copylogs",
+    "publish": "npm run prepublishOnly  && lerna publish --conventional-commits && npm run copylogs",
     "publish:canary": "lerna publish --canary --conventional-commits && npm run copylogs",
     "afterpublish": "npm run copylogs",
     "copylogs": "copyfiles \"packages/**/CHANGELOG.md\"  ./docs/zh/guide/other/changelogs/ -e **/node_modules/** && copyfiles \"CHANGELOG.md\"  ./docs/zh/guide/other/changelogs/",
