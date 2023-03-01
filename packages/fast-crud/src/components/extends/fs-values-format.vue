@@ -183,13 +183,12 @@ export default {
 
       if (dict) {
         options = dict.getNodesFromDataMap(valueArr);
-        if (props.defaultLabel) {
-          _.forEach(options, (item) => {
-            if (item[labelProp] == null) {
-              item[labelProp] = props.defaultLabel;
-            }
-          });
-        }
+        //设置默认label
+        _.forEach(options, (item) => {
+          if (item[labelProp] == null) {
+            item[labelProp] = props.defaultLabel || item[valueProp];
+          }
+        });
       } else {
         options = [];
         _.forEach(valueArr, (item) => {

@@ -294,7 +294,7 @@ class Dict extends UnMergeable {
       if (node) {
         nodes.push(node);
       } else {
-        nodes.push({ [this.value]: item, [this.label]: item });
+        nodes.push({ [this.value]: item });
       }
     });
     return nodes;
