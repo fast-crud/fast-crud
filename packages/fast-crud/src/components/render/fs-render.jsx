@@ -14,7 +14,6 @@ export default {
   },
   setup() {},
   render() {
-    console.log("'render", this.scope);
     return this.renderFunc(this.scope);
   }
 };
