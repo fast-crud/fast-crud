@@ -79,9 +79,6 @@ export type InfoReq = {
 };
 
 export type UserPageRes = {
-  res: any;
-  query: any;
-
   [key: string]: any;
 };
 
