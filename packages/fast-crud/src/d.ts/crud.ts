@@ -91,7 +91,7 @@ export type UserPageQuery = {
 
 export type TransformQuery = (query: PageQuery) => UserPageQuery;
 export type TransformRes = (userPageRes: UserPageRes) => PageRes;
-export type PageRequest = (query: UserPageQuery) => Promise<UserPageRes>;
+export type PageRequest = (query: UserPageQuery | PageQuery) => Promise<UserPageRes | PageRes>;
 export type EditRequest = (req: EditReq) => Promise<any>;
 export type AddRequest = (req: AddReq) => Promise<any>;
 export type DelRequest = (req: DelReq) => Promise<any>;
