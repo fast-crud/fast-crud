@@ -29,7 +29,7 @@
     "@rollup/plugin-strip": "^2.0.0",
     "@rollup/plugin-typescript": "^8.3.3",
     "@types/chai": "^4.3.3",
-    "@types/jest": "^29.1.1",
+    "@types/jest": "^29.4.0",
     "@types/mocha": "^10.0.0",
     "@types/node": "^18.8.0",
     "@typescript-eslint/eslint-plugin": "^5.38.1",
