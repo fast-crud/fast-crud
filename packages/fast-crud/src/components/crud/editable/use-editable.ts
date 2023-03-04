@@ -140,9 +140,18 @@ export function useEditable(props: any, ctx: any, tableRef: any) {
     return cell;
   }
 
+  function eachTree(tree: any, callback: any) {
+    _.forEach(tree, (item) => {
+      if (item.children) {
+        eachTree(item.children, callback);
+      } else {
+        callback(item);
+      }
+    });
+  }
   function createEditableRow(index: number, rowData: any) {
     const cells: any = {};
-    _.forEach(props.columns, (item) => {
+    eachTree(props.columns, (item: any) => {
       const config = item.editable ?? {};
       let disabled = config.disabled ?? false;
       if (disabled instanceof Function) {
