@@ -95,6 +95,8 @@
 /**
  * FsTableColumnsFilter，列设置组件
  */
+//不要删
+import draggable from "vuedraggable-es";
 import _ from "lodash-es";
 import FsTableColumnsFixedController from "../fs-table-columns-fixed-controller/index.vue";
 import TableStore from "../../../utils/util.store";
