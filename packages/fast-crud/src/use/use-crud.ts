@@ -344,6 +344,10 @@ export type CreateCrudOptionsRet = {
 };
 export type UseFsProps = {
   createCrudOptions: CreateCrudOptions;
+  /**
+   * 传给createCrudOptions方法的自定义参数
+   */
+  [key: string]: any;
 };
 export type CreateCrudOptions = (props?: CreateCrudOptionsProps) => CreateCrudOptionsRet;
 
@@ -355,7 +359,7 @@ export function useFs(props: UseFsProps): UseFsRet {
   // 暴露的方法
   const { crudExpose } = useExpose({ crudRef, crudBinding });
   // 你的crud配置
-  const crudOptionsRet = createCrudOptions({ crudExpose, expose: crudExpose });
+  const crudOptionsRet = createCrudOptions({ ...props, crudExpose, expose: crudExpose });
   // 初始化crud配置
   const useCrudRet = useCrud({ crudExpose, ...crudOptionsRet });
 

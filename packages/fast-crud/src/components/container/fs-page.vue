@@ -39,6 +39,13 @@ export default {
       font-size: 16px;
       font-weight: bold;
       color: #444;
+
+      .sub {
+        font-size: 12px;
+        color: gray;
+        margin-left: 20px;
+        font-weight: lighter;
+      }
     }
     > .more {
       justify-self: flex-end;

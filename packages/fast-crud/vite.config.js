@@ -5,11 +5,12 @@ import visualizer from "rollup-plugin-visualizer";
 import strip from "@rollup/plugin-strip";
 import typescript from "@rollup/plugin-typescript";
 import { defineConfig } from "vite";
+
 const { resolve } = path;
 // https://vitejs.dev/config/
 export default defineConfig(({ command, mode, ssrBuild }) => {
   return {
-    plugins: [vueJsx(), vue()],
+    plugins: [ vueJsx(), vue()],
     esbuild: {
       jsxFactory: "h",
       jsxFragment: "Fragment",

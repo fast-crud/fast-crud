@@ -7,7 +7,7 @@ const DictGlobalCache = new LRU<string, any>({
   max: 500,
   maxSize: 5000,
   ttl: 1000 * 60 * 30,
-  sizeCalculation: (value, key) => {
+  sizeCalculation: (value: any, key: any) => {
     // return an positive integer which is the size of the item,
     // if a positive integer is not returned, will use 0 as the size.
     return 1;
