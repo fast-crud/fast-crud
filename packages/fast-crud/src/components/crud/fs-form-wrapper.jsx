@@ -55,6 +55,23 @@ export default {
     const title = ref();
     const formWrapperId = parseInt(Math.random() * 1000000);
     const formWrapperIdClass = "fs-form-wrapper_" + formWrapperId;
+
+    function buildEvent() {
+      return {
+        wrapper: formWrapperBind.value,
+        options: formOptions.value,
+        formRef: formRef.value,
+        form: getFormData(),
+        wrapperBindRef: formWrapperBind,
+        formOptionsRef: formOptions,
+        setFormData,
+        getFormData,
+        close,
+        toggleFullscreen,
+        submit
+      };
+    }
+
     const open = (opts) => {
       //提取formrapper的配置
       const { wrapper } = opts;
@@ -79,13 +96,6 @@ export default {
       };
 
       // 发射打开事件
-      function buildEvent() {
-        return {
-          wrapper: formWrapperBind.value,
-          options: formOptions.value,
-          formRef: formRef.value
-        };
-      }
 
       emitOnClosed.value = () => {
         if (wrapper.onClosed) {
@@ -180,7 +190,7 @@ export default {
         buttonsArr.push(value);
         if (value.onClick == null && value.click != null) {
           value.onClick = () => {
-            value.click(value);
+            value.click(buildEvent());
           };
         }
       });
