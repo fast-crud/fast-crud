@@ -12,7 +12,7 @@ function newClient(options) {
   const secretId = options.secretId;
   const secretKey = options.secretKey;
   const getAuthorization = options.getAuthorization;
-  if (secretId && secretKey && getAuthorization) {
+  if (!secretId && !secretKey && getAuthorization) {
     client = new COS({
       // 必选参数
       getAuthorization(options, callback) {

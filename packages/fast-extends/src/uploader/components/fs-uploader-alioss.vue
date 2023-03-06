@@ -35,7 +35,7 @@ async function getSts(config) {
 async function doUpload({ file, fileName, onProgress, options }) {
   const key = await buildKey(file, fileName, options);
   let sts = null;
-  if (options.accessKeyId && options.accessKeySecret && options.getAuthorization !== null) {
+  if (!options.accessKeyId && !options.accessKeySecret && options.getAuthorization !== null) {
     sts = await getSts({
       key,
       file,
