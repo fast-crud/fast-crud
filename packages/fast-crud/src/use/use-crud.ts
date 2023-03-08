@@ -298,7 +298,7 @@ export function useCrud(ctx: UseCrudProps): UseCrudRet {
     };
   }
 
-  function resetCrudOptions(options: CrudOptions) {
+  function rebuildCrudBindings(options: CrudOptions) {
     const userOptions = merge(
       defaultCrudOptions.defaultOptions({ t }),
       usePagination(),
@@ -316,9 +316,11 @@ export function useCrud(ctx: UseCrudProps): UseCrudRet {
 
     const { buildColumns } = useColumns();
     //初始化columns，将crudOptions.columns里面的配置转化为crudBinding
-    const bindOptions = buildColumns(userOptions);
+    return buildColumns(userOptions);
+  }
+  function resetCrudOptions(options: CrudOptions) {
     // 设置crudOptions Ref
-    crudBinding.value = bindOptions;
+    crudBinding.value = rebuildCrudBindings(options);
     logger.info("fast-crud inited, crudBinding=", crudBinding.value);
   }
 
@@ -363,53 +365,55 @@ export type CreateCrudOptionsRet = {
 export type UseFsProps = {
   crudRef?: Ref;
   crudBinding?: Ref<CrudBinding>;
-  createCrudOptions: CreateCrudOptions;
+  createCrudOptions: CreateCrudOptions | CreateCrudOptionsAsync;
 
   /**
    * 传给createCrudOptions方法的自定义参数
    */
   [key: string]: any;
 };
-export type CreateCrudOptions = (props?: CreateCrudOptionsProps) => CreateCrudOptionsRet;
+export type CreateCrudOptions = (props: CreateCrudOptionsProps) => CreateCrudOptionsRet;
 
-export function useFs(props: UseFsProps): UseFsRet {
+export type CreateCrudOptionsAsync = (props: CreateCrudOptionsProps) => Promise<CreateCrudOptionsRet>;
+export function useFsReal(props: UseFsProps): UseFsRet | Promise<UseCrudRet> {
   const { createCrudOptions } = props;
   const crudRef = props.crudRef || ref();
   // crud 配置的ref
-  const crudBinding: Ref<CrudBinding> = props.crudRef || ref({});
+  const crudBinding: Ref<CrudBinding> = props.crudBinding || ref({});
   // 暴露的方法
   const { crudExpose } = useExpose({ crudRef, crudBinding });
   // 你的crud配置
-  const crudOptionsRet = createCrudOptions({ ...props, crudExpose, expose: crudExpose });
-  // 初始化crud配置
-  const useCrudRet = useCrud({ crudExpose, ...crudOptionsRet });
-
-  return {
-    ...crudOptionsRet,
-    ...useCrudRet,
-    crudRef,
+  const crudOptionsRet = createCrudOptions({
+    ...props,
     crudExpose,
-    crudBinding
-  };
+    expose: crudExpose
+  });
+
+  function initCrud(crudOptionsRet: CreateCrudOptionsRet) {
+    const useCrudRet = useCrud({ crudExpose, ...crudOptionsRet });
+    return {
+      ...crudOptionsRet,
+      ...useCrudRet,
+      crudRef,
+      crudExpose,
+      crudBinding
+    };
+  }
+
+  if (crudOptionsRet instanceof Promise) {
+    return crudOptionsRet.then((ret) => {
+      return initCrud(ret);
+    });
+  } else {
+    // 初始化crud配置
+    return initCrud(crudOptionsRet);
+  }
 }
 
-export async function useFsAsync(props: UseFsProps): Promise<UseFsRet> {
-  const { createCrudOptions } = props;
-  const crudRef = props.crudRef || ref();
-  // crud 配置的ref
-  const crudBinding: Ref<CrudBinding> = props.crudRef || ref({});
-  // 暴露的方法
-  const { crudExpose } = useExpose({ crudRef, crudBinding });
-  // 你的crud配置
-  const crudOptionsRet = await createCrudOptions({ ...props, crudExpose, expose: crudExpose });
-  // 初始化crud配置
-  const useCrudRet = useCrud({ crudExpose, ...crudOptionsRet });
+export function useFs(props: UseFsProps): UseFsRet {
+  return useFsReal(props) as UseFsRet;
+}
 
-  return {
-    ...crudOptionsRet,
-    ...useCrudRet,
-    crudRef,
-    crudExpose,
-    crudBinding
-  };
+export function useFsAsync(props: UseFsProps): Promise<UseFsRet> {
+  return useFsReal(props) as Promise<UseFsRet>;
 }
