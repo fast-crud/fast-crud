@@ -111,8 +111,13 @@ export interface CascaderCI extends CI {
   fieldNames: Function;
 }
 
-export type TabsCI = CI;
-export type TabPaneCI = CI;
+export type TabsCI = {
+  modelValue: string;
+} & CI;
+export type TabPaneCI = {
+  key: string;
+  tab: string;
+} & CI;
 export interface CollapseCI extends CI {
   modelValue;
   keyName;

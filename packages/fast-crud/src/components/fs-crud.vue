@@ -55,7 +55,9 @@
         <slot name="toolbar-right"></slot>
       </div>
     </template>
-
+    <template #tabs>
+      <fs-tabs-filter v-if="tabsBinding.show" ref="tabsRef" class="fs-tabs" v-bind="tabsBinding" />
+    </template>
     <template #table>
       <fs-table
         ref="tableRef"
@@ -109,6 +111,7 @@ import traceUtil from "../utils/util.trace";
 import { uiContext } from "../ui";
 import { useMerge } from "../use/use-merge";
 import utilLog from "../utils/util.log";
+import logger from "../utils/util.log";
 
 const { merge } = useMerge();
 
@@ -184,6 +187,41 @@ function useSearch(props, ctx) {
     getSearchRef,
     getSearchFormData,
     setSearchFormData
+  };
+}
+
+function useTabs(searchRet, props, ctx) {
+  const tabsBinding = computed(() => {
+    if (props.tabs && props.tabs.show && props.tabs.name) {
+      let dict = null;
+      const defaultTabs = { ...props.tabs };
+      if (props.search?.columns && props.search?.columns[props.tabs.name]?.component?.dict) {
+        dict = props.search?.columns[props.tabs.name]?.component?.dict;
+        if (defaultTabs.value == null) {
+          defaultTabs.value = dict.value;
+        }
+        if (defaultTabs.label == null) {
+          defaultTabs.label = dict.label;
+        }
+        if (defaultTabs.options == null) {
+          defaultTabs.options = dict.data || [];
+        }
+      }
+
+      return {
+        ...defaultTabs,
+        modelValue: searchRet.searchFormData.value[props.tabs.name],
+        "onUpdate:modelValue": (value) => {
+          searchRet.setSearchFormData({ form: { [props.tabs.name]: value } });
+        }
+      };
+    }
+    return {
+      show: false
+    };
+  });
+  return {
+    tabsBinding
   };
 }
 
@@ -373,6 +411,15 @@ export default defineComponent({
       }
     },
     /**
+     * tabs filter
+     */
+    tabs: {
+      type: Object,
+      default() {
+        return {};
+      }
+    },
+    /**
      * 添加表单对话框配置，见FsFormWrapper
      */
     addForm: {
@@ -446,10 +493,12 @@ export default defineComponent({
     traceUtil.trace("fs-crud");
     useProviders(props, ctx);
     const search = useSearch(props, ctx);
+    const tabs = useTabs(search, props, ctx);
     const table = useTable(props, ctx, search);
     return {
       ...search,
-      ...table
+      ...table,
+      ...tabs
     };
   }
 });

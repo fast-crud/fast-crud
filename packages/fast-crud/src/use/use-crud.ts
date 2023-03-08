@@ -9,7 +9,7 @@ import { ComputeContext, CrudBinding, CrudExpose, ScopeContext } from "../d.ts";
 import { useCompute } from "./use-compute";
 import { useColumns } from "./use-columns";
 import { CrudOptions } from "../d.ts/crud";
-import { Ref, ref } from "vue";
+import { computed, Ref, ref } from "vue";
 import { useExpose } from "./use-expose";
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 const { merge, cloneDeep } = useMerge();
@@ -28,8 +28,22 @@ export type UseCrudProps = {
   [key: string]: any;
 };
 
+export type UseCrudRet = {
+  /**
+   * 重新设置crudOptions
+   * @param overOptions
+   */
+  resetCrudOptions: (options: CrudOptions) => void;
+
+  /**
+   * 追加配置,注意是覆盖crudBinding的结构，而不是crudOptions的结构
+   * @param overOptions
+   */
+  appendBindingOptions: (overBinding: CrudBinding) => void;
+};
+
 // 导出useCrud
-export function useCrud(ctx: UseCrudProps) {
+export function useCrud(ctx: UseCrudProps): UseCrudRet {
   const ui = uiContext.get();
   const { t } = useI18n();
   const options: CrudOptions = ctx.crudOptions;
@@ -132,6 +146,16 @@ export function useCrud(ctx: UseCrudProps) {
         doSearch,
         ["onUpdate:collapse"]: (value: any) => {
           crudBinding.value.search.collapse = value;
+        }
+      }
+    };
+  }
+
+  function useTabs() {
+    return {
+      tabs: {
+        onChange: () => {
+          doRefresh();
         }
       }
     };
@@ -281,6 +305,7 @@ export function useCrud(ctx: UseCrudProps) {
       useFormSubmit(),
       useRowHandle(),
       useSearch(),
+      useTabs(),
       useEvent(),
       useTable(),
       useActionbar(),
@@ -303,7 +328,7 @@ export function useCrud(ctx: UseCrudProps) {
    * 追加配置,注意是覆盖crudBinding的结构，而不是crudOptions的结构
    * @param overOptions
    */
-  function appendBindingOptions(overOptions: CrudOptions) {
+  function appendBindingOptions(overOptions: CrudBinding) {
     merge(crudBinding.value, overOptions);
   }
 
@@ -315,22 +340,15 @@ export function useCrud(ctx: UseCrudProps) {
 
 export type UseFsRet = {
   crudRef: Ref;
-
-  crudOptions: CrudOptions;
-
   crudBinding: Ref<CrudBinding>;
   crudExpose: CrudExpose;
-
-  /**
-   * 其他从createCrudOptions自定义返回的参数
-   */
-  [key: string]: any;
-};
+} & UseCrudRet &
+  CreateCrudOptionsRet;
 
 export type CreateCrudOptionsProps = {
   crudExpose: CrudExpose;
 
-  expose: CrudExpose;
+  expose?: CrudExpose;
 
   [key: string]: any;
 };
@@ -343,7 +361,10 @@ export type CreateCrudOptionsRet = {
   [key: string]: any;
 };
 export type UseFsProps = {
+  crudRef?: Ref;
+  crudBinding?: Ref<CrudBinding>;
   createCrudOptions: CreateCrudOptions;
+
   /**
    * 传给createCrudOptions方法的自定义参数
    */
@@ -353,13 +374,34 @@ export type CreateCrudOptions = (props?: CreateCrudOptionsProps) => CreateCrudOp
 
 export function useFs(props: UseFsProps): UseFsRet {
   const { createCrudOptions } = props;
-  const crudRef = ref();
+  const crudRef = props.crudRef || ref();
   // crud 配置的ref
-  const crudBinding: Ref<CrudBinding> = ref({});
+  const crudBinding: Ref<CrudBinding> = props.crudRef || ref({});
   // 暴露的方法
   const { crudExpose } = useExpose({ crudRef, crudBinding });
   // 你的crud配置
   const crudOptionsRet = createCrudOptions({ ...props, crudExpose, expose: crudExpose });
+  // 初始化crud配置
+  const useCrudRet = useCrud({ crudExpose, ...crudOptionsRet });
+
+  return {
+    ...crudOptionsRet,
+    ...useCrudRet,
+    crudRef,
+    crudExpose,
+    crudBinding
+  };
+}
+
+export async function useFsAsync(props: UseFsProps): Promise<UseFsRet> {
+  const { createCrudOptions } = props;
+  const crudRef = props.crudRef || ref();
+  // crud 配置的ref
+  const crudBinding: Ref<CrudBinding> = props.crudRef || ref({});
+  // 暴露的方法
+  const { crudExpose } = useExpose({ crudRef, crudBinding });
+  // 你的crud配置
+  const crudOptionsRet = await createCrudOptions({ ...props, crudExpose, expose: crudExpose });
   // 初始化crud配置
   const useCrudRet = useCrud({ crudExpose, ...crudOptionsRet });
 

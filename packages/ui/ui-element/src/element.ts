@@ -100,10 +100,10 @@ export class Element implements UiInterface {
   messageBox: MessageBoxCI = {
     name: "el-message-box",
     instance: undefined,
-    open: async context => {
+    open: async (context) => {
       return this.messageBox.instance(context);
     },
-    confirm: async context => {
+    confirm: async (context) => {
       return this.messageBox.instance(context);
     }
   };
@@ -111,19 +111,19 @@ export class Element implements UiInterface {
   message: MessageCI = {
     instance: undefined,
     name: "el-message",
-    open: context => {
+    open: (context) => {
       this.message.instance.open(context);
     },
-    success: msg => {
+    success: (msg) => {
       this.message.instance.success(msg);
     },
-    error: msg => {
+    error: (msg) => {
       this.message.instance.error(msg);
     },
-    warn: msg => {
+    warn: (msg) => {
       this.message.instance.warning(msg);
     },
-    info: msg => {
+    info: (msg) => {
       this.message.instance(msg);
     }
   };
@@ -131,19 +131,19 @@ export class Element implements UiInterface {
   notification: NotificationCI = {
     instance: undefined,
     name: "el-notification",
-    open: context => {
+    open: (context) => {
       this.notification.instance.open(context);
     },
-    success: msg => {
+    success: (msg) => {
       this.notification.instance.success(msg);
     },
-    error: msg => {
+    error: (msg) => {
       this.notification.instance.error(msg);
     },
-    warn: msg => {
+    warn: (msg) => {
       this.notification.instance.warn(msg);
     },
-    info: msg => {
+    info: (msg) => {
       this.notification.instance.success(msg);
     }
   };
@@ -301,7 +301,7 @@ export class Element implements UiInterface {
     //     }
     //   }
     // },
-    validateWrap: async formRef => {
+    validateWrap: async (formRef) => {
       return formRef.validate();
     },
     transformValidateErrors: (e: Error) => {
@@ -328,7 +328,7 @@ export class Element implements UiInterface {
     textType: { type: "text" },
     linkType: { type: "text" },
     circle: { circle: true },
-    colors: type => {
+    colors: (type) => {
       return { type };
     }
   };
@@ -375,10 +375,10 @@ export class Element implements UiInterface {
     renderMode: "slot",
     defaultRowKey: "id",
     fixedHeaderNeedComputeBodyHeight: false,
-    buildMaxHeight: maxHeight => {
+    buildMaxHeight: (maxHeight) => {
       return { maxHeight };
     },
-    hasMaxHeight: options => {
+    hasMaxHeight: (options) => {
       return options?.maxHeight != null;
     },
     headerDomSelector: "",
@@ -503,10 +503,13 @@ export class Element implements UiInterface {
     limitAdd: 1
   };
   tabs: TabsCI = {
-    name: "el-tabs"
+    name: "el-tabs",
+    modelValue: "modelValue"
   };
   tabPane: TabPaneCI = {
-    name: "el-tab-pane"
+    name: "el-tab-pane",
+    key: "name",
+    tab: "label"
   };
   collapse: CollapseCI = {
     name: "el-collapse",

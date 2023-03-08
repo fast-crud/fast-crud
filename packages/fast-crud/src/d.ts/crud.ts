@@ -89,8 +89,13 @@ export type UserPageQuery = {
   [key: string]: any;
 };
 
+export type TransformProps = {
+  res: UserPageRes;
+  query: UserPageQuery;
+};
+
 export type TransformQuery = (query: PageQuery) => UserPageQuery;
-export type TransformRes = (userPageRes: UserPageRes) => PageRes;
+export type TransformRes = (props: TransformProps) => PageRes;
 export type PageRequest = (query: UserPageQuery) => Promise<UserPageRes>;
 export type EditRequest = (req: EditReq) => Promise<any>;
 export type AddRequest = (req: AddReq) => Promise<any>;
@@ -465,7 +470,7 @@ export type ButtonProps = {
    * 图标
    * [图标的使用](/guide/start/icon.html)
    */
-  icon?: string;
+  icon?: string | { icon: string; [key: string]: any };
   /**
    * 文本右侧图标
    */

@@ -116,6 +116,13 @@ export default {
       type: Object
     },
     /**
+     * tabs
+     * { show , options,key, default}
+     */
+    tabs: {
+      type: Object
+    },
+    /**
      * 按钮配置,可以根据order排序
      * {search:{...FsButton},reset:{...FsButton}}
      */
@@ -505,8 +512,8 @@ export default {
 </script>
 <style lang="less">
 .fs-search {
-  display: flex;
-  flex-wrap: nowrap;
+  //display: flex;
+  //flex-wrap: nowrap;
   .search-left {
   }
   .search-right {

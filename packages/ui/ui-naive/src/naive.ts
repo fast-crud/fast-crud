@@ -620,10 +620,13 @@ export class Naive implements UiInterface {
     }
   };
   tabs: TabsCI = {
-    name: "n-tabs"
+    name: "n-tabs",
+    modelValue: "value"
   };
   tabPane: TabPaneCI = {
-    name: "n-tab-pane"
+    name: "n-tab-pane",
+    key: "name",
+    tab: "tab"
   };
   collapse: CollapseCI = {
     name: "n-collapse",

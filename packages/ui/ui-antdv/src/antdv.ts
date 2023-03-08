@@ -69,7 +69,7 @@ export class Antdv implements UiInterface {
         return { afterClose: onClosed };
       } else if (is === "a-drawer") {
         return {
-          onAfterVisibleChange: visible => {
+          onAfterVisibleChange: (visible) => {
             if (visible === false) {
               onClosed(visible);
             }
@@ -97,10 +97,10 @@ export class Antdv implements UiInterface {
   messageBox: MessageBoxCI = {
     name: "a-model",
     instance: undefined,
-    open: context => {
+    open: (context) => {
       return this.messageBox.confirm(context);
     },
-    confirm: context => {
+    confirm: (context) => {
       return new Promise<void>((resolve, reject) => {
         function onOk() {
           resolve();
@@ -132,16 +132,16 @@ export class Antdv implements UiInterface {
       }
       this.message.instance[type](content);
     },
-    success: context => {
+    success: (context) => {
       this.message.open("success", context);
     },
-    error: context => {
+    error: (context) => {
       this.message.open("error", context);
     },
-    warn: context => {
+    warn: (context) => {
       this.message.open("warn", context);
     },
-    info: context => {
+    info: (context) => {
       this.message.open("info", context);
     }
   };
@@ -162,16 +162,16 @@ export class Antdv implements UiInterface {
         this.notification.instance.open(context);
       }
     },
-    success: context => {
+    success: (context) => {
       this.notification.open("success", context);
     },
-    error: context => {
+    error: (context) => {
       this.notification.open("error", context);
     },
-    warn: context => {
+    warn: (context) => {
       this.notification.open("warn", context);
     },
-    info: context => {
+    info: (context) => {
       this.notification.open("info", context);
     }
   };
@@ -228,7 +228,7 @@ export class Antdv implements UiInterface {
     textType: { type: "link" },
     linkType: { type: "link" },
     circle: { shape: "circle" },
-    colors: type => {
+    colors: (type) => {
       if (type === "danger") {
         return { danger: true };
       }
@@ -308,7 +308,7 @@ export class Antdv implements UiInterface {
     //     }
     //   }
     // },
-    validateWrap: async formRef => {
+    validateWrap: async (formRef) => {
       return formRef.validate();
     },
     transformValidateErrors: (e: Error) => {
@@ -392,13 +392,13 @@ export class Antdv implements UiInterface {
     data: "dataSource",
     renderMode: "config",
     renderMethod: "customRender",
-    rebuildRenderScope: scope => {
+    rebuildRenderScope: (scope) => {
       return scope;
     },
-    buildMaxHeight: maxHeight => {
+    buildMaxHeight: (maxHeight) => {
       return { scroll: { y: maxHeight } };
     },
-    hasMaxHeight: options => {
+    hasMaxHeight: (options) => {
       return options?.scroll?.y != null;
     },
     defaultRowKey: "id",
@@ -524,7 +524,7 @@ export class Antdv implements UiInterface {
   };
   dropdownMenu: DropdownMenuCI = {
     name: "a-menu",
-    command: callback => {
+    command: (callback) => {
       return {
         onClick($event) {
           callback($event.key);
@@ -578,10 +578,13 @@ export class Antdv implements UiInterface {
     limitAdd: 0
   };
   tabs: TabsCI = {
-    name: "a-tabs"
+    name: "a-tabs",
+    modelValue: "activeKey"
   };
   tabPane: TabPaneCI = {
-    name: "a-tab-pane"
+    name: "a-tab-pane",
+    key: "key",
+    tab: "tab"
   };
   collapse: CollapseCI = {
     name: "a-collapse",

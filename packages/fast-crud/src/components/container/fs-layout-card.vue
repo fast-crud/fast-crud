@@ -12,34 +12,39 @@
       </div>
     </template>
 
-    <component :is="cardComponentName" class="fs-layout-card-body">
-      <template #title>
-        <div class="top-bar">
-          <slot name="actionbar"></slot>
-          <slot name="toolbar"></slot>
-        </div>
-      </template>
+    <fs-container>
       <template #header>
-        <div class="top-bar">
-          <slot name="actionbar"></slot>
-          <slot name="toolbar"></slot>
-        </div>
+        <slot name="tabs"></slot>
       </template>
-      <fs-container>
-        <!-- 默认插槽 -->
-        <slot></slot>
-        <!-- table -->
-        <slot name="table"></slot>
-        <slot name="form"></slot>
-        <template #footer>
-          <div class="fs-crud-footer">
-            <slot name="footer-top"></slot>
-            <slot name="pagination"></slot>
-            <slot name="footer-bottom"></slot>
+      <component :is="cardComponentName" class="fs-layout-card-body">
+        <template #title>
+          <div class="top-bar">
+            <slot name="actionbar"></slot>
+            <slot name="toolbar"></slot>
           </div>
         </template>
-      </fs-container>
-    </component>
+        <template #header>
+          <div class="top-bar">
+            <slot name="actionbar"></slot>
+            <slot name="toolbar"></slot>
+          </div>
+        </template>
+        <fs-container>
+          <!-- 默认插槽 -->
+          <slot></slot>
+          <!-- table -->
+          <slot name="table"></slot>
+          <slot name="form"></slot>
+          <template #footer>
+            <div class="fs-crud-footer">
+              <slot name="footer-top"></slot>
+              <slot name="pagination"></slot>
+              <slot name="footer-bottom"></slot>
+            </div>
+          </template>
+        </fs-container>
+      </component>
+    </fs-container>
   </fs-container>
 </template>
 
@@ -84,14 +89,14 @@ export default defineComponent({
     display: flex;
     justify-content: space-between;
   }
-
+  .fs-container {
+    padding: 0;
+  }
   .fs-layout-card-body {
     height: 100%;
     display: flex;
     flex-direction: column;
-    .fs-container {
-      padding: 0;
-    }
+
     .ant-card-body {
       flex: 1;
       padding: 10px;
@@ -99,6 +104,23 @@ export default defineComponent({
     .el-card__body {
       flex: 1;
       padding: 10px;
+    }
+  }
+
+  .fs-tabs-filter {
+    margin-bottom: -1px;
+    .n-tabs .n-tabs-nav.n-tabs-nav--card-type .n-tabs-tab {
+      &.n-tabs-tab--active {
+        background-color: #fff;
+      }
+      background-color: #ffffff60;
+    }
+
+    .el-tabs--card > .el-tabs__header .el-tabs__item {
+      &.is-active {
+        background-color: #fff;
+      }
+      background-color: #ffffff80;
     }
   }
 }

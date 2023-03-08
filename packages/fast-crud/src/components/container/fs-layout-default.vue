@@ -9,15 +9,15 @@
         <div class="fs-header-middle">
           <slot name="header-middle"></slot>
         </div>
-
         <slot name="actionbar"></slot>
-
         <slot name="toolbar"></slot>
         <div class="fs-header-bottom">
           <slot name="header-bottom"></slot>
         </div>
+        <slot name="tabs"></slot>
       </div>
     </template>
+
     <!-- 默认插槽 -->
     <slot></slot>
     <!-- table -->
@@ -47,5 +47,8 @@ export default defineComponent({
 
 <style lang="less">
 .fs-layout-default {
+  .fs-tabs-filter {
+    margin-top: 10px;
+  }
 }
 </style>

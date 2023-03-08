@@ -5,7 +5,7 @@ import logger from "../utils/util.log";
 import { useMerge } from "../use/use-merge";
 import { useUi } from "../use/use-ui";
 import { useI18n } from "../locale";
-import { ColumnProps, CrudBinding, RemoveProps, UserPageQuery } from "/src/d.ts";
+import { ColumnProps, CrudBinding, PageQuery, PageRes, RemoveProps, UserPageQuery, UserPageRes } from "/src/d.ts";
 
 const { merge } = useMerge();
 export type UseExposeProps = {
@@ -157,6 +157,17 @@ export function useExpose(props: UseExposeProps): { expose: CrudExpose; crudExpo
   const { crudRef, crudBinding } = props;
   const { ui } = useUi();
   const { t } = useI18n();
+  function checkCrudRef() {
+    if (crudRef.value == null) {
+      logger.warn("crudRef还未初始化，请在onMounted之后调用");
+    }
+  }
+  function checkCrudBindingRef() {
+    if (crudBinding.value == null) {
+      logger.warn("crudBinding还未初始化，请在useFs或useCrud之后调用");
+    }
+  }
+
   const crudExpose: CrudExpose = {
     crudRef,
     crudBinding,
@@ -167,7 +178,9 @@ export function useExpose(props: UseExposeProps): { expose: CrudExpose; crudExpo
     getFormRef: () => {
       const formWrapperRef = crudExpose.getFormWrapperRef();
       if (formWrapperRef == null || formWrapperRef?.formRef == null) {
-        logger.error("当前无法获取FormRef，请在编辑对话框已打开的状态下调用此方法");
+        logger.error(
+          "当前无法获取FormRef，请在编辑对话框已打开的状态下调用此方法，如果是在打开对话框时调用，可以尝试先nextTick"
+        );
         return;
       }
       return formWrapperRef?.formRef;
@@ -235,12 +248,14 @@ export function useExpose(props: UseExposeProps): { expose: CrudExpose; crudExpo
      * {form,mergeForm}
      */
     setSearchFormData(context: { form: any; mergeForm?: boolean }) {
+      checkCrudRef();
       crudRef.value.setSearchFormData(context);
     },
     /**
      * 获取search组件ref
      */
     getSearchRef() {
+      checkCrudRef();
       return crudRef.value.getSearchRef();
     },
     async doRefresh() {
@@ -263,30 +278,32 @@ export function useExpose(props: UseExposeProps): { expose: CrudExpose; crudExpo
       crudExpose.doValueResolve({ form: searchFormData });
 
       const sort = crudBinding.value.sort || {};
-      let query: UserPageQuery = { page, form: searchFormData, sort };
+      const query: PageQuery = { page, form: searchFormData, sort };
+      let userPageQuery: UserPageQuery = query;
       if (crudBinding.value.request.transformQuery) {
-        query = crudBinding.value.request.transformQuery(query);
+        userPageQuery = crudBinding.value.request.transformQuery(query);
       }
 
-      let pageRes;
+      let userPageRes: UserPageRes;
       try {
         crudBinding.value.table.loading = true;
-        logger.debug("pageRequest", query);
-        pageRes = await crudBinding.value.request.pageRequest(query);
+        logger.debug("pageRequest", userPageQuery);
+        userPageRes = await crudBinding.value.request.pageRequest(userPageQuery);
       } finally {
         crudBinding.value.table.loading = false;
       }
-      if (pageRes == null) {
+      if (userPageRes == null) {
         logger.warn("pageRequest返回结果不能为空");
         return;
       }
+      let pageRes: PageRes = userPageRes;
       if (crudBinding.value.request.transformRes) {
         pageRes = crudBinding.value.request.transformRes({
-          res: pageRes,
-          query
+          res: userPageRes,
+          query: userPageQuery
         });
       }
-      const { currentPage = page[ui.pagination.currentPage], pageSize = page.pageSize, total } = pageRes;
+      const { currentPage = page[ui.pagination.currentPage], pageSize = page.pageSize, total } = userPageRes;
       const { records } = pageRes;
       if (records == null) {
         logger.warn(
@@ -338,6 +355,7 @@ export function useExpose(props: UseExposeProps): { expose: CrudExpose; crudExpo
      * 获取FsTable实例
      */
     getTableRef() {
+      checkCrudRef();
       return crudRef.value?.tableRef;
     },
     /**
@@ -355,12 +373,15 @@ export function useExpose(props: UseExposeProps): { expose: CrudExpose; crudExpo
      * 获取表格数据
      */
     getTableData() {
+      checkCrudBindingRef();
       return crudBinding.value.data;
     },
     setTableData(data: any[]) {
+      checkCrudBindingRef();
       crudBinding.value.data = data;
     },
     insertTableRow(index, row) {
+      checkCrudBindingRef();
       crudBinding.value.data.splice(index, 0, row);
     },
     updateTableRow(index, row, merge = true) {
@@ -371,6 +392,7 @@ export function useExpose(props: UseExposeProps): { expose: CrudExpose; crudExpo
       }
     },
     removeTableRow(index) {
+      checkCrudBindingRef();
       crudBinding.value.data.splice(index, 1);
     },
     getTableDataRow(index) {
