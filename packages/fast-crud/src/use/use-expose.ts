@@ -308,7 +308,7 @@ export function useExpose(props: UseExposeProps): UseExposeRet {
           query: userPageQuery
         });
       }
-      const { currentPage = page[ui.pagination.currentPage], pageSize = page.pageSize, total } = userPageRes;
+      const { currentPage = page[ui.pagination.currentPage], pageSize = page.pageSize, total } = pageRes;
       const { records } = pageRes;
       if (records == null) {
         logger.warn(
