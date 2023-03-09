@@ -502,12 +502,18 @@ export class Antdv implements UiInterface {
         return { name: "a-range-picker", showTime: true };
       }
       if (type === "month") {
-        return { name: "a-month-picker" };
+        return { name: "a-date-picker", picker: "month" };
       }
       if (type === "week") {
-        return { name: "a-week-picker" };
+        return { name: "a-date-picker", picker: "week" };
       }
-      return { name: "a-date-picker" };
+      if (type === "quarter") {
+        return { name: "a-date-picker", picker: "quarter" };
+      }
+      if (type === "year") {
+        return { name: "a-date-picker", picker: "year" };
+      }
+      return { name: "a-date-picker", picker: "type" };
     }
   };
   timePicker: TimePickerCI = {

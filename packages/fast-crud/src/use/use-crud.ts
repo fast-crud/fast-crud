@@ -37,9 +37,9 @@ export type UseCrudRet = {
 
   /**
    * 追加配置,注意是覆盖crudBinding的结构，而不是crudOptions的结构
-   * @param overOptions
+   * @param overBinding
    */
-  appendBindingOptions: (overBinding: CrudBinding) => void;
+  appendCrudBinding: (overBinding: CrudBinding) => void;
 };
 
 // 导出useCrud
@@ -330,13 +330,13 @@ export function useCrud(ctx: UseCrudProps): UseCrudRet {
    * 追加配置,注意是覆盖crudBinding的结构，而不是crudOptions的结构
    * @param overOptions
    */
-  function appendBindingOptions(overOptions: CrudBinding) {
+  function appendCrudBinding(overOptions: CrudBinding) {
     merge(crudBinding.value, overOptions);
   }
 
   return {
     resetCrudOptions,
-    appendBindingOptions
+    appendCrudBinding
   };
 }
 

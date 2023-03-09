@@ -89,13 +89,13 @@ export type UserPageQuery = {
   [key: string]: any;
 };
 
-export type TransformProps = {
+export type TransformResProps = {
   res: UserPageRes;
   query: UserPageQuery;
 };
 
 export type TransformQuery = (query: PageQuery) => UserPageQuery;
-export type TransformRes = (props: TransformProps) => PageRes;
+export type TransformRes = (props: TransformResProps) => PageRes;
 export type PageRequest = (query: UserPageQuery) => Promise<UserPageRes>;
 export type EditRequest = (req: EditReq) => Promise<any>;
 export type AddRequest = (req: AddReq) => Promise<any>;

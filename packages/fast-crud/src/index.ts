@@ -10,24 +10,33 @@ import { uiContext } from "./ui";
 export * from "./ui";
 import { useDictDefine, useCompute } from "./use";
 import { App } from "vue";
+import { CrudOptions } from "/src/d.ts";
+import { UiInterface } from "@fast-crud/ui-interface";
 const { dict, setDictRequest } = useDictDefine();
 const { ComputeValue, compute, asyncCompute } = useCompute();
 export { ComputeValue, compute, asyncCompute, dict, utils, useI18n, uiContext };
 export * from "./d.ts/index";
 
+export type FsSetupOptions = {
+  ui?: UiInterface;
+  commonOptions?: () => CrudOptions;
+
+  dictRequest?: (opts: any) => Promise<any[]>;
+  i18n?: any;
+};
 export const FastCrud = {
-  install(app: App, options: any) {
-    if (options?.ui) {
+  install(app: App, options: FsSetupOptions = {}) {
+    if (options.ui) {
       uiContext.set(options.ui);
     }
-    if (options?.commonOptions) {
+    if (options.commonOptions) {
       defaultCrudOptions.commonOptions = options.commonOptions;
     }
-    if (options?.dictRequest) {
+    if (options.dictRequest) {
       setDictRequest(options.dictRequest);
     }
 
-    if (options?.i18n) {
+    if (options.i18n) {
       i18n.setVueI18n(options.i18n);
     }
     for (const key in components) {

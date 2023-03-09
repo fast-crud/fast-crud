@@ -19,61 +19,52 @@
 * api.js： 接口
 * mock.js： 接口mock数据，可选
 
-### 1. crud.js
+### 1. crud.ts
 
 crud配置，每个crud最大的不同就在于此文件。     
-将如下代码保存为`views/test/myFirstCrud/crud.js`
+将如下代码保存为`views/test/myFirstCrud/crud.ts`
 
-```js
-// crud.js
-import * as api from "./api";
-import {dict} from "@fast-crud/fast-crud";
-// 构建crudOptions的方法
-export default function ({expose}) {
-    const pageRequest = async (query) => {
-        return await api.GetList(query);
-    };
-    const editRequest = async ({form, row}) => {
-        form.id = row.id;
-        return await api.UpdateObj(form);
-    };
-    const delRequest = async ({row}) => {
-        return await api.DelObj(row.id);
-    };
+```ts
+import { CreateCrudOptionsProps, CreateCrudOptionsRet, dict } from "@fast-crud/fast-crud";
+import { addRequest, delRequest, editRequest, pageRequest } from "./api";
 
-    const addRequest = async ({form}) => {
-        return await api.AddObj(form);
-    };
-    return {
-        crudOptions: {
-            //请求配置
-            request: {
-                pageRequest, // 列表数据请求
-                addRequest,  // 添加请求
-                editRequest, // 修改请求
-                delRequest,  // 删除请求
-            },
-            columns: {
-                // 字段配置
-                radio: {
-                    title: "状态", //字段名称
-                    search: {show: true}, // 搜索配置
-                    type: "dict-radio", // 字段类型
-                    dict: dict({ //数据字典配置
-                        url: "/dicts/OpenStatusEnum",
-                    }),
-                },
-                text: {
-                    title: "测试",
-                    search: {show: true},
-                    type: "text"
-                },
-                // 你可以尝试在此处增加更多字段
-            },
-            // 其他crud配置
+export default function ({ crudExpose, customValue }: CreateCrudOptionsProps): CreateCrudOptionsRet {
+  return {
+    customExport: {},
+    crudOptions: {
+      // 自定义crudOptions配置
+      request: {
+        pageRequest,
+        addRequest,
+        editRequest,
+        delRequest
+      },
+      //两个字段
+      columns: {
+        name: {
+          title: "姓名",
+          type: "text",
+          search: { show: true },
+          column: {
+            resizable: true,
+            width: 200
+          }
         },
-    };
+        type: {
+          title: "类型",
+          type: "dict-select",
+          dict: dict({
+            data: [
+              { value: 1, label: "开始" },
+              { value: 0, label: "停止" }
+            ]
+          })
+        }
+      }
+    }
+  };
 }
+
 
 ``` 
 
@@ -87,20 +78,21 @@ export default function ({expose}) {
 将如下代码保存为`views/test/myFirstCrud/index.vue`
 
 ```html
-
 <template>
-    <fs-crud ref="crudRef" v-bind="crudBinding"/>
+    <fs-page>
+        <fs-crud ref="crudRef" v-bind="crudBinding" />
+    </fs-page>
 </template>
 
-<script>
-    import {defineComponent,onMounted} from "vue";
+<script lang="ts">
+    import { defineComponent, onMounted } from "vue";
+    import { useFs } from "@fast-crud/fast-crud";
     import createCrudOptions from "./crud";
-    import { useFs} from "@fast-crud/fast-crud";
 
+    //此处为组件定义
     export default defineComponent({
-        name: "MyFirstCrud", // 实际开发中可以修改一下name
+        name: "FsCrudFirst",
         setup() {
-
             // // crud组件的ref
             // const crudRef = ref();
             // // crud 配置的ref
@@ -114,18 +106,18 @@ export default function ({expose}) {
 
             //  =======以上为fs的初始化代码=========
             //  =======你可以简写为下面这一行========
-            
-            const { crudRef, crudBinding, crudExpose } = useFs({ createCrudOptions });
-            
+            const customValue: any = {}; // 自定义变量, 将会传递给createCrudOptions
+            const { crudRef, crudBinding, crudExpose, customExport } = useFs({ createCrudOptions, customValue });
+
             // 页面打开后获取列表数据
             onMounted(() => {
                 crudExpose.doRefresh();
             });
             return {
                 crudBinding,
-                crudRef,
+                crudRef
             };
-        },
+        }
     });
 </script>
 ``` 
@@ -137,58 +129,44 @@ export default function ({expose}) {
 ### 3. api.js
 
 实现添删改查请求接口，实际开发中，复制后修改url即可，你也可以根据实际业务需求增加和修改方法     
-将如下代码保存为`views/test/myFirstCrud/api.js`
+将如下代码保存为`views/test/myFirstCrud/api.ts`
 
 ```javascript
-// api.js
+import { AddReq, DelReq, EditReq, UserPageQuery, UserPageRes } from "@fast-crud/fast-crud";
+import _ from "lodash-es";
 
-// 如下为mock请求，实际开发中需要替换为你的真实后端请求方法
-import {requestForMock} from "../../../api/service";
-// 请求真实后端
-// import { request } from "../../../api/service";
-
-const request = requestForMock;
-const apiPrefix = "/MyFirstCrud";
-
-export function GetList(query) {
-    return request({
-        url: apiPrefix + "/page",
-        method: "get",
-        data: query,
+/**
+ * 此处本地方式模拟远程接口，实际开发，你需要替换成你的后台请求
+ */
+const records = [{ id: 1, name: "Hello World", type: 1 }];
+export const pageRequest = async (query: UserPageQuery): Promise<UserPageRes> => {
+    return {
+        records,
+        currentPage: 1,
+        pageSize: 20,
+        total: records.length
+    };
+};
+export const editRequest = async ({ form, row }: EditReq) => {
+    const target = _.find(records, (item) => {
+        return row.id === item.id;
     });
-}
-
-export function AddObj(obj) {
-    return request({
-        url: apiPrefix + "/add",
-        method: "post",
-        data: obj,
+    _.merge(target, form);
+    return target;
+};
+export const delRequest = async ({ row }: DelReq) => {
+    _.remove(records, (item) => {
+        return item.id === row.id;
     });
-}
-
-export function UpdateObj(obj) {
-    return request({
-        url: apiPrefix + "/update",
-        method: "post",
-        data: obj,
+};
+export const addRequest = async ({ form }: AddReq) => {
+    const maxRecord = _.maxBy(records, (item) => {
+        return item.id;
     });
-}
-
-export function DelObj(id) {
-    return request({
-        url: apiPrefix + "/delete",
-        method: "post",
-        params: {id},
-    });
-}
-
-export function GetObj(id) {
-    return request({
-        url: apiPrefix + "/info",
-        method: "get",
-        params: {id},
-    });
-}
+    form.id = (maxRecord?.id || 0) + 1;
+    records.push(form);
+    return form;
+};
 
 ```  
 
@@ -197,37 +175,7 @@ export function GetObj(id) {
 具体请参考[request配置](/api/crud-options/request.html)    
 :::
 
-### 4. mock数据
-
-如下为mock数据，实际开发中需要替换为你的真实后端接口    
-将如下代码保存为`views/test/myFirstCrud/mock.js`
-
-```js
-// mock.js
-import mockUtil from "/src/mock/base";
-
-const options = {
-    name: "MyFirstCrud",
-    idGenerator: 0,
-};
-const list = [
-    {
-        radio: "1",
-    },
-    {
-        radio: "2",
-    },
-    {
-        radio: "0",
-    },
-];
-options.list = list;
-const mock = mockUtil.buildMock(options);
-export default mock;
-
-```
-
-### 5. 添加路由和菜单
+### 4. 添加路由和菜单
 
 在`src/router/modules/crud.ts`中增加路由菜单配置
 

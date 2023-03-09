@@ -13,6 +13,11 @@ export type UseExposeProps = {
   crudBinding: Ref<CrudBinding>;
 };
 
+export type UseExposeRet = {
+  expose: CrudExpose;
+  crudExpose: CrudExpose;
+};
+
 export type UseEditableProps = {
   crudExpose: CrudExpose;
 };
@@ -153,7 +158,7 @@ function useEditable(props: UseEditableProps) {
  *
  * @param props
  */
-export function useExpose(props: UseExposeProps): { expose: CrudExpose; crudExpose: CrudExpose } {
+export function useExpose(props: UseExposeProps): UseExposeRet {
   const { crudRef, crudBinding } = props;
   const { ui } = useUi();
   const { t } = useI18n();

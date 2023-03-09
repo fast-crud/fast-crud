@@ -583,6 +583,10 @@ export default {
 
   .fs-form-invalid {
   }
+
+  //.el-date-editor.el-input__wrapper {
+  //  width: 100%;
+  //}
 }
 .fs-form-grid {
   .fs-row {
