@@ -91,6 +91,10 @@ module.exports = {
                             link: '/api/install-options'
                         },
                         {
+                            text: 'Use',
+                            link: '/api/use'
+                        },
+                        {
                             text: 'CrudOptions',
                             items: [
                                 {text: '概览', link: '/api/crud-options/index'},
@@ -100,6 +104,7 @@ module.exports = {
                                 {text: 'search', link: '/api/crud-options/search'},
                                 {text: 'actionbar', link: '/api/crud-options/actionbar'},
                                 {text: 'toolbar', link: '/api/crud-options/toolbar'},
+                                {text: 'tabs', link: '/api/crud-options/tabs'},
                                 {text: 'viewForm', link: '/api/crud-options/viewForm'},
                                 {text: 'addForm', link: '/api/crud-options/addForm'},
                                 {text: 'editForm', link: '/api/crud-options/editForm'},

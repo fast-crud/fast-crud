@@ -125,7 +125,7 @@ class Dict extends UnMergeable {
 
     let data: any[] = null;
     if (this.getNodesByValues) {
-      if (context == null || context.value == null) {
+      if (!this.prototype) {
         logger.warn("您配置了getNodesByValues，根据value值获取节点数据需要dict.prototype=true");
         return [];
       }
@@ -142,9 +142,9 @@ class Dict extends UnMergeable {
           cached = DictGlobalCache.get(cacheKey);
         }
         if (cached) {
-          this.data = cached;
+          data = cached;
         } else {
-          this.data = await this.getNodesByValues(context.value, context);
+          data = await this.getNodesByValues(context.value, context);
           if (cacheKey) {
             DictGlobalCache.set(cacheKey, data);
           }

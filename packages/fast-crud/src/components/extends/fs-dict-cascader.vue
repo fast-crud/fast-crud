@@ -33,9 +33,11 @@ export default {
         children: props.dict.children
       });
     }
+    const computedOptions = dictUseRet.createComputedOptions();
     return {
       ...dictUseRet,
-      fieldNamesBinder
+      fieldNamesBinder,
+      computedOptions
     };
   }
 };

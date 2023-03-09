@@ -182,40 +182,48 @@ app.use(FsExtendsEditor, {
   </fs-page>
 </template>
 
-<script>
+<script lang="ts">
 import { defineComponent, ref, onMounted } from "vue";
-import { CrudBinding, useFs } from '@fast-crud/fast-crud';
-import _ from 'lodash-es'
+import { AddReq, CreateCrudOptionsProps, CreateCrudOptionsRet, DelReq, dict, EditReq, useCrud, useFs, UserPageQuery, UserPageRes } from "@fast-crud/fast-crud";
+import _ from "lodash-es";
 
 //此处为crudOptions配置
-const createCrudOptions = function ({ expose }) {
-  const records = [{id:1,name:'Hello World'}]
-  
-  // 此处4个request对应添删改查的后端请求。
-  // 当前是本地示例，你需要改成使用axios等http客户端向后端发出请求
-  const pageRequest = async (query) => {
+const createCrudOptions = function ({ crudOptions, customValue }: CreateCrudOptionsProps): CreateCrudOptionsRet {
+  //本地模拟后台crud接口方法 ----开始
+  const records = [{ id: 1, name: "Hello World", type: 1 }];
+  const pageRequest = async (query: UserPageQuery): Promise<UserPageRes> => {
     return {
-      records, currentPage:1,pageSize:20,total:records.length
-    }
+      records,
+      currentPage: 1,
+      pageSize: 20,
+      total: records.length
+    };
   };
-  const editRequest = async ({ form, row }) => {
-    const target = _.find(records,item=>{return row.id === item.id})
-    _.merge(target,form)
+  const editRequest = async ({ form, row }: EditReq) => {
+    const target = _.find(records, (item) => {
+      return row.id === item.id;
+    });
+    _.merge(target, form);
     return target;
   };
-  const delRequest = async ({ row }) => {
-    _.remove(records,item=>{return item.id === row.id})
+  const delRequest = async ({ row }: DelReq) => {
+    _.remove(records, (item) => {
+      return item.id === row.id;
+    });
   };
+  const addRequest = async ({ form }: AddReq) => {
+    const maxRecord = _.maxBy(records, (item) => {
+      return item.id;
+    });
+    form.id = (maxRecord?.id || 0) + 1;
+    records.push(form);
+    return form;
+  };
+  //本地模拟后台crud接口方法 -----结束
 
-  const addRequest = async ({ form }) => {
-    const maxRecord = _.maxBy(records,item=>{return item.id})
-    form.id = (maxRecord?.id||0)+1
-    records.push(form)
-    return form
-  };
-  
-  // 此处编辑 crudOptions 配置
   return {
+    //自定义变量返回
+    customExport: {},
     crudOptions: {
       request: {
         pageRequest,
@@ -227,38 +235,48 @@ const createCrudOptions = function ({ expose }) {
         name: {
           title: "姓名",
           type: "text",
-          search: {show: true},
-          form: {
-            component: {
-              maxlength: 20
-            }
+          search: { show: true },
+          column: {
+            resizable: true,
+            width: 200
           }
         },
+        type: {
+          title: "类型",
+          type: "dict-select",
+          dict: dict({
+            data: [
+              { value: 1, label: "开始" },
+              { value: 0, label: "停止" }
+            ]
+          })
+        }
       }
     }
   };
-}
+};
 
 //此处为组件定义
 export default defineComponent({
-  name: "HelloWorld",
+  name: "FsCrudHelloWorld",
   setup() {
-    // fs-crud 初始化
-    const { crudRef, crudBinding, crudExpose } = useFs({ createCrudOptions });
-    
+    // 演示自定义变量传递, 将会传递给createCrudOptions
+    const customValue: any = {};
+    //  =======你可以简写为下面这一行========
+    const { crudRef, crudBinding, crudExpose, customExport } = useFs({ createCrudOptions, customValue });
+
+    // 页面打开后获取列表数据
     onMounted(() => {
-      // 页面打开后立即加载列表数据
       crudExpose.doRefresh();
     });
-
     return {
-      // 给 template 使用
       crudBinding,
       crudRef
     };
   }
 });
 </script>
+
 ```
 
 
