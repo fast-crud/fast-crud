@@ -1,5 +1,8 @@
 import { daterangeFormatter, datetimerangeFormatter } from "../functions";
 import { uiContext } from "../../ui";
+import dayjs from "dayjs";
+import weekOfYear from "dayjs/plugin/weekOfYear";
+dayjs.extend(weekOfYear);
 
 export default function () {
   const ui = uiContext.get();
@@ -65,6 +68,62 @@ export default function () {
         width: 100,
         align: "center",
         component: { name: "fs-date-format", format: "HH:mm:ss" }
+      }
+    },
+    month: {
+      form: {
+        component: {
+          //el-date-picker,a-date-picker
+          ...ui.datePicker.buildDateType("month"),
+          vModel: ui.datePicker.modelValue
+        }
+      },
+      column: {
+        align: "center",
+        width: 120,
+        component: { name: "fs-date-format", format: "YYYY-MM" }
+      }
+    },
+    week: {
+      form: {
+        component: {
+          //el-date-picker,a-date-picker
+          ...ui.datePicker.buildDateType("week"),
+          vModel: ui.datePicker.modelValue
+        }
+      },
+      column: {
+        align: "center",
+        width: 120,
+        component: { name: "fs-date-format", format: "YYYY-ww[周]" }
+      }
+    },
+    quarter: {
+      form: {
+        component: {
+          //el-date-picker,a-date-picker
+          ...ui.datePicker.buildDateType("quarter"),
+          vModel: ui.datePicker.modelValue
+        }
+      },
+      column: {
+        align: "center",
+        width: 120,
+        component: { name: "fs-date-format", format: "YYYY-[Q]Q" }
+      }
+    },
+    year: {
+      form: {
+        component: {
+          //el-date-picker,a-date-picker
+          ...ui.datePicker.buildDateType("year"),
+          vModel: ui.datePicker.modelValue
+        }
+      },
+      column: {
+        align: "center",
+        width: 120,
+        component: { name: "fs-date-format", format: "YYYY" }
       }
     }
   };

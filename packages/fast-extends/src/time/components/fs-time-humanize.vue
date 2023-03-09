@@ -9,7 +9,8 @@ import _ from "lodash-es";
 import humanizeDuration, { HumanizerOptions } from "humanize-duration";
 const defaultOptions = {
   language: "zh_CN",
-  largest: 1
+  largest: 1,
+  maxDecimalPoints: 0
 };
 /**
  * 日期人性化格式展示组件
