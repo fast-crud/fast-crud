@@ -11,27 +11,29 @@ export function useDict(props: any, ctx: any, vModel = "modelValue") {
     }
   }
 
-  const computedOptions = computed(() => {
-    let options: any = [];
-    if (props.options) {
-      options = props.options;
-    } else if (dict && dict.data != null) {
-      options = dict.data;
-    }
-
-    if (ui.type === "naive") {
-      const newOptions: any = [];
-      for (const option of options) {
-        newOptions.push({
-          ...option,
-          value: getValue(option),
-          label: getLabel(option)
-        });
+  function createComputedOptions() {
+    return computed(() => {
+      let options: any = [];
+      if (props.options) {
+        options = props.options;
+      } else if (dict && dict.data != null) {
+        options = dict.data;
       }
-      return newOptions;
-    }
-    return options;
-  });
+
+      if (ui.type === "naive") {
+        const newOptions: any = [];
+        for (const option of options) {
+          newOptions.push({
+            ...option,
+            value: getValue(option),
+            label: getLabel(option)
+          });
+        }
+        return newOptions;
+      }
+      return options;
+    });
+  }
 
   function getDict() {
     return dict;
@@ -68,6 +70,12 @@ export function useDict(props: any, ctx: any, vModel = "modelValue") {
 
   const reloadDict = async () => {
     await loadDict(true);
+  };
+  const clearDict = () => {
+    if (!dict) {
+      return;
+    }
+    dict.clear();
   };
 
   const watchValue = () => {
@@ -141,9 +149,10 @@ export function useDict(props: any, ctx: any, vModel = "modelValue") {
   };
 
   return {
-    computedOptions,
+    createComputedOptions,
     loadDict,
     reloadDict,
+    clearDict,
     getDictData,
     getDict,
     watchValue,
@@ -151,6 +160,7 @@ export function useDict(props: any, ctx: any, vModel = "modelValue") {
     getLabel,
     getChildren,
     getColor,
-    removePropValue
+    removePropValue,
+    curDict: dict
   };
 }

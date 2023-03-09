@@ -50,8 +50,11 @@ export default {
   emits: ["dict-change"],
   setup(props, ctx) {
     const ui = uiContext.get();
+    let usedDict = useDict(props, ctx, ui.checkboxGroup.modelValue);
+    const computedOptions = usedDict.createComputedOptions();
     return {
-      ...useDict(props, ctx, ui.checkboxGroup.modelValue)
+      ...usedDict,
+      computedOptions
     };
   }
 };

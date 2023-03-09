@@ -20,12 +20,19 @@ function setDictRequest(request: any) {
   dictRequest = request;
 }
 
-// eslint-disable-next-line @typescript-eslint/no-unused-vars,no-unused-vars
 let dictRequest = async (opts: any): Promise<any> => {
   logger.warn("请配置 app.use(FsCrud,{dictRequest:(context)=>{ 你的字典请求方法 }})");
   return [];
 };
 
+export type LoadDictOpts = {
+  reload?: boolean;
+  value?: any;
+
+  [key: string]: any;
+};
+
+type SuccessNotify = (data: any[]) => void | undefined;
 /**
  *
  * @param url
@@ -43,7 +50,15 @@ class Dict extends UnMergeable {
   children = "children";
   color = "color";
   isTree = false;
-  data: null | Array<any> = null;
+
+  _data: null | any[] = null;
+  get data() {
+    return this._data;
+  }
+  set data(data: any[]) {
+    this._data = data;
+    this.toMap();
+  }
   originalData: undefined | Array<any> = undefined;
   dataMap: any = {};
   loading = false;
@@ -82,19 +97,22 @@ class Dict extends UnMergeable {
 
   setData(data: any[]) {
     this.data = data;
-    this.toMap();
+    // this.toMap();
   }
 
   /**
    * 加载字典
-   * @param context 当prototype=true时会传入
    */
-  async loadDict(context?: any) {
-    let notify: Function | null = null;
+  async _loadDict(context: LoadDictOpts): Promise<any[]> {
+    if (this.data && !context.reload) {
+      return this.data;
+    }
+
     if (this.loading) {
+      let notify: SuccessNotify = null;
       //如果正在加载中，则等待加载完成
-      const ret = new Promise((resolve) => {
-        notify = (data: any) => {
+      const ret: Promise<any[]> = new Promise((resolve) => {
+        notify = (data: any[]) => {
           resolve(data);
         };
       });
@@ -104,12 +122,10 @@ class Dict extends UnMergeable {
       this.notifies.push(notify);
       return ret;
     }
-    if (this.data) {
-      return this.data;
-    }
-    let data: Array<any> = [];
+
+    let data: any[] = null;
     if (this.getNodesByValues) {
-      if (context == null) {
+      if (context == null || context.value == null) {
         logger.warn("您配置了getNodesByValues，根据value值获取节点数据需要dict.prototype=true");
         return [];
       }
@@ -126,9 +142,9 @@ class Dict extends UnMergeable {
           cached = DictGlobalCache.get(cacheKey);
         }
         if (cached) {
-          data = cached;
+          this.data = cached;
         } else {
-          data = await this.getNodesByValues(context.value, context);
+          this.data = await this.getNodesByValues(context.value, context);
           if (cacheKey) {
             DictGlobalCache.set(cacheKey, data);
           }
@@ -144,7 +160,7 @@ class Dict extends UnMergeable {
         this.loading = false;
       }
     }
-    this.setData(data);
+    this.data = data;
     if (this.onReady) {
       this.onReady({ dict: this, ...context });
     }
@@ -157,9 +173,16 @@ class Dict extends UnMergeable {
     }
   }
 
+  /**
+   * 加载字典
+   * @param context 当prototype=true时会传入
+   */
+  async loadDict(context?: any) {
+    return this._loadDict({ ...context });
+  }
+
   async reloadDict(context?: any) {
-    this.clear();
-    return this.loadDict(context);
+    return this.loadDict({ ...context, reload: true });
   }
 
   clear() {
@@ -306,15 +329,16 @@ function dict(config: any) {
   if (!ret.prototype && ret.immediate) {
     ret.loadDict();
   }
-  watch(
-    () => {
-      return ret.data;
-    },
-    () => {
-      ret.toMap();
-    },
-    { deep: true }
-  );
+  // watch(
+  //   () => {
+  //     return ret.data;
+  //   },
+  //   () => {
+  //     console.log("----------------------dict on watch---------------------");
+  //     ret.toMap();
+  //   },
+  //   { deep: true, immediate: true }
+  // );
   return ret;
 }
 export function useDictDefine() {

@@ -41,9 +41,12 @@ export default {
     });
 
     const { ui } = useUi();
+    let usedDict = useDict(props, ctx, ui.select.modelValue);
+    const computedOptions = usedDict.createComputedOptions();
     return {
       computedPlaceholder,
-      ...useDict(props, ctx, ui.select.modelValue)
+      ...usedDict,
+      computedOptions
     };
   },
   render() {

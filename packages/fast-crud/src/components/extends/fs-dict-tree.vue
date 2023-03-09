@@ -40,9 +40,12 @@ export default {
       return props.placeholder || t("fs.component.select.placeholder");
     });
 
+    let usedDict = useDict(props, ctx);
+    const computedOptions = usedDict.createComputedOptions();
     return {
       computedPlaceholder,
-      ...useDict(props, ctx)
+      ...usedDict,
+      computedOptions
     };
   }
 };

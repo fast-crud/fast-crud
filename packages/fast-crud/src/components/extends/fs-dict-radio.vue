@@ -67,9 +67,12 @@ export default {
       return props.optionName ?? props.radioName ?? ui.radio.name;
     });
 
+    let usedDict = useDict(props, ctx, ui.radioGroup.modelValue);
+    const computedOptions = usedDict.createComputedOptions();
     return {
       computedRadioName,
-      ...useDict(props, ctx, ui.radioGroup.modelValue)
+      ...usedDict,
+      computedOptions
     };
   }
 };
