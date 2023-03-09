@@ -1,5 +1,13 @@
-import { CrudBinding } from "./crud";
+import { CrudBinding, FormProps } from "./crud";
 import { Ref } from "vue";
+
+export type OpenDialogProps = {
+  mode: string;
+  initialForm?: any;
+  index?: number;
+  row?: any;
+  newInstance?: boolean;
+} & FormProps;
 
 export type CrudExpose = {
   crudRef: Ref;
@@ -49,27 +57,27 @@ export type CrudExpose = {
    * 删除行按钮点击
    * @param context = {index,row,...} , delRequest的请求参数
    */
-  doRemove: (context: any) => Promise<void>;
+  doRemove: (context: { index: number; row: any }) => Promise<void>;
   /**
    * 打开编辑对话框
    * @param context = {index,row,...formWrapper.open的自定义参数}
    */
-  openEdit: (context: any) => Promise<void>;
+  openEdit: (context: OpenDialogProps) => Promise<void>;
   /**
    * 打开添加对话框
    *  @param context = {row,...formWrapper.open的自定义参数}
    */
-  openAdd: (context: any) => Promise<void>;
+  openAdd: (context: OpenDialogProps) => Promise<void>;
   /**
    * 打开查看对话框
    *  @param context = {index,row,...formWrapper.open的自定义参数}
    */
-  openView: (context: any) => Promise<void>;
+  openView: (context: OpenDialogProps) => Promise<void>;
   /**
    * 打开对话框
    * @param context = {...formWrapper.open的自定义参数}
    */
-  openDialog: (context: any) => Promise<void>;
+  openDialog: (context: OpenDialogProps) => Promise<void>;
 
   /**
    *  获取查询组件ref

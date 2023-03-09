@@ -1,17 +1,27 @@
-import { ref, resolveDynamicComponent, computed, nextTick, onMounted } from "vue";
+import {
+  ref,
+  resolveDynamicComponent,
+  computed,
+  nextTick,
+  onMounted,
+  useSlots,
+  defineExpose,
+  defineComponent
+} from "vue";
 import _ from "lodash-es";
 import { useI18n } from "../../locale";
 import { uiContext } from "../../ui";
 import { Constants } from "../../utils/util.constants";
 import "./fs-form-wrapper.less";
 import { useDrag } from "../../use";
+import { FormProps, OpenDialogProps } from "/src/d.ts";
 
 /**
  * 表单对话框|抽屉
  * 暴露方法：
  * open(options)
  */
-export default {
+export default defineComponent({
   name: "FsFormWrapper",
   props: {
     /**
@@ -40,7 +50,7 @@ export default {
     innerWrapper: {}
   },
   emits: ["reset", "submit", "validationError", "value-change", "open", "opened", "closed", "inner-change"],
-  setup(props, ctx) {
+  setup(props: any, ctx: any) {
     const { t } = useI18n();
     const formWrapperOpen = ref(false);
     const formWrapperIs = ref();
@@ -53,7 +63,7 @@ export default {
     const emitOnClosed = ref();
     const emitOnOpened = ref();
     const title = ref();
-    const formWrapperId = parseInt(Math.random() * 1000000);
+    const formWrapperId = Math.floor(Math.random() * 1000000) + "";
     const formWrapperIdClass = "fs-form-wrapper_" + formWrapperId;
 
     function buildEvent() {
@@ -72,7 +82,7 @@ export default {
       };
     }
 
-    const open = (opts) => {
+    const open = (opts: FormProps) => {
       //提取formrapper的配置
       const { wrapper } = opts;
       if (wrapper.onOpen) {
@@ -82,7 +92,7 @@ export default {
       formWrapperIs.value = opts.wrapper.is;
       formWrapperOpts.value = wrapper;
       const customClassKey = ui.formWrapper.customClass(formWrapperIs.value);
-      let customClass = `fs-form-wrapper ${formWrapperIdClass} ${wrapper[customClassKey] || ""} `;
+      const customClass = `fs-form-wrapper ${formWrapperIdClass} ${wrapper[customClassKey] || ""} `;
 
       formWrapperBind.value = {
         ..._.omit(wrapper, "title", "onOpen", "onClosed", "onOpened", "is", "inner"),
@@ -143,7 +153,7 @@ export default {
       }
     };
 
-    const onValueChange = (e) => {
+    const onValueChange = (e: any) => {
       ctx.emit("value-change", e);
     };
 
@@ -162,7 +172,7 @@ export default {
     function getFormData() {
       return formRef.value?.getFormData();
     }
-    function setFormData(form) {
+    function setFormData(form: any) {
       formRef.value?.setFormData(form);
     }
 
@@ -184,7 +194,7 @@ export default {
         }
       };
       const buttons = _.merge(defBtns, formWrapperBind.value?.buttons);
-      const buttonsArr = [];
+      const buttonsArr: any = [];
       _.forEach(buttons, (value, key) => {
         value.key = key;
         buttonsArr.push(value);
@@ -226,7 +236,7 @@ export default {
       });
     });
 
-    return {
+    ctx.expose({
       formWrapperId,
       formWrapperIdClass,
       close,
@@ -249,122 +259,126 @@ export default {
       setFormData,
       onValueChange,
       innerBind
-    };
-  },
-  render() {
-    if (!this.formWrapperBind) {
-      return null;
-    }
-    const ui = uiContext.get();
-    let children = {};
-    const _slots = { ...this.$slots, ...this.slots };
-    const slotsRender = (key, scope, slots = _slots) => {
-      if (!slots[key]) {
+    });
+
+    const slots = useSlots();
+
+    return () => {
+      if (!formWrapperBind.value) {
         return null;
       }
-      return slots[key](scope);
-    };
-    const is = this.formWrapperIs || "el-dialog";
-    if (this.formOptions) {
-      const { index, mode } = this.formOptions || {};
-      const scope = { _self: this, index, mode, getFormData: this.getFormData };
-      children = {
-        [ui.formWrapper.titleSlotName]: () => {
-          let fullScreenIcon = null;
-          if (this.fullscreenEnabled) {
-            fullScreenIcon = (
-              <fs-icon
-                class="fs-fullscreen-icon"
-                onClick={this.toggleFullscreen}
-                icon={this.fullscreen ? ui.icons.fullScreen : ui.icons.unFullScreen}
-              />
-            );
-          }
-          return (
-            <div class={"fs-form-header"}>
-              <div class={"fs-form-header-left"}>
-                {slotsRender("form-header-left", scope)}
-                {this.title}
-                {slotsRender("form-header-right", scope)}
-              </div>
-              <div class={"fs-form-header-action"}>
-                {slotsRender("form-header-action-left", scope)}
-                {fullScreenIcon}
-                {slotsRender("form-header-action-right", scope)}
-              </div>
-            </div>
-          );
-        },
-        default: () => {
-          const buttons = [];
-          _.forEach(this.computedButtons, (item) => {
-            if (item.show === false) {
-              return;
-            }
-            buttons.push(<fs-button {...item} />);
-          });
-          return (
-            <div class={"fs-form-wrapper-body"}>
-              <div class={"fs-form-body"}>
-                {slotsRender("form-body-top", scope)}
-                <fs-form ref="formRef" {...this.formOptions} onValueChange={this.onValueChange} />
-                {slotsRender("form-body-bottom", scope)}
-              </div>
-              <div className="fs-form-footer-btns">
-                {slotsRender("form-footer-left", scope)}
-                {buttons}
-                {slotsRender("form-footer-right", scope)}
-              </div>
-            </div>
-          );
+      const ui = uiContext.get();
+      let children = {};
+      const _slots = { ...slots, ...props.slots };
+      const slotsRender = (key: string, scope: any, slots = _slots) => {
+        if (!slots[key]) {
+          return null;
         }
+        return slots[key](scope);
       };
-    }
-
-    if (ui.formWrapper.hasContentWrap) {
-      const contentWrap = ui.formWrapper.hasContentWrap(is);
-      const subChildren = children;
-      if (contentWrap) {
-        const contentWrapComp = resolveDynamicComponent(contentWrap);
+      const is = formWrapperIs.value || "el-dialog";
+      if (formOptions.value) {
+        const { index, mode } = formOptions.value || {};
+        const scope = { _self: this, index, mode, getFormData: getFormData };
         children = {
+          [ui.formWrapper.titleSlotName]: () => {
+            let fullScreenIcon = null;
+            if (fullscreenEnabled.value) {
+              fullScreenIcon = (
+                <fs-icon
+                  class="fs-fullscreen-icon"
+                  onClick={toggleFullscreen}
+                  icon={fullscreen.value ? ui.icons.fullScreen : ui.icons.unFullScreen}
+                />
+              );
+            }
+            return (
+              <div class={"fs-form-header"}>
+                <div class={"fs-form-header-left"}>
+                  {slotsRender("form-header-left", scope)}
+                  {title.value}
+                  {slotsRender("form-header-right", scope)}
+                </div>
+                <div class={"fs-form-header-action"}>
+                  {slotsRender("form-header-action-left", scope)}
+                  {fullScreenIcon}
+                  {slotsRender("form-header-action-right", scope)}
+                </div>
+              </div>
+            );
+          },
           default: () => {
-            return <contentWrapComp>{subChildren}</contentWrapComp>;
+            const buttons: any[] = [];
+            _.forEach(computedButtons.value, (item: any) => {
+              if (item.show === false) {
+                return;
+              }
+              buttons.push(<fs-button {...item} />);
+            });
+            return (
+              <div class={"fs-form-wrapper-body"}>
+                <div class={"fs-form-body"}>
+                  {slotsRender("form-body-top", scope)}
+                  <fs-form ref={formRef} {...formOptions.value} onValueChange={onValueChange} />
+                  {slotsRender("form-body-bottom", scope)}
+                </div>
+                <div class={"fs-form-footer-btns"}>
+                  {slotsRender("form-footer-left", scope)}
+                  {buttons}
+                  {slotsRender("form-footer-right", scope)}
+                </div>
+              </div>
+            );
           }
         };
       }
-    }
 
-    const visible = ui.formWrapper.visible;
-    const vModel = {
-      [visible]: this.formWrapperOpen,
-      ["onUpdate:" + visible]: (value) => {
-        this.formWrapperOpen = value;
+      if (ui.formWrapper.hasContentWrap) {
+        const contentWrap = ui.formWrapper.hasContentWrap(is);
+        const subChildren = children;
+        if (contentWrap) {
+          const contentWrapComp = resolveDynamicComponent(contentWrap);
+          children = {
+            default: () => {
+              return <contentWrapComp>{subChildren}</contentWrapComp>;
+            }
+          };
+        }
       }
-    };
-    const vClosed = ui.formWrapper.buildOnClosedBind(is, this.onClosed);
 
-    const customClassKey = ui.formWrapper.customClass(is);
-    const fullscreenClassKey = this.fullscreen ? "fs-fullscreen" : "";
-    const customClass = `${fullscreenClassKey} ${this.formWrapperBind[customClassKey] || ""}`;
-    const vCustomClass = {
-      [customClassKey]: customClass
-    };
+      const visible = ui.formWrapper.visible;
+      const vModel = {
+        [visible]: formWrapperOpen.value,
+        ["onUpdate:" + visible]: (value: any) => {
+          formWrapperOpen.value = value;
+        }
+      };
+      const vClosed = ui.formWrapper.buildOnClosedBind(is, onClosed);
 
-    const vFullScreen = {
-      fullscreen: this.fullscreen
-    };
+      const customClassKey = ui.formWrapper.customClass(is);
+      const fullscreenClassKey = fullscreen.value ? "fs-fullscreen" : "";
+      const customClass = `${fullscreenClassKey} ${formWrapperBind.value[customClassKey] || ""}`;
+      const vCustomClass = {
+        [customClassKey]: customClass
+      };
 
-    const formWrapperComp = resolveDynamicComponent(is);
-    return (
-      <formWrapperComp
-        {...this.formWrapperBind}
-        {...vCustomClass}
-        {...vModel}
-        {...vClosed}
-        {...vFullScreen}
-        {...this.innerBind}
-        v-slots={children}
-      />
-    );
-  }
-};
+      const vFullScreen = {
+        fullscreen: fullscreen
+      };
+
+      const formWrapperComp = resolveDynamicComponent(is);
+      return (
+        <formWrapperComp
+          {...formWrapperBind.value}
+          {...vCustomClass}
+          {...vModel}
+          {...vClosed}
+          {...vFullScreen}
+          {...innerBind.value}
+          v-slots={children}
+        />
+      );
+    };
+  },
+  open(context: OpenDialogProps) {}
+});

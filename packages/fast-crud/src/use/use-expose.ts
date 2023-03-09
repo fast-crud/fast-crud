@@ -5,9 +5,20 @@ import logger from "../utils/util.log";
 import { useMerge } from "../use/use-merge";
 import { useUi } from "../use/use-ui";
 import { useI18n } from "../locale";
-import { ColumnProps, CrudBinding, PageQuery, PageRes, RemoveProps, UserPageQuery, UserPageRes } from "/src/d.ts";
+import {
+  ColumnProps,
+  CrudBinding,
+  FormProps,
+  PageQuery,
+  PageRes,
+  RemoveProps,
+  UserPageQuery,
+  UserPageRes
+} from "/src/d.ts";
+import FsFormWrapper from "../components/crud/fs-form-wrapper.js";
 
 const { merge } = useMerge();
+
 export type UseExposeProps = {
   crudRef: Ref;
   crudBinding: Ref<CrudBinding>;
@@ -310,9 +321,9 @@ export function useExpose(props: UseExposeProps): UseExposeRet {
       }
       const { currentPage = page[ui.pagination.currentPage], pageSize = page.pageSize, total } = pageRes;
       const { records } = pageRes;
-      if (records == null) {
+      if (records == null || total == null) {
         logger.warn(
-          "pageRequest返回结构不正确，请配置request.transformRes，期望：{currentPage, pageSize, total, records:[]},实际返回：",
+          "pageRequest返回结构不正确，请配置正确的request.transformRes，期望：{currentPage, pageSize, total, records:[]},实际返回：",
           pageRes
         );
         return;
@@ -344,7 +355,7 @@ export function useExpose(props: UseExposeProps): UseExposeRet {
      *   mergeForm=false
      * }
      */
-    async doSearch(opts) {
+    async doSearch(opts: { form?: any; goFirstPage?: boolean; mergeForm?: boolean }) {
       logger.debug("do search:", opts);
       opts = merge({ goFirstPage: true }, opts);
       if (opts.goFirstPage) {
@@ -385,22 +396,22 @@ export function useExpose(props: UseExposeProps): UseExposeRet {
       checkCrudBindingRef();
       crudBinding.value.data = data;
     },
-    insertTableRow(index, row) {
+    insertTableRow(index: number, row: any) {
       checkCrudBindingRef();
       crudBinding.value.data.splice(index, 0, row);
     },
-    updateTableRow(index, row, merge = true) {
+    updateTableRow(index: number, row: any, merge = true) {
       if (merge) {
         crudBinding.value.data[index] = _.merge(crudBinding.value.data[index], row);
       } else {
         crudBinding.value.data[index] = row;
       }
     },
-    removeTableRow(index) {
+    removeTableRow(index: number) {
       checkCrudBindingRef();
       crudBinding.value.data.splice(index, 1);
     },
-    getTableDataRow(index) {
+    getTableDataRow(index: number) {
       const data = crudExpose.getTableData();
       if (data == null) {
         throw new Error("table data is not init");
@@ -415,7 +426,7 @@ export function useExpose(props: UseExposeProps): UseExposeRet {
      * @param index
      * @param row
      */
-    doSelectCurrentRow({ row }) {
+    doSelectCurrentRow({ row }: { row: any }) {
       const tableRef = crudExpose.getTableRef();
       tableRef.value.setCurrentRow(row);
     },
@@ -423,7 +434,7 @@ export function useExpose(props: UseExposeProps): UseExposeRet {
      * 删除行按钮
      * @param context
      */
-    async doRemove(context = {}) {
+    async doRemove(context: { index: number; row: any }) {
       const removeProps: RemoveProps = crudBinding.value.table.remove ?? {};
       try {
         if (removeProps.confirmFn) {
@@ -443,7 +454,7 @@ export function useExpose(props: UseExposeProps): UseExposeRet {
       }
       let res = null;
       if (crudBinding.value.mode?.name === "local") {
-        crudExpose.removeTableRow(context.index);
+        crudExpose.removeTableRow(context?.index);
       } else {
         res = await crudBinding.value.request.delRequest(context);
       }
@@ -465,10 +476,17 @@ export function useExpose(props: UseExposeProps): UseExposeRet {
      * 打开表单对话框
      * @param context ={mode, initialForm: row, index,...formOptions}
      */
-    async openDialog(context = {}) {
-      this.getFormWrapperRef().open(context);
+    async openDialog(context: OpenDialogProps) {
+      let formWrapperRef = null;
+      if (context.newInstance === true) {
+        formWrapperRef = FsFormWrapper.open(context);
+      } else {
+        formWrapperRef = this.getFormWrapperRef();
+      }
+      formWrapperRef.open(context);
+      return formWrapperRef;
     },
-    async openAdd(context: any = {}) {
+    async openAdd(context: OpenDialogProps) {
       const mode = "add";
       let row = context.row;
       if (crudBinding.value?.request?.infoRequest) {
@@ -482,7 +500,7 @@ export function useExpose(props: UseExposeProps): UseExposeRet {
       _.merge(options, context);
       this.getFormWrapperRef().open(options);
     },
-    async openEdit(context) {
+    async openEdit(context: OpenDialogProps) {
       let row = context.row || context[ui.tableColumn.row];
       if (row == null && context.index != null) {
         row = crudExpose.getTableDataRow(context.index);
@@ -499,7 +517,7 @@ export function useExpose(props: UseExposeProps): UseExposeRet {
       _.merge(options, context);
       this.getFormWrapperRef().open(options);
     },
-    async openView(context) {
+    async openView(context: OpenDialogProps) {
       let row = context.row || context[ui.tableColumn.row];
       if (row == null && context.index != null) {
         row = crudExpose.getTableDataRow(context.index);
