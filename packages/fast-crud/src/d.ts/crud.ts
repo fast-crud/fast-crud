@@ -314,6 +314,16 @@ export type FormGroupProps = {
  */
 export type FormProps = {
   /**
+   * 表单初始值
+   */
+  initialForm?: any;
+
+  /**
+   * 表单模式 [add/edit/view]
+   */
+  mode?: string;
+
+  /**
    * 布局方式
    */
   display?: "flex" | "grid";
@@ -364,6 +374,13 @@ export type FormProps = {
    * 表单分组配置
    */
   group?: FormGroupProps;
+
+  /**
+   * 插槽render
+   */
+  slots?: {
+    [key: string]: () => any;
+  };
   /**
    * 其他表单配置 [x]-form的配置
    */

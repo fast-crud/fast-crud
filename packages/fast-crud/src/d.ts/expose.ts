@@ -1,14 +1,9 @@
 import { CrudBinding, FormProps } from "./crud";
 import { Ref } from "vue";
 
-export type OpenDialogProps = {
-  mode: string;
-  initialForm?: any;
-  index?: number;
-  row?: any;
-  newInstance?: boolean;
-} & FormProps;
-
+/**
+ * crudExpose
+ */
 export type CrudExpose = {
   crudRef: Ref;
   crudBinding: Ref<CrudBinding>;
@@ -52,32 +47,32 @@ export type CrudExpose = {
    * 查询按钮点击，执行查询
    * @param opts {form, goFirstPage =true,mergeForm=false}
    */
-  doSearch: (opts: { form: any; goFirstPage?: boolean; mergeForm?: boolean }) => Promise<void>;
+  doSearch: (opts: DoSearchProps) => Promise<void>;
   /**
    * 删除行按钮点击
    * @param context = {index,row,...} , delRequest的请求参数
    */
-  doRemove: (context: { index: number; row: any }) => Promise<void>;
+  doRemove: (context: DoRemoveProps) => Promise<void>;
   /**
    * 打开编辑对话框
    * @param context = {index,row,...formWrapper.open的自定义参数}
    */
-  openEdit: (context: OpenDialogProps) => Promise<void>;
+  openEdit: (context: OpenEditProps) => Promise<any>;
   /**
    * 打开添加对话框
    *  @param context = {row,...formWrapper.open的自定义参数}
    */
-  openAdd: (context: OpenDialogProps) => Promise<void>;
+  openAdd: (context: OpenAddProps) => Promise<any>;
   /**
    * 打开查看对话框
    *  @param context = {index,row,...formWrapper.open的自定义参数}
    */
-  openView: (context: OpenDialogProps) => Promise<void>;
+  openView: (context: OpenEditProps) => Promise<any>;
   /**
    * 打开对话框
    * @param context = {...formWrapper.open的自定义参数}
    */
-  openDialog: (context: OpenDialogProps) => Promise<void>;
+  openDialog: (context: OpenDialogProps) => Promise<any>;
 
   /**
    *  获取查询组件ref
@@ -91,7 +86,7 @@ export type CrudExpose = {
   /**
    * 重新设置查询表单数据
    */
-  setSearchFormData: (context: { form: any; mergeForm?: boolean }) => void;
+  setSearchFormData: (context: SetSearchFormDataProps) => void;
   /**
    * 获取FsTable的实例
    */
@@ -135,9 +130,61 @@ export type CrudExpose = {
    * 选中某一行
    * @param context = {row}
    */
-  doSelectCurrentRow: (context: { row: any }) => void;
+  doSelectCurrentRow: (context: SelectCurrentRowProps) => void;
   /**
    * 行编辑
    */
   editable: any;
 };
+
+export type OpenEditProps = {
+  /**
+   * 行索引
+   */
+  index: number;
+  /**
+   * 行数据，默认会赋值给initialForm作为初始值
+   */
+  row: any;
+} & OpenDialogProps;
+
+export type OpenAddProps = {
+  /**
+   * 行数据，默认会赋值给initialForm作为初始值
+   */
+  row?: any;
+} & OpenDialogProps;
+
+/**
+ * crudExpose.openDialog 打开对话框参数
+ */
+export type OpenDialogProps = {
+  /**
+   * 是否新创建一个实例打开
+   * 当使用新建实例打开时，无法通过getFormWrapperRef获取到表单ref，你可以从openDialog的返回值中拿到ref
+   * const {openDialog} = useFormWrapper()
+   * const wrapperRef = await openDialog(props:OpenDialogProps)
+   */
+  newInstance?: boolean;
+  /**
+   * 对话框id，不传则随机生成，新实例在关闭时不会被销毁，使用相同id的form重复打开会被覆盖
+   */
+  id?: string;
+} & FormProps;
+
+/**
+ * crudExpose.setSearchFormData参数
+ */
+export type SetSearchFormDataProps = { form: any; mergeForm?: boolean };
+/**
+ * crudExpose.doRemove参数
+ */
+export type DoRemoveProps = { index: number; row: any };
+/**
+ * crudExpose.doSearch参数
+ */
+export type DoSearchProps = { form: any; goFirstPage?: boolean; mergeForm?: boolean };
+/**
+ * crudExpose.doSelectCurrentRow参数
+ */
+export type SelectCurrentRowProps = { row: any };

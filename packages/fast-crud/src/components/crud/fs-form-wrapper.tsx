@@ -1,12 +1,12 @@
 import {
-  ref,
-  resolveDynamicComponent,
   computed,
+  defineComponent,
+  getCurrentInstance,
   nextTick,
   onMounted,
-  useSlots,
-  defineExpose,
-  defineComponent
+  ref,
+  resolveDynamicComponent,
+  useSlots
 } from "vue";
 import _ from "lodash-es";
 import { useI18n } from "../../locale";
@@ -14,7 +14,7 @@ import { uiContext } from "../../ui";
 import { Constants } from "../../utils/util.constants";
 import "./fs-form-wrapper.less";
 import { useDrag } from "../../use";
-import { FormProps, OpenDialogProps } from "/src/d.ts";
+import { OpenDialogProps } from "/src/d.ts";
 
 /**
  * 表单对话框|抽屉
@@ -47,9 +47,13 @@ export default defineComponent({
     /**
      * 内部打开对话框的wrapper
      */
-    innerWrapper: {}
+    innerWrapper: {},
+
+    id: {},
+
+    zIndex: {}
   },
-  emits: ["reset", "submit", "validationError", "value-change", "open", "opened", "closed", "inner-change"],
+  emits: ["reset", "submit", "validationError", "value-change", "open", "opened", "mounted", "closed", "inner-change"],
   setup(props: any, ctx: any) {
     const { t } = useI18n();
     const formWrapperOpen = ref(false);
@@ -63,8 +67,10 @@ export default defineComponent({
     const emitOnClosed = ref();
     const emitOnOpened = ref();
     const title = ref();
-    const formWrapperId = Math.floor(Math.random() * 1000000) + "";
+    const formWrapperId = props.id || Math.floor(Math.random() * 1000000) + "";
     const formWrapperIdClass = "fs-form-wrapper_" + formWrapperId;
+
+    const formWrapperSlots = ref({});
 
     function buildEvent() {
       return {
@@ -82,7 +88,7 @@ export default defineComponent({
       };
     }
 
-    const open = (opts: FormProps) => {
+    const open = async (opts: OpenDialogProps) => {
       //提取formrapper的配置
       const { wrapper } = opts;
       if (wrapper.onOpen) {
@@ -101,12 +107,19 @@ export default defineComponent({
 
       //form的配置
       formOptions.value = {
-        ..._.omit(opts, "wrapper"),
-        slots: props.slots
+        ..._.omit(opts, "wrapper", "slots"),
+        slots: {
+          ...props.slots,
+          ...opts.slots
+        }
+      };
+
+      formWrapperSlots.value = {
+        ...props.slots,
+        ...opts.wrapper?.slots
       };
 
       // 发射打开事件
-
       emitOnClosed.value = () => {
         if (wrapper.onClosed) {
           wrapper.onClosed(buildEvent());
@@ -118,16 +131,18 @@ export default defineComponent({
         }
       };
 
-      // 打开表单对话框
-      nextTick(async () => {
-        formWrapperOpen.value = true;
-        await nextTick();
-        onOpened();
-      });
       /**
        * 是否内部打开对话框
        */
       ctx.emit("inner-change", !!formWrapperOpts.value.inner);
+
+      // 打开表单对话框
+      return new Promise(async (resolve, reject) => {
+        await nextTick();
+        formWrapperOpen.value = true;
+        await nextTick();
+        onOpened();
+      });
     };
     const close = () => {
       formWrapperOpen.value = false;
@@ -137,6 +152,7 @@ export default defineComponent({
       if (emitOnClosed.value) {
         emitOnClosed.value();
       }
+      ctx.emit("closed");
     };
 
     const onOpened = () => {
@@ -213,6 +229,7 @@ export default defineComponent({
       if (props.options != null) {
         open(props.options);
       }
+      ctx.emit("mounted", getCurrentInstance().exposed);
     });
 
     const fullscreen = ref(false);
@@ -258,7 +275,8 @@ export default defineComponent({
       getFormData,
       setFormData,
       onValueChange,
-      innerBind
+      innerBind,
+      formWrapperSlots
     });
 
     const slots = useSlots();
@@ -269,7 +287,7 @@ export default defineComponent({
       }
       const ui = uiContext.get();
       let children = {};
-      const _slots = { ...slots, ...props.slots };
+      const _slots: any = { ...slots, ...formWrapperSlots.value };
       const slotsRender = (key: string, scope: any, slots = _slots) => {
         if (!slots[key]) {
           return null;
@@ -363,7 +381,11 @@ export default defineComponent({
       };
 
       const vFullScreen = {
-        fullscreen: fullscreen
+        fullscreen: fullscreen.value
+      };
+
+      const vStyle = {
+        zIndex: props.zIndex
       };
 
       const formWrapperComp = resolveDynamicComponent(is);
@@ -375,10 +397,10 @@ export default defineComponent({
           {...vClosed}
           {...vFullScreen}
           {...innerBind.value}
+          {...vStyle}
           v-slots={children}
         />
       );
     };
-  },
-  open(context: OpenDialogProps) {}
+  }
 });

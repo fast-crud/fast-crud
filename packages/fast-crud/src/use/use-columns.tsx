@@ -6,7 +6,7 @@ import _ from "lodash-es";
 import { reactive } from "vue";
 import { useI18n } from "../locale";
 import logger from "../utils/util.log";
-import { ColumnCompositionProps, CompositionColumns, CrudOptions, ScopeContext } from "../d.ts";
+import { ColumnCompositionProps, CompositionColumns, CrudOptions, FormProps, ScopeContext } from "../d.ts";
 const { merge, cloneDeep } = useMerge();
 // mergeColumnPlugin 注册
 
@@ -241,7 +241,7 @@ function buildSearchForm(baseOptions: CrudOptions, formType = "search", columnsM
   return merge({ columns: formColumnsForSearch }, { columns: searchColumns }, baseOptions.search);
 }
 
-function buildFormOptions(crudOptions: CrudOptions) {
+function buildFormOptions(crudOptions: CrudOptions): FormProps {
   const { t } = useI18n();
   const userOptions = merge(
     defaultCrudOptions.defaultOptions({ t }),

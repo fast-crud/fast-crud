@@ -71,7 +71,6 @@
 
     <template #form>
       <div ref="innerWrapperRef" class="fs-form-wrapper-container" :class="{ 'fs-form-inner-wrapper': isFormInner }">
-        <!-- 编辑对话框 -->
         <fs-form-wrapper
           ref="formWrapperRef"
           :slots="computedFormSlots"
@@ -79,6 +78,7 @@
           @inner-change="onFormInnerChange"
           @value-change="$emit('form-value-change', $event)"
         />
+        <!-- 编辑对话框 -->
       </div>
     </template>
 
@@ -88,7 +88,7 @@
           <slot name="pagination-left"></slot>
         </div>
         <div class="fs-pagination">
-          <component :is="$fsui.pagination.name" v-if="pagination.show !== false" v-bind="pagination" />
+          <component :is="ui.pagination.name" v-if="pagination.show !== false" v-bind="pagination" />
         </div>
         <div class="fs-pagination-right">
           <slot name="pagination-right"></slot>
@@ -104,22 +104,24 @@
     </template>
   </component>
 </template>
-<script>
-import { defineComponent, computed, provide, ref, toRef, nextTick, onMounted, watch } from "vue";
+<script lang="ts">
+import { computed, defineComponent, nextTick, onMounted, provide, ref, SetupContext, toRef } from "vue";
 import _ from "lodash-es";
 import traceUtil from "../utils/util.trace";
 import { uiContext } from "../ui";
 import { useMerge } from "../use/use-merge";
 import utilLog from "../utils/util.log";
-import logger from "../utils/util.log";
+import { SetSearchFormDataProps } from "/src/d.ts";
+import FsFormProvider from "./crud/fs-form-provider.vue";
+import { useUi } from "../use";
 
 const { merge } = useMerge();
 
-function useProviders(props, ctx) {
+function useProviders(props: any, ctx: SetupContext) {
   provide("get:columns", () => {
     return props.table.columns;
   });
-  provide("update:columns", (columns) => {
+  provide("update:columns", (columns: any) => {
     ctx.emit("update:columns", columns);
   });
 
@@ -128,10 +130,10 @@ function useProviders(props, ctx) {
   });
 }
 
-function useSearch(props, ctx) {
+function useSearch(props: any, ctx: SetupContext) {
   const searchRef = ref();
   const searchFormData = ref(_.cloneDeep(props.search.initialForm || {}));
-  const onSearchSubmit = async (e) => {
+  const onSearchSubmit = async (e: any) => {
     searchFormData.value = e.form;
     if (props.search.doSearch) {
       props.search.doSearch(e);
@@ -140,7 +142,7 @@ function useSearch(props, ctx) {
     ctx.emit("search-submit", e);
   };
 
-  const onSearchReset = (e) => {
+  const onSearchReset = (e: any) => {
     if (props.search.doReset) {
       props.search.doReset(e);
       return;
@@ -166,7 +168,7 @@ function useSearch(props, ctx) {
    *    isMerge:false 是否与原有form值合并,
    * }
    */
-  function setSearchFormData({ form, mergeForm = false }) {
+  function setSearchFormData({ form, mergeForm = false }: SetSearchFormDataProps) {
     const baseForm = {};
     if (mergeForm) {
       _.merge(baseForm, searchFormData.value, form);
@@ -190,7 +192,7 @@ function useSearch(props, ctx) {
   };
 }
 
-function useTabs(searchRet, props, ctx) {
+function useTabs(searchRet: any, props: any, ctx: SetupContext) {
   const tabsBinding = computed(() => {
     if (props.tabs && props.tabs.show && props.tabs.name) {
       let dict = null;
@@ -211,7 +213,7 @@ function useTabs(searchRet, props, ctx) {
       return {
         ...defaultTabs,
         modelValue: searchRet.searchFormData.value[props.tabs.name],
-        "onUpdate:modelValue": (value) => {
+        "onUpdate:modelValue": (value: any) => {
           searchRet.setSearchFormData({ form: { [props.tabs.name]: value } });
         }
       };
@@ -225,11 +227,11 @@ function useTabs(searchRet, props, ctx) {
   };
 }
 
-function slotFilter(ctxSlots, keyPrefix) {
+function slotFilter(ctxSlots: any, keyPrefix: string) {
   if (!ctxSlots) {
     return {};
   }
-  const slots = {};
+  const slots: any = {};
   _.forEach(ctxSlots, (value, key) => {
     if (key.startsWith(keyPrefix)) {
       slots[key] = value;
@@ -238,7 +240,7 @@ function slotFilter(ctxSlots, keyPrefix) {
   return slots;
 }
 
-function useFixedHeight(props, ctx, { tableRef, containerRef }) {
+function useFixedHeight(props: any, ctx: SetupContext, { tableRef, containerRef }: any) {
   const ui = uiContext.get();
   if (ui.table.hasMaxHeight(props.table)) {
     return {};
@@ -288,7 +290,7 @@ function useFixedHeight(props, ctx, { tableRef, containerRef }) {
   return { maxHeightRef, computeBodyHeight };
 }
 
-function useTable(props, ctx) {
+function useTable(props: any, ctx: SetupContext) {
   const ui = uiContext.get();
   const tableRef = ref();
   const containerRef = ref();
@@ -320,7 +322,7 @@ function useTable(props, ctx) {
   const formWrapperRef = ref();
 
   const computedClass = computed(() => {
-    const clazz = { compact: props.toolbar.compact !== false };
+    const clazz: any = { compact: props.toolbar.compact !== false };
     if (props.customClass) {
       clazz[props.customClass] = true;
     }
@@ -330,7 +332,7 @@ function useTable(props, ctx) {
   const innerWrapperRef = ref();
 
   const isFormInner = ref(false);
-  const onFormInnerChange = (value) => {
+  const onFormInnerChange = (value: any) => {
     isFormInner.value = value;
   };
 
@@ -357,6 +359,7 @@ function useTable(props, ctx) {
  */
 export default defineComponent({
   name: "FsCrud",
+  components: { FsFormProvider },
   inheritAttrs: false,
   props: {
     /**
@@ -489,13 +492,16 @@ export default defineComponent({
     "form-value-change",
     "update:modelValue"
   ],
-  setup(props, ctx) {
+  setup(props: any, ctx: any) {
     traceUtil.trace("fs-crud");
+
+    const { ui } = useUi();
     useProviders(props, ctx);
     const search = useSearch(props, ctx);
     const tabs = useTabs(search, props, ctx);
-    const table = useTable(props, ctx, search);
+    const table = useTable(props, ctx);
     return {
+      ui,
       ...search,
       ...table,
       ...tabs

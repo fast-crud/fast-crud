@@ -1,21 +1,12 @@
 import { Ref, toRaw } from "vue";
-import { CrudExpose } from "../d.ts/expose";
+import { CrudExpose, OpenDialogProps } from "../d.ts/expose";
 import _ from "lodash-es";
 import logger from "../utils/util.log";
 import { useMerge } from "../use/use-merge";
 import { useUi } from "../use/use-ui";
 import { useI18n } from "../locale";
-import {
-  ColumnProps,
-  CrudBinding,
-  FormProps,
-  PageQuery,
-  PageRes,
-  RemoveProps,
-  UserPageQuery,
-  UserPageRes
-} from "/src/d.ts";
-import FsFormWrapper from "../components/crud/fs-form-wrapper.js";
+import { ColumnProps, CrudBinding, PageQuery, PageRes, DoRemoveProps, UserPageQuery, UserPageRes } from "/src/d.ts";
+import { useFormWrapper } from "./use-form";
 
 const { merge } = useMerge();
 
@@ -173,6 +164,8 @@ export function useExpose(props: UseExposeProps): UseExposeRet {
   const { crudRef, crudBinding } = props;
   const { ui } = useUi();
   const { t } = useI18n();
+
+  const formWrapperProvider = useFormWrapper(true);
   function checkCrudRef() {
     if (crudRef.value == null) {
       logger.warn("crudRef还未初始化，请在onMounted之后调用");
@@ -434,21 +427,21 @@ export function useExpose(props: UseExposeProps): UseExposeRet {
      * 删除行按钮
      * @param context
      */
-    async doRemove(context: { index: number; row: any }) {
-      const removeProps: RemoveProps = crudBinding.value.table.remove ?? {};
+    async doRemove(context: DoRemoveProps) {
+      const removeBinding: any = crudBinding.value.table.remove ?? {};
       try {
-        if (removeProps.confirmFn) {
-          await removeProps.confirmFn(context);
+        if (removeBinding.confirmFn) {
+          await removeBinding.confirmFn(context);
         } else {
           await ui.messageBox.confirm({
-            title: removeProps.confirmTitle || t("fs.rowHandle.remove.confirmTitle"), // '提示',
-            message: removeProps.confirmMessage || t("fs.rowHandle.remove.confirmMessage"), // '确定要删除此记录吗?',
+            title: removeBinding.confirmTitle || t("fs.rowHandle.remove.confirmTitle"), // '提示',
+            message: removeBinding.confirmMessage || t("fs.rowHandle.remove.confirmMessage"), // '确定要删除此记录吗?',
             type: "warn"
           });
         }
       } catch (e) {
-        if (removeProps.onCanceled) {
-          await removeProps.onCanceled(context);
+        if (removeBinding.onCanceled) {
+          await removeBinding.onCanceled(context);
         }
         return;
       }
@@ -459,16 +452,16 @@ export function useExpose(props: UseExposeProps): UseExposeRet {
         res = await crudBinding.value.request.delRequest(context);
       }
 
-      if (removeProps.showSuccessNotification !== false) {
+      if (removeBinding.showSuccessNotification !== false) {
         ui.notification.success(t("fs.rowHandle.remove.success"));
       }
 
-      if (removeProps.refreshTable !== false) {
+      if (removeBinding.refreshTable !== false) {
         await crudExpose.doRefresh();
       }
 
-      if (removeProps.onRemoved) {
-        await removeProps.onRemoved({ ...context, res });
+      if (removeBinding.onRemoved) {
+        await removeBinding.onRemoved({ ...context, res });
       }
     },
     /**
@@ -477,15 +470,15 @@ export function useExpose(props: UseExposeProps): UseExposeRet {
      * @param context ={mode, initialForm: row, index,...formOptions}
      */
     async openDialog(context: OpenDialogProps) {
-      let formWrapperRef = null;
-      if (context.newInstance === true) {
-        formWrapperRef = FsFormWrapper.open(context);
-      } else {
-        formWrapperRef = this.getFormWrapperRef();
+      if (context.newInstance === true && formWrapperProvider) {
+        //通过新实例打开
+        return await formWrapperProvider.openDialog(context);
       }
+      const formWrapperRef = this.getFormWrapperRef();
       formWrapperRef.open(context);
       return formWrapperRef;
     },
+
     async openAdd(context: OpenDialogProps) {
       const mode = "add";
       let row = context.row;
@@ -498,7 +491,7 @@ export function useExpose(props: UseExposeProps): UseExposeRet {
         ...crudBinding.value.addForm
       };
       _.merge(options, context);
-      this.getFormWrapperRef().open(options);
+      return await this.openDialog(options);
     },
     async openEdit(context: OpenDialogProps) {
       let row = context.row || context[ui.tableColumn.row];

@@ -52,6 +52,7 @@ showTableRef.value = true
 ## 3. compute 【同步计算】
 > 注意后面没有`d`，基于`vue`的`computed`，用法类似，不同的是它支持上下文参数      
 > 开发过程中但凡遇到需要根据表单数据或者行数据参与动态计算的，用`compute`或者`asyncCompute`就对了
+> `compute`代价比`computed`更高，能用computed的就不要用compute
 
 
 
@@ -212,7 +213,7 @@ context = {
 
 ## 适用范围
 1. 对于`ref或computed`类型的动态，基本上整个`crudBinding`都支持
-2. 对于`compute或asyncCompute`,则仅在`columns.key.form`、`columns.key.xxxForm`、`columns.key.column`、`columns.key.search`、`rowHandle`下的属性支持
+2. 对于`compute或asyncCompute`,则仅在`columns.key.form`、`columns.key.xxxForm`、`columns.key.column`（show等跟行数据无关的属性不支持）、`columns.key.search`、`rowHandle`下的属性支持
 3. `form.value`不支持`asyncCompute`方式动态，因为打开对话框就得设置默认值，等异步完成时已经晚了。
 ::: warning  
 使用动态计算会失去配置合并特性，无法与公共配置和基础配置进行合并。     

@@ -84,3 +84,43 @@ export default {
     }
 }
 ```
+
+
+## form对话框
+
+### useFormWrapper
+* 说明: 获得打开对话框能力。 前提是需要使用`<fs-form-provider>`标签将上级组件包裹
+* 类型： `()=>{openDialog:OpenDialogProps}`
+* 示例：
+
+```vue
+<template>
+  <fs-form-provider>  <!-- 这里很重要 -->
+    <router-view/>
+  </fs-form-provider>
+</template>
+<script>
+//这里是 app.vue
+</script>
+```
+
+```vue
+<script setup lang='ts'>
+//这里是页面组件 index.vue
+
+import {useFormWrapper,useColumns,CrudOptions} from "@fast-crud/fast-crud";
+import createCrudOptions from 'crud'
+
+async function openCustomDialog(){
+  const {openDialog} = useFormWrapper()
+  const {buildFormOptions} = useColumns();
+  const {crudOptions} = createCrudOptions({...} as CrudOptions);
+  const opts = buildFormOptions(crudOptions); //将 crudOptions 转化为form表单所需要的options
+  const wrapperRef = await openDialog(opts) //打开对话框
+  return wrapperRef
+}
+</script>
+```
+
+
+
