@@ -96,7 +96,7 @@ export type TransformResProps = {
 
 export type TransformQuery = (query: PageQuery) => UserPageQuery;
 export type TransformRes = (props: TransformResProps) => PageRes;
-export type PageRequest = (query: UserPageQuery) => Promise<UserPageRes>;
+export type PageRequest = ((query: UserPageQuery) => Promise<UserPageRes>) | ((query: PageQuery) => Promise<PageRes>);
 export type EditRequest = (req: EditReq) => Promise<any>;
 export type AddRequest = (req: AddReq) => Promise<any>;
 export type DelRequest = (req: DelReq) => Promise<any>;
