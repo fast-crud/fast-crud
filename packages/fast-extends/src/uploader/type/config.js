@@ -40,6 +40,19 @@ export default {
       // buildKey，获取授权等接口中将会传入
     }
   },
+  s3: {
+    bucket: "fast-crud",
+    sdkOpts: {
+      endPoint: "play.min.io",
+      port: 9000,
+      useSSL: true,
+      accessKey: "Q3AM3UQ867SPQQA43P2F",
+      secretKey: "zuf+tfteSlswRu7BJ86wekitnifILbZam1KYY3TG"
+    },
+    custom: {
+      // buildKey，获取授权等接口中将会传入
+    }
+  },
   form: {
     successHandle(ret) {
       //处理后端返回，转化为组件所需要的格式：{url:xxxx,key:xxx}
