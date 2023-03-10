@@ -5,23 +5,17 @@
 import _ from "lodash-es";
 import { useUploader, buildKey } from "./utils/index.js";
 import { getCurrentInstance } from "vue";
-import Minio from "minio";
+import { PutObjectCommand, S3Client } from "@aws-sdk/client-s3";
 
 async function doUpload({ file, fileName, onProgress, options }) {
-  const minioClient = new Minio.Client({
+  const client = new S3Client({
     ...(options.sdkOpts || {})
   });
 
   return new Promise(async (resolve, reject) => {
     const key = await buildKey(file, fileName, options);
-    const metaData = {
-      "Content-Type": "application/octet-stream",
-      // "X-Amz-Meta-Testing": 1234,
-      // example: 5678
-      ...options.metaData
-    };
     async function complete() {
-      let ret = { url: options.domain + "/" + key, key: key };
+      let ret = { url: options.sdkOpts.endpoint + "/" + options.bucket + "/" + key, key: key };
       if (options.successHandle) {
         ret = await options.successHandle(ret);
         resolve(ret);
@@ -29,13 +23,17 @@ async function doUpload({ file, fileName, onProgress, options }) {
       }
       resolve(ret);
     }
-    return minioClient.fPutObject(options.bucket, key, file, metaData, function (err, etag) {
-      if (err) {
-        reject(err);
-      }
-      //onProgress(res.total);
-      complete();
-    });
+
+    const params = {
+      Bucket: options.bucket, // The name of the bucket. For example, 'sample_bucket_101'.
+      Key: key // The name of the object. For example, 'sample_upload.txt'.
+    };
+    try {
+      await client.send(new PutObjectCommand({ Body: file, ...params }));
+      return complete();
+    } catch (err) {
+      reject(err);
+    }
   });
 }
 export default {

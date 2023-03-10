@@ -196,7 +196,6 @@ export default {
       const array: any = [];
       for (let item of fList) {
         if (ui.upload.isSuccess(item)) {
-          debugger;
           array.push(await buildOneToValue(item));
         }
       }
@@ -317,6 +316,7 @@ export default {
       option.options = props.uploader;
       let uploaderRef = uploaderImplRef.value.getUploaderRef();
       if (uploaderRef == null) {
+        ui.message.warn("Sorry，The uploader component is not ready yet");
         throw new Error("Sorry，The component is not ready yet");
       }
       return await uploaderRef?.upload(option);

@@ -18,6 +18,8 @@
   "author": "Greper",
   "license": "MIT",
   "dependencies": {
+    "@aws-sdk/client-s3": "^3.288.0",
+    "@aws-sdk/s3-request-presigner": "^3.288.0",
     "@soerenmartius/vue3-clipboard": "^0.1.2",
     "@wangeditor/editor": "^5.1.23",
     "@wangeditor/editor-for-vue": "^5.1.12",
