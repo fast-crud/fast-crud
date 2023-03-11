@@ -12,6 +12,7 @@
 | actionbar     |             |          |
 | toolbar       |             |          |
 | header-bottom |             |          |
+| tabs          |             |          |
 | default       |             |          |
 | table         |             |          |
 | form          |             |          |

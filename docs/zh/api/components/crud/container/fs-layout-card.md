@@ -9,6 +9,7 @@
 | header-top    |             |          |
 | search        |             |          |
 | header-bottom |             |          |
+| tabs          |             |          |
 | actionbar     |             |          |
 | toolbar       |             |          |
 | default       |             |          |

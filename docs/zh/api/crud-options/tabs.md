@@ -2,7 +2,7 @@
 # tabs
 * 说明: Tabs快捷查询，在表格顶部显示tabs页签进行快捷查询
 * 类型： Object
-* 更多参数： [FsTabsFilter](/api/components/crud/tabs/index.md)
+* 更多参数： [FsTabsFilter](/api/components/crud/search/tabs-filter.md)
 * demo： [antdv](http://fast-crud.docmirror.cn/antdv/#/crud/feature/tabs)  /  [element](http://fast-crud.docmirror.cn/element/#/crud/feature/tabs)  /  [naive](http://fast-crud.docmirror.cn/naive/#/crud/feature/tabs)
 * 示例
 ```js
