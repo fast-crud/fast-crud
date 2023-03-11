@@ -112,7 +112,6 @@ import { uiContext } from "../ui";
 import { useMerge } from "../use/use-merge";
 import utilLog from "../utils/util.log";
 import { SetSearchFormDataProps } from "/src/d.ts";
-import FsFormProvider from "./crud/fs-form-provider.vue";
 import { useUi } from "../use";
 
 const { merge } = useMerge();
@@ -359,7 +358,6 @@ function useTable(props: any, ctx: SetupContext) {
  */
 export default defineComponent({
   name: "FsCrud",
-  components: { FsFormProvider },
   inheritAttrs: false,
   props: {
     /**

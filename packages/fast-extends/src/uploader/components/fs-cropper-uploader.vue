@@ -104,9 +104,17 @@ export default {
     // 构建下载url方法,不影响提交的value
     buildUrl: {
       type: Function,
-      default: function (value, item) {
-        return typeof value === "object" ? item.url : value;
+      default: async function (value, item) {
+        return typeof value === "object" ? value.url || item?.url : value;
       }
+    },
+    /**
+     * 返回值类型
+     * 支持：`[url,key,object]`
+     */
+    valueType: {
+      type: String, // url ,key, object
+      default: "url"
     }
   },
   emits: ["update:modelValue", "change"],
@@ -147,17 +155,17 @@ export default {
     this.initValue(this.modelValue);
   },
   methods: {
-    initValue(value) {
+    async initValue(value) {
       const list = [];
       if (value == null || value === "") {
         this.list = list;
         return;
       }
       if (typeof value === "string") {
-        list.push({ url: this.buildUrl(value), value: value, status: "done" });
+        list.push({ url: await this.buildUrl(value), value: value, status: "done" });
       } else {
         for (const item of value) {
-          list.push({ url: this.buildUrl(item), value: item, status: "done" });
+          list.push({ url: await this.buildUrl(item), value: item, status: "done" });
         }
       }
       this.list = list;
@@ -213,8 +221,12 @@ export default {
       this.list.push(item);
       try {
         const uploaded = await this.doUpload(option);
-        item.url = this.buildUrl(uploaded.url);
-        item.value = uploaded.url;
+        let value = uploaded;
+        if (this.valueType !== "object") {
+          value = uploaded[this.valueType];
+        }
+        item.url = await this.buildUrl(value);
+        item.value = value;
         item.status = "done";
         this.emit();
       } catch (e) {

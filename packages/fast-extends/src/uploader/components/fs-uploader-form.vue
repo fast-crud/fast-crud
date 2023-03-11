@@ -7,19 +7,6 @@ import ajax from "./utils/ajax";
 import { useUploader, buildKey } from "./utils/index";
 import { getCurrentInstance } from "vue";
 
-function doAjax(ajaxOptions) {
-  return new Promise((resolve, reject) => {
-    ajax(
-      ajaxOptions,
-      async (res) => {
-        resolve(res);
-      },
-      (e) => {
-        reject(e);
-      }
-    );
-  });
-}
 /**
  *
  * @param option {file,filename,action,data,headers}
@@ -35,7 +22,7 @@ async function doUpload({ file, fileName, onProgress, options }) {
   const ajaxOptions = {
     file,
     onProgress,
-    timeout:60000,
+    timeout: 60000,
     ...options
   };
   delete ajaxOptions.uploadRequest;

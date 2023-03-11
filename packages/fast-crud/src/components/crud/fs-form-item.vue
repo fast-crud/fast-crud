@@ -187,6 +187,7 @@ export default {
       justify-content: flex-start;
       .fs-form-item-component {
         flex: 1;
+        max-width: 100%;
       }
     }
   }

@@ -1,11 +1,20 @@
 import { Ref, toRaw } from "vue";
-import { CrudExpose, OpenDialogProps } from "../d.ts/expose";
+import { CrudExpose, OpenDialogProps, OpenEditContext } from "../d.ts/expose";
 import _ from "lodash-es";
 import logger from "../utils/util.log";
 import { useMerge } from "../use/use-merge";
 import { useUi } from "../use/use-ui";
 import { useI18n } from "../locale";
-import { ColumnProps, CrudBinding, PageQuery, PageRes, DoRemoveProps, UserPageQuery, UserPageRes } from "/src/d.ts";
+import {
+  ColumnProps,
+  CrudBinding,
+  PageQuery,
+  PageRes,
+  DoRemoveContext,
+  UserPageQuery,
+  UserPageRes,
+  RemoveProps
+} from "/src/d.ts";
 import { useFormWrapper } from "./use-form";
 
 const { merge } = useMerge();
@@ -165,7 +174,7 @@ export function useExpose(props: UseExposeProps): UseExposeRet {
   const { ui } = useUi();
   const { t } = useI18n();
 
-  const formWrapperProvider = useFormWrapper(true);
+  const formWrapperProvider = useFormWrapper();
   function checkCrudRef() {
     if (crudRef.value == null) {
       logger.warn("crudRef还未初始化，请在onMounted之后调用");
@@ -426,9 +435,10 @@ export function useExpose(props: UseExposeProps): UseExposeRet {
     /**
      * 删除行按钮
      * @param context
+     * @param opts
      */
-    async doRemove(context: DoRemoveProps) {
-      const removeBinding: any = crudBinding.value.table.remove ?? {};
+    async doRemove(context: DoRemoveContext, opts?: RemoveProps) {
+      const removeBinding: any = crudBinding.value.table.remove ?? opts ?? {};
       try {
         if (removeBinding.confirmFn) {
           await removeBinding.confirmFn(context);
@@ -467,66 +477,43 @@ export function useExpose(props: UseExposeProps): UseExposeRet {
     /**
      *
      * 打开表单对话框
-     * @param context ={mode, initialForm: row, index,...formOptions}
+     * @param formOpts ={mode, initialForm: row, index,...formOptions}
      */
-    async openDialog(context: OpenDialogProps) {
-      if (context.newInstance === true && formWrapperProvider) {
+    async openDialog(formOpts: OpenDialogProps) {
+      if (formOpts.newInstance === true && formWrapperProvider) {
         //通过新实例打开
-        return await formWrapperProvider.openDialog(context);
+        return await formWrapperProvider.openDialog(formOpts);
       }
       const formWrapperRef = this.getFormWrapperRef();
-      formWrapperRef.open(context);
+      formWrapperRef.open(formOpts);
       return formWrapperRef;
     },
-
-    async openAdd(context: OpenDialogProps) {
-      const mode = "add";
-      let row = context.row;
+    async _openDialog(mode: string, context: OpenEditContext, formOpts: OpenDialogProps) {
+      // @ts-ignore
+      let row = context.row || context[ui.tableColumn.row];
+      if (row == null && context.index != null) {
+        row = crudExpose.getTableDataRow(context.index);
+      }
       if (crudBinding.value?.request?.infoRequest) {
         row = await crudBinding.value.request.infoRequest({ mode, row });
       }
       const options = {
         mode,
-        initialForm: row || {},
-        ...crudBinding.value.addForm
+        initialForm: row
       };
-      _.merge(options, context);
+      _.merge(options, crudBinding.value[mode + "Form"], context, formOpts);
       return await this.openDialog(options);
     },
-    async openEdit(context: OpenDialogProps) {
-      let row = context.row || context[ui.tableColumn.row];
-      if (row == null && context.index != null) {
-        row = crudExpose.getTableDataRow(context.index);
-      }
-      const mode = "edit";
-      if (crudBinding.value?.request?.infoRequest) {
-        row = await crudBinding.value.request.infoRequest({ mode, row });
-      }
-      const options = {
-        mode,
-        initialForm: row,
-        ...crudBinding.value.editForm
-      };
-      _.merge(options, context);
-      this.getFormWrapperRef().open(options);
+    async openAdd(context: OpenEditContext, formOpts: OpenDialogProps = {}) {
+      return this._openDialog("add", context, formOpts);
     },
-    async openView(context: OpenDialogProps) {
-      let row = context.row || context[ui.tableColumn.row];
-      if (row == null && context.index != null) {
-        row = crudExpose.getTableDataRow(context.index);
-      }
-      const mode = "view";
-      if (crudBinding.value?.request?.infoRequest) {
-        row = await crudBinding.value.request.infoRequest({ mode, row });
-      }
-      const options = {
-        mode,
-        initialForm: row,
-        ...crudBinding.value.viewForm
-      };
-      _.merge(options, context);
-      this.getFormWrapperRef().open(options);
+    async openEdit(context: OpenEditContext, formOpts: OpenDialogProps = {}) {
+      return this._openDialog("edit", context, formOpts);
     },
+    async openView(context: OpenEditContext, formOpts: OpenDialogProps = {}) {
+      return this._openDialog("view", context, formOpts);
+    },
+
     editable: undefined
   };
   crudExpose.editable = useEditable({ crudExpose });

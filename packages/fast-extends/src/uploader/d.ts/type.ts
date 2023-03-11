@@ -12,3 +12,5 @@ export type UploadRequestProps = {
   file: File;
   onProgress: (progress: { percent: number }) => void;
 };
+
+export type SignedUrlType = "get" | "put";

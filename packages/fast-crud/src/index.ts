@@ -12,6 +12,7 @@ import { useDictDefine, useCompute } from "./use";
 import { App } from "vue";
 import { CrudOptions } from "/src/d.ts";
 import { UiInterface } from "@fast-crud/ui-interface";
+import { FsFormWrapper } from "./components";
 const { dict, setDictRequest } = useDictDefine();
 const { ComputeValue, compute, asyncCompute } = useCompute();
 export { ComputeValue, compute, asyncCompute, dict, utils, useI18n, uiContext };
@@ -44,6 +45,8 @@ export const FastCrud = {
       const com = components[key];
       app.component(key, com);
     }
+
+    FsFormWrapper._context = app._context;
 
     types.install();
 

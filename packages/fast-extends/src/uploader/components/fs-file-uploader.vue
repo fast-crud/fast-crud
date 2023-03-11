@@ -118,7 +118,12 @@ export default {
     const fileUploaderRef = ref();
 
     function pickFileName(url) {
-      return url.substring(url.lastIndexOf("/") + 1);
+      const suffix = url.substring(url.lastIndexOf("/") + 1);
+      const wenIndex = suffix.indexOf("?");
+      if (wenIndex >= 0) {
+        return suffix.substring(0, wenIndex);
+      }
+      return suffix;
     }
     async function buildOneToFile(value) {
       let fileValue;
@@ -181,6 +186,7 @@ export default {
 
     async function emitValue(list) {
       let value = await buildEmitValue(list);
+
       onInput(value);
       onChange(value);
     }
@@ -445,7 +451,19 @@ export default {
       };
     }
 
+    const naiveExtraCache: any = {};
     function buildNaiveBinding() {
+      function appendExtra(fileList: any) {
+        let list = fileList.value || fileList;
+        list = _.cloneDeep(list);
+        for (let item of list) {
+          const extra = naiveExtraCache[item.id];
+          if (extra) {
+            _.merge(item, extra);
+          }
+        }
+        return list;
+      }
       return {
         action: "",
         listType: props.listType,
@@ -457,9 +475,15 @@ export default {
           customRequest({
             ...context,
             file: fileInfo.file,
-            onSuccess: (res) => {
+            onSuccess: async (res) => {
               //TODO native upload 会清空多余自定义的属性，比如key、md5
+              const value = props.valueType === "object" ? res : res[props.valueType];
+              res.url = await props.buildUrl(value);
               _.merge(fileInfo, res);
+              naiveExtraCache[fileInfo.id] = {
+                ...res,
+                fsRes: res
+              };
               context.onFinish(fileInfo);
             },
             onProgress: (opts) => {
@@ -475,10 +499,16 @@ export default {
           handleChange(file, fileList.value);
         },
         onChange: ({ event, file, fileList }) => {
+          fileList = appendExtra(fileList);
           handleChange(file, fileList);
         },
         onFinish: (file) => {
-          handleSuccess({}, file, fileList.value);
+          const extra = naiveExtraCache[file.id];
+          if (extra) {
+            _.merge(file, extra);
+          }
+          const list = appendExtra(fileList);
+          handleSuccess(extra, file, list);
         },
         onPreview: handlePreview
       };

@@ -89,24 +89,10 @@ export default {
 ## form对话框
 
 ### useFormWrapper
-* 说明: 获得打开对话框能力。 前提是需要使用`<fs-form-provider>`标签将上级组件包裹
-* 类型： `()=>{openDialog:OpenDialogProps}`
+* 说明: 获得打开自定义对话框能力，可以同时打开多个（默认的view/add/edit只能打开一个）
+* 类型： `()=>{opts:OpenDialogProps}`
 * 示例：
-
-```vue
-<template>
-  <fs-form-provider>  <!-- 这里很重要 -->
-    <router-view/>
-  </fs-form-provider>
-</template>
-<script>
-//这里是 app.vue
-</script>
-```
-
-```vue
-<script setup lang='ts'>
-//这里是页面组件 index.vue
+```js
 
 import {useFormWrapper,useColumns,CrudOptions} from "@fast-crud/fast-crud";
 import createCrudOptions from 'crud'
@@ -117,10 +103,16 @@ async function openCustomDialog(){
   const {crudOptions} = createCrudOptions({...} as CrudOptions);
   const opts = buildFormOptions(crudOptions); //将 crudOptions 转化为form表单所需要的options
   const wrapperRef = await openDialog(opts) //打开对话框
+  //获取formData
+  const formData = wrapperRef.getFormData();
+  wrapperRef.setFormData({xxx:'value'});
+  //对话框实例
   return wrapperRef
 }
-</script>
 ```
+::: warning
+使用此方式打开的对话框无法通过crudExpose.getFormWrapperRef、crudExpose.getFormData获取到实例Ref和data。你只能通过返回值获取
+:::
 
 
 

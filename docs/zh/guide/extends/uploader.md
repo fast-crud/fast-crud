@@ -23,6 +23,15 @@ const crudOptions = {
     columns:{
         key:{
             type:'file-uploader',
+            form:{
+                component:{
+                    uploader:{
+                        //上传的自定义参数，可以覆盖“参数参考”中的全局参数
+                        type:"cos",
+                        bucket: "d2p-demo", //覆盖cos的bucket
+                    }
+                }
+            }
         }
     }
 }

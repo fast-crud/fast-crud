@@ -85,3 +85,17 @@ export default function upload(option, onSuccess, onError) {
   xhr.send(formData);
   return xhr;
 }
+
+export function doAjax(ajaxOptions) {
+  return new Promise((resolve, reject) => {
+    ajax(
+      ajaxOptions,
+      async (res) => {
+        resolve(res);
+      },
+      (e) => {
+        reject(e);
+      }
+    );
+  });
+}
