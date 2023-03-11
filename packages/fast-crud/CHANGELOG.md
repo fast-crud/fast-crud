@@ -3,6 +3,38 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [1.10.0](https://github.com/fast-crud/fast-crud/compare/v1.9.2...v1.10.0) (2023-03-11)
+
+
+### Bug Fixes
+
+* 行编辑支持多级表头 ([a547c99](https://github.com/fast-crud/fast-crud/commit/a547c99250f2d00b9d91c326364ccb81415c2772))
+* 修复误删draggable的import，导致列设置字段无法显示的bug ([f36c506](https://github.com/fast-crud/fast-crud/commit/f36c506373a38ec3681f9c0ca8ed248a19c4db0b))
+* **values-format:** 修复defaultLabel无效的bug ([bb55591](https://github.com/fast-crud/fast-crud/commit/bb55591be7602810ced518d7d06b224771d0d243))
+
+
+### Features
+
+* fs-form-wrapper支持多实例 ([023cc1d](https://github.com/fast-crud/fast-crud/commit/023cc1d425d5b1fa618a3d13fe5c88c81671524d))
+* resetCrudOptions 示例 ([67a6c63](https://github.com/fast-crud/fast-crud/commit/67a6c63dd6cd4c73bae0c65da1a30d4fe54726d5))
+* tabs快捷查询组件 ([db88968](https://github.com/fast-crud/fast-crud/commit/db88968fc2b428e839c85c317483513719a6099c))
+
+
+### Performance Improvements
+
+* 表单下方按钮支持context ([583017f](https://github.com/fast-crud/fast-crud/commit/583017f0080dc9a244883c6fe89ce4068496f041))
+* 日期增加week、month、year、quarter类型 ([6073b00](https://github.com/fast-crud/fast-crud/commit/6073b006f740072f5fa3e9ad54c109819963ec93))
+* 完善文档，完善部分types ([8fff02d](https://github.com/fast-crud/fast-crud/commit/8fff02d758530bbb1212d7475dc94bc8b562ef97))
+* 优化d.ts类型 ([7a51aac](https://github.com/fast-crud/fast-crud/commit/7a51aace532ed6692f28a53332a2103a74f5827a))
+* 优化dict ([f2f9d6e](https://github.com/fast-crud/fast-crud/commit/f2f9d6e8f9061a30f88e5d0591de19c65273d912))
+* 增加s3示例 ([9060b03](https://github.com/fast-crud/fast-crud/commit/9060b036ce9e36ef8f2ddc50b1362682c7d3aa7f))
+* antdv 增加自定义表头示例 ([d5cc254](https://github.com/fast-crud/fast-crud/commit/d5cc254f003983afcf48403604782fde4eb2dfb2))
+* upload sdk换成aws-s3 ([6814083](https://github.com/fast-crud/fast-crud/commit/681408321be32ce42245a4aa34e491694a7e3d0e))
+
+
+
+
+
 ## [1.9.2](https://github.com/fast-crud/fast-crud/compare/v1.9.1...v1.9.2) (2023-03-01)
 
 

@@ -3,6 +3,24 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [1.10.0](https://github.com/fast-crud/fast-crud/compare/v1.9.2...v1.10.0) (2023-03-11)
+
+
+### Features
+
+* upload 支持s3 minio ([2c2b9f6](https://github.com/fast-crud/fast-crud/commit/2c2b9f6e509f96e9c219f9d220b856a5b0f5fcb1))
+
+
+### Performance Improvements
+
+* 日期增加week、month、year、quarter类型 ([6073b00](https://github.com/fast-crud/fast-crud/commit/6073b006f740072f5fa3e9ad54c109819963ec93))
+* 增加s3示例 ([9060b03](https://github.com/fast-crud/fast-crud/commit/9060b036ce9e36ef8f2ddc50b1362682c7d3aa7f))
+* upload sdk换成aws-s3 ([6814083](https://github.com/fast-crud/fast-crud/commit/681408321be32ce42245a4aa34e491694a7e3d0e))
+
+
+
+
+
 ## [1.9.2](https://github.com/fast-crud/fast-crud/compare/v1.9.1...v1.9.2) (2023-03-01)
 
 **Note:** Version bump only for package @fast-crud/fast-extends

@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [1.10.0](https://github.com/fast-crud/fast-crud/compare/v1.9.2...v1.10.0) (2023-03-11)
+
+
+### Features
+
+* tabs快捷查询组件 ([db88968](https://github.com/fast-crud/fast-crud/commit/db88968fc2b428e839c85c317483513719a6099c))
+
+
+
+
+
 ## [1.9.2](https://github.com/fast-crud/fast-crud/compare/v1.9.1...v1.9.2) (2023-03-01)
 
 **Note:** Version bump only for package @fast-crud/ui-element
