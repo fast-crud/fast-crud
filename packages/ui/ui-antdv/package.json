@@ -1,6 +1,6 @@
 {
   "name": "@fast-crud/ui-antdv",
-  "version": "1.9.2",
+  "version": "1.10.0",
   "description": "",
   "main": "./dist/ui-antdv.umd.js",
   "module": "./dist/ui-antdv.mjs",
@@ -13,11 +13,11 @@
   "author": "Greper",
   "license": "MIT",
   "dependencies": {
-    "@fast-crud/ui-interface": "^1.9.1"
+    "@fast-crud/ui-interface": "^1.10.0"
   },
   "devDependencies": {
     "@ant-design/icons-vue": "^6.0.1",
-    "@fast-crud/fast-crud": "^1.9.2",
+    "@fast-crud/fast-crud": "^1.10.0",
     "@rollup/plugin-strip": "^3.0.1",
     "@rollup/plugin-typescript": "^10.0.1",
     "@types/lodash-es": "^4.17.6",
