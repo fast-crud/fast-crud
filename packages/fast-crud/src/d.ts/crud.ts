@@ -1,4 +1,7 @@
 import { ToolbarComponentProps } from "/src/components/toolbar/props";
+import { ComputedRef, Ref } from "vue";
+
+export type FsRefValue<T> = T | Ref<T> | ComputedRef<T>;
 
 export type ScopeContext = {
   /**
@@ -120,6 +123,7 @@ export type RequestProp = {
  * 组件配置
  */
 export type ComponentProps = {
+  show?: FsRefValue<boolean>;
   /**
    * 组件的名称
    */
@@ -591,15 +595,15 @@ export type ColumnProps = {
   /**
    * 在列设置中是否禁用勾选
    */
-  columnSetDisabled?: Boolean;
+  columnSetDisabled?: boolean;
   /**
    * 在列设置中是否显示此字段
    */
-  columnSetShow?: Boolean;
+  columnSetShow?: boolean;
   /**
    * 此列是否显示
    */
-  show?: Boolean;
+  show?: FsRefValue<boolean>;
   /**
    * 列排序号
    */

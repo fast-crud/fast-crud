@@ -134,7 +134,7 @@ function compute(computeFn: ComputeFn): any {
 export type GetContextFn = () => any;
 
 export type AsyncComputeOptions = {
-  watch: (getContextFn: GetContextFn) => any;
+  watch?: (getContextFn: GetContextFn) => any;
   asyncFn: (value: any, getContextFn: GetContextFn) => any;
   defaultValue?: any;
 };
