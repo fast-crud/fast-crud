@@ -1,7 +1,7 @@
 import { computed, ref } from "vue";
-import { asyncCompute, compute, CrudOptions, TableProps } from "../src";
+import { asyncCompute, compute, DynamicallyCrudOptions } from "../src";
 
-const crudOptions: CrudOptions = {
+const crudOptions: DynamicallyCrudOptions = {
   table: {
     scroll: {
       x: 1500
@@ -10,28 +10,31 @@ const crudOptions: CrudOptions = {
     show: computed(() => {
       return true;
     })
-  } as TableProps,
+  },
   form: {
     labelCol: { span: 8 },
-    wrapperCol: { span: 14 }
+    wrapperCol: ref({ span: 14 })
   },
   rowHandle: {
     fixed: "right",
     show: computed(() => {
-      return false;
+      return "111";
     }),
     buttons: {
       edit: {
-        show: compute(({ row }) => {
+        show: compute<boolean>(({ row }) => {
           return row.editable;
-        })
+        }),
+        icon: false
       },
       remove: {
         show: compute(({ row }) => {
           return row.editable;
         }),
-        icon: compute<boolean>(({ row }) => {
-          return row.icon;
+        icon: asyncCompute<boolean>({
+          async asyncFn() {
+            return false;
+          }
         })
       },
       custom: compute(({ row }) => {

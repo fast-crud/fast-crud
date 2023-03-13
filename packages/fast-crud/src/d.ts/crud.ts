@@ -1,9 +1,10 @@
 import { ToolbarComponentProps } from "/src/components/toolbar/props";
-import { ComputedRef, Ref } from "vue";
-import { AsyncComputeValue, ComputeValue } from "/src/use";
+import { Ref } from "vue";
+import { ComputeContext } from "/src/d.ts/compute";
+import { AsyncComputeValue, GetContextFn } from "/src/use";
 
-export type FsRefValue<T> = T | Ref<T> | ComputedRef<T>;
-export type FsComputeValue<T> = FsRefValue<T> | ComputeValue<T> | AsyncComputeValue<T>;
+// export type FsRefValue<T> = T | Ref<T> | ComputedRef<T>;
+// export type FsComputeValue<T> = FsRefValue<T> | ComputeValue<T> | AsyncComputeValue<T>;
 
 export type ScopeContext = {
   /**
@@ -125,7 +126,7 @@ export type RequestProp = {
  * 组件配置
  */
 export type ComponentProps = {
-  show?: FsComputeValue<boolean>;
+  show?: boolean;
   /**
    * 组件的名称
    */
@@ -481,6 +482,8 @@ export type ToolbarProps = {
   [key: string]: any;
 } & ToolbarComponentProps;
 
+type ButtonIconProps = string | { icon: string; [key: string]: any };
+type NullableString = string | null;
 /**
  * 按钮配置
  */
@@ -488,12 +491,12 @@ export type ButtonProps = {
   /**
    * 按钮文本
    */
-  text?: string | null;
+  text?: NullableString;
   /**
    * 图标
    * [图标的使用](/guide/start/icon.html)
    */
-  icon?: string | { icon: string; [key: string]: any };
+  icon?: ButtonIconProps;
   /**
    * 文本右侧图标
    */
@@ -606,7 +609,7 @@ export type ColumnProps = {
   /**
    * 此列是否显示
    */
-  show?: FsRefValue<boolean>;
+  show?: boolean;
   /**
    * 列排序号
    */
@@ -745,7 +748,7 @@ export type RowHandleProps = {
   /**
    * 是否显示操作列
    */
-  show?: FsRefValue<boolean>;
+  show?: boolean;
   /**
    * 操作列按钮配置
    */
@@ -780,6 +783,7 @@ export type CompositionColumns = {
    */
   [prop: string]: ColumnCompositionProps;
 };
+
 /**
  * crud配置
  */
@@ -877,6 +881,25 @@ export type CrudBinding = {
   [key: string]: any;
 };
 
-export type ComputeOptions<T> = {
-  [P in keyof T]: T[P];
+export type ComputeRef<T = any> = {
+  computeFn: (context: ComputeContext) => T;
 };
+
+export type ComputeFn<T> = (context: ComputeContext) => T;
+
+export type AsyncComputeRef<T> = {
+  watch?: (getContextFn: GetContextFn) => any;
+  asyncFn: (value: any, getContextFn: GetContextFn) => Promise<T>;
+  defaultValue?: any;
+};
+
+export type RefableType<T> = Ref<T> | ComputeRef<T> | AsyncComputeRef<T> | DynamicType<T>;
+
+export type DynamicType<T> = {
+  [P in keyof T]: T[P] | RefableType<T[P]>;
+};
+
+/**
+ * crudOptions支持动态化配置
+ */
+export type DynamicallyCrudOptions = DynamicType<CrudOptions>;

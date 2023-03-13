@@ -5,7 +5,7 @@ import { useMerge } from "./use-merge";
 import logger from "../utils/util.log";
 import { uiContext } from "../ui";
 import { useI18n } from "../locale";
-import { ComputeContext, CrudBinding, CrudExpose, ScopeContext } from "../d.ts";
+import { ComputeContext, CrudBinding, CrudExpose, DynamicallyCrudOptions, ScopeContext } from "../d.ts";
 import { useCompute } from "./use-compute";
 import { useColumns } from "./use-columns";
 import { CrudOptions } from "../d.ts/crud";
@@ -15,7 +15,7 @@ import { useExpose } from "./use-expose";
 const { merge, cloneDeep } = useMerge();
 
 export type UseCrudProps = {
-  crudOptions: CrudOptions;
+  crudOptions: DynamicallyCrudOptions;
   /**
    * 即将废弃，请使用crudExpose
    */
@@ -46,7 +46,7 @@ export type UseCrudRet = {
 export function useCrud(ctx: UseCrudProps): UseCrudRet {
   const ui = uiContext.get();
   const { t } = useI18n();
-  const options: CrudOptions = ctx.crudOptions;
+  const options: CrudOptions = ctx.crudOptions as CrudOptions;
   const crudExpose = ctx.expose || ctx.crudExpose;
   if (!crudExpose) {
     throw new Error("crudExpose不能为空，请给useCrud传入{crudExpose}参数");
@@ -359,7 +359,7 @@ export type CreateCrudOptionsRet = {
   /**
    * crudOptions
    */
-  crudOptions: CrudOptions;
+  crudOptions: DynamicallyCrudOptions;
   /**
    * 其他从createCrudOptions自定义返回的参数
    */
