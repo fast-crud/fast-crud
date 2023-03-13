@@ -1,8 +1,9 @@
 import _ from "lodash-es";
-import { computed, ref, toRaw, watch, isRef } from "vue";
+import { computed, ref, toRaw, watch, isRef, Ref } from "vue";
 import getEachDeep from "deepdash-es/getEachDeep";
 import { useMerge } from "./use-merge";
 import { ComputeContext } from "/src/d.ts/compute";
+import { ComputedRefValue } from "vue/macros";
 const { cloneDeep } = useMerge();
 // @ts-ignore
 const eachDeep = getEachDeep(_);
@@ -115,34 +116,34 @@ function doComputed(
   });
 }
 
-export type ComputeFn = (context: ComputeContext) => any;
-export class ComputeValue {
-  computeFn: ComputeFn;
-  constructor(computeFn: ComputeFn) {
+export type ComputeFn<T> = (context: ComputeContext) => T;
+export class ComputeValue<T> {
+  computeFn: ComputeFn<T>;
+  constructor(computeFn: ComputeFn<T>) {
     this.computeFn = computeFn;
   }
 
-  static create(computeFn: ComputeFn) {
-    return new ComputeValue(computeFn);
+  static create<T>(computeFn: ComputeFn<T>): ComputeValue<T> {
+    return new ComputeValue<T>(computeFn);
   }
 }
 
-function compute(computeFn: ComputeFn): any {
-  return ComputeValue.create(computeFn);
+function compute<T>(computeFn: ComputeFn<T>): ComputeValue<T> {
+  return ComputeValue.create<T>(computeFn);
 }
 
 export type GetContextFn = () => any;
 
-export type AsyncComputeOptions = {
+export type AsyncComputeOptions<T> = {
   watch?: (getContextFn: GetContextFn) => any;
   asyncFn: (value: any, getContextFn: GetContextFn) => any;
-  defaultValue?: any;
+  defaultValue?: T;
 };
-export class AsyncComputeValue {
+export class AsyncComputeValue<T> implements AsyncComputeOptions<T> {
   watch;
   asyncFn;
-  defaultValue?;
-  constructor(options: AsyncComputeOptions) {
+  defaultValue?: T;
+  constructor(options: AsyncComputeOptions<T>) {
     const { watch, asyncFn, defaultValue } = options;
     this.watch = watch;
     this.asyncFn = asyncFn;
@@ -151,8 +152,8 @@ export class AsyncComputeValue {
 
   buildAsyncRef(getContextFn: GetContextFn) {
     getContextFn = getContextFn || function () {};
-    const asyncRef = ref(this.defaultValue);
-    const computedValue = computed(() => {
+    const asyncRef = ref<T>(this.defaultValue);
+    const computedValue = computed<T>(() => {
       if (this.watch) {
         return this.watch(getContextFn());
       }
@@ -172,8 +173,8 @@ export class AsyncComputeValue {
     return asyncRef;
   }
 }
-function asyncCompute(options: AsyncComputeOptions) {
-  return new AsyncComputeValue(options);
+function asyncCompute<T>(options: AsyncComputeOptions<T>): AsyncComputeValue<T> {
+  return new AsyncComputeValue<T>(options);
 }
 export function useCompute() {
   return {

@@ -44,7 +44,8 @@ module.exports = {
                     text: '进阶',
                     items: [
                         {text: '基于配置', link: '/guide/advance/options'},
-                        {text: '配置与组件的对应关系', link: '/guide/advance/struct'},
+                        {text: '配置总览', link: '/guide/advance/struct'},
+                        {text: '配置覆盖', link: '/guide/advance/cover'},
                         {text: '字段配置', link: '/guide/advance/component'},
                         {text: '字段类型', link: '/guide/advance/column-type'},
                         {text: '数据字典', link: '/guide/advance/dict'},

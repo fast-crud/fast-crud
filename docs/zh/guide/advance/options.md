@@ -14,11 +14,13 @@
 
 
 ### useCrud
-主要作用是初始化crud，将`crudOptions`转化为`crudBinding`    
+主要作用是初始化crud，将`crudOptions`转化为`crudBinding` 
 转化过程主要做了两件事：    
 1. 用户的`crudOptions`与公共配置、基础配置进行合并
-2. 将`columns`里面的`form`,`column`,`search`等配置分散到`table.columns`,`form.columns`,`search.columns`中去
+2. 字段配置分发，将`crudOptions.columns[key]`里面的`form`,`column`,`search`等配置分发到`table.columns`,`form.columns`,`search.columns`中去
+   * 其中`viewForm`、`addForm`、`editForm`与`form`会进行合并，然后分发到`viewForm.columns`、`addForm.columns`、`editForm.columns`
 
+如此生成出来的新的`Options`就是`crudBinding`
 
 
 ### crudBinding
@@ -29,6 +31,18 @@
     <fs-crud ref="crudRef" v-bind="crudBinding"/>
 </template>
 ```
+
+::: tip
+`crudBinding.table`驱动表格    
+`crudBinding.search`驱动查询框    
+`crudBinding.viewForm`驱动查看表单      
+`crudBinding.editForm`驱动编辑表单      
+`crudBinding.addForm`驱动添加表单   
+:::
+
+配置对应如图
+![](../../images/struct.png)
+
 
 ::: tip
 

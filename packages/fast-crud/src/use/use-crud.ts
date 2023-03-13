@@ -356,6 +356,9 @@ export type CreateCrudOptionsProps = {
 };
 
 export type CreateCrudOptionsRet = {
+  /**
+   * crudOptions
+   */
   crudOptions: CrudOptions;
   /**
    * 其他从createCrudOptions自定义返回的参数

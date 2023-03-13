@@ -1,7 +1,9 @@
 import { ToolbarComponentProps } from "/src/components/toolbar/props";
 import { ComputedRef, Ref } from "vue";
+import { AsyncComputeValue, ComputeValue } from "/src/use";
 
 export type FsRefValue<T> = T | Ref<T> | ComputedRef<T>;
+export type FsComputeValue<T> = FsRefValue<T> | ComputeValue<T> | AsyncComputeValue<T>;
 
 export type ScopeContext = {
   /**
@@ -123,7 +125,7 @@ export type RequestProp = {
  * 组件配置
  */
 export type ComponentProps = {
-  show?: FsRefValue<boolean>;
+  show?: FsComputeValue<boolean>;
   /**
    * 组件的名称
    */
@@ -516,15 +518,18 @@ export type ButtonProps = {
    */
   click?: (context: any) => void;
 
+  show?: boolean;
+
   /**
    * 其他按钮配置 [a|el|n]-button的配置，请查看对应ui组件的文档
    */
   [key: string]: any;
 };
+type ButtonsProps = {
+  [key: string]: ButtonProps;
+};
 export type ActionbarProps = {
-  buttons?: {
-    [key: string]: ButtonProps;
-  };
+  buttons?: ButtonsProps;
 
   [key: string]: any;
 };
@@ -539,9 +544,7 @@ export type SearchProps = {
   /**
    * 查询框的按钮配置（查询和重置按钮，你还可以添加自定义按钮）
    */
-  buttons?: {
-    [key: string]: ButtonProps;
-  };
+  buttons?: ButtonsProps;
   /**
    * 布局方式：【single-line单行, multi-line多行】
    */
@@ -632,7 +635,7 @@ export type ColumnProps = {
 /**
  * valueBuild参数
  */
-export type ValueBuilderProps = {
+export type ValueBuilderContext = {
   value: any;
   key: string;
   row?: any;
@@ -641,7 +644,7 @@ export type ValueBuilderProps = {
   mode?: string;
   column?: any;
 };
-export type ValueResolveProps = {
+export type ValueResolveContext = {
   value: any;
   key: string;
   row?: any;
@@ -688,14 +691,14 @@ export type ColumnCompositionProps = {
    * 即row[key]=字段组件能够识别的值
    * @param context
    */
-  valueBuilder?: (context: ValueBuilderProps) => void;
+  valueBuilder?: (context: ValueBuilderContext) => void;
   /**
    * 值解析器，表单提交前执行
    * 表单输出的值可能不是后台所需要的值，所以需要在提交前做一层转化
    * 即：row[key]=后台能所需要的值
    * @param context
    */
-  valueResolve?: (context: ValueResolveProps) => void;
+  valueResolve?: (context: ValueResolveContext) => void;
   /**
    * 其他配置
    */
@@ -716,6 +719,25 @@ export type PaginationProps = {
   [key: string]: any;
 };
 
+type RowHandleDropdownProps = {
+  /**
+   * 更多按钮
+   */
+  more?: ButtonProps;
+
+  [key: string]: any;
+};
+type RowHandleGroupProps = {
+  /**
+   * 按钮组组key
+   */
+  [groupKey: string]: {
+    /**
+     * 按钮
+     */
+    [buttonKey: string]: ButtonProps;
+  };
+};
 /**
  * 操作列配置
  */
@@ -723,39 +745,20 @@ export type RowHandleProps = {
   /**
    * 是否显示操作列
    */
-  show?: boolean;
+  show?: FsRefValue<boolean>;
   /**
    * 操作列按钮配置
    */
-  buttons?: {
-    [key: string]: ButtonProps;
-  };
+  buttons?: ButtonsProps;
 
-  dropdown?: {
-    /**
-     * 更多按钮
-     */
-    more?: ButtonProps;
-
-    [key: string]: any;
-  };
+  dropdown?: RowHandleDropdownProps;
 
   /**
    * 额外的按钮组
    * 激活时就显示，没激活的不显示
    * 同一时间只能激活一组
    */
-  group?: {
-    /**
-     * 按钮组组key
-     */
-    [groupKey: string]: {
-      /**
-       * 按钮
-       */
-      [buttonKey: string]: ButtonProps;
-    };
-  };
+  group?: RowHandleGroupProps;
 
   /**
    * 当前激活是哪个分组
@@ -768,7 +771,9 @@ export type RowHandleProps = {
    */
   [key: string]: any;
 };
-
+/**
+ * 复合columns配置
+ */
 export type CompositionColumns = {
   /**
    * 字段key:对应的列综合配置
@@ -779,37 +784,40 @@ export type CompositionColumns = {
  * crud配置
  */
 export type CrudOptions = {
-  setting?: {
-    viewFormUseCellComponent?: false;
-  };
-  /**
-   * 模式
-   */
-  mode?: {
-    /**
-     * 模式名称: local,remote
-     */
-    name?: string;
-    /**
-     *  更新时是否将表单值merge到行数据中
-     */
-    isMergeWhenUpdate?: boolean;
-    /**
-     * 添加时是否在列表最后插入
-     */
-    isAppendWhenAdd?: boolean;
-    [key: string]: any;
-  };
   /**
    * 列配置
    */
   columns?: CompositionColumns;
 } & CrudBinding;
 
+type CrudSetting = {
+  viewFormUseCellComponent?: false;
+};
+type CrudMode = {
+  /**
+   * 模式名称: local,remote
+   */
+  name?: string;
+  /**
+   *  更新时是否将表单值merge到行数据中
+   */
+  isMergeWhenUpdate?: boolean;
+  /**
+   * 添加时是否在列表最后插入
+   */
+  isAppendWhenAdd?: boolean;
+  [key: string]: any;
+};
 /**
  * crudBinding
  */
 export type CrudBinding = {
+  setting?: CrudSetting;
+  /**
+   * 模式
+   */
+  mode?: CrudMode;
+
   /**
    * 表格配置
    */
@@ -867,4 +875,8 @@ export type CrudBinding = {
    * 其他配置
    */
   [key: string]: any;
+};
+
+export type ComputeOptions<T> = {
+  [P in keyof T]: T[P];
 };
