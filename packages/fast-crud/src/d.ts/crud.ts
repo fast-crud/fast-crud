@@ -1,7 +1,9 @@
 import { ToolbarComponentProps } from "/src/components/toolbar/props";
-import { Ref } from "vue";
+import { Ref, Slots } from "vue";
 import { ComputeContext } from "/src/d.ts/compute";
-import { AsyncComputeValue, GetContextFn } from "/src/use";
+import { AsyncComputeValue, Dict, GetContextFn } from "/src/use";
+import { Slot } from "vue";
+import { ShallowRef } from "vue";
 
 // export type FsRefValue<T> = T | Ref<T> | ComputedRef<T>;
 // export type FsComputeValue<T> = FsRefValue<T> | ComputeValue<T> | AsyncComputeValue<T>;
@@ -46,6 +48,23 @@ export type ScopeContext = {
    */
   componentRef: any;
 };
+
+export type ComponentEventContext = {
+  /**
+   * 原始事件
+   */
+  $event: any;
+} & ScopeContext;
+
+export type ValueChangeContext = {
+  immediate: boolean;
+} & ScopeContext;
+
+export type ValueChangeProps = {
+  immediate?: boolean;
+  handle: ValueChangeHandle;
+};
+export type ValueChangeHandle = (context: ValueChangeContext) => Promise<void>;
 
 export type PageQuery = {
   page?: any;
@@ -130,7 +149,7 @@ export type ComponentProps = {
   /**
    * 组件的名称
    */
-  name?: string | object;
+  name?: string | ShallowRef;
   /**
    * vmodel绑定的目标属性名
    */
@@ -153,17 +172,40 @@ export type ComponentProps = {
   };
 
   /**
-   * 组件事件监听
+   * 组件事件监听,带上下文
    */
   on?: {
-    [key: string]: (context?: any) => void;
+    [key: string]: (context?: ComponentEventContext) => void;
   };
 
   /**
-   * 组件其他参数
-   * 事件：onXxx:(event)=>void 组件原始事件监听
-   *      on.onXxx:(context)=>void 组件事件监听(对原始事件包装)
-   * 样式：style、class等
+   * 同on，即将废弃
+   */
+  events?: {
+    [key: string]: (context?: ComponentEventContext) => void;
+  };
+
+  /**
+   * 插槽
+   */
+  slots?: {
+    [name: string]: Slot;
+  };
+
+  /**
+   * 同插槽
+   */
+  children?: {
+    [name: string]: Slot;
+  };
+
+  /**
+   * 直接渲染
+   * @param scope
+   */
+  render?: (scope: ScopeContext) => any;
+  /**
+   * 组件其他参数，如style、class、onXxx事件等
    */
   [key: string]: any;
 };
@@ -228,6 +270,18 @@ export type TableProps = {
   remove?: RemoveProps;
 
   /**
+   * x-table 插槽
+   */
+  slots?: {
+    [name: string]: Slot;
+  };
+
+  /**
+   * 表格数据
+   */
+  data?: any[];
+
+  /**
    * [x]-table组件的配置
    */
   [key: string]: any;
@@ -247,7 +301,7 @@ export type FormWrapperProps = {
   /**
    * 对话框使用什么组件，[el-dialog,a-modal,n-modal,el-drawer,a-drawer,n-drawer]
    */
-  is?: string;
+  is?: string | ShallowRef;
   /**
    * 对话框打开前事件处理
    * @param opts
@@ -293,7 +347,7 @@ export type FormGroupItemProps = {
    * 插槽，可以用来自定义标题
    */
   slots?: {
-    [key: string]: any;
+    [name: string]: Slot;
   };
   /**
    * 此分组包含哪些字段,keys数组
@@ -371,7 +425,7 @@ export type FormProps = {
    * 值变化后的操作
    * @param context
    */
-  valueChange?: (context: any) => void | { immediate?: boolean; handle?: (context: any) => void };
+  valueChange?: ValueChangeHandle | ValueChangeProps;
   /**
    * 表单重置时的操作
    */
@@ -471,7 +525,7 @@ export type ContainerProps = {
   /**
    * 布局容器组件名称
    */
-  is?: string;
+  is?: string | ShallowRef;
   [key: string]: any;
 };
 
@@ -618,17 +672,23 @@ export type ColumnProps = {
    * 格式化方法，比如格式化一下时间
    * @param scope
    */
-  formatter?: (scope: any) => string;
+  formatter?: (scope: ScopeContext) => string;
   /**
    * 自定义render方法
    * @param scope
    */
-  cellRender?: (scope: any) => any;
+  cellRender?: (scope: ScopeContext) => any;
 
   /**
    * 多级表头
    */
   children?: ColumnProps[];
+
+  /**
+   * 单元格值变化事件处理
+   */
+  valueChange?: ValueChangeHandle | ValueChangeProps;
+
   /**
    * 其他x-table-column配置
    */
@@ -647,15 +707,8 @@ export type ValueBuilderContext = {
   mode?: string;
   column?: any;
 };
-export type ValueResolveContext = {
-  value: any;
-  key: string;
-  row?: any;
-  form?: any;
-  index: number;
-  mode?: string;
-  column?: any;
-};
+export type ValueResolveContext = ValueBuilderContext;
+
 /**
  * 列综合配置
  */
@@ -664,6 +717,11 @@ export type ColumnCompositionProps = {
    * 列标题
    */
   title?: string;
+
+  /**
+   * 字段类型，必填，【默认可以用：text】
+   */
+  type: string | string[];
   /**
    * 表格列配置（单元格）
    */
@@ -702,6 +760,11 @@ export type ColumnCompositionProps = {
    * @param context
    */
   valueResolve?: (context: ValueResolveContext) => void;
+
+  /**
+   * dict，会复制到各个component中去
+   */
+  dict?: Dict;
   /**
    * 其他配置
    */
@@ -779,7 +842,7 @@ export type RowHandleProps = {
  */
 export type CompositionColumns = {
   /**
-   * 字段key:对应的列综合配置
+   * 字段复合配置, 里面的{search,column,form,viewForm,editForm,addForm}设置将分发到各个部件的columns中
    */
   [prop: string]: ColumnCompositionProps;
 };
@@ -888,7 +951,7 @@ export type ComputeRef<T = any> = {
 export type ComputeFn<T> = (context: ComputeContext) => T;
 
 export type AsyncComputeRef<T> = {
-  watch?: (getContextFn: GetContextFn) => any;
+  watch?: (context: ScopeContext) => any;
   asyncFn: (value: any, getContextFn: GetContextFn) => Promise<T>;
   defaultValue?: any;
 };

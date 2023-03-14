@@ -78,7 +78,7 @@ export default {
      */
     props: {}
   },
-  emits: ["update:dict", "update:modelValue"],
+  emits: ["update:dict", "update:modelValue", "mounted"],
   setup(props, ctx) {
     const { proxy } = getCurrentInstance();
     const { ui } = useUi();
@@ -86,11 +86,9 @@ export default {
       return props.scope;
     });
 
-    if (props.onMounted) {
-      onMounted(() => {
-        props.onMounted(props.scope);
-      });
-    }
+    onMounted(() => {
+      ctx.emit("mounted", props.scope);
+    });
 
     // 带事件的attrs
     const allAttrs = computed(() => {

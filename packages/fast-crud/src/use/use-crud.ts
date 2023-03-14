@@ -5,7 +5,7 @@ import { useMerge } from "./use-merge";
 import logger from "../utils/util.log";
 import { uiContext } from "../ui";
 import { useI18n } from "../locale";
-import { ComputeContext, CrudBinding, CrudExpose, DynamicallyCrudOptions, ScopeContext } from "../d.ts";
+import { ComputeContext, CrudBinding, CrudExpose, DynamicallyCrudOptions, DynamicType, ScopeContext } from "../d.ts";
 import { useCompute } from "./use-compute";
 import { useColumns } from "./use-columns";
 import { CrudOptions } from "../d.ts/crud";
@@ -33,7 +33,7 @@ export type UseCrudRet = {
    * 重新设置crudOptions
    * @param overOptions
    */
-  resetCrudOptions: (options: CrudOptions) => void;
+  resetCrudOptions: (options: DynamicType<CrudOptions>) => void;
 
   /**
    * 追加配置,注意是覆盖crudBinding的结构，而不是crudOptions的结构

@@ -4,7 +4,7 @@ import getEachDeep from "deepdash-es/getEachDeep";
 import { useMerge } from "./use-merge";
 import { ComputeContext } from "/src/d.ts/compute";
 import { ComputedRefValue } from "vue/macros";
-import { AsyncComputeRef, ComputeFn, ComputeRef } from "/src/d.ts";
+import { AsyncComputeRef, ComputeFn, ComputeRef, ScopeContext } from "/src/d.ts";
 const { cloneDeep } = useMerge();
 // @ts-ignore
 const eachDeep = getEachDeep(_);
@@ -130,9 +130,9 @@ function compute<T>(computeFn: (context: ComputeContext) => T): ComputeValue<T> 
 
 export type GetContextFn = () => any;
 
-export class AsyncComputeValue<T> implements AsyncComputeRef<T> {
-  watch?: (getContextFn: GetContextFn) => any;
-  asyncFn: (value: any, getContextFn: GetContextFn) => Promise<T>;
+export class AsyncComputeValue<T, P = any> implements AsyncComputeRef<T> {
+  watch?: (context: ScopeContext) => P;
+  asyncFn: (value: P, getContextFn: GetContextFn) => Promise<T>;
   defaultValue?: any;
   constructor(options: AsyncComputeRef<T>) {
     const { asyncFn, defaultValue } = options;
@@ -144,7 +144,7 @@ export class AsyncComputeValue<T> implements AsyncComputeRef<T> {
   buildAsyncRef(getContextFn: GetContextFn) {
     getContextFn = getContextFn || function () {};
     const asyncRef: Ref<T> = ref(this.defaultValue);
-    const computedValue = computed<any>(() => {
+    const computedValue = computed<P>(() => {
       if (this.watch) {
         return this.watch(getContextFn());
       }
@@ -153,7 +153,7 @@ export class AsyncComputeValue<T> implements AsyncComputeRef<T> {
 
     watch(
       () => computedValue.value,
-      async (value: T) => {
+      async (value: P) => {
         //执行异步方法
         asyncRef.value = await this.asyncFn(value, getContextFn());
       },

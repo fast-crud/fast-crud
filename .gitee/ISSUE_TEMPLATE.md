@@ -27,9 +27,9 @@
 `请您填写fast-crud的版本`
 ### 2. 使用的ui库以及版本
 `中括号中输入x即选中，或者删除其他，仅保留你正使用的ui库`
-- [x] Antdv (版本？)
-- [ ] ElementPlus（版本？）
-- [ ] NaiveUI（版本？）
+- [x] Antdv (版本号:           )
+- [ ] ElementPlus（版本号：          ）
+- [ ] NaiveUI（版本号：               ）
 
 ### 3. 使用的admin框架
 `请您填写您当前使用的admin框架是哪一套`

@@ -25,6 +25,77 @@ let dictRequest = async (opts: any): Promise<any> => {
   return [];
 };
 
+export type DictGetUrl = (context?: any) => string;
+export type DictGetData<T> = (context?: any) => Promise<T[]>;
+
+/**
+ * Dict参数
+ */
+export interface DictOptions<T> {
+  /**
+   * dict请求url
+   */
+  url?: string | DictGetUrl;
+  /**
+   * 自定义获取data远程方法
+   */
+  getData?: DictGetData<T>;
+
+  /**
+   * 字典项value字段名称
+   */
+  value?: string;
+  /**
+   * 字典项label字段名称
+   */
+  label?: string;
+  /**
+   * 字典项children字段名称
+   */
+  children?: string;
+  /**
+   * 字典项color字段名称
+   */
+  color?: string;
+  /**
+   * 是否是树形
+   */
+  isTree?: boolean;
+  /**
+   * 是否全局缓存
+   */
+  cache?: boolean; // 获取到结果是否进行全局缓存
+  /**
+   * 是否将本dict当做原型，所有组件引用后将clone一个实例
+   */
+  prototype?: boolean; // 是否原型配置
+
+  /**
+   * dict创建后是否立即请求
+   */
+  immediate?: boolean; //是否立即请求
+
+  /**
+   * 根据values 远程获取字典，prototype=true时有效
+   * @param values
+   */
+  getNodesByValues?: (values: any, options?: LoadDictOpts) => Promise<T[]>;
+
+  /**
+   * dict数据远程加载完后触发
+   */
+  onReady?: (context: any) => void;
+
+  /**
+   * 自定义参数
+   */
+  custom?: any;
+
+  /**
+   * 本地字典数据，无需远程请求
+   */
+  data?: T[];
+}
 export type LoadDictOpts = {
   reload?: boolean;
   value?: any;
@@ -33,41 +104,46 @@ export type LoadDictOpts = {
 };
 
 type SuccessNotify = (data: any[]) => void | undefined;
+
+export type DictOnReadyContext = {
+  dict: Dict;
+  [key: string]: any;
+};
 /**
  *
  * @param url
  * @param context = {dict, scope}
  * @returns {Promise<*>}
  */
-class Dict extends UnMergeable {
+export class Dict<T = any> extends UnMergeable implements DictOptions<T> {
   cache = false; // 获取到结果是否进行全局缓存
   prototype = false; // 是否原型配置
   immediate = true; //是否立即请求
-  url: undefined | String | Function = undefined;
-  getData: undefined | Function = undefined;
+  url?: string | DictGetUrl = undefined;
+  getData?: DictGetData<T> = undefined;
   value = "value";
   label = "label";
   children = "children";
   color = "color";
   isTree = false;
 
-  _data: null | any[] = null;
+  _data: null | T[] = null;
   get data() {
     return this._data;
   }
-  set data(data: any[]) {
+  set data(data: T[]) {
     this._data = data;
     this.toMap();
   }
-  originalData: undefined | Array<any> = undefined;
+  originalData?: T[] = undefined;
   dataMap: any = {};
   loading = false;
   custom = {};
-  getNodesByValues: undefined | Function = undefined;
+  getNodesByValues?: (values: any, options?: LoadDictOpts) => Promise<T[]>;
   cacheNodes = {};
-  onReady: undefined | Function = undefined;
+  onReady?: (context: DictOnReadyContext) => void = undefined;
   notifies: Array<any> = []; //loadDict成功后的通知
-  constructor(dict: any) {
+  constructor(dict: DictOptions<T>) {
     super();
 
     // 设置为不可枚举,就不会在clone的时候复制值，导致不会loadDict的bug
@@ -324,7 +400,7 @@ class Dict extends UnMergeable {
   }
 }
 
-function dict(config: any) {
+function dict<T = any>(config: DictOptions<T>) {
   const ret = reactive(new Dict(config));
   if (!ret.prototype && ret.immediate) {
     ret.loadDict();
