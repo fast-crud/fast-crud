@@ -1,4 +1,4 @@
 export default {
   wangEditor: {},
-  wangEditor5:{editorConfig:{},toolbarConfig:{}},
+  wangEditor5: { editorConfig: {}, toolbarConfig: {} }
 };
