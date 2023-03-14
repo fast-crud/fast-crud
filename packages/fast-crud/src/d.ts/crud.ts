@@ -422,11 +422,6 @@ export type FormProps = {
   afterSubmit?: (context: any) => Promise<any>;
 
   /**
-   * 值变化后的操作
-   * @param context
-   */
-  valueChange?: ValueChangeHandle | ValueChangeProps;
-  /**
    * 表单重置时的操作
    */
   doReset?: () => Promise<any>;
@@ -514,6 +509,11 @@ export type FormItemProps = {
    * 是否提交给后台
    */
   submit?: boolean;
+
+  /**
+   * 表单valueChange
+   */
+  valueChange?: ValueChangeHandle | ValueChangeProps;
 
   [key: string]: any;
 };

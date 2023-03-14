@@ -298,7 +298,7 @@ export function useCrud(ctx: UseCrudProps): UseCrudRet {
     };
   }
 
-  function rebuildCrudBindings(options: CrudOptions) {
+  function rebuildCrudBindings(options: DynamicallyCrudOptions) {
     const userOptions = merge(
       defaultCrudOptions.defaultOptions({ t }),
       usePagination(),
@@ -318,7 +318,7 @@ export function useCrud(ctx: UseCrudProps): UseCrudRet {
     //初始化columns，将crudOptions.columns里面的配置转化为crudBinding
     return buildColumns(userOptions);
   }
-  function resetCrudOptions(options: CrudOptions) {
+  function resetCrudOptions(options: DynamicallyCrudOptions) {
     // 设置crudOptions Ref
     crudBinding.value = rebuildCrudBindings(options);
     logger.info("fast-crud inited, crudBinding=", crudBinding.value);
