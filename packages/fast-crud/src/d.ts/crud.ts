@@ -1203,6 +1203,11 @@ export interface TabsFilterProps {
   onChange?: (context: any) => void;
 
   /**
+   * tabs 显示类型
+   */
+  type?: string;
+
+  /**
    * x-tabs 其他属性
    */
   [key: string]: any;
