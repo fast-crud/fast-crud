@@ -1,9 +1,9 @@
 import _ from "lodash-es";
 import { computed, ref, Ref, watch } from "vue";
 import { useMerge } from "./use-merge";
-import { ComputeContext } from "/src/d.ts/compute";
-import { AsyncComputeRef, ComputeFn, ComputeRef, ScopeContext } from "/src/d.ts";
-import { deepdash } from "/src/utils/deepdash";
+import { ComputeContext } from "../d.ts/compute";
+import { AsyncComputeRef, ComputeFn, ComputeRef, ScopeContext } from "../d.ts";
+import { deepdash } from "../utils/deepdash";
 const { cloneDeep } = useMerge();
 
 function isAsyncCompute(value: any) {

@@ -563,6 +563,10 @@ export type FormItemHelperProps = {
 };
 
 export type FormItemTitleRender = (context: ScopeContext) => any;
+
+export type RuleRecord = {
+  trigger?: string;
+} & RuleItem;
 /**
  * 表单字段配置
  */
@@ -658,7 +662,7 @@ export type FormItemProps = {
   /**
    * 校验规则
    */
-  rules?: RuleItem | RuleItem[];
+  rules?: RuleRecord | RuleRecord[];
 
   /**
    * fs-form-item 、 x-form-item的其他配置

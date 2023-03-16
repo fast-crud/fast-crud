@@ -6,7 +6,7 @@ import _ from "lodash-es";
 import { useUploader, buildKey } from "./utils/index";
 import * as qiniu from "qiniu-js";
 import { defineComponent, getCurrentInstance } from "vue";
-import { FsUploaderDoUploadOptions, FsUploaderQiniuOptions } from "@/uploader/d.ts/type";
+import { FsUploaderDoUploadOptions, FsUploaderQiniuOptions } from "../d.ts/type";
 async function getToken(file: File, fileName: string, key: string, config: FsUploaderQiniuOptions) {
   const ret = await config.getToken({
     fileName,

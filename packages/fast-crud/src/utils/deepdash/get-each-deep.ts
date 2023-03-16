@@ -3,7 +3,7 @@ import _ from "lodash-es";
 export function getEachDeep(_: any): ForEachDeep {
   const iterate = getIterate(_);
 
-  function eachDeep(obj: any, callback: any, options: any) {
+  function eachDeep(obj: any, callback: any, options?: any) {
     if (callback === undefined) callback = _.identity;
     options = _.merge(
       {
@@ -43,5 +43,5 @@ export function getEachDeep(_: any): ForEachDeep {
   return eachDeep;
 }
 
-export type ForEachDeep = (obj: any, callback: any, options: any) => any;
+export type ForEachDeep = (obj: any, callback: any, options?: any) => any;
 export const forEachDeep: ForEachDeep = getEachDeep(_);

@@ -1,4 +1,4 @@
-import { FsUploaderOptions } from "@/uploader/d.ts/type";
+import { FsUploaderOptions } from "../d.ts/type";
 
 export default {
   defaultType: "cos", // 默认的上传后端类型

@@ -1,14 +1,14 @@
-var rxArrIndex = /\D/;
-var rxVarName = /^[a-zA-Z_$]+([\w_$]*)$/;
-var rxQuot = /"/g;
+const rxArrIndex = /\D/;
+const rxVarName = /^[a-zA-Z_$]+([\w_$]*)$/;
+const rxQuot = /"/g;
 
-function joinPaths(...paths) {
-  return paths.reduce((acc, p) => (acc ? (!p || p.startsWith("[") ? `${acc}${p}` : `${acc}.${p}`) : p), "");
+function joinPaths(...paths: any) {
+  return paths.reduce((acc: any, p: any) => (acc ? (!p || p.startsWith("[") ? `${acc}${p}` : `${acc}.${p}`) : p), "");
 }
 
-export default function getPathToString(_) {
-  function pathToString(path, ...prefixes) {
-    prefixes = prefixes.filter((p) => p !== undefined);
+export default function getPathToString(_: any) {
+  function pathToString(path: any, ...prefixes: any) {
+    prefixes = prefixes.filter((p: any) => p !== undefined);
     if (_.isString(path)) return joinPaths(...prefixes, path);
     if (!Array.isArray(path)) return undefined;
     prefixes = joinPaths(...prefixes);

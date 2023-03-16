@@ -27,6 +27,7 @@
   "author": "Greper",
   "license": "MIT",
   "devDependencies": {
+    "@algolia/client-search": "^4.15.0",
     "@types/lodash-es": "^4.17.7",
     "axios": "^1.3.4",
     "copyfiles": "^2.4.1",
@@ -34,8 +35,8 @@
     "markdown-it": "^13.0.1",
     "typedoc": "^0.23.27",
     "typedoc-plugin-markdown": "^3.14.0",
-    "vitepress": "1.0.0-alpha.50",
-    "vitepress-plugin-search": "1.0.4-alpha.19",
+    "vitepress": "1.0.0-alpha.60",
+    "vue": "^3.2.45",
     "vue-docgen-cli": "^4.63.0"
   },
   "dependencies": {

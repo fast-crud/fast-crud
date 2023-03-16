@@ -6,7 +6,7 @@ import _ from "lodash-es";
 import ajax, { doAjax } from "./utils/ajax";
 import { useUploader, buildKey } from "./utils/index";
 import { defineComponent, getCurrentInstance } from "vue";
-import { FsUploaderDoUploadOptions, FsUploaderFormOptions } from "@/uploader/d.ts/type";
+import { FsUploaderDoUploadOptions, FsUploaderFormOptions } from "../d.ts/type";
 
 /**
  *

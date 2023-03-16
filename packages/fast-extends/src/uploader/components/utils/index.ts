@@ -1,5 +1,5 @@
 import _ from "lodash-es";
-import { FsUploaderImplOptions } from "@/uploader/d.ts/type";
+import { FsUploaderImplOptions } from "../d.ts/type";
 export async function buildKey(file: File, fileName: string, config: FsUploaderImplOptions) {
   return config.buildKey({
     fileName,

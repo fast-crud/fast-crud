@@ -19,13 +19,9 @@ import { UiInterface } from "@fast-crud/ui-interface/src";
 
 type BuildTableColumnsOption = {
   props: any;
-  ctx: any;
   ui: UiInterface;
-  getContextFn: () => any;
-  componentRefs: any;
   renderRowHandle: any;
   renderCellComponent: any;
-  columns: ColumnProps[];
 };
 function buildTableSlots({ props, ui, renderRowHandle, renderCellComponent }: BuildTableColumnsOption) {
   const tableComp = resolveDynamicComponent(ui.table.name);

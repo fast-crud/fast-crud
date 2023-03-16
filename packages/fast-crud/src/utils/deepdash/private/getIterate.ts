@@ -3,15 +3,15 @@ const rxVarName = /^[a-zA-Z_$]+([\w_$]*)$/;
 const rxQuot = /"/g;
 const has = Object.prototype.hasOwnProperty;
 
-export function isObject(value) {
-  var type = typeof value;
+export function isObject(value: any) {
+  const type = typeof value;
   return value != null && (type == "object" || type == "function");
 }
 
-export default function getIterate(_) {
+export default function getIterate(_: any) {
   const pathToString = getPathToString(_);
 
-  function iterate(item) {
+  function iterate(item: any) {
     const { options, obj, callback } = item;
     options.pathFormatArray = options.pathFormat == "array";
     item.depth = 0;
@@ -48,9 +48,9 @@ export default function getIterate(_) {
 
         item.children = [];
         if (options.childrenPath) {
-          options.childrenPath.forEach((cp, i) => {
+          options.childrenPath.forEach((cp: any, i: any) => {
             const children = _.get(item.value, cp);
-            const info = describeValue(children, options.ownPropertiesOnly);
+            const info: any = describeValue(children, options.ownPropertiesOnly);
             if (!info.isEmpty) {
               item.children.push([cp, options.strChildrenPath[i], children, info]);
             }
@@ -70,7 +70,7 @@ export default function getIterate(_) {
           contextReader.setItem(item, false);
           try {
             item.res = callback(item.value, item.key, item.parent && item.parent.value, contextReader);
-          } catch (err) {
+          } catch (err: any) {
             if (err.message) {
               err.message += "\ncallback failed before deep iterate at:\n" + pathToString(item.path);
             }
@@ -88,7 +88,7 @@ export default function getIterate(_) {
             if (options.childrenPath !== undefined && (item.depth || !options.rootIsChildren)) {
               item.childrenItems = [];
               if (item.children.length) {
-                item.children.forEach(([cp, scp, children, info]) => {
+                item.children.forEach(([cp, scp, children, info]: any) => {
                   item.childrenItems = [
                     ...item.childrenItems,
                     ...(info.isArray
@@ -120,7 +120,7 @@ export default function getIterate(_) {
 
         try {
           callback(item.value, item.key, item.parent && item.parent.value, contextReader);
-        } catch (err) {
+        } catch (err: any) {
           if (err.message) {
             err.message += "\ncallback failed after deep iterate at:\n" + pathToString(item.path);
           }
@@ -134,7 +134,7 @@ export default function getIterate(_) {
 
   return iterate;
 
-  function getElements(item, children, options, childrenPath, strChildrenPath) {
+  function getElements(item: any, children: any, options: any, childrenPath: any, strChildrenPath: any) {
     let strChildPathPrefix;
     if (!options.pathFormatArray) {
       strChildPathPrefix = item.strPath || "";
@@ -176,7 +176,7 @@ export default function getIterate(_) {
     return res;
   }
 
-  function getOwnChildren(item, children, options, childrenPath, strChildrenPath) {
+  function getOwnChildren(item: any, children: any, options: any, childrenPath: any, strChildrenPath: any) {
     let strChildPathPrefix;
     if (!options.pathFormatArray) {
       strChildPathPrefix = item.strPath || "";
@@ -230,12 +230,17 @@ export default function getIterate(_) {
 }
 
 class ContextReader {
-  constructor(obj, options, breakIt) {
+  private _item: any;
+  private obj: any;
+  private _options: any;
+  private afterIterate: any;
+  constructor(obj: any, options: any, breakIt: any) {
     this.obj = obj;
     this._options = options;
+    // @ts-ignore
     this["break"] = breakIt;
   }
-  setItem(item, afterIterate) {
+  setItem(item: any, afterIterate: any) {
     this._item = item;
     this.afterIterate = afterIterate;
   }
@@ -291,7 +296,7 @@ class ContextReader {
   }
 }
 
-function isObjectEmpty(value, ownPropertiesOnly) {
+function isObjectEmpty(value: any, ownPropertiesOnly: any) {
   for (const key in value) {
     if (!ownPropertiesOnly || has.call(value, key)) {
       return false;
@@ -300,8 +305,8 @@ function isObjectEmpty(value, ownPropertiesOnly) {
   return true;
 }
 
-function describeValue(value, ownPropertiesOnly) {
-  const res = { isObject: isObject(value) };
+function describeValue(value: any, ownPropertiesOnly: any) {
+  const res: any = { isObject: isObject(value) };
   res.isArray = res.isObject && Array.isArray(value);
   res.isEmpty = res.isArray ? !value.length : res.isObject ? isObjectEmpty(value, ownPropertiesOnly) : true;
 

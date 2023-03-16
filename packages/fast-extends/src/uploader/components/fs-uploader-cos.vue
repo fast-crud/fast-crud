@@ -7,7 +7,7 @@ import { defineComponent, getCurrentInstance } from "vue";
 import { buildKey, useUploader } from "./utils";
 import COS from "cos-js-sdk-v5";
 import dayjs from "dayjs";
-import { FsUploaderDoUploadOptions, FsUploaderCosOptions } from "@/uploader/d.ts/type";
+import { FsUploaderDoUploadOptions, FsUploaderCosOptions } from "../d.ts/type";
 function newClient(options: FsUploaderCosOptions) {
   let client = null;
   const secretId = options.secretId;

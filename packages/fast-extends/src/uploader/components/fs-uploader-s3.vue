@@ -7,7 +7,7 @@ import { useUploader, buildKey } from "./utils/index.js";
 import { defineComponent, getCurrentInstance } from "vue";
 import { PutObjectCommand, S3Client } from "@aws-sdk/client-s3";
 import { axiosInstance } from "./utils/axios";
-import { FsUploaderDoUploadOptions, FsUploaderS3Options } from "@/uploader/d.ts/type";
+import { FsUploaderDoUploadOptions, FsUploaderS3Options } from "../d.ts/type";
 
 async function uploadUsingSignedUrl(props: FsUploaderDoUploadOptions, key: string) {
   const { file, onProgress, options } = props;

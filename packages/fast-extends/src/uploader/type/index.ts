@@ -3,7 +3,7 @@ import types from "./types";
 import _ from "lodash-es";
 import defaultConfig from "./config";
 import { AllUploadSuccessValidator } from "./validators";
-import { FsUploaderOptions } from "@/uploader/d.ts/type";
+import { FsUploaderOptions } from "../d.ts/type";
 
 function setConfig(app: any, config: FsUploaderOptions) {
   app.config.globalProperties.$fs_uploader_config = _.merge(defaultConfig, config);
