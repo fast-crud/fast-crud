@@ -1201,6 +1201,11 @@ export interface TabsFilterProps {
    * @param context
    */
   onChange?: (context: any) => void;
+
+  /**
+   * x-tabs 其他属性
+   */
+  [key: string]: any;
 }
 
 /**
