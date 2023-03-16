@@ -89,7 +89,7 @@ type = dict-cascader
     *  file-uploader（文件上传） | image-uploader（图片上传） | avatar-uploader（头像上传，单图片）  
     *  avatar-cropper (头像裁剪上传)
     
-<<< @/../../packages/fast-extends/src/uploader/type/types.js
+<<< @/../../packages/fast-extends/src/uploader/type/types.ts
 * 示例：[antdv](http://fast-crud.docmirror.cn/antdv/#/crud/component/uploader/form) | [element](http://fast-crud.docmirror.cn/element/#/component/uploader/form)
 
 * 相关组件文档：
@@ -105,7 +105,7 @@ type = dict-cascader
   *  file-uploader（文件上传） | image-uploader（图片上传） | avatar-uploader（头像上传，单图片）
   *  cropper-uploader (头像裁剪上传)
 
-<<< @/../../packages/fast-extends/src/editor/type/types.js
+<<< @/../../packages/fast-extends/src/editor/type/types.ts
 * 示例：[antdv](http://fast-crud.docmirror.cn/antdv/#/crud/component/editor) | [element](http://fast-crud.docmirror.cn/element/#/component/editor)
 
 * 相关组件文档：

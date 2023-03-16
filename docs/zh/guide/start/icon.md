@@ -50,7 +50,7 @@ return {
 }
 ```
 
-### 3. `main.js` 中导入`generated`
+### 3. `main.ts` 中导入`generated`
 ```js
 import "@purge-icons/generated";
 ```

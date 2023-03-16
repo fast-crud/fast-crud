@@ -14,10 +14,10 @@
 
 一个crud主要分为3个部分
 
-* crud.js： crud配置
+* crud.ts： crud配置
 * index.vue： 页面组件
-* api.js： 接口
-* mock.js： 接口mock数据，可选
+* api.ts： 接口
+* mock.ts： 接口mock数据，可选
 
 ### 1. crud.ts
 
@@ -126,7 +126,7 @@ export default function ({ crudExpose, customValue }: CreateCrudOptionsProps): C
 注意，由于`fs-crud`默认高度为`100%`,所以你必须让`<fs-crud></fs-crud>`的父容器具备高度，或者直接给`fs-crud`本身设置高度
 :::
 
-### 3. api.js
+### 3. api.ts
 
 实现添删改查请求接口，实际开发中，复制后修改url即可，你也可以根据实际业务需求增加和修改方法     
 将如下代码保存为`views/test/myFirstCrud/api.ts`
@@ -180,7 +180,7 @@ export const addRequest = async ({ form }: AddReq) => {
 在`src/router/modules/crud.ts`中增加路由菜单配置
 
 ```js
-// src/router/modules/crud.js
+// src/router/modules/crud.ts
 export const crudResources = [
     {
         title: "CRUD示例",
@@ -218,5 +218,5 @@ export const crudResources = [
 
 在实际项目开发中，通常在`示例`的`views`中找一个合适的crud复制到你的项目的`views`，然后再根据需求修改即可    
 ::: warning
-注意：需要修改api.js的`requestForMock`为`request`，这样才会去调用你的真实后端接口
+注意：需要修改api.ts的`requestForMock`为`request`，这样才会去调用你的真实后端接口
 :::
