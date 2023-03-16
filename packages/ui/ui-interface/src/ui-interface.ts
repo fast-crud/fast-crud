@@ -6,8 +6,8 @@ export interface FormCI {
   name: string;
   inlineLayout: Object;
   // resetWrap: Function;
-  validateWrap: Function;
-  transformValidateErrors: (e: Error) => { [key: string]: any };
+  validateWrap: (formRef: any) => Promise<any>;
+  transformValidateErrors: (e: Error) => ComponentBinding;
 }
 export interface SelectCI extends CI {
   modelValue: string;
@@ -48,14 +48,16 @@ export interface TextAreaCI extends CI {
   modelValue: string;
 }
 
+export type DialogFooterBuilder = (footer: any) => ComponentBinding;
+export type DialogOnClosedBindBuilder = (onClose: (visible: boolean) => void) => ComponentBinding;
 export interface DialogCI extends CI {
   visible: string;
-  footer: Function;
-  buildOnClosedBind: Function;
+  footer: DialogFooterBuilder;
+  buildOnClosedBind: DialogOnClosedBindBuilder;
   customClass: string;
   titleSlotName?: string;
-  buildWidthBind?: any;
-  buildInitBind?: any;
+  buildWidthBind?: (width: any) => ComponentBinding;
+  buildInitBind?: () => ComponentBinding;
 }
 
 export interface DrawerCI extends CI {
@@ -75,16 +77,21 @@ export interface TableColumnCI extends CI {
 export type TableOnChangeBindingBuilder = (context: {
   onSortChange: (sorter: any) => void;
   onFilterChange: (filters: any) => void;
+  onPagination: (pagination: any) => void;
 }) => any;
+
+export type ComponentBinding = {
+  [key: string]: any;
+};
 
 export interface TableCI extends CI {
   defaultRowKey?: string | ((rowData: any) => any);
   data: string;
   fixedHeaderNeedComputeBodyHeight: boolean;
   headerDomSelector: string; //用于计算高度
-  buildMaxHeight: Function;
-  hasMaxHeight: Function;
-  vLoading: string;
+  buildMaxHeight: (maxHeight: number) => ComponentBinding;
+  hasMaxHeight: (tableOptions: any) => boolean;
+  vLoading: boolean | string;
   onChange: TableOnChangeBindingBuilder;
   /**
    * 列render的模式，antdv和naive为config模式，element为slot模式
@@ -97,23 +104,23 @@ export interface TableCI extends CI {
   /**
    * render 方法触发时的参数构建出一个scope
    */
-  rebuildRenderScope?: Function;
+  rebuildRenderScope?: (scope: any, prop2?: any, prop3?: any, prop4?: any) => ComponentBinding;
 }
 
 export interface CheckboxGroupCI extends CI {
   modelValue: string;
 }
 export interface CheckboxCI extends CI {
-  resolveEvent: Function;
+  resolveEvent: (e: any) => any;
   value: string;
   modelValue: string;
-  onChange: Function;
+  onChange: (onUpdateModelValue: (value: any) => any) => any;
 }
 
 export interface CascaderCI extends CI {
   modelValue: string;
   clearable: string;
-  fieldNames: Function;
+  fieldNames: (namesMap: { value: string; label: string; children: string }) => any;
 }
 
 export type TabsCI = {
@@ -138,10 +145,10 @@ export interface SwitchCI extends CI {
   inactiveValue: string;
 }
 
-export type MessageContext = string | { type?: string; message?: string };
+export type MessageContext = string | { type?: string; message?: string; content?: string };
 
 export interface MessageCI extends CI {
-  open: (context: MessageContext) => void;
+  open: (type: string, context: MessageContext) => void;
   success: (context: MessageContext) => void;
   error: (context: MessageContext) => void;
   warn: (context: MessageContext) => void;
@@ -165,7 +172,7 @@ export interface MessageBoxCI extends CI {
   getInstance?: any;
 }
 
-export type NotificationContext = string | { type?: string; message?: string };
+export type NotificationContext = string | { type?: string; message?: string; text?: string };
 
 export interface NotificationCI extends CI {
   open: (type: string, context: NotificationContext) => void;
@@ -198,9 +205,11 @@ export interface TagCI extends CI {
   colors: Array<string>;
 }
 
+type FormWrapperOnClosedBindBuilder = (is: string, onClose: (visible: boolean) => void) => any;
+
 export interface FormWrapperCI extends CI {
   visible: string;
-  buildOnClosedBind: (is: string, onClose: Function) => {};
+  buildOnClosedBind: FormWrapperOnClosedBindBuilder;
   customClass: (is: string) => string;
   titleSlotName: string;
   buildWidthBind: (is: string, width: any) => {};
@@ -210,13 +219,13 @@ export interface FormWrapperCI extends CI {
 }
 export interface DatePickerCI extends CI {
   modelValue: string;
-  buildDateType: Function;
+  buildDateType: (type: string) => ComponentBinding;
 }
 export interface TimePickerCI extends CI {
   modelValue: string;
 }
 export interface DropdownCI extends CI {
-  command: Function;
+  command: (callback: (key: any) => void) => ComponentBinding;
   slotName: string;
   /**
    * 选项的渲染模式，slot or config
@@ -227,7 +236,7 @@ export interface DropdownCI extends CI {
   children?: string;
 }
 export interface DropdownMenuCI extends CI {
-  command: Function;
+  command: (callback: (key: string) => void) => ComponentBinding;
 }
 export interface DropdownItemCI extends CI {
   command: string;
@@ -256,13 +265,13 @@ export interface UploadCI extends CI {
   type: string;
   typeImageCard: string;
   typeImage: string;
-  getStatusFromEvent: string;
-  getFileListFromEvent: string;
+  getStatusFromEvent: (event: any) => string;
+  getFileListFromEvent: (event: any, event2?: any, event3?: any, event4?: any) => any[];
   status: {
     success: string;
     uploading: string;
   };
-  limitAdd: string;
+  limitAdd: number;
   isSuccess: (fileItem: any) => Boolean;
 }
 export interface ButtonCI extends CI {

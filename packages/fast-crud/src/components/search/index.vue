@@ -28,10 +28,7 @@
                   <component :is="computedColName" v-if="item.show === true" class="fs-search-col" v-bind="item.col">
                     <component :is="ui.formItem.name" v-bind="item" :[ui.formItem.prop]="key" :label="item.title">
                       <template v-if="slots['search_' + key]">
-                        <fs-slot-render
-                          :slots="slots['search_' + key]"
-                          :scope="{ ...searchEventContextRef.value, key }"
-                        />
+                        <fs-slot-render :slots="slots['search_' + key]" :scope="{ ...searchEventContextRef, key }" />
                       </template>
                       <template v-else>
                         <fs-component-render
@@ -516,7 +513,8 @@ export default defineComponent({
       computedColumnBoxHeight,
       computedColName,
       computedIsMultiLine,
-      toggleCollapse
+      toggleCollapse,
+      searchEventContextRef
     };
   }
 });

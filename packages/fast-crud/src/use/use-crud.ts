@@ -359,7 +359,7 @@ export type UseFsRet = {
   CreateCrudOptionsRet;
 
 export type CreateCrudOptionsProps = {
-  crudExpose: CrudExpose;
+  crudExpose?: CrudExpose;
 
   expose?: CrudExpose;
 

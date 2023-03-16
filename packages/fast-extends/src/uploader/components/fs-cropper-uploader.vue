@@ -2,7 +2,7 @@
   <div class="fs-cropper-uploader" :class="{ 'is-disabled': disabled }">
     <div class="image-list">
       <component :is="ui.imageGroup.name">
-        <div v-for="(item, index) in list" :key="index" class="image-item">
+        <div v-for="(item, index) in listRef" :key="index" class="image-item">
           <component :is="ui.image.name" class="image" :src="item.dataUrl ? item.dataUrl : item.url" v-bind="img">
             <template #placeholder>
               <div class="image-slot">
@@ -20,7 +20,7 @@
             <fs-icon :icon="ui.icons.check" class="status-down-icon" />
           </div>
         </div>
-        <div v-if="limit <= 0 || limit > list.length" class="image-item image-plus" @click="addNewImage">
+        <div v-if="limit <= 0 || limit > listRef.length" class="image-item image-plus" @click="addNewImage">
           <fs-icon :icon="ui.icons.plus" class="cropper-uploader-icon" />
         </div>
       </component>
@@ -237,16 +237,6 @@ export default defineComponent({
       ctx.emit("update:modelValue", ret);
     }
 
-    const _urlList = computed(() => {
-      const urlList = [];
-      if (listRef.value) {
-        for (const item of listRef.value) {
-          urlList.push(item.url);
-        }
-      }
-      return urlList;
-    });
-
     watch(
       () => {
         return props.modelValue;
@@ -265,7 +255,6 @@ export default defineComponent({
       uploaderImplRef,
       indexRef,
       listRef,
-      _urlList,
       addNewImage,
       hasUploading,
       cropComplete,

@@ -1,5 +1,7 @@
 import FsUploaderType from "./type";
 export * from "./type";
+export * from "./d.ts";
+
 import { ColumnCompositionProps, CrudOptions, utils } from "@fast-crud/fast-crud";
 // @ts-ignore
 const asyncModules = import.meta.glob("./components/*.vue");
@@ -16,17 +18,20 @@ registerMergeColumnPlugin({
   name: "uploader-merge-plugin",
   order: 5,
   handle: (columnProps: ColumnCompositionProps = {}, crudOptions: CrudOptions = {}) => {
-    if (typeof columnProps.type === "string" && columnProps.type.endsWith("uploader") && columnProps.buildUrl) {
+    if (typeof columnProps.type === "string" && columnProps.type.endsWith("uploader")) {
       const buildUrl = columnProps.buildUrl;
+      const buildUrls = columnProps.buildUrls;
       _.merge(columnProps, {
         form: {
           component: {
-            buildUrl
+            buildUrl,
+            buildUrls
           }
         },
         column: {
           component: {
-            buildUrl
+            buildUrl,
+            buildUrls
           }
         }
       });

@@ -1,5 +1,4 @@
 import { S3ClientConfig } from "@aws-sdk/client-s3";
-import COS from "cos-js-sdk-v5";
 
 export type FileItem = {
   url?: string;
@@ -12,12 +11,6 @@ export type FileItem = {
   [key: string]: any;
 };
 
-export type UploadRequestProps = {
-  action?: string;
-  file: File;
-  onProgress: (progress: { percent: number }) => void;
-};
-
 export type FsUploaderS3SignedUrlType = "get" | "put";
 
 export type FsUploaderBuildKeyContext = {
@@ -26,7 +19,7 @@ export type FsUploaderBuildKeyContext = {
   keepName?: boolean;
 
   file: File;
-};
+} & FsUploaderImplOptions;
 
 export type FsUploaderGetAuthContext = {
   file: File;
@@ -101,6 +94,7 @@ export type FsUploaderFormOptions = {
    */
   uploadRequest?: (props: FsUploaderFormRequestOptions) => Promise<any>;
 } & FsUploaderCommonOptions;
+
 export type FsUploaderS3Options = {
   bucket?: string;
   sdkOpts?: S3ClientConfig;

@@ -6,15 +6,14 @@ import { useMerge } from "../use/use-merge";
 import { useUi } from "../use/use-ui";
 import { useI18n } from "../locale";
 import {
-  ColumnProps,
+  ColumnCompositionProps,
   CrudBinding,
+  DoRemoveContext,
   PageQuery,
   PageRes,
-  DoRemoveContext,
-  UserPageQuery,
-  UserPageRes,
   RemoveProps,
-  ColumnCompositionProps
+  UserPageQuery,
+  UserPageRes
 } from "../d.ts";
 import { useFormWrapper } from "./use-form";
 import { forEachColumns } from "../use/use-columns";
@@ -222,7 +221,7 @@ export function useExpose(props: UseExposeProps): UseExposeRet {
       }
       logger.debug("doValueBuilder ,columns=", columns);
       const valueBuilderColumns: ColumnCompositionProps[] = [];
-      forEachColumns(columns, (column, key) => {
+      forEachColumns(columns, (column) => {
         if (column.valueBuilder != null) {
           valueBuilderColumns.push(column);
         }
@@ -249,7 +248,7 @@ export function useExpose(props: UseExposeProps): UseExposeRet {
       }
       const valueBuilderColumns: ColumnCompositionProps[] = [];
       forEachColumns(columns, (column) => {
-        if (column.valueBuilder != null) {
+        if (column.valueResolve != null) {
           valueBuilderColumns.push(column);
         }
       });

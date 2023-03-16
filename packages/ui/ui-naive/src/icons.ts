@@ -34,7 +34,7 @@ import {
   // @ts-ignore
 } from "@ant-design/icons-vue";
 
-const icons = {
+const icons: any = {
   SearchOutlined,
   PlusCircleOutlined,
   PlusOutlined,
@@ -68,7 +68,7 @@ const icons = {
   CaretUpOutlined,
   CaretDownOutlined
 };
-export default function (app) {
+export default function (app: any) {
   for (const key in icons) {
     app.component(key, icons[key]);
   }

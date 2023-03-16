@@ -6,7 +6,7 @@ import { Antdv } from "./antdv";
 
 export * from "./antdv";
 export default {
-  install(app) {
+  install(app: any) {
     const antdvUi = new Antdv({
       Message: message,
       Notification: notification,

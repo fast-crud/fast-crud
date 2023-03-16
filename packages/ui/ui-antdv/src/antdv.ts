@@ -45,13 +45,19 @@ import {
   PaginationCI,
   DividerCI,
   PopoverCI,
-  TooltipCI
+  TooltipCI,
+  MessageContext,
+  NotificationContext
 } from "@fast-crud/ui-interface";
 import _ from "lodash-es";
 
-
+export type AntdvUiProvider = {
+  Notification: any;
+  Message: any;
+  MessageBox: any;
+};
 export class Antdv implements UiInterface {
-  constructor(target) {
+  constructor(target: AntdvUiProvider) {
     this.notification.instance = target.Notification;
     this.message.instance = target.Message;
     this.messageBox.instance = target.MessageBox;
@@ -66,12 +72,12 @@ export class Antdv implements UiInterface {
       return "class";
     },
     titleSlotName: "title",
-    buildOnClosedBind(is, onClosed: Function): {} {
+    buildOnClosedBind(is, onClosed: (visible: boolean) => void): {} {
       if (is === "a-modal") {
         return { afterClose: onClosed };
       } else if (is === "a-drawer") {
         return {
-          onAfterVisibleChange: (visible) => {
+          onAfterVisibleChange: (visible: boolean) => {
             if (visible === false) {
               onClosed(visible);
             }
@@ -217,10 +223,10 @@ export class Antdv implements UiInterface {
     name: "a-modal",
     visible: "visible",
     customClass: "wrapClassName",
-    footer(footer = null) {
+    footer(footer: any = null) {
       return { footer };
     },
-    buildOnClosedBind(onClosed: Function): {} {
+    buildOnClosedBind(onClosed): {} {
       return { afterClose: onClosed };
     }
   };
@@ -269,9 +275,9 @@ export class Antdv implements UiInterface {
     },
     value: "value",
     modelValue: "checked",
-    onChange(callback) {
+    onChange(onUpdateModelValue) {
       return {
-        "onUpdate:checked": callback
+        "onUpdate:checked": onUpdateModelValue
       };
     }
   };
@@ -316,7 +322,7 @@ export class Antdv implements UiInterface {
     transformValidateErrors: (e: Error) => {
       // @ts-ignore
       const errorFields = e.errorFields;
-      const errors = {};
+      const errors: any = {};
       for (const errorField of errorFields) {
         for (const name of errorField.name) {
           errors[name] = true;
@@ -344,14 +350,15 @@ export class Antdv implements UiInterface {
     currentPage: "current",
     total: "total",
     pageCount: null,
-    onChange({ setCurrentPage, setPageSize, doAfterChange }) {
+    onChange(props) {
+      const { setCurrentPage, setPageSize, doAfterChange } = props;
       return {
         // antd 页码改动回调
-        onChange(page) {
+        onChange(page: number) {
           setCurrentPage(page);
           doAfterChange();
         },
-        onShowSizeChange(current, size) {
+        onShowSizeChange(current: number, size: number) {
           setPageSize(size);
           //无需刷新，上面onChange也会触发
           // doAfterChange();
@@ -409,7 +416,7 @@ export class Antdv implements UiInterface {
     vLoading: false,
     onChange({ onSortChange, onFilterChange, onPagination }) {
       return {
-        onChange: (pagination, filters, sorter, { currentDataSource }) => {
+        onChange: (pagination: any, filters: any, sorter: any, { currentDataSource }: any) => {
           if (pagination && onPagination) {
             onPagination({ ...pagination, data: currentDataSource });
           }
@@ -534,7 +541,7 @@ export class Antdv implements UiInterface {
     name: "a-menu",
     command: (callback) => {
       return {
-        onClick($event) {
+        onClick($event: any) {
           callback($event.key);
         }
       };

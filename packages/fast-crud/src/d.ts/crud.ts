@@ -4,6 +4,7 @@ import { ComputeContext } from "../d.ts/compute";
 import { AsyncComputeValue, Dict, GetContextFn } from "../use";
 import { Slot } from "vue";
 import { ShallowRef } from "vue";
+import { DoRemoveContext } from "/src/d.ts/expose";
 
 // export type FsRefValue<T> = T | Ref<T> | ComputedRef<T>;
 // export type FsComputeValue<T> = FsRefValue<T> | ComputeValue<T> | AsyncComputeValue<T>;
@@ -224,7 +225,7 @@ export type ComponentProps = {
   [key: string]: any;
 };
 
-export type RemoveConfirmFn = (context: ScopeContext) => Promise<void>;
+export type RemoveConfirmFn = (context: DoRemoveContext) => Promise<void>;
 /**
  * 删除操作配置
  */
@@ -303,6 +304,11 @@ export type TableProps = {
    * 列配置 map
    */
   columnsMap?: TypeMap<ColumnProps>;
+
+  /**
+   * 表格最大高度调整
+   */
+  maxHeightAdjust?: number;
   /**
    * [x]-table组件的配置
    */

@@ -1,15 +1,19 @@
-import _ from "lodash-es";
 import {
+  ButtonCI,
   CascaderCI,
   CheckboxCI,
   CheckboxGroupCI,
   CI,
+  CollapseCI,
+  CollapseItemCI,
   DatePickerCI,
   DialogCI,
+  DividerCI,
   DrawerCI,
   DropdownCI,
   DropdownItemCI,
   DropdownMenuCI,
+  FormCI,
   FormItemCI,
   FormWrapperCI,
   IconCI,
@@ -21,8 +25,12 @@ import {
   InputPasswordCI,
   LoadingCI,
   MessageBoxCI,
+  MessageBoxContextType,
   MessageCI,
   NotificationCI,
+  OptionCI,
+  PaginationCI,
+  PopoverCI,
   ProgressCI,
   RadioCI,
   RadioGroupCI,
@@ -30,24 +38,15 @@ import {
   SwitchCI,
   TableCI,
   TableColumnCI,
+  TabPaneCI,
+  TabsCI,
   TagCI,
   TextAreaCI,
   TimePickerCI,
-  UiInterface,
-  UploadCI,
-  TreeSelectCI,
-  TabsCI,
-  TabPaneCI,
-  CollapseCI,
-  CollapseItemCI,
-  ButtonCI,
-  PaginationCI,
-  FormCI,
   TooltipCI,
-  OptionCI,
-  DividerCI,
-  PopoverCI,
-  MessageBoxContextType
+  TreeSelectCI,
+  UiInterface,
+  UploadCI
 } from "@fast-crud/ui-interface";
 
 export type NaiveUiProviders = {
@@ -203,10 +202,10 @@ export class Naive implements UiInterface {
       if (typeof context === "string") {
         context = {
           title: context
-        };
+        } as any;
       }
       context = Object.assign({ duration: 5000 }, context);
-      type = type || context.type;
+      type = type || (context as any).type;
       if (type) {
         this.notification.getInstance()[type](context);
       } else {
@@ -413,11 +412,11 @@ export class Naive implements UiInterface {
     onChange({ setCurrentPage, setPageSize, doAfterChange }) {
       return {
         // antd 页码改动回调
-        "onUpdate:page": (page) => {
+        "onUpdate:page": (page: any) => {
           setCurrentPage(page);
           doAfterChange();
         },
-        "onUpdate:pageSize": (pageSize) => {
+        "onUpdate:pageSize": (pageSize: any) => {
           setPageSize(pageSize);
           doAfterChange();
         }
@@ -458,7 +457,7 @@ export class Naive implements UiInterface {
     name: "n-data-table",
     renderMode: "config",
     renderMethod: "render",
-    rebuildRenderScope: (row, index) => {
+    rebuildRenderScope: (row: any, index: number) => {
       return { row, index };
     },
     buildMaxHeight: (maxHeight) => {
@@ -476,7 +475,7 @@ export class Naive implements UiInterface {
     vLoading: false,
     onChange({ onSortChange, onFilterChange, onPagination }) {
       return {
-        onChange: (pagination, filters, sorter, { currentDataSource }) => {
+        onChange: (pagination: any, filters: any, sorter: any, { currentDataSource }: any) => {
           if (pagination && onPagination) {
             onPagination({ ...pagination, data: currentDataSource });
           }
@@ -579,7 +578,7 @@ export class Naive implements UiInterface {
     name: "n-menu",
     command: (callback) => {
       return {
-        onClick($event) {
+        onClick($event: any) {
           callback($event.key);
         }
       };

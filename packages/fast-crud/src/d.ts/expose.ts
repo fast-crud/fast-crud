@@ -194,7 +194,7 @@ export type SetSearchFormDataProps = { form: any; mergeForm?: boolean };
 /**
  * crudExpose.doRemove参数
  */
-export type DoRemoveContext = { index: number; row: any };
+export type DoRemoveContext = { index?: number; row?: any };
 /**
  * crudExpose.doSearch参数
  */
