@@ -8,7 +8,7 @@ import setupIcons from "./icons";
 
 export * from "./element";
 export default {
-  install(app) {
+  install(app: any) {
     const elementUi = new Element({
       Message: ElMessage,
       Notification: ElNotification,

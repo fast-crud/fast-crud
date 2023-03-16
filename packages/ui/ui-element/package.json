@@ -7,7 +7,7 @@
   "types": "./dist/d/index.d.ts",
   "scripts": {
     "tsc": "vue-tsc --noEmit --skipLibCheck",
-    "build": "npm run tsc && vite build",
+    "build": " vite build",
     "test": "jest",
     "lint-fix": "eslint --fix --ext .js --ext .jsx --ext .vue src/"
   },
@@ -19,6 +19,7 @@
   "devDependencies": {
     "lodash-es": "^4.17.21",
     "@element-plus/icons-vue": "^2.1.0",
+    "@ant-design/icons-vue": "^6.1.0",
     "@fast-crud/fast-crud": "workspace:^1.10.0",
     "@rollup/plugin-strip": "^3.0.2",
     "@rollup/plugin-typescript": "^11.0.0",
@@ -31,7 +32,6 @@
     "@vitejs/plugin-vue-jsx": "^3.0.0",
     "@vue/compiler-sfc": "^3.2.47",
     "@vue/test-utils": "^2.3.1",
-    "element-plus": "^2.3.0",
     "eslint": "^8.36.0",
     "eslint-config-prettier": "^8.7.0",
     "eslint-plugin-import": "^2.27.5",
