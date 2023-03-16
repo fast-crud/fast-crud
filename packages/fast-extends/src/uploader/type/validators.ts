@@ -1,5 +1,4 @@
 import { compute } from "@fast-crud/fast-crud";
-
 export const createAllUploadSuccessValidator = (getFormComponentRef: (key: string, isAsync: boolean) => any) => {
   return async (rule: any, value: any) => {
     const ref = await getFormComponentRef(rule.fullField, true);

@@ -12,6 +12,7 @@ import {
   CompositionColumns,
   CrudOptions,
   DynamicallyCrudOptions,
+  FormItemProps,
   FormProps,
   ScopeContext,
   TypeMap
@@ -84,13 +85,16 @@ const viewFormUseCellComponentPlugin = {
     }
     // 让viewForm的组件使用cell组件
     const columnComponent = columnProps.column?.component || {};
+    const viewFormColumn: FormItemProps = {
+      component: columnComponent
+    };
     if (columnProps.type === "text") {
-      columnComponent.render = (context: ScopeContext) => {
+      viewFormColumn.render = (context: ScopeContext) => {
         const { value } = context;
         return <span>{value}</span>;
       };
     }
-    merge(columnProps, { viewForm: { component: columnComponent } });
+    merge(columnProps, { viewForm: viewFormColumn });
     return columnProps;
   }
 };

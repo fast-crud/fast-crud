@@ -40,7 +40,11 @@
         <div class="fs-form-item-component">
           <fs-slot-render v-if="formSlot" :slots="formSlot" :scope="scopeComputed" />
           <template v-else-if="item.component?.show !== false">
-            <fs-render v-if="item.component?.render" :render-func="item.component.render" :scope="scopeComputed" />
+            <fs-render
+              v-if="item.render || item.component?.render"
+              :render-func="item.render || item.component.render"
+              :scope="scopeComputed"
+            />
             <fs-component-render
               v-else
               ref="componentRenderRef"

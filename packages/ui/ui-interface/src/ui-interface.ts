@@ -48,7 +48,7 @@ export interface TextAreaCI extends CI {
   modelValue: string;
 }
 
-export type DialogFooterBuilder = (footer: any) => ComponentBinding;
+export type DialogFooterBuilder = (footer?: any) => ComponentBinding;
 export type DialogOnClosedBindBuilder = (onClose: (visible: boolean) => void) => ComponentBinding;
 export interface DialogCI extends CI {
   visible: string;

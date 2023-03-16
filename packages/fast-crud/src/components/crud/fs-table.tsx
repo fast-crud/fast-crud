@@ -288,6 +288,9 @@ export default defineComponent({
       },
       onFilterChange: (filters: any) => {
         ctx.emit("filter-change", filters);
+      },
+      onPagination: (pagination: any) => {
+        //
       }
     });
 
@@ -383,7 +386,7 @@ export default defineComponent({
         const tableRender = (
           <tableComp ref={tableRef} {...ctx.attrs} {...events} {...dataSource} v-slots={computedTableSlots.value} />
         );
-        if (ui.table.vLoading) {
+        if (typeof ui.table.vLoading === "string") {
           const loading = resolveDirective(ui.table.vLoading);
           return withDirectives(tableRender, [[loading, ctx.attrs.loading]]);
         }

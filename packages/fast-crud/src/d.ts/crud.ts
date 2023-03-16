@@ -1,10 +1,9 @@
-import { ToolbarComponentProps } from "../components/toolbar/props";
-import { Ref, Slots } from "vue";
+import { Ref, ShallowRef, Slot } from "vue";
 import { ComputeContext } from "../d.ts/compute";
-import { AsyncComputeValue, Dict, GetContextFn } from "../use";
-import { Slot } from "vue";
-import { ShallowRef } from "vue";
+import { Dict, GetContextFn } from "../use";
 import { DoRemoveContext } from "/src/d.ts/expose";
+
+import { RuleItem } from "async-validator";
 
 // export type FsRefValue<T> = T | Ref<T> | ComputedRef<T>;
 // export type FsComputeValue<T> = FsRefValue<T> | ComputeValue<T> | AsyncComputeValue<T>;
@@ -73,26 +72,69 @@ export type ComponentEventContext = {
 } & ScopeContext;
 
 export type ValueChangeContext = {
+  /**
+   * 当前是否是第一次触发的
+   */
   immediate: boolean;
 } & ScopeContext;
 
+/**
+ * valueChange复合配置
+ */
 export type ValueChangeProps = {
+  /**
+   * 是否立即触发一次
+   */
   immediate?: boolean;
+  /**
+   * valueChange处理器
+   */
   handle: ValueChangeHandle;
 };
+/**
+ * valueChange 处理器
+ */
 export type ValueChangeHandle = (context: ValueChangeContext) => Promise<void>;
 
+/**
+ * 查询
+ */
 export type PageQuery = {
+  /**
+   * 翻页参数
+   */
   page?: any;
+  /**
+   * 查询表单
+   */
   form?: any;
+  /**
+   * 远程排序配置
+   */
   sort?: any;
-  [key: string]: any;
 };
 
+/**
+ * fs-crud能够接受的页面数据格式，
+ * 如果你的后台与此格式不一致，你需要转化成此格式，
+ * 请参考transformRes
+ */
 export type PageRes = {
+  /**
+   * 当前页
+   */
   currentPage?: number;
+  /**
+   * 每页条数
+   */
   pageSize?: number;
+  /**
+   * 总记录数
+   */
   total?: number;
+  /**
+   * 列表数据
+   */
   records?: Array<object>;
   [key: string]: any;
 };
@@ -119,6 +161,9 @@ export type InfoReq = {
   [key: string]: any;
 };
 
+/**
+ * 用户后台page请求原始返回
+ */
 export type UserPageRes = {
   [key: string]: any;
 };
@@ -130,8 +175,17 @@ export type UserPageQuery = {
   [key: string]: any;
 };
 
+/**
+ * 页面数据转换参数
+ */
 export type TransformResProps = {
+  /**
+   * 用户页面请求实际返回
+   */
   res: UserPageRes;
+  /**
+   * 本次请求参数
+   */
   query: UserPageQuery;
 };
 
@@ -157,6 +211,10 @@ export type RequestProp = {
 
   [key: string]: any;
 };
+
+/**
+ * 可改变的插槽集合
+ */
 export type WriteableSlots = {
   [name: string]: Slot;
 };
@@ -164,6 +222,9 @@ export type WriteableSlots = {
  * 组件配置
  */
 export type ComponentProps = {
+  /**
+   * 是否显示组件
+   */
   show?: boolean;
   /**
    * 组件的名称
@@ -215,10 +276,11 @@ export type ComponentProps = {
   children?: WriteableSlots;
 
   /**
-   * 直接渲染
+   * 直接渲染（仅form表单内可用）
    * @param scope
    */
   render?: (scope: ScopeContext) => any;
+
   /**
    * 组件其他参数，如style、class、onXxx事件等
    */
@@ -494,6 +556,9 @@ export type FormItemHelperProps = {
    */
   tooltip?: object;
 
+  /**
+   * 自定义配置
+   */
   [key: string]: any;
 };
 
@@ -511,7 +576,7 @@ export type FormItemProps = {
    */
   component?: ComponentProps;
   /**
-   * 表单字段 [a|el|n]-col的配置
+   * 表单字段 x-col的配置
    * 一般用来配置跨列：{span:24} 占满一行
    */
   col?: ColProps;
@@ -561,6 +626,43 @@ export type FormItemProps = {
    */
   valueResolve?: (context: ValueResolveContext) => void;
 
+  /**
+   * 直接渲染组件
+   * @param scope
+   */
+  render?: (scope: ScopeContext) => any;
+
+  /**
+   * 组件左边渲染
+   * @param scope
+   */
+  prefixRender?: (scope: ScopeContext) => any;
+
+  /**
+   * 组件右边渲染
+   * @param scope
+   */
+  suffixRender?: (scope: ScopeContext) => any;
+
+  /**
+   * 组件上方渲染
+   * @param scope
+   */
+  topRender?: (scope: ScopeContext) => any;
+
+  /**
+   * 组件下方渲染
+   * @param scope
+   */
+  bottomRender?: (scope: ScopeContext) => any;
+  /**
+   * 校验规则
+   */
+  rules?: RuleItem | RuleItem[];
+
+  /**
+   * fs-form-item 、 x-form-item的其他配置
+   */
   [key: string]: any;
 };
 
@@ -573,6 +675,100 @@ export type ContainerProps = {
    */
   is?: string | ShallowRef;
   [key: string]: any;
+};
+
+export type ColumnsFilterComponentProps = {
+  /**
+   * 是否显示列设置抽屉
+   */
+  show?: boolean;
+  /**
+   * 模式，default,simple
+   */
+  mode?: string;
+  /**
+   * 列数据
+   */
+  columns?: any[];
+  /**
+   * 是否保存设置
+   */
+  storage?: boolean | string;
+  /**
+   * 文本设置
+   */
+  text?: {
+    /**
+     * 标题
+     */
+    title?: string;
+    /**
+     * 固定
+     */
+    fixed?: string;
+    /**
+     * 排序
+     */
+    order?: string;
+    /**
+     * 重置
+     */
+    reset?: string;
+    /**
+     * 确认
+     */
+    confirm?: string;
+    /**
+     * 未命名
+     */
+    unnamed?: string;
+  };
+};
+
+export type ToolbarComponentProps = {
+  /**
+   * 按钮配置
+   * {
+   *   search:{}, 查询
+   *   refresh:{}, 刷新
+   *   compact:{}, 紧凑模式
+   *   columns:{} 列设置
+   * }
+   */
+  buttons?: {
+    /**
+     * 按钮key: 按钮配置
+     */
+    [key: string]: ButtonProps;
+  };
+
+  /**
+   * 当前是否显示查询。
+   * 注意：如果要隐藏search，请配置crudOptions.search.show=false
+   */
+  search?: boolean;
+
+  columnsFilter?: ColumnsFilterComponentProps;
+
+  /**
+   * 当前是否紧凑模式
+   */
+  compact?: boolean;
+  /**
+   * 列配置
+   */
+  columns?: any[];
+  /**
+   * 是否保存用户列设置
+   * 传string则表示传入缓存的主key
+   */
+  storage?: boolean | string;
+  /**
+   * 插槽
+   */
+  slots?: {
+    [key: string]: Function;
+  };
 };
 
 /**
@@ -690,6 +886,10 @@ export type SearchProps = {
  * 搜索框字段配置
  */
 export type SearchItemProps = {
+  /**
+   * 搜索框是否显示此字段组件
+   */
+  show?: boolean;
   /**
    * 组件配置
    */
@@ -872,7 +1072,7 @@ export type PaginationProps = {
 
 type RowHandleDropdownProps = {
   /**
-   * 更多按钮
+   * 更多按钮配置
    */
   more?: ButtonProps;
 
@@ -902,6 +1102,9 @@ export type RowHandleProps = {
    */
   buttons?: ButtonsProps<ScopeContext>;
 
+  /**
+   * 按钮折叠
+   */
   dropdown?: RowHandleDropdownProps;
 
   /**
@@ -960,6 +1163,42 @@ type CrudMode = {
   isAppendWhenAdd?: boolean;
   [key: string]: any;
 };
+
+export type TabsFilterDefaultOption = { show?: boolean; value?: any; label?: string };
+export type TabsFilterOption = { value: any; label: string; [key: string]: any };
+export interface TabsFilterProps {
+  /**
+   * 目标字段的key，查询时作为search的key
+   */
+  name: string; //查询字段的key,search参数key
+  /**
+   * 是否显示
+   */
+  show?: boolean;
+  /**
+   * 全部选项卡（第一个选项卡）的配置
+   */
+  defaultOption?: TabsFilterDefaultOption;
+  /**
+   * 选项，如果目标字段配置了dict，那么将自动通过dict生成，无需配置
+   */
+  options?: TabsFilterOption[];
+  /**
+   * 选项value的名称
+   */
+  value?: string;
+  /**
+   * 选项label的名称
+   */
+  label?: string;
+
+  /**
+   * change事件
+   * @param context
+   */
+  onChange?: (context: any) => void;
+}
+
 /**
  * crudBinding
  */
@@ -994,6 +1233,11 @@ export type CrudBinding = {
    * 左上角动作条（默认添加按钮）
    */
   actionbar?: ActionbarProps;
+
+  /**
+   * Tabs快捷查询组件
+   */
+  tabs?: TabsFilterProps;
   /**
    * 表单配置
    */
