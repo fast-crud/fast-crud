@@ -13,7 +13,7 @@ import { useColumns } from "@fast-crud/fast-crud";
 const { registerMergeColumnPlugin } = useColumns();
 
 import _ from "lodash-es";
-import { FsUploaderOptions } from "../d.ts/type";
+import { FsUploaderOptions } from "./d.ts/type";
 registerMergeColumnPlugin({
   name: "uploader-merge-plugin",
   order: 5,
