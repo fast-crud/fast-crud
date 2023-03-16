@@ -1,6 +1,7 @@
 {
   "compilerOptions": {
     "noImplicitAny": true,
+    "allowJs": true,
     "target": "esnext",
     "module": "esnext",
     "strict": true,
@@ -15,7 +16,6 @@
     "sourceMap": true,
     "baseUrl": ".",
     "outDir": "./dist/ts",
-    "allowJs": true,
     "types": [
       "vite/client", "@types/jest",
       "mocha",

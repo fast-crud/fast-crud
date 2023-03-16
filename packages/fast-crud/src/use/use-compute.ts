@@ -1,13 +1,11 @@
 import _ from "lodash-es";
-import { computed, ref, toRaw, watch, isRef, Ref } from "vue";
-import getEachDeep from "deepdash-es/getEachDeep";
+import { computed, ref, Ref, watch } from "vue";
 import { useMerge } from "./use-merge";
 import { ComputeContext } from "/src/d.ts/compute";
-import { ComputedRefValue } from "vue/macros";
 import { AsyncComputeRef, ComputeFn, ComputeRef } from "/src/d.ts";
+import { deepdash } from "/src/utils/deepdash";
+
 const { cloneDeep } = useMerge();
-// @ts-ignore
-const eachDeep = getEachDeep(_);
 
 function isAsyncCompute(value: any) {
   return value instanceof AsyncComputeValue;
@@ -21,9 +19,9 @@ function findComputeValues(target: any, excludes: any[], isAsync: boolean) {
     return foundMap;
   }
   const checkFunc = isAsync ? isAsyncCompute : isSyncCompute;
-  eachDeep(
+  deepdash.forEachDeep(
     target,
-    (value, key, parent, context) => {
+    (value: any, key: any, parent: any, context: any) => {
       if (checkFunc(value)) {
         // @ts-ignore
         const path: string = context.path;
