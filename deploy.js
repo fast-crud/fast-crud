@@ -1,4 +1,36 @@
 const http = require("axios")
+const exec = require('child_process').exec;
+
+//builder
+function execute(cmd){
+    return new Promise((resolve,reject)=>{
+        console.log("cmd executing: " + cmd)
+        exec(cmd, function(error, stdout, stderr) {
+            if(error){
+                console.error(error);
+                console.info(stderr)
+                reject(error)
+            }
+            else{
+                console.info(stdout)
+                console.log("success");
+                resolve(true)
+            }
+        });
+    })
+}
+
+async function build(){
+    await execute("cd ./packages/fast-admin/fs-admin-antdv/ && npm run build")
+    await execute("cd ./packages/fast-admin/fs-admin-element/ && npm run build")
+    await execute("cd ./packages/fast-admin/fs-admin-naive-ui/ && npm run build")
+    await execute("npm run docs:build")
+}
+
+
+
+// trigger
+
 const naive = "http://flow-openapi.aliyun.com/pipeline/webhook/Zm3TJyDtyFZgV4dtJiD1"
 const doc = "http://flow-openapi.aliyun.com/pipeline/webhook/soOYdQ5sF3kLjTPJGmIO"
 const antdv = "http://flow-openapi.aliyun.com/pipeline/webhook/HiL0uVYxfUnBzIMJZVXB"
@@ -28,7 +60,12 @@ async function trigger(){
 
 }
 
-trigger()
+async function  start(){
+    await build()
+   await trigger()
+}
+
+start()
 
 
 /**
