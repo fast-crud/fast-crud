@@ -1,13 +1,14 @@
 <template>
   <span class="fs-uploader-cos"></span>
 </template>
-<script>
+<script lang="ts">
 import _ from "lodash-es";
-import { getCurrentInstance } from "vue";
+import { defineComponent, getCurrentInstance } from "vue";
 import { buildKey, useUploader } from "./utils";
 import COS from "cos-js-sdk-v5";
 import dayjs from "dayjs";
-function newClient(options) {
+import { FsUploaderDoUploadOptions, FsUploaderCosOptions } from "@/uploader/d.ts/type";
+function newClient(options: FsUploaderCosOptions) {
   let client = null;
   const secretId = options.secretId;
   const secretKey = options.secretKey;
@@ -15,7 +16,7 @@ function newClient(options) {
   if (!secretId && !secretKey && getAuthorization) {
     client = new COS({
       // 必选参数
-      getAuthorization(options, callback) {
+      getAuthorization(opts, callback) {
         // 不传secretKey代表使用临时签名模式,此时此参数必传（安全，生产环境推荐）
         getAuthorization(options).then((data) => {
           if (data.ExpiredTime && typeof data.ExpiredTime === "string") {
@@ -35,11 +36,11 @@ function newClient(options) {
 
   return client;
 }
-async function doUpload({ file, fileName, onProgress, options }) {
+async function doUpload({ file, fileName, onProgress, options }: FsUploaderDoUploadOptions) {
   const key = await buildKey(file, fileName, options);
-  const config = options;
+  const config = options as FsUploaderCosOptions;
   // TODO 大文件需要分片上传
-  const cos = newClient(options);
+  const cos = newClient(config);
   return new Promise((resolve, reject) => {
     // onProgress({
     //   total: 0,
@@ -65,7 +66,7 @@ async function doUpload({ file, fileName, onProgress, options }) {
           reject(err);
           return;
         }
-        let result = { url: config.domain + "/" + key, key: key };
+        let result: any = { url: config.domain + "/" + key, key: key };
         if (config.successHandle) {
           result = await config.successHandle(result);
           resolve(result);
@@ -76,13 +77,13 @@ async function doUpload({ file, fileName, onProgress, options }) {
     );
   });
 }
-export default {
+export default defineComponent({
   name: "FsUploaderCos",
   setup() {
     const { proxy } = getCurrentInstance();
     const { getConfig } = useUploader(proxy);
     const global = getConfig("cos");
-    async function upload(context) {
+    async function upload(context: FsUploaderDoUploadOptions) {
       const options = context.options;
       const config = _.merge(_.cloneDeep(global), options);
       context.options = config;
@@ -90,5 +91,5 @@ export default {
     }
     return { upload };
   }
-};
+});
 </script>

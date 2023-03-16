@@ -1,18 +1,20 @@
 <template>
   <span class="fs-uploader-alioss"></span>
 </template>
-<script>
+<script lang="ts">
 import _ from "lodash-es";
 import { useUploader, buildKey } from "./utils/index";
 import OSS from "ali-oss";
-import { getCurrentInstance } from "vue";
-let sts = null;
-async function getSts(config) {
+import { defineComponent, getCurrentInstance } from "vue";
+import { FsUploaderDoUploadOptions, FsUploaderAliossOptions, FsUploaderGetAuthContext } from "../d.ts/type";
+let sts: any = null;
+async function getSts(config: FsUploaderGetAuthContext) {
   if (sts != null && sts.expiresTime > new Date().getTime()) {
     return sts;
   }
+  const options = config as FsUploaderAliossOptions;
   // 需要重新获取sts
-  const ret = await config.getAuthorization(config);
+  const ret = await options.getAuthorization(config);
   sts = ret;
   sts.expiresTime = new Date().getTime() + parseInt(ret.expiration);
   return sts;
@@ -32,7 +34,9 @@ async function getSts(config) {
  * }
  * @returns  上传结果 {url:xxx}
  */
-async function doUpload({ file, fileName, onProgress, options }) {
+async function doUpload(opts: FsUploaderDoUploadOptions) {
+  const { file, fileName, onProgress } = opts;
+  const options: FsUploaderAliossOptions = opts.options as FsUploaderAliossOptions;
   const key = await buildKey(file, fileName, options);
   let sts = null;
   if (!options.accessKeyId && !options.accessKeySecret && options.getAuthorization !== null) {
@@ -64,7 +68,7 @@ async function doUpload({ file, fileName, onProgress, options }) {
     });
   }
   await client.put(key, file);
-  let result = { url: options.domain + "/" + key, key: key };
+  let result: any = { url: options.domain + "/" + key, key: key };
   if (options.successHandle) {
     result = await options.successHandle(result);
   }
@@ -81,13 +85,13 @@ async function doUpload({ file, fileName, onProgress, options }) {
         }
    */
 }
-export default {
+export default defineComponent({
   name: "FsUploaderAlioss",
   setup() {
     const { proxy } = getCurrentInstance();
     const { getConfig } = useUploader(proxy);
     const global = getConfig("alioss");
-    async function upload(context) {
+    async function upload(context: FsUploaderDoUploadOptions) {
       const options = context.options;
       const config = _.merge(_.cloneDeep(global), options);
       context.options = config;
@@ -95,5 +99,5 @@ export default {
     }
     return { upload };
   }
-};
+});
 </script>

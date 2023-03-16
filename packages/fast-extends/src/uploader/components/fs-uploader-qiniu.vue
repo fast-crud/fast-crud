@@ -1,17 +1,19 @@
 <template>
   <span class="fs-uploader-qiniu"></span>
 </template>
-<script>
+<script lang="ts">
 import _ from "lodash-es";
 import { useUploader, buildKey } from "./utils/index";
 import * as qiniu from "qiniu-js";
-import { getCurrentInstance } from "vue";
-async function getToken(file, fileName, key, config) {
+import { defineComponent, getCurrentInstance } from "vue";
+import { FsUploaderDoUploadOptions, FsUploaderQiniuOptions } from "@/uploader/d.ts/type";
+async function getToken(file: File, fileName: string, key: string, config: FsUploaderQiniuOptions) {
   const ret = await config.getToken({
     fileName,
     key,
     file,
-    ...config.custom
+    ...config.custom,
+    ...config
   });
 
   let tokenWrapper = null;
@@ -24,26 +26,25 @@ async function getToken(file, fileName, key, config) {
   return tokenWrapper.token;
 }
 
-async function doUpload({ file, fileName, onProgress, options }) {
+async function doUpload({ file, fileName, onProgress, options }: FsUploaderDoUploadOptions) {
   const key = await buildKey(file, fileName, options);
   const token = await getToken(file, fileName, key, options);
 
   return new Promise((resolve, reject) => {
     /**
      */
-    const observable = qiniu.upload(file, key, token, options.putExtra, options.putConfig);
-    // eslint-disable-next-line no-unused-vars,@typescript-eslint/no-unused-vars
+    const observable: any = qiniu.upload(file, key, token, options.putExtra, options.putConfig);
     const subscription = observable.subscribe({
-      next(res) {
+      next(res: any) {
         if (res) {
           onProgress(res.total);
         }
       },
-      error(err) {
+      error(err: any) {
         reject(err);
       },
-      async complete(res) {
-        let ret = { url: options.domain + "/" + key, key: key };
+      async complete(res: any) {
+        let ret: any = { url: options.domain + "/" + key, key: key };
         if (options.successHandle) {
           ret = await options.successHandle(ret);
           resolve(ret);
@@ -55,13 +56,13 @@ async function doUpload({ file, fileName, onProgress, options }) {
     // subscription.unsubscribe() // 上传取消
   });
 }
-export default {
+export default defineComponent({
   name: "FsUploaderQiniu",
   setup() {
     const { proxy } = getCurrentInstance();
     const { getConfig } = useUploader(proxy);
     const global = getConfig("qiniu");
-    async function upload(context) {
+    async function upload(context: FsUploaderDoUploadOptions) {
       const options = context.options;
       const config = _.merge(_.cloneDeep(global), options);
       context.options = config;
@@ -69,5 +70,5 @@ export default {
     }
     return { upload };
   }
-};
+});
 </script>

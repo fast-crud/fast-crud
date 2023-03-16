@@ -1,9 +1,9 @@
 <template>
   <div class="fs-cropper-uploader" :class="{ 'is-disabled': disabled }">
     <div class="image-list">
-      <component :is="$fsui.imageGroup.name">
+      <component :is="ui.imageGroup.name">
         <div v-for="(item, index) in list" :key="index" class="image-item">
-          <component :is="$fsui.image.name" class="image" :src="item.dataUrl ? item.dataUrl : item.url" v-bind="img">
+          <component :is="ui.image.name" class="image" :src="item.dataUrl ? item.dataUrl : item.url" v-bind="img">
             <template #placeholder>
               <div class="image-slot">
                 <fs-loading :loading="true" />
@@ -11,17 +11,17 @@
             </template>
           </component>
           <div v-if="!disabled" class="delete">
-            <fs-icon :icon="$fsui.icons.remove" @click="removeImage(index, item)" />
+            <fs-icon :icon="ui.icons.remove" @click="removeImage(index, item)" />
           </div>
           <div v-if="item.status === 'uploading'" class="status-uploading">
-            <component :is="$fsui.progress.name" type="circle" :percentage="item.progress" :width="70" />
+            <component :is="ui.progress.name" type="circle" :percentage="item.progress" :width="70" />
           </div>
           <div v-else-if="item.status === 'done'" class="status-done">
-            <fs-icon :icon="$fsui.icons.check" class="status-down-icon" />
+            <fs-icon :icon="ui.icons.check" class="status-down-icon" />
           </div>
         </div>
         <div v-if="limit <= 0 || limit > list.length" class="image-item image-plus" @click="addNewImage">
-          <fs-icon :icon="$fsui.icons.plus" class="cropper-uploader-icon" />
+          <fs-icon :icon="ui.icons.plus" class="cropper-uploader-icon" />
         </div>
       </component>
     </div>
@@ -41,15 +41,17 @@
   </div>
 </template>
 
-<script>
-import { reactive, ref, getCurrentInstance } from "vue";
-import { useUploader } from "./utils";
+<script lang="ts">
+import { defineComponent, reactive, ref, Ref } from "vue";
 import FsUploader from "./fs-uploader.vue";
+import { useUi } from "@fast-crud/fast-crud";
+import { FsUploaderDoUploadOptions } from "../d.ts/type";
+
 /**
  * 图片裁剪上传组件,封装了fs-cropper, fs-cropper内部封装了cropperjs
  */
 
-export default {
+export default defineComponent({
   name: "FsCropperUploader",
   components: { FsUploader },
   props: {
@@ -104,8 +106,8 @@ export default {
     // 构建下载url方法,不影响提交的value
     buildUrl: {
       type: Function,
-      default: async function (value, item) {
-        return typeof value === "object" ? value.url || item?.url : value;
+      default: async function (value: any) {
+        return typeof value === "object" ? value.url : value;
       }
     },
     /**
@@ -119,16 +121,18 @@ export default {
   },
   emits: ["update:modelValue", "change"],
   setup() {
-    const cropperRef = ref();
+    const { ui } = useUi();
+    const cropperRef: Ref = ref();
     return {
+      ui,
       cropperRef
     };
   },
   data() {
     return {
-      index: undefined,
-      list: []
-    };
+      index: undefined as any,
+      list: [] as any
+    } as any;
   },
   computed: {
     _urlList() {
@@ -140,23 +144,23 @@ export default {
       }
       return urlList;
     }
-  },
+  } as any,
   watch: {
-    modelValue(val) {
+    modelValue(val: any) {
       this.$emit("change", val);
       if (val === this.emitValue) {
         return;
       }
       this.initValue(val);
     }
-  },
+  } as any,
   created() {
     this.emitValue = this.modelValue;
     this.initValue(this.modelValue);
   },
   methods: {
-    async initValue(value) {
-      const list = [];
+    async initValue(value: any) {
+      const list: any = [];
       if (value == null || value === "") {
         this.list = list;
         return;
@@ -178,12 +182,12 @@ export default {
       this.cropperRef.clear();
       this.cropperRef.open();
     },
-    removeImage(index) {
+    removeImage(index: number) {
       this.list.splice(index, 1);
       this.emit();
     },
     hasUploading() {
-      const fileList = this.list;
+      const fileList: any = this.list;
       if (fileList && fileList.length > 0) {
         for (const item of fileList) {
           if (item.status === "uploading") {
@@ -193,21 +197,21 @@ export default {
       }
       return false;
     },
-    async cropComplete(ret) {
+    async cropComplete(ret: any) {
       const blob = ret.blob;
       const dataUrl = ret.dataUrl;
       const file = ret.file;
       // 开始上传
-      const item = reactive({
+      const item: any = reactive({
         url: undefined,
         dataUrl: dataUrl,
         status: "uploading",
         progress: 0
       });
-      const onProgress = (e) => {
+      const onProgress = (e: any) => {
         item.progress = e.percent;
       };
-      const onError = (e) => {
+      const onError = (e: any) => {
         item.status = "error";
         item.message = "文件上传出错:" + e.message;
         console.error(e);
@@ -233,7 +237,7 @@ export default {
         onError(e);
       }
     },
-    async doUpload(option) {
+    async doUpload(option: FsUploaderDoUploadOptions) {
       option.options = this.uploader;
       let uploaderRef = this.$refs.uploaderImplRef?.getUploaderRef();
       if (uploaderRef == null) {
@@ -257,8 +261,8 @@ export default {
       this.emitValue = ret;
       this.$emit("update:modelValue", ret);
     }
-  }
-};
+  } as any
+} as any);
 </script>
 
 <style lang="less">

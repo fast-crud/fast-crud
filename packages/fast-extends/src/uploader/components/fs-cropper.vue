@@ -1,8 +1,8 @@
 <template>
   <component
-    :is="$fsui.dialog.name"
+    :is="ui.dialog.name"
     ref="cropperDialogRef"
-    v-model:[$fsui.dialog.visible]="dialogVisible"
+    v-model:[ui.dialog.visible]="dialogVisible"
     append-to-body
     width="900px"
     :close-on-click-modal="true"
@@ -28,7 +28,7 @@
           />
         </div>
         <div class="tool-bar">
-          <component :is="$fsui.buttonGroup.name">
+          <component :is="ui.buttonGroup.name">
             <fs-button v-for="(item, index) of computedButtons" :key="index" v-bind="item" />
           </component>
         </div>
@@ -49,13 +49,13 @@
   </component>
 </template>
 
-<script>
-import { ref, computed } from "vue";
+<script lang="ts">
+import { computed, defineComponent, ref, Ref } from "vue";
 import VueCropper from "./utils/vue-cropperjs.js";
 import "cropperjs/dist/cropper.css";
-import { uiContext, useI18n } from "@fast-crud/fast-crud";
+import { useI18n, useUi } from "@fast-crud/fast-crud";
 // 图片裁剪对话框，封装cropperjs
-export default {
+export default defineComponent({
   name: "FsCropper",
   components: {
     VueCropper
@@ -101,16 +101,16 @@ export default {
   },
   emits: ["cancel", "done", "ready"],
   setup(props, ctx) {
+    const { ui } = useUi();
     const { t } = useI18n();
-    const ui = uiContext.get();
-    const dialogVisible = ref(false);
-    const cropperRef = ref();
-    const fileInputRef = ref();
-    const isLoaded = ref(false);
-    const imgSrc = ref();
-    const data = ref();
-    const file = ref();
-    const scale = ref({
+    const dialogVisible: Ref = ref(false);
+    const cropperRef: Ref = ref();
+    const fileInputRef: Ref = ref();
+    const isLoaded: Ref = ref(false);
+    const imgSrc: Ref = ref();
+    const data: Ref = ref();
+    const file: Ref = ref();
+    const scale: Ref = ref({
       x: 1,
       y: 1
     });
@@ -124,14 +124,14 @@ export default {
     }
     const vClosed = ui.dialog.buildOnClosedBind(handleClosed);
     const customClass = ui.dialog.customClass;
-    const dialogBinding = ref({
+    const dialogBinding: Ref = ref({
       ...vClosed,
       [customClass]: "fs-cropper-dialog",
       ...ui.formWrapper.buildWidthBind(ui.dialog.name, "960px"),
       ...ui.formWrapper.buildInitBind(ui.dialog.name)
     });
 
-    function open(url) {
+    function open(url: string) {
       dialogVisible.value = true;
       if (url != null && url !== "") {
         imgSrc.value = url;
@@ -154,12 +154,12 @@ export default {
       return cropperRef.value;
     }
 
-    function ready(event) {
-      console.info("cropper ready:", event);
+    function ready(event: any) {
+      console.debug("cropper ready:", event);
       // this.zoom(-0.3)
       ctx.emit("ready");
     }
-    function preventDefault(e) {
+    function preventDefault(e: any) {
       e.preventDefault();
       return false;
     }
@@ -169,7 +169,7 @@ export default {
     }
 
     // 检测选择的文件是否合适
-    function checkFile(file) {
+    function checkFile(file: File) {
       // 仅限图片
       if (file.type.indexOf("image") === -1) {
         ui.message.warn("请选择合适的文件类型");
@@ -183,7 +183,7 @@ export default {
       return true;
     }
 
-    function setImage(e) {
+    function setImage(e: any) {
       const selectFile = e.target.files[0];
       if (selectFile.type.indexOf("image/") === -1) {
         ui.message.warn("Please select an image file");
@@ -202,7 +202,7 @@ export default {
       }
     }
     // 触发input框的change事件选择图片
-    function handleChange(e) {
+    function handleChange(e: any) {
       e.preventDefault();
       const files = e.target.files || e.dataTransfer.files;
       isLoaded.value = true;
@@ -220,18 +220,17 @@ export default {
       // get image data for post processing, e.g. upload or setting image src
       return cropperRef.value.getCroppedCanvas().toDataURL();
     }
-    function getCropImageBlob(callback, type, quality) {
+    function getCropImageBlob(callback: any, type?: any, quality?: any) {
       return cropperRef.value.getCroppedCanvas().toBlob(callback, type, quality);
     }
-    function emit(result) {
-      console.info("crop done:", result);
+    function emit(result: any) {
+      console.debug("crop done:", result);
       ctx.emit("done", result);
     }
-    function doOutput(file) {
-      console.info("output this:", this);
-      const ret = { file };
+    function doOutput(file: File) {
+      const ret: any = { file };
       if (props.output === "all") {
-        getCropImageBlob((blob) => {
+        getCropImageBlob((blob: any) => {
           const dataUrl = getCropImageDataUrl();
           ret.blob = blob;
           ret.dataUrl = dataUrl;
@@ -241,7 +240,7 @@ export default {
       }
 
       if (props.output === "blob") {
-        getCropImageBlob((blob) => {
+        getCropImageBlob((blob: any) => {
           ret.blob = blob;
           emit(ret);
         });
@@ -274,28 +273,26 @@ export default {
     function getData() {
       data.value = JSON.stringify(cropperRef.value.getData(), null, 4);
     }
-    function move(offsetX, offsetY) {
+    function move(offsetX: any, offsetY: any) {
       cropperRef.value.move(offsetX, offsetY);
     }
     function reset() {
       cropperRef.value.reset();
     }
-    function rotate(deg) {
+    function rotate(deg: any) {
       cropperRef.value.rotate(deg);
     }
     function setCropBoxData() {
-      if (!this.data) return;
       cropperRef.value.setCropBoxData(JSON.parse(data.value));
     }
     function setData() {
-      if (!this.data) return;
       cropperRef.value.setData(JSON.parse(data.value));
     }
 
     function showFileChooser() {
       fileInputRef.value.click();
     }
-    function zoom(percent) {
+    function zoom(percent: any) {
       cropperRef.value.relativeZoom(percent);
     }
 
@@ -375,6 +372,7 @@ export default {
     });
 
     return {
+      ui,
       cropperRef,
       fileInputRef,
       dialogVisible,
@@ -449,7 +447,7 @@ export default {
         }
       }
       if (typeof height === "number") {
-        height += "px";
+        return height + "px";
       }
       return height;
     },
@@ -459,12 +457,12 @@ export default {
         width = "50%";
       }
       if (typeof width === "number") {
-        width += "px";
+        return width + "px";
       }
       return width;
     }
   }
-};
+});
 </script>
 
 <style lang="less">
