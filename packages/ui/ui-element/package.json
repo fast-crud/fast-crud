@@ -1,6 +1,6 @@
 {
   "name": "@fast-crud/ui-element",
-  "version": "1.10.0",
+  "version": "1.11.0",
   "description": "",
   "main": "./dist/ui-element.umd.js",
   "module": "./dist/ui-element.mjs",
@@ -14,13 +14,12 @@
   "author": "Greper",
   "license": "MIT",
   "dependencies": {
-    "@fast-crud/ui-interface": "workspace:^1.10.0"
+    "@fast-crud/ui-interface": "workspace:^1.11.0"
   },
   "devDependencies": {
-    "lodash-es": "^4.17.21",
-    "@element-plus/icons-vue": "^2.1.0",
     "@ant-design/icons-vue": "^6.1.0",
-    "@fast-crud/fast-crud": "workspace:^1.10.0",
+    "@element-plus/icons-vue": "^2.1.0",
+    "@fast-crud/fast-crud": "workspace:^1.11.0",
     "@rollup/plugin-strip": "^3.0.2",
     "@rollup/plugin-typescript": "^11.0.0",
     "@types/lodash-es": "^4.17.7",
@@ -40,6 +39,7 @@
     "eslint-plugin-promise": "^6.1.1",
     "eslint-plugin-vue": "^9.9.0",
     "lint-staged": "^13.2.0",
+    "lodash-es": "^4.17.21",
     "postcss": "^8.4.21",
     "prettier": "^2.8.4",
     "rollup-plugin-visualizer": "^5.9.0",
