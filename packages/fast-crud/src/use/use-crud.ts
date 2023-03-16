@@ -5,7 +5,15 @@ import { useMerge } from "./use-merge";
 import logger from "../utils/util.log";
 import { uiContext } from "../ui";
 import { useI18n } from "../locale";
-import { ComputeContext, CrudBinding, CrudExpose, DynamicallyCrudOptions, DynamicType, ScopeContext } from "../d.ts";
+import {
+  ComputeContext,
+  CrudBinding,
+  CrudExpose,
+  DoRemoveContext,
+  DynamicallyCrudOptions,
+  DynamicType,
+  ScopeContext
+} from "../d.ts";
 import { useCompute } from "./use-compute";
 import { useColumns } from "./use-columns";
 import { CrudOptions } from "../d.ts/crud";
@@ -66,8 +74,8 @@ export function useCrud(ctx: UseCrudProps): UseCrudRet {
         crudBinding.value.pagination.pageSize = pageSize;
         crudBinding.value.pagination[ui.pagination.currentPage] = 1; //重置页码到1
       },
-      doAfterChange() {
-        return doRefresh();
+      async doAfterChange() {
+        return await doRefresh();
       }
     });
     return {
@@ -80,7 +88,7 @@ export function useCrud(ctx: UseCrudProps): UseCrudRet {
   function useFormSubmit() {
     return {
       editForm: {
-        async doSubmit(context: any) {
+        async doSubmit(context: ScopeContext) {
           doValueResolve(context);
           if (options.mode?.name === "local") {
             expose.updateTableRow(context.index, context.form, options.mode.isMergeWhenUpdate);
@@ -92,7 +100,7 @@ export function useCrud(ctx: UseCrudProps): UseCrudRet {
         }
       },
       addForm: {
-        async doSubmit(context: any) {
+        async doSubmit(context: ScopeContext) {
           doValueResolve(context);
           if (options.mode?.name === "local") {
             const index = options.mode.isAppendWhenAdd ? expose.getTableData().length : 0;
@@ -112,13 +120,15 @@ export function useCrud(ctx: UseCrudProps): UseCrudRet {
       rowHandle: {
         buttons: {
           remove: {
-            click: async (context: any) => {
+            click: async (context: ScopeContext) => {
+              // @ts-ignore
               context.row = context[ui.tableColumn.row];
               await expose.doRemove(context);
             }
           },
           edit: {
-            click: async (context: any) => {
+            click: async (context: ScopeContext) => {
+              // @ts-ignore
               context.row = context[ui.tableColumn.row];
               await expose.openEdit({
                 row: context.row,
@@ -127,7 +137,8 @@ export function useCrud(ctx: UseCrudProps): UseCrudRet {
             }
           },
           view: {
-            click: async (context: any) => {
+            click: async (context: ScopeContext) => {
+              // @ts-ignore
               context.row = context[ui.tableColumn.row];
               await expose.openView({
                 row: context.row,

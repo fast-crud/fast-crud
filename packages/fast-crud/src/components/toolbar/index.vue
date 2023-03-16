@@ -3,18 +3,18 @@
     <template v-for="(item, key) of computedButtons" :key="key">
       <template v-if="item.show !== false">
         <component
-          :is="$fsui.popover.name"
+          :is="ui.popover.name"
           v-if="key === 'columns' && columnsFilter && columnsFilter.mode === 'simple'"
-          v-model:[$fsui.popover.visible]="popoverVisible"
+          v-model:[ui.popover.visible]="popoverVisible"
           display-directive="show"
           placement="bottom"
           :width="760"
           trigger="click"
         >
-          <template #[$fsui.popover.referenceSlotName]>
+          <template #[ui.popover.referenceSlotName]>
             <fs-button v-bind="item" @click="handleSimpleClick" />
           </template>
-          <template #[$fsui.popover.contentSlotName]>
+          <template #[ui.popover.contentSlotName]>
             <fs-table-columns-filter
               v-if="columns"
               v-model:show="popoverVisible"
@@ -39,20 +39,20 @@
   </div>
 </template>
 
-<script>
+<script lang="ts">
 import FsTableColumnsFilter from "./fs-table-columns-filter/index.vue";
 import _ from "lodash-es";
-import { ref, computed } from "vue";
+import { computed, defineComponent, ref, Ref } from "vue";
 import { useI18n } from "../../locale";
 import { Constants } from "../../utils/util.constants";
-import { uiContext } from "../../ui";
+import { ButtonProps, ButtonsProps } from "../../d.ts";
+import { useUi } from "../../use";
 
 /**
  * 工具条
  */
-export default {
+export default defineComponent({
   name: "FsToolbar",
-  // eslint-disable-next-line vue/no-unused-components
   components: { FsTableColumnsFilter },
   props: {
     /**
@@ -106,14 +106,14 @@ export default {
      * 列设置配置
      */
     columnsFilter: {}
-  },
+  } as any,
   emits: ["refresh", "update:search", "update:compact", "update:columns", "export"],
-  setup(props, ctx) {
+  setup(props: any, ctx) {
     const { t } = useI18n();
-    const columnsFilterRef = ref();
-    const ui = uiContext.get();
+    const columnsFilterRef: Ref = ref();
+    const { ui } = useUi();
     const computedButtons = computed(() => {
-      const defaultButtons = {
+      const defaultButtons: ButtonsProps<void> = {
         refresh: {
           type: "primary",
           icon: ui.icons.refresh,
@@ -170,7 +170,7 @@ export default {
         defaultButtons.compact.type = props.compact ? "primary" : "default";
       }
 
-      let sortArr = [];
+      let sortArr: ButtonProps[] = [];
       for (let defaultButtonsKey in defaultButtons) {
         sortArr.push({
           ...defaultButtons[defaultButtonsKey],
@@ -181,7 +181,7 @@ export default {
         return item.order ?? Constants.orderDefault;
       });
 
-      const sortedButtons = {};
+      const sortedButtons: ButtonsProps<void> = {};
 
       sortArr.forEach((item) => {
         let _key = item._key;
@@ -198,13 +198,14 @@ export default {
       popoverVisible.value = !popoverVisible.value;
     };
     return {
+      ui,
       columnsFilterRef,
       computedButtons,
       popoverVisible,
       handleSimpleClick
     };
   }
-};
+});
 </script>
 <style lang="less">
 .fs-toolbar {

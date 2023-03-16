@@ -1,9 +1,9 @@
 <template>
   <component
-    :is="$fsui.formItem.name"
+    :is="ui.formItem.name"
     v-if="item"
     class="fs-form-item"
-    :[$fsui.formItem.prop]="computedKey"
+    :[ui.formItem.prop]="computedKey"
     v-bind="item"
     :path="item.key"
     :rule-path="item.key"
@@ -17,18 +17,18 @@
       </span>
 
       <component
-        :is="$fsui.tooltip.name"
+        :is="ui.tooltip.name"
         v-if="item.helper && computedHelperPosition === 'label'"
         v-bind="computedHelperTooltip"
       >
-        <template #[$fsui.tooltip.content]>
+        <template #[ui.tooltip.content]>
           <span class="fs-form-helper-tooltip">
             <fs-form-helper :helper="item.helper" :scope="scopeComputed" />
           </span>
         </template>
-        <template #[$fsui.tooltip.trigger]>
+        <template #[ui.tooltip.trigger]>
           <span class="fs-form-item-label-icon">
-            <fs-icon class="fs-form-item-label-icon-inner" :icon="$fsui.icons.question"></fs-icon>
+            <fs-icon class="fs-form-item-label-icon-inner" :icon="ui.icons.question"></fs-icon>
           </span>
         </template>
       </component>
@@ -60,14 +60,16 @@
     </div>
   </component>
 </template>
-<script>
-import { ref, computed } from "vue";
+<script lang="ts">
+import { ref, computed, defineComponent, Ref, PropType } from "vue";
 import _ from "lodash-es";
-import FsRender from "../render/fs-render.jsx";
+import FsRender from "../render/fs-render.js";
+import { ScopeContext } from "../../d.ts";
+import { useUi } from "../../use";
 /**
  * form-item组件封装
  */
-export default {
+export default defineComponent({
   name: "FsFormItem",
   components: { FsRender },
   props: {
@@ -99,13 +101,14 @@ export default {
   },
   emits: ["update:modelValue"],
   setup(props, ctx) {
+    const { ui } = useUi();
     const componentRenderRef = ref();
-    const scopeComputed = computed(() => {
+    const scopeComputed: Ref<ScopeContext> = computed(() => {
       const scope = props.getContextFn ? props.getContextFn() : {};
       return { value: props.modelValue, key: props.item.key, ...scope };
     });
 
-    function updateModelValue(value) {
+    function updateModelValue(value: any) {
       ctx.emit("update:modelValue", value);
     }
     function getComponentRef(isAsync = false) {
@@ -116,10 +119,10 @@ export default {
     }
 
     const computedHelperPosition = computed(() => {
-      return props.item?.helper?.position || props.helper?.position;
+      return props.item?.helper?.position || (props.helper as any)?.position;
     });
     const computedHelperTooltip = computed(() => {
-      return _.merge({}, props.item.helper?.tooltip, props.helper?.tooltip);
+      return _.merge({}, props.item.helper?.tooltip, (props.helper as any)?.tooltip);
     });
     const computedKey = computed(() => {
       if (props.item == null) {
@@ -143,6 +146,7 @@ export default {
     };
 
     return {
+      ui,
       updateModelValue,
       scopeComputed,
       getComponentRef,
@@ -155,7 +159,7 @@ export default {
       computedLabelRender
     };
   }
-};
+});
 </script>
 
 <style lang="less">

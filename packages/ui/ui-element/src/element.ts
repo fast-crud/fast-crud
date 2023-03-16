@@ -49,8 +49,14 @@ import {
 } from "@fast-crud/ui-interface";
 // @ts-ignore
 import _ from "lodash-es";
+
+export type ElementUiProvider = {
+  Notification: any;
+  Message: any;
+  MessageBox: any;
+};
 export class Element implements UiInterface {
-  constructor(target) {
+  constructor(target?: ElementUiProvider) {
     if (target) {
       this.notification.instance = target.Notification;
       this.message.instance = target.Message;
@@ -187,7 +193,7 @@ export class Element implements UiInterface {
     name: "el-dialog",
     visible: "modelValue",
     customClass: "customClass",
-    buildOnClosedBind(onClosed) {
+    buildOnClosedBind(onClosed: () => void) {
       return { onClosed };
     },
     footer() {
@@ -217,12 +223,12 @@ export class Element implements UiInterface {
   };
   checkbox: CheckboxCI = {
     name: "el-checkbox",
-    resolveEvent(e) {
+    resolveEvent(e: any) {
       return e;
     },
     modelValue: "modelValue",
     value: "label",
-    onChange(callback) {
+    onChange(callback: (e: any) => void) {
       return {
         "onUpdate:modelValue": callback
       };
@@ -276,7 +282,7 @@ export class Element implements UiInterface {
     name: "el-cascader",
     modelValue: "modelValue",
     clearable: "clearable",
-    fieldNames(namesMap) {
+    fieldNames(namesMap: any) {
       return {
         props: namesMap
       };

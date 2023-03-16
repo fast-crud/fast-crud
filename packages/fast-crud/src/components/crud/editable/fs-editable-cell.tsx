@@ -1,11 +1,11 @@
-import { computed } from "vue";
+import { computed, defineComponent } from "vue";
 import { uiContext } from "../../../ui";
 import { useCompute } from "../../../use/use-compute";
 import "./fs-editable-cell.less";
 /**
  * 可编辑单元格组件
  */
-export default {
+export default defineComponent({
   name: "FsEditableCell",
   inheritAttrs: false,
   props: {
@@ -106,4 +106,4 @@ export default {
       return this.$refs.targetRef?.getTargetRef();
     }
   }
-};
+});

@@ -1,13 +1,13 @@
 import { useTypes } from "@fast-crud/fast-crud";
 import types from "./types";
 import _ from "lodash-es";
-import defaultConfig from "./config";
+import { defaultConfig, FsEditorConfig } from "./config.js";
 
-function setConfig(app, config) {
+function setConfig(app: any, config: FsEditorConfig) {
   app.config.globalProperties.$fs_editor_config = _.merge(defaultConfig, config);
 }
 export default {
-  install(app, options) {
+  install(app: any, options: FsEditorConfig) {
     const newTypes = types();
     const { addTypes } = useTypes();
     addTypes(newTypes);

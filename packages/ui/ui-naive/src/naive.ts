@@ -46,25 +46,33 @@ import {
   TooltipCI,
   OptionCI,
   DividerCI,
-  PopoverCI
+  PopoverCI,
+  MessageBoxContextType
 } from "@fast-crud/ui-interface";
 
+export type NaiveUiProviders = {
+  notification: any;
+  message: any;
+  messageBox: any;
+  i18n: any;
+};
 export class Naive implements UiInterface {
-  constructor(target) {
+  constructor(target?: NaiveUiProviders) {
     if (target) {
       this.init(target);
     }
   }
 
-  init({ notification, message, messageBox, i18n }) {
+  init({ notification, message, messageBox, i18n }: NaiveUiProviders) {
     this.notification.instance = notification;
     this.message.instance = message;
     this.messageBox.instance = messageBox;
+    this.i18n = i18n;
   }
 
   type = "naive";
   modelValue = "value";
-  i18n = null;
+  i18n: any = null;
 
   formWrapper: FormWrapperCI = {
     visible: "show",
@@ -72,12 +80,12 @@ export class Naive implements UiInterface {
       return "class";
     },
     titleSlotName: "header",
-    buildOnClosedBind(is, onClosed: Function): {} {
+    buildOnClosedBind(is: string, onClosed: Function): {} {
       if (is === "n-modal") {
         return { afterClose: onClosed };
       } else if (is === "n-drawer") {
         return {
-          afterVisibleChange: (visible) => {
+          afterVisibleChange: (visible: boolean) => {
             if (visible === false) {
               onClosed(visible);
             }
@@ -86,16 +94,16 @@ export class Naive implements UiInterface {
       }
       return {};
     },
-    buildWidthBind(is, width) {
+    buildWidthBind(is: string, width: any) {
       return { style: { width: width } };
     },
-    buildInitBind(is) {
+    buildInitBind(is: string) {
       return { preset: "card" };
     },
-    buildInnerBind({ getInnerWrapper }) {
+    buildInnerBind({ getInnerWrapper }: { getInnerWrapper: () => any }) {
       return { to: getInnerWrapper() };
     },
-    hasContentWrap(is) {
+    hasContentWrap(is: string) {
       if (is === "n-drawer") {
         return "n-drawer-content";
       }
@@ -116,10 +124,10 @@ export class Naive implements UiInterface {
         return this.instance;
       }
     },
-    open: (context) => {
+    open: (context: MessageBoxContextType) => {
       return this.messageBox.getInstance().info(context);
     },
-    confirm: (context) => {
+    confirm: (context: MessageBoxContextType) => {
       return new Promise<void>((resolve, reject) => {
         function onOk() {
           resolve();
@@ -157,24 +165,23 @@ export class Naive implements UiInterface {
       }
     },
     name: "n-message",
-    open: (type, context) => {
+    open: (type: any, context: any) => {
       let content = context;
       if (typeof context !== "string") {
         content = context.message || context.content;
       }
-      debugger;
       this.message.getInstance()[type](content);
     },
-    success: (context) => {
+    success: (context: any) => {
       this.message.open("success", context);
     },
-    error: (context) => {
+    error: (context: any) => {
       this.message.open("error", context);
     },
-    warn: (context) => {
+    warn: (context: any) => {
       this.message.open("warning", context);
     },
-    info: (context) => {
+    info: (context: any) => {
       this.message.open("info", context);
     }
   };

@@ -12,9 +12,10 @@
 <script lang="ts">
 import { ComponentPublicInstance, defineComponent, ref, getCurrentInstance, onMounted, reactive, watch } from "vue";
 import "./style.css";
+//@ts-ignore
 import JSONEditor from "jsoneditor";
 import "jsoneditor/dist/jsoneditor.css";
-export default {
+export default defineComponent({
   name: "FsJsonEditor",
   props: {
     modelValue: [String, Boolean, Object, Array],
@@ -124,6 +125,6 @@ export default {
       editorRef
     };
   }
-};
+});
 </script>
 <style lang="less"></style>

@@ -1,3 +1,5 @@
+import { FsUploaderOptions } from "@/uploader/d.ts/type";
+
 export default {
   defaultType: "cos", // 默认的上传后端类型
   cos: {
@@ -7,7 +9,7 @@ export default {
     region: "",
     secretId: "", //
     secretKey: "", // 传了secretKey 和secretId 代表使用本地签名模式（不安全，生产环境不推荐）
-    async getAuthorization() {
+    async getAuthorization(context) {
       // 不传secretKey代表使用临时签名模式时，此参数必传（安全，生产环境推荐）
       throw new Error("请配置config.cos.getAuthorization 或 uploader.getAuthorization");
     }
@@ -16,8 +18,8 @@ export default {
     domain: "https://d2p-demo.oss-cn-shenzhen.aliyuncs.com",
     bucket: "d2p-demo",
     region: "oss-cn-shenzhen",
-    secretId: "",
-    secretKey: "", // 传了secretKey 和secretId 代表使用本地签名模式（不安全，生产环境不推荐）
+    accessKeyId: "", // "",
+    accessKeySecret: "",
     getAuthorization(context) {
       // 不传secretKey代表使用临时签名模式时（安全）
       return new Promise((resolve, reject) => {
@@ -35,10 +37,7 @@ export default {
     async getToken(context) {
       throw new Error("请实现config.qiniu.getToken方法，返回Promise获取七牛的授权token{token:xxx,expires:xxx}");
     },
-    domain: "http://pzrsldiu3.bkt.clouddn.com",
-    custom: {
-      // buildKey，获取授权等接口中将会传入
-    }
+    domain: "http://pzrsldiu3.bkt.clouddn.com"
   },
   s3: {
     bucket: "fast-crud",
@@ -48,9 +47,6 @@ export default {
       useSSL: true,
       accessKey: "Q3AM3UQ867SPQQA43P2F",
       secretKey: "zuf+tfteSlswRu7BJ86wekitnifILbZam1KYY3TG"
-    },
-    custom: {
-      // buildKey，获取授权等接口中将会传入
     }
   },
   form: {
@@ -61,21 +57,18 @@ export default {
     action: undefined,
     name: "file",
     headers: {},
-    data: {},
-    custom: {
-      // buildKey，获取授权等接口中将会传入
-    }
+    data: {}
     // async uploadRequest({ file, action }) {
     //   自定义文件上传请求
     //   return await axios.request();
     // }
   },
-  buildKey(context) {
+  async buildKey(context) {
     const { fileName } = context;
     // 文件key的构建规则
     const date = new Date();
-    let fileType = context.fileType ?? "file";
-    let keepName = context.keepName ?? false;
+    const fileType = context.fileType ?? "file";
+    const keepName = context.keepName ?? false;
     let ext = "";
     if (keepName) {
       ext = "/" + fileName;
@@ -98,4 +91,4 @@ export default {
       ext
     );
   }
-};
+} as FsUploaderOptions;

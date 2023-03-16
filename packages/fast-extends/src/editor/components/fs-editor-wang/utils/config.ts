@@ -95,4 +95,4 @@ export default {
 
   // 超时时间
   uploadImgTimeout: 5 * 1000
-};
+} as any;

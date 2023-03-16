@@ -1,5 +1,5 @@
 import { Ref, toRaw } from "vue";
-import { CrudExpose, OpenDialogProps, OpenEditContext } from "../d.ts/expose";
+import { CrudExpose, OpenDialogProps, OpenEditContext, SetFormDataOptions } from "../d.ts/expose";
 import _ from "lodash-es";
 import logger from "../utils/util.log";
 import { useMerge } from "../use/use-merge";
@@ -13,9 +13,11 @@ import {
   DoRemoveContext,
   UserPageQuery,
   UserPageRes,
-  RemoveProps
-} from "/src/d.ts";
+  RemoveProps,
+  ColumnCompositionProps
+} from "../d.ts";
 import { useFormWrapper } from "./use-form";
+import { forEachColumns } from "../use/use-columns";
 
 const { merge } = useMerge();
 
@@ -207,6 +209,9 @@ export function useExpose(props: UseExposeProps): UseExposeRet {
       const formRef = crudExpose.getFormRef();
       return formRef?.getFormData();
     },
+    setFormData: (form: any, options?: SetFormDataOptions) => {
+      crudExpose.getFormRef()?.setFormData(form, options);
+    },
     getFormComponentRef(key, isAsync = false) {
       const formRef = crudExpose.getFormRef();
       return formRef?.getComponentRef(key, isAsync);
@@ -216,20 +221,23 @@ export function useExpose(props: UseExposeProps): UseExposeRet {
         columns = toRaw(crudBinding.value.columns);
       }
       logger.debug("doValueBuilder ,columns=", columns);
-      const valueBuilderColumns = _.filter(columns, (column) => {
-        return column.valueBuilder != null;
+      const valueBuilderColumns: ColumnCompositionProps[] = [];
+      forEachColumns(columns, (column, key) => {
+        if (column.valueBuilder != null) {
+          valueBuilderColumns.push(column);
+        }
       });
       if (valueBuilderColumns.length === 0) {
         return;
       }
       _.forEach(records, (row, index) => {
-        _.forEach(valueBuilderColumns, (builder) => {
-          builder.valueBuilder({
-            value: row[builder.key],
+        _.forEach(valueBuilderColumns, (col) => {
+          col.valueBuilder({
+            value: row[col.key],
             row,
             index,
-            key: builder.key,
-            column: builder.column
+            key: col.key,
+            column: col
           });
         });
       });
@@ -239,17 +247,25 @@ export function useExpose(props: UseExposeProps): UseExposeRet {
       if (columns == null) {
         columns = toRaw(crudBinding.value.columns);
       }
-      logger.debug("doValueResolve ,columns=", columns);
-      _.forEach(columns, (column: ColumnProps, key) => {
-        if (column.valueResolve) {
-          column.valueResolve({
-            value: form[key],
-            row: form,
-            form,
-            key,
-            column
-          });
+      const valueBuilderColumns: ColumnCompositionProps[] = [];
+      forEachColumns(columns, (column) => {
+        if (column.valueBuilder != null) {
+          valueBuilderColumns.push(column);
         }
+      });
+      if (valueBuilderColumns.length === 0) {
+        return;
+      }
+      logger.debug("doValueResolve ,columns=", columns);
+      _.forEach(valueBuilderColumns, (col) => {
+        const key = col.key;
+        col.valueResolve({
+          value: form[key],
+          row: form,
+          form,
+          key,
+          column: col
+        });
       });
       logger.debug("valueResolve success:", form);
     },

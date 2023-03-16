@@ -1,13 +1,13 @@
-import { computed, resolveDynamicComponent } from "vue";
+import { computed, defineComponent, resolveDynamicComponent } from "vue";
 import { useDict } from "../../use/use-dict";
 import { useI18n } from "../../locale";
 import { useUi } from "../../use";
-import _ from "lodash-es";
+
 /**
  * 字典选择框
  * 支持el-select|a-select的属性配置
  */
-export default {
+export default defineComponent({
   name: "FsDictSelect",
   props: {
     /**
@@ -41,7 +41,7 @@ export default {
     });
 
     const { ui } = useUi();
-    let usedDict = useDict(props, ctx, ui.select.modelValue);
+    const usedDict = useDict(props, ctx, ui.select.modelValue);
     const computedOptions = usedDict.createComputedOptions();
     return {
       computedPlaceholder,
@@ -50,8 +50,9 @@ export default {
     };
   },
   render() {
-    const selectComp = resolveDynamicComponent(this.$fsui.select.name);
-    if (this.$fsui.option.name == null) {
+    const { ui } = useUi();
+    const selectComp = resolveDynamicComponent(ui.select.name);
+    if (ui.option.name == null) {
       //naive ui
       //以options参数作为options
       const options = this.computedOptions || [];
@@ -59,7 +60,7 @@ export default {
     }
     // options 为子组件
     const options = [];
-    const optionComp = resolveDynamicComponent(this.$fsui.option.name);
+    const optionComp = resolveDynamicComponent(ui.option.name);
     for (const item of this.computedOptions) {
       const option = (
         <optionComp {...item} value={this.getValue(item)} label={this.getLabel(item)}>
@@ -74,4 +75,4 @@ export default {
       </selectComp>
     );
   }
-};
+});

@@ -11,6 +11,7 @@ import { useColumns } from "@fast-crud/fast-crud";
 const { registerMergeColumnPlugin } = useColumns();
 
 import _ from "lodash-es";
+import { FsUploaderOptions } from "@/uploader/d.ts/type";
 registerMergeColumnPlugin({
   name: "uploader-merge-plugin",
   order: 5,
@@ -35,7 +36,7 @@ registerMergeColumnPlugin({
 });
 
 const FsUploaderComponents = {
-  install(app) {
+  install(app: any) {
     //加载异步组件，异步组件将会被懒加载，所以不用担心打包之后的体积问题
     utils.vite.installAsyncComponents(app, asyncModules, ["FsImagesFormat"], null, null);
     utils.vite.installSyncComponents(app, syncModules, null, null, null);
@@ -43,7 +44,7 @@ const FsUploaderComponents = {
 };
 
 export const FsExtendsUploader = {
-  install(app, options) {
+  install(app: any, options: FsUploaderOptions) {
     app.use(FsUploaderType, options);
     app.use(FsUploaderComponents);
   }

@@ -1,5 +1,5 @@
 <template>
-  <component :is="$fsui.buttonGroup.name" class="fs-table-columns-fixed-controller">
+  <component :is="ui.buttonGroup.name" class="fs-table-columns-fixed-controller">
     <fs-button
       v-for="option of options"
       :key="option.icon"
@@ -11,8 +11,11 @@
   </component>
 </template>
 
-<script>
-export default {
+<script lang="ts">
+import { defineComponent, ref } from "vue";
+import { useUi } from "../../../use";
+
+export default defineComponent({
   name: "FsTableColumnsFixedController",
   props: {
     modelValue: {
@@ -20,31 +23,34 @@ export default {
     }
   },
   emits: ["update:modelValue", "change"],
-  data() {
-    return {
-      options: [
-        {
-          value: "left",
-          icon: this.$fsui.icons.left // 'el-icon-arrow-left'
-        },
-        {
-          value: false,
-          icon: this.$fsui.icons.close // 'el-icon-close'
-        },
-        {
-          value: "right",
-          icon: this.$fsui.icons.right // 'el-icon-arrow-right'
-        }
-      ]
-    };
-  },
-  methods: {
-    submit(value) {
-      this.$emit("update:modelValue", value);
-      this.$emit("change", value);
+  setup(props, ctx) {
+    const { ui } = useUi();
+    const options = ref([
+      {
+        value: "left",
+        icon: ui.icons.left // 'el-icon-arrow-left'
+      },
+      {
+        value: false,
+        icon: ui.icons.close // 'el-icon-close'
+      },
+      {
+        value: "right",
+        icon: ui.icons.right // 'el-icon-arrow-right'
+      }
+    ]);
+
+    function submit(value: any) {
+      ctx.emit("update:modelValue", value);
+      ctx.emit("change", value);
     }
+    return {
+      ui,
+      options,
+      submit
+    };
   }
-};
+});
 </script>
 
 <style lang="less">

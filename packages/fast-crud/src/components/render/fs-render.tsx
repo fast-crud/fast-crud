@@ -1,7 +1,9 @@
+import { defineComponent } from "vue";
+
 /**
  * 自定义render组件
  */
-export default {
+export default defineComponent({
   name: "FsRender",
   functional: true,
   props: {
@@ -16,4 +18,4 @@ export default {
   render() {
     return this.renderFunc(this.scope);
   }
-};
+});

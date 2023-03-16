@@ -1,15 +1,15 @@
 <template>
-  <component :is="$fsui.cascader.name" :options="computedOptions" v-bind="fieldNamesBinder" />
+  <component :is="ui.cascader.name" :options="computedOptions" v-bind="fieldNamesBinder" />
 </template>
-<script>
+<script lang="ts">
 import { useDict } from "../../use/use-dict";
 import { useUi } from "../../use";
-import { ref } from "vue";
+import { defineComponent, ref } from "vue";
 /**
  * 字典级联组件
  * 支持el-cascader|a-cascader组件的参数
  */
-export default {
+export default defineComponent({
   name: "FsDictCascader",
   props: {
     /**
@@ -20,7 +20,7 @@ export default {
      * 选项，比dict.data优先级高
      */
     options: { type: Array }
-  },
+  } as any,
   emits: ["dict-change"],
   setup(props, ctx) {
     const dictUseRet = useDict(props, ctx);
@@ -35,10 +35,11 @@ export default {
     }
     const computedOptions = dictUseRet.createComputedOptions();
     return {
+      ui,
       ...dictUseRet,
       fieldNamesBinder,
       computedOptions
     };
   }
-};
+});
 </script>

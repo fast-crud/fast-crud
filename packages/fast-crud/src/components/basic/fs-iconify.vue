@@ -2,8 +2,8 @@
   <span ref="iconifyRef" class="fs-iconify" :class="{ 'fs-iconify-spin': spin }"></span>
 </template>
 <script lang="ts">
-import _ from "lodash-es";
 import { defineComponent, nextTick, onMounted, ref, unref, watch } from "vue";
+
 /**
  * iconify 按需加载图标组件
  * https://iconify.design/icon-sets/ion/

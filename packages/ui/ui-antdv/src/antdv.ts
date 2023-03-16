@@ -48,6 +48,8 @@ import {
   TooltipCI
 } from "@fast-crud/ui-interface";
 import _ from "lodash-es";
+
+
 export class Antdv implements UiInterface {
   constructor(target) {
     this.notification.instance = target.Notification;
@@ -149,7 +151,7 @@ export class Antdv implements UiInterface {
   notification: NotificationCI = {
     instance: undefined,
     name: "a-notification",
-    open: (type, context) => {
+    open: (type: string, context: NotificationContext) => {
       if (typeof context === "string") {
         context = {
           message: context
@@ -157,9 +159,9 @@ export class Antdv implements UiInterface {
       }
       type = type || context.type;
       if (type) {
-        this.notification.instance[type](context);
+        return this.notification.instance[type](context);
       } else {
-        this.notification.instance.open(context);
+        return this.notification.instance.open(context);
       }
     },
     success: (context) => {

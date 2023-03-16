@@ -1,17 +1,17 @@
 export interface CI {
-  name;
+  name: string;
 }
 
 export interface FormCI {
-  name;
+  name: string;
   inlineLayout: Object;
   // resetWrap: Function;
   validateWrap: Function;
   transformValidateErrors: (e: Error) => { [key: string]: any };
 }
 export interface SelectCI extends CI {
-  modelValue;
-  clearable;
+  modelValue: string;
+  clearable: string;
 }
 export interface OptionCI extends CI {
   // 默认的value和label字段名
@@ -19,18 +19,18 @@ export interface OptionCI extends CI {
   label: string;
 }
 export interface TreeSelectCI extends CI {
-  modelValue;
-  clearable;
+  modelValue: string;
+  clearable: string;
   options: string;
   value: string;
   label: string;
   children: string;
 }
 export interface RadioCI extends CI {
-  value;
+  value: string;
 }
 export interface RadioGroupCI extends CI {
-  modelValue;
+  modelValue: string;
 }
 export interface InputCI extends CI {
   clearable: string;
@@ -43,48 +43,53 @@ export interface InputPasswordCI extends InputCI {
   modelValue: string;
 }
 export interface TextAreaCI extends CI {
-  type;
-  clearable;
-  modelValue;
+  type: string;
+  clearable: string;
+  modelValue: string;
 }
 
 export interface DialogCI extends CI {
-  visible;
+  visible: string;
   footer: Function;
   buildOnClosedBind: Function;
-  customClass;
+  customClass: string;
   titleSlotName?: string;
   buildWidthBind?: any;
   buildInitBind?: any;
 }
 
 export interface DrawerCI extends CI {
-  visible;
-  customClass;
-  width;
+  visible: string;
+  customClass: string;
+  width: string;
   hasContentWrap?: string;
 }
 
 export interface TableColumnCI extends CI {
-  label;
-  prop;
-  row;
-  index;
+  label: string;
+  prop: string;
+  row: string;
+  index: string;
 }
+
+export type TableOnChangeBindingBuilder = (context: {
+  onSortChange: (sorter: any) => void;
+  onFilterChange: (filters: any) => void;
+}) => any;
 
 export interface TableCI extends CI {
   defaultRowKey?: string | ((rowData: any) => any);
-  data;
+  data: string;
   fixedHeaderNeedComputeBodyHeight: boolean;
   headerDomSelector: string; //用于计算高度
   buildMaxHeight: Function;
   hasMaxHeight: Function;
-  vLoading;
-  onChange;
+  vLoading: string;
+  onChange: TableOnChangeBindingBuilder;
   /**
    * 列render的模式，antdv和naive为config模式，element为slot模式
    */
-  renderMode;
+  renderMode: string;
   /**
    * render的方法名
    */
@@ -96,7 +101,7 @@ export interface TableCI extends CI {
 }
 
 export interface CheckboxGroupCI extends CI {
-  modelValue;
+  modelValue: string;
 }
 export interface CheckboxCI extends CI {
   resolveEvent: Function;
@@ -106,8 +111,8 @@ export interface CheckboxCI extends CI {
 }
 
 export interface CascaderCI extends CI {
-  modelValue;
-  clearable;
+  modelValue: string;
+  clearable: string;
   fieldNames: Function;
 }
 
@@ -119,35 +124,38 @@ export type TabPaneCI = {
   tab: string;
 } & CI;
 export interface CollapseCI extends CI {
-  modelValue;
-  keyName;
+  modelValue: string;
+  keyName: string;
 }
 export type CollapseItemCI = CI;
 export interface SwitchCI extends CI {
-  modelValue;
-  activeColor;
-  activeValue;
-  activeText;
-  inactiveText;
-  inactiveColor;
-  inactiveValue;
+  modelValue: string;
+  activeColor: string;
+  activeValue: string;
+  activeText: string;
+  inactiveText: string;
+  inactiveColor: string;
+  inactiveValue: string;
 }
+
+export type MessageContext = string | { type?: string; message?: string };
+
 export interface MessageCI extends CI {
-  open;
-  success;
-  error;
-  warn;
-  info;
+  open: (context: MessageContext) => void;
+  success: (context: MessageContext) => void;
+  error: (context: MessageContext) => void;
+  warn: (context: MessageContext) => void;
+  info: (context: MessageContext) => void;
   instance: any;
   getInstance?: any;
 }
 
 export type MessageBoxContextType = {
   title?: string;
-  message?;
-  confirmButtonText?;
-  cancelButtonText?;
-  type?;
+  message?: string;
+  confirmButtonText?: string;
+  cancelButtonText?: string;
+  type?: string;
 };
 export type MessageBoxOpenType = (context: MessageBoxContextType) => Promise<void>;
 export interface MessageBoxCI extends CI {
@@ -156,12 +164,15 @@ export interface MessageBoxCI extends CI {
   instance: any;
   getInstance?: any;
 }
+
+export type NotificationContext = string | { type?: string; message?: string };
+
 export interface NotificationCI extends CI {
-  open;
-  success;
-  error;
-  warn;
-  info;
+  open: (type: string, context: NotificationContext) => void;
+  success: (message: NotificationContext) => void;
+  error: (message: NotificationContext) => void;
+  warn: (message: NotificationContext) => void;
+  info: (message: NotificationContext) => void;
   instance: any;
   getInstance?: any;
 }
@@ -198,15 +209,15 @@ export interface FormWrapperCI extends CI {
   hasContentWrap?: (is: string) => string | undefined;
 }
 export interface DatePickerCI extends CI {
-  modelValue;
+  modelValue: string;
   buildDateType: Function;
 }
 export interface TimePickerCI extends CI {
-  modelValue;
+  modelValue: string;
 }
 export interface DropdownCI extends CI {
   command: Function;
-  slotName;
+  slotName: string;
   /**
    * 选项的渲染模式，slot or config
    */
@@ -219,27 +230,39 @@ export interface DropdownMenuCI extends CI {
   command: Function;
 }
 export interface DropdownItemCI extends CI {
-  command;
+  command: string;
 }
 export type ImageGroupCI = CI;
+
+export type ImagePreviewBindBuilder = (opts: {
+  url: string;
+  urls: string[];
+  previewUrl: string;
+  previewUrls: string[];
+  index: number;
+}) => any;
+
 export interface ImageCI extends CI {
-  buildPreviewBind;
+  buildPreviewBind: ImagePreviewBindBuilder;
 }
 export type ProgressCI = CI;
 export interface LoadingCI extends CI {
-  name;
-  type;
+  name: string;
+  type: string;
 }
 export interface UploadCI extends CI {
   id: string;
-  name;
-  type;
+  name: string;
+  type: string;
   typeImageCard: string;
   typeImage: string;
-  getStatusFromEvent;
-  getFileListFromEvent;
-  status;
-  limitAdd;
+  getStatusFromEvent: string;
+  getFileListFromEvent: string;
+  status: {
+    success: string;
+    uploading: string;
+  };
+  limitAdd: string;
   isSuccess: (fileItem: any) => Boolean;
 }
 export interface ButtonCI extends CI {
@@ -249,28 +272,35 @@ export interface ButtonCI extends CI {
   colors: (type: string) => any;
   circle: Object;
 }
+
+export type PaginationOnChangeContext = {
+  setCurrentPage: (current: number) => void;
+  setPageSize: (pageSize: number) => void;
+  doAfterChange: () => Promise<void>;
+};
+export type PaginationOnChangeBindingBuilder = (context: PaginationOnChangeContext) => any;
 export interface PaginationCI extends CI {
-  name;
-  currentPage;
-  onChange;
-  total;
-  pageCount;
+  name: string;
+  currentPage: string;
+  onChange: PaginationOnChangeBindingBuilder;
+  total: string;
+  pageCount: string;
 }
 
 export interface DividerCI extends CI {
-  name;
+  name: string;
 }
 
 export interface PopoverCI extends CI {
-  name;
+  name: string;
 
   /**
    * 内容插槽
    */
-  contentSlotName;
+  contentSlotName: string;
 
-  referenceSlotName;
-  visible;
+  referenceSlotName: string;
+  visible: string;
 }
 
 export interface Icons {

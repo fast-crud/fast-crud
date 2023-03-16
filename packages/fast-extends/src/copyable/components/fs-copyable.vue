@@ -20,7 +20,7 @@
 </template>
 
 <script lang="ts">
-import { computed, ref, PropType } from "vue";
+import { computed, ref, PropType, defineComponent, Ref } from "vue";
 import { useUi } from "@fast-crud/fast-crud";
 import _ from "lodash-es";
 
@@ -37,7 +37,7 @@ interface CopyButton {
  * 可以点击复制文本
  * 通过默认插槽可以自定义文本主体
  */
-export default {
+export default defineComponent({
   name: "FsCopyable",
   props: {
     modelValue: {
@@ -87,7 +87,7 @@ export default {
       return slots.default != null;
     });
     const { ui } = useUi();
-    const tagName = ref(ui.tag.name);
+    const tagName: Ref<string> = ref(ui.tag.name);
 
     const copyButton = computed(() => {
       const defaultButton = {
@@ -119,7 +119,7 @@ export default {
       onError
     };
   }
-};
+});
 </script>
 <style lang="less">
 .fs-copyable {

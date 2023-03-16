@@ -6,7 +6,17 @@ import _ from "lodash-es";
 import { reactive } from "vue";
 import { useI18n } from "../locale";
 import logger from "../utils/util.log";
-import { ColumnCompositionProps, CompositionColumns, CrudOptions, FormProps, ScopeContext } from "../d.ts";
+import {
+  ColumnCompositionProps,
+  ColumnProps,
+  CompositionColumns,
+  CrudOptions,
+  DynamicallyCrudOptions,
+  FormProps,
+  ScopeContext,
+  TypeMap
+} from "../d.ts";
+
 const { merge, cloneDeep } = useMerge();
 // mergeColumnPlugin 注册
 
@@ -16,11 +26,8 @@ export type MergeColumnPlugin = {
   order: number;
 };
 
-export type CompositionColumnsMap = {
-  [key: string]: ColumnCompositionProps;
-};
-
 const mergeColumnPlugins: MergeColumnPlugin[] = [];
+
 export function registerMergeColumnPlugin(plugin: MergeColumnPlugin) {
   _.remove(mergeColumnPlugins, (item) => {
     return item.name === plugin.name;
@@ -31,6 +38,7 @@ export function registerMergeColumnPlugin(plugin: MergeColumnPlugin) {
   });
   logger.debug("mergeColumnPlugin register success: current:", plugin, "registered:", mergeColumnPlugins);
 }
+
 function mergeColumnDict(item: ColumnCompositionProps) {
   // copy dict
   if (item.dict) {
@@ -45,6 +53,7 @@ function mergeColumnDict(item: ColumnCompositionProps) {
   }
   return item;
 }
+
 function mergeColumnType(item: ColumnCompositionProps) {
   if (!item.type) {
     return item;
@@ -88,6 +97,7 @@ const viewFormUseCellComponentPlugin = {
 registerMergeColumnPlugin({ name: "type", handle: mergeColumnType, order: -2 });
 registerMergeColumnPlugin({ name: "dict", handle: mergeColumnDict, order: -1 });
 registerMergeColumnPlugin(viewFormUseCellComponentPlugin);
+
 /**
  * 排序
  * @param arr
@@ -104,7 +114,7 @@ function doArraySort(arr: any) {
  * @param columns
  * @param userOptions
  */
-function setupOptionsColumns(columns: ColumnCompositionProps[], userOptions: CrudOptions) {
+function setupOptionsColumns(columns: { [key: string]: ColumnCompositionProps }, userOptions: CrudOptions) {
   const initedColumns: any = {};
   _.forEach(columns, (item, key) => {
     item.key = key;
@@ -127,7 +137,7 @@ function setupOptionsColumns(columns: ColumnCompositionProps[], userOptions: Cru
  * @param map
  * @param columns
  */
-function buildOptionsColumnsMap(map: CompositionColumnsMap = {}, columns: ColumnCompositionProps) {
+function buildOptionsColumnsMap(map: CompositionColumns = {}, columns: CompositionColumns) {
   _.forEach(columns, (item, key) => {
     if (item.children) {
       buildOptionsColumnsMap(map, item.children);
@@ -159,7 +169,7 @@ function buildTableColumn(colTemplate: any) {
  * 构建列表表头配置
  * @param columns
  */
-function buildTableColumns(columns: CompositionColumnsMap) {
+function buildTableColumns(columns: CompositionColumns) {
   const tableColumns: any = [];
   //合并为tableColumns
   _.forEach(columns, (item) => {
@@ -175,10 +185,10 @@ function buildTableColumns(columns: CompositionColumnsMap) {
  * @param map
  * @param columns
  */
-function buildTableColumnsMap(map: CompositionColumnsMap = {}, columns: CompositionColumns) {
+function buildTableColumnsMap(map: TypeMap<ColumnProps> = {}, columns: ColumnProps[]) {
   _.forEach(columns, (item) => {
     map[item.key] = item;
-    if (item.children && item.children.length > 0) {
+    if (item.children) {
       buildTableColumnsMap(map, item.children);
     }
   });
@@ -214,7 +224,7 @@ function buildFormColumns(columns: CompositionColumns, formType: string) {
 function buildForm(
   baseOptions: CrudOptions,
   formType: string,
-  columnsMap: CompositionColumnsMap,
+  columnsMap: CompositionColumns,
   onComplete?: (form: any) => void
 ) {
   const formColumns = buildFormColumns(columnsMap, formType);
@@ -231,7 +241,7 @@ function buildForm(
  * @param formType
  * @param columnsMap
  */
-function buildSearchForm(baseOptions: CrudOptions, formType = "search", columnsMap: CompositionColumnsMap) {
+function buildSearchForm(baseOptions: CrudOptions, formType = "search", columnsMap: CompositionColumns) {
   const searchColumns = buildFormColumns(columnsMap, formType);
   const formColumnsForSearch: any = {};
   _.forEach(cloneDeep(baseOptions.form.columns), (item, key) => {
@@ -241,7 +251,7 @@ function buildSearchForm(baseOptions: CrudOptions, formType = "search", columnsM
   return merge({ columns: formColumnsForSearch }, { columns: searchColumns }, baseOptions.search);
 }
 
-function buildFormOptions(crudOptions: CrudOptions): FormProps {
+function buildFormOptions(crudOptions: DynamicallyCrudOptions): FormProps {
   const { t } = useI18n();
   const userOptions = merge(
     defaultCrudOptions.defaultOptions({ t }),
@@ -286,10 +296,27 @@ function buildColumns(userOptions: CrudOptions) {
   return userOptions;
 }
 
+export function forEachColumns(
+  columns: CompositionColumns,
+  callback: (col: ColumnCompositionProps, key: string) => void
+) {
+  _.forEach(columns, (item, key) => {
+    if (!item.key) {
+      item.key = key;
+    }
+    if (item.children) {
+      forEachColumns(item.children, callback);
+    } else {
+      callback(item, key);
+    }
+  });
+}
+
 export function useColumns() {
   return {
     buildFormOptions,
     buildColumns,
-    registerMergeColumnPlugin
+    registerMergeColumnPlugin,
+    forEachColumns
   };
 }

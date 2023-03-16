@@ -1,14 +1,14 @@
-import { ToolbarComponentProps } from "/src/components/toolbar/props";
+import { ToolbarComponentProps } from "../components/toolbar/props";
 import { Ref, Slots } from "vue";
-import { ComputeContext } from "/src/d.ts/compute";
-import { AsyncComputeValue, Dict, GetContextFn } from "/src/use";
+import { ComputeContext } from "../d.ts/compute";
+import { AsyncComputeValue, Dict, GetContextFn } from "../use";
 import { Slot } from "vue";
 import { ShallowRef } from "vue";
 
 // export type FsRefValue<T> = T | Ref<T> | ComputedRef<T>;
 // export type FsComputeValue<T> = FsRefValue<T> | ComputeValue<T> | AsyncComputeValue<T>;
 
-export type ScopeContext = {
+export type RowContext = {
   /**
    * 字段key
    */
@@ -35,6 +35,8 @@ export type ScopeContext = {
    * 第几行
    */
   index: number;
+};
+export type ScopeContext = {
   /**
    * 表单模式,add,view,edit
    */
@@ -46,8 +48,21 @@ export type ScopeContext = {
   /**
    * 当前字段组件的ref
    */
-  componentRef: any;
-};
+  componentRef?: any;
+
+  /**
+   * ui特有的context属性
+   */
+  [key: string]: any;
+} & RowContext;
+
+export type FormScopeContext = {
+  attrs: any;
+  /**
+   * 提交成功后的response
+   */
+  res?: any;
+} & ScopeContext;
 
 export type ComponentEventContext = {
   /**
@@ -141,6 +156,9 @@ export type RequestProp = {
 
   [key: string]: any;
 };
+export type WriteableSlots = {
+  [name: string]: Slot;
+};
 /**
  * 组件配置
  */
@@ -188,16 +206,12 @@ export type ComponentProps = {
   /**
    * 插槽
    */
-  slots?: {
-    [name: string]: Slot;
-  };
+  slots?: WriteableSlots;
 
   /**
    * 同插槽
    */
-  children?: {
-    [name: string]: Slot;
-  };
+  children?: WriteableSlots;
 
   /**
    * 直接渲染
@@ -210,7 +224,7 @@ export type ComponentProps = {
   [key: string]: any;
 };
 
-export type RemoveConfirmFn = (context: any) => Promise<any>;
+export type RemoveConfirmFn = (context: ScopeContext) => Promise<void>;
 /**
  * 删除操作配置
  */
@@ -255,6 +269,7 @@ export type RemoveProps = {
 
   [key: string]: any;
 };
+
 /**
  * 表格配置
  */
@@ -272,15 +287,22 @@ export type TableProps = {
   /**
    * x-table 插槽
    */
-  slots?: {
-    [name: string]: Slot;
-  };
+  slots?: WriteableSlots;
 
   /**
    * 表格数据
    */
   data?: any[];
 
+  /**
+   * 单元格列配置
+   */
+  columns?: ColumnProps[];
+
+  /**
+   * 列配置 map
+   */
+  columnsMap?: TypeMap<ColumnProps>;
   /**
    * [x]-table组件的配置
    */
@@ -301,7 +323,7 @@ export type FormWrapperProps = {
   /**
    * 对话框使用什么组件，[el-dialog,a-modal,n-modal,el-drawer,a-drawer,n-drawer]
    */
-  is?: string | ShallowRef;
+  is?: string;
   /**
    * 对话框打开前事件处理
    * @param opts
@@ -318,6 +340,9 @@ export type FormWrapperProps = {
    */
   onClosed?: (opts: any) => void;
 
+  buttons?: {
+    [key: string]: ButtonProps<FormWrapperContext>;
+  };
   /**
    * 对应对话框组件的配置
    */
@@ -346,9 +371,7 @@ export type FormGroupItemProps = {
   /**
    * 插槽，可以用来自定义标题
    */
-  slots?: {
-    [name: string]: Slot;
-  };
+  slots?: WriteableSlots;
   /**
    * 此分组包含哪些字段,keys数组
    */
@@ -410,16 +433,16 @@ export type FormProps = {
   /**
    * 提交表单的方法（默认已经配置好，将会调用addRequest或者updateRequest）
    */
-  doSubmit?: (context: any) => Promise<any>;
+  doSubmit?: (context: FormScopeContext) => Promise<any>;
   /**
    * 提交前做一些操作
    */
-  beforeSubmit?: (context: any) => Promise<any>;
+  beforeSubmit?: (context: FormScopeContext) => Promise<any>;
   /**
    * 提交后做一些操作
    * @param context
    */
-  afterSubmit?: (context: any) => Promise<any>;
+  afterSubmit?: (context: FormScopeContext) => Promise<any>;
 
   /**
    * 表单重置时的操作
@@ -467,6 +490,8 @@ export type FormItemHelperProps = {
 
   [key: string]: any;
 };
+
+export type FormItemTitleRender = (context: ScopeContext) => any;
 /**
  * 表单字段配置
  */
@@ -474,7 +499,7 @@ export type FormItemProps = {
   /**
    * 字段label
    */
-  title?: string;
+  title?: string | FormItemTitleRender;
   /**
    * 表单字段组件配置
    */
@@ -515,6 +540,21 @@ export type FormItemProps = {
    */
   valueChange?: ValueChangeHandle | ValueChangeProps;
 
+  /**
+   * 值构建器，pageRequest之后执行
+   * 从pageRequest获取到的字段数据值可能并不是组件能够识别的值，所以需要将其做一层转化
+   * 即row[key]=字段组件能够识别的值
+   * @param context
+   */
+  valueBuilder?: (context: ValueBuilderContext) => void;
+  /**
+   * 值解析器，表单提交前执行
+   * 表单输出的值可能不是后台所需要的值，所以需要在提交前做一层转化
+   * 即：row[key]=后台能所需要的值
+   * @param context
+   */
+  valueResolve?: (context: ValueResolveContext) => void;
+
   [key: string]: any;
 };
 
@@ -538,10 +578,24 @@ export type ToolbarProps = {
 
 type ButtonIconProps = string | { icon: string; [key: string]: any };
 type NullableString = string | null;
+
+export type FormWrapperContext = {
+  wrapper: any;
+  options: any;
+  formRef: Ref;
+  form: any;
+  wrapperBindRef: any;
+  formOptionsRef: Ref;
+  setFormData: (form: any) => void;
+  getFormData: () => any;
+  close: () => void;
+  toggleFullscreen: () => void;
+  submit: () => void;
+};
 /**
  * 按钮配置
  */
-export type ButtonProps = {
+export type ButtonProps<E = any> = {
   /**
    * 按钮文本
    */
@@ -573,7 +627,7 @@ export type ButtonProps = {
   /**
    * 点击事件
    */
-  click?: (context: any) => void;
+  click?: (context: E) => void;
 
   show?: boolean;
 
@@ -582,14 +636,24 @@ export type ButtonProps = {
    */
   [key: string]: any;
 };
-type ButtonsProps = {
-  [key: string]: ButtonProps;
+export type ButtonsProps<E> = TypeMap<ButtonProps<E>>;
+
+export type TypeMap<T> = {
+  [key: string]: T;
+};
+
+export type ActionbarClickEvent = {
+  key: string;
+  btn: ButtonProps;
+  $event: any;
 };
 export type ActionbarProps = {
-  buttons?: ButtonsProps;
+  buttons?: ButtonsProps<ActionbarClickEvent>;
 
   [key: string]: any;
 };
+
+export type SearchEventContext = { form: any; getComponentRef?: (key: string) => any };
 /**
  * 查询框配置
  */
@@ -601,7 +665,7 @@ export type SearchProps = {
   /**
    * 查询框的按钮配置（查询和重置按钮，你还可以添加自定义按钮）
    */
-  buttons?: ButtonsProps;
+  buttons?: ButtonsProps<SearchEventContext>;
   /**
    * 布局方式：【single-line单行, multi-line多行】
    */
@@ -637,6 +701,11 @@ export type SearchItemProps = {
    * [a|el|n]-col的配置
    */
   col?: ColProps;
+
+  /**
+   * 此字段是否开启触发自动查询, 传入string则表示，[input,change]事件时触发
+   */
+  autoSearchTrigger?: boolean | string;
   /**
    * 其他[a|el|n]-form-item的配置
    */
@@ -703,9 +772,9 @@ export type ValueBuilderContext = {
   key: string;
   row?: any;
   form?: any;
-  index: number;
+  index?: number;
   mode?: string;
-  column?: any;
+  column?: ColumnCompositionProps;
 };
 export type ValueResolveContext = ValueBuilderContext;
 
@@ -719,9 +788,14 @@ export type ColumnCompositionProps = {
   title?: string;
 
   /**
-   * 字段类型，必填，【默认可以用：text】
+   * key
    */
-  type: string | string[];
+  key?: string;
+
+  /**
+   * 字段类型,【默认可以用：text】
+   */
+  type?: string | string[];
   /**
    * 表格列配置（单元格）
    */
@@ -765,6 +839,11 @@ export type ColumnCompositionProps = {
    * dict，会复制到各个component中去
    */
   dict?: Dict;
+
+  /**
+   * 多级表头
+   */
+  children?: CompositionColumns;
   /**
    * 其他配置
    */
@@ -815,7 +894,7 @@ export type RowHandleProps = {
   /**
    * 操作列按钮配置
    */
-  buttons?: ButtonsProps;
+  buttons?: ButtonsProps<ScopeContext>;
 
   dropdown?: RowHandleDropdownProps;
 

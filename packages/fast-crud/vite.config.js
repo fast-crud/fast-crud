@@ -32,7 +32,7 @@ export default defineConfig(({ command, mode, ssrBuild }) => {
         plugins: [
           visualizer(),
           typescript({
-            target: "es2020",
+            target: "esnext",
             rootDir: "src",
             declaration: true,
             declarationDir: "dist/d",

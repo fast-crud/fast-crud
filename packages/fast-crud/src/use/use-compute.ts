@@ -54,7 +54,7 @@ function findComputeValues(target: any, excludes: any[], isAsync: boolean) {
   return foundMap;
 }
 
-function doAsyncCompute(dependAsyncValues: any, getContextFn: (key: string, value: any) => any) {
+function doAsyncCompute(dependAsyncValues: any, getContextFn: () => any) {
   if (dependAsyncValues == null || Object.keys(dependAsyncValues).length <= 0) {
     return null;
   }
@@ -76,7 +76,7 @@ function setAsyncComputeValue(target: any, asyncValuesMap: any) {
 
 function doComputed(
   getTargetFunc: any,
-  getContextFn: (key: string, value: any) => any,
+  getContextFn: () => any,
   excludes?: any[],
   userComputedFn?: (target: any) => any
 ) {
@@ -100,8 +100,8 @@ function doComputed(
     if (asyncCount > 0 || syncCount > 0) {
       target = cloneDeep(target);
       if (syncCount > 0) {
+        const context = getContextFn ? getContextFn() : {};
         _.forEach(dependValues.value, (value, key) => {
-          const context = getContextFn ? getContextFn(key, value) : {};
           _.set(target, key, value.computeFn(context));
         });
       }

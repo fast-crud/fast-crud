@@ -1,5 +1,6 @@
 import { uiContext } from "../ui";
 import { UiInterface } from "@fast-crud/ui-interface";
+
 export function useUi() {
   return {
     uiContext,

@@ -6,13 +6,13 @@
   </div>
 </template>
 
-<script>
-
+<script lang="ts">
 import WangEditor from "wangeditor";
 import wangConfig from "./utils/config";
-import defaultConfig from "../../type/config";
+import { defaultConfig } from "../../type/config";
 import _ from "lodash-es";
-export default {
+import { defineComponent } from "vue";
+export default defineComponent({
   name: "FsEditorWang",
   props: {
     modelValue: {
@@ -96,23 +96,23 @@ export default {
       }
 
       _.merge(editor.config, wangConfig, defaultConfig.wangEditor, this.config);
-      editor.config.onchange = (newHtml) => {
+      editor.config.onchange = (newHtml: string) => {
         this.$emit("update:modelValue", newHtml);
         this.$emit("change", newHtml);
         this.currentValue = newHtml;
       };
 
       if (this.uploader) {
-        const addImage = async (file, insertImgFn) => {
-          const item = {
+        const addImage = async (file: File, insertImgFn: any) => {
+          const item: any = {
             status: "uploading",
             progress: 0
           };
 
-          const onProgress = (e) => {
+          const onProgress = (e: any) => {
             item.progress = e.percent;
           };
-          const onError = (e) => {
+          const onError = (e: any) => {
             item.status = "error";
             item.message = "文件上传出错:" + e.message;
             console.error(item.message, e);
@@ -132,7 +132,7 @@ export default {
           // 上传图片，返回结果，将图片插入到编辑器中
           insertImgFn(url);
         };
-        editor.config.customUploadImg = async (resultFiles, insertImgFn) => {
+        editor.config.customUploadImg = async (resultFiles: any, insertImgFn: any) => {
           // resultFiles 是 input 中选中的文件列表
           // insertImgFn 是获取图片 url 后，插入到编辑器的方法
           _.forEach(resultFiles, (file) => {
@@ -148,9 +148,10 @@ export default {
       this.setDisabled(this.disabled);
       this.$emit("ready", { editor: editor });
     },
-    async doUpload(option) {
+    async doUpload(option: any) {
       option.options = this.uploader;
-      let uploaderRef = this.$refs.uploaderImplRef.getUploaderRef();
+      let uploaderImplRef: any = this.$refs.uploaderImplRef;
+      let uploaderRef = uploaderImplRef.getUploaderRef();
       if (uploaderRef == null) {
         throw new Error("Sorry，The component is not ready yet");
       }
@@ -166,7 +167,7 @@ export default {
       }
     }
   }
-};
+});
 </script>
 <style lang="less">
 .fs-editor-wang {

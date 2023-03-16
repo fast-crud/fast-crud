@@ -21,11 +21,12 @@
 <script lang="ts">
 import "@wangeditor/editor/dist/css/style.css"; // 引入 css
 
-import { onBeforeUnmount, defineComponent, ref, shallowRef, onMounted, watch, computed } from "vue";
+import { onBeforeUnmount, defineComponent, ref, shallowRef, onMounted, watch, computed, Ref } from "vue";
 import { Editor, Toolbar } from "@wangeditor/editor-for-vue";
 
-import defaultConfig from "../../type/config.js";
+import { defaultConfig } from "../../type/config.js";
 import _ from "lodash-es";
+import { FsUploaderDoUploadOptions } from "@/uploader/d.ts/type";
 type InsertFnType = (url: string, alt?: string, href?: string) => void;
 /**
  * wangEditor5组件封装
@@ -84,11 +85,11 @@ export default defineComponent({
   setup(props: any) {
     // 编辑器实例，必须用 shallowRef
     const editorRef = shallowRef();
-    const toolbarRef = ref();
-    const uploaderImplRef = ref();
-    const valueHtml = ref("");
+    const toolbarRef: Ref = ref();
+    const uploaderImplRef: Ref = ref();
+    const valueHtml: Ref = ref("");
 
-    function toggleEnabled(value) {
+    function toggleEnabled(value: boolean) {
       if (!editorRef.value) {
         return;
       }
@@ -129,7 +130,7 @@ export default defineComponent({
 
     const MENU_CONF: any = {};
     if (props.uploader) {
-      async function doUpload(option) {
+      async function doUpload(option: FsUploaderDoUploadOptions) {
         option.options = props.uploader;
         let uploaderRef = uploaderImplRef.value.getUploaderRef();
         if (uploaderRef == null) {
@@ -151,10 +152,10 @@ export default defineComponent({
           message: undefined
         };
 
-        const onProgress = (e) => {
+        const onProgress = (e: any) => {
           item.progress = e.percent;
         };
-        const onError = (e) => {
+        const onError = (e: any) => {
           item.status = "error";
           item.message = "文件上传出错:" + e.message;
           console.error(item.message, e);
@@ -201,7 +202,7 @@ export default defineComponent({
       editor.destroy();
     });
 
-    const handleCreated = (editor) => {
+    const handleCreated = (editor: any) => {
       editorRef.value = editor; // 记录 editor 实例，重要！
     };
 
