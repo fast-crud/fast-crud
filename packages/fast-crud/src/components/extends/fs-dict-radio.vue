@@ -1,26 +1,27 @@
 <template>
-  <component :is="$fsui.radioGroup.name">
+  <component :is="ui.radioGroup.name">
     <component
       :is="computedRadioName"
       v-for="item of computedOptions"
       :key="getValue(item)"
-      :[$fsui.radio.value]="getValue(item)"
+      :[ui.radio.value]="getValue(item)"
       v-bind="optionProps"
     >
       {{ getLabel(item) }}
     </component>
   </component>
 </template>
-<script>
+<script lang="ts">
 import { useDict } from "../../use/use-dict";
 import { uiContext } from "../../ui";
-import { ref, computed } from "vue";
+import { ref, computed, defineComponent } from "vue";
+import { useUi } from "../../use";
 /**
  * 字典单选框
  * 支持el-radio-group|a-radio-group的参数
  *
  */
-export default {
+export default defineComponent({
   name: "FsDictRadio",
   props: {
     /**
@@ -57,8 +58,8 @@ export default {
     }
   },
   emits: ["dict-change"],
-  setup(props, ctx) {
-    const ui = uiContext.get();
+  setup(props: any, ctx: any) {
+    const { ui } = useUi();
 
     if (props.radioName) {
       console.warn("参数radioName即将废弃，请改成optionName");
@@ -70,10 +71,11 @@ export default {
     let usedDict = useDict(props, ctx, ui.radioGroup.modelValue);
     const computedOptions = usedDict.createComputedOptions();
     return {
+      ui,
       computedRadioName,
       ...usedDict,
       computedOptions
     };
   }
-};
+});
 </script>

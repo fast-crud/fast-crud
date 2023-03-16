@@ -1,9 +1,10 @@
 import { useCompute } from "../../use/use-compute";
-import { computed, render, withDirectives } from "vue";
+import { defineComponent } from "vue";
+
 /**
  * 单元格显示组件
  */
-export default {
+export default defineComponent({
   name: "FsCell",
   props: {
     item: {},
@@ -17,7 +18,7 @@ export default {
     },
     slots: {}
   },
-  setup(props) {
+  setup(props: any) {
     const { doComputed } = useCompute();
     const computedPropsComponent = () => {
       return props.item.component;
@@ -28,13 +29,13 @@ export default {
     const computedComponent = doComputed(computedPropsComponent, getScope);
     return () => {
       let title = props.item.showTitle;
-      let value = props.scope.value;
+      const value = props.scope.value;
       if (title === true) {
         title = value;
       }
-      const cellContentRender = (slot) => {
+      const cellContentRender = (slot: any) => {
         return (
-          <span className={"fs-cell"} title={title}>
+          <span class={"fs-cell"} title={title}>
             {slot}
           </span>
         );
@@ -59,7 +60,8 @@ export default {
   },
   methods: {
     getTargetRef() {
+      // @ts-ignore
       return this.$refs.targetRef?.getTargetRef();
     }
   }
-};
+});

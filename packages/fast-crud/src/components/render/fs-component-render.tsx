@@ -6,16 +6,18 @@ import {
   provide,
   resolveComponent,
   resolveDynamicComponent,
-  ref
+  ref,
+  defineComponent
 } from "vue";
 import _ from "lodash-es";
 import { useUi } from "../../use";
+import { ComponentEventContext } from "/src/d.ts";
 
-function mergeEventHandles(target, eventName) {
+function mergeEventHandles(target: any, eventName: string) {
   if (target[eventName] instanceof Array) {
     const events = target[eventName];
-    target[eventName] = ($event) => {
-      for (let event of events) {
+    target[eventName] = ($event: any) => {
+      for (const event of events) {
         event($event);
       }
     };
@@ -25,7 +27,7 @@ const htmlTags = ["div", "span", "a", "p", "pre", "li", "ol", "ul"];
 /**
  * 组件动态渲染组件
  */
-export default {
+export default defineComponent({
   name: "FsComponentRender",
   inheritAttrs: false,
   props: {
@@ -77,20 +79,17 @@ export default {
      * 组件参数，会与attrs合并
      */
     props: {}
-  },
-  emits: ["update:dict", "update:modelValue"],
+  } as any,
+  emits: ["update:dict", "update:modelValue", "mounted"],
   setup(props, ctx) {
-    const { proxy } = getCurrentInstance();
     const { ui } = useUi();
     provide("get:scope", () => {
       return props.scope;
     });
 
-    if (props.onMounted) {
-      onMounted(() => {
-        props.onMounted(props.scope);
-      });
-    }
+    onMounted(() => {
+      ctx.emit("mounted", props.scope);
+    });
 
     // 带事件的attrs
     const allAttrs = computed(() => {
@@ -103,14 +102,16 @@ export default {
         [vModel]: modelValue,
         ...props.props
       };
-      attrs["onUpdate:" + vModel] = (value) => {
+      attrs["onUpdate:" + vModel] = (value: any) => {
         ctx.emit("update:modelValue", value);
       };
 
-      const events = { ...props.events, ...props.on };
+      const events: {
+        [key: string]: (e: ComponentEventContext) => void;
+      } = { ...props.events, ...props.on };
       _.forEach(events, (value, key) => {
         const handler = value;
-        attrs[key] = ($event) => {
+        attrs[key] = ($event: any) => {
           return handler({ ...props.scope, $event });
         };
       });
@@ -119,10 +120,10 @@ export default {
     });
 
     const childrenRender = () => {
-      const children = {};
-      let createChildren = (item, key) => {
+      const children: any = {};
+      const createChildren = (item: any, key: string) => {
         if (item instanceof Function) {
-          children[key] = (scope) => {
+          children[key] = (scope: any) => {
             return item({ ...props.scope, scope });
           };
         } else {
@@ -136,7 +137,7 @@ export default {
       return children;
     };
     // eslint-disable-next-line vue/no-setup-props-destructure
-    let inputComp = props.name || proxy.$fsui.input.name;
+    let inputComp = props.name || ui.input.name;
 
     const isAsyncComponent = ref(false);
     if (!htmlTags.includes(inputComp)) {
@@ -177,7 +178,7 @@ export default {
         this.getTargetRefDelay(resolve, reject, 0);
       });
     },
-    getTargetRefDelay(resolve, reject, count) {
+    getTargetRefDelay(resolve: any, reject: any, count: number) {
       setTimeout(() => {
         const c = this.getTargetRefSync();
         if (c != null) {
@@ -185,7 +186,7 @@ export default {
           return;
         }
         count++;
-        if (count > 10) {
+        if (count > 20) {
           reject(new Error("异步组件加载超时"));
           return;
         }
@@ -201,4 +202,4 @@ export default {
     const inputComp = this.inputComp;
     return <inputComp {...merged}>{this.childrenRendered()}</inputComp>;
   }
-};
+});

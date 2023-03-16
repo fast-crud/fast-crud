@@ -1,6 +1,6 @@
 <template>
   <component
-    :is="$fsui.form.name"
+    :is="ui.form.name"
     ref="formRef"
     class="fs-form"
     :class="{
@@ -11,14 +11,14 @@
     :model="form"
   >
     <!-- row -->
-    <component :is="$fsui.row.name" class="fs-row" v-bind="row">
+    <component :is="ui.row.name" class="fs-row" v-bind="row">
       <!-- col -->
       <template v-for="item in computedDefaultColumns" :key="item?.key">
-        <component :is="$fsui.col.name" v-if="formItemShow(item)" class="fs-col" v-bind="item.col">
+        <component :is="ui.col.name" v-if="formItemShow(item)" class="fs-col" v-bind="item.col">
           <fs-form-item
             v-if="item.blank !== true"
             :ref="
-              (el) => {
+              (el:any) => {
                 if (el) {
                   formItemRefs[item.key] = el;
                 }
@@ -37,7 +37,7 @@
     <component
       :is="computedGroup.wrapper.parent"
       v-if="computedGroup.wrapper"
-      v-model:[$fsui.collapse.modelValue]="groupActiveKey"
+      v-model:[ui.collapse.modelValue]="groupActiveKey"
       style="width: 100%"
       v-bind="computedGroup"
     >
@@ -45,7 +45,7 @@
         <component
           :is="computedGroup.wrapper.child"
           v-if="groupItemShow(groupItem)"
-          :[$fsui.collapse.keyName]="groupKey"
+          :[ui.collapse.keyName]="groupKey"
           v-bind="groupItem"
           :class="{ 'fs-form-group-error': errorsRef['group.' + groupKey] }"
         >
@@ -53,11 +53,11 @@
             <fs-render :render-func="item" :scope="{ ...scope, hasError: errorsRef['group.' + groupKey] }" />
           </template>
           <!-- row -->
-          <component :is="$fsui.row.name" class="fs-row">
+          <component :is="ui.row.name" class="fs-row">
             <!-- col -->
             <template v-for="key in groupItem.columns" :key="key">
               <component
-                :is="$fsui.col.name"
+                :is="ui.col.name"
                 v-if="formItemShow(computedColumns[key])"
                 class="fs-col"
                 v-bind="mergeCol(computedColumns[key]?.col)"
@@ -65,7 +65,7 @@
                 <fs-form-item
                   v-if="computedColumns[key] && computedColumns[key]?.blank !== true"
                   :ref="
-                    (el) => {
+                    (el:any) => {
                       if (el) {
                         formItemRefs[key] = el;
                       }
@@ -86,15 +86,16 @@
   </component>
 </template>
 
-<script>
-import { computed, getCurrentInstance, onMounted, reactive, ref, toRaw, unref } from "vue";
+<script lang="ts">
+import { computed, defineComponent, getCurrentInstance, onMounted, reactive, Ref, ref, toRaw, unref } from "vue";
 import _ from "lodash-es";
 import { useCompute } from "../../use/use-compute";
 import logger from "../../utils/util.log";
 import { uiContext } from "../../ui";
 import { useMerge } from "../../use/use-merge";
 import { Constants } from "../../utils/util.constants";
-import { utils } from "../../index";
+import { FormScopeContext, ScopeContext, SetFormDataOptions, useUi, utils } from "../../index";
+import { UnwrapNestedRefs } from "vue";
 
 /**
  * 配置化的表单组件
@@ -102,7 +103,7 @@ import { utils } from "../../index";
  * ref.submit() = 提交表单
  * ref.reset() = 重置表单
  */
-export default {
+export default defineComponent({
   name: "FsForm",
   props: {
     /**
@@ -224,21 +225,22 @@ export default {
   emits: ["reset", "submit", "validationError", "value-change"],
   setup(props, ctx) {
     const { merge } = useMerge();
-    const ui = uiContext.get();
+    const { ui } = useUi();
     const { AsyncComputeValue, doComputed } = useCompute();
     const formRef = ref();
-    const form = reactive({});
+    const form: UnwrapNestedRefs<any> = reactive({});
     const { proxy } = getCurrentInstance();
     const initialForm = _.cloneDeep(props.initialForm);
 
-    const scope = ref({
+    const scope: Ref<FormScopeContext> = ref({
       row: initialForm,
       form,
       index: props.index,
       mode: props.mode,
       attrs: ctx.attrs,
       getComponentRef
-    });
+    } as FormScopeContext);
+
     function getContextFn() {
       return scope.value;
     }
@@ -268,7 +270,7 @@ export default {
       }
     });
     //form.valueBuilder
-    function doValueBuilder(form) {
+    function doValueBuilder(form: any) {
       if (form == null) {
         return;
       }
@@ -289,7 +291,7 @@ export default {
 
     doValueBuilder(form);
 
-    function doValueChange(key, value) {
+    function doValueChange(key: string, value: any) {
       const event = { key, value, formRef: proxy, ...scope.value, immediate: false };
       ctx.emit("value-change", event);
       let valueChange = props.columns[key].valueChange;
@@ -302,13 +304,13 @@ export default {
       }
     }
 
-    const formItemRefs = ref({});
+    const formItemRefs: Ref = ref({});
 
-    function getFormItemRef(key) {
+    function getFormItemRef(key: string) {
       return formItemRefs.value[key];
     }
 
-    function getComponentRef(key, isAsync = false) {
+    function getComponentRef(key: string, isAsync = false) {
       return getFormItemRef(key)?.getComponentRef(isAsync);
     }
 
@@ -328,14 +330,14 @@ export default {
       () => {
         return props.group;
       },
-      getContextFn(),
+      getContextFn,
       null,
       (group) => {
         if (!group) {
           return {};
         }
         //找出没有添加进分组的字段
-        const groupedKeys = {};
+        const groupedKeys: any = {};
         _.forEach(group?.groups, (groupItem, key) => {
           _.forEach(groupItem.columns, (item) => {
             if (computedColumns.value[item] == null) {
@@ -366,7 +368,7 @@ export default {
     );
 
     const computedDefaultColumns = computed(() => {
-      const columns = [];
+      const columns: any = [];
       //default columns排序
       _.forEach(computedColumns.value, (value, key) => {
         value.key = key;
@@ -379,7 +381,7 @@ export default {
         value.col = mergeCol(value.col);
       });
       //排序
-      columns.sort((a, b) => {
+      columns.sort((a: any, b: any) => {
         return a.order - b.order;
       });
 
@@ -411,10 +413,10 @@ export default {
       ctx.emit("reset");
     }
 
-    const validRef = ref();
-    const errorsRef = ref({});
+    const validRef: Ref = ref();
+    const errorsRef: Ref = ref({});
 
-    function fillGroupError(fieldErrors) {
+    function fillGroupError(fieldErrors: any) {
       if (!computedGroup.value?.groupedKeys) {
         return;
       }
@@ -430,7 +432,7 @@ export default {
         errorsRef.value = {};
         await ui.form.validateWrap(formRef.value);
         validRef.value = true;
-      } catch (e) {
+      } catch (e: any) {
         validRef.value = false;
         const validateErrors = ui.form.transformValidateErrors(e);
         fillGroupError(validateErrors);
@@ -480,7 +482,7 @@ export default {
     function getFormData() {
       return form;
     }
-    function setFormData(formData, options = {}) {
+    function setFormData(formData: any, options: SetFormDataOptions = {}) {
       doValueBuilder(formData);
       _.merge(form, formData);
       const { valueChange } = options;
@@ -492,11 +494,11 @@ export default {
       }
     }
 
-    function mergeCol(col) {
+    function mergeCol(col: any) {
       return _.merge({}, props.col, col);
     }
 
-    function buildItemScope(item) {
+    function buildItemScope(item: any): FormScopeContext {
       return { key: item.key, ...scope.value };
     }
 
@@ -516,13 +518,13 @@ export default {
       });
     });
 
-    function formItemShow(item) {
+    function formItemShow(item: any) {
       if (item && item.show !== false) {
         return true;
       }
       return false;
     }
-    function groupItemShow(groupItem) {
+    function groupItemShow(groupItem: any) {
       if (!groupItem.columns) {
         return false;
       }
@@ -540,13 +542,14 @@ export default {
     }
 
     return {
-      get: (form, key) => {
+      get: (form: any, key: string) => {
         return _.get(form, key);
       },
-      set: (form, key, value) => {
+      set: (form: any, key: string, value: any) => {
         _.set(form, key, value);
         doValueChange(key, value);
       },
+      ui,
       validRef,
       errorsRef,
       formRef,
@@ -570,7 +573,7 @@ export default {
       groupItemShow
     };
   }
-};
+});
 </script>
 
 <style lang="less">

@@ -1,20 +1,17 @@
 <template>
-  <component
-    :is="$fsui.treeSelect.name"
-    :[$fsui.treeSelect.options]="computedOptions"
-    :placeholder="computedPlaceholder"
-  />
+  <component :is="ui.treeSelect.name" :[ui.treeSelect.options]="computedOptions" :placeholder="computedPlaceholder" />
 </template>
-<script>
-import { computed } from "vue";
+<script lang="ts">
+import { computed, defineComponent } from "vue";
 import { useDict } from "../../use/use-dict";
 import { useI18n } from "../../locale";
+import { useUi } from "../../use";
 
 /**
  * 字典树选择组件
  * 支持 a-tree-select 参数
  */
-export default {
+export default defineComponent({
   name: "FsDictTree",
   props: {
     /**
@@ -36,6 +33,7 @@ export default {
   // },
   setup(props, ctx) {
     const { t } = useI18n();
+    const { ui } = useUi();
     const computedPlaceholder = computed(() => {
       return props.placeholder || t("fs.component.select.placeholder");
     });
@@ -43,10 +41,11 @@ export default {
     let usedDict = useDict(props, ctx);
     const computedOptions = usedDict.createComputedOptions();
     return {
+      ui,
       computedPlaceholder,
       ...usedDict,
       computedOptions
     };
   }
-};
+});
 </script>

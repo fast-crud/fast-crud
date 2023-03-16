@@ -2,12 +2,13 @@
   <span>{{ doFormat }}</span>
 </template>
 
-<script>
+<script lang="ts">
 import dayjs from "dayjs";
+import { defineComponent } from "vue";
 /**
  * 日期格式化展示组件
  */
-export default {
+export default defineComponent({
   name: "FsDateFormat",
   props: {
     /**
@@ -41,8 +42,8 @@ export default {
       }
       return date.format(this.format);
     }
-  },
+  } as any,
   created() {},
   methods: {}
-};
+});
 </script>

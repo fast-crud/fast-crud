@@ -7,13 +7,14 @@
   "types": "./dist/d/index.d.ts",
   "scripts": {
     "build:all": "npm run build:type && npm run build && npm run copy:index",
-    "build": " npm run build:umd && npm run build:es",
+    "build": " npm run tsc && npm run build:umd && npm run build:es",
     "build:es": "vite build",
     "build:type": "vite build --mode type && npm run copy:type",
     "build:umd": "vite build --mode umd",
     "copy:type": "copyfiles -f ./dist/extends-uploader.es.js ./dist/index.type.js",
     "copy:index": "copyfiles -f ./src/index.vite.es.js ./dist/",
-    "lint-fix": "eslint --fix --ext .js --ext .jsx --ext .vue src/"
+    "lint-fix": "eslint --fix --ext .js --ext .jsx --ext .vue src/",
+    "tsc": "vue-tsc --noEmit --skipLibCheck"
   },
   "author": "Greper",
   "license": "MIT",
@@ -31,7 +32,6 @@
     "humanize-duration": "^3.27.3",
     "jsoneditor": "^9.9.2",
     "lodash-es": "^4.17.20",
-    "minio": "^7.0.32",
     "object-assign": "^4.1.1",
     "qiniu-js": "3.4.1",
     "quill": "^1.3.7",
@@ -45,6 +45,7 @@
     "@rollup/plugin-commonjs": "^23.0.4",
     "@rollup/plugin-strip": "^3.0.1",
     "@rollup/plugin-typescript": "^10.0.1",
+    "@types/ali-oss": "^6.16.7",
     "@types/chai": "^4.3.4",
     "@types/humanize-duration": "^3.27.1",
     "@types/lodash-es": "^4.17.6",

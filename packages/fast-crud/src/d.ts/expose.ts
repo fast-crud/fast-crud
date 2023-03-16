@@ -1,5 +1,16 @@
-import { CrudBinding, FormProps, RemoveProps } from "./crud";
+import { ColumnCompositionProps, CompositionColumns, CrudBinding, FormProps, RemoveProps } from "./crud";
 import { Ref } from "vue";
+
+export type DoValueResolveProps = {
+  form: any;
+};
+
+export class SetFormDataOptions {
+  /**
+   * 是否执行valueChange
+   */
+  valueChange?: boolean;
+}
 
 /**
  * crudExpose
@@ -19,6 +30,12 @@ export type CrudExpose = {
    * 获取表单数据
    */
   getFormData: () => any;
+
+  /**
+   * 获取表单数据
+   */
+  setFormData: (data: any, options?: SetFormDataOptions) => any;
+
   /**
    * 获取表单组件实例
    * key: 字段key
@@ -29,12 +46,12 @@ export type CrudExpose = {
    * 执行valueBuilder
    * @param rows 表格数据列表
    */
-  doValueBuilder: (rows: any[], columns?: any) => void;
+  doValueBuilder: (rows: any[], columns?: CompositionColumns) => void;
   /**
    * 执行valueResolve
    * @param props { form }
    */
-  doValueResolve: (props: { form: any }, columns?: any) => void;
+  doValueResolve: (props: DoValueResolveProps, columns?: CompositionColumns) => void;
   /**
    * 刷新列表数据
    */
@@ -177,7 +194,7 @@ export type SetSearchFormDataProps = { form: any; mergeForm?: boolean };
 /**
  * crudExpose.doRemove参数
  */
-export type DoRemoveContext = { index: number; row: any };
+export type DoRemoveContext = { index?: number; row?: any };
 /**
  * crudExpose.doSearch参数
  */

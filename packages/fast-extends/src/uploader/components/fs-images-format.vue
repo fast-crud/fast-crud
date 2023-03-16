@@ -1,13 +1,7 @@
 <template>
   <div class="fs-image-format">
-    <component :is="$fsui.imageGroup.name" v-bind="wrapper">
-      <component
-        :is="$fsui.image.name"
-        v-for="item in imageListRef"
-        :key="item.src"
-        class="fs-image-item"
-        v-bind="item"
-      >
+    <component :is="ui.imageGroup.name" v-bind="wrapper">
+      <component :is="ui.image.name" v-for="item in imageListRef" :key="item.src" class="fs-image-item" v-bind="item">
         <template #placeholder>
           <div class="fs-image-slot">
             <fs-loading :loading="true" />
@@ -25,10 +19,10 @@
 </template>
 
 <script lang="ts">
-import { computed, Ref, ref, watch } from "vue";
+import { computed, defineComponent, Ref, ref, watch } from "vue";
 import { useUi } from "@fast-crud/fast-crud";
 // 图片行展示组件
-export default {
+export default defineComponent({
   name: "FsImagesFormat",
   inheritAttrs: false,
   props: {
@@ -60,22 +54,25 @@ export default {
      */
     buildUrl: {
       type: Function,
-      default: function (value) {
+      default: function (value: any) {
         return value;
       }
     },
+    buildUrls: {},
     /**
      * 从value或url构建预览大图的方法
      * 支持异步
      */
     buildPreviewUrl: {
       type: Function,
-      default: function ({ url, value, index }) {
+      default: function ({ url, value, index }: any) {
         return url;
       }
-    }
+    },
+
+    buildPreviewUrls: {}
   },
-  setup(props, ctx) {
+  setup(props: any, ctx) {
     const { ui } = useUi();
     type ImageItem = {
       value?: any;
@@ -137,35 +134,52 @@ export default {
       return imageList;
     }
 
-    async function buildImageListByValue(values) {
+    async function buildImageListUrls(list: ImageItem[]) {
+      if (props.buildUrls) {
+        const values = list.map((item) => item.value);
+        const urls = await props.buildUrls(values);
+        for (let i = 0; i < list.length; i++) {
+          list[i].url = urls[i];
+        }
+        let previewUrls = urls;
+        if (props.buildPreviewUrls) {
+          previewUrls = await props.previewUrls(list);
+        }
+        for (let i = 0; i < list.length; i++) {
+          list[i].previewUrl = previewUrls[i];
+        }
+      } else if (props.buildUrl) {
+        for (let item of list) {
+          item.url = await props.buildUrl(item.value);
+          item.previewUrl = item.url;
+          if (props.buildPreviewUrl) {
+            item.previewUrl = await props.buildPreviewUrl(item);
+          }
+        }
+      } else {
+        for (let i = 0; i < list.length; i++) {
+          list[i].url = list[i].value;
+          list[i].previewUrl = list[i].value;
+        }
+      }
+    }
+
+    async function buildImageListByValue(values: any) {
       const images: ImageItem[] = [];
       for (let i = 0; i < values.length; i++) {
         let value = values[i];
-        let url = value;
-        if (props.buildUrl) {
-          url = await props.buildUrl(value);
-        }
-
-        let previewUrl = url;
-        if (props.buildPreviewUrl) {
-          previewUrl = await props.buildPreviewUrl({
-            url,
-            value,
-            index: i
-          });
-        }
         images.push({
-          url,
           value,
-          index: i,
-          previewUrl
+          index: i
         });
       }
+
+      await buildImageListUrls(images);
 
       return buildImageList(images);
     }
 
-    async function buildImageListByUrls(urls) {
+    async function buildImageListByUrls(urls: any) {
       const list: ImageItem[] = [];
       if (typeof urls === "string") {
         list.push({
@@ -236,9 +250,9 @@ export default {
       }
     );
 
-    return { imageListRef };
+    return { imageListRef, ui };
   }
-};
+});
 </script>
 <style lang="less">
 .fs-image-format {

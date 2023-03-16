@@ -9,7 +9,7 @@
     </template>
     <template v-else>
       <component
-        :is="$fsui.tag.name"
+        :is="ui.tag.name"
         v-for="item in itemsRef"
         :key="item.url"
         class="fs-tag-item"
@@ -22,22 +22,20 @@
   </div>
 </template>
 
-<script>
-import { ref, watch } from "vue";
+<script lang="ts">
+import { defineComponent, Ref, ref, watch } from "vue";
+import { useUi } from "@fast-crud/fast-crud";
 // 文件格式化展示组件
-export default {
+export default defineComponent({
   name: "FsFilesFormat",
   props: {
     /**
      * 文件列表
      * 支持格式： url , {url} , [url1,url2] ,  [{url:url1},{url:url2}]
      */
-    modelValue: {
-      require: true
-    },
+    modelValue: {},
     // tag颜色，【primary, success, warning, danger ,info】
     color: {
-      require: false,
       default: ""
     },
     // 展示类型【text, tag】
@@ -51,25 +49,45 @@ export default {
     // 构建下载url方法，支持异步
     buildUrl: {
       type: Function,
-      default: function (value) {
+      default: function (value: any) {
         return value;
       }
-    }
-  },
-  setup(props, ctx) {
-    function getFileName(url) {
+    },
+    buildUrls: {}
+  } as any,
+  setup(props: any, ctx) {
+    const { ui } = useUi();
+    function getFileName(url: string) {
       if (url?.lastIndexOf("/") >= 0) {
         return url.substring(url.lastIndexOf("/") + 1);
       }
       return url;
     }
-    async function getItem(value) {
+    function getItem(value: any): any {
       return {
-        url: await props.buildUrl(value),
+        url: undefined,
         value: value,
         name: getFileName(value),
         color: props.color
       };
+    }
+
+    async function buildFileListUrls(list: any[]) {
+      if (props.buildUrls) {
+        const values = list.map((item) => item.value);
+        const urls = await props.buildUrls(values);
+        for (let i = 0; i < list.length; i++) {
+          list[i].url = urls[i];
+        }
+      } else if (props.buildUrl) {
+        for (let item of list) {
+          item.url = await props.buildUrl(item.value);
+        }
+      } else {
+        for (let i = 0; i < list.length; i++) {
+          list[i].url = list[i].value;
+        }
+      }
     }
 
     async function buildItems() {
@@ -78,17 +96,18 @@ export default {
       }
       let valueArr = [];
       if (typeof props.modelValue === "string") {
-        valueArr = [await getItem(props.modelValue)];
+        valueArr = [getItem(props.modelValue)];
       } else if (props.modelValue instanceof Array) {
         // 本来就是数组的
         valueArr = [];
         for (const val of props.modelValue) {
-          valueArr.push(await getItem(val));
+          valueArr.push(getItem(val));
         }
       }
+      await buildFileListUrls(valueArr);
       return valueArr;
     }
-    const itemsRef = ref([]);
+    const itemsRef: Ref = ref([]);
     watch(
       () => {
         return props.modelValue;
@@ -102,10 +121,11 @@ export default {
     );
 
     return {
+      ui,
       itemsRef
     };
   }
-};
+});
 </script>
 <style lang="less">
 .fs-files-format {

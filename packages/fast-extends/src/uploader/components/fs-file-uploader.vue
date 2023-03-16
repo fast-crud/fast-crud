@@ -1,13 +1,13 @@
 <template>
   <div class="fs-file-uploader" :class="{ 'fs-file-uploader-limit': computedOnLimit() }">
-    <component :is="$fsui.upload.name" ref="fileUploaderRef" v-model:fileList="fileList" v-bind="computedBinding">
+    <component :is="ui.upload.name" ref="fileUploaderRef" v-model:fileList="fileList" v-bind="computedBinding">
       <component :is="computedFileSelectBtn.is" v-bind="computedFileSelectBtn" />
     </component>
     <fs-uploader ref="uploaderImplRef" :type="uploader?.type" />
     <component
-      :is="$fsui.dialog.name"
+      :is="ui.dialog.name"
       v-if="isPicture()"
-      v-model:[$fsui.dialog.visible]="previewVisible"
+      v-model:[ui.dialog.visible]="previewVisible"
       v-bind="computedPreview"
     >
       <img style="width: 100%" :src="previewImage" />
@@ -16,17 +16,17 @@
 </template>
 
 <script lang="ts">
-import { computed, ref, watch } from "vue";
-import { uiContext, useI18n } from "@fast-crud/fast-crud";
+import { AppContext, computed, defineComponent, Ref, ref, watch } from "vue";
+import { uiContext, useI18n, useUi } from "@fast-crud/fast-crud";
 import _ from "lodash-es";
 import FsUploader from "./fs-uploader.vue";
-import { FileItem } from "../d.ts/type";
+import { FileItem, FsUploaderDoUploadOptions } from "../d.ts/type";
 
 /**
  * 文件上传组件
  * 支持对应ui库的[x]-file-uploader组件的配置
  */
-export default {
+export default defineComponent({
   name: "FsFileUploader",
   components: { FsUploader },
   inheritAttrs: false,
@@ -55,11 +55,15 @@ export default {
      */
     buildUrl: {
       default() {
-        return (value) => {
+        return (value: any) => {
           return value;
         };
       }
     },
+    /**
+     * 多个value值构建多个url
+     */
+    buildUrls: {},
     /**
      * 上传按钮配置，参考FsButton参数
      */
@@ -100,7 +104,7 @@ export default {
     },
     /**
      * 返回值类型
-     * 支持：`[url,key,object]`
+     * 支持：`[object,url,key,其他（successHandle返回的object内要有该字段）]`
      */
     valueType: {
       type: String, // url ,key, object
@@ -108,16 +112,15 @@ export default {
     }
   },
   emits: ["change", "update:modelValue", "success", "exceed"],
-  setup(props, ctx) {
-    const ui = uiContext.get();
+  setup(props: any, ctx: any) {
+    const { ui } = useUi();
     const { t } = useI18n();
     // uploader 的 modelValue
-    const fileList = ref([]);
-    const fileLocalList = ref([]);
-    const currentValue = ref();
-    const fileUploaderRef = ref();
+    const fileList: Ref = ref([]);
+    const currentValue: Ref = ref();
+    const fileUploaderRef: Ref = ref();
 
-    function pickFileName(url) {
+    function pickFileName(url: string) {
       const suffix = url.substring(url.lastIndexOf("/") + 1);
       const wenIndex = suffix.indexOf("?");
       if (wenIndex >= 0) {
@@ -125,50 +128,69 @@ export default {
       }
       return suffix;
     }
-    async function buildOneToFile(value) {
-      let fileValue;
-      if (typeof value === "string") {
-        fileValue = {
-          url: undefined,
-          key: value,
-          value
-        };
-      } else {
-        fileValue = value;
-      }
-      if (!fileValue.url) {
-        const key = fileValue.key || fileValue.value;
-        fileValue.url = await props.buildUrl(key);
-      }
-      if (!fileValue.name) {
-        const url = fileValue.url;
-        fileValue.name = pickFileName(url);
-      }
-      if (!fileValue[ui.upload.id]) {
-        fileValue[ui.upload.id] = Math.random() + "";
-      }
-      if (!fileValue.status) {
-        fileValue.status = ui.upload.status.success;
-      }
-      return fileValue;
-    }
-    async function buildOneToValue(file) {
-      const res = file.response || file.fsRes;
-      const value: FileItem = {
-        size: file.size,
-        name: file.name,
-        uid: file.uid,
-        ...(res != null ? res : file)
-      };
-      if (!value.url) {
-        value.url = await props.buildUrl(value.key);
-      }
+
+    function getValueByValueType(item: any) {
       if (props.valueType === "object") {
-        return value;
+        return item;
       }
-      return value[props.valueType];
+      return item[props.valueType];
     }
-    async function initFileList(value) {
+    function getValueByValueTypeFromList(list: any[]) {
+      const values = [];
+      for (let item of list) {
+        values.push(getValueByValueType(item));
+      }
+      return values;
+    }
+    async function buildListToFile(list: any[]) {
+      const arr = [];
+      for (let value of list) {
+        let fileValue: any;
+        if (typeof value === "string") {
+          fileValue = {
+            url: undefined,
+            key: value,
+            value
+          };
+          if (props.valueType !== "object") {
+            fileValue[props.valueType] = value;
+          }
+        } else {
+          fileValue = value;
+        }
+        if (!fileValue[ui.upload.id]) {
+          fileValue[ui.upload.id] = Math.random() + "";
+        }
+        if (!fileValue.status) {
+          fileValue.status = ui.upload.status.success;
+        }
+        arr.push(fileValue);
+      }
+      await buildFileItemUrls(arr);
+      for (const item of arr) {
+        if (!item.name) {
+          const url = item.url || item.value;
+          item.name = pickFileName(url);
+        }
+      }
+      return arr;
+    }
+    async function buildListToValue(list: any[]) {
+      const arr: any = [];
+      for (let file of list) {
+        const res = file.response || file.fsRes;
+        const value: FileItem = {
+          size: file.size,
+          name: file.name,
+          uid: file.uid,
+          ...(res != null ? res : file)
+        };
+        arr.push(value);
+      }
+      await buildFileItemUrls(arr);
+      return getValueByValueTypeFromList(arr);
+    }
+    async function initFileList(value: any) {
       const array: any = [];
       if (value == null || value.length === 0) {
         fileList.value = array;
@@ -176,42 +198,68 @@ export default {
       }
       if (value instanceof Array) {
         for (let item of value) {
-          array.push(await buildOneToFile(item));
+          array.push(item);
         }
       } else {
-        array.push(await buildOneToFile(value));
+        array.push(value);
       }
-      updateFileList(array);
+
+      const list = await buildListToFile(array);
+      updateFileList(list);
     }
 
-    async function emitValue(list) {
+    async function emitValue(list: FileItem[]) {
       let value = await buildEmitValue(list);
 
       onInput(value);
       onChange(value);
     }
 
-    async function buildEmitValue(fList) {
+    async function buildEmitValue(fList: FileItem[]) {
       if (fList == null || fList.length === 0) {
         return [];
       }
+
       if (props.limit === 1) {
-        //单个文件
-        return await buildOneToValue(fList[0]);
+        const list: any = await buildListToValue(fList);
+        return list[0];
       }
       const array: any = [];
       for (let item of fList) {
         if (ui.upload.isSuccess(item)) {
-          array.push(await buildOneToValue(item));
+          array.push(item);
         }
       }
-      return array;
+      return await buildListToValue(array);
     }
 
-    function onChange(value) {
+    async function buildFileItemUrls(list: any[]) {
+      let needUrlItems = list.filter((item) => {
+        return item.url == null;
+      });
+      if (props.buildUrls) {
+        const values = needUrlItems.map((item) => {
+          return getValueByValueType(item);
+        });
+        const urls = await props.buildUrls(values);
+        for (let i = 0; i < needUrlItems.length; i++) {
+          needUrlItems[i].url = urls[i];
+        }
+      } else if (props.buildUrl) {
+        for (let needUrlItem of needUrlItems) {
+          needUrlItem.url = await props.buildUrl(getValueByValueType(needUrlItem));
+        }
+      } else {
+        for (let needUrlItem of needUrlItems) {
+          needUrlItem.url = needUrlItem.value || needUrlItem.key;
+        }
+      }
+    }
+
+    function onChange(value: any) {
       ctx.emit("change", value);
     }
-    function onInput(value) {
+    function onInput(value: any) {
       currentValue.value = value;
       ctx.emit("update:modelValue", value);
     }
@@ -238,19 +286,19 @@ export default {
       return uploading.length > 0;
     }
 
-    function handleChange(file, list) {
+    function handleChange(file: any, list: any) {
       updateFileList(list);
       emitValue(list);
     }
 
-    function handleSuccess(res, file, list) {
+    function handleSuccess(res: any, file: any, list: any) {
       ctx.emit("success", { res, file, fileList: list });
       handleChange(file, list);
     }
 
-    const uploaderImplRef = ref();
+    const uploaderImplRef: Ref = ref();
 
-    function formatFileSize(fileSize) {
+    function formatFileSize(fileSize: number) {
       let sizeTip;
       if (fileSize > 1024 * 1024 * 1024) {
         sizeTip = (fileSize / (1024 * 1024 * 1024)).toFixed(2) + "G";
@@ -277,12 +325,12 @@ export default {
       }
     }
 
-    function checkSizeLimit(file) {
+    function checkSizeLimit(file: any) {
       if (props.sizeLimit != null) {
         let limit = props.sizeLimit;
         let showMessage: any = null;
         if (typeof props.sizeLimit === "number") {
-          showMessage = (fileSize, limit) => {
+          showMessage = (fileSize: number, limit: number) => {
             const limitTip = formatFileSize(limit);
             const fileSizeTip = formatFileSize(file.size);
             ui.message.warn(t("fs.extends.fileUploader.sizeLimitTip", [limitTip, fileSizeTip]));
@@ -299,7 +347,7 @@ export default {
       }
     }
 
-    const beforeUpload = async (file, list = fileList.value) => {
+    const beforeUpload = async (file: any, list = fileList.value) => {
       if (props.beforeUpload) {
         const ret = await props.beforeUpload({ file, fileList: fileList.value });
         if (ret === false) {
@@ -314,11 +362,11 @@ export default {
       }
     };
 
-    function updateFileList(list) {
+    function updateFileList(list: any) {
       fileList.value = list;
     }
 
-    async function doUpload(option) {
+    async function doUpload(option: FsUploaderDoUploadOptions) {
       option.options = props.uploader;
       let uploaderRef = uploaderImplRef.value.getUploaderRef();
       if (uploaderRef == null) {
@@ -327,7 +375,7 @@ export default {
       }
       return await uploaderRef?.upload(option);
     }
-    async function customRequest(context) {
+    async function customRequest(context: any) {
       if (props.beforeUploadRequest) {
         await props.beforeUploadRequest(context);
       }
@@ -363,15 +411,15 @@ export default {
       };
     });
 
-    const previewVisible = ref(false);
-    const previewImage = ref();
+    const previewVisible: Ref = ref(false);
+    const previewImage: Ref = ref();
     const computedPreview = computed(() => {
       return {
         ...ui.dialog.footer(),
         ...props.preview
       };
     });
-    function getBase64(file) {
+    function getBase64(file: File) {
       return new Promise((resolve, reject) => {
         const reader = new FileReader();
         reader.readAsDataURL(file);
@@ -385,7 +433,7 @@ export default {
     function isPictureCard() {
       return props.listType === ui.upload.typeImageCard;
     }
-    const handlePreview = async (file) => {
+    const handlePreview = async (file: any) => {
       if (!isPicture()) {
         let url;
         if (file.url) {
@@ -413,7 +461,7 @@ export default {
         customRequest,
         beforeUpload,
         listType: props.listType,
-        onChange: (change) => {
+        onChange: (change: any) => {
           const { file, fileList } = change;
           handleChange(file, fileList);
         },
@@ -431,13 +479,13 @@ export default {
           checkLimit();
           ctx.emit("exceed", { fileList: fileList.value });
         },
-        onRemove: (file, fileList) => {
+        onRemove: (file: any, fileList: any) => {
           handleChange(file, fileList);
         },
-        onChange: (file, fileList) => {
+        onChange: (file: any, fileList: any) => {
           handleChange(file, fileList);
         },
-        onSuccess: (res, file, fileList) => {
+        onSuccess: (res: any, file: any, fileList: any) => {
           if (res == null) {
             return;
           }
@@ -467,15 +515,15 @@ export default {
       return {
         action: "",
         listType: props.listType,
-        onBeforeUpload: async ({ file, fileList }) => {
+        onBeforeUpload: async ({ file, fileList }: any) => {
           return beforeUpload(file, fileList);
         },
-        customRequest: (context) => {
+        customRequest: (context: any) => {
           const fileInfo = context.file;
           customRequest({
             ...context,
             file: fileInfo.file,
-            onSuccess: async (res) => {
+            onSuccess: async (res: any) => {
               //TODO native upload 会清空多余自定义的属性，比如key、md5
               const value = props.valueType === "object" ? res : res[props.valueType];
               res.url = await props.buildUrl(value);
@@ -486,7 +534,7 @@ export default {
               };
               context.onFinish(fileInfo);
             },
-            onProgress: (opts) => {
+            onProgress: (opts: any) => {
               context.onProgress(opts);
             }
           });
@@ -495,14 +543,14 @@ export default {
           checkLimit();
           ctx.emit("exceed", { fileList: fileList.value });
         },
-        onRemove: (file) => {
+        onRemove: (file: any) => {
           handleChange(file, fileList.value);
         },
-        onChange: ({ event, file, fileList }) => {
+        onChange: ({ event, file, fileList }: any) => {
           fileList = appendExtra(fileList);
           handleChange(file, fileList);
         },
-        onFinish: (file) => {
+        onFinish: (file: any) => {
           const extra = naiveExtraCache[file.id];
           if (extra) {
             _.merge(file, extra);
@@ -530,6 +578,7 @@ export default {
     });
 
     return {
+      ui,
       fileList,
       fileUploaderRef,
       initValue: initFileList,
@@ -546,7 +595,7 @@ export default {
       computedBinding
     };
   }
-};
+});
 </script>
 <style lang="less">
 .fs-file-uploader {

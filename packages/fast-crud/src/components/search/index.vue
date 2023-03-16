@@ -1,8 +1,8 @@
 <template>
-  <component :is="$fsui.collapseTransition.name">
+  <component :is="ui.collapseTransition.name">
     <div v-if="show !== false" class="fs-search" :class="{ 'fs-search-multi-line': computedIsMultiLine }">
       <component
-        :is="$fsui.form.name"
+        :is="ui.form.name"
         ref="searchFormRef"
         :model="form"
         v-bind="options"
@@ -18,23 +18,23 @@
               :class="{ 'fs-search-collapse': collapse }"
               :style="{ height: computedColumnBoxHeight }"
             >
-              <component :is="$fsui.row.name" ref="columnsRowRef">
+              <component :is="ui.row.name" ref="columnsRowRef">
                 <div v-if="slots['search-left']" class="fs-search-col">
-                  <component :is="$fsui.formItem.name">
-                    <fs-slot-render :slots="slots['search-left']" :scope="{ form }" />
+                  <component :is="ui.formItem.name">
+                    <fs-slot-render :slots="slots['search-left']" :scope="searchEventContextRef" />
                   </component>
                 </div>
                 <template v-for="(item, key) in computedColumns" :key="key">
                   <component :is="computedColName" v-if="item.show === true" class="fs-search-col" v-bind="item.col">
-                    <component :is="$fsui.formItem.name" v-bind="item" :[$fsui.formItem.prop]="key" :label="item.title">
+                    <component :is="ui.formItem.name" v-bind="item" :[ui.formItem.prop]="key" :label="item.title">
                       <template v-if="slots['search_' + key]">
-                        <fs-slot-render :slots="slots['search_' + key]" :scope="{ form, key }" />
+                        <fs-slot-render :slots="slots['search_' + key]" :scope="{ ...searchEventContextRef, key }" />
                       </template>
                       <template v-else>
                         <fs-component-render
                           v-if="item.component && item.component.show !== false"
                           :ref="
-                            (el) => {
+                            (el:any) => {
                               if (el) {
                                 componentRenderRefs[item.key] = el;
                               }
@@ -42,7 +42,7 @@
                           "
                           :model-value="get(form, key)"
                           v-bind="item.component"
-                          :scope="{ form }"
+                          :scope="searchEventContextRef"
                           @update:modelValue="onValueChanged($event, item)"
                           @input="onInput(item)"
                         />
@@ -52,14 +52,14 @@
                 </template>
 
                 <div v-if="slots['search-middle']" class="fs-search-col fs-search-middle">
-                  <component :is="$fsui.formItem.name">
-                    <fs-slot-render :slots="slots['search-middle']" :scope="{ form }" />
+                  <component :is="ui.formItem.name">
+                    <fs-slot-render :slots="slots['search-middle']" :scope="searchEventContextRef" />
                   </component>
                 </div>
                 <fs-search-buttons v-if="!computedIsMultiLine" :buttons="computedButtons"></fs-search-buttons>
                 <div v-if="slots['search-right']" class="fs-search-col fs-search-right">
-                  <component :is="$fsui.formItem.name">
-                    <fs-slot-render :slots="slots['search-right']" :scope="{ form }" />
+                  <component :is="ui.formItem.name">
+                    <fs-slot-render :slots="slots['search-right']" :scope="searchEventContextRef" />
                   </component>
                 </div>
               </component>
@@ -68,8 +68,8 @@
           </div>
 
           <div v-if="computedIsMultiLine" class="fs-search-action">
-            <component :is="$fsui.formItem.name">
-              <fs-button :icon="collapse ? $fsui.icons.caretUp : $fsui.icons.caretDown" @click="toggleCollapse" />
+            <component :is="ui.formItem.name">
+              <fs-button :icon="collapse ? ui.icons.caretUp : ui.icons.caretDown" @click="toggleCollapse" />
             </component>
           </div>
         </div>
@@ -78,19 +78,21 @@
   </component>
 </template>
 
-<script>
-import { computed, nextTick, reactive, ref, unref, watch, onMounted } from "vue";
+<script lang="ts">
+import { computed, defineComponent, nextTick, onMounted, reactive, ref, Ref, unref } from "vue";
 import _ from "lodash-es";
 import { useCompute } from "../../use/use-compute";
-import { uiContext } from "../../ui";
 import { useI18n } from "../../locale";
 import logger from "../../utils/util.log";
 import FsSearchButtons from "./buttons.vue";
 import { Constants } from "../../utils/util.constants";
+import { ButtonsProps, SearchEventContext, SearchItemProps } from "/src/d.ts";
+import { useUi } from "../../use/use-ui";
+
 /**
  * 查询框组件
  */
-export default {
+export default defineComponent({
   name: "FsSearch",
   components: { FsSearchButtons },
   inheritAttrs: false,
@@ -191,7 +193,7 @@ export default {
       type: Boolean,
       default: false
     }
-  },
+  } as any,
   emits: [
     /**
      * 查询事件
@@ -205,6 +207,7 @@ export default {
     "update:collapse"
   ],
   setup(props, ctx) {
+    const { ui } = useUi();
     // 异步setup需要放在第一个await之前
     // onMounted is called when there is no active component instance to be associated with.
     //为啥会有这个警告
@@ -218,8 +221,7 @@ export default {
       }
     });
 
-    const ui = uiContext.get();
-    let autoSearch = null;
+    let autoSearch: any = null;
     function createInitialForm() {
       return _.cloneDeep(props.initialForm || {});
     }
@@ -245,13 +247,13 @@ export default {
         }
         // 合并col
         if (props.col) {
-          _.forEach(value, (v, key) => {
+          _.forEach(value, (v) => {
             v.col = _.merge({}, props.col, v.col);
           });
         }
 
         //字段排序
-        let sortArr = [];
+        let sortArr: SearchItemProps[] = [];
         _.forEach(value, (v, key) => {
           v._key = key;
           sortArr.push(v);
@@ -260,7 +262,9 @@ export default {
           return item.order ?? Constants.orderDefault;
         });
 
-        const sortedColumns = {};
+        const sortedColumns: {
+          [key: string]: SearchItemProps;
+        } = {};
 
         sortArr.forEach((item) => {
           let _key = item._key;
@@ -284,19 +288,20 @@ export default {
     });
     const searchFormRef = ref();
     const { t } = useI18n();
-    const componentRenderRefs = ref({});
-
-    function getComponentRenderRef(key) {
+    const componentRenderRefs: Ref = ref({});
+    function getComponentRenderRef(key: string) {
       return componentRenderRefs.value[key];
     }
 
-    function getComponentRef(key) {
+    function getComponentRef(key: string): any {
       return getComponentRenderRef(key)?.$refs?.targetRef;
     }
 
-    function getContextFn() {
+    function getContextFn(): SearchEventContext {
       return { form, getComponentRef };
     }
+
+    const searchEventContextRef: Ref<SearchEventContext> = ref(getContextFn());
 
     async function doSearch() {
       if (autoSearch) {
@@ -306,7 +311,7 @@ export default {
 
       const valid = await ui.form.validateWrap(searchFormRef.value);
       if (valid) {
-        ctx.emit("search", { form });
+        ctx.emit("search", searchEventContextRef.value);
       } else {
         ui.message.error({
           message: t("fs.search.error.message")
@@ -330,7 +335,7 @@ export default {
       }
 
       if (props.reset) {
-        props.reset({ form });
+        props.reset(searchEventContextRef.value);
       }
       // 表单重置事件
       ctx.emit("reset", getContextFn());
@@ -342,13 +347,13 @@ export default {
     }
 
     const computedButtons = computed(() => {
-      const btns = [];
-      const defBtnOptions = {
+      const btns: any = [];
+      const defBtnOptions: ButtonsProps<SearchEventContext> = {
         search: {
           show: true,
           type: "primary",
           disabled: false,
-          click: () => {
+          click: (context: SearchEventContext) => {
             doSearch();
           },
           order: 1,
@@ -357,7 +362,7 @@ export default {
         reset: {
           show: true,
           disabled: false,
-          click: () => {
+          click: (context: SearchEventContext) => {
             doReset();
           },
           text: t("fs.search.reset.text"), // '重置',
@@ -366,10 +371,14 @@ export default {
       };
       _.merge(defBtnOptions, props.buttons);
       for (let key in defBtnOptions) {
-        btns.push(defBtnOptions[key]);
+        const btn = defBtnOptions[key];
+        btn._click = () => {
+          btn.click(getContextFn());
+        };
+        btns.push(btn);
       }
 
-      btns.sort((a, b) => {
+      btns.sort((a: any, b: any) => {
         return a.order - b.order;
       });
       return btns;
@@ -395,7 +404,7 @@ export default {
     /**
      * 设置form值
      */
-    function setForm(newForm, merge = true) {
+    function setForm(newForm: any, merge = true) {
       if (!merge) {
         _.each(_.keys(form), (item) => {
           delete form[item];
@@ -413,21 +422,19 @@ export default {
       }
     };
 
-    const onInput = (item) => {
-      console.log("value input", item.key, item);
-      if (item.autoSearchTrigger == null || item.autoSearchTrigger === "input") {
+    const onInput = (item: any) => {
+      if (item.autoSearchTrigger === "input") {
         doAutoSearch();
       }
     };
     // 输入法监听
-    const changeInputEventDisabled = (disabled) => {
+    const changeInputEventDisabled = (disabled: boolean) => {
       inputEventDisabled.value = disabled;
       doAutoSearch();
     };
 
-    function onValueChanged(value, item) {
+    function onValueChanged(value: any, item: SearchItemProps) {
       const key = item.key;
-      console.log("value changed", key, value);
       _.set(form, key, value);
       if (item.valueChange) {
         const key = item.key;
@@ -436,7 +443,7 @@ export default {
         const valueChange = item.valueChange instanceof Function ? item.valueChange : item.valueChange.handle;
         valueChange({ key, value, componentRef, ...getContextFn() });
       }
-      if (!item.autoSearchTrigger || item.autoSearchTrigger === "change") {
+      if (item.autoSearchTrigger == null || item.autoSearchTrigger === true || item.autoSearchTrigger === "change") {
         doAutoSearch();
       }
     }
@@ -482,9 +489,10 @@ export default {
     });
 
     return {
-      get: (form, key) => {
+      get: (form: any, key: any) => {
         return _.get(form, key);
       },
+      ui,
       onValueChanged,
       doSearch,
       doReset,
@@ -505,10 +513,11 @@ export default {
       computedColumnBoxHeight,
       computedColName,
       computedIsMultiLine,
-      toggleCollapse
+      toggleCollapse,
+      searchEventContextRef
     };
   }
-};
+});
 </script>
 <style lang="less">
 .fs-search {

@@ -4,8 +4,10 @@ import {
   getCurrentInstance,
   nextTick,
   onMounted,
+  Ref,
   ref,
   resolveDynamicComponent,
+  ShallowRef,
   useSlots
 } from "vue";
 import _ from "lodash-es";
@@ -14,7 +16,14 @@ import { uiContext } from "../../ui";
 import { Constants } from "../../utils/util.constants";
 import "./fs-form-wrapper.less";
 import { useDrag } from "../../use";
-import { OpenDialogProps } from "/src/d.ts";
+import {
+  FormProps,
+  FormWrapperContext,
+  FormWrapperProps,
+  OpenDialogProps,
+  SetFormDataOptions,
+  WriteableSlots
+} from "/src/d.ts";
 
 /**
  * 表单对话框|抽屉
@@ -56,23 +65,23 @@ export default defineComponent({
   emits: ["reset", "submit", "validationError", "value-change", "open", "opened", "mounted", "closed", "inner-change"],
   setup(props: any, ctx: any) {
     const { t } = useI18n();
-    const formWrapperOpen = ref(false);
-    const formWrapperIs = ref();
-    const formOptions = ref();
-    const formWrapperBind = ref();
-    const formWrapperOpts = ref();
-    const formRef = ref();
-    const loading = ref(false);
+    const formWrapperOpen: Ref<boolean> = ref(false);
+    const formWrapperIs: Ref<string> = ref();
+    const formOptions: Ref<FormProps> = ref();
+    const formWrapperBind: Ref = ref();
+    const formWrapperOpts: Ref<FormWrapperProps> = ref();
+    const formRef: Ref = ref();
+    const loading: Ref<boolean> = ref(false);
 
-    const emitOnClosed = ref();
-    const emitOnOpened = ref();
-    const title = ref();
+    const emitOnClosed: Ref = ref();
+    const emitOnOpened: Ref = ref();
+    const title: Ref<string> = ref();
     const formWrapperId = props.id || Math.floor(Math.random() * 1000000) + "";
     const formWrapperIdClass = "fs-form-wrapper_" + formWrapperId;
 
-    const formWrapperSlots = ref({});
+    const formWrapperSlots: Ref<WriteableSlots> = ref({});
 
-    function buildEvent() {
+    function buildEvent(): FormWrapperContext {
       return {
         wrapper: formWrapperBind.value,
         options: formOptions.value,
@@ -97,7 +106,7 @@ export default defineComponent({
       title.value = wrapper.title;
       formWrapperIs.value = opts.wrapper.is;
       formWrapperOpts.value = wrapper;
-      const customClassKey = ui.formWrapper.customClass(formWrapperIs.value);
+      const customClassKey = ui.formWrapper.customClass(formWrapperIs.value as string);
       const customClass = `fs-form-wrapper ${formWrapperIdClass} ${wrapper[customClassKey] || ""} `;
 
       formWrapperBind.value = {
@@ -188,8 +197,8 @@ export default defineComponent({
     function getFormData() {
       return formRef.value?.getFormData();
     }
-    function setFormData(form: any) {
-      formRef.value?.setFormData(form);
+    function setFormData(form: any, options?: SetFormDataOptions) {
+      formRef.value?.setFormData(form, options);
     }
 
     const computedButtons = computed(() => {

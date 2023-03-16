@@ -1,11 +1,12 @@
 <template>
   <span class="fs-uploader-form"></span>
 </template>
-<script>
+<script lang="ts">
 import _ from "lodash-es";
-import ajax from "./utils/ajax";
+import ajax, { doAjax } from "./utils/ajax";
 import { useUploader, buildKey } from "./utils/index";
-import { getCurrentInstance } from "vue";
+import { defineComponent, getCurrentInstance } from "vue";
+import { FsUploaderDoUploadOptions, FsUploaderFormOptions } from "@/uploader/d.ts/type";
 
 /**
  *
@@ -13,8 +14,11 @@ import { getCurrentInstance } from "vue";
  * @param options
  * @returns {Promise<unknown>}
  */
-async function doUpload({ file, fileName, onProgress, options }) {
+async function doUpload(opts: FsUploaderDoUploadOptions) {
+  const { file, fileName, onProgress } = opts;
+  const options = opts.options as FsUploaderFormOptions;
   const key = await buildKey(file, fileName, options);
+
   if (options.data == null) {
     options.data = {};
   }
@@ -37,17 +41,17 @@ async function doUpload({ file, fileName, onProgress, options }) {
   }
   return res;
 }
-export default {
+export default defineComponent({
   name: "FsUploaderForm",
   setup() {
     const { proxy } = getCurrentInstance();
     const { getConfig } = useUploader(proxy);
     const global = getConfig("form");
-    async function upload(context) {
+    async function upload(context: FsUploaderDoUploadOptions) {
       context.options = _.merge({}, _.cloneDeep(global), context.options);
       return await doUpload(context);
     }
     return { upload };
   }
-};
+});
 </script>

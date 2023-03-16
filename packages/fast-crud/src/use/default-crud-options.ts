@@ -1,6 +1,6 @@
 import { uiContext } from "../ui";
-import { UseCrudProps } from "/src/use/use-crud";
-import { CrudOptions } from "/src/d.ts";
+import { UseCrudProps } from "../use/use-crud";
+import { CrudOptions } from "../d.ts";
 export default {
   commonOptions(ctx?: UseCrudProps): any {
     return {};

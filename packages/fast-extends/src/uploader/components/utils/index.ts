@@ -1,20 +1,21 @@
 import _ from "lodash-es";
-export async function buildKey(file, fileName, config) {
+import { FsUploaderImplOptions } from "@/uploader/d.ts/type";
+export async function buildKey(file: File, fileName: string, config: FsUploaderImplOptions) {
   return config.buildKey({
     fileName,
     file,
     ...config
   });
 }
-export function useUploader(vm) {
+export function useUploader(vm: any) {
   function getDefaultType() {
     const config = vm.$fs_uploader_config;
     return config?.defaultType;
   }
-  function getUploaderImpl(type) {
+  function getUploaderImpl(type: string) {
     return `FsUploader${_.upperFirst(type)}`;
   }
-  function getConfig(type) {
+  function getConfig(type: string) {
     if (type == null) {
       type = getDefaultType();
     }

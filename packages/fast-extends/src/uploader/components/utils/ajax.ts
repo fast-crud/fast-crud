@@ -1,4 +1,4 @@
-function getError(action, option, xhr) {
+function getError(action: string, option: any, xhr: any) {
   let msg;
   if (xhr.response) {
     msg = `${xhr.response.error || xhr.response}`;
@@ -8,14 +8,14 @@ function getError(action, option, xhr) {
     msg = `fail to post ${action} ${xhr.status}`;
   }
 
-  const err = new Error(msg);
+  const err: any = new Error(msg);
   err.status = xhr.status;
   err.method = "post";
   err.url = action;
   return err;
 }
 
-function getBody(xhr) {
+function getBody(xhr: any) {
   const text = xhr.responseText || xhr.response;
   if (!text) {
     return text;
@@ -28,7 +28,7 @@ function getBody(xhr) {
   }
 }
 
-export default function upload(option, onSuccess, onError) {
+export default function upload(option: any, onSuccess: any, onError: any) {
   if (typeof XMLHttpRequest === "undefined") {
     return;
   }
@@ -38,7 +38,7 @@ export default function upload(option, onSuccess, onError) {
 
   xhr.timeout = option.timeout;
   if (xhr.upload) {
-    xhr.upload.onprogress = function progress(e) {
+    xhr.upload.onprogress = function progress(e: any) {
       if (e.total > 0) {
         e.percent = (e.loaded / e.total) * 100;
       }
@@ -86,14 +86,14 @@ export default function upload(option, onSuccess, onError) {
   return xhr;
 }
 
-export function doAjax(ajaxOptions) {
+export function doAjax(ajaxOptions: any) {
   return new Promise((resolve, reject) => {
-    ajax(
+    upload(
       ajaxOptions,
-      async (res) => {
+      async (res: any) => {
         resolve(res);
       },
-      (e) => {
+      (e: any) => {
         reject(e);
       }
     );

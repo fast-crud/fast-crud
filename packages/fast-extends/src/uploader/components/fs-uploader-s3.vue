@@ -4,54 +4,58 @@
 <script lang="ts">
 import _ from "lodash-es";
 import { useUploader, buildKey } from "./utils/index.js";
-import { getCurrentInstance } from "vue";
+import { defineComponent, getCurrentInstance } from "vue";
 import { PutObjectCommand, S3Client } from "@aws-sdk/client-s3";
 import { axiosInstance } from "./utils/axios";
+import { FsUploaderDoUploadOptions, FsUploaderS3Options } from "@/uploader/d.ts/type";
 
-async function uploadUsingSignedUrl(file, onProgress, options: any, key: string) {
-  const signedUrl = await options.getSignedUrl(options.bucket, key, options);
+async function uploadUsingSignedUrl(props: FsUploaderDoUploadOptions, key: string) {
+  const { file, onProgress, options } = props;
+  const s3Options: FsUploaderS3Options = options as FsUploaderS3Options;
+  const signedUrl = await s3Options.getSignedUrl(s3Options.bucket, key, options);
   const decodedURL = decodeURIComponent(signedUrl);
 
   return await axiosInstance.put(decodedURL, file, {
     onUploadProgress: (progressEvent) => {
       const { loaded, total } = progressEvent;
-      onProgress(Math.round((loaded * 100) / total));
+      onProgress({ percent: Math.round((loaded * 100) / total) });
     }
   });
 }
-async function doUpload({ file, fileName, onProgress, options }) {
+async function doUpload(props: FsUploaderDoUploadOptions) {
+  const { file, fileName, onProgress, options } = props;
+  const s3Options: FsUploaderS3Options = options as FsUploaderS3Options;
   const client = new S3Client({
-    ...(options.sdkOpts || {})
+    ...(s3Options?.sdkOpts || {})
   });
 
-  const key = await buildKey(file, fileName, options);
+  const key = await buildKey(file, fileName, s3Options);
   async function complete() {
-    let ret = { url: options.sdkOpts.endpoint + "/" + options.bucket + "/" + key, key: key };
-    if (options.successHandle) {
-      ret = await options.successHandle(ret);
-      return ret;
+    let ret = { url: s3Options.sdkOpts.endpoint + "/" + s3Options.bucket + "/" + key, key: key };
+    if (s3Options.successHandle) {
+      return await s3Options.successHandle(ret);
     }
     return ret;
   }
 
-  if (options.getSignedUrl) {
-    await uploadUsingSignedUrl(file, onProgress, options, key);
+  if (s3Options.getSignedUrl) {
+    await uploadUsingSignedUrl(props, key);
   } else {
     const params = {
-      Bucket: options.bucket, // The name of the bucket. For example, 'sample_bucket_101'.
+      Bucket: s3Options.bucket, // The name of the bucket. For example, 'sample_bucket_101'.
       Key: key // The name of the object. For example, 'sample_upload.txt'.
     };
     await client.send(new PutObjectCommand({ Body: file, ...params }));
   }
   return await complete();
 }
-export default {
+export default defineComponent({
   name: "FsUploaderS3",
   setup() {
     const { proxy } = getCurrentInstance();
     const { getConfig } = useUploader(proxy);
     const global = getConfig("s3");
-    async function upload(context) {
+    async function upload(context: FsUploaderDoUploadOptions) {
       const options = context.options;
       const config = _.merge(_.cloneDeep(global), options);
       context.options = config;
@@ -59,5 +63,5 @@ export default {
     }
     return { upload };
   }
-};
+});
 </script>

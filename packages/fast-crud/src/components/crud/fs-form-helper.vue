@@ -7,11 +7,13 @@
     <pre v-else-if="helper.text">{{ helper.text }}</pre>
   </div>
 </template>
-<script>
+<script lang="ts">
+import { defineComponent } from "vue";
+
 /**
  * 表单字段帮助说明组件
  */
-export default {
+export default defineComponent({
   name: "FsFormHelper",
   props: {
     /**
@@ -33,7 +35,7 @@ export default {
     scope: {}
   },
   setup(props) {}
-};
+});
 </script>
 <style lang="less">
 .fs-form-helper {

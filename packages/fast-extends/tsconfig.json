@@ -1,6 +1,7 @@
 {
   "compilerOptions": {
-    "noImplicitAny": false,
+    "allowJs": true,
+    "noImplicitAny": true,
     "target": "esnext",
     "module": "esnext",
     "strict": true,
@@ -16,7 +17,7 @@
     "baseUrl": ".",
     "outDir": "./dist/ts",
     "types": [
-      "webpack-env",
+      "vite/client",
       "mocha",
       "chai"
     ],

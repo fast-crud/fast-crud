@@ -1,17 +1,17 @@
 <template>
   <component :is="computedUploaderImpl" ref="uploaderImplRef" />
 </template>
-<script>
-import { getCurrentInstance, computed, ref } from "vue";
+<script lang="ts">
+import { getCurrentInstance, computed, ref, defineComponent, Ref } from "vue";
 import { useUploader } from "./utils";
 
-export default {
+export default defineComponent({
   name: "FsUploader",
   props: {
     type: {}
   },
   setup(props) {
-    const uploaderImplRef = ref();
+    const uploaderImplRef: Ref = ref();
     const computedUploaderImpl = computed(() => {
       const { proxy } = getCurrentInstance();
       const { getDefaultType, getUploaderImpl } = useUploader(proxy);
@@ -29,5 +29,5 @@ export default {
       getUploaderRef
     };
   }
-};
+});
 </script>

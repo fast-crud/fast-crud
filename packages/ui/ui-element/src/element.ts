@@ -49,8 +49,14 @@ import {
 } from "@fast-crud/ui-interface";
 // @ts-ignore
 import _ from "lodash-es";
+
+export type ElementUiProvider = {
+  Notification: any;
+  Message: any;
+  MessageBox: any;
+};
 export class Element implements UiInterface {
-  constructor(target) {
+  constructor(target?: ElementUiProvider) {
     if (target) {
       this.notification.instance = target.Notification;
       this.message.instance = target.Message;
@@ -217,12 +223,12 @@ export class Element implements UiInterface {
   };
   checkbox: CheckboxCI = {
     name: "el-checkbox",
-    resolveEvent(e) {
+    resolveEvent(e: any) {
       return e;
     },
     modelValue: "modelValue",
     value: "label",
-    onChange(callback) {
+    onChange(callback: (e: any) => void) {
       return {
         "onUpdate:modelValue": callback
       };
@@ -276,7 +282,7 @@ export class Element implements UiInterface {
     name: "el-cascader",
     modelValue: "modelValue",
     clearable: "clearable",
-    fieldNames(namesMap) {
+    fieldNames(namesMap: any) {
       return {
         props: namesMap
       };
@@ -307,7 +313,7 @@ export class Element implements UiInterface {
     transformValidateErrors: (e: Error) => {
       // @ts-ignore
       const errorFields = e.code || e.validation || {};
-      const errors = {};
+      const errors: any = {};
       for (const errorField of errorFields) {
         const name = errorField.field;
         errors[name] = true;
@@ -341,11 +347,11 @@ export class Element implements UiInterface {
     onChange({ setCurrentPage, setPageSize, doAfterChange }) {
       return {
         // element 页码改动回调
-        onCurrentChange(event) {
+        onCurrentChange(event: any) {
           setCurrentPage(event);
           doAfterChange();
         },
-        onSizeChange(event) {
+        onSizeChange(event: any) {
           setPageSize(event);
           doAfterChange();
         }
@@ -383,9 +389,12 @@ export class Element implements UiInterface {
     },
     headerDomSelector: "",
     vLoading: "loading",
+    rebuildRenderScope: (scope) => {
+      return scope;
+    },
     onChange({ onSortChange, onFilterChange }) {
       return {
-        onSortChange: ({ column, prop, order }) => {
+        onSortChange: ({ column, prop, order }: any) => {
           if (!onSortChange) {
             return;
           }
@@ -446,7 +455,7 @@ export class Element implements UiInterface {
     name: "el-dropdown",
     command(callback) {
       return {
-        onCommand($event) {
+        onCommand($event: any) {
           callback($event);
         }
       };
@@ -490,7 +499,7 @@ export class Element implements UiInterface {
     getStatusFromEvent(event) {
       return event?.status;
     },
-    getFileListFromEvent(response, file, fileList) {
+    getFileListFromEvent(response: any, file: any, fileList: any) {
       return fileList;
     },
     status: {

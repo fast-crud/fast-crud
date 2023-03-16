@@ -12,19 +12,19 @@
     <slot name="cell-rowHandle-middle" v-bind="scope"></slot>
     <!-- 下拉按钮菜单 -->
     <span v-if="hasDropdownBtn" class="row-handle-btn fs-handle-row-dropdown">
-      <component :is="$fsui.dropdown.name" v-bind="computedDropdownBinding">
+      <component :is="ui.dropdown.name" v-bind="computedDropdownBinding">
         <fs-button v-bind="dropdown.more" />
-        <template #[$fsui.dropdown.slotName]>
+        <template #[ui.dropdown.slotName]>
           <component
-            :is="$fsui.dropdownMenu.name"
-            v-if="$fsui.dropdown.renderMode === 'slot'"
-            v-bind="$fsui.dropdownMenu.command(doDropdownItemClick)"
+            :is="ui.dropdownMenu.name"
+            v-if="ui.dropdown.renderMode === 'slot'"
+            v-bind="ui.dropdownMenu.command(doDropdownItemClick)"
           >
             <template v-for="(item, index) in computedHandleBtns" :key="index">
               <component
-                :is="$fsui.dropdownItem.name"
+                :is="ui.dropdownItem.name"
                 v-if="item.show !== false && isDropdownBtn(item, index)"
-                :[$fsui.dropdownItem.command]="item.key"
+                :[ui.dropdownItem.command]="item.key"
               >
                 <div class="fs-row-handle-dropdown-item" v-bind="item">
                   <fs-icon v-if="item.icon" :icon="item.icon" /> {{ item.text || item.title }}
@@ -38,7 +38,7 @@
     <slot name="cell-rowHandle-right" v-bind="scope"></slot>
   </div>
 </template>
-<script>
+<script lang="ts">
 import { computed, defineComponent } from "vue";
 import _ from "lodash-es";
 import traceUtil from "../../utils/util.trace";
@@ -46,6 +46,7 @@ import { useI18n } from "../../locale";
 import { useUi } from "../../use/use-ui";
 import { useCompute } from "../../use/use-compute";
 import { Constants } from "../../utils/util.constants";
+import { ButtonProps, ScopeContext } from "/src/d.ts";
 
 /**
  * 操作列配置
@@ -93,15 +94,15 @@ export default defineComponent({
     scope: {}
   },
   emits: ["handle"],
-  setup(props, ctx) {
+  setup(props: any, ctx) {
     const { ui } = useUi();
 
     traceUtil.trace("fs-row-handler");
     const { t } = useI18n();
-    const doClick = (item) => {
+    const doClick = (item: any) => {
       const index = props.scope[ui.tableColumn.index];
       const row = props.scope[ui.tableColumn.row];
-      const e = { key: item.key, row, btn: item, index, ...props.scope };
+      const e: ScopeContext = { key: item.key, row, btn: item, index, ...props.scope };
       if (item.click) {
         return item.click(e);
       }
@@ -155,7 +156,7 @@ export default defineComponent({
         mergedBtns = computeProps.value.group[computeProps.value.active];
       }
 
-      const btns = [];
+      const btns: ButtonProps[] = [];
       _.forEach(mergedBtns, (item, key) => {
         item.key = key;
         if (item.show === false) {
@@ -180,7 +181,7 @@ export default defineComponent({
       }
       return computeProps.value.dropdown.atLeast || 0;
     });
-    function isDropdownBtn(item, index) {
+    function isDropdownBtn(item: any, index: number) {
       if (item.dropdown === true) {
         return true;
       }
@@ -201,7 +202,7 @@ export default defineComponent({
       return false;
     });
 
-    function doDropdownItemClick($event) {
+    function doDropdownItemClick($event: any) {
       for (let btn of computedHandleBtns.value) {
         if ($event === btn.key) {
           doClick(btn);
@@ -211,11 +212,11 @@ export default defineComponent({
     }
 
     const computedDropdownBinding = computed(() => {
-      const options = {};
+      const binding: any = {};
       if (ui.dropdown.renderMode !== "slot") {
         // naive 通过options配置来显示子项
         const btns = computedHandleBtns.value;
-        const opts = [];
+        const opts: ButtonProps[] = [];
         _.forEach(btns, (value, index) => {
           if (value.show !== false && isDropdownBtn(value, index)) {
             opts.push({
@@ -225,16 +226,17 @@ export default defineComponent({
             });
           }
         });
-        options.options = opts;
+        binding.options = opts;
       }
       return {
         ..._.omit(props.dropdown, "more", "atLeast"),
         ...ui.dropdown.command(doDropdownItemClick),
-        ...options
+        ...binding
       };
     });
 
     return {
+      ui,
       hasDropdownBtn,
       computedHandleBtns,
       doDropdownItemClick,

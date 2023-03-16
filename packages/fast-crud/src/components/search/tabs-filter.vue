@@ -9,7 +9,8 @@
       />
       <component
         :is="ui.tabPane.name"
-        v-for="item of options"
+        v-for="(item, index) of options"
+        :key="index"
         :[ui.tabPane.key]="getValue(item)"
         :[ui.tabPane.tab]="getLabel(item)"
       />

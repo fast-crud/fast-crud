@@ -2,9 +2,8 @@ import _ from "lodash-es";
 import { computed, ref, Ref, watch } from "vue";
 import { useMerge } from "./use-merge";
 import { ComputeContext } from "/src/d.ts/compute";
-import { AsyncComputeRef, ComputeFn, ComputeRef } from "/src/d.ts";
+import { AsyncComputeRef, ComputeFn, ComputeRef, ScopeContext } from "/src/d.ts";
 import { deepdash } from "/src/utils/deepdash";
-
 const { cloneDeep } = useMerge();
 
 function isAsyncCompute(value: any) {
@@ -52,7 +51,7 @@ function findComputeValues(target: any, excludes: any[], isAsync: boolean) {
   return foundMap;
 }
 
-function doAsyncCompute(dependAsyncValues: any, getContextFn: (key: string, value: any) => any) {
+function doAsyncCompute(dependAsyncValues: any, getContextFn: () => any) {
   if (dependAsyncValues == null || Object.keys(dependAsyncValues).length <= 0) {
     return null;
   }
@@ -74,7 +73,7 @@ function setAsyncComputeValue(target: any, asyncValuesMap: any) {
 
 function doComputed(
   getTargetFunc: any,
-  getContextFn: (key: string, value: any) => any,
+  getContextFn: () => any,
   excludes?: any[],
   userComputedFn?: (target: any) => any
 ) {
@@ -98,8 +97,8 @@ function doComputed(
     if (asyncCount > 0 || syncCount > 0) {
       target = cloneDeep(target);
       if (syncCount > 0) {
+        const context = getContextFn ? getContextFn() : {};
         _.forEach(dependValues.value, (value, key) => {
-          const context = getContextFn ? getContextFn(key, value) : {};
           _.set(target, key, value.computeFn(context));
         });
       }
@@ -122,15 +121,15 @@ export class ComputeValue<T> implements ComputeRef<T> {
   }
 }
 
-function compute<T>(computeFn: (context: ComputeContext) => T): ComputeValue<T> {
+export function compute<T>(computeFn: (context: ComputeContext) => T): ComputeValue<T> {
   return new ComputeValue<T>(computeFn);
 }
 
 export type GetContextFn = () => any;
 
-export class AsyncComputeValue<T> implements AsyncComputeRef<T> {
-  watch?: (getContextFn: GetContextFn) => any;
-  asyncFn: (value: any, getContextFn: GetContextFn) => Promise<T>;
+export class AsyncComputeValue<T, P = any> implements AsyncComputeRef<T> {
+  watch?: (context: ScopeContext) => P;
+  asyncFn: (value: P, getContextFn: GetContextFn) => Promise<T>;
   defaultValue?: any;
   constructor(options: AsyncComputeRef<T>) {
     const { asyncFn, defaultValue } = options;
@@ -142,7 +141,7 @@ export class AsyncComputeValue<T> implements AsyncComputeRef<T> {
   buildAsyncRef(getContextFn: GetContextFn) {
     getContextFn = getContextFn || function () {};
     const asyncRef: Ref<T> = ref(this.defaultValue);
-    const computedValue = computed<any>(() => {
+    const computedValue = computed<P>(() => {
       if (this.watch) {
         return this.watch(getContextFn());
       }
@@ -151,7 +150,7 @@ export class AsyncComputeValue<T> implements AsyncComputeRef<T> {
 
     watch(
       () => computedValue.value,
-      async (value: T) => {
+      async (value: P) => {
         //执行异步方法
         asyncRef.value = await this.asyncFn(value, getContextFn());
       },
@@ -161,7 +160,7 @@ export class AsyncComputeValue<T> implements AsyncComputeRef<T> {
     return asyncRef;
   }
 }
-function asyncCompute<T>(options: AsyncComputeRef<T>): AsyncComputeValue<T> {
+export function asyncCompute<T>(options: AsyncComputeRef<T>): AsyncComputeValue<T> {
   return new AsyncComputeValue<T>(options);
 }
 export function useCompute() {

@@ -1,15 +1,19 @@
-import _ from "lodash-es";
 import {
+  ButtonCI,
   CascaderCI,
   CheckboxCI,
   CheckboxGroupCI,
   CI,
+  CollapseCI,
+  CollapseItemCI,
   DatePickerCI,
   DialogCI,
+  DividerCI,
   DrawerCI,
   DropdownCI,
   DropdownItemCI,
   DropdownMenuCI,
+  FormCI,
   FormItemCI,
   FormWrapperCI,
   IconCI,
@@ -21,8 +25,12 @@ import {
   InputPasswordCI,
   LoadingCI,
   MessageBoxCI,
+  MessageBoxContextType,
   MessageCI,
   NotificationCI,
+  OptionCI,
+  PaginationCI,
+  PopoverCI,
   ProgressCI,
   RadioCI,
   RadioGroupCI,
@@ -30,41 +38,40 @@ import {
   SwitchCI,
   TableCI,
   TableColumnCI,
+  TabPaneCI,
+  TabsCI,
   TagCI,
   TextAreaCI,
   TimePickerCI,
-  UiInterface,
-  UploadCI,
-  TreeSelectCI,
-  TabsCI,
-  TabPaneCI,
-  CollapseCI,
-  CollapseItemCI,
-  ButtonCI,
-  PaginationCI,
-  FormCI,
   TooltipCI,
-  OptionCI,
-  DividerCI,
-  PopoverCI
+  TreeSelectCI,
+  UiInterface,
+  UploadCI
 } from "@fast-crud/ui-interface";
 
+export type NaiveUiProviders = {
+  notification: any;
+  message: any;
+  messageBox: any;
+  i18n: any;
+};
 export class Naive implements UiInterface {
-  constructor(target) {
+  constructor(target?: NaiveUiProviders) {
     if (target) {
       this.init(target);
     }
   }
 
-  init({ notification, message, messageBox, i18n }) {
+  init({ notification, message, messageBox, i18n }: NaiveUiProviders) {
     this.notification.instance = notification;
     this.message.instance = message;
     this.messageBox.instance = messageBox;
+    this.i18n = i18n;
   }
 
   type = "naive";
   modelValue = "value";
-  i18n = null;
+  i18n: any = null;
 
   formWrapper: FormWrapperCI = {
     visible: "show",
@@ -72,12 +79,12 @@ export class Naive implements UiInterface {
       return "class";
     },
     titleSlotName: "header",
-    buildOnClosedBind(is, onClosed: Function): {} {
+    buildOnClosedBind(is: string, onClosed: Function): {} {
       if (is === "n-modal") {
         return { afterClose: onClosed };
       } else if (is === "n-drawer") {
         return {
-          afterVisibleChange: (visible) => {
+          afterVisibleChange: (visible: boolean) => {
             if (visible === false) {
               onClosed(visible);
             }
@@ -86,16 +93,16 @@ export class Naive implements UiInterface {
       }
       return {};
     },
-    buildWidthBind(is, width) {
+    buildWidthBind(is: string, width: any) {
       return { style: { width: width } };
     },
-    buildInitBind(is) {
+    buildInitBind(is: string) {
       return { preset: "card" };
     },
-    buildInnerBind({ getInnerWrapper }) {
+    buildInnerBind({ getInnerWrapper }: { getInnerWrapper: () => any }) {
       return { to: getInnerWrapper() };
     },
-    hasContentWrap(is) {
+    hasContentWrap(is: string) {
       if (is === "n-drawer") {
         return "n-drawer-content";
       }
@@ -116,10 +123,10 @@ export class Naive implements UiInterface {
         return this.instance;
       }
     },
-    open: (context) => {
+    open: (context: MessageBoxContextType) => {
       return this.messageBox.getInstance().info(context);
     },
-    confirm: (context) => {
+    confirm: (context: MessageBoxContextType) => {
       return new Promise<void>((resolve, reject) => {
         function onOk() {
           resolve();
@@ -157,24 +164,23 @@ export class Naive implements UiInterface {
       }
     },
     name: "n-message",
-    open: (type, context) => {
+    open: (type: any, context: any) => {
       let content = context;
       if (typeof context !== "string") {
         content = context.message || context.content;
       }
-      debugger;
       this.message.getInstance()[type](content);
     },
-    success: (context) => {
+    success: (context: any) => {
       this.message.open("success", context);
     },
-    error: (context) => {
+    error: (context: any) => {
       this.message.open("error", context);
     },
-    warn: (context) => {
+    warn: (context: any) => {
       this.message.open("warning", context);
     },
-    info: (context) => {
+    info: (context: any) => {
       this.message.open("info", context);
     }
   };
@@ -196,10 +202,10 @@ export class Naive implements UiInterface {
       if (typeof context === "string") {
         context = {
           title: context
-        };
+        } as any;
       }
       context = Object.assign({ duration: 5000 }, context);
-      type = type || context.type;
+      type = type || (context as any).type;
       if (type) {
         this.notification.getInstance()[type](context);
       } else {
@@ -406,11 +412,11 @@ export class Naive implements UiInterface {
     onChange({ setCurrentPage, setPageSize, doAfterChange }) {
       return {
         // antd 页码改动回调
-        "onUpdate:page": (page) => {
+        "onUpdate:page": (page: any) => {
           setCurrentPage(page);
           doAfterChange();
         },
-        "onUpdate:pageSize": (pageSize) => {
+        "onUpdate:pageSize": (pageSize: any) => {
           setPageSize(pageSize);
           doAfterChange();
         }
@@ -451,7 +457,7 @@ export class Naive implements UiInterface {
     name: "n-data-table",
     renderMode: "config",
     renderMethod: "render",
-    rebuildRenderScope: (row, index) => {
+    rebuildRenderScope: (row: any, index: number) => {
       return { row, index };
     },
     buildMaxHeight: (maxHeight) => {
@@ -469,7 +475,7 @@ export class Naive implements UiInterface {
     vLoading: false,
     onChange({ onSortChange, onFilterChange, onPagination }) {
       return {
-        onChange: (pagination, filters, sorter, { currentDataSource }) => {
+        onChange: (pagination: any, filters: any, sorter: any, { currentDataSource }: any) => {
           if (pagination && onPagination) {
             onPagination({ ...pagination, data: currentDataSource });
           }
@@ -572,7 +578,7 @@ export class Naive implements UiInterface {
     name: "n-menu",
     command: (callback) => {
       return {
-        onClick($event) {
+        onClick($event: any) {
           callback($event.key);
         }
       };

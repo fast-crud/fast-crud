@@ -1,7 +1,9 @@
+import { defineComponent } from "vue";
+
 /**
  * 插槽render组件
  */
-export default {
+export default defineComponent({
   name: "FsSlotRender",
   inheritAttrs: false,
   props: {
@@ -23,4 +25,4 @@ export default {
       return props.slots(props.scope);
     };
   }
-};
+});

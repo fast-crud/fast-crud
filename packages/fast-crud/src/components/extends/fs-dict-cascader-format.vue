@@ -17,12 +17,13 @@
   </span>
 </template>
 
-<script>
+<script lang="ts">
 import { useDict } from "../../use/use-dict";
+import { defineComponent } from "vue";
 /**
  * 级联数据格式化展示组件
  */
-export default {
+export default defineComponent({
   name: "FsDictCascaderFormat",
   props: {
     /**
@@ -53,7 +54,7 @@ export default {
       default: undefined,
       require: false
     }
-  },
+  } as any,
   emits: ["dict-change"],
   setup(props, ctx) {
     const dict = useDict(props, ctx);
@@ -87,7 +88,7 @@ export default {
     }
   },
   methods: {
-    getValueArr(values) {
+    getValueArr(values: any) {
       if (values == null) {
         if (this.multiple) {
           values = [];
@@ -113,7 +114,7 @@ export default {
       }
       return arr;
     },
-    buildValueItem(values) {
+    buildValueItem(values: any) {
       const arr = this.getValueArr(values);
 
       const dict = this.getDict();
@@ -122,5 +123,5 @@ export default {
       }
     }
   }
-};
+});
 </script>

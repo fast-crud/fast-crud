@@ -11,7 +11,7 @@ export * from "./naive";
 export { FsUiContext };
 
 export default {
-  install(app) {
+  install(app: any) {
     // @ts-ignore
     const naiveUi = new Naive();
     uiContext.set(naiveUi);

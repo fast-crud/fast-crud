@@ -1,9 +1,9 @@
 <template>
   <div class="fs-cropper-uploader" :class="{ 'is-disabled': disabled }">
     <div class="image-list">
-      <component :is="$fsui.imageGroup.name">
-        <div v-for="(item, index) in list" :key="index" class="image-item">
-          <component :is="$fsui.image.name" class="image" :src="item.dataUrl ? item.dataUrl : item.url" v-bind="img">
+      <component :is="ui.imageGroup.name">
+        <div v-for="(item, index) in listRef" :key="index" class="image-item">
+          <component :is="ui.image.name" class="image" :src="item.dataUrl ? item.dataUrl : item.url" v-bind="img">
             <template #placeholder>
               <div class="image-slot">
                 <fs-loading :loading="true" />
@@ -11,17 +11,17 @@
             </template>
           </component>
           <div v-if="!disabled" class="delete">
-            <fs-icon :icon="$fsui.icons.remove" @click="removeImage(index, item)" />
+            <fs-icon :icon="ui.icons.remove" @click="removeImage(index)" />
           </div>
           <div v-if="item.status === 'uploading'" class="status-uploading">
-            <component :is="$fsui.progress.name" type="circle" :percentage="item.progress" :width="70" />
+            <component :is="ui.progress.name" type="circle" :percentage="item.progress" :width="70" />
           </div>
           <div v-else-if="item.status === 'done'" class="status-done">
-            <fs-icon :icon="$fsui.icons.check" class="status-down-icon" />
+            <fs-icon :icon="ui.icons.check" class="status-down-icon" />
           </div>
         </div>
-        <div v-if="limit <= 0 || limit > list.length" class="image-item image-plus" @click="addNewImage">
-          <fs-icon :icon="$fsui.icons.plus" class="cropper-uploader-icon" />
+        <div v-if="limit <= 0 || limit > listRef.length" class="image-item image-plus" @click="addNewImage">
+          <fs-icon :icon="ui.icons.plus" class="cropper-uploader-icon" />
         </div>
       </component>
     </div>
@@ -41,15 +41,17 @@
   </div>
 </template>
 
-<script>
-import { reactive, ref, getCurrentInstance } from "vue";
-import { useUploader } from "./utils";
+<script lang="ts">
+import { computed, defineComponent, reactive, ref, Ref, watch } from "vue";
 import FsUploader from "./fs-uploader.vue";
+import { useUi } from "@fast-crud/fast-crud";
+import { FsUploaderDoUploadOptions } from "../d.ts/type";
+
 /**
  * 图片裁剪上传组件,封装了fs-cropper, fs-cropper内部封装了cropperjs
  */
 
-export default {
+export default defineComponent({
   name: "FsCropperUploader",
   components: { FsUploader },
   props: {
@@ -104,8 +106,8 @@ export default {
     // 构建下载url方法,不影响提交的value
     buildUrl: {
       type: Function,
-      default: async function (value, item) {
-        return typeof value === "object" ? value.url || item?.url : value;
+      default: async function (value: any) {
+        return typeof value === "object" ? value.url : value;
       }
     },
     /**
@@ -116,74 +118,49 @@ export default {
       type: String, // url ,key, object
       default: "url"
     }
-  },
+  } as any,
   emits: ["update:modelValue", "change"],
-  setup() {
-    const cropperRef = ref();
-    return {
-      cropperRef
-    };
-  },
-  data() {
-    return {
-      index: undefined,
-      list: []
-    };
-  },
-  computed: {
-    _urlList() {
-      const urlList = [];
-      if (this.list) {
-        for (const item of this.list) {
-          urlList.push(item.url);
-        }
-      }
-      return urlList;
-    }
-  },
-  watch: {
-    modelValue(val) {
-      this.$emit("change", val);
-      if (val === this.emitValue) {
-        return;
-      }
-      this.initValue(val);
-    }
-  },
-  created() {
-    this.emitValue = this.modelValue;
-    this.initValue(this.modelValue);
-  },
-  methods: {
-    async initValue(value) {
-      const list = [];
+  setup(props: any, ctx: any) {
+    const { ui } = useUi();
+    const cropperRef: Ref = ref();
+    const uploaderImplRef: Ref = ref();
+
+    const indexRef: Ref = ref();
+    const listRef: Ref = ref([]);
+
+    // eslint-disable-next-line vue/no-setup-props-destructure
+    let emitValue: any = props.modelValue;
+    initValue(props.modelValue);
+
+    async function initValue(value: any) {
+      const list: any = [];
       if (value == null || value === "") {
-        this.list = list;
+        listRef.value = list;
         return;
       }
       if (typeof value === "string") {
-        list.push({ url: await this.buildUrl(value), value: value, status: "done" });
+        list.push({ url: await props.buildUrl(value), value: value, status: "done" });
       } else {
         for (const item of value) {
-          list.push({ url: await this.buildUrl(item), value: item, status: "done" });
+          list.push({ url: await props.buildUrl(item), value: item, status: "done" });
         }
       }
-      this.list = list;
-    },
-    addNewImage() {
-      if (this.disabled) {
+      listRef.value = list;
+    }
+    function addNewImage() {
+      if (props.disabled) {
         return;
       }
-      this.index = undefined;
-      this.cropperRef.clear();
-      this.cropperRef.open();
-    },
-    removeImage(index) {
-      this.list.splice(index, 1);
-      this.emit();
-    },
-    hasUploading() {
-      const fileList = this.list;
+      indexRef.value = undefined;
+      cropperRef.value.clear();
+      cropperRef.value.open();
+    }
+    function removeImage(index: number) {
+      listRef.value.splice(index, 1);
+      doEmit();
+    }
+    function hasUploading() {
+      const fileList: any = listRef.value;
       if (fileList && fileList.length > 0) {
         for (const item of fileList) {
           if (item.status === "uploading") {
@@ -192,22 +169,22 @@ export default {
         }
       }
       return false;
-    },
-    async cropComplete(ret) {
+    }
+    async function cropComplete(ret: any) {
       const blob = ret.blob;
       const dataUrl = ret.dataUrl;
       const file = ret.file;
       // 开始上传
-      const item = reactive({
+      const item: any = reactive({
         url: undefined,
         dataUrl: dataUrl,
         status: "uploading",
         progress: 0
       });
-      const onProgress = (e) => {
+      const onProgress = (e: any) => {
         item.progress = e.percent;
       };
-      const onError = (e) => {
+      const onError = (e: any) => {
         item.status = "error";
         item.message = "文件上传出错:" + e.message;
         console.error(e);
@@ -218,32 +195,34 @@ export default {
         onProgress,
         onError
       };
-      this.list.push(item);
+      listRef.value.push(item);
       try {
-        const uploaded = await this.doUpload(option);
+        const uploaded = await doUpload(option);
         let value = uploaded;
-        if (this.valueType !== "object") {
-          value = uploaded[this.valueType];
+        if (props.valueType !== "object") {
+          value = uploaded[props.valueType];
         }
-        item.url = await this.buildUrl(value);
+        item.url = await props.buildUrl(value);
         item.value = value;
         item.status = "done";
-        this.emit();
+        doEmit();
       } catch (e) {
         onError(e);
       }
-    },
-    async doUpload(option) {
-      option.options = this.uploader;
-      let uploaderRef = this.$refs.uploaderImplRef?.getUploaderRef();
+    }
+
+    async function doUpload(option: FsUploaderDoUploadOptions) {
+      option.options = props.uploader;
+      let uploaderRef = uploaderImplRef.value?.getUploaderRef();
       if (uploaderRef == null) {
         throw new Error("Sorry，The component is not ready yet");
       }
       return await uploaderRef?.upload(option);
-    },
-    emit() {
+    }
+
+    function doEmit() {
       const list = [];
-      for (const item of this.list) {
+      for (const item of listRef.value) {
         if (typeof item === "string") {
           list.push(item);
         } else {
@@ -251,14 +230,39 @@ export default {
         }
       }
       let ret = list;
-      if (this.limit === 1) {
+      if (props.limit === 1) {
         ret = list && list.length > 0 ? list[0] : undefined;
       }
-      this.emitValue = ret;
-      this.$emit("update:modelValue", ret);
+      emitValue = ret;
+      ctx.emit("update:modelValue", ret);
     }
+
+    watch(
+      () => {
+        return props.modelValue;
+      },
+      (val: any) => {
+        ctx.emit("change", val);
+        if (val === emitValue) {
+          return;
+        }
+        initValue(val);
+      }
+    );
+    return {
+      ui,
+      cropperRef,
+      uploaderImplRef,
+      indexRef,
+      listRef,
+      addNewImage,
+      hasUploading,
+      cropComplete,
+      doUpload,
+      removeImage
+    };
   }
-};
+});
 </script>
 
 <style lang="less">

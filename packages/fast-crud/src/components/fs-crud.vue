@@ -260,7 +260,7 @@ function useFixedHeight(props: any, ctx: SetupContext, { tableRef, containerRef 
     }
     const tableHeight = tableDom.getBoundingClientRect().height;
     const headHeight = headDom.getBoundingClientRect().height;
-    maxHeightRef.value = tableHeight - headHeight - 2;
+    maxHeightRef.value = tableHeight - headHeight - 2 + (props.table.maxHeightAdjust || 0);
 
     utilLog.debug("table max height recomputed ", maxHeightRef.value);
   }

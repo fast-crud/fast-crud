@@ -1,5 +1,5 @@
 import { AllUploadSuccessValidator } from "./validators";
-import { uiContext, useI18n } from "@fast-crud/fast-crud";
+import { uiContext, useI18n, ValueResolveContext } from "@fast-crud/fast-crud";
 export default function () {
   const { t } = useI18n();
   const ui = uiContext.get();
@@ -14,7 +14,8 @@ export default function () {
         [ui.formItem.rules]: [
           {
             validator: AllUploadSuccessValidator(),
-            message: t("fs.extends.fileUploader.hasUploading")
+            message: t("fs.extends.fileUploader.hasUploading"),
+            trigger: "change"
           }
         ]
       },
@@ -30,14 +31,15 @@ export default function () {
         [ui.formItem.rules]: [
           {
             validator: AllUploadSuccessValidator(),
-            message: t("fs.extends.fileUploader.hasUploading")
+            message: t("fs.extends.fileUploader.hasUploading"),
+            trigger: "change"
           }
         ],
         component: {
           name: "fs-file-uploader",
           limit: 1,
           listType: ui.upload.typeImageCard,
-          accept: ".png,.jpeg,.jpg,.ico,.bmp,.gif,.webp,.svg",
+          accept: ".png,.jpeg,.jpg,.ico,.bmp,.gif,.webp,.svg"
         }
       },
       column: {
@@ -47,7 +49,7 @@ export default function () {
       viewForm: {
         component: { height: 100, width: 100 }
       },
-      valueResolve({ row, key }) {
+      valueResolve({ row, key }: ValueResolveContext) {
         const value = row[key];
         if (value != null && value instanceof Array) {
           if (value.length >= 0) {
@@ -67,7 +69,8 @@ export default function () {
         [ui.formItem.rules]: [
           {
             validator: AllUploadSuccessValidator(),
-            message: t("fs.extends.fileUploader.hasUploading")
+            message: t("fs.extends.fileUploader.hasUploading"),
+            trigger: "change"
           }
         ]
       },
@@ -85,7 +88,8 @@ export default function () {
         [ui.formItem.rules]: [
           {
             validator: AllUploadSuccessValidator(),
-            message: t("fs.extends.fileUploader.hasUploading")
+            message: t("fs.extends.fileUploader.hasUploading"),
+            trigger: "change"
           }
         ]
       },

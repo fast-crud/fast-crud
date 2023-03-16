@@ -1,24 +1,25 @@
 <template>
-  <component :is="$fsui.checkboxGroup.name">
+  <component :is="ui.checkboxGroup.name">
     <component
-      :is="optionName || $fsui.checkbox.name"
+      :is="optionName || ui.checkbox.name"
       v-for="item of computedOptions"
       :key="getValue(item)"
-      :[$fsui.checkbox.value]="getValue(item)"
+      :[ui.checkbox.value]="getValue(item)"
       v-bind="optionProps"
       >{{ getLabel(item) }}</component
     >
   </component>
 </template>
-<script>
+<script lang="ts">
 import { useDict } from "../../use/use-dict";
-import { uiContext } from "../../ui";
+import { defineComponent } from "vue";
+import { useUi } from "../../use";
 
 /**
  * 字典checkbox
  * 支持el-checkbox|a-checkbox参数
  */
-export default {
+export default defineComponent({
   name: "FsDictCheckbox",
   props: {
     /**
@@ -49,13 +50,14 @@ export default {
   },
   emits: ["dict-change"],
   setup(props, ctx) {
-    const ui = uiContext.get();
+    const { ui } = useUi();
     let usedDict = useDict(props, ctx, ui.checkboxGroup.modelValue);
     const computedOptions = usedDict.createComputedOptions();
     return {
+      ui,
       ...usedDict,
       computedOptions
     };
   }
-};
+});
 </script>

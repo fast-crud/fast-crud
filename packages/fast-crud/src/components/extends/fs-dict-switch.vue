@@ -1,30 +1,35 @@
 <template>
-  <component :is="$fsui.switch.name" v-bind="binding" />
+  <component :is="ui.switch.name" v-bind="binding" />
 </template>
-<script>
+<script lang="ts">
 import { useDict } from "../../use/use-dict";
 import { uiContext } from "../../ui";
+import { defineComponent, PropType } from "vue";
+import { DictOptions, useUi } from "../../use";
 
 /**
  * 字典开关
  * 支持el-switch|a-switch的属性
  */
-export default {
+export default defineComponent({
   name: "FsDictSwitch",
   props: {
     /**
      * 字典第一个为开启
      * 第二个为关闭
      */
-    dict: {},
+    dict: {
+      type: Object as PropType<DictOptions<any>>
+    },
     options: {}
-  },
+  } as any,
   emits: ["dict-change"],
   setup(props, ctx) {
-    const ui = uiContext.get();
+    const { ui } = useUi();
     let usedDict = useDict(props, ctx, ui.switch.modelValue);
     const computedOptions = usedDict.createComputedOptions();
     return {
+      ui,
       ...usedDict,
       computedOptions
     };
@@ -54,5 +59,5 @@ export default {
       };
     }
   }
-};
+});
 </script>

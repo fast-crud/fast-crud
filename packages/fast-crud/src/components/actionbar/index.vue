@@ -5,10 +5,11 @@
     </template>
   </div>
 </template>
-<script lant="ts">
-import { defineComponent, computed } from "vue";
+<script lang="ts">
+import { defineComponent, computed, Ref } from "vue";
 import _ from "lodash-es";
 import { Constants } from "../../utils/util.constants";
+import { ActionbarClickEvent, ButtonsProps } from "/src/d.ts";
 
 export default defineComponent({
   name: "FsActionbar",
@@ -24,22 +25,22 @@ export default defineComponent({
      * }
      */
     buttons: {}
-  },
+  } as any,
   emits: ["action"],
-  setup(props, ctx) {
-    function onClick(key, value, $event) {
-      const e = { key, btn: value, $event };
-      if (value.click) {
-        value.click(e);
+  setup(props, ctx: any) {
+    function onClick(key: any, btn: any, $event: any) {
+      const e = { key, btn, $event };
+      if (btn.click) {
+        btn.click(e);
         return;
       }
-      if (value.onClick) {
-        value.onClick(e);
+      if (btn.onClick) {
+        btn.onClick(e);
         return;
       }
       ctx.emit("action", e);
     }
-    const computedButtons = computed(() => {
+    const computedButtons: Ref = computed(() => {
       let sortArr = [];
       for (let key in props.buttons) {
         sortArr.push({
@@ -51,7 +52,7 @@ export default defineComponent({
         return item.order ?? Constants.orderDefault;
       });
 
-      const sortedButtons = {};
+      const sortedButtons: ButtonsProps<ActionbarClickEvent> = {};
 
       sortArr.forEach((item) => {
         let _key = item._key;

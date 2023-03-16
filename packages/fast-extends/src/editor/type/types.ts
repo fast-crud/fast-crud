@@ -5,6 +5,6 @@ export default function () {
     },
     "editor-wang5": {
       form: { component: { name: "fs-editor-wang5" } }
-    },
+    }
   };
 }

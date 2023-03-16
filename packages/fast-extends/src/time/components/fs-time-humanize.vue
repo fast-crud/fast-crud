@@ -4,9 +4,10 @@
 
 <script lang="ts">
 import dayjs, { Dayjs } from "dayjs";
-import { computed, PropType } from "vue";
+import { computed, defineComponent, PropType } from "vue";
 import _ from "lodash-es";
 import humanizeDuration, { HumanizerOptions } from "humanize-duration";
+
 const defaultOptions = {
   language: "zh_CN",
   largest: 1,
@@ -16,7 +17,7 @@ const defaultOptions = {
  * 日期人性化格式展示组件
  * 例如几天前，几分钟前，几个小时前
  */
-export default {
+export default defineComponent({
   name: "FsTimeHumanize",
   props: {
     /**
@@ -58,7 +59,7 @@ export default {
       }
     }
   },
-  setup(props) {
+  setup(props: any) {
     const formatted = computed(() => {
       if (props.modelValue == null || props.modelValue === "") {
         return "";
@@ -88,5 +89,5 @@ export default {
       formatted
     };
   }
-};
+});
 </script>

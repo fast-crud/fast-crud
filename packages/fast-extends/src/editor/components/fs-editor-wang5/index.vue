@@ -1,53 +1,54 @@
 <template>
   <div class="fs-editor-wang5" v-bind="container">
     <Toolbar
-        style="border-bottom: 1px solid #ccc"
-        :ref="toolbarRef"
-        :editor="editorRef"
-        :defaultConfig="toolbarConfig"
-        :mode="mode"
+      :ref="toolbarRef"
+      style="border-bottom: 1px solid #ccc"
+      :editor="editorRef"
+      :default-config="toolbarConfigRef"
+      :mode="mode"
     />
     <Editor
-        style="height: 500px; overflow-y: hidden;"
-        :defaultConfig="editorConfig"
-        :mode="mode"
-        @onCreated="handleCreated"
-        v-bind="$attrs"
+      style="height: 500px; overflow-y: hidden"
+      :default-config="editorConfigRef"
+      :mode="mode"
+      v-bind="$attrs"
+      @onCreated="handleCreated"
     />
     <fs-uploader ref="uploaderImplRef" :type="uploader?.type" />
   </div>
 </template>
 
 <script lang="ts">
-import '@wangeditor/editor/dist/css/style.css' // 引入 css
+import "@wangeditor/editor/dist/css/style.css"; // 引入 css
 
-import { onBeforeUnmount,defineComponent, ref, shallowRef, onMounted,watch,computed } from 'vue'
-import { Editor, Toolbar } from '@wangeditor/editor-for-vue'
+import { onBeforeUnmount, defineComponent, ref, shallowRef, onMounted, watch, computed, Ref } from "vue";
+import { Editor, Toolbar } from "@wangeditor/editor-for-vue";
 
-import defaultConfig from "../../type/config";
+import { defaultConfig } from "../../type/config.js";
 import _ from "lodash-es";
-type InsertFnType = (url: string, alt?: string, href?: string) => void
+import { FsUploaderDoUploadOptions } from "@/uploader/d.ts/type";
+type InsertFnType = (url: string, alt?: string, href?: string) => void;
 /**
  * wangEditor5组件封装
  * 文档：https://www.wangeditor.com/v5/for-frame.html#使用-1
  */
 export default defineComponent({
-  components: { Editor, Toolbar },
   name: "FsEditorWang5",
+  components: { Editor, Toolbar },
   inheritAttrs: false,
   props: {
     /**
      * 容器配置
      * 包装editor和toolbar的外部容器配置，可以设置class，style等
      */
-    container:{
-      type:Object
+    container: {
+      type: Object
     },
     /**
      * editor的模式
      */
-    mode:{
-      type:String
+    mode: {
+      type: String
     },
     /**
      * 工具条配置
@@ -58,7 +59,7 @@ export default defineComponent({
     /**
      * 编辑器默认配置
      */
-    editorConfig:{
+    editorConfig: {
       type: Object
     },
     /**
@@ -71,7 +72,7 @@ export default defineComponent({
     /**
      * 只读
      */
-    readonly:{
+    readonly: {
       type: Boolean
     },
     /**
@@ -81,47 +82,55 @@ export default defineComponent({
       type: Boolean
     }
   },
-  setup(props:any){
+  setup(props: any) {
     // 编辑器实例，必须用 shallowRef
-    const editorRef = shallowRef()
-    const toolbarRef = ref()
-    const uploaderImplRef = ref()
-    const valueHtml = ref('')
+    const editorRef = shallowRef();
+    const toolbarRef: Ref = ref();
+    const uploaderImplRef: Ref = ref();
+    const valueHtml: Ref = ref("");
 
-    function toggleEnabled(value){
-      if(!editorRef.value){
-        return
+    function toggleEnabled(value: boolean) {
+      if (!editorRef.value) {
+        return;
       }
-      if(value){
-        editorRef.value.enable()
-      }else{
-        editorRef.value.disable()
+      if (value) {
+        editorRef.value.enable();
+      } else {
+        editorRef.value.disable();
       }
     }
 
-    watch(()=>{
-      return props.readonly
-    },(value)=>{
-      toggleEnabled(!value)
-    },{
-      immediate: true
-    })
+    watch(
+      () => {
+        return props.readonly;
+      },
+      (value) => {
+        toggleEnabled(!value);
+      },
+      {
+        immediate: true
+      }
+    );
 
-    watch(()=>{
-      return props.disabled
-    },(value)=>{
-      toggleEnabled(!value)
-    },{
-      immediate: true
-    })
+    watch(
+      () => {
+        return props.disabled;
+      },
+      (value) => {
+        toggleEnabled(!value);
+      },
+      {
+        immediate: true
+      }
+    );
 
-    const toolbarConfig = computed(()=>{
-      return _.merge({ },defaultConfig.wangEditor5.toolbarConfig,props.toolbarConfig)
-    })
+    const toolbarConfigRef = computed(() => {
+      return _.merge({}, defaultConfig.wangEditor5.toolbarConfig, props.toolbarConfig);
+    });
 
-    const MENU_CONF:any = {}
+    const MENU_CONF: any = {};
     if (props.uploader) {
-      async function doUpload(option) {
+      async function doUpload(option: FsUploaderDoUploadOptions) {
         option.options = props.uploader;
         let uploaderRef = uploaderImplRef.value.getUploaderRef();
         if (uploaderRef == null) {
@@ -129,74 +138,80 @@ export default defineComponent({
         }
         return await uploaderRef?.upload(option);
       }
-      MENU_CONF.uploadImage = {
-        async customUpload(file: File, insertFn: InsertFnType) {  // TS 语法
-          // async customUpload(file, insertFn) {                   // JS 语法
-          // file 即选中的文件
-          // 自己实现上传，并得到图片 url alt href
-          // 最后插入图片
 
-          const item:any = {
-            status: "uploading",
-            progress: 0,
-            message:undefined
-          };
+      async function customUpload(file: File, insertFn: InsertFnType) {
+        // TS 语法
+        // async customUpload(file, insertFn) {                   // JS 语法
+        // file 即选中的文件
+        // 自己实现上传，并得到图片 url alt href
+        // 最后插入图片
 
-          const onProgress = (e) => {
-            item.progress = e.percent;
-          };
-          const onError = (e) => {
-            item.status = "error";
-            item.message = "文件上传出错:" + e.message;
-            console.error(item.message, e);
-          };
-          const option = {
-            file: file,
-            fileName: file.name,
-            onProgress,
-            onError
-          };
+        const item: any = {
+          status: "uploading",
+          progress: 0,
+          message: undefined
+        };
 
-          const res = await doUpload(option);
-          let url = res?.url;
-          if (props.uploader?.buildUrl) {
-            url = await props.uploader.buildUrl(res);
-          }
-          // 上传图片，返回结果，将图片插入到编辑器中
-          insertFn(url)
+        const onProgress = (e: any) => {
+          item.progress = e.percent;
+        };
+        const onError = (e: any) => {
+          item.status = "error";
+          item.message = "文件上传出错:" + e.message;
+          console.error(item.message, e);
+        };
+        const option = {
+          file: file,
+          fileName: file.name,
+          onProgress,
+          onError
+        };
+
+        const res = await doUpload(option);
+        let url = res?.url;
+        if (props.uploader?.buildUrl) {
+          url = await props.uploader.buildUrl(res);
         }
+        // 上传图片，返回结果，将图片插入到编辑器中
+        insertFn(url);
+      }
+
+      MENU_CONF.uploadImage = {
+        customUpload
+      };
+      MENU_CONF.uploadVideo = {
+        customUpload
       };
     }
 
-
-    const editorConfig = computed(()=>{
-      return _.merge({
-        placeholder: '请输入内容...',
-        MENU_CONF
-      },defaultConfig.wangEditor5.editorConfig,props.editorConfig)
-    })
-
-
+    const editorConfigRef = computed(() => {
+      return _.merge(
+        {
+          placeholder: "请输入内容...",
+          MENU_CONF
+        },
+        defaultConfig.wangEditor5.editorConfig,
+        props.editorConfig
+      );
+    });
 
     // 组件销毁时，也及时销毁编辑器
     onBeforeUnmount(() => {
-      const editor = editorRef.value
-      if (editor == null) return
-      editor.destroy()
-    })
+      const editor = editorRef.value;
+      if (editor == null) return;
+      editor.destroy();
+    });
 
-    const handleCreated = (editor) => {
-      editorRef.value = editor // 记录 editor 实例，重要！
+    const handleCreated = (editor: any) => {
+      editorRef.value = editor; // 记录 editor 实例，重要！
+    };
+
+    function getEditorRef() {
+      return editorRef;
     }
-
-    function getEditorRef(){
-      return editorRef
+    function getToolRef() {
+      return toolbarRef;
     }
-    function getToolRef(){
-      return toolbarRef
-    }
-
-
 
     return {
       uploaderImplRef,
@@ -205,17 +220,17 @@ export default defineComponent({
       toolbarRef,
       editorRef,
       valueHtml,
-      toolbarConfig,
-      editorConfig,
+      toolbarConfigRef,
+      editorConfigRef,
       handleCreated
     };
-  },
+  }
 });
 </script>
 <style lang="less">
 .fs-editor-wang5 {
-  border:1px solid #eee;
-  .w-e-full-screen-container{
+  border: 1px solid #eee;
+  .w-e-full-screen-container {
     z-index: 20;
   }
 }

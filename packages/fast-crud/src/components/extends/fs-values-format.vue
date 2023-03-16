@@ -5,7 +5,7 @@
     </template>
     <template v-else>
       <component
-        :is="$fsui.tag.name"
+        :is="ui.tag.name"
         v-for="item in computedValueItems"
         :key="getValue(item)"
         class="fs-tag"
@@ -23,13 +23,12 @@
   </span>
 </template>
 
-<script>
-import { uiContext } from "../../ui";
+<script lang="ts">
 import _ from "lodash-es";
-import { computed } from "vue";
+import { computed, defineComponent } from "vue";
 import { useDict } from "../../use/use-dict";
-import trace from "../../utils/util.trace";
-function getHashCode(str) {
+import { useUi } from "../../use";
+function getHashCode(str: string) {
   if (str == null) {
     return 0;
   }
@@ -49,7 +48,7 @@ function getHashCode(str) {
   return hash;
 }
 
-function buildArrayValue(props) {
+function buildArrayValue(props: any) {
   let valueArr = [];
   if (typeof props.modelValue === "string" && props.multiple && props.separator != null && props.separator !== "") {
     valueArr = props.modelValue.split(props.separator);
@@ -65,15 +64,13 @@ function buildArrayValue(props) {
 /**
  * value格式化展示组件
  */
-export default {
+export default defineComponent({
   name: "FsValuesFormat",
   props: {
     /**
      * 值
      */
-    modelValue: {
-      require: false
-    },
+    modelValue: {},
     /**
      * 字典配置
      */
@@ -81,13 +78,13 @@ export default {
     /**
      * 是否多选
      */
-    multiple: { default: true, require: false },
+    multiple: { default: true },
     /**
      * 分隔符<br/>
      * 多选时，如果value为string，则以该分隔符分割成多个展示<br/>
      * 传入空字符串，表示不分割<br/>
      */
-    separator: { default: ",", require: false },
+    separator: { default: "," },
 
     /**
      * 颜色
@@ -95,15 +92,11 @@ export default {
      * antdv=【auto, primary, success, blue,red,...】
      * 配置auto，则自动根据value值hashcode分配颜色值
      */
-    color: {
-      require: false
-    },
+    color: {},
     /**
      * 效果（仅element）
      **/
-    effect: {
-      require: false
-    },
+    effect: {},
     /**
      * 自动染色颜色值列表
      */
@@ -127,22 +120,20 @@ export default {
      * 当value值不在字典中时默认显示的文本
      */
     defaultLabel: {}
-  },
+  } as any,
   emits: ["click", "dict-change"],
   setup(props, ctx) {
     // trace.trace("values-format");
     // console.log("values-format init", props.modelValue);
     //const dict = useDict(props, ctx);
-    const ui = uiContext.get();
+    const { ui } = useUi();
     const COLOR_LIST = ui.tag.colors;
     const EFFECT_LIST = ["plain", "light"];
 
     const usedDict = useDict(props, ctx);
     const { getColor, getValue, removePropValue } = usedDict;
-    usedDict.watchValue(() => {
-      return props.modelValue;
-    });
-    function setColor(props, item) {
+    usedDict.watchValue();
+    function setColor(props: any, item: any) {
       if (!item.effect && props.effect) {
         item.effect = props.effect;
       }
@@ -203,7 +194,7 @@ export default {
         });
       }
 
-      const colorfulOptions = [];
+      const colorfulOptions: any = [];
       _.forEach(options, (item) => {
         colorfulOptions.push(_.omit(item, "children"));
       });
@@ -213,17 +204,18 @@ export default {
       return colorfulOptions;
     });
 
-    function doClick(item) {
+    function doClick(item: any) {
       ctx.emit("click", { item: item });
     }
 
     return {
+      ui,
       ...usedDict,
       doClick,
       computedValueItems
     };
   }
-};
+});
 </script>
 <style lang="less">
 .fs-values-format .fs-tag {
