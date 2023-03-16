@@ -310,14 +310,16 @@ export class Element implements UiInterface {
     validateWrap: async (formRef) => {
       return formRef.validate();
     },
-    transformValidateErrors: (e: Error) => {
-      // @ts-ignore
+    transformValidateErrors: (e: any) => {
       const errorFields = e.code || e.validation || {};
       const errors: any = {};
-      for (const errorField of errorFields) {
-        const name = errorField.field;
-        errors[name] = true;
+      if (errorFields && errorFields instanceof Array) {
+        for (const errorField of errorFields) {
+          const name = errorField.field;
+          errors[name] = true;
+        }
       }
+
       return errors;
     }
   };
