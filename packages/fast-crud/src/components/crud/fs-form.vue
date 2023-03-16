@@ -18,7 +18,7 @@
           <fs-form-item
             v-if="item.blank !== true"
             :ref="
-              (el) => {
+              (el:any) => {
                 if (el) {
                   formItemRefs[item.key] = el;
                 }
@@ -65,7 +65,7 @@
                 <fs-form-item
                   v-if="computedColumns[key] && computedColumns[key]?.blank !== true"
                   :ref="
-                    (el) => {
+                    (el:any) => {
                       if (el) {
                         formItemRefs[key] = el;
                       }

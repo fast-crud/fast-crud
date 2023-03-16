@@ -36,7 +36,7 @@ export default defineConfig(({ command, mode, ssrBuild }) => {
             rootDir: "src",
             declaration: true,
             declarationDir: "dist/d",
-            exclude: "./node_modules/**",
+            exclude: ["./node_modules/**", "./src/**/*.vue"],
             allowSyntheticDefaultImports: true
           }),
           strip({

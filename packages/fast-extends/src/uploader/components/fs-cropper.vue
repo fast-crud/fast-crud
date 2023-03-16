@@ -100,7 +100,7 @@ export default defineComponent({
     }
   },
   emits: ["cancel", "done", "ready"],
-  setup(props, ctx) {
+  setup(props: any, ctx) {
     const { ui } = useUi();
     const { t } = useI18n();
     const dialogVisible: Ref = ref(false);
@@ -427,7 +427,7 @@ export default defineComponent({
       }
     },
     _cropper() {
-      const def = {
+      const def: any = {
         aspectRatio: 1,
         ready: this.ready
       };

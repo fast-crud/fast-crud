@@ -2,8 +2,8 @@
   <div class="fs-json-editor">
     <div ref="editorRef" class="jsoneditor-vue"></div>
     <div v-if="showBtns !== false" class="jsoneditor-btns">
-      <button class="json-save-btn" :type="button" :disabled="state.error" @click="onSave">
-        {{ state.locale[lang].save }}
+      <button class="json-save-btn" type="button" :disabled="state.error" @click="onSave">
+        {{ getI18nText("save") }}
       </button>
     </div>
   </div>
@@ -44,16 +44,13 @@ export default defineComponent({
     const root = getCurrentInstance()?.root.proxy as ComponentPublicInstance;
 
     const editorRef = ref();
-    const state = reactive({
+    const state: any = reactive({
       editor: null as any,
       error: false,
       json: {},
       internalChange: false,
       expandedModes: ["tree", "view", "form"],
       locale: {
-        it: {
-          save: "SALVA"
-        },
         en: {
           save: "SAVE"
         },
@@ -117,12 +114,17 @@ export default defineComponent({
       if (state.editor) state.editor.set(value);
     }
 
+    function getI18nText(name: string) {
+      let i = state.locale[props.lang] || state.locale["zh"];
+      return i[name];
+    }
     return {
       setEditor,
       state,
       onSave,
       expandAll,
-      editorRef
+      editorRef,
+      getI18nText
     };
   }
 });

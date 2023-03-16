@@ -1,8 +1,10 @@
 import _ from "lodash-es";
 import { useMerge } from "./use-merge";
 import logger from "../utils/util.log";
-import { reactive, watch } from "vue";
+import { reactive, UnwrapRef } from "vue";
 import LRU from "lru-cache";
+import { UnwrapNestedRefs } from "vue";
+
 const DictGlobalCache = new LRU<string, any>({
   max: 500,
   maxSize: 5000,
@@ -16,7 +18,9 @@ const DictGlobalCache = new LRU<string, any>({
 
 const { UnMergeable } = useMerge();
 
-function setDictRequest(request: any) {
+export type DictRequest = (req: { url: string; dict: Dict }) => Promise<any[]>;
+
+function setDictRequest(request: DictRequest) {
   dictRequest = request;
 }
 
@@ -400,21 +404,16 @@ export class Dict<T = any> extends UnMergeable implements DictOptions<T> {
   }
 }
 
-function dict<T = any>(config: DictOptions<T>) {
+/**
+ * 创建Dict对象
+ * 注意：这里只能定义返回<any>,否则build结果会缺失index.d.ts
+ * @param config
+ */
+export function dict<T = any>(config: DictOptions<T>): UnwrapNestedRefs<Dict<any>> {
   const ret = reactive(new Dict(config));
   if (!ret.prototype && ret.immediate) {
     ret.loadDict();
   }
-  // watch(
-  //   () => {
-  //     return ret.data;
-  //   },
-  //   () => {
-  //     console.log("----------------------dict on watch---------------------");
-  //     ret.toMap();
-  //   },
-  //   { deep: true, immediate: true }
-  // );
   return ret;
 }
 export function useDictDefine() {

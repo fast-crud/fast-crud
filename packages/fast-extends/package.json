@@ -45,6 +45,7 @@
     "@rollup/plugin-commonjs": "^23.0.4",
     "@rollup/plugin-strip": "^3.0.1",
     "@rollup/plugin-typescript": "^10.0.1",
+    "@types/ali-oss": "^6.16.7",
     "@types/chai": "^4.3.4",
     "@types/humanize-duration": "^3.27.1",
     "@types/lodash-es": "^4.17.6",

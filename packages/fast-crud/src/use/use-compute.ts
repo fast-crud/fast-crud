@@ -1,10 +1,10 @@
 import _ from "lodash-es";
-import { computed, ref, toRaw, watch, isRef, Ref } from "vue";
+import { computed, ref, Ref, watch } from "vue";
 import getEachDeep from "deepdash-es/getEachDeep";
 import { useMerge } from "./use-merge";
 import { ComputeContext } from "/src/d.ts/compute";
-import { ComputedRefValue } from "vue/macros";
 import { AsyncComputeRef, ComputeFn, ComputeRef, ScopeContext } from "/src/d.ts";
+
 const { cloneDeep } = useMerge();
 // @ts-ignore
 const eachDeep = getEachDeep(_);
@@ -124,7 +124,7 @@ export class ComputeValue<T> implements ComputeRef<T> {
   }
 }
 
-function compute<T>(computeFn: (context: ComputeContext) => T): ComputeValue<T> {
+export function compute<T>(computeFn: (context: ComputeContext) => T): ComputeValue<T> {
   return new ComputeValue<T>(computeFn);
 }
 
@@ -163,7 +163,7 @@ export class AsyncComputeValue<T, P = any> implements AsyncComputeRef<T> {
     return asyncRef;
   }
 }
-function asyncCompute<T>(options: AsyncComputeRef<T>): AsyncComputeValue<T> {
+export function asyncCompute<T>(options: AsyncComputeRef<T>): AsyncComputeValue<T> {
   return new AsyncComputeValue<T>(options);
 }
 export function useCompute() {

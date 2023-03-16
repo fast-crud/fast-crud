@@ -37,7 +37,7 @@
                         <fs-component-render
                           v-if="item.component && item.component.show !== false"
                           :ref="
-                            (el) => {
+                            (el:any) => {
                               if (el) {
                                 componentRenderRefs[item.key] = el;
                               }

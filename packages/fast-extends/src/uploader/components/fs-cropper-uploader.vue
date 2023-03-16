@@ -11,7 +11,7 @@
             </template>
           </component>
           <div v-if="!disabled" class="delete">
-            <fs-icon :icon="ui.icons.remove" @click="removeImage(index, item)" />
+            <fs-icon :icon="ui.icons.remove" @click="removeImage(index)" />
           </div>
           <div v-if="item.status === 'uploading'" class="status-uploading">
             <component :is="ui.progress.name" type="circle" :percentage="item.progress" :width="70" />
@@ -42,7 +42,7 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, reactive, ref, Ref } from "vue";
+import { computed, defineComponent, reactive, ref, Ref, watch } from "vue";
 import FsUploader from "./fs-uploader.vue";
 import { useUi } from "@fast-crud/fast-crud";
 import { FsUploaderDoUploadOptions } from "../d.ts/type";
@@ -118,76 +118,49 @@ export default defineComponent({
       type: String, // url ,key, object
       default: "url"
     }
-  },
+  } as any,
   emits: ["update:modelValue", "change"],
-  setup() {
+  setup(props: any, ctx: any) {
     const { ui } = useUi();
     const cropperRef: Ref = ref();
-    return {
-      ui,
-      cropperRef
-    };
-  },
-  data() {
-    return {
-      index: undefined as any,
-      list: [] as any
-    } as any;
-  },
-  computed: {
-    _urlList() {
-      const urlList = [];
-      if (this.list) {
-        for (const item of this.list) {
-          urlList.push(item.url);
-        }
-      }
-      return urlList;
-    }
-  } as any,
-  watch: {
-    modelValue(val: any) {
-      this.$emit("change", val);
-      if (val === this.emitValue) {
-        return;
-      }
-      this.initValue(val);
-    }
-  } as any,
-  created() {
-    this.emitValue = this.modelValue;
-    this.initValue(this.modelValue);
-  },
-  methods: {
-    async initValue(value: any) {
+    const uploaderImplRef: Ref = ref();
+
+    const indexRef: Ref = ref();
+    const listRef: Ref = ref([]);
+
+    // eslint-disable-next-line vue/no-setup-props-destructure
+    let emitValue: any = props.modelValue;
+    initValue(props.modelValue);
+
+    async function initValue(value: any) {
       const list: any = [];
       if (value == null || value === "") {
-        this.list = list;
+        listRef.value = list;
         return;
       }
       if (typeof value === "string") {
-        list.push({ url: await this.buildUrl(value), value: value, status: "done" });
+        list.push({ url: await props.buildUrl(value), value: value, status: "done" });
       } else {
         for (const item of value) {
-          list.push({ url: await this.buildUrl(item), value: item, status: "done" });
+          list.push({ url: await props.buildUrl(item), value: item, status: "done" });
         }
       }
-      this.list = list;
-    },
-    addNewImage() {
-      if (this.disabled) {
+      listRef.value = list;
+    }
+    function addNewImage() {
+      if (props.disabled) {
         return;
       }
-      this.index = undefined;
-      this.cropperRef.clear();
-      this.cropperRef.open();
-    },
-    removeImage(index: number) {
-      this.list.splice(index, 1);
-      this.emit();
-    },
-    hasUploading() {
-      const fileList: any = this.list;
+      indexRef.value = undefined;
+      cropperRef.value.clear();
+      cropperRef.value.open();
+    }
+    function removeImage(index: number) {
+      listRef.value.splice(index, 1);
+      doEmit();
+    }
+    function hasUploading() {
+      const fileList: any = listRef.value;
       if (fileList && fileList.length > 0) {
         for (const item of fileList) {
           if (item.status === "uploading") {
@@ -196,8 +169,8 @@ export default defineComponent({
         }
       }
       return false;
-    },
-    async cropComplete(ret: any) {
+    }
+    async function cropComplete(ret: any) {
       const blob = ret.blob;
       const dataUrl = ret.dataUrl;
       const file = ret.file;
@@ -222,32 +195,34 @@ export default defineComponent({
         onProgress,
         onError
       };
-      this.list.push(item);
+      listRef.value.push(item);
       try {
-        const uploaded = await this.doUpload(option);
+        const uploaded = await doUpload(option);
         let value = uploaded;
-        if (this.valueType !== "object") {
-          value = uploaded[this.valueType];
+        if (props.valueType !== "object") {
+          value = uploaded[props.valueType];
         }
-        item.url = await this.buildUrl(value);
+        item.url = await props.buildUrl(value);
         item.value = value;
         item.status = "done";
-        this.emit();
+        doEmit();
       } catch (e) {
         onError(e);
       }
-    },
-    async doUpload(option: FsUploaderDoUploadOptions) {
-      option.options = this.uploader;
-      let uploaderRef = this.$refs.uploaderImplRef?.getUploaderRef();
+    }
+
+    async function doUpload(option: FsUploaderDoUploadOptions) {
+      option.options = props.uploader;
+      let uploaderRef = uploaderImplRef.value?.getUploaderRef();
       if (uploaderRef == null) {
         throw new Error("Sorry，The component is not ready yet");
       }
       return await uploaderRef?.upload(option);
-    },
-    emit() {
+    }
+
+    function doEmit() {
       const list = [];
-      for (const item of this.list) {
+      for (const item of listRef.value) {
         if (typeof item === "string") {
           list.push(item);
         } else {
@@ -255,14 +230,50 @@ export default defineComponent({
         }
       }
       let ret = list;
-      if (this.limit === 1) {
+      if (props.limit === 1) {
         ret = list && list.length > 0 ? list[0] : undefined;
       }
-      this.emitValue = ret;
-      this.$emit("update:modelValue", ret);
+      emitValue = ret;
+      ctx.emit("update:modelValue", ret);
     }
-  } as any
-} as any);
+
+    const _urlList = computed(() => {
+      const urlList = [];
+      if (listRef.value) {
+        for (const item of listRef.value) {
+          urlList.push(item.url);
+        }
+      }
+      return urlList;
+    });
+
+    watch(
+      () => {
+        return props.modelValue;
+      },
+      (val: any) => {
+        ctx.emit("change", val);
+        if (val === emitValue) {
+          return;
+        }
+        initValue(val);
+      }
+    );
+    return {
+      ui,
+      cropperRef,
+      uploaderImplRef,
+      indexRef,
+      listRef,
+      _urlList,
+      addNewImage,
+      hasUploading,
+      cropComplete,
+      doUpload,
+      removeImage
+    };
+  }
+});
 </script>
 
 <style lang="less">

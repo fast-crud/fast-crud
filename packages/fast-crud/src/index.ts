@@ -1,30 +1,22 @@
 import defaultCrudOptions from "./use/default-crud-options";
 import utils from "./utils/index";
-export * from "./utils/index";
-export * from "./use";
 import types from "./types/index";
 import * as components from "./components";
-export * from "./components";
+import { FsFormWrapper } from "./components";
 import { i18n, useI18n } from "./locale/";
 import { uiContext } from "./ui";
-export * from "./ui";
-import { useDictDefine, useCompute } from "./use";
+import { useDictDefine } from "./use";
 import { App } from "vue";
-import { CrudOptions } from "/src/d.ts";
-import { UiInterface } from "@fast-crud/ui-interface";
-import { FsFormWrapper } from "./components";
-const { dict, setDictRequest } = useDictDefine();
-const { ComputeValue, compute, asyncCompute } = useCompute();
-export { ComputeValue, compute, asyncCompute, dict, utils, useI18n, uiContext };
+import { FsSetupOptions } from "./d.ts";
+
+export * from "./utils/index";
+export * from "./use";
+export * from "./components";
+export * from "./ui";
+const { setDictRequest } = useDictDefine();
+export { utils, useI18n, uiContext };
 export * from "./d.ts/index";
 
-export type FsSetupOptions = {
-  ui?: UiInterface;
-  commonOptions?: () => CrudOptions;
-
-  dictRequest?: (opts: any) => Promise<any[]>;
-  i18n?: any;
-};
 export const FastCrud = {
   install(app: App, options: FsSetupOptions = {}) {
     if (options.ui) {
