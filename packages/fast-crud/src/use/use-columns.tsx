@@ -17,7 +17,7 @@ import {
   ScopeContext,
   TypeMap
 } from "../d.ts";
-import { UseFsContext } from "../../dist/d";
+import { UseFsContext } from "./use-crud";
 
 const { merge, cloneDeep } = useMerge();
 // mergeColumnPlugin 注册
