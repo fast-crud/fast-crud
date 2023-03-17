@@ -3,6 +3,18 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.11.1](https://github.com/fast-crud/fast-crud/compare/v1.11.0...v1.11.1) (2023-03-17)
+
+
+### Performance Improvements
+
+* useFs优化，增加context:UseFsContext ([c3d3080](https://github.com/fast-crud/fast-crud/commit/c3d3080300e05616ee37c581a8635f8679e0aa7a))
+* useFs支持crudExposeRef ([c56e840](https://github.com/fast-crud/fast-crud/commit/c56e840bb909f4b33548701141168e97789ff367))
+
+
+
+
+
 # [1.11.0](https://github.com/fast-crud/fast-crud/compare/v1.10.0...v1.11.0) (2023-03-16)
 
 
