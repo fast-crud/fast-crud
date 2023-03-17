@@ -17,7 +17,7 @@
     "@fast-crud/ui-interface": "workspace:^1.11.0"
   },
   "devDependencies": {
-    "@ant-design/icons-vue": "^6.1.0",
+    "element-plus": "^2.3.0",
     "@element-plus/icons-vue": "^2.1.0",
     "@fast-crud/fast-crud": "workspace:^1.11.0",
     "@rollup/plugin-strip": "^3.0.2",
