@@ -11,8 +11,9 @@
 //index.vue
 export default {
     setup(){
-        const customValue: any = {}; //自定义变量，传给createCrudOptions的额外参数（可以任意命名，任意多个）
-        const { crudBinding, crudRef, crudExpose, resetCrudOptions, customExport } = useFs({ createCrudOptions, customValue });
+        const context: any = {}; //自定义变量，传给createCrudOptions的额外参数（可以任意命名，任意多个）
+        const onExpose = (e:OnExposeContext)=>{}
+        const { crudBinding, crudRef, crudExpose, resetCrudOptions } = useFs({ createCrudOptions, context });
         return {
             crudBinding,
             crudRef
@@ -34,10 +35,11 @@ export default {
     setup(){
         const crudBinding:Ref<CrudBinding> = ref()
         const crudRef:Ref = ref()
-        const customValue: any = {}; //自定义变量，传给createCrudOptions的额外参数（可以任意命名，任意多个）
+        const context: any = {}; //变量上下文，传给createCrudOptions的额外参数（可以任意命名，任意多个）
+        const onExpose = (e:OnExposeContext)=>{}
         onMounted(async ()=>{
             // 要求createCrudOptions也要是一个异步方法
-            const {  crudExpose, customExport } = await useFs({crudBinding,crudRef, createCrudOptions, customValue } as UseFsProps);
+            const {  crudExpose, context } = await useFs({crudBinding,crudRef, createCrudOptions, context });
         })
         return {
             crudBinding,

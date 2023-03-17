@@ -17,6 +17,7 @@ import {
   ScopeContext,
   TypeMap
 } from "../d.ts";
+import { UseFsContext } from "../../dist/d";
 
 const { merge, cloneDeep } = useMerge();
 // mergeColumnPlugin 注册
@@ -255,11 +256,12 @@ function buildSearchForm(baseOptions: CrudOptions, formType = "search", columnsM
   return merge({ columns: formColumnsForSearch }, { columns: searchColumns }, baseOptions.search);
 }
 
-function buildFormOptions(crudOptions: DynamicallyCrudOptions): FormProps {
+function buildFormOptions(crudOptions: DynamicallyCrudOptions, context?: UseFsContext): FormProps {
   const { t } = useI18n();
+  context = context || {};
   const userOptions = merge(
     defaultCrudOptions.defaultOptions({ t }),
-    defaultCrudOptions.commonOptions({ crudOptions }),
+    defaultCrudOptions.commonOptions({ crudOptions, context, crudExpose: null }),
     crudOptions
   );
   const initedColumns = setupOptionsColumns(cloneDeep(userOptions.columns), userOptions);

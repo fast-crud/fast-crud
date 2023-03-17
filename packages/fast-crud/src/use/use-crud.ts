@@ -28,7 +28,9 @@ export type UseCrudProps = {
    * 即将废弃，请使用crudExpose
    */
   expose?: CrudExpose;
-  crudExpose?: CrudExpose;
+  crudExpose: CrudExpose;
+
+  context: UseFsContext;
   /**
    * 自定义参数
    * common里面可以使用
@@ -358,12 +360,16 @@ export type UseFsRet = {
 } & UseCrudRet &
   CreateCrudOptionsRet;
 
+export type UseFsContext = {
+  [key: string]: any;
+};
+
 export type CreateCrudOptionsProps = {
   crudExpose?: CrudExpose;
 
   expose?: CrudExpose;
 
-  [key: string]: any;
+  context?: UseFsContext;
 };
 
 export type CreateCrudOptionsRet = {
@@ -371,8 +377,9 @@ export type CreateCrudOptionsRet = {
    * crudOptions
    */
   crudOptions: DynamicallyCrudOptions;
+
   /**
-   * 其他从createCrudOptions自定义返回的参数
+   * 自定义返回变量
    */
   [key: string]: any;
 };
@@ -381,12 +388,17 @@ export type UseFsProps = {
   crudBinding?: Ref<CrudBinding>;
   createCrudOptions: CreateCrudOptions | CreateCrudOptionsAsync;
 
-  /**
-   * 传给createCrudOptions方法的自定义参数
-   */
-  [key: string]: any;
+  onExpose?: (context: OnExposeContext) => any;
+
+  context?: UseFsContext;
 };
 export type CreateCrudOptions = (props: CreateCrudOptionsProps) => CreateCrudOptionsRet;
+export type OnExposeContext = {
+  crudRef: Ref;
+  crudBinding: Ref<CrudBinding>;
+  crudExpose: CrudExpose;
+  context: UseFsContext;
+};
 
 export type CreateCrudOptionsAsync = (props: CreateCrudOptionsProps) => Promise<CreateCrudOptionsRet>;
 export function useFsReal(props: UseFsProps): UseFsRet | Promise<UseCrudRet> {
@@ -396,17 +408,26 @@ export function useFsReal(props: UseFsProps): UseFsRet | Promise<UseCrudRet> {
   const crudBinding: Ref<CrudBinding> = props.crudBinding || ref({});
   // 暴露的方法
   const { crudExpose } = useExpose({ crudRef, crudBinding });
+
+  if (props.context == null) {
+    props.context = {};
+  }
+  const context = props.context;
+  if (props.onExpose) {
+    props.onExpose({ crudRef, crudBinding, crudExpose, context });
+  }
   // 你的crud配置
-  const crudOptionsRet = createCrudOptions({
+  const createCrudOptionsRet = createCrudOptions({
     ...props,
     crudExpose,
-    expose: crudExpose
+    expose: crudExpose,
+    context
   });
 
-  function initCrud(crudOptionsRet: CreateCrudOptionsRet) {
-    const useCrudRet = useCrud({ crudExpose, ...crudOptionsRet });
+  function initCrud(createCrudOptionsRet: CreateCrudOptionsRet) {
+    const useCrudRet = useCrud({ crudExpose, ...createCrudOptionsRet, context });
     return {
-      ...crudOptionsRet,
+      ...createCrudOptionsRet,
       ...useCrudRet,
       crudRef,
       crudExpose,
@@ -414,13 +435,13 @@ export function useFsReal(props: UseFsProps): UseFsRet | Promise<UseCrudRet> {
     };
   }
 
-  if (crudOptionsRet instanceof Promise) {
-    return crudOptionsRet.then((ret) => {
+  if (createCrudOptionsRet instanceof Promise) {
+    return createCrudOptionsRet.then((ret) => {
       return initCrud(ret);
     });
   } else {
     // 初始化crud配置
-    return initCrud(crudOptionsRet);
+    return initCrud(createCrudOptionsRet);
   }
 }
 

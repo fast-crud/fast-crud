@@ -28,9 +28,8 @@ crud配置，每个crud最大的不同就在于此文件。
 import { CreateCrudOptionsProps, CreateCrudOptionsRet, dict } from "@fast-crud/fast-crud";
 import { addRequest, delRequest, editRequest, pageRequest } from "./api";
 
-export default function ({ crudExpose, customValue }: CreateCrudOptionsProps): CreateCrudOptionsRet {
+export default function ({ crudExpose, context }: CreateCrudOptionsProps): CreateCrudOptionsRet {
   return {
-    customExport: {},
     crudOptions: {
       // 自定义crudOptions配置
       request: {
@@ -107,8 +106,9 @@ export default function ({ crudExpose, customValue }: CreateCrudOptionsProps): C
             //  =======以上为fs的初始化代码=========
             //  =======你可以简写为下面这一行========
             const customValue: any = {}; // 自定义变量, 将会传递给createCrudOptions
-            const { crudRef, crudBinding, crudExpose, customExport } = useFs({ createCrudOptions, customValue });
-
+            const onExpose(e:OnExposeContext){} //将在createOptions之前触发，可以获取到crudExpose,和context
+            const { crudRef, crudBinding, crudExpose, context } = useFs({ createCrudOptions, onExpose, context:customValue});
+            
             // 页面打开后获取列表数据
             onMounted(() => {
                 crudExpose.doRefresh();

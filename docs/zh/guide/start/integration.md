@@ -188,7 +188,7 @@ import { AddReq, CreateCrudOptionsProps, CreateCrudOptionsRet, DelReq, dict, Edi
 import _ from "lodash-es";
 
 //此处为crudOptions配置
-const createCrudOptions = function ({ crudOptions, customValue }: CreateCrudOptionsProps): CreateCrudOptionsRet {
+const createCrudOptions = function ({ crudOptions, context }: CreateCrudOptionsProps): CreateCrudOptionsRet {
   //本地模拟后台crud接口方法 ----开始
   const records = [{ id: 1, name: "Hello World", type: 1 }];
   const pageRequest = async (query: UserPageQuery): Promise<UserPageRes> => {
@@ -220,10 +220,10 @@ const createCrudOptions = function ({ crudOptions, customValue }: CreateCrudOpti
     return form;
   };
   //本地模拟后台crud接口方法 -----结束
+  
+  // context.xxx = xxx //往上下文中可以放入自定义变量
 
   return {
-    //自定义变量返回
-    customExport: {},
     crudOptions: {
       request: {
         pageRequest,
@@ -263,7 +263,7 @@ export default defineComponent({
     // 演示自定义变量传递, 将会传递给createCrudOptions
     const customValue: any = {};
     //  =======你可以简写为下面这一行========
-    const { crudRef, crudBinding, crudExpose, customExport } = useFs({ createCrudOptions, customValue });
+    const { crudRef, crudBinding, crudExpose, context } = useFs({ createCrudOptions, context:customValue });
 
     // 页面打开后获取列表数据
     onMounted(() => {
