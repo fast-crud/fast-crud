@@ -386,6 +386,8 @@ export type CreateCrudOptionsRet = {
 export type UseFsProps = {
   crudRef?: Ref;
   crudBinding?: Ref<CrudBinding>;
+
+  crudExposeRef?: Ref<CrudExpose>;
   createCrudOptions: CreateCrudOptions | CreateCrudOptionsAsync;
 
   onExpose?: (context: OnExposeContext) => any;
@@ -401,13 +403,17 @@ export type OnExposeContext = {
 };
 
 export type CreateCrudOptionsAsync = (props: CreateCrudOptionsProps) => Promise<CreateCrudOptionsRet>;
-export function useFsReal(props: UseFsProps): UseFsRet | Promise<UseCrudRet> {
-  const { createCrudOptions } = props;
+function useFsImpl(props: UseFsProps): UseFsRet | Promise<UseCrudRet> {
+  const { createCrudOptions, crudExposeRef } = props;
   const crudRef = props.crudRef || ref();
   // crud 配置的ref
   const crudBinding: Ref<CrudBinding> = props.crudBinding || ref({});
   // 暴露的方法
   const { crudExpose } = useExpose({ crudRef, crudBinding });
+
+  if (crudExposeRef && !crudExposeRef.value) {
+    crudExposeRef.value = crudExpose;
+  }
 
   if (props.context == null) {
     props.context = {};
@@ -446,9 +452,9 @@ export function useFsReal(props: UseFsProps): UseFsRet | Promise<UseCrudRet> {
 }
 
 export function useFs(props: UseFsProps): UseFsRet {
-  return useFsReal(props) as UseFsRet;
+  return useFsImpl(props) as UseFsRet;
 }
 
 export function useFsAsync(props: UseFsProps): Promise<UseFsRet> {
-  return useFsReal(props) as Promise<UseFsRet>;
+  return useFsImpl(props) as Promise<UseFsRet>;
 }
