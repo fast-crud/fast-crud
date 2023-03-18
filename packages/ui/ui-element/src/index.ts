@@ -1,7 +1,7 @@
 // @ts-ignore
 import { ElMessage, ElNotification, ElMessageBox } from "element-plus";
 // @ts-ignore
-import { uiContext } from "@fast-crud/fast-crud";
+import { uiContext } from "@fast-crud/ui-interface";
 // @ts-ignore
 import { Element } from "./element.ts";
 import setupIcons from "./icons";

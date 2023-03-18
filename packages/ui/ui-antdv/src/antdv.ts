@@ -1,10 +1,14 @@
 import {
+  ButtonCI,
   CascaderCI,
   CheckboxCI,
   CheckboxGroupCI,
   CI,
+  CollapseCI,
+  CollapseItemCI,
   DatePickerCI,
   DialogCI,
+  DividerCI,
   DrawerCI,
   DropdownCI,
   DropdownItemCI,
@@ -23,33 +27,27 @@ import {
   MessageBoxCI,
   MessageCI,
   NotificationCI,
+  NotificationContext,
+  OptionCI,
+  PaginationCI,
+  PopoverCI,
   ProgressCI,
   RadioCI,
   RadioGroupCI,
   SelectCI,
-  OptionCI,
   SwitchCI,
   TableCI,
   TableColumnCI,
+  TabPaneCI,
+  TabsCI,
   TagCI,
   TextAreaCI,
   TimePickerCI,
-  UiInterface,
-  UploadCI,
-  TreeSelectCI,
-  TabsCI,
-  TabPaneCI,
-  CollapseCI,
-  CollapseItemCI,
-  ButtonCI,
-  PaginationCI,
-  DividerCI,
-  PopoverCI,
   TooltipCI,
-  MessageContext,
-  NotificationContext
+  TreeSelectCI,
+  UiInterface,
+  UploadCI
 } from "@fast-crud/ui-interface";
-import _ from "lodash-es";
 
 export type AntdvUiProvider = {
   Notification: any;
@@ -248,7 +246,7 @@ export class Antdv implements UiInterface {
   };
 
   buttonGroup: CI = {
-    name: "a-button-group"
+    name: "a-space"
   };
 
   card: CI = {
