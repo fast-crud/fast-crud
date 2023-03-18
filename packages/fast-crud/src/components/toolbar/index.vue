@@ -11,7 +11,7 @@
           :width="760"
           trigger="click"
         >
-          <template #[ui.popover.referenceSlotName]>
+          <template #[ui.popover.triggerSlotName]>
             <fs-button v-bind="item" @click="handleSimpleClick" />
           </template>
           <template #[ui.popover.contentSlotName]>

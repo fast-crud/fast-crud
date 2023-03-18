@@ -1,5 +1,7 @@
 import {
+  ButtonBuilderOptions,
   ButtonCI,
+  ButtonGroupCI,
   CascaderCI,
   CheckboxCI,
   CheckboxGroupCI,
@@ -22,6 +24,8 @@ import {
   ImageGroupCI,
   InputCI,
   InputGroupCI,
+  InputNumberBuilderOptions,
+  InputNumberCI,
   InputPasswordCI,
   LoadingCI,
   MessageBoxCI,
@@ -30,6 +34,7 @@ import {
   NotificationContext,
   OptionCI,
   PaginationCI,
+  PopoverBuilderOptions,
   PopoverCI,
   ProgressCI,
   RadioCI,
@@ -46,19 +51,32 @@ import {
   TooltipCI,
   TreeSelectCI,
   UiInterface,
-  UploadCI
+  UploadCI,
+  useUiRender
 } from "@fast-crud/ui-interface";
+
+import _ from "lodash-es";
 
 export type AntdvUiProvider = {
   Notification: any;
   Message: any;
   MessageBox: any;
 };
+
+const { buildBinding, renderComponent } = useUiRender();
 export class Antdv implements UiInterface {
   constructor(target: AntdvUiProvider) {
     this.notification.instance = target.Notification;
     this.message.instance = target.Message;
     this.messageBox.instance = target.MessageBox;
+
+    _.forEach(this, (value: any) => {
+      if (value instanceof Object && value.builder) {
+        value.render = (opts: any) => {
+          return renderComponent(value, opts);
+        };
+      }
+    });
   }
 
   type = "antdv";
@@ -239,14 +257,27 @@ export class Antdv implements UiInterface {
         return { danger: true };
       }
       if (type === "info" || type === "warning") {
-        return { type: "default" };
+        return {};
       }
       return { type };
+    },
+    builder(opts: ButtonBuilderOptions) {
+      return buildBinding(this, opts, {
+        slots: {
+          icon: opts.icon
+        }
+      });
     }
   };
 
-  buttonGroup: CI = {
-    name: "a-space"
+  buttonGroup: ButtonGroupCI = {
+    name: "a-space",
+    builder(opts) {
+      return buildBinding(this, opts, {});
+    },
+    render(opts) {
+      return renderComponent(this, opts);
+    }
   };
 
   card: CI = {
@@ -367,22 +398,38 @@ export class Antdv implements UiInterface {
 
   radio: RadioCI = {
     name: "a-radio",
-    value: "value"
+    value: "value",
+    builder(opts) {
+      return buildBinding(this, opts, {});
+    }
   };
 
   radioGroup: RadioGroupCI = {
     name: "a-radio-group",
-    modelValue: "value"
+    modelValue: "value",
+    builder(opts) {
+      return buildBinding(this, opts, {});
+    }
   };
 
   row: CI = {
-    name: "a-row"
+    name: "a-row",
+    builder(opts) {
+      return buildBinding(this, opts, {});
+    }
   };
 
   select: SelectCI = {
     name: "a-select",
     modelValue: "value",
-    clearable: "allowClear"
+    clearable: "allowClear",
+    builder(opts) {
+      return buildBinding(this, opts, {
+        props: {
+          [this.clearable]: opts.clearable
+        }
+      });
+    }
   };
 
   treeSelect: TreeSelectCI = {
@@ -470,7 +517,14 @@ export class Antdv implements UiInterface {
   input: InputCI = {
     name: "a-input",
     clearable: "allowClear",
-    modelValue: "value"
+    modelValue: "value",
+    builder(opts) {
+      return buildBinding(this, opts, {
+        props: {
+          [this.clearable]: opts.clearable
+        }
+      });
+    }
   };
   inputPassword: InputPasswordCI = {
     name: "a-input-password",
@@ -478,8 +532,13 @@ export class Antdv implements UiInterface {
     modelValue: "value",
     passwordType: { showPassword: true }
   };
-  number: CI = {
-    name: "a-input-number"
+  number: InputNumberCI = {
+    name: "a-input-number",
+    modelValue: "value",
+
+    builder(opts: InputNumberBuilderOptions) {
+      return buildBinding(this, opts, {});
+    }
   };
   switch: SwitchCI = {
     activeColor: "checkedColor",
@@ -489,7 +548,17 @@ export class Antdv implements UiInterface {
     inactiveText: "unCheckedChildren",
     inactiveValue: "unCheckedValue",
     modelValue: "checked",
-    name: "a-switch"
+    name: "a-switch",
+    builder(opts) {
+      return buildBinding(this, opts, {
+        [this.activeValue]: opts.activeValue,
+        [this.activeColor]: opts.activeColor,
+        [this.activeText]: opts.activeText,
+        [this.inactiveValue]: opts.inactiveValue,
+        [this.inactiveColor]: opts.inactiveColor,
+        [this.inactiveText]: opts.inactiveText
+      });
+    }
   };
   datePicker: DatePickerCI = {
     name: "a-date-picker",
@@ -618,7 +687,15 @@ export class Antdv implements UiInterface {
   popover: PopoverCI = {
     name: "a-popover",
     contentSlotName: "content",
-    referenceSlotName: "default",
-    visible: "visible"
+    triggerSlotName: "default",
+    visible: "visible",
+    builder(opts: PopoverBuilderOptions) {
+      return buildBinding(this, opts, {
+        slots: {
+          [this.contentSlotName]: opts.contentSlot,
+          [this.triggerSlotName]: opts.triggerSlot
+        }
+      });
+    }
   };
 }
