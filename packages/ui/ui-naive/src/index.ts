@@ -17,6 +17,7 @@ export default {
     uiContext.set(naiveUi);
     app.component("FsUiContext", FsUiContext);
     setupIcons(app);
+    return naiveUi;
   },
   init() {
     uiUtil.init();

@@ -16,5 +16,6 @@ export default {
     });
     setupIcons(app);
     uiContext.set(elementUi);
+    return elementUi;
   }
 };

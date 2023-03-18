@@ -15,5 +15,6 @@ export default {
     uiContext.set(antdvUi);
 
     setupIcons(app);
+    return antdvUi;
   }
 };
