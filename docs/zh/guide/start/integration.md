@@ -176,6 +176,10 @@ app.use(FsExtendsEditor, {
 ```
 扩展组件文档请参考[fast-extends](../advance/extends.md)
 
+:::tip
+扩展组件均为按需加载的异步组件，请放心全局安装
+:::
+
 ### 7. 完成
 现在`fast-crud`已经集成到你的项目中，你可以按照上一节学习的，在你的实际项目里开始你的crud开发了。
 
