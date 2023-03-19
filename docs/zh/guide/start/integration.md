@@ -50,21 +50,31 @@ pnpm i  @fast-crud/ui-naive
 此部分的安装需要参考对应的ui库文档    
 
 ```js
-//安装基础组件,三选一
+//全量安装基础组件,三选一
 // element 
 import ElementPlus from 'element-plus'
 import zhCn from "element-plus/es/locale/lang/zh-cn";
 import "element-plus/dist/index.css";
 import "dayjs/locale/zh-cn";
 app.use(ElementPlus,{size:"small",locale: zhCn})
+
 // 或者 antdv 
 import Antdv from 'ant-design-vue'
 import "ant-design-vue/dist/antd.less";
 app.use(Antdv)
+
 // 或者 naive
 import Naive from 'naive-ui'
 app.use(Naive)
 ```
+
+::: warning
+某些admin框架，为了按需加载，可能并没有全量安装ui组件库，你需要在main.js中全量安装.       
+个人愚见，作为admin管理框架，基础ui组件占比并不大，就算全量安装也就500k-1m左右，在开发便捷性面前，按需加载没有太大必要。      
+重点注意那些不常用、但特别重的第三方组件的按需加载即可（chart、上传sdk、截图sdk等，本项目带的extends组件都是异步按需加载组件。）    
+:::
+
+
 ### 4.引入
 
  ```javascript
