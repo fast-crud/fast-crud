@@ -240,6 +240,7 @@ export class Antdv implements UiInterface {
 
   dialog: DialogCI = {
     name: "a-modal",
+    modelValue: "visible",
     visible: "visible",
     customClass: "wrapClassName",
     footer(footer: any = null) {
@@ -247,6 +248,13 @@ export class Antdv implements UiInterface {
     },
     buildOnClosedBind(onClosed): {} {
       return { afterClose: onClosed };
+    },
+    builder(opts) {
+      return buildBinding(this, opts, {
+        slots: {
+          footer: opts.footer
+        }
+      });
     }
   };
 

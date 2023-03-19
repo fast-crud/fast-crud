@@ -118,7 +118,9 @@ export interface TextAreaCI extends CI<TextAreaBuilderOption> {
 export type DialogFooterBuilder = (footer?: any) => ComponentBinding;
 export type DialogOnClosedBindBuilder = (onClose: (visible: boolean) => void) => ComponentBinding;
 
-export type DialogBuilderOption = {} & BindBuilderOptions;
+export type DialogBuilderOption = {
+  footer?: UiSlot;
+} & BindBuilderOptions;
 
 export interface DialogCI extends CI<DialogBuilderOption> {
   visible: string;
