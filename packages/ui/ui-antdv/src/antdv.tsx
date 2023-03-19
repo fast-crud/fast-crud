@@ -1,4 +1,5 @@
 import {
+  BadgeCI,
   BindBuilderOptions,
   ButtonBuilderOptions,
   ButtonCI,
@@ -692,7 +693,28 @@ export class Antdv implements UiInterface {
     }
   };
   collapseItem: CollapseItemCI = {
-    name: "a-collapse-panel"
+    name: "a-collapse-panel",
+    titleSlotName: "header",
+    extraSlotName: "extra",
+    builder(opts) {
+      return buildBinding(this, opts, {
+        slots: {
+          [this.titleSlotName]: opts.titleSlot,
+          [this.extraSlotName]: opts.extraSlot
+        }
+      });
+    }
+  };
+  badge: BadgeCI = {
+    name: "a-badge",
+    value: "count",
+    builder(opts) {
+      return buildBinding(this, opts, {
+        props: {
+          [this.value]: opts.value
+        }
+      });
+    }
   };
   tooltip: TooltipCI = {
     name: "a-tooltip",

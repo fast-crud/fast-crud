@@ -45,7 +45,10 @@ import {
   DividerCI,
   FormCI,
   PopoverCI,
-  TooltipCI
+  TooltipCI,
+  useUiRender,
+  InputNumberCI,
+  BadgeCI
 } from "@fast-crud/ui-interface";
 // @ts-ignore
 import _ from "lodash-es";
@@ -55,6 +58,8 @@ export type ElementUiProvider = {
   Message: any;
   MessageBox: any;
 };
+
+const { buildBinding, renderComponent } = useUiRender();
 export class Element implements UiInterface {
   constructor(target?: ElementUiProvider) {
     if (target) {
@@ -62,6 +67,14 @@ export class Element implements UiInterface {
       this.message.instance = target.Message;
       this.messageBox.instance = target.MessageBox;
     }
+
+    _.forEach(this, (value: any) => {
+      if (value instanceof Object && value.builder) {
+        value.render = (opts: any) => {
+          return renderComponent(value, opts);
+        };
+      }
+    });
   }
 
   type = "element";
@@ -439,8 +452,12 @@ export class Element implements UiInterface {
     modelValue: "modelValue",
     passwordType: { showPassword: true }
   };
-  number: CI = {
-    name: "el-input-number"
+  number: InputNumberCI = {
+    name: "el-input-number",
+    modelValue: "modelValue",
+    builder(opts) {
+      return buildBinding(this, opts, {});
+    }
   };
   datePicker: DatePickerCI = {
     name: "el-date-picker",
@@ -528,7 +545,38 @@ export class Element implements UiInterface {
     keyName: "name"
   };
   collapseItem: CollapseItemCI = {
-    name: "el-collapse-item"
+    name: "el-collapse-item",
+    titleSlotName: "title",
+    /**
+     * element collapse只支持title插槽
+     */
+    extraSlotName: "not_support_extra",
+    builder(opts) {
+      return buildBinding(this, opts, {
+        slots: {
+          [this.titleSlotName]() {
+            return (
+              <div class={"fsel-collapse-item-title fsel-flex-row space-between"}>
+                <span class={"title-text"}>{opts.titleSlot()} </span>
+                <span class={"title-extra"}>{opts.extraSlot()}</span>
+              </div>
+            );
+          }
+        }
+      });
+    }
+  };
+
+  badge: BadgeCI = {
+    name: "el-badge",
+    value: "value",
+    builder(opts) {
+      return buildBinding(this, opts, {
+        props: {
+          [this.value]: opts.value
+        }
+      });
+    }
   };
   tooltip: TooltipCI = {
     name: "el-tooltip",

@@ -1,4 +1,5 @@
 import {
+  BadgeCI,
   ButtonCI,
   CascaderCI,
   CheckboxCI,
@@ -22,6 +23,7 @@ import {
   ImageGroupCI,
   InputCI,
   InputGroupCI,
+  InputNumberCI,
   InputPasswordCI,
   LoadingCI,
   MessageBoxCI,
@@ -46,8 +48,10 @@ import {
   TooltipCI,
   TreeSelectCI,
   UiInterface,
-  UploadCI
+  UploadCI,
+  useUiRender
 } from "@fast-crud/ui-interface";
+import _ from "lodash-es";
 
 export type NaiveUiProviders = {
   notification: any;
@@ -55,11 +59,22 @@ export type NaiveUiProviders = {
   messageBox: any;
   i18n: any;
 };
+
+const { buildBinding, renderComponent } = useUiRender();
+
 export class Naive implements UiInterface {
   constructor(target?: NaiveUiProviders) {
     if (target) {
       this.init(target);
     }
+
+    _.forEach(this, (value: any) => {
+      if (value instanceof Object && value.builder) {
+        value.render = (opts: any) => {
+          return renderComponent(value, opts);
+        };
+      }
+    });
   }
 
   init({ notification, message, messageBox, i18n }: NaiveUiProviders) {
@@ -539,8 +554,12 @@ export class Naive implements UiInterface {
     modelValue: "value",
     passwordType: { type: "password" }
   };
-  number: CI = {
-    name: "n-input-number"
+  number: InputNumberCI = {
+    name: "n-input-number",
+    modelValue: "value",
+    builder(opts) {
+      return buildBinding(this, opts, {});
+    }
   };
   switch: SwitchCI = {
     activeColor: "active-color",
@@ -640,7 +659,28 @@ export class Naive implements UiInterface {
     keyName: "name"
   };
   collapseItem: CollapseItemCI = {
-    name: "n-collapse-item"
+    name: "n-collapse-item",
+    titleSlotName: "header",
+    extraSlotName: "header-extra",
+    builder(opts) {
+      return buildBinding(this, opts, {
+        slots: {
+          [this.titleSlotName]: opts.titleSlot,
+          [this.extraSlotName]: opts.extraSlot
+        }
+      });
+    }
+  };
+  badge: BadgeCI = {
+    name: "n-badge",
+    value: "value",
+    builder(opts) {
+      return buildBinding(this, opts, {
+        props: {
+          [this.value]: opts.value
+        }
+      });
+    }
   };
   tooltip: TooltipCI = {
     name: "n-tooltip",

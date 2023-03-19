@@ -221,8 +221,17 @@ export interface CollapseCI extends CI<CollapseBuilderOptions> {
   keyName: string;
 }
 
-export type CollapseItemBuilderOptions = {} & BindBuilderOptions;
-export type CollapseItemCI = CI<CollapseItemBuilderOptions>;
+export type CollapseItemBuilderOptions = {
+  titleSlot: UiSlot;
+  /**
+   * 标题右边的插槽
+   */
+  extraSlot: UiSlot;
+} & BindBuilderOptions;
+export type CollapseItemCI = {
+  titleSlotName: string;
+  extraSlotName: string;
+} & CI<CollapseItemBuilderOptions>;
 
 export type SwitchBuilderOptions = {
   activeColor?: string;
@@ -423,6 +432,17 @@ export interface PopoverCI extends CI<PopoverBuilderOptions> {
    */
   triggerSlotName: string;
   visible: string;
+}
+
+export type BadgeBuilderOptions = {
+  value: number | string;
+} & BindBuilderOptions;
+export interface BadgeCI extends CI<BadgeBuilderOptions> {
+  name: string;
+  /**
+   * 计数参数名称
+   */
+  value: string;
 }
 
 export interface ColorPickerCI extends CI {
