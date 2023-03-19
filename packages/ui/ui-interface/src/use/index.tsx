@@ -4,7 +4,7 @@ import _ from "lodash-es";
 
 const doRenderComponent: UiDoRenderComponent = (binding) => {
   const comp = typeof binding.is === "string" ? resolveComponent(binding.is) : binding.is;
-  return <comp {...binding.props} v-slots={binding.slots} v-model={binding.vModel} />;
+  return <comp {...binding.props} v-slots={binding.slots} />;
 };
 
 const renderComponent: UiRenderComponent = (ci: CI, opts: BindBuilderOptions) => {
@@ -23,12 +23,17 @@ const buildBinding: UiBuildBinding = (ci, opts, special: UiSpecialBinding) => {
       vModel[modelValueName] = mvConf.get();
       vModel[`onUpdate:${modelValueName}`] = (value: any) => {
         mvConf.set(value);
+        mvConf.onChange && mvConf.onChange(value);
       };
     } else if (mvConf.ref && mvConf.key) {
       vModel[modelValueName] = _.get(mvConf.ref, mvConf.key);
       vModel[`onUpdate:${modelValueName}`] = (value: any) => {
         _.set(mvConf.ref, mvConf.key, value);
+        mvConf.onChange && mvConf.onChange(value);
       };
+      console.log("vModel", vModel);
+    } else {
+      console.warn("vModel配置错误:", ci, mvConf);
     }
   }
 

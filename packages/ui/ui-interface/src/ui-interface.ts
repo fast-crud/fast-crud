@@ -10,12 +10,15 @@ export type VModelRefKey = {
   key: string;
 };
 
-export type BindBuilderModelValue = VModelGetSet | VModelRefKey;
+export type BindBuilderModelValue = {
+  onChange: (value: any) => void;
+} & (VModelGetSet | VModelRefKey);
+
 export type BindBuilderOptions = {
   is?: string | ShallowRef;
   props?: any;
 
-  vModel?: VModelGetSet | VModelRefKey;
+  vModel?: BindBuilderModelValue;
   slots?: WritableSlots;
 };
 
@@ -27,7 +30,6 @@ export type WritableSlots = {
 export type ComponentRenderBinding = {
   is: string | ShallowRef;
   props: any;
-  vModel?: any[];
   slots?: WritableSlots;
 };
 
@@ -128,7 +130,9 @@ export interface DialogCI extends CI<DialogBuilderOption> {
   buildInitBind?: () => ComponentBinding;
 }
 
-export type DrawerBuilderOption = {} & BindBuilderOptions;
+export type DrawerBuilderOption = {
+  width?: number | string;
+} & BindBuilderOptions;
 
 export interface DrawerCI extends CI<DrawerBuilderOption> {
   visible: string;
@@ -198,18 +202,27 @@ export interface CascaderCI extends CI {
   fieldNames: (namesMap: { value: string; label: string; children: string }) => any;
 }
 
+export type TabsBuilderOptions = {} & BindBuilderOptions;
 export type TabsCI = {
   modelValue: string;
-} & CI;
+} & CI<TabsBuilderOptions>;
+
+export type TabPaneBuilderOptions = {} & BindBuilderOptions;
 export type TabPaneCI = {
   key: string;
   tab: string;
-} & CI;
-export interface CollapseCI extends CI {
+} & CI<TabPaneBuilderOptions>;
+
+export type CollapseBuilderOptions = {
+  key?: string;
+} & BindBuilderOptions;
+export interface CollapseCI extends CI<CollapseBuilderOptions> {
   modelValue: string;
   keyName: string;
 }
-export type CollapseItemCI = CI;
+
+export type CollapseItemBuilderOptions = {} & BindBuilderOptions;
+export type CollapseItemCI = CI<CollapseItemBuilderOptions>;
 
 export type SwitchBuilderOptions = {
   activeColor?: string;

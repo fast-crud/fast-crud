@@ -1,4 +1,5 @@
 import {
+  BindBuilderOptions,
   ButtonBuilderOptions,
   ButtonCI,
   ButtonGroupCI,
@@ -51,6 +52,7 @@ import {
   TooltipCI,
   TreeSelectCI,
   UiInterface,
+  UiSlot,
   UploadCI,
   useUiRender
 } from "@fast-crud/ui-interface";
@@ -323,7 +325,15 @@ export class Antdv implements UiInterface {
     name: "a-drawer",
     visible: "visible",
     customClass: "class",
-    width: "width"
+    width: "width",
+    modelValue: "visible",
+    builder(opts) {
+      return buildBinding(this, opts, {
+        props: {
+          [this.width]: opts.width
+        }
+      });
+    }
   };
 
   form: FormCI = {
@@ -668,10 +678,18 @@ export class Antdv implements UiInterface {
     key: "key",
     tab: "tab"
   };
+
   collapse: CollapseCI = {
     name: "a-collapse",
     modelValue: "activeKey",
-    keyName: "key"
+    keyName: "key",
+    builder(opts) {
+      return buildBinding(this, opts, {
+        props: {
+          [this.keyName]: opts.key
+        }
+      });
+    }
   };
   collapseItem: CollapseItemCI = {
     name: "a-collapse-panel"
