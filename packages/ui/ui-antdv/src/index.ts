@@ -1,6 +1,5 @@
 import { message, notification, Modal } from "ant-design-vue";
-// @ts-ignore
-import { uiContext } from "@fast-crud/fast-crud";
+import { uiContext } from "@fast-crud/ui-interface";
 import setupIcons from "./icons";
 import { Antdv } from "./antdv";
 

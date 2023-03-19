@@ -1,5 +1,43 @@
-export interface CI {
+import { ShallowRef, VNode } from "vue";
+
+export type VModelGetSet = {
+  get: () => any;
+  set: (value: any) => void;
+};
+
+export type VModelRefKey = {
+  ref: any;
+  key: string;
+};
+
+export type BindBuilderModelValue = VModelGetSet | VModelRefKey;
+export type BindBuilderOptions = {
+  is?: string | ShallowRef;
+  props?: any;
+
+  vModel?: VModelGetSet | VModelRefKey;
+  slots?: WritableSlots;
+};
+
+export type UiSlotRet = string | VNode | VNode[] | UiSlotRet[];
+export type UiSlot = () => UiSlotRet;
+export type WritableSlots = {
+  [name: string]: UiSlot;
+};
+export type ComponentRenderBinding = {
+  is: string | ShallowRef;
+  props: any;
+  vModel?: any[];
+  slots?: WritableSlots;
+};
+
+export interface CI<T = any> {
   name: string;
+
+  modelValue?: string;
+  builder?: (options: T) => ComponentRenderBinding;
+
+  render?: (options: T) => UiSlotRet;
 }
 
 export interface FormCI {
@@ -9,16 +47,24 @@ export interface FormCI {
   validateWrap: (formRef: any) => Promise<any>;
   transformValidateErrors: (e: Error) => ComponentBinding;
 }
-export interface SelectCI extends CI {
+
+export type SelectBuilderOption = {
+  clearable?: boolean;
+} & BindBuilderOptions;
+export interface SelectCI extends CI<SelectBuilderOption> {
   modelValue: string;
   clearable: string;
 }
-export interface OptionCI extends CI {
+
+export type OptionBuilderOption = {} & BindBuilderOptions;
+export interface OptionCI extends CI<OptionBuilderOption> {
   // 默认的value和label字段名
   value: string;
   label: string;
 }
-export interface TreeSelectCI extends CI {
+
+export type TreeSelectBuilderOption = {} & BindBuilderOptions;
+export interface TreeSelectCI extends CI<TreeSelectBuilderOption> {
   modelValue: string;
   clearable: string;
   options: string;
@@ -26,23 +72,42 @@ export interface TreeSelectCI extends CI {
   label: string;
   children: string;
 }
-export interface RadioCI extends CI {
+
+export type RadioBuilderOption = {} & BindBuilderOptions;
+export interface RadioCI extends CI<RadioBuilderOption> {
   value: string;
 }
-export interface RadioGroupCI extends CI {
+
+export type RadioGroupBuilderOption = {} & BindBuilderOptions;
+export interface RadioGroupCI extends CI<RadioGroupBuilderOption> {
   modelValue: string;
 }
+
+export type InputBuilderOptions = {
+  clearable?: boolean;
+} & BindBuilderOptions;
 export interface InputCI extends CI {
   clearable: string;
   modelValue: string;
 }
-export type InputGroupCI = CI;
-export interface InputPasswordCI extends InputCI {
+
+export type InputNumberBuilderOptions = {} & BindBuilderOptions;
+export interface InputNumberCI extends CI<InputNumberBuilderOptions> {
+  modelValue: string;
+}
+
+export type InputGroupBuilderOption = {} & BindBuilderOptions;
+export type InputGroupCI = CI<InputGroupBuilderOption>;
+
+export type InputPasswordBuilderOption = {} & BindBuilderOptions;
+export interface InputPasswordCI extends CI<InputPasswordBuilderOption> {
   passwordType: Object;
   clearable: string;
   modelValue: string;
 }
-export interface TextAreaCI extends CI {
+
+export type TextAreaBuilderOption = {} & BindBuilderOptions;
+export interface TextAreaCI extends CI<TextAreaBuilderOption> {
   type: string;
   clearable: string;
   modelValue: string;
@@ -50,7 +115,10 @@ export interface TextAreaCI extends CI {
 
 export type DialogFooterBuilder = (footer?: any) => ComponentBinding;
 export type DialogOnClosedBindBuilder = (onClose: (visible: boolean) => void) => ComponentBinding;
-export interface DialogCI extends CI {
+
+export type DialogBuilderOption = {} & BindBuilderOptions;
+
+export interface DialogCI extends CI<DialogBuilderOption> {
   visible: string;
   footer: DialogFooterBuilder;
   buildOnClosedBind: DialogOnClosedBindBuilder;
@@ -60,14 +128,17 @@ export interface DialogCI extends CI {
   buildInitBind?: () => ComponentBinding;
 }
 
-export interface DrawerCI extends CI {
+export type DrawerBuilderOption = {} & BindBuilderOptions;
+
+export interface DrawerCI extends CI<DrawerBuilderOption> {
   visible: string;
   customClass: string;
   width: string;
   hasContentWrap?: string;
 }
 
-export interface TableColumnCI extends CI {
+export type TableColumnBuilderOption = {} & BindBuilderOptions;
+export interface TableColumnCI extends CI<TableColumnBuilderOption> {
   label: string;
   prop: string;
   row: string;
@@ -84,7 +155,8 @@ export type ComponentBinding = {
   [key: string]: any;
 };
 
-export interface TableCI extends CI {
+export type TableBuilderOption = {} & BindBuilderOptions;
+export interface TableCI extends CI<TableBuilderOption> {
   defaultRowKey?: string | ((rowData: any) => any);
   data: string;
   fixedHeaderNeedComputeBodyHeight: boolean;
@@ -107,10 +179,13 @@ export interface TableCI extends CI {
   rebuildRenderScope?: (scope: any, prop2?: any, prop3?: any, prop4?: any) => ComponentBinding;
 }
 
-export interface CheckboxGroupCI extends CI {
+export type CheckboxGroupBuilderOption = {} & BindBuilderOptions;
+export interface CheckboxGroupCI extends CI<CheckboxGroupBuilderOption> {
   modelValue: string;
 }
-export interface CheckboxCI extends CI {
+
+export type CheckboxBuilderOption = {} & BindBuilderOptions;
+export interface CheckboxCI extends CI<CheckboxBuilderOption> {
   resolveEvent: (e: any) => any;
   value: string;
   modelValue: string;
@@ -135,7 +210,16 @@ export interface CollapseCI extends CI {
   keyName: string;
 }
 export type CollapseItemCI = CI;
-export interface SwitchCI extends CI {
+
+export type SwitchBuilderOptions = {
+  activeColor?: string;
+  activeText?: string;
+  activeValue?: string;
+  inactiveColor?: string;
+  inactiveText?: string;
+  inactiveValue?: string;
+} & BindBuilderOptions;
+export interface SwitchCI extends CI<SwitchBuilderOptions> {
   modelValue: string;
   activeColor: string;
   activeValue: string;
@@ -274,7 +358,16 @@ export interface UploadCI extends CI {
   limitAdd: number;
   isSuccess: (fileItem: any) => Boolean;
 }
-export interface ButtonCI extends CI {
+
+export type ButtonBuilderOptions = {
+  icon?: UiSlot;
+  circle?: boolean;
+  linkType?: boolean;
+  textType?: boolean;
+  color?: string;
+} & BindBuilderOptions;
+
+export interface ButtonCI extends CI<ButtonBuilderOptions> {
   name: string;
   textType: Object;
   linkType: Object;
@@ -300,7 +393,11 @@ export interface DividerCI extends CI {
   name: string;
 }
 
-export interface PopoverCI extends CI {
+export type PopoverBuilderOptions = {
+  contentSlot: UiSlot;
+  triggerSlot: UiSlot;
+} & BindBuilderOptions;
+export interface PopoverCI extends CI<PopoverBuilderOptions> {
   name: string;
 
   /**
@@ -308,10 +405,19 @@ export interface PopoverCI extends CI {
    */
   contentSlotName: string;
 
-  referenceSlotName: string;
+  /**
+   * 触发源插槽
+   */
+  triggerSlotName: string;
   visible: string;
 }
 
+export interface ColorPickerCI extends CI {
+  name: string;
+}
+
+export type ButtonGroupBuilderOptions = {} & BindBuilderOptions;
+export type ButtonGroupCI = CI<ButtonGroupBuilderOptions>;
 export interface Icons {
   refresh: string;
   search: string;
@@ -346,6 +452,7 @@ export interface UiInterface {
   type: string;
   inputGroup: InputGroupCI;
   input: InputCI;
+  number: InputNumberCI;
   inputPassword: InputPasswordCI;
   textArea: TextAreaCI;
   tag: TagCI;
@@ -369,7 +476,7 @@ export interface UiInterface {
   drawer: DrawerCI;
   col: CI;
   row: CI;
-  buttonGroup: CI;
+  buttonGroup: ButtonGroupCI;
   dialog: DialogCI;
   icon: IconCI;
   icons: Icons;
@@ -377,7 +484,7 @@ export interface UiInterface {
   notification: NotificationCI;
   messageBox: MessageBoxCI;
   formWrapper: FormWrapperCI;
-  number: CI;
+
   cascader: CascaderCI;
   switch: SwitchCI;
   datePicker: DatePickerCI;

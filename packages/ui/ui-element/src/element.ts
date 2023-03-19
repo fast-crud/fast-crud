@@ -541,7 +541,7 @@ export class Element implements UiInterface {
   popover: PopoverCI = {
     name: "el-popover",
     contentSlotName: "default",
-    referenceSlotName: "reference",
+    triggerSlotName: "reference",
     visible: "visible"
   };
 }

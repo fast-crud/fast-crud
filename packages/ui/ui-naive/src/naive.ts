@@ -654,6 +654,6 @@ export class Naive implements UiInterface {
     name: "n-popover",
     visible: "show",
     contentSlotName: "default",
-    referenceSlotName: "trigger"
+    triggerSlotName: "trigger"
   };
 }

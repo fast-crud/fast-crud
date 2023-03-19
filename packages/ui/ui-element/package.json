@@ -18,7 +18,6 @@
   },
   "devDependencies": {
     "@element-plus/icons-vue": "^2.1.0",
-    "@fast-crud/fast-crud": "workspace:^1.11.1",
     "@rollup/plugin-strip": "^3.0.2",
     "@rollup/plugin-typescript": "^11.0.0",
     "@types/lodash-es": "^4.17.7",
