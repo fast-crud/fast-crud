@@ -452,6 +452,9 @@ export class Antdv implements UiInterface {
     builder(opts) {
       return buildBinding(this, opts, {
         props: {
+          mode: opts.multiple ? "multiple" : "combobox",
+          options: opts.options,
+          fieldNames: { value: opts.valueName || "value", label: opts.labelName || "label" },
           [this.clearable]: opts.clearable
         }
       });

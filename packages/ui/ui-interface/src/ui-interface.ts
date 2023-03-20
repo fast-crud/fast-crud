@@ -51,7 +51,11 @@ export interface FormCI {
 }
 
 export type SelectBuilderOption = {
+  multiple?: boolean;
   clearable?: boolean;
+  valueName?: string;
+  labelName?: string;
+  options?: any[];
 } & BindBuilderOptions;
 export interface SelectCI extends CI<SelectBuilderOption> {
   modelValue: string;
