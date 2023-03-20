@@ -121,6 +121,10 @@ module.exports = {
                             link: '/api/common-options',
                         },
                         {
+                            text: 'crudExpose',
+                            link: '/api/expose'
+                        },
+                        {
                             text: 'Dict数据字典',
                             link: '/api/dict'
                         },
@@ -128,10 +132,7 @@ module.exports = {
                             text: '官方字段类型列表',
                             link: '/api/types'
                         },
-                        {
-                            text: 'Expose暴露的方法',
-                            link: '/api/expose'
-                        }
+
                     ]
                 },
                 {
