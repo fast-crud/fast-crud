@@ -5,18 +5,26 @@
 ### useFs
 * 说明: 初始化crud
 * 类型： `(props:UseFsProps):UseFsRet`
+* 参数说明：
+    * props.crudExposeRef :  crudExpose创建好之后，会填充进此ref，可以让你在useFs之前创建使用crudExpose的方法(要在useFs之后才能调用)
+    * props.context: 上下文容器，可以放入任何东西
+    * ret.context: props传入的上下文容器，如果没传则会自动创建一个
 * 示例：
 
 ```js
 //index.vue
 export default {
     setup(){
-        const context: any = {}; //自定义变量，传给createCrudOptions的额外参数（可以任意命名，任意多个）
-        const onExpose = (e:OnExposeContext)=>{}
-        const { crudBinding, crudRef, crudExpose, resetCrudOptions } = useFs({ createCrudOptions, context });
+        const custom: any = {}; //自定义变量，传给createCrudOptions的额外参数（可以任意命名，任意多个）
+        const crudExposeRef:Ref<CrudExpose> = ref() //crudExpose创建好之后，会填充进此ref，可以在useFs之前创建使用crudExpose的方法
+        const customAdd = ()=>{
+            crudExposeRef.value.openAdd({row:{}})
+        }
+        const { crudBinding, crudRef, crudExpose, resetCrudOptions,context } = useFs({ createCrudOptions, context: custom, crudExposeRef});
         return {
             crudBinding,
-            crudRef
+            crudRef,
+            customAdd
         }
     }
 }
@@ -24,7 +32,7 @@ export default {
 ```
 
 ### useFsAsync
-* 说明: 异步初始化crud , 可以从后台获取配置后再初始化crud
+* 说明: 异步初始化crud , 可以从后台获取配置后再初始化crud, 需要事先定义crudRef,crudBinding
 * 类型： `(props:UseFsProps):Promise<UseFsRet>`
 * demo： [antdv](http://fast-crud.docmirror.cn/antdv/#/crud/advanced/from-backend)  /  [element](http://fast-crud.docmirror.cn/element/#/crud/advanced/from-backend)  /  [naive](http://fast-crud.docmirror.cn/naive/#/crud/advanced/from-backend)
 * 示例：
@@ -49,11 +57,11 @@ export default {
 }
 ```
 
-### createCrudOptions
+### props.createCrudOptions
 * 说明: 创建CrudOptions的方法，需要用户实现，并传入useFs 或 useFsAsync
 * 类型： `(props:CreateCrudOptionsProps):CreateCrudOptionsRet |  (props:CreateCrudOptionsProps):Promise<CreateCrudOptionsRet>`
 
-### resetCrudOptions
+### ret.resetCrudOptions
 * 说明: useFs返回值之一，可以重新设置crudOptions，重设后表格数据会被清空
 * 类型： `(opts:CrudOptions)=>void`
 * 示例：
