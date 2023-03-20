@@ -11,7 +11,7 @@ export type VModelRefKey = {
 };
 
 export type BindBuilderModelValue = {
-  onChange: (value: any) => void;
+  onChange?: (value: any) => void;
 } & (VModelGetSet | VModelRefKey);
 
 export type BindBuilderOptions = {
@@ -108,7 +108,9 @@ export interface InputPasswordCI extends CI<InputPasswordBuilderOption> {
   modelValue: string;
 }
 
-export type TextAreaBuilderOption = {} & BindBuilderOptions;
+export type TextAreaBuilderOption = {
+  clearable?: boolean;
+} & BindBuilderOptions;
 export interface TextAreaCI extends CI<TextAreaBuilderOption> {
   type: string;
   clearable: string;
@@ -122,6 +124,14 @@ export type DialogBuilderOption = {
   footer?: UiSlot;
 } & BindBuilderOptions;
 
+export type DialogOpenOption = {
+  title?: string | UiSlot;
+  content?: string | UiSlot;
+  width?: number | string;
+  onCancel?: () => Promise<void>;
+  onOk?: () => Promise<void>;
+  type: "info" | "success" | "warning" | "error" | "confirm";
+};
 export interface DialogCI extends CI<DialogBuilderOption> {
   visible: string;
   footer: DialogFooterBuilder;
@@ -130,6 +140,8 @@ export interface DialogCI extends CI<DialogBuilderOption> {
   titleSlotName?: string;
   buildWidthBind?: (width: any) => ComponentBinding;
   buildInitBind?: () => ComponentBinding;
+
+  open: (opts: DialogOpenOption) => void;
 }
 
 export type DrawerBuilderOption = {
@@ -224,15 +236,20 @@ export interface CollapseCI extends CI<CollapseBuilderOptions> {
 }
 
 export type CollapseItemBuilderOptions = {
-  titleSlot: UiSlot;
+  titleSlot?: UiSlot;
   /**
    * 标题右边的插槽
    */
-  extraSlot: UiSlot;
+  extraSlot?: UiSlot;
+  /**
+   * 每个panel对应的key
+   */
+  key?: string;
 } & BindBuilderOptions;
 export type CollapseItemCI = {
   titleSlotName: string;
   extraSlotName: string;
+  key: string;
 } & CI<CollapseItemBuilderOptions>;
 
 export type SwitchBuilderOptions = {
@@ -418,8 +435,12 @@ export interface DividerCI extends CI {
 }
 
 export type PopoverBuilderOptions = {
-  contentSlot: UiSlot;
-  triggerSlot: UiSlot;
+  contentSlot?: UiSlot;
+  triggerSlot?: UiSlot;
+  /**
+   * 偏移位置
+   */
+  position?: { x: string; y: string };
 } & BindBuilderOptions;
 export interface PopoverCI extends CI<PopoverBuilderOptions> {
   name: string;

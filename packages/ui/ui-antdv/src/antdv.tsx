@@ -59,6 +59,7 @@ import {
 } from "@fast-crud/ui-interface";
 
 import _ from "lodash-es";
+import { Modal } from "ant-design-vue";
 
 export type AntdvUiProvider = {
   Notification: any;
@@ -248,6 +249,12 @@ export class Antdv implements UiInterface {
     },
     buildOnClosedBind(onClosed): {} {
       return { afterClose: onClosed };
+    },
+    open(opts) {
+      Modal[opts.type]({
+        ...opts,
+        type: null
+      } as any);
     },
     builder(opts) {
       return buildBinding(this, opts, {
@@ -521,7 +528,12 @@ export class Antdv implements UiInterface {
     name: "a-textarea",
     type: undefined,
     modelValue: "value",
-    clearable: "allowClear"
+    clearable: "allowClear",
+    builder(opts) {
+      return buildBinding(this, opts, {
+        [this.clearable]: opts.clearable
+      });
+    }
   };
 
   tag: TagCI = {
@@ -704,8 +716,12 @@ export class Antdv implements UiInterface {
     name: "a-collapse-panel",
     titleSlotName: "header",
     extraSlotName: "extra",
+    key: "key",
     builder(opts) {
       return buildBinding(this, opts, {
+        props: {
+          [this.key]: opts.key
+        },
         slots: {
           [this.titleSlotName]: opts.titleSlot,
           [this.extraSlotName]: opts.extraSlot
@@ -738,7 +754,21 @@ export class Antdv implements UiInterface {
     triggerSlotName: "default",
     visible: "visible",
     builder(opts: PopoverBuilderOptions) {
+      function position() {
+        if (opts.position) {
+          return {
+            overlayStyle: {
+              top: opts.position.y,
+              left: opts.position.x
+            }
+          };
+        }
+        return {};
+      }
       return buildBinding(this, opts, {
+        props: {
+          ...position()
+        },
         slots: {
           [this.contentSlotName]: opts.contentSlot,
           [this.triggerSlotName]: opts.triggerSlot

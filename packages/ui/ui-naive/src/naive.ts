@@ -662,8 +662,12 @@ export class Naive implements UiInterface {
     name: "n-collapse-item",
     titleSlotName: "header",
     extraSlotName: "header-extra",
+    key: "name",
     builder(opts) {
       return buildBinding(this, opts, {
+        props: {
+          [this.key]: opts.key
+        },
         slots: {
           [this.titleSlotName]: opts.titleSlot,
           [this.extraSlotName]: opts.extraSlot
