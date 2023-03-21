@@ -21,7 +21,6 @@ export type BindBuilderOptions = {
   vModel?: BindBuilderModelValue;
   slots?: WritableSlots;
 };
-
 export type UiSlotRet = string | VNode | VNode[] | UiSlotRet[];
 export type UiSlot = (scope?: any) => UiSlotRet;
 export type WritableSlots = {
@@ -38,7 +37,6 @@ export interface CI<T = any> {
 
   modelValue?: string;
   builder?: (options: T) => ComponentRenderBinding;
-
   render?: (options: T) => UiSlotRet;
 }
 
