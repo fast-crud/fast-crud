@@ -2,8 +2,7 @@
 import { ElMessage, ElNotification, ElMessageBox } from "element-plus";
 // @ts-ignore
 import { uiContext } from "@fast-crud/ui-interface";
-// @ts-ignore
-import { Element } from "./element.ts";
+import { Element } from "./element";
 import setupIcons from "./icons";
 
 export * from "./element";
