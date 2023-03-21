@@ -132,6 +132,10 @@ export type DialogOpenOption = {
   title?: string | UiSlot;
   content?: string | UiSlot;
   width?: number | string;
+
+  okText?: string;
+
+  cancelText?: string;
   onCancel?: () => Promise<void>;
   onOk?: () => Promise<void>;
   type: "info" | "success" | "warning" | "error" | "confirm";

@@ -279,6 +279,7 @@ export class Naive implements UiInterface {
 
   dialog: DialogCI = {
     name: "n-modal",
+    modelValue: "show",
     visible: "show",
     customClass: "class",
     titleSlotName: "header",
@@ -293,6 +294,26 @@ export class Naive implements UiInterface {
     },
     buildInitBind() {
       return { preset: "card" };
+    },
+    open: (opts) => {
+      let type: string = opts.type;
+      let showIcon = true;
+      if (opts.type === "confirm") {
+        type = "create";
+        showIcon = false;
+      }
+      this.messageBox.instance[type]({
+        title: opts.title,
+        content: opts.content,
+        positiveText: opts.okText,
+        negativeText: opts.cancelText,
+        onPositiveClick: opts.onOk,
+        onNegativeClick: opts.onCancel,
+        showIcon
+      });
+    },
+    builder(opts) {
+      return buildBinding(this, opts, {});
     }
   };
 
