@@ -86,7 +86,7 @@ import { useI18n } from "../../locale";
 import logger from "../../utils/util.log";
 import FsSearchButtons from "./buttons.vue";
 import { Constants } from "../../utils/util.constants";
-import { ButtonsProps, SearchEventContext, SearchItemProps } from "/src/d.ts";
+import { ButtonsProps, SearchEventContext, SearchItemProps } from "../../d";
 import { useUi } from "../../use/use-ui";
 
 /**

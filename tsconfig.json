@@ -31,7 +31,7 @@
     ]
   },
   "include": [
-    "packages/fast-crud/src/d.ts/*.ts",
+    "packages/fast-crud/src/d/*.ts",
     "src/**/*.ts",
     "src/**/*.tsx",
     "src/**/*.vue",

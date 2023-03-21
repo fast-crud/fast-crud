@@ -1,6 +1,6 @@
 import { UiInterface } from "@fast-crud/ui-interface";
-import { CrudOptions } from "/src/d.ts/crud";
-import { DictRequest } from "/src/use";
+import { CrudOptions } from "../d/crud";
+import { DictRequest } from "../use";
 
 export type FsSetupOptions = {
   ui?: UiInterface;

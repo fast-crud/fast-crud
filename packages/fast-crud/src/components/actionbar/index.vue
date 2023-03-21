@@ -9,7 +9,7 @@
 import { defineComponent, computed, Ref } from "vue";
 import _ from "lodash-es";
 import { Constants } from "../../utils/util.constants";
-import { ActionbarClickEvent, ButtonsProps } from "/src/d.ts";
+import { ActionbarClickEvent, ButtonsProps } from "../../d";
 
 export default defineComponent({
   name: "FsActionbar",

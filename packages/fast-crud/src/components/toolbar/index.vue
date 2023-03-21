@@ -45,7 +45,7 @@ import _ from "lodash-es";
 import { computed, defineComponent, ref, Ref } from "vue";
 import { useI18n } from "../../locale";
 import { Constants } from "../../utils/util.constants";
-import { ButtonProps, ButtonsProps } from "../../d.ts";
+import { ButtonProps, ButtonsProps } from "../../d";
 import { useUi } from "../../use";
 
 /**

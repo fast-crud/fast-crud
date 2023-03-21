@@ -19,7 +19,8 @@
     "types": [
       "vite/client",
       "mocha",
-      "chai"
+      "chai",
+      "unplugin-vue-define-options/macros-global"
     ],
     "paths": {
       "@/*": [

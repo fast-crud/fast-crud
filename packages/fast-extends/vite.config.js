@@ -5,6 +5,7 @@ import _ from "lodash";
 import visualizer from "rollup-plugin-visualizer";
 import strip from "@rollup/plugin-strip";
 const { resolve } = path;
+import DefineOptions from "unplugin-vue-define-options/vite";
 import typescript from "@rollup/plugin-typescript";
 // https://vitejs.dev/config/
 export default ({ command, mode }) => {
@@ -27,7 +28,7 @@ export default ({ command, mode }) => {
   }
 
   const options = {
-    plugins: [vueJsx(), vue()],
+    plugins: [DefineOptions(), vueJsx(), vue()],
     esbuild: {
       drop: command === "build" ? ["debugger"] : [],
       jsxFactory: "h",

@@ -23,7 +23,7 @@ import {
   OpenDialogProps,
   SetFormDataOptions,
   WriteableSlots
-} from "/src/d.ts";
+} from "../../d";
 
 /**
  * 表单对话框|抽屉

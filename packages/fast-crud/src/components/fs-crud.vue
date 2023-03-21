@@ -111,7 +111,7 @@ import traceUtil from "../utils/util.trace";
 import { uiContext } from "../ui";
 import { useMerge } from "../use/use-merge";
 import utilLog from "../utils/util.log";
-import { SetSearchFormDataProps } from "/src/d.ts";
+import { SetSearchFormDataProps } from "../d";
 import { useUi } from "../use";
 
 const { merge } = useMerge();

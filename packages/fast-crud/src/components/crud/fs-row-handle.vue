@@ -46,7 +46,7 @@ import { useI18n } from "../../locale";
 import { useUi } from "../../use/use-ui";
 import { useCompute } from "../../use/use-compute";
 import { Constants } from "../../utils/util.constants";
-import { ButtonProps, ScopeContext } from "/src/d.ts";
+import { ButtonProps, ScopeContext } from "../../d";
 
 /**
  * 操作列配置

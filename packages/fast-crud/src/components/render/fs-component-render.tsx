@@ -11,7 +11,7 @@ import {
 } from "vue";
 import _ from "lodash-es";
 import { useUi } from "../../use";
-import { ComponentEventContext } from "/src/d.ts";
+import { ComponentEventContext } from "../../d";
 
 function mergeEventHandles(target: any, eventName: string) {
   if (target[eventName] instanceof Array) {

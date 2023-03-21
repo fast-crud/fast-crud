@@ -7,7 +7,7 @@ import { i18n, useI18n } from "./locale/";
 import { uiContext } from "./ui";
 import { useDictDefine } from "./use";
 import { App } from "vue";
-import { FsSetupOptions } from "./d.ts";
+import { FsSetupOptions } from "./d";
 
 export * from "./utils/index";
 export * from "./use";
@@ -15,7 +15,7 @@ export * from "./components";
 export * from "./ui";
 const { setDictRequest } = useDictDefine();
 export { utils, useI18n, uiContext };
-export * from "./d.ts/index";
+export * from "./d/index";
 
 export const FastCrud = {
   install(app: App, options: FsSetupOptions = {}) {

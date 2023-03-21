@@ -16,7 +16,7 @@ import {
   FormProps,
   ScopeContext,
   TypeMap
-} from "../d.ts";
+} from "../d";
 import { UseFsContext } from "./use-crud";
 
 const { merge, cloneDeep } = useMerge();

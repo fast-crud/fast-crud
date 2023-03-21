@@ -1,7 +1,7 @@
 import { Ref, ShallowRef } from "vue";
-import { ComputeContext } from "../d.ts/compute";
+import { ComputeContext } from "./compute";
 import { Dict, GetContextFn } from "../use";
-import { DoRemoveContext } from "/src/d.ts/expose";
+import { DoRemoveContext } from "../d/expose";
 
 import { RuleItem } from "async-validator";
 import { UiSlot } from "@fast-crud/ui-interface";

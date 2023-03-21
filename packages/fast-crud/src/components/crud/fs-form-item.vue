@@ -68,7 +68,7 @@
 import { ref, computed, defineComponent, Ref, PropType } from "vue";
 import _ from "lodash-es";
 import FsRender from "../render/fs-render.js";
-import { ScopeContext } from "../../d.ts";
+import { ScopeContext } from "../../d";
 import { useUi } from "../../use";
 /**
  * form-item组件封装

@@ -1,4 +1,4 @@
-import { FormProps, OpenDialogProps } from "/src/d.ts";
+import { FormProps, OpenDialogProps } from "../d";
 import { ComponentInternalInstance, createVNode, render, VNode } from "vue";
 import { FsFormWrapper } from "../components";
 

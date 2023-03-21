@@ -13,10 +13,10 @@ import {
   DynamicallyCrudOptions,
   DynamicType,
   ScopeContext
-} from "../d.ts";
+} from "../d";
 import { useCompute } from "./use-compute";
 import { useColumns } from "./use-columns";
-import { CrudOptions } from "../d.ts/crud";
+import { CrudOptions } from "../d/crud";
 import { computed, Ref, ref } from "vue";
 import { useExpose } from "./use-expose";
 // eslint-disable-next-line @typescript-eslint/no-unused-vars

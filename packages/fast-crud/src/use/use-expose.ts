@@ -1,5 +1,5 @@
 import { Ref, toRaw } from "vue";
-import { CrudExpose, OpenDialogProps, OpenEditContext, SetFormDataOptions } from "../d.ts/expose";
+import { CrudExpose, OpenDialogProps, OpenEditContext, SetFormDataOptions } from "../d/expose";
 import _ from "lodash-es";
 import logger from "../utils/util.log";
 import { useMerge } from "../use/use-merge";
@@ -14,7 +14,7 @@ import {
   RemoveProps,
   UserPageQuery,
   UserPageRes
-} from "../d.ts";
+} from "../d";
 import { useFormWrapper } from "./use-form";
 import { forEachColumns } from "../use/use-columns";
 

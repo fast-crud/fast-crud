@@ -14,7 +14,7 @@ import { useEditable } from "./editable/use-editable";
 import logger from "../../utils/util.log";
 import utilLog from "../../utils/util.log";
 import "./fs-table.less";
-import { ColumnProps, ScopeContext, WriteableSlots } from "/src/d.ts";
+import { ColumnProps, ScopeContext, WriteableSlots } from "../../d";
 import { UiInterface } from "@fast-crud/ui-interface/src";
 
 type BuildTableColumnsOption = {
