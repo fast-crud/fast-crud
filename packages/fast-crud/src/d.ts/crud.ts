@@ -1,9 +1,10 @@
-import { Ref, ShallowRef, Slot } from "vue";
+import { Ref, ShallowRef } from "vue";
 import { ComputeContext } from "../d.ts/compute";
 import { Dict, GetContextFn } from "../use";
 import { DoRemoveContext } from "/src/d.ts/expose";
 
 import { RuleItem } from "async-validator";
+import { UiSlot } from "@fast-crud/ui-interface";
 
 // export type FsRefValue<T> = T | Ref<T> | ComputedRef<T>;
 // export type FsComputeValue<T> = FsRefValue<T> | ComputeValue<T> | AsyncComputeValue<T>;
@@ -216,7 +217,7 @@ export type RequestProp = {
  * 可改变的插槽集合
  */
 export type WriteableSlots = {
-  [name: string]: Slot;
+  [name: string]: UiSlot;
 };
 /**
  * 组件配置
@@ -782,7 +783,7 @@ export type ToolbarProps = {
   [key: string]: any;
 } & ToolbarComponentProps;
 
-type ButtonIconProps = string | { icon: string; [key: string]: any };
+type ButtonIconProps = string | { icon: string; [key: string]: any } | UiSlot;
 type NullableString = string | null;
 
 export type FormWrapperContext = {

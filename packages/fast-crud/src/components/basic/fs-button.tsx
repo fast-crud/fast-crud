@@ -20,11 +20,11 @@ export default defineComponent({
     /**
      * 图标
      */
-    icon: { type: [String, Object], default: "", required: false },
+    icon: { type: [String, Object, Function], default: "", required: false },
     /**
      * 右边的图标
      */
-    iconRight: { type: [String, Object], default: "", required: false },
+    iconRight: { type: [String, Object, Function], default: "", required: false },
     /**
      * 是否圆形按钮，text需配置为null
      */
@@ -46,6 +46,8 @@ export default defineComponent({
       }
       if (typeof icon === "string") {
         return <fs-icon icon={icon} class={iconClass} />;
+      } else if (typeof icon === "function") {
+        return icon();
       } else {
         return <fs-icon {...icon} class={iconClass} />;
       }
