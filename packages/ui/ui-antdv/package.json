@@ -1,6 +1,6 @@
 {
   "name": "@fast-crud/ui-antdv",
-  "version": "1.11.1",
+  "version": "1.11.2",
   "description": "antdv",
   "main": "./src/index.ts",
   "module": "./src/index.ts",
@@ -18,7 +18,7 @@
   "author": "Greper",
   "license": "MIT",
   "dependencies": {
-    "@fast-crud/ui-interface": "workspace:^1.11.0",
+    "@fast-crud/ui-interface": "workspace:^1.11.2",
     "lodash-es": "^4.17.21"
   },
   "devDependencies": {
