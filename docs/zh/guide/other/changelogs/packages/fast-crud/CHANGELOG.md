@@ -3,6 +3,18 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.11.2](https://github.com/fast-crud/fast-crud/compare/v1.11.1...v1.11.2) (2023-03-21)
+
+
+### Performance Improvements
+
+* ui 支持render ([18b97a3](https://github.com/fast-crud/fast-crud/commit/18b97a3e67ee9410be5eb8ef7e757125a9160852))
+* ui package移除对fast-crud的依赖 ([7a7b51f](https://github.com/fast-crud/fast-crud/commit/7a7b51fd9594b29a31e844b0fd2d31396e96a613))
+
+
+
+
+
 ## [1.11.1](https://github.com/fast-crud/fast-crud/compare/v1.11.0...v1.11.1) (2023-03-17)
 
 

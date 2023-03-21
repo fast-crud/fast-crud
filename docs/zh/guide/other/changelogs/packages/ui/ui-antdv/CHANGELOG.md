@@ -3,6 +3,20 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.11.2](https://github.com/fast-crud/fast-crud/compare/v1.11.1...v1.11.2) (2023-03-21)
+
+
+### Performance Improvements
+
+* ui 支持render ([18b97a3](https://github.com/fast-crud/fast-crud/commit/18b97a3e67ee9410be5eb8ef7e757125a9160852))
+* ui package移除对fast-crud的依赖 ([7a7b51f](https://github.com/fast-crud/fast-crud/commit/7a7b51fd9594b29a31e844b0fd2d31396e96a613))
+* ui package移除对fast-crud的依赖 ([89a9f2c](https://github.com/fast-crud/fast-crud/commit/89a9f2ccbad4374a6bd92c29fe16afab19bd3744))
+* ui-interface支持render 和buildBinding ([71d2528](https://github.com/fast-crud/fast-crud/commit/71d25287ab2c3d3367039284ce206774774e1dd4))
+
+
+
+
+
 ## [1.11.1](https://github.com/fast-crud/fast-crud/compare/v1.11.0...v1.11.1) (2023-03-17)
 
 **Note:** Version bump only for package @fast-crud/ui-antdv
