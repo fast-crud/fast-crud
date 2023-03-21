@@ -23,7 +23,7 @@ export type BindBuilderOptions = {
 };
 
 export type UiSlotRet = string | VNode | VNode[] | UiSlotRet[];
-export type UiSlot = () => UiSlotRet;
+export type UiSlot = (scope?: any) => UiSlotRet;
 export type WritableSlots = {
   [name: string]: UiSlot;
 };

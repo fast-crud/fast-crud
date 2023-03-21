@@ -57,8 +57,8 @@ function buildTableSlots({ props, ui, renderRowHandle, renderCellComponent }: Bu
         }
       } else {
         // cell render custom component
-        cellSlots.default = (scope) => {
-          return renderCellComponent(item, scope);
+        cellSlots.default = (scope: any) => {
+          return renderCellComponent(item, scope) as any;
         };
       }
       const newItem = { ...item };
