@@ -41,15 +41,15 @@ export default ({ command, mode }) => {
         ],
         // make sure to externalize deps that shouldn't be bundled
         // into your library
-        external: ["vue", "@fast-crud/fast-crud", "ant-design-vue", "@ant-design/icons-vue", "lodash-es"],
+        external: ["vue", "@fast-crud/fast-crud", "element-plus", "@element-plus/icons-vue", "lodash-es"],
         output: {
           // Provide global variables to use in the UMD build
           // for externalized deps
           globals: {
             vue: "Vue",
             "@fast-crud/fast-crud": "FastCrud",
-            "ant-design-vue": "Antdv",
-            "@ant-design/icons-vue": "IconsVue",
+            "element-plus": "ElementPlus",
+            "@element-plus/icons-vue": "IconsVue",
             "lodash-es": "_"
           }
         }
