@@ -19,7 +19,7 @@
 你可以从以下途径了解crudBinding数据结构：
 1. [crudBinding数据结构文档](/d.ts/types/CrudBinding.html)
 2. 通过`fast-crud`初始化日志查看 
-   ![](../..//images/crud-init-log.jpg)
+   ![](../../images/crud-init-log.jpg)
 
 ```js
 // 使用示例

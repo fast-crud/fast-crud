@@ -18,7 +18,8 @@
     "allowJs": true,
     "types": [
       "vite/client",
-      "node"
+      "node",
+      "unplugin-vue-define-options/macros-global"
     ],
     "paths": {
       "/src/*": [ "src/*"]
