@@ -68,7 +68,8 @@ export default ({ command, mode }) => {
           "ali-oss",
           "cos-js-sdk-v5",
           "qiniu-js",
-          "@fast-crud/fast-crud"
+          "@fast-crud/fast-crud",
+          "@fast-crud/ui-interface"
         ],
         output: {
           manualChunks(id) {
@@ -89,7 +90,8 @@ export default ({ command, mode }) => {
             "@fast-crud/fast-crud": "FastCrud",
             "ali-oss": "OSS",
             "cos-js-sdk-v5": "COS",
-            "qiniu-js": "qiniu"
+            "qiniu-js": "qiniu",
+            "@fast-crud/ui-interface": "UiInterface"
           }
         }
       }
