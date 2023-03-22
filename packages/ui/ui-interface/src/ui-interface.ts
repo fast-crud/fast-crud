@@ -1,4 +1,4 @@
-import { ShallowRef, VNode } from "vue";
+import { Ref, ShallowRef, VNode } from "vue";
 
 export type VModelGetSet = {
   get: () => any;
@@ -37,6 +37,8 @@ export interface CI<T = any> {
 
   modelValue?: string;
   builder?: (options: T) => ComponentRenderBinding;
+  buildProps?: (options: T) => any;
+  builderComputed?: (options: T) => Ref<ComponentRenderBinding>;
   render?: (options: T) => UiSlotRet;
 }
 
@@ -240,7 +242,7 @@ export interface CollapseCI extends CI<CollapseBuilderOptions> {
   modelValue: string;
   keyName: string;
 }
-
+export type CollapseTransitionCI = CI;
 export type CollapseItemBuilderOptions = {
   titleSlot?: UiSlot;
   /**
@@ -440,6 +442,9 @@ export interface DividerCI extends CI {
   name: string;
 }
 
+export type CardCI = CI;
+export type RowCI = CI;
+export type ColCI = CI;
 export type PopoverBuilderOptions = {
   contentSlot?: UiSlot;
   triggerSlot?: UiSlot;
@@ -533,11 +538,11 @@ export interface UiInterface {
   select: SelectCI;
   treeSelect: TreeSelectCI;
   option: OptionCI;
-  collapseTransition: CI;
-  card: CI;
+  collapseTransition: CollapseTransitionCI;
+  card: CardCI;
   drawer: DrawerCI;
-  col: CI;
-  row: CI;
+  col: ColCI;
+  row: RowCI;
   buttonGroup: ButtonGroupCI;
   dialog: DialogCI;
   icon: IconCI;
