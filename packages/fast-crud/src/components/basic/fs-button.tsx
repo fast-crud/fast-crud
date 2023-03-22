@@ -96,15 +96,17 @@ export default defineComponent({
 
       const buttonComp: any = resolveDynamicComponent(ui.button.name);
 
-      const btnProps = {
-        ...ctx.attrs,
-        ...isCircle,
-        //icon,
-        class: {
-          "fs-button": true,
-          "is-thin": !props.text && !ctx.slots.default
-        }
-      };
+      const btnProps = _.merge(
+        {
+          ...isCircle,
+          //icon,
+          class: {
+            "fs-button": true,
+            "is-thin": !props.text && !ctx.slots.default
+          }
+        },
+        { ...ctx.attrs }
+      );
       if (iconProp) {
         // @ts-ignore
         btnProps.icon = iconProp;
