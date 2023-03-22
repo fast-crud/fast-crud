@@ -32,7 +32,7 @@ pnpm create vite my-vue-app -- --template vue
 cd my-vue-app
 pnpm i  @fast-crud/fast-crud
 pnpm i  @fast-crud/fast-extends
-pnpm i  @fast-crud/fast-interface
+pnpm i  @fast-crud/ui-interface
 
 #安装ui，根据你选择的基础组件 三选一
 # element-plus
