@@ -2,9 +2,9 @@
   "name": "@fast-crud/ui-element",
   "version": "1.11.7",
   "description": "",
-  "main": "./dist/ui-element.umd.js",
-  "module": "./dist/ui-element.mjs",
-  "types": "./dist/d/index.d.ts",
+  "main": "./src/index.ts",
+  "module": "./src/index.ts",
+  "types": "./src/index.ts",
   "publishConfig": {
     "main": "./dist/ui-element.umd.js",
     "module": "./dist/ui-element.mjs",

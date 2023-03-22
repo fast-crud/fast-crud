@@ -61,7 +61,7 @@ async function trigger(){
 }
 
 async function  start(){
-    await build()
+    // await build()
     await trigger()
 }
 
