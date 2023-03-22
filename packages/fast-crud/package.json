@@ -2,9 +2,9 @@
   "name": "@fast-crud/fast-crud",
   "version": "1.11.6",
   "private": false,
-  "main": "./src/index.ts",
-  "module": "./src/index.ts",
-  "types": "./src/index.ts",
+  "main": "./dist/fast-crud.umd.js",
+  "module": "./dist/fast-crud.mjs",
+  "types": "./dist/d/index.d.ts",
   "publishConfig": {
     "main": "./dist/fast-crud.umd.js",
     "module": "./dist/fast-crud.mjs",
