@@ -1,7 +1,7 @@
 {
   "name": "ui-demo",
   "private": true,
-  "version": "1.11.5",
+  "version": "1.11.6",
   "type": "module",
   "scripts": {
     "dev": "vite",
@@ -9,8 +9,8 @@
     "preview": "vite preview"
   },
   "dependencies": {
-    "@fast-crud/ui-antdv": "^1.11.5",
-    "@fast-crud/ui-interface": "^1.11.5",
+    "@fast-crud/ui-antdv": "^1.11.6",
+    "@fast-crud/ui-interface": "^1.11.6",
     "ant-design-vue": "^3.2.15",
     "vue": "^3.2.47"
   },
