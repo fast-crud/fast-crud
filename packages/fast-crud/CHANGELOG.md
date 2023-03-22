@@ -3,6 +3,18 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.11.4](https://github.com/fast-crud/fast-crud/compare/v1.11.3...v1.11.4) (2023-03-22)
+
+### Bug Fixes
+
+* 多级表头列设置不显示bug ([f66afaf](https://github.com/fast-crud/fast-crud/commit/f66afaf55e3a8d86136484dd819622199bafc2c0))
+* 修复 buttons丢失class配置的问题 ([40a885d](https://github.com/fast-crud/fast-crud/commit/40a885d632ecd88e9c3a0ab9b06119f7af2e952b))
+* tabs，修复连续触发两次查询的bug ([52eab90](https://github.com/fast-crud/fast-crud/commit/52eab90ab01680c3b7a62289196b1674b53c30b0))
+
+### Performance Improvements
+
+* doRefresh增加参数 ([a585604](https://github.com/fast-crud/fast-crud/commit/a5856045380f4a3fe2e657fd2ace1aea3473c6d7))
+
 ## [1.11.3](https://github.com/fast-crud/fast-crud/compare/v1.11.2...v1.11.3) (2023-03-21)
 
 **Note:** Version bump only for package @fast-crud/fast-crud

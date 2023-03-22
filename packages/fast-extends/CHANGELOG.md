@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.11.4](https://github.com/fast-crud/fast-crud/compare/v1.11.3...v1.11.4) (2023-03-22)
+
+### Performance Improvements
+
+* 文本复制组件优化 ([20a0b4c](https://github.com/fast-crud/fast-crud/commit/20a0b4c6d56c73157752e1b9bb99a6543e23fb98))
+
 ## [1.11.3](https://github.com/fast-crud/fast-crud/compare/v1.11.2...v1.11.3) (2023-03-21)
 
 **Note:** Version bump only for package @fast-crud/fast-extends
