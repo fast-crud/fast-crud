@@ -42,6 +42,7 @@
       <div v-if="toolbar && toolbar.show !== false" class="fs-crud-toolbar">
         <slot name="toolbar-left"></slot>
         <fs-toolbar
+          ref="toolbarRef"
           v-bind="toolbar"
           :slots="computedToolbarSlots"
           :search="search.show"
@@ -292,6 +293,7 @@ function useFixedHeight(props: any, ctx: SetupContext, { tableRef, containerRef 
 function useTable(props: any, ctx: SetupContext) {
   const ui = uiContext.get();
   const tableRef = ref();
+  const toolbarRef = ref();
   const containerRef = ref();
   const { maxHeightRef, computeBodyHeight } = useFixedHeight(props, ctx, { tableRef, containerRef });
   const computedTable = computed(() => {
@@ -318,6 +320,7 @@ function useTable(props: any, ctx: SetupContext) {
   const computedToolbarSlots = computed(() => {
     return slotFilter(ctx.slots, "toolbar");
   });
+
   const formWrapperRef = ref();
 
   const computedClass = computed(() => {
@@ -338,6 +341,7 @@ function useTable(props: any, ctx: SetupContext) {
   return {
     tableRef,
     containerRef,
+    toolbarRef,
     computedTable,
     computedToolbar,
     computedCellSlots,

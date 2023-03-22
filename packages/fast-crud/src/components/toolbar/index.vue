@@ -17,6 +17,7 @@
           <template #[ui.popover.contentSlotName]>
             <fs-table-columns-filter
               v-if="columns"
+              ref="columnsFilterRef"
               v-model:show="popoverVisible"
               mode="simple"
               v-bind="columnsFilter"
@@ -30,8 +31,9 @@
       </template>
     </template>
     <fs-table-columns-filter
-      v-if="columns"
+      v-if="columns && columnsFilter.mode !== 'simple'"
       ref="columnsFilterRef"
+      v-bind="columnsFilter"
       :columns="columns"
       :storage="storage"
       @update:columns="$emit('update:columns', $event)"

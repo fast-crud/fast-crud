@@ -229,7 +229,14 @@ function buildOriginalColumns(value: any) {
       __show: item.columnSetShow !== false,
       __disabled: item.columnSetDisabled ?? false
     };
-    columns.push(column);
+    if (item.children) {
+      const list = buildOriginalColumns(item.children);
+      for (let i of list) {
+        columns.push(i);
+      }
+    } else {
+      columns.push(column);
+    }
   });
   return columns;
 }
@@ -379,7 +386,9 @@ const init = () => {
 
 init();
 defineExpose({
-  start
+  start,
+  original,
+  columns: currentValue
 });
 
 function buildText(element: any) {

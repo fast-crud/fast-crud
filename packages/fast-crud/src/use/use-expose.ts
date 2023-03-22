@@ -369,6 +369,36 @@ export function useExpose(props: UseExposeProps): UseExposeRet {
         });
       }
     },
+
+    /**
+     * 获取toolbar组件Ref
+     */
+    getToolbarRef: () => {
+      return crudRef.value.toolbarRef;
+    },
+
+    /**
+     * 获取列设置组件Ref
+     */
+    getColumnsFilterRef: () => {
+      return crudExpose.getToolbarRef().columnsFilterRef;
+    },
+
+    /**
+     * 获取列设置的原始列配置Ref
+     * 可以修改列设置的原始配置
+     */
+    getColumnsFilterOriginalColumnsRef: () => {
+      return crudExpose.getColumnsFilterRef().original;
+    },
+    /**
+     * 获取列设置的列配置Ref
+     * 可以动态修改列设置每列的配置
+     */
+    getColumnsFilterColumnsRef: () => {
+      return crudExpose.getColumnsFilterRef().columns;
+    },
+
     doPageTurn(no: number) {
       crudBinding.value.pagination[ui.pagination.currentPage] = no;
     },
