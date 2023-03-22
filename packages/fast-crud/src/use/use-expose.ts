@@ -280,9 +280,12 @@ export function useExpose(props: UseExposeProps): UseExposeRet {
     /**
      * {form,mergeForm}
      */
-    setSearchFormData(context: { form: any; mergeForm?: boolean }) {
+    setSearchFormData(context) {
       checkCrudRef();
       crudRef.value.setSearchFormData(context);
+      if (context.triggerSearch) {
+        crudExpose.doRefresh();
+      }
     },
     /**
      * 获取search组件ref
@@ -291,18 +294,23 @@ export function useExpose(props: UseExposeProps): UseExposeRet {
       checkCrudRef();
       return crudRef.value.getSearchRef();
     },
-    async doRefresh() {
+    async doRefresh(props?) {
       if (crudBinding.value.request.pageRequest == null) {
         return;
       }
 
       let page: any;
       if (crudBinding.value.pagination) {
+        if (props?.goFirstPage) {
+          crudBinding.value.pagination[ui.pagination.currentPage] = 1;
+        }
+
         page = {
           currentPage: crudBinding.value.pagination[ui.pagination.currentPage],
           pageSize: crudBinding.value.pagination.pageSize
         };
       }
+
       const searchFormData = _.cloneDeep(crudExpose.getSearchFormData());
       //配置searchValueResolve
       if (crudBinding.value?.search?.columns) {

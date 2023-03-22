@@ -12,6 +12,10 @@ export class SetFormDataOptions {
   valueChange?: boolean;
 }
 
+export type DoRefreshProps = {
+  goFirstPage?: boolean;
+};
+
 /**
  * crudExpose
  */
@@ -55,7 +59,7 @@ export type CrudExpose = {
   /**
    * 刷新列表数据
    */
-  doRefresh: () => Promise<void>;
+  doRefresh: (props?: DoRefreshProps) => Promise<void>;
   /**
    * 翻页
    */
@@ -190,7 +194,7 @@ export type OpenDialogProps = {
 /**
  * crudExpose.setSearchFormData参数
  */
-export type SetSearchFormDataProps = { form: any; mergeForm?: boolean };
+export type SetSearchFormDataProps = { form: any; mergeForm?: boolean; triggerSearch?: boolean };
 /**
  * crudExpose.doRemove参数
  */
