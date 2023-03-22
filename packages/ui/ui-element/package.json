@@ -12,7 +12,7 @@
   },
   "scripts": {
     "tsc": "vue-tsc --noEmit --skipLibCheck",
-    "build": " vite build",
+    "build": "npm run tsc && vite build",
     "test": "jest",
     "lint-fix": "eslint --fix --ext .js --ext .jsx --ext .vue src/"
   },

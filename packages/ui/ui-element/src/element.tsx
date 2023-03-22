@@ -52,6 +52,7 @@ import {
 } from "@fast-crud/ui-interface";
 // @ts-ignore
 import _ from "lodash-es";
+import { ElDialog } from "element-plus";
 
 export type ElementUiProvider = {
   Notification: any;
@@ -211,6 +212,9 @@ export class Element implements UiInterface {
     },
     footer() {
       return {};
+    },
+    open(opts) {
+      ElDialog.open(opts);
     }
   };
 
@@ -546,6 +550,7 @@ export class Element implements UiInterface {
   };
   collapseItem: CollapseItemCI = {
     name: "el-collapse-item",
+    key: "name",
     titleSlotName: "title",
     /**
      * element collapse只支持title插槽

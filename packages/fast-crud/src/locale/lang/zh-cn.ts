@@ -72,4 +72,4 @@ export default {
       }
     }
   }
-};
+} as any;
