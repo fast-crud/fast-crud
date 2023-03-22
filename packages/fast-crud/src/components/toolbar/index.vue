@@ -4,7 +4,7 @@
       <template v-if="item.show !== false">
         <component
           :is="ui.popover.name"
-          v-if="key === 'columns' && columnsFilter && columnsFilter.mode === 'simple'"
+          v-if="key === 'columns' && columnsFilter && columnsFilter?.mode === 'simple'"
           v-model:[ui.popover.visible]="popoverVisible"
           display-directive="show"
           placement="bottom"
@@ -31,7 +31,7 @@
       </template>
     </template>
     <fs-table-columns-filter
-      v-if="columns && columnsFilter.mode !== 'simple'"
+      v-if="columns && columnsFilter?.mode !== 'simple'"
       ref="columnsFilterRef"
       v-bind="columnsFilter"
       :columns="columns"
