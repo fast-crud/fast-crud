@@ -18,10 +18,10 @@
   "author": "Greper",
   "license": "MIT",
   "dependencies": {
-    "@fast-crud/ui-interface": "workspace:^1.11.3",
-    "lodash-es": "^4.17.21"
   },
   "devDependencies": {
+    "@fast-crud/ui-interface": "workspace:^1.11.3",
+    "lodash-es": "^4.17.21",
     "@ant-design/icons-vue": "^6.1.0",
     "@rollup/plugin-strip": "^3.0.2",
     "@rollup/plugin-typescript": "^11.0.0",

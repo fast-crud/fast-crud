@@ -9,7 +9,10 @@
     "preview": "vite preview"
   },
   "dependencies": {
-    "vue": "^3.2.47"
+    "vue": "^3.2.47",
+    "ant-design-vue": "^3.2.15",
+    "@fast-crud/ui-antdv": "^1.11.4",
+    "@fast-crud/ui-interface": "^1.11.3"
   },
   "devDependencies": {
     "@vitejs/plugin-vue": "^4.1.0",

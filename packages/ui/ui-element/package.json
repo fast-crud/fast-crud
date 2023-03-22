@@ -19,9 +19,9 @@
   "author": "Greper",
   "license": "MIT",
   "dependencies": {
-    "@fast-crud/ui-interface": "workspace:^1.11.3"
   },
   "devDependencies": {
+    "@fast-crud/ui-interface": "workspace:^1.11.3",
     "@element-plus/icons-vue": "^2.1.0",
     "@rollup/plugin-strip": "^3.0.2",
     "@rollup/plugin-typescript": "^11.0.0",

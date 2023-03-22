@@ -1,11 +1,3 @@
-import { UiInterface, uiContext } from "@fast-crud/ui-interface";
+import { uiContext, useUi } from "../ui";
 
-export function useUi() {
-  return {
-    uiContext,
-    ui: uiContext.get(),
-    set: (ui: UiInterface) => {
-      uiContext.set(ui);
-    }
-  };
-}
+export { uiContext, useUi };

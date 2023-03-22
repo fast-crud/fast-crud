@@ -21,13 +21,13 @@
   "author": "Greper",
   "license": "MIT",
   "dependencies": {
-    "@fast-crud/ui-interface": "workspace:^1.11.3",
-    "dayjs": "^1.11.7",
-    "lodash-es": "^4.17.21",
     "lru-cache": "^8.0.3",
     "vuedraggable-es": "^4.1.1"
   },
   "devDependencies": {
+    "dayjs": "^1.11.7",
+    "lodash-es": "^4.17.21",
+    "@fast-crud/ui-interface": "workspace:^1.11.3",
     "@iconify/json": "^2.2.35",
     "@ls-lint/ls-lint": "^1.11.2",
     "@rollup/plugin-strip": "^3.0.2",

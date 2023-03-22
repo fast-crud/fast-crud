@@ -1,4 +1,4 @@
-import { uiContext } from "../../ui";
+import { useUi } from "../../ui";
 
 function antdvColspan(ui: any, labelSpan: any) {
   return ui.type !== "antdv" ? {} : { labelCol: { span: labelSpan }, wrapperCol: { span: 23 - labelSpan } };
@@ -8,7 +8,7 @@ function antdvColspan(ui: any, labelSpan: any) {
  * 辅助type 即将废弃，antdv已经有更好的方式做跨列配置
  */
 export default function () {
-  const ui = uiContext.get();
+  const { ui } = useUi();
   return {
     colspan: {
       //跨列
