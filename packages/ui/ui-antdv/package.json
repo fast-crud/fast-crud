@@ -1,6 +1,6 @@
 {
   "name": "@fast-crud/ui-antdv",
-  "version": "1.11.6",
+  "version": "1.11.7",
   "description": "antdv",
   "main": "./dist/ui-antdv.umd.js",
   "module": "./dist/ui-antdv.mjs",
