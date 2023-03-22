@@ -416,6 +416,7 @@ export default defineComponent({
     const inputEventDisabled = ref(false);
 
     const doAutoSearch = () => {
+      logger.debug("do auto search,inputEventDisabled:", inputEventDisabled.value);
       if (inputEventDisabled.value !== true && autoSearch) {
         // 防抖查询
         autoSearch();

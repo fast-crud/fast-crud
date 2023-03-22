@@ -298,7 +298,7 @@ export function useExpose(props: UseExposeProps): UseExposeRet {
       if (crudBinding.value.request.pageRequest == null) {
         return;
       }
-
+      logger.debug("do refresh:", props);
       let page: any;
       if (crudBinding.value.pagination) {
         if (props?.goFirstPage) {
