@@ -1,13 +1,4 @@
-import {
-  computed,
-  defineComponent,
-  ref,
-  resolveDirective,
-  resolveDynamicComponent,
-  Slots,
-  watch,
-  withDirectives
-} from "vue";
+import { computed, defineComponent, ref, resolveDirective, resolveDynamicComponent, watch, withDirectives } from "vue";
 import _ from "lodash-es";
 import { uiContext } from "../../ui";
 import { useEditable } from "./editable/use-editable";

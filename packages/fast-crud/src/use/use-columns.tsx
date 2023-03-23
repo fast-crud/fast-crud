@@ -279,6 +279,11 @@ function buildColumns(userOptions: CrudOptions) {
 
   userOptions.table.columns = buildTableColumns(cloneDeep(columns));
   userOptions.table.columnsMap = buildTableColumnsMap({}, userOptions.table.columns);
+  _.merge(userOptions.toolbar, {
+    columnsFilter: {
+      originalColumns: cloneDeep(userOptions.table.columns)
+    }
+  });
   userOptions.form = buildForm(userOptions, "form", columnsMap);
   userOptions.addForm = buildForm(userOptions, "addForm", columnsMap);
   userOptions.editForm = buildForm(userOptions, "editForm", columnsMap);

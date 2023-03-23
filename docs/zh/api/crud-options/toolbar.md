@@ -50,3 +50,15 @@
 * 默认值： 无
 * 可选值：【simple(简单模式) | default（默认模式）】
 
+## columnsFilter.originalColumns
+* 说明：原始列设置, 可以修改列设置选项的显隐和禁用启用
+* 类型：ColumnProps[]
+* 默认值： 无
+```js
+// 在列设置中隐藏第三个字段
+crudBinding.value.toolbar.columnsFilter.originalColumns[2].columnSetShow = false
+
+// 在列设置中禁止第三个字段勾选
+crudBinding.value.toolbar.columnsFilter.originalColumns[2].columnSetDisabled = true
+
+```
