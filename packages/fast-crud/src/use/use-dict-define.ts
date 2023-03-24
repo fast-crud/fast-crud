@@ -1,7 +1,7 @@
 import _ from "lodash-es";
 import { useMerge } from "./use-merge";
 import logger from "../utils/util.log";
-import { reactive, UnwrapRef } from "vue";
+import { reactive, shallowReactive, UnwrapRef } from "vue";
 import LRU from "lru-cache";
 import { UnwrapNestedRefs } from "vue";
 
@@ -410,7 +410,7 @@ export class Dict<T = any> extends UnMergeable implements DictOptions<T> {
  * @param config
  */
 export function dict<T = any>(config: DictOptions<T>): UnwrapNestedRefs<Dict<any>> {
-  const ret = reactive(new Dict(config));
+  const ret = shallowReactive(new Dict(config));
   if (!ret.prototype && ret.immediate) {
     ret.loadDict();
   }
