@@ -270,7 +270,7 @@ export default defineComponent({
     }
 
     const events = ui.table.onChange({
-      onSortChange: (sorter: any) => {
+      onSortChange: (sorter) => {
         ctx.emit("sort-change", sorter);
       },
       onFilterChange: (filters: any) => {
