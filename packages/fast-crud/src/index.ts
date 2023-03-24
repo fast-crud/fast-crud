@@ -1,5 +1,5 @@
 import defaultCrudOptions from "./use/default-crud-options";
-import utils from "./utils/index";
+import { utils } from "./utils/index";
 import types from "./types/index";
 import * as components from "./components";
 import { FsFormWrapper } from "./components";

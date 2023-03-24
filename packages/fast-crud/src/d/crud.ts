@@ -696,6 +696,9 @@ export type ColumnsFilterComponentProps = {
    */
   columns?: any[];
 
+  /**
+   * 原始列数据，还原成此列表
+   */
   originalColumns?: any[];
   /**
    * 是否保存设置

@@ -3,13 +3,21 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.11.8](https://github.com/fast-crud/fast-crud/compare/v1.11.7...v1.11.8) (2023-03-24)
+
+### Bug Fixes
+
+* 修复列设置非fixed字段越过fixed字段错乱的bug ([d944fb2](https://github.com/fast-crud/fast-crud/commit/d944fb228911d8d2afa24118bc2dd4ee13bb0026))
+* 修复element 本地排序无效的bug ([bc64205](https://github.com/fast-crud/fast-crud/commit/bc64205d78d8a8316a666dbcf5431ee5545b797c))
+
+### Performance Improvements
+
+* 优化翻页性能 ([d0a1db7](https://github.com/fast-crud/fast-crud/commit/d0a1db7bda08b49226739bba38e28b38c60c2b65))
+* 优化dict性能 ([39a5f1d](https://github.com/fast-crud/fast-crud/commit/39a5f1ddb1576e1eba5a160ab957212699907fb1))
+
 ## [1.11.7](https://github.com/fast-crud/fast-crud/compare/v1.11.6...v1.11.7) (2023-03-22)
 
 **Note:** Version bump only for package @fast-crud/fast-crud
-
-
-
-
 
 ## [1.11.6](https://github.com/fast-crud/fast-crud/compare/v1.11.5...v1.11.6) (2023-03-22)
 

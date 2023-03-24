@@ -21,7 +21,7 @@ export type BindBuilderOptions = {
   vModel?: BindBuilderModelValue;
   slots?: WritableSlots;
 };
-export type UiSlotRet = string | VNode | VNode[] | UiSlotRet[];
+export type UiSlotRet = string | VNode | VNode[] | JSX.Element | JSX.Element[] | UiSlotRet[];
 export type UiSlot = (scope?: any) => UiSlotRet;
 export type WritableSlots = {
   [name: string]: UiSlot;
@@ -172,7 +172,7 @@ export interface TableColumnCI extends CI<TableColumnBuilderOption> {
 }
 
 export type TableOnChangeBindingBuilder = (context: {
-  onSortChange: (sorter: any) => void;
+  onSortChange: (sorter: TableSorterContext) => void;
   onFilterChange: (filters: any) => void;
   onPagination: (pagination: any) => void;
 }) => any;
@@ -181,6 +181,12 @@ export type ComponentBinding = {
   [key: string]: any;
 };
 
+export type TableSorterContext = {
+  isServerSort: boolean;
+  prop: string;
+  order: string;
+  asc: boolean;
+};
 export type TableBuilderOption = {} & BindBuilderOptions;
 export interface TableCI extends CI<TableBuilderOption> {
   defaultRowKey?: string | ((rowData: any) => any);
