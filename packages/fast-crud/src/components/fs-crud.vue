@@ -64,6 +64,7 @@
         ref="tableRef"
         class="fs-crud-table"
         v-bind="computedTable"
+        :columns="table.columns"
         :loading="table.loading"
         :row-handle="rowHandle"
         :data="data"
@@ -300,13 +301,12 @@ function useTable(props: any, ctx: SetupContext) {
 
   const tablePropRef = toRef(props, "table");
   const computedTable = computed(() => {
-    console.log("computed table");
     // antdv naive 高度自适应， 如果用户有配置scroll，则优先使用用户配置的
     let fixedHeight = {};
     if (maxHeightRef?.value != null) {
       fixedHeight = ui.table.buildMaxHeight(maxHeightRef.value);
     }
-    const pAttrs = utils.dash.omit(tablePropRef, "loading");
+    const pAttrs = utils.dash.omit(tablePropRef, "loading", "columns", "columnsMap");
 
     return _.merge(fixedHeight, { ...ctx.attrs, ...pAttrs });
   });
@@ -501,8 +501,6 @@ export default defineComponent({
     "update:modelValue"
   ],
   setup(props: any, ctx: any) {
-    traceUtil.trace("fs-crud");
-
     const { ui } = useUi();
     useProviders(props, ctx);
     const search = useSearch(props, ctx);
