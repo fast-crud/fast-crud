@@ -73,5 +73,6 @@ start()
  * nodemodules里面搜索如下
  * return childProcess.exec("git", ["add", "--", ...files], execOpts);
  *
- * ('git', ['add', '--'
+ * ('git', ['add', '--', ...files]
+ * ('git', ['add', '.']
  */
