@@ -4,13 +4,17 @@ import trace from "./util.trace";
 import vite from "./util.vite";
 import store from "./util.store";
 import { deepdash } from "./deepdash";
+import dash from "./util.dash";
 export * from "./util.log";
 
-export default {
+export const utils = {
   logger,
   strings,
   trace,
   vite,
   store,
-  deepdash
+  deepdash,
+  dash
 };
+
+export default utils;

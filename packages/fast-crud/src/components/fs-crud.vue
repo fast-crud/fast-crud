@@ -64,6 +64,7 @@
         ref="tableRef"
         class="fs-crud-table"
         v-bind="computedTable"
+        :loading="table.loading"
         :row-handle="rowHandle"
         :data="data"
         :cell-slots="computedCellSlots"
@@ -114,7 +115,7 @@ import { useMerge } from "../use/use-merge";
 import utilLog from "../utils/util.log";
 import { SetSearchFormDataProps } from "../d";
 import { useUi } from "../use";
-
+import { utils } from "../utils";
 const { merge } = useMerge();
 
 function useProviders(props: any, ctx: SetupContext) {
@@ -296,13 +297,18 @@ function useTable(props: any, ctx: SetupContext) {
   const toolbarRef = ref();
   const containerRef = ref();
   const { maxHeightRef, computeBodyHeight } = useFixedHeight(props, ctx, { tableRef, containerRef });
+
+  const tablePropRef = toRef(props, "table");
   const computedTable = computed(() => {
+    console.log("computed table");
     // antdv naive 高度自适应， 如果用户有配置scroll，则优先使用用户配置的
     let fixedHeight = {};
     if (maxHeightRef?.value != null) {
       fixedHeight = ui.table.buildMaxHeight(maxHeightRef.value);
     }
-    return _.merge(fixedHeight, { ...ctx.attrs, ...props.table });
+    const pAttrs = utils.dash.omit(tablePropRef, "loading");
+
+    return _.merge(fixedHeight, { ...ctx.attrs, ...pAttrs });
   });
 
   const computedToolbar = toRef(props, "toolbar");
