@@ -305,8 +305,8 @@ function onDraggableMove(e: any, b: any) {
   //看key的排列是否正常
   let leftIndex = 0;
   let rightIndex = sorted.length - 1;
-  let minNotIndex = 0;
-  let maxNotIndex = sorted.length - 1;
+  let minNotIndex = sorted.length - 1;
+  let maxNotIndex = 0;
   for (let i = 0; i < sorted.length; i++) {
     const item = sorted[i];
     if (item.fixed === "left") {
@@ -318,6 +318,7 @@ function onDraggableMove(e: any, b: any) {
       maxNotIndex = maxNotIndex < i ? i : maxNotIndex;
     }
   }
+  console.log("leftindex", leftIndex, "rightindex", rightIndex, "minnot", minNotIndex, "maxnot", maxNotIndex);
 
   if (minNotIndex < leftIndex || maxNotIndex > rightIndex) {
     //ui.message.error("非fixed字段不得越过fixed字段的顺序");
