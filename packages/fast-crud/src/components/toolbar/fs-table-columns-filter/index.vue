@@ -113,7 +113,7 @@ import { computed, nextTick, ref, Ref, watch } from "vue";
 import { uiContext } from "../../../ui";
 import { useMerge } from "../../../use/use-merge";
 import { useRoute } from "vue-router";
-import { ColumnProps, TypeMap } from "/src/d";
+import { ColumnProps, TypeMap } from "../../../d";
 
 console.debug("draggable", draggable);
 
