@@ -5,14 +5,14 @@
       <component
         :is="ui.col.name"
         v-for="(element, key) in currentColumns"
-        v-show="original[key].__show"
+        v-show="original[key]?.__show"
         :key="key"
         :span="6"
       >
         <component
           :is="ui.checkbox.name"
           v-model:[ui.checkbox.modelValue]="element.show"
-          :disabled="original[key].__disabled"
+          :disabled="original[key]?.__disabled"
           class="item-label"
           :title="buildText(element)"
           @update:[ui.checkbox.modelValue]="showChange"
@@ -55,7 +55,7 @@
           <draggable v-model="currentColumns" item-key="key" :move="onDraggableMove">
             <template #item="{ element, index }">
               <div
-                v-show="original[element.key].__show"
+                v-show="original[element.key]?.__show"
                 :title="buildText(element)"
                 class="component--list-item"
                 flex="main:justify cross:center"
@@ -64,7 +64,7 @@
                 <component
                   :is="ui.checkbox.name"
                   v-model:[ui.checkbox.modelValue]="element.show"
-                  :disabled="original[element.key].__disabled"
+                  :disabled="original[element.key]?.__disabled"
                   class="item-label"
                   :title="buildText(element)"
                   @update:[ui.checkbox.modelValue]="showChange"
@@ -358,8 +358,10 @@ function submit(noSave = false) {
 
   //解决naive ui与列设置冲突的问题
   result.forEach((column) => {
-    delete column.__disabled;
-    delete column.__show;
+    if (column) {
+      delete column.__disabled;
+      delete column.__show;
+    }
   });
 
   doEmit(result);
