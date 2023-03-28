@@ -1,6 +1,7 @@
 import _ from "lodash-es";
 import { computed, reactive, watch } from "vue";
 import { uiContext } from "../../../ui";
+import { useMerge } from "../../../use";
 
 // import { useValidation } from "./validation/use-validation";
 
@@ -59,9 +60,10 @@ export function useEditable(props: any, ctx: any, tableRef: any) {
     });
   }
 
+  const { merge } = useMerge();
   // editable
   const options = computed(() => {
-    return _.merge(
+    return merge(
       {
         rowKey: "id",
         enabled: false,
@@ -196,10 +198,10 @@ export function useEditable(props: any, ctx: any, tableRef: any) {
       const { index, doSave } = opts;
       const changed = editableRow.getChangeData(index);
       const row = tableData.get(index);
-
+      const { merge } = useMerge();
       function setData(newRow: any) {
         if (newRow) {
-          _.merge(row, newRow);
+          merge(row, newRow);
         }
       }
 
@@ -403,7 +405,7 @@ export function useEditable(props: any, ctx: any, tableRef: any) {
 
     function setData(list: any[]) {
       _.forEach(list, (row, index) => {
-        _.merge(tableData.get(index), row);
+        merge(tableData.get(index), row);
       });
     }
 

@@ -22,7 +22,7 @@
 
 <script lang="ts">
 import { defineComponent, computed } from "vue";
-import _ from "lodash-es";
+import { useMerge } from "../../use";
 /**
  * crud的容器，根据外部高度自适应
  */
@@ -56,16 +56,17 @@ export default defineComponent({
     }
   },
   setup(props, ctx) {
+    const { merge } = useMerge();
     const computedInnerStyle = computed(() => {
       if (props.fixedHeight === false) {
-        return _.merge({ position: "relative" }, props.innerStyle);
+        return merge({ position: "relative" }, props.innerStyle);
       }
       return props.innerStyle;
     });
 
     const computedBodyStyle = computed(() => {
       if (props.fixedHeight === false) {
-        return _.merge({ flex: "unset" }, props.bodyStyle);
+        return merge({ flex: "unset" }, props.bodyStyle);
       }
       return props.bodyStyle;
     });

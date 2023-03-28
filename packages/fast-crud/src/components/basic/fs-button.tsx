@@ -1,5 +1,5 @@
 import { resolveDynamicComponent, defineComponent, h, computed } from "vue";
-import { useUi } from "../../use";
+import { useMerge, useUi } from "../../use";
 import "./fs-button.less";
 import _ from "lodash-es";
 /**
@@ -40,6 +40,7 @@ export default defineComponent({
   },
   setup(props, ctx) {
     const { ui } = useUi();
+    const { merge } = useMerge();
     const iconRender = (icon: any, iconClass = "fs-button-icon") => {
       if (icon == null) {
         return;
@@ -52,6 +53,7 @@ export default defineComponent({
         return <fs-icon {...icon} class={iconClass} />;
       }
     };
+
     const renderBtn = () => {
       const icon: string | null | undefined | object = props.icon;
       const iconRight: string | null | undefined | object = props.iconRight;
@@ -96,7 +98,7 @@ export default defineComponent({
 
       const buttonComp: any = resolveDynamicComponent(ui.button.name);
 
-      const btnProps = _.merge(
+      const btnProps = merge(
         {
           ...isCircle,
           //icon,

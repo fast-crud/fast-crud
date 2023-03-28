@@ -48,7 +48,7 @@ import { computed, defineComponent, ref, Ref } from "vue";
 import { useI18n } from "../../locale";
 import { Constants } from "../../utils/util.constants";
 import { ButtonProps, ButtonsProps } from "../../d";
-import { useUi } from "../../use";
+import { useMerge, useUi } from "../../use";
 
 /**
  * 工具条
@@ -114,6 +114,7 @@ export default defineComponent({
     const { t } = useI18n();
     const columnsFilterRef: Ref = ref();
     const { ui } = useUi();
+    const { merge } = useMerge();
     const computedButtons = computed(() => {
       const defaultButtons: ButtonsProps<void> = {
         refresh: {
@@ -164,7 +165,7 @@ export default defineComponent({
         }
       };
 
-      _.merge(defaultButtons, props.buttons);
+      merge(defaultButtons, props.buttons);
       if (defaultButtons.search) {
         defaultButtons.search.type = props.search ? "primary" : "default";
       }

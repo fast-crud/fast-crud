@@ -66,10 +66,9 @@
 </template>
 <script lang="ts">
 import { ref, computed, defineComponent, Ref, PropType } from "vue";
-import _ from "lodash-es";
 import FsRender from "../render/fs-render.js";
 import { ScopeContext } from "../../d";
-import { useUi } from "../../use";
+import { useMerge, useUi } from "../../use";
 /**
  * form-item组件封装
  */
@@ -106,6 +105,7 @@ export default defineComponent({
   emits: ["update:modelValue"],
   setup(props, ctx) {
     const { ui } = useUi();
+    const { merge } = useMerge();
     const componentRenderRef = ref();
     const scopeComputed: Ref<ScopeContext> = computed(() => {
       const scope = props.getContextFn ? props.getContextFn() : {};
@@ -126,7 +126,7 @@ export default defineComponent({
       return props.item?.helper?.position || (props.helper as any)?.position;
     });
     const computedHelperTooltip = computed(() => {
-      return _.merge({}, props.item.helper?.tooltip, (props.helper as any)?.tooltip);
+      return merge({}, props.item.helper?.tooltip, (props.helper as any)?.tooltip);
     });
     const computedKey = computed(() => {
       if (props.item == null) {

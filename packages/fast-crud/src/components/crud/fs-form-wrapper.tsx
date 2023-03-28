@@ -15,7 +15,7 @@ import { useI18n } from "../../locale";
 import { uiContext } from "../../ui";
 import { Constants } from "../../utils/util.constants";
 import "./fs-form-wrapper.less";
-import { useDrag } from "../../use";
+import { useDrag, useMerge } from "../../use";
 import {
   FormProps,
   FormWrapperContext,
@@ -65,6 +65,7 @@ export default defineComponent({
   emits: ["reset", "submit", "validationError", "value-change", "open", "opened", "mounted", "closed", "inner-change"],
   setup(props: any, ctx: any) {
     const { t } = useI18n();
+    const { merge } = useMerge();
     const formWrapperOpen: Ref<boolean> = ref(false);
     const formWrapperIs: Ref<string> = ref();
     const formOptions: Ref<FormProps> = ref();
@@ -218,7 +219,7 @@ export default defineComponent({
           loading: loading.value
         }
       };
-      const buttons = _.merge(defBtns, formWrapperBind.value?.buttons);
+      const buttons = merge(defBtns, formWrapperBind.value?.buttons);
       const buttonsArr: any = [];
       _.forEach(buttons, (value, key) => {
         value.key = key;

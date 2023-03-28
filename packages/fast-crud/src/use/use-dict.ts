@@ -1,4 +1,4 @@
-import { getCurrentInstance, computed, reactive, watch, inject } from "vue";
+import { getCurrentInstance, computed, watch, inject, shallowReactive } from "vue";
 import _ from "lodash-es";
 import { uiContext } from "../ui";
 export function useDict(props: any, ctx: any, vModel = "modelValue") {
@@ -7,7 +7,7 @@ export function useDict(props: any, ctx: any, vModel = "modelValue") {
   if (dict) {
     if (dict.prototype) {
       dict.clear();
-      dict = reactive(_.cloneDeep(props.dict));
+      dict = shallowReactive(_.cloneDeep(props.dict));
     }
   }
 

@@ -29,7 +29,7 @@ function merge(target: any, ...sources: any) {
 
   let found: any = null;
   for (const item of sources) {
-    if (item != null && item instanceof UnMergeable) {
+    if (isUnMergeable(item)) {
       found = item;
     }
   }

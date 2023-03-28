@@ -88,6 +88,7 @@ import FsSearchButtons from "./buttons.vue";
 import { Constants } from "../../utils/util.constants";
 import { ButtonsProps, SearchEventContext, SearchItemProps } from "../../d";
 import { useUi } from "../../use/use-ui";
+import { useMerge } from "../../use/use-merge";
 
 /**
  * 查询框组件
@@ -232,6 +233,7 @@ export default defineComponent({
         logger.warn("search.value配置不支持AsyncCompute类型的动态计算");
       }
     });
+    const { merge } = useMerge();
     const computedColumns = doComputed(
       () => {
         return props.columns;
@@ -248,7 +250,7 @@ export default defineComponent({
         // 合并col
         if (props.col) {
           _.forEach(value, (v) => {
-            v.col = _.merge({}, props.col, v.col);
+            v.col = merge({}, props.col, v.col);
           });
         }
 
@@ -345,7 +347,6 @@ export default defineComponent({
         });
       }
     }
-
     const computedButtons = computed(() => {
       const btns: any = [];
       const defBtnOptions: ButtonsProps<SearchEventContext> = {
@@ -369,7 +370,7 @@ export default defineComponent({
           order: 2
         }
       };
-      _.merge(defBtnOptions, props.buttons);
+      merge(defBtnOptions, props.buttons);
       for (let key in defBtnOptions) {
         const btn = defBtnOptions[key];
         btn._click = () => {
@@ -410,7 +411,7 @@ export default defineComponent({
           delete form[item];
         });
       }
-      _.merge(form, newForm);
+      merge(form, newForm);
     }
 
     const inputEventDisabled = ref(false);
