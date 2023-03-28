@@ -3,6 +3,14 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.11.9](https://github.com/fast-crud/fast-crud/compare/v1.11.8...v1.11.9) (2023-03-28)
+
+### Bug Fixes
+
+* 修复某些情况下 column original 为空无法读取__show的bug ([c640c76](https://github.com/fast-crud/fast-crud/commit/c640c7600f81da0435cbb452e92f3d3cd7145b64))
+* 修复form表单配置ref无效的bug ([97e8904](https://github.com/fast-crud/fast-crud/commit/97e8904bbffd4ec143c7430cd93568c277b5f1f3))
+* 修复form表单render scope.form修改值不生效的bug ([47694c3](https://github.com/fast-crud/fast-crud/commit/47694c3f9e7218aef186ba72a93fe0030e385c5d))
+
 ## [1.11.8](https://github.com/fast-crud/fast-crud/compare/v1.11.7...v1.11.8) (2023-03-24)
 
 ### Bug Fixes
