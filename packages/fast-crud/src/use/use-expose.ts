@@ -1,4 +1,4 @@
-import { Ref, toRaw } from "vue";
+import { Ref, toRaw, toRef, unref } from "vue";
 import { CrudExpose, OpenDialogProps, OpenEditContext, SetFormDataOptions } from "../d/expose";
 import _ from "lodash-es";
 import logger from "../utils/util.log";
@@ -19,7 +19,7 @@ import { useFormWrapper } from "./use-form";
 import { forEachColumns } from "../use/use-columns";
 
 const { merge } = useMerge();
-
+const doMerge = merge;
 export type UseExposeProps = {
   crudRef: Ref;
   crudBinding: Ref<CrudBinding>;
@@ -43,6 +43,7 @@ function useEditable(props: UseEditableProps) {
   const { crudBinding } = crudExpose;
   const { ui } = useUi();
   const { t } = useI18n();
+  const { merge } = useMerge();
   const editable = {
     /**
      * 启用编辑
@@ -51,7 +52,7 @@ function useEditable(props: UseEditableProps) {
      */
     async enable(opts: any, onEnabled: (opts: EditableOnEnabledProps) => void) {
       const editableOpts = crudBinding.value.table.editable;
-      _.merge(editableOpts, { enabled: true }, opts);
+      merge(editableOpts, { enabled: true }, opts);
       if (onEnabled) {
         onEnabled({ editable: editableOpts });
       } else {
@@ -457,7 +458,7 @@ export function useExpose(props: UseExposeProps): UseExposeRet {
     },
     updateTableRow(index: number, row: any, merge = true) {
       if (merge) {
-        crudBinding.value.data[index] = _.merge(crudBinding.value.data[index], row);
+        crudBinding.value.data[index] = doMerge(crudBinding.value.data[index], row);
       } else {
         crudBinding.value.data[index] = row;
       }
@@ -539,9 +540,11 @@ export function useExpose(props: UseExposeProps): UseExposeRet {
       }
       const formWrapperRef = this.getFormWrapperRef();
       formWrapperRef.open(formOpts);
+      console.log("formOpts", formOpts);
       return formWrapperRef;
     },
     async _openDialog(mode: string, context: OpenEditContext, formOpts: OpenDialogProps) {
+      const { merge } = useMerge();
       // @ts-ignore
       let row = context.row || context[ui.tableColumn.row];
       if (row == null && context.index != null) {
@@ -554,7 +557,8 @@ export function useExpose(props: UseExposeProps): UseExposeRet {
         mode,
         initialForm: row
       };
-      _.merge(options, crudBinding.value[mode + "Form"], context, formOpts);
+      const xxForm = toRaw(crudBinding.value[mode + "Form"]);
+      merge(options, xxForm, context, formOpts);
       return await this.openDialog(options);
     },
     async openAdd(context: OpenEditContext, formOpts: OpenDialogProps = {}) {
