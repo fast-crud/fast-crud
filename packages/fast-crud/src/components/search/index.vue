@@ -234,6 +234,7 @@ export default defineComponent({
       }
     });
     const { merge } = useMerge();
+    const doMerge = merge;
     const computedColumns = doComputed(
       () => {
         return props.columns;
@@ -411,7 +412,7 @@ export default defineComponent({
           delete form[item];
         });
       }
-      merge(form, newForm);
+      doMerge(form, newForm);
     }
 
     const inputEventDisabled = ref(false);

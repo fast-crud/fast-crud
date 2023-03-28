@@ -23,7 +23,7 @@
       >
         <template #[ui.tooltip.content]>
           <span class="fs-form-helper-tooltip">
-            <fs-form-helper :helper="item.helper" :scope="scopeComputed" />
+            <fs-form-helper :helper="item.helper" :scope="scopeFunc()" />
           </span>
         </template>
         <template #[ui.tooltip.trigger]>
@@ -34,32 +34,32 @@
       </component>
     </template>
     <div class="fs-form-item-content">
-      <fs-render v-if="item.topRender" :render-func="item.topRender" :scope="scopeComputed" />
+      <fs-render v-if="item.topRender" :render-func="item.topRender" :scope="scopeFunc()" />
       <div class="fs-form-item-render">
-        <fs-render v-if="item.prefixRender" :render-func="item.prefixRender" :scope="scopeComputed" />
+        <fs-render v-if="item.prefixRender" :render-func="item.prefixRender" :scope="scopeFunc()" />
         <div class="fs-form-item-component">
-          <fs-slot-render v-if="formSlot" :slots="formSlot" :scope="scopeComputed" />
+          <fs-slot-render v-if="formSlot" :slots="formSlot" :scope="scopeFunc()" />
           <template v-else-if="item.component?.show !== false">
             <fs-render
               v-if="item.render || item.component?.render"
               :render-func="item.render || item.component.render"
-              :scope="scopeComputed"
+              :scope="scopeFunc()"
             />
             <fs-component-render
               v-else
               ref="componentRenderRef"
               v-bind="item.component"
               :model-value="modelValue"
-              :scope="scopeComputed"
+              :scope="scopeFunc()"
               @update:modelValue="updateModelValue"
             />
           </template>
         </div>
-        <fs-render v-if="item.suffixRender" :render-func="item.suffixRender" :scope="scopeComputed" />
+        <fs-render v-if="item.suffixRender" :render-func="item.suffixRender" :scope="scopeFunc()" />
       </div>
-      <fs-render v-if="item.bottomRender" :render-func="item.bottomRender" :scope="scopeComputed" />
+      <fs-render v-if="item.bottomRender" :render-func="item.bottomRender" :scope="scopeFunc()" />
       <template v-if="item.helper && computedHelperPosition !== 'label'">
-        <fs-form-helper :helper="item.helper" :scope="scopeComputed" />
+        <fs-form-helper :helper="item.helper" :scope="scopeFunc()" />
       </template>
     </div>
   </component>
@@ -107,10 +107,12 @@ export default defineComponent({
     const { ui } = useUi();
     const { merge } = useMerge();
     const componentRenderRef = ref();
-    const scopeComputed: Ref<ScopeContext> = computed(() => {
+    // const scopeComputed: Ref<ScopeContext> = computed(() => {});
+
+    const scopeFunc = () => {
       const scope = props.getContextFn ? props.getContextFn() : {};
       return { value: props.modelValue, key: props.item.key, ...scope };
-    });
+    };
 
     function updateModelValue(value: any) {
       ctx.emit("update:modelValue", value);
@@ -146,13 +148,13 @@ export default defineComponent({
     });
 
     const computedLabelRender = () => {
-      return computedLabel.value(scopeComputed.value);
+      return computedLabel.value(scopeFunc());
     };
 
     return {
       ui,
       updateModelValue,
-      scopeComputed,
+      scopeFunc,
       getComponentRef,
       componentRenderRef,
       computedHelperPosition,
