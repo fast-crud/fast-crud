@@ -19,7 +19,7 @@ export default defineConfig(({ command, mode, ssrBuild }) => {
     build: {
       lib: {
         entry: resolve(__dirname, "src/index.ts"),
-        name: "fast-crud"
+        name: "FastCrud"
       },
       // cssCodeSplit: true,
       sourcemap: "inline",
@@ -59,7 +59,7 @@ export default defineConfig(({ command, mode, ssrBuild }) => {
             "vue-i18n": "VueI18n",
             vuedraggable: "vuedraggable",
             "vue-router": "VueRouter",
-            "@fast-crud/ui-interface": "UiInterface"
+            "@fast-crud/ui-interface": "FsUiInterface"
           }
         }
       }

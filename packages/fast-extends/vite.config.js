@@ -38,7 +38,7 @@ export default ({ command, mode }) => {
       emptyOutDir: false,
       lib: {
         entry: resolve(__dirname, "src/index.ts"),
-        name: "extends-uploader",
+        name: "FsExtends",
         formats: ["es"]
       },
       // cssCodeSplit: true,
@@ -91,7 +91,7 @@ export default ({ command, mode }) => {
             "ali-oss": "OSS",
             "cos-js-sdk-v5": "COS",
             "qiniu-js": "qiniu",
-            "@fast-crud/ui-interface": "UiInterface"
+            "@fast-crud/ui-interface": "FsUiInterface"
           }
         }
       }

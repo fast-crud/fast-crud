@@ -17,7 +17,7 @@ export default ({ command, mode }) => {
     build: {
       lib: {
         entry: resolve(__dirname, "src/index.ts"),
-        name: "index"
+        name: "FsUiElement"
       },
       // cssCodeSplit: true,
       sourcemap: "inline",
@@ -58,7 +58,7 @@ export default ({ command, mode }) => {
             "element-plus": "ElementPlus",
             "@element-plus/icons-vue": "IconsVue",
             "lodash-es": "_",
-            "@fast-crud/ui-interface": "UiInterface"
+            "@fast-crud/ui-interface": "FsUiInterface"
           }
         }
       }
