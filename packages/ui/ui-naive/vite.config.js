@@ -55,9 +55,8 @@ export default ({ command, mode }) => {
           globals: {
             vue: "Vue",
             "@fast-crud/fast-crud": "FastCrud",
-            "ant-design-vue": "Antdv",
-            "naive-ui": "Naive",
-            "@ant-design/icons-vue": "IconsVue",
+            "naive-ui": "naive",
+            "@ant-design/icons-vue": "AntDesignIconsVue",
             "lodash-es": "_",
             "@fast-crud/ui-interface": "FsUiInterface"
           }

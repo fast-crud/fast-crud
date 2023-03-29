@@ -56,7 +56,7 @@ export default ({ command, mode }) => {
             vue: "Vue",
             "@fast-crud/fast-crud": "FastCrud",
             "element-plus": "ElementPlus",
-            "@element-plus/icons-vue": "IconsVue",
+            "@element-plus/icons-vue": "ElementPlusIconsVue",
             "lodash-es": "_",
             "@fast-crud/ui-interface": "FsUiInterface"
           }
