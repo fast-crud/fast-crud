@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.11.10](https://github.com/fast-crud/fast-crud/compare/v1.11.9...v1.11.10) (2023-03-29)
+
+### Bug Fixes
+
+* 修复列设置显隐和禁用无效的bug ([ab28857](https://github.com/fast-crud/fast-crud/commit/ab288574818709e0313f063614b46f46b96de0a3))
+
 ## [1.11.9](https://github.com/fast-crud/fast-crud/compare/v1.11.8...v1.11.9) (2023-03-28)
 
 ### Bug Fixes
