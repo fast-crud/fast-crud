@@ -45,3 +45,4 @@ export const FastCrud = {
     app.config.globalProperties.$fsui = uiContext.get();
   }
 };
+export default FastCrud;
