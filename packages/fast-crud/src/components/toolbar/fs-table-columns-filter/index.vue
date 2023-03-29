@@ -193,7 +193,9 @@ const start = () => {
   active.value = true;
 };
 
-const original: Ref<TypeMap<ColumnsFilterItem>> = ref({});
+const original: Ref<TypeMap<ColumnsFilterItem>> = computed(() => {
+  return transformColumnsMap(props.originalColumns);
+});
 const currentColumns: Ref<ColumnsFilterItem[]> = ref([]);
 const checkAll = ref(false);
 const indeterminate = ref(false);
@@ -440,7 +442,6 @@ watch(
 );
 
 const init = () => {
-  original.value = transformColumnsMap(props.columns);
   setCurrentValue(props.columns);
   const storedOptions = getOptionsFromStorage();
   if (storedOptions) {
