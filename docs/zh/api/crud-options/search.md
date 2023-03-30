@@ -2,6 +2,23 @@
 # search【查询框】
 更多参数见：[FsSearch](/api/components/crud/search/index.md)
 
+## container
+* 说明：布局容器，支持search自定义布局
+* 类型：Object
+* 默认： {is:'fs-search-layout-default'}
+* 参考： [fs-search-layout-default](https://github.com/fast-crud/fast-crud/blob/main/packages/fast-crud/src/components/search/layout-default.vue)
+```js
+const crudOptions = {
+    search:{
+        container:{
+            is:'your-custom-layout-component-name',
+            collpase:true //是否展开，你布局组件中定义的props
+        },
+    }
+}
+
+```
+
 ## show
 * 说明：显示或隐藏查询框
 * 类型：Boolean
@@ -29,7 +46,7 @@
 
 
 ## buttonsPosition
-* 说明：按钮位置
+* 说明：按钮位置 (已废弃)
 * 类型：string，可选【default，bottom】
 * 默认：`default`
 
@@ -62,6 +79,7 @@
 * 说明：表单参数
 * 类型：Object
 * 支持：el-form,a-form的参数
+
 
 
 ## 更多参数

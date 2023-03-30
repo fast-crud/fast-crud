@@ -24,7 +24,9 @@ export default defineComponent({
       const styles = window.getComputedStyle(pageRef.value.parentNode);
       const positionValue = styles.getPropertyValue("position");
       if (positionValue !== "relative") {
-        utils.logger.warn("fs-page父节点的position建议为relative");
+        utils.logger.warn(
+          "fs-page父节点的position建议为relative,因为fs-page为相对定位（position:absolute），如果样式没有异常，你可以忽略此警告"
+        );
       }
     });
     return {

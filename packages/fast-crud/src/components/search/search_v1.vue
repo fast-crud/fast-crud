@@ -94,7 +94,7 @@ import { useMerge } from "../../use/use-merge";
  * 查询框组件
  */
 export default defineComponent({
-  name: "FsSearch",
+  name: "FsSearchV1",
   components: { FsSearchButtons },
   inheritAttrs: false,
   props: {

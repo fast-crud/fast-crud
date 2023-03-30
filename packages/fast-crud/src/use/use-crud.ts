@@ -159,6 +159,12 @@ export function useCrud(ctx: UseCrudProps): UseCrudRet {
         doSearch,
         ["onUpdate:collapse"]: (value: any) => {
           crudBinding.value.search.collapse = value;
+        },
+        container: {
+          collapse: true,
+          ["onUpdate:collapse"]: (value: any) => {
+            crudBinding.value.search.container.collapse = value;
+          }
         }
       }
     };

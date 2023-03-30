@@ -32,17 +32,25 @@ export type ComponentRenderBinding = {
   slots?: WritableSlots;
 };
 
-export interface CI<T = any> {
-  name: string;
-  modelValue?: string;
-
-  builder: (options: T) => ComponentRenderBinding;
-  buildProps: (options: T) => any;
-  builderComputed: (options: T) => Ref<ComponentRenderBinding>;
-  render: (options: T) => UiSlotRet;
+export interface BaseCI<P = any> {
+  builder?: (options: P) => ComponentRenderBinding;
+  buildProps?: (options: P) => any;
+  builderComputed?: (options: P) => Ref<ComponentRenderBinding>;
+  render?: (options: P) => UiSlotRet;
 }
 
-export interface FormCI {
+export type CI<P = any> = {
+  name: string;
+  modelValue?: string;
+  __options?: P;
+  builder: (options: P) => ComponentRenderBinding;
+  buildProps: (options: P) => any;
+  builderComputed: (options: P) => Ref<ComponentRenderBinding>;
+  render: (options: P) => UiSlotRet;
+};
+
+export type FormBuilderOption = {} & BindBuilderOptions;
+export interface FormCI extends CI<FormBuilderOption> {
   name: string;
   inlineLayout: Object;
   // resetWrap: Function;

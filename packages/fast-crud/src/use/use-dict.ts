@@ -1,6 +1,7 @@
 import { getCurrentInstance, computed, watch, inject, shallowReactive } from "vue";
 import _ from "lodash-es";
 import { uiContext } from "../ui";
+import { utils } from "../utils";
 export function useDict(props: any, ctx: any, vModel = "modelValue") {
   const ui = uiContext.get();
   let dict = props.dict;
@@ -17,6 +18,9 @@ export function useDict(props: any, ctx: any, vModel = "modelValue") {
       if (props.options) {
         options = props.options;
       } else if (dict && dict.data != null) {
+        if (!(dict.data instanceof Array)) {
+          utils.logger.warn("dict.data类型错误，期望为数组，实际：" + dict.data);
+        }
         options = dict.data;
       }
 

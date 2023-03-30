@@ -20,7 +20,8 @@
 
     <template #search>
       <div class="fs-crud-search">
-        <fs-search
+        <component
+          :is="search.is || 'fs-search'"
           ref="searchRef"
           v-bind="search"
           :slots="computedSearchSlots"

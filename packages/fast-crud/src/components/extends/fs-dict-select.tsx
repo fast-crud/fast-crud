@@ -61,7 +61,8 @@ export default defineComponent({
     // options 为子组件
     const options = [];
     const optionComp = resolveDynamicComponent(ui.option.name);
-    for (const item of this.computedOptions) {
+    const computedOptions = this.computedOptions || [];
+    for (const item of computedOptions) {
       const option = (
         <optionComp {...item} value={this.getValue(item)} label={this.getLabel(item)}>
           {this.renderLabel ? this.renderLabel(item) : this.getLabel(item)}
