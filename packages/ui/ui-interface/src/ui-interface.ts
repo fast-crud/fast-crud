@@ -34,12 +34,12 @@ export type ComponentRenderBinding = {
 
 export interface CI<T = any> {
   name: string;
-
   modelValue?: string;
-  builder?: (options: T) => ComponentRenderBinding;
-  buildProps?: (options: T) => any;
-  builderComputed?: (options: T) => Ref<ComponentRenderBinding>;
-  render?: (options: T) => UiSlotRet;
+
+  builder: (options: T) => ComponentRenderBinding;
+  buildProps: (options: T) => any;
+  builderComputed: (options: T) => Ref<ComponentRenderBinding>;
+  render: (options: T) => UiSlotRet;
 }
 
 export interface FormCI {
