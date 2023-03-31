@@ -120,7 +120,6 @@ export default defineComponent({
     }
 
     function handleClosed() {
-      debugger;
       clear();
       ctx.emit("cancel");
     }
