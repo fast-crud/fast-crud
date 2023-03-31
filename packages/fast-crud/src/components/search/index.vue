@@ -13,7 +13,7 @@
       >
         <component :is="container?.is" v-if="show !== false" v-bind="container" :columns="computedColumns">
           <template #search-items>
-            <template v-for="(item, key) in computedColumns" :key="key">
+            <template v-for="(item, key) of computedColumns" :key="key">
               <div v-if="item.show === true" class="fs-search-col" v-bind="item.col">
                 <component :is="ui.formItem.name" v-bind="item" :[ui.formItem.prop]="key" :label="item.title">
                   <template v-if="slots['search_' + key]">
@@ -77,7 +77,7 @@ import { useI18n } from "../../locale";
 import logger from "../../utils/util.log";
 import FsSearchButtons from "./buttons.vue";
 import { Constants } from "../../utils/util.constants";
-import { ButtonsProps, SearchEventContext, SearchItemProps } from "../../d";
+import { ButtonsProps, SearchEventContext, SearchItemProps, TypeMap } from "../../d";
 import { useUi } from "../../use/use-ui";
 import { useMerge } from "../../use/use-merge";
 
@@ -269,7 +269,7 @@ export default defineComponent({
       });
     }
 
-    const computedColumns = doComputed(
+    const computedColumns: Ref<TypeMap<SearchItemProps>> = doComputed(
       () => {
         return props.columns;
       },
