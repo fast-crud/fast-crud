@@ -14,7 +14,10 @@ export default {
       search: {
         container: {
           is: "fs-search-layout-default",
-          collapse: true
+          collapse: true,
+          col: {
+            span: 4
+          }
         },
         options: {
           ...ui.form.inlineLayout,

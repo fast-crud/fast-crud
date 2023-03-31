@@ -9,7 +9,7 @@
         <component :is="ui.row.name" ref="columnsRowRef" class="fs-search-columns">
           <!-- 查询字段render，render可以更精细化的自定义，需要定义props.columns -->
           <template v-for="(item, key) of columns" :key="key">
-            <component :is="ui.col.name" v-if="item.show" class="fs-search-col" v-bind="item.col">
+            <component :is="ui.col.name" v-if="item.show" class="fs-search-col" v-bind="mergeCol(item.col)">
               <fs-render :render-func="item._cellRender" />
             </component>
           </template>
@@ -18,8 +18,13 @@
             <slot name="search-items"></slot>
           -->
 
-          <component :is="ui.col.name" v-if="!computedIsMultiLine" class="fs-search-col fs-search-buttons-group">
-            <component :is="ui.formItem.name">
+          <component
+            :is="ui.col.name"
+            v-if="!computedIsMultiLine"
+            class="fs-search-col fs-search-buttons-group"
+            v-bind="mergeCol(action?.col)"
+          >
+            <component :is="ui.formItem.name" :[ui.formItem.label]="action?.label">
               <!-- 查询按钮插槽-->
               <slot name="search-buttons"></slot>
             </component>
@@ -42,7 +47,7 @@
 <script lang="ts">
 import { useUi } from "../../use";
 import { computed, defineComponent, onMounted, ref } from "vue";
-
+import _ from "lodash-es";
 export default defineComponent({
   name: "FsSearchLayoutDefault",
   props: {
@@ -59,6 +64,10 @@ export default defineComponent({
     collapseButton: {
       type: Object
     },
+
+    action: {
+      type: Object
+    },
     /**
      * 布局模式
      */
@@ -70,6 +79,12 @@ export default defineComponent({
      * 查询字段列表，可以精细化自定义查询字段布局
      */
     columns: {
+      type: Object
+    },
+    /**
+     * 默认的col配置
+     */
+    col: {
       type: Object
     }
   },
@@ -101,33 +116,37 @@ export default defineComponent({
       ctx.emit("collapse", !props.collapse);
     };
 
+    function mergeCol(col: any) {
+      return _.merge({}, props.col, col);
+    }
+
     return {
       ui,
       columnsRowRef,
       computedColumnBoxHeight,
       computedIsMultiLine,
-      toggleCollapse
+      toggleCollapse,
+      mergeCol
     };
   }
 });
 </script>
 <style lang="less">
-.fs-search {
-  .ant-picker,
-  .n-date-picker,
-  .el-date-editor {
-    width: 100%;
-  }
+.fs-search-layout-default {
+  width: 100%;
   .fs-search-box {
+    width: 100%;
     display: flex;
     flex-direction: column;
     position: relative;
 
     .fs-search-main {
+      width: 100%;
       display: flex;
       height: auto;
 
       .fs-search-columns {
+        width: 100%;
         display: flex;
         flex-wrap: wrap;
         height: auto;
@@ -155,7 +174,7 @@ export default defineComponent({
     }
   }
 
-  .fs-search-multi-line {
+  &.fs-search-multi-line {
     .fs-search-box {
       .fs-search-main {
         flex-direction: column;

@@ -120,6 +120,8 @@ export default defineComponent({
     }
 
     function handleClosed() {
+      debugger;
+      clear();
       ctx.emit("cancel");
     }
     const vClosed = ui.dialog.buildOnClosedBind(handleClosed);
@@ -143,6 +145,7 @@ export default defineComponent({
     function clear() {
       isLoaded.value = false;
       if (fileInputRef.value != null) {
+        fileInputRef.value.value = null;
         fileInputRef.value = null;
       }
       if (cropperRef.value != null) {
@@ -205,6 +208,9 @@ export default defineComponent({
     function handleChange(e: any) {
       e.preventDefault();
       const files = e.target.files || e.dataTransfer.files;
+      if (files == null) {
+        return;
+      }
       isLoaded.value = true;
       const selectedFile = files[0];
       if (checkFile(selectedFile)) {

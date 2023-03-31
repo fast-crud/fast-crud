@@ -546,6 +546,13 @@ export default defineComponent({
       align-items: center;
       flex-wrap: wrap;
 
+      .ant-picker,
+      .n-date-picker,
+      .el-select,
+      .el-date-editor {
+        width: 100%;
+      }
+
       .el-form-item {
         margin-bottom: 4px;
         margin-top: 4px;

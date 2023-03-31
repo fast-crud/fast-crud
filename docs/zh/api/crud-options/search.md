@@ -2,22 +2,7 @@
 # search【查询框】
 更多参数见：[FsSearch](/api/components/crud/search/index.md)
 
-## container
-* 说明：布局容器，支持search自定义布局
-* 类型：Object
-* 默认： {is:'fs-search-layout-default'}
-* 参考： [fs-search-layout-default](https://github.com/fast-crud/fast-crud/blob/main/packages/fast-crud/src/components/search/layout-default.vue)
-```js
-const crudOptions = {
-    search:{
-        container:{
-            is:'your-custom-layout-component-name',
-            collpase:true //是否展开，你布局组件中定义的props
-        },
-    }
-}
 
-```
 
 ## show
 * 说明：显示或隐藏查询框
@@ -79,6 +64,35 @@ const crudOptions = {
 * 说明：表单参数
 * 类型：Object
 * 支持：el-form,a-form的参数
+
+
+## container
+* 说明：布局容器，支持search自定义布局
+* 类型：Object
+* 默认： {is:'fs-search-layout-default'}
+* 参考： [fs-search-layout-default](https://github.com/fast-crud/fast-crud/blob/main/packages/fast-crud/src/components/search/layout-default.vue)
+```js
+const crudOptions = {
+    search:{
+        container:{
+            is:'your-custom-layout-component-name',
+            collpase:true, //是否展开，你布局组件中定义的props
+            'onUpdate:collpase':(value)=>{
+              crudBiding.value.search.container.collpase = value  
+            },
+            action:{
+                label:"操作", //查询按钮前缀
+                col:{ span: 4} //查询按钮所占格子宽度
+            },
+            col:{ span:4}, // 默认列宽度配置
+            collapseButton:{ //展开按钮配置
+                // fs-button 属性
+            }
+        },
+    }
+}
+
+```
 
 
 
