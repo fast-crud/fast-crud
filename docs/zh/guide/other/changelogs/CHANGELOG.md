@@ -3,6 +3,21 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [1.12.0](https://github.com/fast-crud/fast-crud/compare/v1.11.10...v1.12.0) (2023-03-31)
+
+### Bug Fixes
+
+* 修复el-tag 颜色异常 ([e3bcbf0](https://github.com/fast-crud/fast-crud/commit/e3bcbf051cb1d27d1722b981494abf75acc0da46))
+
+### Features
+
+* **search:** search支持自定义布局 ([94c10cf](https://github.com/fast-crud/fast-crud/commit/94c10cfaee338798c0373d066bb98da9ca085d29))
+
+### Performance Improvements
+
+* 优化多行查询示例 ([95fa427](https://github.com/fast-crud/fast-crud/commit/95fa427043b29ef9590ce75fe91df9d5d686b196))
+* **cropper-uploader:** 支持图片预览 ([b289af8](https://github.com/fast-crud/fast-crud/commit/b289af87267661d14a34aa632b48233c47f7c249))
+
 ## [1.11.10](https://github.com/fast-crud/fast-crud/compare/v1.11.9...v1.11.10) (2023-03-29)
 
 ### Bug Fixes
