@@ -437,7 +437,7 @@ export class Element implements UiInterface {
   tag: TagCI = creator<TagCI>({
     name: "el-tag",
     type: "type",
-    colors: ["primary", "success", "warning", "danger"]
+    colors: ["info", "success", "warning", "danger"]
   });
 
   inputGroup: InputGroupCI = creator<InputGroupCI>({
