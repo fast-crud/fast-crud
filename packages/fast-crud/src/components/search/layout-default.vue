@@ -1,33 +1,40 @@
 <template>
   <div class="fs-search-layout-default" :class="{ 'fs-search-multi-line': computedIsMultiLine }">
     <div class="fs-search-box">
-      <div class="fs-search-main">
-        <component
-          :is="ui.row.name"
-          ref="columnsRowRef"
-          class="fs-search-columns"
-          :class="{ 'fs-search-collapse': collapse }"
-          :style="{ height: computedColumnBoxHeight }"
-        >
-          <!-- 查询字段render -->
+      <div
+        class="fs-search-main"
+        :class="{ 'fs-search-collapse': collapse }"
+        :style="{ maxHeight: computedColumnBoxHeight }"
+      >
+        <component :is="ui.row.name" ref="columnsRowRef" class="fs-search-columns">
+          <!-- 查询字段render，render可以更精细化的自定义，需要定义props.columns -->
           <template v-for="(item, key) of columns" :key="key">
             <component :is="ui.col.name" v-if="item.show" class="fs-search-col" v-bind="item.col">
               <fs-render :render-func="item._cellRender" />
             </component>
           </template>
+          <!--
+            也可以使用search-items插槽，自定义程度不高，比较简单
+            <slot name="search-items"></slot>
+          -->
 
-          <!-- 查询按钮-->
           <component :is="ui.col.name" v-if="!computedIsMultiLine" class="fs-search-col fs-search-buttons-group">
             <component :is="ui.formItem.name">
+              <!-- 查询按钮插槽-->
               <slot name="search-buttons"></slot>
             </component>
           </component>
         </component>
       </div>
-      <div v-if="computedIsMultiLine" class="fs-search-buttons-group">
+      <div v-if="computedIsMultiLine" class="fs-search-buttons-group fs-search-multi-line-buttons">
         <!-- 多行模式时的查询按钮-->
         <slot name="search-buttons"></slot>
-        <fs-button :icon="collapse ? ui.icons.caretUp : ui.icons.caretDown" @click="toggleCollapse" />
+        <fs-button
+          :icon="collapse ? ui.icons.caretUp : ui.icons.caretDown"
+          text="更多条件"
+          v-bind="collapseButton"
+          @click="toggleCollapse"
+        />
       </div>
     </div>
   </div>
@@ -39,14 +46,29 @@ import { computed, defineComponent, onMounted, ref } from "vue";
 export default defineComponent({
   name: "FsSearchLayoutDefault",
   props: {
+    /**
+     * 是否收缩
+     */
     collapse: {
       type: Boolean,
       default: true
     },
+    /**
+     * 展开按钮
+     */
+    collapseButton: {
+      type: Object
+    },
+    /**
+     * 布局模式
+     */
     layout: {
       type: String,
-      default: "default"
+      default: "single-line"
     },
+    /**
+     * 查询字段列表，可以精细化自定义查询字段布局
+     */
     columns: {
       type: Object
     }
@@ -62,26 +84,17 @@ export default defineComponent({
     onMounted(() => {
       if (computedIsMultiLine.value && columnsRowRef.value) {
         columnsBoxHeightRef.value = columnsRowRef.value.$el.offsetHeight;
-        const columnsList = columnsRowRef.value.$el.children;
-        if (columnsList && columnsList.length > 1) {
-          columnsLineHeightRef.value = columnsList[1].offsetHeight + 10;
-        }
       }
     });
 
     const computedColumnBoxHeight = computed(() => {
-      if (!computedIsMultiLine.value) {
+      if (!computedIsMultiLine.value || !props.collapse) {
         return "auto";
       }
-      if (props.collapse) {
-        return columnsLineHeightRef.value ? columnsLineHeightRef.value + "px" : "";
-      } else {
-        return columnsBoxHeightRef.value ? columnsBoxHeightRef.value + "px" : "";
-      }
+      return columnsBoxHeightRef.value ? columnsBoxHeightRef.value + "px" : "";
     });
 
     const columnsBoxHeightRef = ref(0);
-    const columnsLineHeightRef = ref(0);
 
     const toggleCollapse = () => {
       ctx.emit("update:collapse", !props.collapse);
@@ -100,64 +113,57 @@ export default defineComponent({
 </script>
 <style lang="less">
 .fs-search {
-  .search-left {
+  .ant-picker,
+  .n-date-picker,
+  .el-date-editor {
+    width: 100%;
+  }
+  .fs-search-box {
+    display: flex;
+    flex-direction: column;
+    position: relative;
+
+    .fs-search-main {
+      display: flex;
+      height: auto;
+
+      .fs-search-columns {
+        display: flex;
+        flex-wrap: wrap;
+        height: auto;
+        padding: 4px 0 4px 0;
+
+        .fs-search-col {
+          min-width: 180px;
+          & > * {
+            margin: 0px 4px;
+          }
+          margin: 4px 0;
+          &:first-child {
+            // margin-left: 0;
+          }
+        }
+      }
+    }
   }
 
-  .search-right {
-    flex: 1;
-  }
-
-  .fs-search-form {
+  .fs-search-buttons-group {
     display: flex;
     align-items: center;
-    flex-wrap: wrap;
-    //& > * {
-    //  margin-bottom: 4px;
-    //  margin-top: 4px;
-    //  margin-right: 10px;
-    //}
+    .fs-button {
+      margin: 0 4px 0 4px;
+    }
+  }
 
+  .fs-search-multi-line {
     .fs-search-box {
-      display: flex;
-      flex-direction: column;
-
       .fs-search-main {
-        display: flex;
-
-        .fs-search-columns {
-          display: flex;
-          flex-wrap: wrap;
-        }
-      }
-    }
-
-    .fs-search-buttons-group {
-      display: flex;
-      align-items: center;
-      .fs-button {
-        margin: 0 4px 0 4px;
-      }
-    }
-
-    .fs-search-multi-line {
-      .fs-search-box {
-        .fs-search-buttons-group {
-          justify-content: end;
-          margin-bottom: 10px;
-        }
-
-        .fs-search-main {
-          flex-direction: column;
-
-          .fs-search-columns {
-            height: auto;
-            overflow: hidden;
-            transition: all 0.1s linear;
-            will-change: height;
-          }
-          .fs-search-collapse {
-            overflow: hidden;
-          }
+        flex-direction: column;
+        overflow: hidden;
+        height: auto;
+        transition: max-height 0.2s ease;
+        &.fs-search-collapse {
+          max-height: 42px !important;
         }
       }
     }

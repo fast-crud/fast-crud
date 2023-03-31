@@ -1,70 +1,72 @@
 <template>
-  <component :is="ui.collapseTransition.name" class="fs-search fs-search-v2">
-    <component
-      :is="ui.form.name"
-      ref="searchFormRef"
-      :model="form"
-      v-bind="options"
-      :rules="computedRules"
-      class="fs-search-form"
-      @compositionstart="changeInputEventDisabled(true)"
-      @compositionend="changeInputEventDisabled(false)"
-    >
-      <component :is="container?.is" v-if="show !== false" v-bind="container" :columns="computedColumns">
-        <template #search-items>
-          <template v-for="(item, key) in computedColumns" :key="key">
-            <div v-if="item.show === true" class="fs-search-col" v-bind="item.col">
-              <component :is="ui.formItem.name" v-bind="item" :[ui.formItem.prop]="key" :label="item.title">
-                <template v-if="slots['search_' + key]">
-                  <fs-slot-render :slots="slots['search_' + key]" :scope="buildFieldContext(key)" />
-                </template>
-                <template v-else-if="item.render">
-                  <fs-render :render-func="item.render" :scope="buildFieldContext(key)" />
-                </template>
-                <template v-else>
-                  <fs-component-render
-                    v-if="item.component && item.component.show !== false"
-                    :ref="
+  <div class="fs-search fs-search-v2">
+    <component :is="ui.collapseTransition.name">
+      <component
+        :is="ui.form.name"
+        ref="searchFormRef"
+        :model="form"
+        v-bind="options"
+        :rules="computedRules"
+        class="fs-search-form"
+        @compositionstart="changeInputEventDisabled(true)"
+        @compositionend="changeInputEventDisabled(false)"
+      >
+        <component :is="container?.is" v-if="show !== false" v-bind="container" :columns="computedColumns">
+          <template #search-items>
+            <template v-for="(item, key) in computedColumns" :key="key">
+              <div v-if="item.show === true" class="fs-search-col" v-bind="item.col">
+                <component :is="ui.formItem.name" v-bind="item" :[ui.formItem.prop]="key" :label="item.title">
+                  <template v-if="slots['search_' + key]">
+                    <fs-slot-render :slots="slots['search_' + key]" :scope="buildFieldContext(key)" />
+                  </template>
+                  <template v-else-if="item.render">
+                    <fs-render :render-func="item.render" :scope="buildFieldContext(key)" />
+                  </template>
+                  <template v-else>
+                    <fs-component-render
+                      v-if="item.component && item.component.show !== false"
+                      :ref="
                             (el:any) => {
                               if (el) {
                                 componentRenderRefs[item.key] = el;
                               }
                             }
                           "
-                    :model-value="get(form, key)"
-                    v-bind="item.component"
-                    :scope="buildFieldContext(key)"
-                    @update:modelValue="onValueChanged($event, item)"
-                    @input="onInput(item)"
-                  />
-                </template>
-              </component>
-            </div>
+                      :model-value="get(form, key)"
+                      v-bind="item.component"
+                      :scope="buildFieldContext(key)"
+                      @update:modelValue="onValueChanged($event, item)"
+                      @input="onInput(item)"
+                    />
+                  </template>
+                </component>
+              </div>
+            </template>
           </template>
-        </template>
-        <template #search-buttons>
-          <template v-for="(item, index) in computedButtons" :key="index">
-            <fs-button v-if="item.show" v-bind="item" @click="item._click()" />
+          <template #search-buttons>
+            <template v-for="(item, index) in computedButtons" :key="index">
+              <fs-button v-if="item.show" v-bind="item" @click="item._click()" />
+            </template>
           </template>
-        </template>
-        <template v-if="slots['search-right']" #search-right>
-          <component :is="ui.formItem.name">
-            <fs-slot-render :slots="slots['search-right']" :scope="searchEventContextRef" />
-          </component>
-        </template>
-        <template v-if="slots['search-left']" #search-left>
-          <component :is="ui.formItem.name">
-            <fs-slot-render :slots="slots['search-left']" :scope="searchEventContextRef" />
-          </component>
-        </template>
-        <template v-if="slots['search-middle']" #search-middle>
-          <component :is="ui.formItem.name">
-            <fs-slot-render :slots="slots['search-left']" :scope="searchEventContextRef" />
-          </component>
-        </template>
+          <template v-if="slots['search-right']" #search-right>
+            <component :is="ui.formItem.name">
+              <fs-slot-render :slots="slots['search-right']" :scope="searchEventContextRef" />
+            </component>
+          </template>
+          <template v-if="slots['search-left']" #search-left>
+            <component :is="ui.formItem.name">
+              <fs-slot-render :slots="slots['search-left']" :scope="searchEventContextRef" />
+            </component>
+          </template>
+          <template v-if="slots['search-middle']" #search-middle>
+            <component :is="ui.formItem.name">
+              <fs-slot-render :slots="slots['search-left']" :scope="searchEventContextRef" />
+            </component>
+          </template>
+        </component>
       </component>
     </component>
-  </component>
+  </div>
 </template>
 
 <script lang="tsx">
@@ -543,16 +545,6 @@ export default defineComponent({
       display: flex;
       align-items: center;
       flex-wrap: wrap;
-      .fs-search-col {
-        min-width: 180px;
-        & > * {
-          margin: 0px 5px;
-        }
-        margin: 5px 0;
-        &:first-child {
-          // margin-left: 0;
-        }
-      }
 
       .el-form-item {
         margin-bottom: 4px;
@@ -573,7 +565,7 @@ export default defineComponent({
     }
   }
   .n-form-item-blank {
-    min-width: 150px;
+    min-width: 130px;
   }
 }
 </style>
