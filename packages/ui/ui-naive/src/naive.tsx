@@ -1,12 +1,16 @@
 import {
   BadgeCI,
   ButtonCI,
+  ButtonGroupCI,
+  CardCI,
   CascaderCI,
   CheckboxCI,
   CheckboxGroupCI,
   CI,
+  ColCI,
   CollapseCI,
   CollapseItemCI,
+  CollapseTransitionCI,
   DatePickerCI,
   DialogCI,
   DividerCI,
@@ -89,7 +93,7 @@ export class Naive implements UiInterface {
   modelValue = "value";
   i18n: any = null;
 
-  formWrapper: FormWrapperCI = creator({
+  formWrapper: FormWrapperCI = creator<FormWrapperCI>({
     visible: "show",
     customClass: (is: string) => {
       return "class";
@@ -126,7 +130,7 @@ export class Naive implements UiInterface {
     name: "fs-form-wrapper"
   });
 
-  messageBox: MessageBoxCI = creator({
+  messageBox: MessageBoxCI = creator<MessageBoxCI>({
     name: "n-dialog",
     instance: undefined,
     getInstance() {
@@ -167,7 +171,7 @@ export class Naive implements UiInterface {
     }
   });
 
-  message: MessageCI = creator({
+  message: MessageCI = creator<MessageCI>({
     instance: undefined,
     getInstance() {
       if (!this.instance) {
@@ -201,7 +205,7 @@ export class Naive implements UiInterface {
     }
   });
 
-  notification: NotificationCI = creator({
+  notification: NotificationCI = creator<NotificationCI>({
     instance: undefined,
     name: "n-notification",
     getInstance() {
@@ -242,7 +246,7 @@ export class Naive implements UiInterface {
     }
   });
 
-  icon: IconCI = creator({
+  icon: IconCI = creator<IconCI>({
     name: "",
     isComponent: true,
     circle: { shape: "circle" }
@@ -275,10 +279,11 @@ export class Naive implements UiInterface {
     unFullScreen: "ExpandOutlined",
     question: "QuestionCircleOutlined",
     caretUp: "CaretUpOutlined",
-    caretDown: "CaretDownOutlined"
+    caretDown: "CaretDownOutlined",
+    eye: "EyeOutlined"
   };
 
-  dialog: DialogCI = creator({
+  dialog: DialogCI = creator<DialogCI>({
     name: "n-modal",
     modelValue: "show",
     visible: "show",
@@ -318,7 +323,7 @@ export class Naive implements UiInterface {
     }
   });
 
-  button: ButtonCI = creator({
+  button: ButtonCI = creator<ButtonCI>({
     name: "n-button",
     textType: { type: "text", quaternary: true },
     linkType: { type: "text", quaternary: true, tag: "a", vModel: "text", target: "_blank", textColor: "#2080f0" },
@@ -331,15 +336,15 @@ export class Naive implements UiInterface {
     }
   });
 
-  buttonGroup: CI = creator({
+  buttonGroup = creator<ButtonGroupCI>({
     name: "n-button-group"
   });
 
-  card: CI = creator({
+  card = creator<CardCI>({
     name: "n-card"
   });
 
-  cascader: CascaderCI = creator({
+  cascader: CascaderCI = creator<CascaderCI>({
     name: "n-cascader",
     modelValue: "value",
     clearable: "clearable",
@@ -353,11 +358,11 @@ export class Naive implements UiInterface {
     }
   });
 
-  checkboxGroup: CheckboxGroupCI = creator({
+  checkboxGroup: CheckboxGroupCI = creator<CheckboxGroupCI>({
     name: "n-checkbox-group",
     modelValue: "value"
   });
-  checkbox: CheckboxCI = creator({
+  checkbox: CheckboxCI = creator<CheckboxCI>({
     name: "n-checkbox",
     resolveEvent(e) {
       return e;
@@ -371,15 +376,15 @@ export class Naive implements UiInterface {
     }
   });
 
-  col: CI = creator({
+  col = creator<ColCI>({
     name: "n-col"
   });
 
-  collapseTransition: CI = creator({
+  collapseTransition = creator<CollapseTransitionCI>({
     name: "div"
   });
 
-  drawer: DrawerCI = creator({
+  drawer: DrawerCI = creator<DrawerCI>({
     name: "n-drawer",
     visible: "show",
     customClass: "class",
@@ -387,7 +392,7 @@ export class Naive implements UiInterface {
     hasContentWrap: "n-drawer-content"
   });
 
-  form: FormCI = creator({
+  form: FormCI = creator<FormCI>({
     name: "n-form",
     inlineLayout: {
       inline: true,
@@ -428,20 +433,20 @@ export class Naive implements UiInterface {
     }
   });
 
-  formItem: FormItemCI = creator({
+  formItem: FormItemCI = creator<FormItemCI>({
     name: "n-form-item",
     prop: "name",
     label: "label",
     rules: "rule"
   });
 
-  option: OptionCI = creator({
+  option: OptionCI = creator<OptionCI>({
     name: null,
     value: "value",
     label: "label"
   });
 
-  pagination: PaginationCI = creator({
+  pagination: PaginationCI = creator<PaginationCI>({
     name: "n-pagination",
     currentPage: "page",
     total: "itemCount",
@@ -461,27 +466,27 @@ export class Naive implements UiInterface {
     }
   });
 
-  radio: RadioCI = creator({
+  radio: RadioCI = creator<RadioCI>({
     name: "n-radio",
     value: "value"
   });
 
-  radioGroup: RadioGroupCI = creator({
+  radioGroup: RadioGroupCI = creator<RadioGroupCI>({
     name: "n-radio-group",
     modelValue: "value"
   });
 
-  row: RowCI = creator({
+  row: RowCI = creator<RowCI>({
     name: "n-row"
   });
 
-  select: SelectCI = creator({
+  select: SelectCI = creator<SelectCI>({
     name: "n-select",
     modelValue: "value",
     clearable: "clearable"
   });
 
-  treeSelect: TreeSelectCI = creator({
+  treeSelect: TreeSelectCI = creator<TreeSelectCI>({
     name: "n-tree-select",
     modelValue: "value",
     clearable: "clearable",
@@ -490,7 +495,7 @@ export class Naive implements UiInterface {
     children: "childrenField",
     options: "options"
   });
-  table: TableCI = creator({
+  table: TableCI = creator<TableCI>({
     name: "n-data-table",
     renderMode: "config",
     renderMethod: "render",
@@ -533,7 +538,7 @@ export class Naive implements UiInterface {
     }
   });
 
-  tableColumn: TableColumnCI = creator({
+  tableColumn: TableColumnCI = creator<TableColumnCI>({
     name: "n-table-column",
     label: "title",
     prop: "key",
@@ -541,7 +546,7 @@ export class Naive implements UiInterface {
     index: "index"
   });
 
-  tableColumnGroup: TableColumnCI = creator({
+  tableColumnGroup: TableColumnCI = creator<TableColumnCI>({
     name: "n-table-column-group",
     label: "title",
     prop: "key",
@@ -549,41 +554,41 @@ export class Naive implements UiInterface {
     index: "index"
   });
 
-  textArea: TextAreaCI = creator({
+  textArea: TextAreaCI = creator<TextAreaCI>({
     name: "n-input",
     type: "textarea",
     modelValue: "value",
     clearable: "clearable"
   });
 
-  tag: TagCI = creator({
+  tag: TagCI = creator<TagCI>({
     name: "n-tag",
     type: "type",
     colors: ["success", "warning", "error", "info"]
   });
 
-  inputGroup: InputGroupCI = creator({
+  inputGroup: InputGroupCI = creator<InputGroupCI>({
     name: "n-input"
   });
-  input: InputCI = creator({
+  input: InputCI = creator<InputCI>({
     name: "n-input",
     clearable: "clearable",
     modelValue: "value"
   });
-  inputPassword: InputPasswordCI = creator({
+  inputPassword: InputPasswordCI = creator<InputPasswordCI>({
     name: "n-input",
     clearable: "clearable",
     modelValue: "value",
     passwordType: { type: "password" }
   });
-  number: InputNumberCI = creator({
+  number: InputNumberCI = creator<InputNumberCI>({
     name: "n-input-number",
     modelValue: "value",
     builder(opts) {
       return buildBinding(this, opts, {});
     }
   });
-  switch: SwitchCI = creator({
+  switch: SwitchCI = creator<SwitchCI>({
     activeColor: "active-color",
     activeText: "checkedChildren",
     activeValue: "checked-value",
@@ -593,18 +598,18 @@ export class Naive implements UiInterface {
     modelValue: "value",
     name: "n-switch"
   });
-  datePicker: DatePickerCI = creator({
+  datePicker: DatePickerCI = creator<DatePickerCI>({
     name: "n-date-picker",
     modelValue: "value",
     buildDateType(type) {
       return { name: "n-date-picker", type };
     }
   });
-  timePicker: TimePickerCI = creator({
+  timePicker: TimePickerCI = creator<TimePickerCI>({
     name: "n-time-picker",
     modelValue: "value"
   });
-  dropdown: DropdownCI = creator({
+  dropdown: DropdownCI = creator<DropdownCI>({
     name: "n-dropdown",
     command: (handler) => {
       return { onSelect: handler };
@@ -615,7 +620,7 @@ export class Naive implements UiInterface {
     value: "key",
     children: "children"
   });
-  dropdownMenu: DropdownMenuCI = creator({
+  dropdownMenu: DropdownMenuCI = creator<DropdownMenuCI>({
     name: "n-menu",
     command: (callback) => {
       return {
@@ -625,27 +630,27 @@ export class Naive implements UiInterface {
       };
     }
   });
-  dropdownItem: DropdownItemCI = creator({
+  dropdownItem: DropdownItemCI = creator<DropdownItemCI>({
     name: "n-menu-item",
     command: "key"
   });
-  imageGroup: ImageGroupCI = creator({
+  imageGroup: ImageGroupCI = creator<ImageGroupCI>({
     name: "n-image-group"
   });
-  image: ImageCI = creator({
+  image: ImageCI = creator<ImageCI>({
     name: "n-image",
     buildPreviewBind: ({ url, urls, previewUrl, previewUrls }) => {
       return { "preview-src": previewUrl };
     }
   });
-  progress: ProgressCI = creator({
+  progress: ProgressCI = creator<ProgressCI>({
     name: "n-progress"
   });
-  loading: LoadingCI = creator({
+  loading: LoadingCI = creator<LoadingCI>({
     name: "n-spin",
     type: "component"
   });
-  upload: UploadCI = creator({
+  upload: UploadCI = creator<UploadCI>({
     id: "id",
     name: "n-upload",
     type: "",
@@ -666,21 +671,21 @@ export class Naive implements UiInterface {
       return fileItem.status == null || fileItem.status === "finished";
     }
   });
-  tabs: TabsCI = creator({
+  tabs: TabsCI = creator<TabsCI>({
     name: "n-tabs",
     modelValue: "value"
   });
-  tabPane: TabPaneCI = creator({
+  tabPane: TabPaneCI = creator<TabPaneCI>({
     name: "n-tab-pane",
     key: "name",
     tab: "tab"
   });
-  collapse: CollapseCI = creator({
+  collapse: CollapseCI = creator<CollapseCI>({
     name: "n-collapse",
     modelValue: "expandedNames",
     keyName: "name"
   });
-  collapseItem: CollapseItemCI = creator({
+  collapseItem: CollapseItemCI = creator<CollapseItemCI>({
     name: "n-collapse-item",
     titleSlotName: "header",
     extraSlotName: "header-extra",
@@ -697,7 +702,7 @@ export class Naive implements UiInterface {
       });
     }
   });
-  badge: BadgeCI = creator({
+  badge: BadgeCI = creator<BadgeCI>({
     name: "n-badge",
     value: "value",
     builder(opts) {
@@ -708,15 +713,15 @@ export class Naive implements UiInterface {
       });
     }
   });
-  tooltip: TooltipCI = creator({
+  tooltip: TooltipCI = creator<TooltipCI>({
     name: "n-tooltip",
     content: "default",
     trigger: "trigger"
   });
-  divider: DividerCI = creator({
+  divider: DividerCI = creator<DividerCI>({
     name: "n-divider"
   });
-  popover: PopoverCI = creator({
+  popover: PopoverCI = creator<PopoverCI>({
     name: "n-popover",
     visible: "show",
     contentSlotName: "default",

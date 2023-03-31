@@ -238,7 +238,8 @@ export class Antdv implements UiInterface {
     unFullScreen: "ExpandOutlined",
     question: "QuestionCircleOutlined",
     caretUp: "CaretUpOutlined",
-    caretDown: "CaretDownOutlined"
+    caretDown: "CaretDownOutlined",
+    eye: "EyeOutlined"
   };
 
   dialog: DialogCI = creator<DialogCI>({

@@ -527,6 +527,7 @@ export interface Icons {
   question: string;
   caretUp: string;
   caretDown: string;
+  eye: string;
 }
 export interface UiInterface {
   modelValue: string;

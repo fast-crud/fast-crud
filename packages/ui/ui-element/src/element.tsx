@@ -48,7 +48,8 @@ import {
   TooltipCI,
   useUiRender,
   InputNumberCI,
-  BadgeCI
+  BadgeCI,
+  CollapseTransitionCI
 } from "@fast-crud/ui-interface";
 // @ts-ignore
 import _ from "lodash-es";
@@ -73,7 +74,7 @@ export class Element implements UiInterface {
   type = "element";
   modelValue = "modelValue";
 
-  switch: SwitchCI = creator({
+  switch: SwitchCI = creator<SwitchCI>({
     activeColor: "active-color",
     activeText: "active-text",
     activeValue: "active-value",
@@ -84,7 +85,7 @@ export class Element implements UiInterface {
     name: "el-switch"
   });
 
-  formWrapper: FormWrapperCI = creator({
+  formWrapper: FormWrapperCI = creator<FormWrapperCI>({
     visible: "modelValue",
     customClass: (is: string) => {
       if (is === "el-dialog") {
@@ -109,7 +110,7 @@ export class Element implements UiInterface {
     name: "fs-form-wrapper"
   });
 
-  messageBox: MessageBoxCI = creator({
+  messageBox: MessageBoxCI = creator<MessageBoxCI>({
     name: "el-message-box",
     instance: undefined,
     open: async (context) => {
@@ -120,7 +121,7 @@ export class Element implements UiInterface {
     }
   });
 
-  message: MessageCI = creator({
+  message: MessageCI = creator<MessageCI>({
     instance: undefined,
     name: "el-message",
     open: (context) => {
@@ -140,7 +141,7 @@ export class Element implements UiInterface {
     }
   });
 
-  notification: NotificationCI = creator({
+  notification: NotificationCI = creator<NotificationCI>({
     instance: undefined,
     name: "el-notification",
     open: (context) => {
@@ -160,7 +161,7 @@ export class Element implements UiInterface {
     }
   });
 
-  icon: IconCI = creator({
+  icon: IconCI = creator<IconCI>({
     name: "",
     isComponent: false
   });
@@ -192,10 +193,11 @@ export class Element implements UiInterface {
     unFullScreen: "full-screen",
     question: "question-filled",
     caretUp: "CaretTop",
-    caretDown: "CaretBottom"
+    caretDown: "CaretBottom",
+    eye: "View"
   };
 
-  dialog: DialogCI = creator({
+  dialog: DialogCI = creator<DialogCI>({
     name: "el-dialog",
     visible: "modelValue",
     customClass: "customClass",
@@ -210,27 +212,27 @@ export class Element implements UiInterface {
     }
   });
 
-  buttonGroup: CI = creator({
+  buttonGroup: CI = creator<>({
     name: "el-button-group"
   });
 
-  col: CI = creator({
+  col: CI = creator<>({
     name: "el-col"
   });
 
-  row: CI = creator({
+  row: CI = creator<>({
     name: "el-row"
   });
 
-  card: CI = creator({
+  card: CI = creator<>({
     name: "el-card"
   });
 
-  checkboxGroup: CheckboxGroupCI = creator({
+  checkboxGroup: CheckboxGroupCI = creator<CheckboxGroupCI>({
     name: "el-checkbox-group",
     modelValue: "modelValue"
   });
-  checkbox: CheckboxCI = creator({
+  checkbox: CheckboxCI = creator<CheckboxCI>({
     name: "el-checkbox",
     resolveEvent(e: any) {
       return e;
@@ -244,30 +246,30 @@ export class Element implements UiInterface {
     }
   });
 
-  drawer: DrawerCI = creator({
+  drawer: DrawerCI = creator<DrawerCI>({
     name: "el-drawer",
     visible: "modelValue",
     customClass: "class",
     width: "size"
   });
 
-  collapseTransition: CI = creator({
+  collapseTransition = creator<CollapseTransitionCI>({
     name: "el-collapse-transition"
   });
 
-  option: OptionCI = creator({
+  option: OptionCI = creator<OptionCI>({
     name: "el-option",
     value: "value",
     label: "label"
   });
 
-  select: SelectCI = creator({
+  select: SelectCI = creator<SelectCI>({
     name: "el-select",
     modelValue: "modelValue",
     clearable: "clearable"
   });
 
-  treeSelect: TreeSelectCI = creator({
+  treeSelect: TreeSelectCI = creator<TreeSelectCI>({
     name: "el-tree-select",
     modelValue: "modelValue",
     clearable: "select.clearable",
@@ -277,17 +279,17 @@ export class Element implements UiInterface {
     children: "tree.children"
   });
 
-  radio: RadioCI = creator({
+  radio: RadioCI = creator<RadioCI>({
     name: "el-radio",
     value: "label"
   });
 
-  radioGroup: RadioGroupCI = creator({
+  radioGroup: RadioGroupCI = creator<RadioGroupCI>({
     name: "el-radio-group",
     modelValue: "modelValue"
   });
 
-  cascader: CascaderCI = creator({
+  cascader: CascaderCI = creator<CascaderCI>({
     name: "el-cascader",
     modelValue: "modelValue",
     clearable: "clearable",
@@ -298,7 +300,7 @@ export class Element implements UiInterface {
     }
   });
 
-  form: FormCI = creator({
+  form: FormCI = creator<FormCI>({
     name: "el-form",
     inlineLayout: {
       layout: "inline",
@@ -333,14 +335,14 @@ export class Element implements UiInterface {
     }
   });
 
-  formItem: FormItemCI = creator({
+  formItem: FormItemCI = creator<FormItemCI>({
     name: "el-form-item",
     prop: "prop",
     label: "label",
     rules: "rules"
   });
 
-  button: ButtonCI = creator({
+  button: ButtonCI = creator<ButtonCI>({
     name: "el-button",
     textType: { type: "text" },
     linkType: { type: "text" },
@@ -350,7 +352,7 @@ export class Element implements UiInterface {
     }
   });
 
-  pagination: PaginationCI = creator({
+  pagination: PaginationCI = creator<PaginationCI>({
     name: "el-pagination",
     currentPage: "currentPage",
     total: "total", //总条数
@@ -370,7 +372,7 @@ export class Element implements UiInterface {
     }
   });
 
-  tableColumn: TableColumnCI = creator({
+  tableColumn: TableColumnCI = creator<TableColumnCI>({
     name: "el-table-column",
     label: "label",
     prop: "prop",
@@ -378,7 +380,7 @@ export class Element implements UiInterface {
     index: "$index"
   });
 
-  tableColumnGroup: TableColumnCI = creator({
+  tableColumnGroup: TableColumnCI = creator<TableColumnCI>({
     name: "el-table-column",
     label: "label",
     prop: "prop",
@@ -386,7 +388,7 @@ export class Element implements UiInterface {
     index: "$index"
   });
 
-  table: TableCI = creator({
+  table: TableCI = creator<TableCI>({
     name: "el-table",
     data: "data",
     renderMode: "slot",
@@ -421,52 +423,52 @@ export class Element implements UiInterface {
     }
   });
 
-  textArea: TextAreaCI = creator({
+  textArea: TextAreaCI = creator<TextAreaCI>({
     name: "el-input",
     type: "textarea",
     modelValue: "modelValue",
     clearable: "clearable"
   });
 
-  tag: TagCI = creator({
+  tag: TagCI = creator<TagCI>({
     name: "el-tag",
     type: "type",
     colors: ["primary", "success", "warning", "danger"]
   });
 
-  inputGroup: InputGroupCI = creator({
+  inputGroup: InputGroupCI = creator<InputGroupCI>({
     name: "el-input-group"
   });
-  input: InputCI = creator({
+  input: InputCI = creator<InputCI>({
     name: "el-input",
     clearable: "clearable",
     modelValue: "modelValue"
   });
-  inputPassword: InputPasswordCI = creator({
+  inputPassword: InputPasswordCI = creator<InputPasswordCI>({
     name: "el-input",
     clearable: "clearable",
     modelValue: "modelValue",
     passwordType: { showPassword: true }
   });
-  number: InputNumberCI = creator({
+  number: InputNumberCI = creator<InputNumberCI>({
     name: "el-input-number",
     modelValue: "modelValue",
     builder(opts) {
       return buildBinding(this, opts, {});
     }
   });
-  datePicker: DatePickerCI = creator({
+  datePicker: DatePickerCI = creator<DatePickerCI>({
     name: "el-date-picker",
     modelValue: "modelValue",
     buildDateType(type) {
       return { name: "el-date-picker", type };
     }
   });
-  timePicker: TimePickerCI = creator({
+  timePicker: TimePickerCI = creator<TimePickerCI>({
     name: "el-time-picker",
     modelValue: "modelValue"
   });
-  dropdown: DropdownCI = creator({
+  dropdown: DropdownCI = creator<DropdownCI>({
     name: "el-dropdown",
     command(callback) {
       return {
@@ -478,34 +480,34 @@ export class Element implements UiInterface {
     slotName: "dropdown",
     renderMode: "slot"
   });
-  dropdownMenu: DropdownMenuCI = creator({
+  dropdownMenu: DropdownMenuCI = creator<DropdownMenuCI>({
     name: "el-dropdown-menu",
     command: () => {
       return {};
     }
   });
-  dropdownItem: DropdownItemCI = creator({
+  dropdownItem: DropdownItemCI = creator<DropdownItemCI>({
     name: "el-dropdown-item",
     command: "command"
   });
 
-  imageGroup: ImageGroupCI = creator({
+  imageGroup: ImageGroupCI = creator<ImageGroupCI>({
     name: "fs-box"
   });
-  image: ImageCI = creator({
+  image: ImageCI = creator<ImageCI>({
     name: "el-image",
     buildPreviewBind: ({ url, urls, previewUrl, previewUrls, index }) => {
       return { "preview-src-list": previewUrls, "initial-index": index };
     }
   });
-  progress: ProgressCI = creator({
+  progress: ProgressCI = creator<ProgressCI>({
     name: "el-progress"
   });
-  loading: LoadingCI = creator({
+  loading: LoadingCI = creator<LoadingCI>({
     name: "v-loading",
     type: "directive"
   });
-  upload: UploadCI = creator({
+  upload: UploadCI = creator<UploadCI>({
     id: "uid",
     name: "el-upload",
     type: "",
@@ -526,21 +528,21 @@ export class Element implements UiInterface {
     },
     limitAdd: 1
   });
-  tabs: TabsCI = creator({
+  tabs: TabsCI = creator<TabsCI>({
     name: "el-tabs",
     modelValue: "modelValue"
   });
-  tabPane: TabPaneCI = creator({
+  tabPane: TabPaneCI = creator<TabPaneCI>({
     name: "el-tab-pane",
     key: "name",
     tab: "label"
   });
-  collapse: CollapseCI = creator({
+  collapse: CollapseCI = creator<CollapseCI>({
     name: "el-collapse",
     modelValue: "modelValue",
     keyName: "name"
   });
-  collapseItem: CollapseItemCI = creator({
+  collapseItem: CollapseItemCI = creator<CollapseItemCI>({
     name: "el-collapse-item",
     key: "name",
     titleSlotName: "title",
@@ -564,7 +566,7 @@ export class Element implements UiInterface {
     }
   });
 
-  badge: BadgeCI = creator({
+  badge: BadgeCI = creator<BadgeCI>({
     name: "el-badge",
     value: "value",
     builder(opts) {
@@ -575,15 +577,15 @@ export class Element implements UiInterface {
       });
     }
   });
-  tooltip: TooltipCI = creator({
+  tooltip: TooltipCI = creator<TooltipCI>({
     name: "el-tooltip",
     content: "content",
     trigger: "default"
   });
-  divider: DividerCI = creator({
+  divider: DividerCI = creator<DividerCI>({
     name: "el-divider"
   });
-  popover: PopoverCI = creator({
+  popover: PopoverCI = creator<PopoverCI>({
     name: "el-popover",
     contentSlotName: "default",
     triggerSlotName: "reference",
