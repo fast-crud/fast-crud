@@ -42,11 +42,6 @@ pnpm up --latest //升级依赖版本,不加lastest则仅在小版本范围内�
 如果你是使用的fs-admin-xxx或者fs-in-xxx-starter 的工程作为基础开发的，且想要同步fs-admin等脚手架的功能，请按如下步骤进行升级：
 
 
-::: tip
-
-推荐使用同步神器升级 [trident-sync](https://github.com/handsfree-work/trident-sync)
-
-:::
 
 
 下面以fs-in-vben-starter为例
@@ -119,3 +114,9 @@ git merge upstream/main
 ![](../../../../images/merge-upgreade.png)
 
 4. 解决冲突，然后提交、push即可
+
+
+
+::: tip
+以上是手动同步，推荐使用同步神器自动同步： [trident-sync](https://github.com/handsfree-work/trident-sync)
+:::
