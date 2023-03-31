@@ -7,17 +7,12 @@
         :style="{ maxHeight: computedColumnBoxHeight }"
       >
         <component :is="ui.row.name" ref="columnsRowRef" class="fs-search-columns">
-          <!-- 查询字段render，render可以更精细化的自定义，需要定义props.columns -->
+          <!-- 查询字段render，需要定义props.columns -->
           <template v-for="(item, key) of columns" :key="key">
             <component :is="ui.col.name" v-if="item.show" class="fs-search-col" v-bind="mergeCol(item.col)">
               <fs-render :render-func="item._cellRender" />
             </component>
           </template>
-          <!--
-            也可以使用search-items插槽，自定义程度不高，比较简单
-            <slot name="search-items"></slot>
-          -->
-
           <component
             :is="ui.col.name"
             v-if="!computedIsMultiLine"

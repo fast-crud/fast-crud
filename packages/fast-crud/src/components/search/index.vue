@@ -12,37 +12,6 @@
         @compositionend="changeInputEventDisabled(false)"
       >
         <component :is="container?.is" v-if="show !== false" v-bind="container" :columns="computedColumns">
-          <template #search-items>
-            <template v-for="(item, key) of computedColumns" :key="key">
-              <div v-if="item.show === true" class="fs-search-col" v-bind="item.col">
-                <component :is="ui.formItem.name" v-bind="item" :[ui.formItem.prop]="key" :label="item.title">
-                  <template v-if="slots['search_' + key]">
-                    <fs-slot-render :slots="slots['search_' + key]" :scope="buildFieldContext(key)" />
-                  </template>
-                  <template v-else-if="item.render">
-                    <fs-render :render-func="item.render" :scope="buildFieldContext(key)" />
-                  </template>
-                  <template v-else>
-                    <fs-component-render
-                      v-if="item.component && item.component.show !== false"
-                      :ref="
-                            (el:any) => {
-                              if (el) {
-                                componentRenderRefs[item.key] = el;
-                              }
-                            }
-                          "
-                      :model-value="get(form, key)"
-                      v-bind="item.component"
-                      :scope="buildFieldContext(key)"
-                      @update:modelValue="onValueChanged($event, item)"
-                      @input="onInput(item)"
-                    />
-                  </template>
-                </component>
-              </div>
-            </template>
-          </template>
           <template #search-buttons>
             <template v-for="(item, index) in computedButtons" :key="index">
               <fs-button v-if="item.show" v-bind="item" @click="item._click()" />
