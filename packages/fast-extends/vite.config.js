@@ -9,24 +9,6 @@ import DefineOptions from "unplugin-vue-define-options/vite";
 import typescript from "@rollup/plugin-typescript";
 // https://vitejs.dev/config/
 export default ({ command, mode }) => {
-  let build = {};
-  if (mode === "umd") {
-    build = {
-      build: {
-        emptyOutDir: true,
-        lib: {
-          entry: resolve(__dirname, "src/index.umd.ts"),
-          formats: ["umd"]
-        },
-        rollupOptions: {
-          output: {
-            manualChunks: null
-          }
-        }
-      }
-    };
-  }
-
   const options = {
     plugins: [DefineOptions(), vueJsx(), vue()],
     esbuild: {
@@ -38,8 +20,7 @@ export default ({ command, mode }) => {
       emptyOutDir: false,
       lib: {
         entry: resolve(__dirname, "src/index.ts"),
-        name: "FsExtends",
-        formats: ["es"]
+        name: "FsExtends"
       },
       // cssCodeSplit: true,
       sourcemap: true,
@@ -98,6 +79,5 @@ export default ({ command, mode }) => {
     }
   };
 
-  _.merge(options, build);
   return options;
 };
