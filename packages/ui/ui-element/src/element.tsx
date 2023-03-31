@@ -49,7 +49,11 @@ import {
   useUiRender,
   InputNumberCI,
   BadgeCI,
-  CollapseTransitionCI
+  CollapseTransitionCI,
+  ButtonGroupCI,
+  ColCI,
+  RowCI,
+  CardCI
 } from "@fast-crud/ui-interface";
 // @ts-ignore
 import _ from "lodash-es";
@@ -212,19 +216,19 @@ export class Element implements UiInterface {
     }
   });
 
-  buttonGroup: CI = creator<>({
+  buttonGroup = creator<ButtonGroupCI>({
     name: "el-button-group"
   });
 
-  col: CI = creator<>({
+  col = creator<ColCI>({
     name: "el-col"
   });
 
-  row: CI = creator<>({
+  row = creator<RowCI>({
     name: "el-row"
   });
 
-  card: CI = creator<>({
+  card = creator<CardCI>({
     name: "el-card"
   });
 
