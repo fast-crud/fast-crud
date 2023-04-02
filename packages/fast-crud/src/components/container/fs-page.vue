@@ -1,5 +1,5 @@
 <template>
-  <div class="fs-page">
+  <div ref="pageRef" class="fs-page">
     <div v-if="$slots.header != null" class="fs-page-header">
       <slot name="header"></slot>
     </div>
@@ -14,10 +14,25 @@
 </template>
 
 <script lang="ts">
-import { defineComponent } from "vue";
-
+import { defineComponent, onMounted, ref, Ref } from "vue";
+import { utils } from "../../utils";
 export default defineComponent({
-  name: "FsPage"
+  name: "FsPage",
+  setup() {
+    const pageRef: Ref = ref();
+    onMounted(() => {
+      const styles = window.getComputedStyle(pageRef.value.parentNode);
+      const positionValue = styles.getPropertyValue("position");
+      if (positionValue !== "relative") {
+        utils.logger.warn(
+          "fs-page父节点的position建议为relative,因为fs-page为相对定位（position:absolute），如果样式没有异常，你可以忽略此警告"
+        );
+      }
+    });
+    return {
+      pageRef
+    };
+  }
 });
 </script>
 

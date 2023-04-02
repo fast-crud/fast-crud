@@ -1,16 +1,11 @@
-import { BindBuilderOptions, CI, ComponentRenderBinding, UiSlotRet } from "../ui-interface";
-import { computed, resolveComponent } from "vue";
+import { BaseCI, CI, ComponentRenderBinding, UiSlotRet } from "../ui-interface";
+import { computed, Ref, resolveComponent } from "vue";
 import _ from "lodash-es";
 
 export type UiSpecialBindingBuilder = () => Partial<ComponentRenderBinding>;
 export type UiSpecialBinding = Partial<ComponentRenderBinding> | UiSpecialBindingBuilder;
 
-export type UiBuildBinding = <P extends BindBuilderOptions>(
-  ci: CI,
-  opts: P,
-  special: UiSpecialBinding
-) => ComponentRenderBinding;
-export type UiRenderComponent = <T extends CI, P extends BindBuilderOptions>(ci: T, opts: P) => UiSlotRet;
+export type UiRenderComponent = <T extends CI>(ci: T, opts: T["__options"]) => UiSlotRet;
 export type UiDoRenderComponent = (binding: ComponentRenderBinding) => UiSlotRet;
 
 export type UiRenderHelper = {
@@ -19,8 +14,6 @@ export type UiRenderHelper = {
   buildBinding: UiBuildBinding;
   creator: UIComponentCreator;
 };
-export type UIBaseCI<T> = Exclude<T, ["builder", "render", "builderProps", "builderComputed"]>;
-export type UIComponentCreator = <T extends CI>(ci: UIBaseCI<T>, special?: UiSpecialBinding) => T;
 
 export const doRenderComponent: UiDoRenderComponent = (binding: ComponentRenderBinding) => {
   const comp = typeof binding.is === "string" ? resolveComponent(binding.is) : binding.is;
@@ -31,6 +24,11 @@ export const renderComponent: UiRenderComponent = (ci, opts) => {
   return doRenderComponent(ci.builder(opts));
 };
 
+export type UiBuildBinding = <T extends CI>(
+  ci: UIBaseCI<T>,
+  opts: T["__options"],
+  special: UiSpecialBinding
+) => ComponentRenderBinding;
 export const buildBinding: UiBuildBinding = (ci, opts, special: UiSpecialBinding) => {
   const vModel: any = {};
   // @ts-ignore
@@ -71,8 +69,13 @@ export const buildBinding: UiBuildBinding = (ci, opts, special: UiSpecialBinding
   );
 };
 
+//export type UIBaseCI<T> = Partial<T>;
+// @ts-ignore
+export type UIBaseCI<T> = Omit<T, keyof BaseCI> & Partial<Pick<T, keyof BaseCI>>;
+export type UIComponentCreator = <T extends CI>(ci: UIBaseCI<T>, special?: UiSpecialBinding) => T;
+
 export const creator: UIComponentCreator = <T extends CI>(ci: UIBaseCI<T>, special: UiSpecialBinding = {}): T => {
-  const extendCI: T = { ...ci };
+  const extendCI: any = { ...ci };
   extendCI.render = (opts: any) => {
     return renderComponent(extendCI, opts);
   };
@@ -89,7 +92,7 @@ export const creator: UIComponentCreator = <T extends CI>(ci: UIBaseCI<T>, speci
       return extendCI.builder(opts);
     });
   };
-  return extendCI;
+  return extendCI as T;
 };
 
 export function useUiRender(): UiRenderHelper {

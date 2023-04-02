@@ -5,14 +5,14 @@
       <component
         :is="ui.col.name"
         v-for="(element, key) in currentColumns"
-        v-show="original[key]?.__show"
+        v-show="original[key]?.__show !== false"
         :key="key"
         :span="6"
       >
         <component
           :is="ui.checkbox.name"
           v-model:[ui.checkbox.modelValue]="element.show"
-          :disabled="original[key]?.__disabled"
+          :disabled="original[key]?.__disabled === true"
           class="item-label"
           :title="buildText(element)"
           @update:[ui.checkbox.modelValue]="showChange"
@@ -55,7 +55,7 @@
           <draggable v-model="currentColumns" item-key="key" :move="onDraggableMove">
             <template #item="{ element, index }">
               <div
-                v-show="original[element.key]?.__show"
+                v-show="original[element.key]?.__show !== false"
                 :title="buildText(element)"
                 class="component--list-item"
                 flex="main:justify cross:center"
@@ -64,7 +64,7 @@
                 <component
                   :is="ui.checkbox.name"
                   v-model:[ui.checkbox.modelValue]="element.show"
-                  :disabled="original[element.key]?.__disabled"
+                  :disabled="original[element.key]?.__disabled === true"
                   class="item-label"
                   :title="buildText(element)"
                   @update:[ui.checkbox.modelValue]="showChange"
@@ -193,10 +193,13 @@ const start = () => {
   active.value = true;
 };
 
-const original: Ref<TypeMap<ColumnsFilterItem>> = ref({});
+const original: Ref<TypeMap<ColumnsFilterItem>> = computed(() => {
+  return transformColumnsMap(props.originalColumns);
+});
 const currentColumns: Ref<ColumnsFilterItem[]> = ref([]);
 const checkAll = ref(false);
 const indeterminate = ref(false);
+const { merge } = useMerge();
 // 全选和反选发生变化时触发
 function onCheckAllChange(value: any) {
   checkAll.value = value;
@@ -227,7 +230,6 @@ const allLength = computed(() => {
 const isIndeterminate = computed(() => {
   return showLength.value > 0 && showLength.value < allLength.value;
 });
-
 const _text = computed(() => {
   const def = {
     title: t("fs.toolbar.columnFilter.title"),
@@ -237,7 +239,7 @@ const _text = computed(() => {
     confirm: t("fs.toolbar.columnFilter.confirm"),
     unnamed: t("fs.toolbar.columnFilter.unnamed")
   };
-  _.merge(def, props.text);
+  merge(def, props.text);
   return def;
 });
 
@@ -440,7 +442,6 @@ watch(
 );
 
 const init = () => {
-  original.value = transformColumnsMap(props.columns);
   setCurrentValue(props.columns);
   const storedOptions = getOptionsFromStorage();
   if (storedOptions) {

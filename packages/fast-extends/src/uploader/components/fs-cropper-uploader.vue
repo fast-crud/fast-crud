@@ -3,15 +3,16 @@
     <div class="image-list">
       <component :is="ui.imageGroup.name">
         <div v-for="(item, index) in listRef" :key="index" class="image-item">
-          <component :is="ui.image.name" class="image" :src="item.dataUrl ? item.dataUrl : item.url" v-bind="img">
+          <component :is="ui.image.name" class="image" :src="getImageSrc(item)" v-bind="img">
             <template #placeholder>
               <div class="image-slot">
                 <fs-loading :loading="true" />
               </div>
             </template>
           </component>
-          <div v-if="!disabled" class="delete">
-            <fs-icon :icon="ui.icons.remove" @click="removeImage(index)" />
+          <div class="delete">
+            <fs-icon v-if="!disabled" :icon="ui.icons.remove" @click="removeImage(index)" />
+            <fs-icon :icon="ui.icons.search" @click="preview(item)" />
           </div>
           <div v-if="item.status === 'uploading'" class="status-uploading">
             <component :is="ui.progress.name" type="circle" :percentage="item.progress" :width="70" />
@@ -38,6 +39,11 @@
       @done="cropComplete"
     />
     <fs-uploader ref="uploaderImplRef" :type="uploader?.type" />
+    <div class="fs-cropper-preview" :class="{ open: previewVisible }" @click="closePreview">
+      <div class="fs-cropper-preview-content">
+        <img v-if="previewUrl" :src="previewUrl" class="preview-image" />
+      </div>
+    </div>
   </div>
 </template>
 
@@ -237,6 +243,20 @@ export default defineComponent({
       ctx.emit("update:modelValue", ret);
     }
 
+    function getImageSrc(item: any) {
+      return item.dataUrl ? item.dataUrl : item.url;
+    }
+
+    const previewVisible = ref(false);
+    const previewUrl = ref();
+    function preview(item: any) {
+      previewVisible.value = true;
+      previewUrl.value = getImageSrc(item);
+    }
+    function closePreview() {
+      previewVisible.value = false;
+      previewUrl.value = null;
+    }
     watch(
       () => {
         return props.modelValue;
@@ -259,7 +279,12 @@ export default defineComponent({
       hasUploading,
       cropComplete,
       doUpload,
-      removeImage
+      removeImage,
+      getImageSrc,
+      previewUrl,
+      previewVisible,
+      preview,
+      closePreview
     };
   }
 });
@@ -335,6 +360,11 @@ export default defineComponent({
         i {
           cursor: pointer;
         }
+
+        display: flex;
+        > * {
+          margin: 5px;
+        }
       }
       .status-uploading {
         border-radius: 6px;
@@ -384,6 +414,32 @@ export default defineComponent({
           -webkit-transform: rotate(-45deg);
           transform: rotate(-45deg);
         }
+      }
+    }
+  }
+
+  .fs-cropper-preview {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(183, 180, 180, 0.7);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    visibility: hidden;
+    z-index: 10000;
+    &.open {
+      visibility: visible;
+    }
+    .fs-cropper-preview-content {
+      max-height: 800px;
+      max-width: 800px;
+      img {
+        max-height: 800px;
+        max-width: 800px;
+        object-fit: contain;
       }
     }
   }

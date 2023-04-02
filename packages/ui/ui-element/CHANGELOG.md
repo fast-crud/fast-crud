@@ -3,6 +3,20 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [1.12.0](https://github.com/fast-crud/fast-crud/compare/v1.11.10...v1.12.0) (2023-03-31)
+
+### Bug Fixes
+
+* 修复el-tag 颜色异常 ([e3bcbf0](https://github.com/fast-crud/fast-crud/commit/e3bcbf051cb1d27d1722b981494abf75acc0da46))
+
+## [1.11.10](https://github.com/fast-crud/fast-crud/compare/v1.11.9...v1.11.10) (2023-03-29)
+
+**Note:** Version bump only for package @fast-crud/ui-element
+
+## [1.11.9](https://github.com/fast-crud/fast-crud/compare/v1.11.8...v1.11.9) (2023-03-28)
+
+**Note:** Version bump only for package @fast-crud/ui-element
+
 ## [1.11.8](https://github.com/fast-crud/fast-crud/compare/v1.11.7...v1.11.8) (2023-03-24)
 
 **Note:** Version bump only for package @fast-crud/ui-element

@@ -3,6 +3,16 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [1.12.0](https://github.com/fast-crud/fast-crud/compare/v1.11.10...v1.12.0) (2023-03-31)
+
+### Features
+
+* **search:** search支持自定义布局 ([94c10cf](https://github.com/fast-crud/fast-crud/commit/94c10cfaee338798c0373d066bb98da9ca085d29))
+
+## [1.11.9](https://github.com/fast-crud/fast-crud/compare/v1.11.8...v1.11.9) (2023-03-28)
+
+**Note:** Version bump only for package @fast-crud/ui-antdv
+
 ## [1.11.8](https://github.com/fast-crud/fast-crud/compare/v1.11.7...v1.11.8) (2023-03-24)
 
 **Note:** Version bump only for package @fast-crud/ui-antdv

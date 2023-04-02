@@ -17,7 +17,7 @@ export default ({ command, mode }) => {
     build: {
       lib: {
         entry: resolve(__dirname, "src/index.ts"),
-        name: "index"
+        name: "FsUiAntdv"
       },
       // cssCodeSplit: true,
       sourcemap: "inline",
@@ -58,7 +58,7 @@ export default ({ command, mode }) => {
             "ant-design-vue": "Antdv",
             "@ant-design/icons-vue": "IconsVue",
             "lodash-es": "_",
-            "@fast-crud/ui-interface": "UiInterface"
+            "@fast-crud/ui-interface": "FsUiInterface"
           }
         }
       }

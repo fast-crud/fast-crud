@@ -20,7 +20,7 @@
 <script lang="ts" setup>
 import { computed, useAttrs } from "vue";
 import _ from "lodash-es";
-import { useUi } from "../../use";
+import { useMerge, useUi } from "../../use";
 defineOptions({
   name: "FsTabsFilter",
   inheritAttrs: false
@@ -39,7 +39,7 @@ interface TabsFilterProps {
 }
 
 const attrs = useAttrs();
-
+const { merge } = useMerge();
 const props = withDefaults(defineProps<TabsFilterProps>(), {
   show: false,
   value: "value",
@@ -56,7 +56,7 @@ const defaultOption = computed(() => {
     value: null,
     label: "全部"
   } as TabsFilterDefaultOption;
-  return _.merge(def, props.defaultOption || {});
+  return merge(def, props.defaultOption || {});
 });
 
 const __DEFAULT__ = "_default_key_";

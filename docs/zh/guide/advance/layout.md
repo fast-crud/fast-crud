@@ -86,3 +86,25 @@ const crudOptions = {
     }
 }
 ```
+
+
+
+# 查询框自定义布局
+配置 `search.container.is=xxxxxxx` 可以自定义查询框组件布局容器（使用方法同上）         
+
+* 默认布局：`fs-search-layout-default`
+* 参考：[fs-search-layout-default源码](https://github.com/fast-crud/fast-crud/blob/main/packages/fast-crud/src/components/search/layout-default.vue)
+
+```js
+const crudOptions = {
+    search:{
+        container:{
+            is:'your-custom-layout-component-name',
+            collpase:true, //是否展开，布局组件中定义的props
+            'onUpdate:collpase':(value)=>{ //vModel事件
+                crudBinding.search.container.collpase=value
+            }
+        },
+    }
+}
+```

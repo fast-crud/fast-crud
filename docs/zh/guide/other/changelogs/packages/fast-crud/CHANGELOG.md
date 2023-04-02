@@ -3,6 +3,30 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [1.12.0](https://github.com/fast-crud/fast-crud/compare/v1.11.10...v1.12.0) (2023-03-31)
+
+### Features
+
+* **search:** search支持自定义布局 ([94c10cf](https://github.com/fast-crud/fast-crud/commit/94c10cfaee338798c0373d066bb98da9ca085d29))
+
+### Performance Improvements
+
+* 优化多行查询示例 ([95fa427](https://github.com/fast-crud/fast-crud/commit/95fa427043b29ef9590ce75fe91df9d5d686b196))
+
+## [1.11.10](https://github.com/fast-crud/fast-crud/compare/v1.11.9...v1.11.10) (2023-03-29)
+
+### Bug Fixes
+
+* 修复列设置显隐和禁用无效的bug ([ab28857](https://github.com/fast-crud/fast-crud/commit/ab288574818709e0313f063614b46f46b96de0a3))
+
+## [1.11.9](https://github.com/fast-crud/fast-crud/compare/v1.11.8...v1.11.9) (2023-03-28)
+
+### Bug Fixes
+
+* 修复某些情况下 column original 为空无法读取__show的bug ([c640c76](https://github.com/fast-crud/fast-crud/commit/c640c7600f81da0435cbb452e92f3d3cd7145b64))
+* 修复form表单配置ref无效的bug ([97e8904](https://github.com/fast-crud/fast-crud/commit/97e8904bbffd4ec143c7430cd93568c277b5f1f3))
+* 修复form表单render scope.form修改值不生效的bug ([47694c3](https://github.com/fast-crud/fast-crud/commit/47694c3f9e7218aef186ba72a93fe0030e385c5d))
+
 ## [1.11.8](https://github.com/fast-crud/fast-crud/compare/v1.11.7...v1.11.8) (2023-03-24)
 
 ### Bug Fixes

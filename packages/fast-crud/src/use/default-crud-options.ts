@@ -12,6 +12,13 @@ export default {
       mode: {},
       data: [],
       search: {
+        container: {
+          is: "fs-search-layout-default",
+          collapse: true,
+          col: {
+            span: 4
+          }
+        },
         options: {
           ...ui.form.inlineLayout,
           // n-form 是否显示校验反馈

@@ -20,7 +20,8 @@
 
     <template #search>
       <div class="fs-crud-search">
-        <fs-search
+        <component
+          :is="search.is || 'fs-search'"
           ref="searchRef"
           v-bind="search"
           :slots="computedSearchSlots"
@@ -173,9 +174,9 @@ function useSearch(props: any, ctx: SetupContext) {
   function setSearchFormData({ form, mergeForm = false }: SetSearchFormDataProps) {
     const baseForm = {};
     if (mergeForm) {
-      _.merge(baseForm, searchFormData.value, form);
+      merge(baseForm, searchFormData.value, form);
     } else {
-      _.merge(baseForm, form);
+      merge(baseForm, form);
     }
     searchFormData.value = baseForm;
     if (searchRef.value) {
@@ -298,7 +299,7 @@ function useTable(props: any, ctx: SetupContext) {
   const toolbarRef = ref();
   const containerRef = ref();
   const { maxHeightRef, computeBodyHeight } = useFixedHeight(props, ctx, { tableRef, containerRef });
-
+  const { merge } = useMerge();
   const tablePropRef = toRef(props, "table");
   const computedTable = computed(() => {
     // antdv naive 高度自适应， 如果用户有配置scroll，则优先使用用户配置的
@@ -308,7 +309,7 @@ function useTable(props: any, ctx: SetupContext) {
     }
     const pAttrs = utils.dash.omit(tablePropRef, "loading", "columns", "columnsMap");
 
-    return _.merge(fixedHeight, { ...ctx.attrs, ...pAttrs });
+    return merge(fixedHeight, { ...ctx.attrs, ...pAttrs });
   });
 
   const computedToolbar = toRef(props, "toolbar");

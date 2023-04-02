@@ -1,6 +1,6 @@
 <template>
-  <div class="fs-search fs-search-v2">
-    <component :is="ui.collapseTransition.name">
+  <component :is="ui.collapseTransition.name">
+    <div v-if="show !== false" class="fs-search" :class="{ 'fs-search-multi-line': computedIsMultiLine }">
       <component
         :is="ui.form.name"
         ref="searchFormRef"
@@ -11,42 +11,82 @@
         @compositionstart="changeInputEventDisabled(true)"
         @compositionend="changeInputEventDisabled(false)"
       >
-        <component :is="container?.is" v-if="show !== false" v-bind="container" :columns="computedColumns">
-          <template #search-buttons>
-            <template v-for="(item, index) in computedButtons" :key="index">
-              <fs-button v-if="item.show" v-bind="item" @click="item._click()" />
-            </template>
-          </template>
-          <template v-if="slots['search-right']" #search-right>
+        <div class="fs-search-box">
+          <div class="fs-search-main">
+            <div
+              class="fs-search-columns"
+              :class="{ 'fs-search-collapse': collapse }"
+              :style="{ height: computedColumnBoxHeight }"
+            >
+              <component :is="ui.row.name" ref="columnsRowRef">
+                <div v-if="slots['search-left']" class="fs-search-col">
+                  <component :is="ui.formItem.name">
+                    <fs-slot-render :slots="slots['search-left']" :scope="searchEventContextRef" />
+                  </component>
+                </div>
+                <template v-for="(item, key) in computedColumns" :key="key">
+                  <component :is="computedColName" v-if="item.show === true" class="fs-search-col" v-bind="item.col">
+                    <component :is="ui.formItem.name" v-bind="item" :[ui.formItem.prop]="key" :label="item.title">
+                      <template v-if="slots['search_' + key]">
+                        <fs-slot-render :slots="slots['search_' + key]" :scope="{ ...searchEventContextRef, key }" />
+                      </template>
+                      <template v-else>
+                        <fs-component-render
+                          v-if="item.component && item.component.show !== false"
+                          :ref="
+                            (el:any) => {
+                              if (el) {
+                                componentRenderRefs[item.key] = el;
+                              }
+                            }
+                          "
+                          :model-value="get(form, key)"
+                          v-bind="item.component"
+                          :scope="searchEventContextRef"
+                          @update:modelValue="onValueChanged($event, item)"
+                          @input="onInput(item)"
+                        />
+                      </template>
+                    </component>
+                  </component>
+                </template>
+
+                <div v-if="slots['search-middle']" class="fs-search-col fs-search-middle">
+                  <component :is="ui.formItem.name">
+                    <fs-slot-render :slots="slots['search-middle']" :scope="searchEventContextRef" />
+                  </component>
+                </div>
+                <fs-search-buttons v-if="!computedIsMultiLine" :buttons="computedButtons"></fs-search-buttons>
+                <div v-if="slots['search-right']" class="fs-search-col fs-search-right">
+                  <component :is="ui.formItem.name">
+                    <fs-slot-render :slots="slots['search-right']" :scope="searchEventContextRef" />
+                  </component>
+                </div>
+              </component>
+            </div>
+            <fs-search-buttons v-if="computedIsMultiLine" :buttons="computedButtons"></fs-search-buttons>
+          </div>
+
+          <div v-if="computedIsMultiLine" class="fs-search-action">
             <component :is="ui.formItem.name">
-              <fs-slot-render :slots="slots['search-right']" :scope="searchEventContextRef" />
+              <fs-button :icon="collapse ? ui.icons.caretUp : ui.icons.caretDown" @click="toggleCollapse" />
             </component>
-          </template>
-          <template v-if="slots['search-left']" #search-left>
-            <component :is="ui.formItem.name">
-              <fs-slot-render :slots="slots['search-left']" :scope="searchEventContextRef" />
-            </component>
-          </template>
-          <template v-if="slots['search-middle']" #search-middle>
-            <component :is="ui.formItem.name">
-              <fs-slot-render :slots="slots['search-left']" :scope="searchEventContextRef" />
-            </component>
-          </template>
-        </component>
+          </div>
+        </div>
       </component>
-    </component>
-  </div>
+    </div>
+  </component>
 </template>
 
-<script lang="tsx">
-import { computed, defineComponent, nextTick, reactive, ref, Ref, unref } from "vue";
+<script lang="ts">
+import { computed, defineComponent, nextTick, onMounted, reactive, ref, Ref, unref } from "vue";
 import _ from "lodash-es";
 import { useCompute } from "../../use/use-compute";
 import { useI18n } from "../../locale";
 import logger from "../../utils/util.log";
 import FsSearchButtons from "./buttons.vue";
 import { Constants } from "../../utils/util.constants";
-import { ButtonsProps, SearchEventContext, SearchItemProps, TypeMap } from "../../d";
+import { ButtonsProps, SearchEventContext, SearchItemProps } from "../../d";
 import { useUi } from "../../use/use-ui";
 import { useMerge } from "../../use/use-merge";
 
@@ -54,21 +94,10 @@ import { useMerge } from "../../use/use-merge";
  * 查询框组件
  */
 export default defineComponent({
-  name: "FsSearch",
+  name: "FsSearchV1",
   components: { FsSearchButtons },
   inheritAttrs: false,
   props: {
-    /**
-     * 布局容器
-     */
-    container: {
-      type: Object,
-      default() {
-        return {
-          is: "fs-search-layout-default"
-        };
-      }
-    },
     /**
      * 初始查询条件
      * 点击重置，会重置成该条件
@@ -146,25 +175,25 @@ export default defineComponent({
     validate: {
       default: false
     },
-    // /**
-    //  * 布局, single-line 单行， multi-line 多行（支持展开收起）
-    //  */
-    // layout: {
-    //   type: String,
-    //   default: "single-line"
-    // },
+    /**
+     * 布局, single-line 单行， multi-line 多行（支持展开收起）
+     */
+    layout: {
+      type: String,
+      default: "single-line"
+    },
     /**
      * 列的宽度设置，span=xx
      */
-    col: {}
+    col: {},
 
-    // /**
-    //  * 是否折叠
-    //  */
-    // collapse: {
-    //   type: Boolean,
-    //   default: false
-    // }
+    /**
+     * 是否折叠
+     */
+    collapse: {
+      type: Boolean,
+      default: false
+    }
   } as any,
   emits: [
     /**
@@ -174,10 +203,24 @@ export default defineComponent({
     /**
      * 重置事件
      **/
-    "reset"
+    "reset",
+    "collapse",
+    "update:collapse"
   ],
   setup(props, ctx) {
     const { ui } = useUi();
+    // 异步setup需要放在第一个await之前
+    // onMounted is called when there is no active component instance to be associated with.
+    //为啥会有这个警告
+    onMounted(() => {
+      if (computedIsMultiLine.value && columnsRowRef.value) {
+        columnsBoxHeightRef.value = columnsRowRef.value.$el.offsetHeight;
+        const columnsList = columnsRowRef.value.$el.children;
+        if (columnsList && columnsList.length > 1) {
+          columnsLineHeightRef.value = columnsList[1].offsetHeight + 2;
+        }
+      }
+    });
 
     let autoSearch: any = null;
     function createInitialForm() {
@@ -185,7 +228,6 @@ export default defineComponent({
     }
     const form = reactive(createInitialForm());
     const { doComputed, AsyncComputeValue } = useCompute();
-
     _.each(props.columns, (item) => {
       if (item.value != null && item.value instanceof AsyncComputeValue) {
         logger.warn("search.value配置不支持AsyncCompute类型的动态计算");
@@ -193,52 +235,7 @@ export default defineComponent({
     });
     const { merge } = useMerge();
     const doMerge = merge;
-
-    const get = (form: any, key: any) => {
-      return _.get(form, key);
-    };
-
-    function cellRender(item: any) {
-      const key = item.key;
-
-      function _onUpdateModelValue($event: any) {
-        onValueChanged($event, item);
-      }
-      function _onInput() {
-        onInput(item);
-      }
-
-      let defaultSlot: any = null;
-      if (props.slots["search_" + key]) {
-        defaultSlot = <fs-slot-render slots={props.slots["search_" + key]} scope={buildFieldContext(key)} />;
-      } else if (item.render) {
-        defaultSlot = <fs-render render-func={item.render} scope={buildFieldContext(key)} />;
-      } else if (item.component && item.component.show !== false) {
-        defaultSlot = (
-          <fs-component-render
-            model-value={get(form, key)}
-            {...item.component}
-            scope={buildFieldContext(key)}
-            onUpdate:modelValue={_onUpdateModelValue}
-            onInput={_onInput}
-          />
-        );
-        componentRenderRefs.value[key] = defaultSlot;
-      }
-
-      return ui.formItem.render({
-        prop: key,
-        label: item.title,
-        props: { ...item, label: item.title },
-        slots: {
-          default() {
-            return defaultSlot;
-          }
-        }
-      });
-    }
-
-    const computedColumns: Ref<TypeMap<SearchItemProps>> = doComputed(
+    const computedColumns = doComputed(
       () => {
         return props.columns;
       },
@@ -257,13 +254,6 @@ export default defineComponent({
             v.col = merge({}, props.col, v.col);
           });
         }
-
-        //cellRender
-        _.forEach(value, (item) => {
-          item._cellRender = () => {
-            return cellRender(item);
-          };
-        });
 
         //字段排序
         let sortArr: SearchItemProps[] = [];
@@ -315,10 +305,6 @@ export default defineComponent({
     }
 
     const searchEventContextRef: Ref<SearchEventContext> = ref(getContextFn());
-
-    function buildFieldContext(key: string) {
-      return { ...searchEventContextRef.value, key };
-    }
 
     async function doSearch() {
       if (autoSearch) {
@@ -472,8 +458,43 @@ export default defineComponent({
       return props.options.rules;
     });
 
+    //-----多行模式折叠
+
+    const columnsRowRef = ref();
+    const columnsBoxHeightRef = ref(0);
+    const columnsLineHeightRef = ref(0);
+
+    const toggleCollapse = () => {
+      ctx.emit("update:collapse", !props.collapse);
+      ctx.emit("collapse", !props.collapse);
+    };
+
+    const computedColName = computed(() => {
+      if (props.layout === "multi-line") {
+        return ui.col.name;
+      }
+      return "div";
+    });
+    const computedIsMultiLine = computed(() => {
+      return props.layout === "multi-line";
+      //不要这个，会死循环， && columnsBoxHeightRef.value > columnsLineHeightRef.value;
+    });
+
+    const computedColumnBoxHeight = computed(() => {
+      if (!computedIsMultiLine.value) {
+        return "auto";
+      }
+      if (props.collapse) {
+        return columnsLineHeightRef.value ? columnsLineHeightRef.value + "px" : "";
+      } else {
+        return columnsBoxHeightRef.value ? columnsBoxHeightRef.value + "px" : "";
+      }
+    });
+
     return {
-      get,
+      get: (form: any, key: any) => {
+        return _.get(form, key);
+      },
       ui,
       onValueChanged,
       doSearch,
@@ -491,57 +512,115 @@ export default defineComponent({
       computedColumns,
       computedButtons,
       computedRules,
-      searchEventContextRef,
-      buildFieldContext
+      columnsRowRef,
+      computedColumnBoxHeight,
+      computedColName,
+      computedIsMultiLine,
+      toggleCollapse,
+      searchEventContextRef
     };
   }
 });
 </script>
 <style lang="less">
 .fs-search {
-  &.fs-search-v2 {
-    //display: flex;
-    //flex-wrap: nowrap;
-    .search-left {
+  //display: flex;
+  //flex-wrap: nowrap;
+  .search-left {
+  }
+  .search-right {
+    flex: 1;
+  }
+  .ant-form-inline {
+    flex-wrap: wrap;
+  }
+  .fs-search-form {
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    //& > * {
+    //  margin-bottom: 4px;
+    //  margin-top: 4px;
+    //  margin-right: 10px;
+    //}
+
+    .fs-search-box {
+      display: flex;
+      .fs-search-main {
+        display: flex;
+        flex-direction: row;
+      }
     }
-    .search-right {
-      flex: 1;
+    .fs-search-col {
+      & > * {
+        margin: 0px 5px;
+      }
+      margin: 1px 0;
+      &:first-child {
+        // margin-left: 0;
+      }
     }
-    .ant-form-inline {
-      flex-wrap: wrap;
-    }
-    .fs-search-form {
+
+    .el-form-item {
+      margin-bottom: 4px;
+      margin-top: 4px;
       display: flex;
       align-items: center;
-      flex-wrap: wrap;
+    }
 
-      .ant-picker,
-      .n-date-picker,
-      .el-select,
-      .el-date-editor {
-        width: 100%;
+    .el-form--inline {
+      display: flex;
+      align-items: center;
+    }
+
+    .el-form-item__content {
+      display: flex;
+      align-items: center;
+    }
+  }
+
+  .fs-search-btns {
+    .fs-button {
+      margin-right: 5px;
+    }
+  }
+
+  &.fs-search-multi-line {
+    .fs-search-box {
+      .fs-search-main {
+        flex-direction: column;
+        .fs-search-columns {
+          height: auto;
+          overflow-y: hidden;
+          // transition: all 0.3s linear;
+          // will-change: height;
+        }
+        .fs-search-btns {
+          width: 100%;
+          text-align: center;
+          margin-top: 4px;
+          .el-form-item__content {
+            justify-content: center;
+          }
+
+          .n-form-item-blank {
+            display: flex;
+            justify-content: center;
+          }
+        }
       }
-
-      .el-form-item {
-        margin-bottom: 4px;
-        margin-top: 4px;
-        display: flex;
-        align-items: center;
-      }
-
-      .el-form--inline {
-        display: flex;
-        align-items: center;
-      }
-
-      .el-form-item__content {
-        display: flex;
-        align-items: center;
+    }
+    .fs-search-action {
+      .ant-form-item {
+        margin-right: 2px;
       }
     }
   }
+}
+
+.fs-search {
   .n-form-item-blank {
-    min-width: 130px;
+    min-width: 150px;
   }
 }
 </style>
