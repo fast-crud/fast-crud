@@ -258,6 +258,7 @@ function buildSearchForm(baseOptions: CrudOptions, formType = "search", columnsM
 
 function buildFormOptions(crudOptions: DynamicallyCrudOptions, context?: UseFsContext): FormProps {
   const { t } = useI18n();
+  const { merge } = useMerge();
   context = context || {};
   const userOptions = merge(
     defaultCrudOptions.defaultOptions({ t }),
@@ -279,6 +280,11 @@ function buildColumns(userOptions: CrudOptions) {
 
   userOptions.table.columns = buildTableColumns(cloneDeep(columns));
   userOptions.table.columnsMap = buildTableColumnsMap({}, userOptions.table.columns);
+  merge(userOptions.toolbar, {
+    columnsFilter: {
+      originalColumns: cloneDeep(userOptions.table.columns)
+    }
+  });
   userOptions.form = buildForm(userOptions, "form", columnsMap);
   userOptions.addForm = buildForm(userOptions, "addForm", columnsMap);
   userOptions.editForm = buildForm(userOptions, "editForm", columnsMap);

@@ -1,4 +1,4 @@
-import { ShallowRef, VNode } from "vue";
+import { Ref, ShallowRef, VNode } from "vue";
 
 export type VModelGetSet = {
   get: () => any;
@@ -21,8 +21,7 @@ export type BindBuilderOptions = {
   vModel?: BindBuilderModelValue;
   slots?: WritableSlots;
 };
-
-export type UiSlotRet = string | VNode | VNode[] | UiSlotRet[];
+export type UiSlotRet = string | VNode | VNode[] | JSX.Element | JSX.Element[] | UiSlotRet[];
 export type UiSlot = (scope?: any) => UiSlotRet;
 export type WritableSlots = {
   [name: string]: UiSlot;
@@ -33,16 +32,25 @@ export type ComponentRenderBinding = {
   slots?: WritableSlots;
 };
 
-export interface CI<T = any> {
-  name: string;
-
-  modelValue?: string;
-  builder?: (options: T) => ComponentRenderBinding;
-
-  render?: (options: T) => UiSlotRet;
+export interface BaseCI<P = any> {
+  builder?: (options: P) => ComponentRenderBinding;
+  buildProps?: (options: P) => any;
+  builderComputed?: (options: P) => Ref<ComponentRenderBinding>;
+  render?: (options: P) => UiSlotRet;
 }
 
-export interface FormCI {
+export type CI<P = any> = {
+  name: string;
+  modelValue?: string;
+  __options?: P;
+  builder: (options: P) => ComponentRenderBinding;
+  buildProps: (options: P) => any;
+  builderComputed: (options: P) => Ref<ComponentRenderBinding>;
+  render: (options: P) => UiSlotRet;
+};
+
+export type FormBuilderOption = {} & BindBuilderOptions;
+export interface FormCI extends CI<FormBuilderOption> {
   name: string;
   inlineLayout: Object;
   // resetWrap: Function;
@@ -173,7 +181,7 @@ export interface TableColumnCI extends CI<TableColumnBuilderOption> {
 }
 
 export type TableOnChangeBindingBuilder = (context: {
-  onSortChange: (sorter: any) => void;
+  onSortChange: (sorter: TableSorterContext) => void;
   onFilterChange: (filters: any) => void;
   onPagination: (pagination: any) => void;
 }) => any;
@@ -182,6 +190,12 @@ export type ComponentBinding = {
   [key: string]: any;
 };
 
+export type TableSorterContext = {
+  isServerSort: boolean;
+  prop: string;
+  order: string;
+  asc: boolean;
+};
 export type TableBuilderOption = {} & BindBuilderOptions;
 export interface TableCI extends CI<TableBuilderOption> {
   defaultRowKey?: string | ((rowData: any) => any);
@@ -243,7 +257,7 @@ export interface CollapseCI extends CI<CollapseBuilderOptions> {
   modelValue: string;
   keyName: string;
 }
-
+export type CollapseTransitionCI = CI;
 export type CollapseItemBuilderOptions = {
   titleSlot?: UiSlot;
   /**
@@ -443,6 +457,9 @@ export interface DividerCI extends CI {
   name: string;
 }
 
+export type CardCI = CI;
+export type RowCI = CI;
+export type ColCI = CI;
 export type PopoverBuilderOptions = {
   contentSlot?: UiSlot;
   triggerSlot?: UiSlot;
@@ -511,6 +528,7 @@ export interface Icons {
   question: string;
   caretUp: string;
   caretDown: string;
+  eye: string;
 }
 export interface UiInterface {
   modelValue: string;
@@ -536,11 +554,11 @@ export interface UiInterface {
   select: SelectCI;
   treeSelect: TreeSelectCI;
   option: OptionCI;
-  collapseTransition: CI;
-  card: CI;
+  collapseTransition: CollapseTransitionCI;
+  card: CardCI;
   drawer: DrawerCI;
-  col: CI;
-  row: CI;
+  col: ColCI;
+  row: RowCI;
   buttonGroup: ButtonGroupCI;
   dialog: DialogCI;
   icon: IconCI;

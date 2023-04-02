@@ -1,13 +1,4 @@
-import {
-  computed,
-  defineComponent,
-  ref,
-  resolveDirective,
-  resolveDynamicComponent,
-  Slots,
-  watch,
-  withDirectives
-} from "vue";
+import { computed, defineComponent, ref, resolveDirective, resolveDynamicComponent, watch, withDirectives } from "vue";
 import _ from "lodash-es";
 import { uiContext } from "../../ui";
 import { useEditable } from "./editable/use-editable";
@@ -227,6 +218,11 @@ export default defineComponent({
     editable: {
       type: Object
     },
+
+    loading: {
+      type: Boolean,
+      default: false
+    },
     request: {}
   } as any,
   emits: ["row-handle", "value-change", "pagination-change", "filter-change", "sort-change", "data-change"],
@@ -279,7 +275,7 @@ export default defineComponent({
     }
 
     const events = ui.table.onChange({
-      onSortChange: (sorter: any) => {
+      onSortChange: (sorter) => {
         ctx.emit("sort-change", sorter);
       },
       onFilterChange: (filters: any) => {
@@ -366,6 +362,12 @@ export default defineComponent({
     });
 
     const renderMode = ui.table.renderMode;
+    const dataSource = computed(() => {
+      return {
+        [ui.table.data]: props.data
+      };
+    });
+
     if (renderMode === "slot") {
       const computedTableSlots = computed(() => {
         return buildTableSlots({ props, ui, renderRowHandle, renderCellComponent } as BuildTableColumnsOption);
@@ -376,15 +378,20 @@ export default defineComponent({
         if (props.show === false) {
           return;
         }
-        const dataSource = {
-          [ui.table.data]: props.data
-        };
+
         const tableRender = (
-          <tableComp ref={tableRef} {...ctx.attrs} {...events} {...dataSource} v-slots={computedTableSlots.value} />
+          <tableComp
+            ref={tableRef}
+            {...ctx.attrs}
+            loading={props.loading}
+            {...events}
+            {...dataSource.value}
+            v-slots={computedTableSlots.value}
+          />
         );
         if (typeof ui.table.vLoading === "string") {
           const loading = resolveDirective(ui.table.vLoading);
-          return withDirectives(tableRender, [[loading, ctx.attrs.loading]]);
+          return withDirectives(tableRender, [[loading, props.loading]]);
         }
         return tableRender;
       };
@@ -406,17 +413,14 @@ export default defineComponent({
         if (props.show === false) {
           return;
         }
-
-        const dataSource = {
-          [ui.table.data]: props.data
-        };
         return (
           <tableComp
             ref={tableRef}
+            loading={props.loading}
             {...ctx.attrs}
             {...events}
             columns={computedColumns.value}
-            {...dataSource}
+            {...dataSource.value}
             v-slots={props.slots}
           />
         );

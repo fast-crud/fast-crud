@@ -2,11 +2,17 @@
   <!-- 简单模式 -->
   <template v-if="mode === 'simple'">
     <component :is="ui.row.name" class="fs-table-columns-filter-simple">
-      <component :is="ui.col.name" v-for="(element, key) in currentValue" v-show="element.__show" :key="key" :span="6">
+      <component
+        :is="ui.col.name"
+        v-for="(element, key) in currentColumns"
+        v-show="original[key]?.__show !== false"
+        :key="key"
+        :span="6"
+      >
         <component
           :is="ui.checkbox.name"
           v-model:[ui.checkbox.modelValue]="element.show"
-          :disabled="element.__disabled"
+          :disabled="original[key]?.__disabled === true"
           class="item-label"
           :title="buildText(element)"
           @update:[ui.checkbox.modelValue]="showChange"
@@ -46,19 +52,21 @@
             <span class="title">{{ _text.fixed }} / {{ _text.order }}</span>
           </div>
 
-          <draggable v-model="currentValue" item-key="key">
+          <draggable v-model="currentColumns" item-key="key" :move="onDraggableMove">
             <template #item="{ element, index }">
               <div
-                v-show="element.__show"
+                v-show="original[element.key]?.__show !== false"
                 :title="buildText(element)"
                 class="component--list-item"
                 flex="main:justify cross:center"
+                :i="index"
               >
                 <component
                   :is="ui.checkbox.name"
                   v-model:[ui.checkbox.modelValue]="element.show"
-                  :disabled="element.__disabled"
+                  :disabled="original[element.key]?.__disabled === true"
                   class="item-label"
+                  :title="buildText(element)"
                   @update:[ui.checkbox.modelValue]="showChange"
                 >
                   {{ buildText(element) }}
@@ -105,6 +113,7 @@ import { computed, nextTick, ref, Ref, watch } from "vue";
 import { uiContext } from "../../../ui";
 import { useMerge } from "../../../use/use-merge";
 import { useRoute } from "vue-router";
+import { ColumnProps, TypeMap } from "../../../d";
 
 console.debug("draggable", draggable);
 
@@ -125,6 +134,11 @@ interface ColumnsFilterProps {
    * 列数据
    */
   columns?: any[];
+
+  /**
+   * 原始列数据
+   */
+  originalColumns?: any[];
   /**
    * 是否保存设置
    */
@@ -147,6 +161,15 @@ interface ColumnsFilterProps {
     unnamed?: string;
   };
 }
+
+type ColumnsFilterItem = {
+  key: string;
+  title: string;
+  fixed: boolean | string;
+  show: boolean;
+  __show: boolean;
+  __disabled: boolean;
+};
 const props = withDefaults(defineProps<ColumnsFilterProps>(), {
   storage: true,
   mode: "default"
@@ -170,14 +193,17 @@ const start = () => {
   active.value = true;
 };
 
-const original = ref([]);
-const currentValue: Ref<any[]> = ref([]);
+const original: Ref<TypeMap<ColumnsFilterItem>> = computed(() => {
+  return transformColumnsMap(props.originalColumns);
+});
+const currentColumns: Ref<ColumnsFilterItem[]> = ref([]);
 const checkAll = ref(false);
 const indeterminate = ref(false);
+const { merge } = useMerge();
 // 全选和反选发生变化时触发
 function onCheckAllChange(value: any) {
   checkAll.value = value;
-  currentValue.value = currentValue.value.map((e: any) => {
+  currentColumns.value = currentColumns.value.map((e: any) => {
     if (!e.__show || e.__disabled) {
       return e;
     }
@@ -196,15 +222,14 @@ const checkAllBind = computed(() => {
 });
 
 const showLength = computed(() => {
-  return currentValue.value.filter((e) => e.__show && e.show === true).length;
+  return currentColumns.value.filter((e) => e.__show && e.show === true).length;
 });
 const allLength = computed(() => {
-  return currentValue.value.filter((e) => e.__show).length;
+  return currentColumns.value.filter((e) => e.__show).length;
 });
 const isIndeterminate = computed(() => {
   return showLength.value > 0 && showLength.value < allLength.value;
 });
-
 const _text = computed(() => {
   const def = {
     title: t("fs.toolbar.columnFilter.title"),
@@ -214,41 +239,105 @@ const _text = computed(() => {
     confirm: t("fs.toolbar.columnFilter.confirm"),
     unnamed: t("fs.toolbar.columnFilter.unnamed")
   };
-  _.merge(def, props.text);
+  merge(def, props.text);
   return def;
 });
 
-function buildOriginalColumns(value: any) {
-  const columns: any[] = [];
+function buildColumnFilterItem(item: ColumnProps) {
+  return {
+    key: item.key,
+    title: item.title,
+    fixed: item.fixed ?? false,
+    show: item.show ?? true,
+    __show: item.columnSetShow !== false,
+    __disabled: item.columnSetDisabled ?? false
+  };
+}
+
+function transformColumnsMap(value: ColumnProps[]): TypeMap<ColumnsFilterItem> {
+  const columns: TypeMap<ColumnsFilterItem> = {};
   _.forEach(value, (item) => {
-    const column = {
-      key: item.key,
-      title: item.title,
-      fixed: item.fixed ?? false,
-      show: item.show ?? true,
-      __show: item.columnSetShow !== false,
-      __disabled: item.columnSetDisabled ?? false
-    };
-    columns.push(column);
+    const column = buildColumnFilterItem(item);
+    if (item.children) {
+      const map = transformColumnsMap(item.children);
+      for (let key in map) {
+        columns[key] = map[key];
+      }
+    } else {
+      columns[column.key] = column;
+    }
+  });
+  return columns;
+}
+
+function transformColumns(value: ColumnProps[]): ColumnsFilterItem[] {
+  const columns: ColumnsFilterItem[] = [];
+  _.forEach(value, (item) => {
+    const column = buildColumnFilterItem(item);
+    if (item.children) {
+      const list: ColumnsFilterItem[] = transformColumns(item.children);
+      for (let item of list) {
+        columns.push(item);
+      }
+    } else {
+      columns.push(column);
+    }
   });
   return columns;
 }
 
 function setCurrentValue(value: any) {
-  currentValue.value = buildOriginalColumns(value);
+  currentColumns.value = transformColumns(value);
   checkAll.value = showLength.value > 0;
+}
+
+function onDraggableMove(e: any, b: any) {
+  const draged = e.draggedContext.element;
+  const target = e.relatedContext.element;
+  const sorted: ColumnsFilterItem[] = [];
+  for (const item of currentColumns.value) {
+    if (item.key === draged.key) {
+      sorted.push(target);
+    } else if (item.key === target.key) {
+      sorted.push(draged);
+    } else {
+      sorted.push(item);
+    }
+  }
+  //看key的排列是否正常
+  let leftIndex = 0;
+  let rightIndex = sorted.length - 1;
+  let minNotIndex = sorted.length - 1;
+  let maxNotIndex = 0;
+  for (let i = 0; i < sorted.length; i++) {
+    const item = sorted[i];
+    if (item.fixed === "left") {
+      leftIndex = i;
+    } else if (item.fixed === "right") {
+      rightIndex = rightIndex > i ? i : rightIndex;
+    } else {
+      minNotIndex = minNotIndex > i ? i : minNotIndex;
+      maxNotIndex = maxNotIndex < i ? i : maxNotIndex;
+    }
+  }
+  console.log("leftindex", leftIndex, "rightindex", rightIndex, "minnot", minNotIndex, "maxnot", maxNotIndex);
+
+  if (minNotIndex < leftIndex || maxNotIndex > rightIndex) {
+    //ui.message.error("非fixed字段不得越过fixed字段的顺序");
+    return false;
+  }
 }
 
 // fixed 变化时触发
 function fixedChange(index: number, value: any) {
   if (value) {
-    currentValue.value[index].show = true;
+    currentColumns.value[index].show = true;
   }
   if (value === "left") {
-    currentValue.value.unshift(currentValue.value.splice(index, 1)[0]);
+    currentColumns.value.unshift(currentColumns.value.splice(index, 1)[0]);
   }
   if (value === "right") {
-    currentValue.value.push(currentValue.value.splice(index, 1)[0]);
+    currentColumns.value.push(currentColumns.value.splice(index, 1)[0]);
   }
   showChange();
 }
@@ -258,21 +347,23 @@ function showChange() {
 
 // 还原
 function reset() {
-  currentValue.value = _.cloneDeep(original.value);
+  currentColumns.value = transformColumns(props.originalColumns);
   submit(true);
   clearThisStorage();
 }
 // 确认
 function submit(noSave = false) {
   if (!noSave) {
-    saveOptionsToStorage(currentValue.value);
+    saveOptionsToStorage(currentColumns.value);
   }
-  const result = _.cloneDeep(currentValue.value);
+  const result = _.cloneDeep(currentColumns.value);
 
   //解决naive ui与列设置冲突的问题
   result.forEach((column) => {
-    delete column.__disabled;
-    delete column.__show;
+    if (column) {
+      delete column.__disabled;
+      delete column.__show;
+    }
   });
 
   doEmit(result);
@@ -330,10 +421,10 @@ function clearThisStorage() {
 
 function getColumnsHash(columns: any) {
   const keys: any = [];
-  for (const item of columns) {
+  _.forEach(columns, (item) => {
     const target = _.pick(item, "key", "__show", "__disabled");
     keys.push(JSON.stringify(target));
-  }
+  });
   keys.sort();
   let hash = "";
   for (const key of keys) {
@@ -351,7 +442,6 @@ watch(
 );
 
 const init = () => {
-  original.value = buildOriginalColumns(props.columns);
   setCurrentValue(props.columns);
   const storedOptions = getOptionsFromStorage();
   if (storedOptions) {
@@ -363,14 +453,14 @@ const init = () => {
     }
     const curValue: any = [];
     for (const storedOption of storedOptions) {
-      const found = currentValue.value.find((item) => item.key === storedOption.key);
+      const found = currentColumns.value.find((item) => item.key === storedOption.key);
       if (found) {
         found.fixed = storedOption.fixed;
         found.show = storedOption.show;
         curValue.push(found);
       }
     }
-    currentValue.value = curValue;
+    currentColumns.value = curValue;
     nextTick(() => {
       submit(true);
     });
@@ -379,7 +469,9 @@ const init = () => {
 
 init();
 defineExpose({
-  start
+  start,
+  original,
+  columns: currentColumns
 });
 
 function buildText(element: any) {

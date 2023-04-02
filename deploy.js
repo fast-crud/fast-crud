@@ -61,8 +61,8 @@ async function trigger(){
 }
 
 async function  start(){
-    await build()
-   await trigger()
+    // await build()
+    await trigger()
 }
 
 start()
@@ -72,4 +72,7 @@ start()
  * 打包前 修改 lerna
  * nodemodules里面搜索如下
  * return childProcess.exec("git", ["add", "--", ...files], execOpts);
+ *
+ * ('git', ['add', '--', ...files]
+ * ('git', ['add', '.']
  */

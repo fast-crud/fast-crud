@@ -484,7 +484,7 @@ export default defineComponent({
     }
     function setFormData(formData: any, options: SetFormDataOptions = {}) {
       doValueBuilder(formData);
-      _.merge(form, formData);
+      merge(form, formData);
       const { valueChange } = options;
       if (valueChange) {
         _.forEach(props.columns, (column, key) => {
@@ -495,7 +495,7 @@ export default defineComponent({
     }
 
     function mergeCol(col: any) {
-      return _.merge({}, props.col, col);
+      return merge({}, props.col, col);
     }
 
     function buildItemScope(item: any): FormScopeContext {

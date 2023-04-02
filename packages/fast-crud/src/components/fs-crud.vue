@@ -20,7 +20,8 @@
 
     <template #search>
       <div class="fs-crud-search">
-        <fs-search
+        <component
+          :is="search.is || 'fs-search'"
           ref="searchRef"
           v-bind="search"
           :slots="computedSearchSlots"
@@ -42,6 +43,7 @@
       <div v-if="toolbar && toolbar.show !== false" class="fs-crud-toolbar">
         <slot name="toolbar-left"></slot>
         <fs-toolbar
+          ref="toolbarRef"
           v-bind="toolbar"
           :slots="computedToolbarSlots"
           :search="search.show"
@@ -63,6 +65,8 @@
         ref="tableRef"
         class="fs-crud-table"
         v-bind="computedTable"
+        :columns="table.columns"
+        :loading="table.loading"
         :row-handle="rowHandle"
         :data="data"
         :cell-slots="computedCellSlots"
@@ -113,7 +117,7 @@ import { useMerge } from "../use/use-merge";
 import utilLog from "../utils/util.log";
 import { SetSearchFormDataProps } from "../d";
 import { useUi } from "../use";
-
+import { utils } from "../utils";
 const { merge } = useMerge();
 
 function useProviders(props: any, ctx: SetupContext) {
@@ -170,9 +174,9 @@ function useSearch(props: any, ctx: SetupContext) {
   function setSearchFormData({ form, mergeForm = false }: SetSearchFormDataProps) {
     const baseForm = {};
     if (mergeForm) {
-      _.merge(baseForm, searchFormData.value, form);
+      merge(baseForm, searchFormData.value, form);
     } else {
-      _.merge(baseForm, form);
+      merge(baseForm, form);
     }
     searchFormData.value = baseForm;
     if (searchRef.value) {
@@ -292,15 +296,20 @@ function useFixedHeight(props: any, ctx: SetupContext, { tableRef, containerRef 
 function useTable(props: any, ctx: SetupContext) {
   const ui = uiContext.get();
   const tableRef = ref();
+  const toolbarRef = ref();
   const containerRef = ref();
   const { maxHeightRef, computeBodyHeight } = useFixedHeight(props, ctx, { tableRef, containerRef });
+  const { merge } = useMerge();
+  const tablePropRef = toRef(props, "table");
   const computedTable = computed(() => {
     // antdv naive 高度自适应， 如果用户有配置scroll，则优先使用用户配置的
     let fixedHeight = {};
     if (maxHeightRef?.value != null) {
       fixedHeight = ui.table.buildMaxHeight(maxHeightRef.value);
     }
-    return _.merge(fixedHeight, { ...ctx.attrs, ...props.table });
+    const pAttrs = utils.dash.omit(tablePropRef, "loading", "columns", "columnsMap");
+
+    return merge(fixedHeight, { ...ctx.attrs, ...pAttrs });
   });
 
   const computedToolbar = toRef(props, "toolbar");
@@ -318,6 +327,7 @@ function useTable(props: any, ctx: SetupContext) {
   const computedToolbarSlots = computed(() => {
     return slotFilter(ctx.slots, "toolbar");
   });
+
   const formWrapperRef = ref();
 
   const computedClass = computed(() => {
@@ -338,6 +348,7 @@ function useTable(props: any, ctx: SetupContext) {
   return {
     tableRef,
     containerRef,
+    toolbarRef,
     computedTable,
     computedToolbar,
     computedCellSlots,
@@ -491,8 +502,6 @@ export default defineComponent({
     "update:modelValue"
   ],
   setup(props: any, ctx: any) {
-    traceUtil.trace("fs-crud");
-
     const { ui } = useUi();
     useProviders(props, ctx);
     const search = useSearch(props, ctx);

@@ -1,10 +1,9 @@
 import _ from "lodash-es";
 import { useMerge } from "./use-merge";
 import logger from "../utils/util.log";
-import { reactive, UnwrapRef } from "vue";
+import { reactive, shallowReactive, UnwrapRef } from "vue";
 import LRU from "lru-cache";
 import { UnwrapNestedRefs } from "vue";
-
 const DictGlobalCache = new LRU<string, any>({
   max: 500,
   maxSize: 5000,
@@ -318,7 +317,8 @@ export class Dict<T = any> extends UnMergeable implements DictOptions<T> {
       try {
         cached.loaded = false;
         cached.loading = true;
-        const dictData = await getFromRemote();
+        let dictData = await getFromRemote();
+        dictData = dictData || [];
         if (!(dictData instanceof Array)) {
           logger.warn("dict data 格式有误，期望格式为数组，实际格式为：", dictData);
         }
@@ -410,7 +410,7 @@ export class Dict<T = any> extends UnMergeable implements DictOptions<T> {
  * @param config
  */
 export function dict<T = any>(config: DictOptions<T>): UnwrapNestedRefs<Dict<any>> {
-  const ret = reactive(new Dict(config));
+  const ret = shallowReactive(new Dict(config));
   if (!ret.prototype && ret.immediate) {
     ret.loadDict();
   }

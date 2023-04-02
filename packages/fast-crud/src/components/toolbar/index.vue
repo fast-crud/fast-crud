@@ -4,7 +4,7 @@
       <template v-if="item.show !== false">
         <component
           :is="ui.popover.name"
-          v-if="key === 'columns' && columnsFilter && columnsFilter.mode === 'simple'"
+          v-if="key === 'columns' && columnsFilter && columnsFilter?.mode === 'simple'"
           v-model:[ui.popover.visible]="popoverVisible"
           display-directive="show"
           placement="bottom"
@@ -17,6 +17,7 @@
           <template #[ui.popover.contentSlotName]>
             <fs-table-columns-filter
               v-if="columns"
+              ref="columnsFilterRef"
               v-model:show="popoverVisible"
               mode="simple"
               v-bind="columnsFilter"
@@ -30,8 +31,9 @@
       </template>
     </template>
     <fs-table-columns-filter
-      v-if="columns"
+      v-if="columns && columnsFilter?.mode !== 'simple'"
       ref="columnsFilterRef"
+      v-bind="columnsFilter"
       :columns="columns"
       :storage="storage"
       @update:columns="$emit('update:columns', $event)"
@@ -46,7 +48,7 @@ import { computed, defineComponent, ref, Ref } from "vue";
 import { useI18n } from "../../locale";
 import { Constants } from "../../utils/util.constants";
 import { ButtonProps, ButtonsProps } from "../../d";
-import { useUi } from "../../use";
+import { useMerge, useUi } from "../../use";
 
 /**
  * 工具条
@@ -112,6 +114,7 @@ export default defineComponent({
     const { t } = useI18n();
     const columnsFilterRef: Ref = ref();
     const { ui } = useUi();
+    const { merge } = useMerge();
     const computedButtons = computed(() => {
       const defaultButtons: ButtonsProps<void> = {
         refresh: {
@@ -162,7 +165,7 @@ export default defineComponent({
         }
       };
 
-      _.merge(defaultButtons, props.buttons);
+      merge(defaultButtons, props.buttons);
       if (defaultButtons.search) {
         defaultButtons.search.type = props.search ? "primary" : "default";
       }

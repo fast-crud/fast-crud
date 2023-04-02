@@ -1,7 +1,7 @@
 import ExtendsType from "./type";
 export * from "./type";
 import { utils } from "@fast-crud/fast-crud";
-import { FsEditorConfig } from "@/editor/type/config";
+import { FsEditorConfig } from "./type/config";
 // @ts-ignore
 const asyncModules = import.meta.glob("./components/*/*.vue");
 const FsUploaderComponents = {

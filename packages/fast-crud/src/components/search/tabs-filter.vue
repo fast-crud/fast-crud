@@ -20,7 +20,7 @@
 <script lang="ts" setup>
 import { computed, useAttrs } from "vue";
 import _ from "lodash-es";
-import { useUi } from "../../use";
+import { useMerge, useUi } from "../../use";
 defineOptions({
   name: "FsTabsFilter",
   inheritAttrs: false
@@ -39,7 +39,7 @@ interface TabsFilterProps {
 }
 
 const attrs = useAttrs();
-
+const { merge } = useMerge();
 const props = withDefaults(defineProps<TabsFilterProps>(), {
   show: false,
   value: "value",
@@ -56,12 +56,13 @@ const defaultOption = computed(() => {
     value: null,
     label: "全部"
   } as TabsFilterDefaultOption;
-  return _.merge(def, props.defaultOption || {});
+  return merge(def, props.defaultOption || {});
 });
 
-const __DEFAULT__ = "_default_";
+const __DEFAULT__ = "_default_key_";
 const binding = computed(() => {
-  const value = props.modelValue || __DEFAULT__;
+  const value =
+    props.modelValue == null || props.modelValue === defaultOption.value.value ? __DEFAULT__ : props.modelValue;
   return {
     type: "card",
     ...attrs,
@@ -73,12 +74,14 @@ const binding = computed(() => {
 const emit = defineEmits(["update:modelValue", "change"]);
 
 function onUpdateActiveKey(value: any) {
-  console.log("value", value);
   if (__DEFAULT__ === value) {
     value = defaultOption.value.value;
   }
+  const oldValue = props.modelValue;
   emit("update:modelValue", value);
-  emit("change", value);
+  if (oldValue !== value) {
+    emit("change", value);
+  }
 }
 
 function getValue(option: TabsFilterOption) {

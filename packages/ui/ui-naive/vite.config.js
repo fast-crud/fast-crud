@@ -17,7 +17,7 @@ export default ({ command, mode }) => {
     build: {
       lib: {
         entry: resolve(__dirname, "src/index.ts"),
-        name: "naive"
+        name: "FsUiNaive"
       },
       // cssCodeSplit: true,
       sourcemap: "inline",
@@ -41,17 +41,24 @@ export default ({ command, mode }) => {
         ],
         // make sure to externalize deps that shouldn't be bundled
         // into your library
-        external: ["vue", "@fast-crud/fast-crud", "naive-ui", "@ant-design/icons-vue", "lodash-es"],
+        external: [
+          "vue",
+          "@fast-crud/fast-crud",
+          "naive-ui",
+          "@ant-design/icons-vue",
+          "lodash-es",
+          "@fast-crud/ui-interface"
+        ],
         output: {
           // Provide global variables to use in the UMD build
           // for externalized deps
           globals: {
             vue: "Vue",
             "@fast-crud/fast-crud": "FastCrud",
-            "ant-design-vue": "Antdv",
-            "naive-ui": "Naive",
-            "@ant-design/icons-vue": "IconsVue",
-            "lodash-es": "_"
+            "naive-ui": "naive",
+            "@ant-design/icons-vue": "AntDesignIconsVue",
+            "lodash-es": "_",
+            "@fast-crud/ui-interface": "FsUiInterface"
           }
         }
       }

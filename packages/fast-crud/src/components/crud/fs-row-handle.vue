@@ -47,6 +47,7 @@ import { useUi } from "../../use/use-ui";
 import { useCompute } from "../../use/use-compute";
 import { Constants } from "../../utils/util.constants";
 import { ButtonProps, ScopeContext } from "../../d";
+import { useMerge } from "../../use";
 
 /**
  * 操作列配置
@@ -96,7 +97,7 @@ export default defineComponent({
   emits: ["handle"],
   setup(props: any, ctx) {
     const { ui } = useUi();
-
+    const { merge } = useMerge();
     traceUtil.trace("fs-row-handler");
     const { t } = useI18n();
     const doClick = (item: any) => {
@@ -151,7 +152,7 @@ export default defineComponent({
             title: t("fs.rowHandle.remove.text")
           }
         };
-        mergedBtns = _.merge(defBtns, computeProps.value.buttons);
+        mergedBtns = merge(defBtns, computeProps.value.buttons);
       } else {
         mergedBtns = computeProps.value.group[computeProps.value.active];
       }

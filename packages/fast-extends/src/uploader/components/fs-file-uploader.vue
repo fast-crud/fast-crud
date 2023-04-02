@@ -210,14 +210,13 @@ export default defineComponent({
 
     async function emitValue(list: FileItem[]) {
       let value = await buildEmitValue(list);
-
       onInput(value);
       onChange(value);
     }
 
     async function buildEmitValue(fList: FileItem[]) {
       if (fList == null || fList.length === 0) {
-        return [];
+        return props.limit === 1 ? null : [];
       }
 
       if (props.limit === 1) {

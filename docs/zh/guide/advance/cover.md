@@ -49,8 +49,12 @@ app.use(FastCrud,{
 ```js
 const crudOptions = {
     actionbar:{
-        text: null, //可以让button不显示文字
-        icon: 'xxx'
+        buttons:{
+            add:{
+                text: null, //可以让button不显示文字
+                icon: 'PlusOutlined' //仅显示图标
+            }
+        }
     }
 }
 ```

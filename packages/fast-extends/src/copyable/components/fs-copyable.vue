@@ -1,10 +1,15 @@
 <template>
-  <div class="fs-copyable" :class="{ 'show-on-hover': copyButton.showOnHover }">
+  <div class="fs-copyable" :class="{ 'show-on-hover': copyButton.showOnHover, inline: inline }">
     <span v-clipboard="modelValue" v-clipboard:success="onSuccess" v-clipboard:error="onError" class="pointer">
-      {{ modelValue }}
+      <template v-if="$slots.default">
+        <slot></slot>
+      </template>
+      <template v-else>
+        {{ modelValue }}
+      </template>
     </span>
-    <slot></slot>
-    <div v-if="modelValue != null" class="copy-button">
+
+    <div v-if="modelValue != null && copyButton.show !== false" class="copy-button">
       <component
         :is="tagName"
         v-clipboard="modelValue"
@@ -69,6 +74,11 @@ export default defineComponent({
     errorMessage: {
       type: [Boolean, String],
       default: true
+    },
+
+    inline: {
+      type: Boolean,
+      default: false
     }
   },
   emits: [
@@ -124,13 +134,20 @@ export default defineComponent({
 <style lang="less">
 .fs-copyable {
   position: relative;
+  display: flex;
+  align-items: center;
+  &.inline {
+    display: inline-flex;
+  }
   .pointer {
     cursor: pointer;
   }
   .copy-button {
     position: absolute;
     right: 0;
-    top: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
   }
   &.show-on-hover {
     .copy-button {

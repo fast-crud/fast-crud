@@ -159,6 +159,12 @@ export function useCrud(ctx: UseCrudProps): UseCrudRet {
         doSearch,
         ["onUpdate:collapse"]: (value: any) => {
           crudBinding.value.search.collapse = value;
+        },
+        container: {
+          collapse: true,
+          ["onUpdate:collapse"]: (value: any) => {
+            crudBinding.value.search.container.collapse = value;
+          }
         }
       }
     };
@@ -209,7 +215,9 @@ export function useCrud(ctx: UseCrudProps): UseCrudRet {
         onSortChange(sortChange: { isServerSort: boolean; prop: any; asc: any; order: any }) {
           const { isServerSort, prop, asc, order } = sortChange;
           crudBinding.value.sort = isServerSort ? { prop, order, asc } : null;
-          expose.doRefresh();
+          if (isServerSort) {
+            expose.doRefresh();
+          }
         }
       }
     };

@@ -32,6 +32,7 @@ pnpm create vite my-vue-app -- --template vue
 cd my-vue-app
 pnpm i  @fast-crud/fast-crud
 pnpm i  @fast-crud/fast-extends
+pnpm i  @fast-crud/ui-interface
 
 #安装ui，根据你选择的基础组件 三选一
 # element-plus
@@ -70,8 +71,8 @@ app.use(Naive)
 
 ::: warning
 * 某些admin框架，为了按需加载，可能并没有全量安装ui组件库，你需要在main.js中全量安装.       
-* 个人愚见，基础ui组件占比并不大（antdv全量安装压缩后也就占300-400k左右），作为admin管理系统，首次加载速度并不是大问题，在开发便捷性面前，基础组件的按需加载很鸡肋。      
-* 重点注意那些不常用、但特别重的第三方组件的按需加载即可（如chart、上传sdk、截图sdk等，本项目带的extends组件都是异步按需加载的，请放心安装。）    
+* 个人愚见，基础ui组件占比并不大（antdv全量安装压缩后也就占300-400k左右），作为admin管理系统，首次加载速度并不是大问题。      
+* 重点注意那些不常用、但特别重的第三方组件的异步加载即可（如chart、上传sdk、截图sdk等，本项目带的extends组件都是异步按需加载的，请放心安装。）    
 :::
 
 

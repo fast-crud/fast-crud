@@ -12,6 +12,10 @@ export class SetFormDataOptions {
   valueChange?: boolean;
 }
 
+export type DoRefreshProps = {
+  goFirstPage?: boolean;
+};
+
 /**
  * crudExpose
  */
@@ -55,7 +59,7 @@ export type CrudExpose = {
   /**
    * 刷新列表数据
    */
-  doRefresh: () => Promise<void>;
+  doRefresh: (props?: DoRefreshProps) => Promise<void>;
   /**
    * 翻页
    */
@@ -106,10 +110,33 @@ export type CrudExpose = {
    * 重新设置查询表单数据
    */
   setSearchFormData: (props: SetSearchFormDataProps) => void;
+
+  /**
+   * 获取toolbar组件Ref
+   */
+  getToolbarRef: () => any;
+
+  /**
+   * 获取列设置组件Ref
+   */
+  getColumnsFilterRef: () => any;
+
+  /**
+   * 获取列设置的原始列配置Ref
+   * 可以修改列设置的原始配置
+   */
+  getColumnsFilterOriginalColumnsRef: () => any;
+
+  /**
+   * 获取列设置的每列配置Ref
+   * 可以修改列设置的每列配置
+   */
+  getColumnsFilterColumnsRef: () => any;
   /**
    * 获取FsTable的实例
    */
   getTableRef: () => any;
+
   /**
    * 获取x-table的实例
    */
@@ -190,7 +217,7 @@ export type OpenDialogProps = {
 /**
  * crudExpose.setSearchFormData参数
  */
-export type SetSearchFormDataProps = { form: any; mergeForm?: boolean };
+export type SetSearchFormDataProps = { form: any; mergeForm?: boolean; triggerSearch?: boolean };
 /**
  * crudExpose.doRemove参数
  */
