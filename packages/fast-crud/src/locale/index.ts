@@ -1,4 +1,5 @@
 import zhCN from "./lang/zh-cn";
+import en from "./lang/en";
 import _ from "lodash-es";
 function t(key: string, args: any) {
   let value = _.get(zhCN, key);
@@ -19,6 +20,14 @@ class I18n {
     return t(key, args);
   }
   setVueI18n(instance: any) {
+    if (!instance) {
+      return;
+    }
+    if (instance.global) {
+      instance = instance.global;
+    }
+    instance.mergeLocaleMessage("zh_CN", { fs: zhCN.fs });
+    instance.mergeLocaleMessage("en", { fs: en.fs });
     this.vueI18nInstance = instance;
   }
 }
@@ -29,7 +38,7 @@ export function useI18n() {
   if (i18n.vueI18nInstance != null) {
     return {
       // @ts-ignore
-      t: i18n.vueI18nInstance.global.t
+      t: i18n.vueI18nInstance.t
     };
   }
 
