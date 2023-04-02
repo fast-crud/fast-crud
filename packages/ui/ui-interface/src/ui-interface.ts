@@ -126,6 +126,7 @@ export type DialogOnClosedBindBuilder = (onClose: (visible: boolean) => void) =>
 
 export type DialogBuilderOption = {
   footer?: UiSlot;
+  customClass?:string
 } & BindBuilderOptions;
 
 export type DialogOpenOption = {
