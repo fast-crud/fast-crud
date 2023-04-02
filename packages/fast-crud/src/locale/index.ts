@@ -26,7 +26,7 @@ class I18n {
     if (instance.global) {
       instance = instance.global;
     }
-    instance.mergeLocaleMessage("zh_CN", { fs: zhCN.fs });
+    instance.mergeLocaleMessage("zh-cn", { fs: zhCN.fs });
     instance.mergeLocaleMessage("en", { fs: en.fs });
     this.vueI18nInstance = instance;
   }
