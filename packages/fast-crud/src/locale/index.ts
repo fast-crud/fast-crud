@@ -1,5 +1,6 @@
 import zhCN from "./lang/zh-cn";
 import en from "./lang/en";
+import { useMerge } from "../use";
 import _ from "lodash-es";
 function t(key: string, args: any) {
   let value = _.get(zhCN, key);
@@ -26,8 +27,19 @@ class I18n {
     if (instance.global) {
       instance = instance.global;
     }
-    instance.mergeLocaleMessage("zh_CN", { fs: zhCN.fs });
-    instance.mergeLocaleMessage("en", { fs: en.fs });
+    const { merge } = useMerge();
+    const locales: string[] = instance.availableLocales;
+    for (const item of locales) {
+      if (item.startsWith("zh")) {
+        const message = instance.getLocaleMessage(item);
+        instance.mergeLocaleMessage(item, { fs: zhCN.fs });
+        instance.mergeLocaleMessage(item, { fs: message.fs });
+      } else if (item.startsWith("en")) {
+        const message = instance.getLocaleMessage(item);
+        instance.mergeLocaleMessage(item, { fs: en.fs });
+        instance.mergeLocaleMessage(item, { fs: message.fs });
+      }
+    }
     this.vueI18nInstance = instance;
   }
 }
