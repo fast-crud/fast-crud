@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.12.1](https://github.com/fast-crud/fast-crud/compare/v1.12.0...v1.12.1) (2023-04-04)
+
+### Reverts
+
+* Revert "refactor: 删除多余的umd配置" ([008a833](https://github.com/fast-crud/fast-crud/commit/008a8333c4b761cfcab8a2531614faafc10cb18c))
+
 # [1.12.0](https://github.com/fast-crud/fast-crud/compare/v1.11.10...v1.12.0) (2023-03-31)
 
 ### Features
