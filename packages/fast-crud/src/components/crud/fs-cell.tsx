@@ -1,6 +1,6 @@
 import { useCompute } from "../../use/use-compute";
 import { defineComponent, PropType } from "vue";
-import { CellConditionalRender } from "/src/d";
+import { CellConditionalRender } from "../../d";
 
 /**
  * 单元格显示组件
