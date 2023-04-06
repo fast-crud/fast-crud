@@ -91,11 +91,47 @@ export default defineComponent({
   }
   .fs-container {
     padding: 0;
+    .box {
+      .inner {
+        .header {
+          .ant-card-body {
+            padding: 14px;
+          }
+        }
+      }
+    }
   }
   .fs-layout-card-body {
     height: 100%;
     display: flex;
     flex-direction: column;
+
+    .ant-card-head {
+      min-height: 0;
+      padding: 0px;
+      .ant-card-head-title {
+        padding: 0;
+      }
+    }
+
+    .el-card__header {
+      padding: 0;
+    }
+
+    .n-card-header {
+      padding: 0px;
+      border-bottom: 1px solid #eee;
+    }
+    .n-card__content {
+      padding: 10px;
+    }
+
+    .fs-crud-actionbar {
+      margin: 10px;
+    }
+    .fs-crud-toolbar {
+      margin: 10px;
+    }
 
     .ant-card-body {
       flex: 1;

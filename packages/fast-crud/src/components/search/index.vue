@@ -14,7 +14,7 @@
         <component :is="container?.is" v-if="show !== false" v-bind="container" :columns="computedColumns">
           <template #search-buttons>
             <template v-for="(item, index) in computedButtons" :key="index">
-              <fs-button v-if="item.show" v-bind="item" @click="item._click()" />
+              <fs-button v-if="item.show !== false" v-bind="item" @click="item._click()" />
             </template>
           </template>
           <template v-if="slots['search-right']" #search-right>
