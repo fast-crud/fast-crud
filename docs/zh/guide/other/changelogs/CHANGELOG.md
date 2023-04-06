@@ -3,6 +3,16 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.12.2](https://github.com/fast-crud/fast-crud/compare/v1.12.1...v1.12.2) (2023-04-06)
+
+### Bug Fixes
+
+* 修复layoutcard样式问题 ([02aca45](https://github.com/fast-crud/fast-crud/commit/02aca45932a90fba39d53ecd12c09aa423187065))
+
+### Performance Improvements
+
+* 新增table.conditionalRender配置,条件渲染 ([0273b91](https://github.com/fast-crud/fast-crud/commit/0273b9152dcf7dbb5d90b82619e6ef8b1191e5cc))
+
 ## [1.12.1](https://github.com/fast-crud/fast-crud/compare/v1.12.0...v1.12.1) (2023-04-04)
 
 ### Performance Improvements
