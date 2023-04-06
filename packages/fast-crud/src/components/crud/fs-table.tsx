@@ -1,11 +1,20 @@
-import { computed, defineComponent, ref, resolveDirective, resolveDynamicComponent, watch, withDirectives } from "vue";
+import {
+  computed,
+  defineComponent,
+  PropType,
+  ref,
+  resolveDirective,
+  resolveDynamicComponent,
+  watch,
+  withDirectives
+} from "vue";
 import _ from "lodash-es";
 import { uiContext } from "../../ui";
 import { useEditable } from "./editable/use-editable";
 import logger from "../../utils/util.log";
 import utilLog from "../../utils/util.log";
 import "./fs-table.less";
-import { ColumnProps, ScopeContext, WriteableSlots } from "../../d";
+import { CellConditionalRender, ColumnProps, ScopeContext, WriteableSlots } from "../../d";
 import { UiInterface } from "@fast-crud/ui-interface/src";
 
 type BuildTableColumnsOption = {
@@ -212,6 +221,10 @@ export default defineComponent({
       type: Array
     },
 
+    conditionalRender: {
+      type: Object as PropType<CellConditionalRender>
+    },
+
     /**
      * 行编辑，批量编辑
      */
@@ -348,7 +361,16 @@ export default defineComponent({
           />
         );
       } else {
-        return <fs-cell ref={setRef} item={item} scope={newScope} slots={cellSlots} {...vModel} />;
+        return (
+          <fs-cell
+            ref={setRef}
+            item={item}
+            scope={newScope}
+            slots={cellSlots}
+            {...vModel}
+            conditionalRender={props.conditionalRender}
+          />
+        );
       }
     };
 

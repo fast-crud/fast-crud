@@ -112,6 +112,28 @@
 ```
 
 
+## conditionalRender
+* 说明：条件render，符合条件的情况下优先render
+* 类型： `{match:(scope)=>boolean,render:(scope)=>any}`
+* 默认值：无
+* 示例： 以下演示，对所有的cell，当其`value`为空值时，显示一个`-`
+```js
+{
+  table:{
+      conditionalRender: {
+          match(scope) {
+              return !scope.value;
+          },
+          render(scope) {
+              return "-";
+          }
+      }
+  }    
+}
+```
+
+
+
 ## remove
 * 说明：删除相关配置
 * 类型：Object

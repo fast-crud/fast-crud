@@ -4,7 +4,7 @@ import { Dict, GetContextFn } from "../use";
 import { DoRemoveContext } from "../d/expose";
 
 import { RuleItem } from "async-validator";
-import { UiSlot } from "@fast-crud/ui-interface";
+import { UiSlot, UiSlotRet } from "@fast-crud/ui-interface";
 
 // export type FsRefValue<T> = T | Ref<T> | ComputedRef<T>;
 // export type FsComputeValue<T> = FsRefValue<T> | ComputeValue<T> | AsyncComputeValue<T>;
@@ -334,6 +334,11 @@ export type RemoveProps = {
   [key: string]: any;
 };
 
+export type CellConditionalRender = {
+  match: (scope: ScopeContext) => boolean;
+  render: (scope: ScopeContext) => UiSlotRet;
+};
+
 /**
  * 表格配置
  */
@@ -367,6 +372,11 @@ export type TableProps = {
    * 列配置 map
    */
   columnsMap?: TypeMap<ColumnProps>;
+
+  /**
+   * 条件渲染
+   */
+  conditionalRender?: CellConditionalRender;
 
   /**
    * 表格最大高度调整

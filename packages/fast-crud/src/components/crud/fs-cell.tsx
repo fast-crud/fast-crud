@@ -1,5 +1,6 @@
 import { useCompute } from "../../use/use-compute";
-import { defineComponent } from "vue";
+import { defineComponent, PropType } from "vue";
+import { CellConditionalRender } from "/src/d";
 
 /**
  * 单元格显示组件
@@ -16,7 +17,17 @@ export default defineComponent({
         return {};
       }
     },
-    slots: {}
+    /**
+     * 插槽
+     */
+    slots: {},
+
+    /**
+     * 条件渲染，符合条件的情况下优先渲染
+     */
+    conditionalRender: {
+      type: Object as PropType<CellConditionalRender>
+    }
   },
   setup(props: any) {
     const { doComputed } = useCompute();
@@ -40,7 +51,10 @@ export default defineComponent({
           </span>
         );
       };
-      if (props.slots) {
+      if (props.conditionalRender && props.conditionalRender.match && props.conditionalRender.match(props.scope)) {
+        //条件render
+        return cellContentRender(props.conditionalRender.render(props.scope));
+      } else if (props.slots) {
         return cellContentRender(props.slots(props.scope));
       } else if (props.item.formatter) {
         return cellContentRender(props.item.formatter(props.scope));
