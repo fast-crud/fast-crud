@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [1.13.0](https://github.com/fast-crud/fast-crud/compare/v1.12.2...v1.13.0) (2023-04-07)
+
+### Features
+
+* FsComponentRender组件重构 ([fb6d77d](https://github.com/fast-crud/fast-crud/commit/fb6d77dd0113d57a7c69acc878a955b618b52342))
+
 ## [1.12.2](https://github.com/fast-crud/fast-crud/compare/v1.12.1...v1.12.2) (2023-04-06)
 
 ### Bug Fixes
