@@ -216,6 +216,9 @@ export default defineComponent({
       } else if (item.component && item.component.show !== false) {
         defaultSlot = (
           <fs-component-render
+            ref={(value: any) => {
+              componentRenderRefs.value[key] = value;
+            }}
             model-value={get(form, key)}
             {...item.component}
             scope={buildFieldContext(key)}
@@ -223,7 +226,6 @@ export default defineComponent({
             onInput={_onInput}
           />
         );
-        componentRenderRefs.value[key] = defaultSlot;
       }
 
       return ui.formItem.render({
@@ -307,7 +309,7 @@ export default defineComponent({
     }
 
     function getComponentRef(key: string): any {
-      return getComponentRenderRef(key)?.$refs?.targetRef;
+      return getComponentRenderRef(key)?.getTargetRef();
     }
 
     function getContextFn(): SearchEventContext {

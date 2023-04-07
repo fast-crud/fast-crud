@@ -7,7 +7,9 @@ import {
   resolveComponent,
   resolveDynamicComponent,
   ref,
-  defineComponent
+  defineComponent,
+  watch,
+  shallowRef
 } from "vue";
 import _ from "lodash-es";
 import { useUi } from "../../use";
@@ -78,10 +80,14 @@ export default defineComponent({
     /**
      * 组件参数，会与attrs合并
      */
-    props: {}
-  } as any,
+    props: {},
+    /**
+     * 自定义render
+     */
+    render: {}
+  },
   emits: ["update:dict", "update:modelValue", "mounted"],
-  setup(props, ctx) {
+  setup(props: any, ctx) {
     const { ui } = useUi();
     provide("get:scope", () => {
       return props.scope;
@@ -91,12 +97,13 @@ export default defineComponent({
       ctx.emit("mounted", props.scope);
     });
 
+    const targetRef = ref();
     // 带事件的attrs
     const allAttrs = computed(() => {
       const vModel = props.vModel || "modelValue";
       const modelValue = props.modelValue ?? (ui.type === "antdv" ? undefined : null);
       const attrs = {
-        ref: "targetRef",
+        ref: targetRef,
         // scope: props.scope,
         // fix element display false bug
         [vModel]: modelValue,
@@ -136,51 +143,57 @@ export default defineComponent({
       _.forEach(props.slots, createChildren);
       return children;
     };
-    // eslint-disable-next-line vue/no-setup-props-destructure
-    let inputComp = props.name || ui.input.name;
 
+    const inputCompRef = shallowRef();
     const isAsyncComponent = ref(false);
-    if (!htmlTags.includes(inputComp)) {
-      inputComp = resolveDynamicComponent(inputComp);
-      if (typeof inputComp === "string") {
-        inputComp = resolveComponent(inputComp);
+    watch(
+      () => {
+        return props.name;
+      },
+      (value) => {
+        let inputComp = value || ui.input.name;
+        if (!htmlTags.includes(inputComp)) {
+          inputComp = resolveDynamicComponent(inputComp);
+          if (typeof inputComp === "string") {
+            inputComp = resolveComponent(inputComp);
+          }
+          if (inputComp?.name === "AsyncComponentWrapper") {
+            //如果是异步组件
+            isAsyncComponent.value = true;
+          }
+        }
+        inputCompRef.value = inputComp;
+      },
+      {
+        immediate: true
       }
-      if (inputComp?.name === "AsyncComponentWrapper") {
-        //如果是异步组件
-        isAsyncComponent.value = true;
-      }
-    }
+    );
+
     const childrenRendered = childrenRender;
-    return {
-      allAttrs,
-      isAsyncComponent,
-      childrenRendered,
-      inputComp
-    };
-  },
-  methods: {
-    getTargetRef() {
-      if (this.isAsyncComponent) {
-        return this.getTargetRefAsync();
+
+    function getTargetRef() {
+      if (isAsyncComponent.value) {
+        return getTargetRefAsync();
       }
-      return this.getTargetRefSync();
-    },
-    getTargetRefSync() {
-      return this.$refs.targetRef;
-    },
+      return getTargetRefSync();
+    }
+    function getTargetRefSync() {
+      return targetRef.value;
+    }
+
     //异步获取组件实例,asyncComponent加载需要时间
-    async getTargetRefAsync() {
-      const c = this.getTargetRefSync();
+    async function getTargetRefAsync() {
+      const c = getTargetRefSync();
       if (c != null) {
         return c;
       }
       return new Promise((resolve, reject) => {
-        this.getTargetRefDelay(resolve, reject, 0);
+        getTargetRefDelay(resolve, reject, 0);
       });
-    },
-    getTargetRefDelay(resolve: any, reject: any, count: number) {
+    }
+    function getTargetRefDelay(resolve: any, reject: any, count: number) {
       setTimeout(() => {
-        const c = this.getTargetRefSync();
+        const c = getTargetRefSync();
         if (c != null) {
           resolve(c);
           return;
@@ -190,16 +203,26 @@ export default defineComponent({
           reject(new Error("异步组件加载超时"));
           return;
         }
-        this.getTargetRefDelay(resolve, reject, count);
+        getTargetRefDelay(resolve, reject, count);
       }, 200);
     }
-  },
-  render() {
-    //merge 必须写在这里
-    const merged = mergeProps(this.allAttrs, this.$attrs);
-    mergeEventHandles(merged, "onChange");
-    mergeEventHandles(merged, "onBlur");
-    const inputComp = this.inputComp;
-    return <inputComp {...merged}>{this.childrenRendered()}</inputComp>;
+
+    ctx.expose({
+      props,
+      getTargetRefSync,
+      getTargetRef
+    });
+
+    return () => {
+      //merge 必须写在这里
+      const merged = mergeProps(allAttrs.value, ctx.attrs);
+      mergeEventHandles(merged, "onChange");
+      mergeEventHandles(merged, "onBlur");
+      if (props.render) {
+        return props.render(merged);
+      }
+      const inputComp = inputCompRef.value;
+      return <inputComp {...merged}>{childrenRendered()}</inputComp>;
+    };
   }
 });

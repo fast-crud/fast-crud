@@ -51,22 +51,23 @@ export default defineComponent({
           </span>
         );
       };
-      if (props.conditionalRender && props.conditionalRender.match && props.conditionalRender.match(props.scope)) {
+      const scope = { ...props.scope, props: props.item };
+      if (props.conditionalRender && props.conditionalRender.match && props.conditionalRender.match(scope)) {
         //条件render
-        return cellContentRender(props.conditionalRender.render(props.scope));
+        return cellContentRender(props.conditionalRender.render(scope));
       } else if (props.slots) {
-        return cellContentRender(props.slots(props.scope));
+        return cellContentRender(props.slots(scope));
       } else if (props.item.formatter) {
-        return cellContentRender(props.item.formatter(props.scope));
+        return cellContentRender(props.item.formatter(scope));
       } else if (props.item.cellRender) {
-        return cellContentRender(props.item.cellRender(props.scope));
+        return cellContentRender(props.item.cellRender(scope));
       } else if (props.item.render) {
         console.warn("column.render 配置已废弃，请使用column.cellRender代替");
       } else if (computedComponent.value?.name) {
         if (computedComponent.value?.show === false) {
           return;
         }
-        return <fs-component-render title={title} ref={"targetRef"} {...computedComponent.value} scope={props.scope} />;
+        return <fs-component-render title={title} ref={"targetRef"} {...computedComponent.value} scope={scope} />;
       } else {
         return cellContentRender(value);
       }
