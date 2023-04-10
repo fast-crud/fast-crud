@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.13.1](https://github.com/fast-crud/fast-crud/compare/v1.13.0...v1.13.1) (2023-04-10)
+
+### Bug Fixes
+
+* 修复getComponentRef获取错误的bug ([67ee58e](https://github.com/fast-crud/fast-crud/commit/67ee58e7a3b7ac5a8f28ee79cff835e5d8534bd7))
+
 # [1.13.0](https://github.com/fast-crud/fast-crud/compare/v1.12.2...v1.13.0) (2023-04-07)
 
 ### Features
