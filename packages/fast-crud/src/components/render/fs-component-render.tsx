@@ -210,7 +210,8 @@ export default defineComponent({
     ctx.expose({
       props,
       getTargetRefSync,
-      getTargetRef
+      getTargetRef,
+      getTargetRefAsync
     });
 
     return () => {

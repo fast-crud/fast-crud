@@ -1,5 +1,5 @@
 import { useCompute } from "../../use/use-compute";
-import { defineComponent, PropType } from "vue";
+import { defineComponent, PropType, ref } from "vue";
 import { CellConditionalRender } from "../../d";
 
 /**
@@ -29,7 +29,7 @@ export default defineComponent({
       type: Object as PropType<CellConditionalRender>
     }
   },
-  setup(props: any) {
+  setup(props: any, ctx) {
     const { doComputed } = useCompute();
     const computedPropsComponent = () => {
       return props.item.component;
@@ -38,6 +38,17 @@ export default defineComponent({
       return props.scope;
     };
     const computedComponent = doComputed(computedPropsComponent, getScope);
+    const targetRef = ref();
+
+    function getTargetRef() {
+      return targetRef.value.getTargetRef();
+    }
+
+    ctx.expose({
+      getTargetRef,
+      targetRef
+    });
+
     return () => {
       let title = props.item.showTitle;
       const value = props.scope.value;
@@ -67,16 +78,10 @@ export default defineComponent({
         if (computedComponent.value?.show === false) {
           return;
         }
-        return <fs-component-render title={title} ref={"targetRef"} {...computedComponent.value} scope={scope} />;
+        return <fs-component-render title={title} ref={targetRef} {...computedComponent.value} scope={scope} />;
       } else {
         return cellContentRender(value);
       }
     };
-  },
-  methods: {
-    getTargetRef() {
-      // @ts-ignore
-      return this.$refs.targetRef?.getTargetRef();
-    }
   }
 });

@@ -98,7 +98,6 @@ export default defineComponent({
   setup(props: any, ctx) {
     const { ui } = useUi();
     const { merge } = useMerge();
-    traceUtil.trace("fs-row-handler");
     const { t } = useI18n();
     const doClick = (item: any) => {
       const index = props.scope[ui.tableColumn.index];
