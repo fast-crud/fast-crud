@@ -181,6 +181,14 @@ export default defineComponent({
         }
       }
     }
+
+    .ant-form-item {
+      display: flex;
+      .ant-form-item-control {
+        flex: 1;
+        overflow: hidden;
+      }
+    }
   }
 }
 </style>
