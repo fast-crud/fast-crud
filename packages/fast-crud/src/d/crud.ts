@@ -905,6 +905,8 @@ export type SearchProps = {
      * 布局方式：【single-line单行, multi-line多行】
      */
     layout?: string;
+
+    [key: string]: any;
   };
 
   /**
