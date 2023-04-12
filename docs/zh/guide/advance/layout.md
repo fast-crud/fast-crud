@@ -100,9 +100,9 @@ const crudOptions = {
     search:{
         container:{
             is:'your-custom-layout-component-name',
-            collpase:true, //是否展开，布局组件中定义的props
-            'onUpdate:collpase':(value)=>{ //vModel事件
-                crudBinding.search.container.collpase=value
+            collapse:true, //是否展开，布局组件中定义的props
+            'onUpdate:collapse':(value)=>{ //vModel事件
+                crudBinding.search.container.collapse=value
             }
         },
     }
