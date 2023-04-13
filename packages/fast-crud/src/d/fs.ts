@@ -5,7 +5,6 @@ import { DictRequest, UseCrudProps } from "../use";
 export type FsSetupOptions = {
   ui?: UiInterface;
   commonOptions?: (props?: UseCrudProps) => CrudOptions;
-
   dictRequest?: DictRequest;
   i18n?: any;
 };

@@ -627,7 +627,7 @@ export type FormItemProps = {
   valueChange?: ValueChangeHandle | ValueChangeProps;
 
   /**
-   * 值构建器，pageRequest之后执行
+   * 值构建器，打开对话框时执行
    * 从pageRequest获取到的字段数据值可能并不是组件能够识别的值，所以需要将其做一层转化
    * 即row[key]=字段组件能够识别的值
    * @param context
