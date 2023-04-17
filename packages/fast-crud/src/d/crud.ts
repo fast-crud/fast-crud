@@ -889,7 +889,10 @@ export type SearchProps = {
    */
   buttons?: ButtonsProps<SearchEventContext>;
 
-  container: {
+  /**
+   * 查询框容器
+   */
+  container?: {
     is?: string;
     collapse: boolean; //是否展开，你布局组件中定义的props
     action?: {
