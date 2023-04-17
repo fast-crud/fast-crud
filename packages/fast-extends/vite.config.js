@@ -67,6 +67,7 @@ export default ({ command, mode }) => {
           "vuedraggable",
           "ali-oss",
           "cos-js-sdk-v5",
+          "axios",
           "qiniu-js",
           "@fast-crud/fast-crud",
           "@fast-crud/ui-interface"
@@ -86,6 +87,7 @@ export default ({ command, mode }) => {
             "lodash-es": "_",
             dayjs: "dayjs",
             "vue-i18n": "VueI18n",
+            axios: "axios",
             vuedraggable: "vuedraggable",
             "@fast-crud/fast-crud": "FastCrud",
             "ali-oss": "OSS",
