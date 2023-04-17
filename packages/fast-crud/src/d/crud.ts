@@ -888,10 +888,27 @@ export type SearchProps = {
    * 查询框的按钮配置（查询和重置按钮，你还可以添加自定义按钮）
    */
   buttons?: ButtonsProps<SearchEventContext>;
-  /**
-   * 布局方式：【single-line单行, multi-line多行】
-   */
-  layout?: string;
+
+  container: {
+    is?: string;
+    collapse: boolean; //是否展开，你布局组件中定义的props
+    action?: {
+      label?: string; //查询按钮前缀
+      col?: {
+        span?: number;
+        [key: string]: any;
+      };
+      [key: string]: any;
+    };
+    collapseButton: ButtonProps;
+    /**
+     * 布局方式：【single-line单行, multi-line多行】
+     */
+    layout?: string;
+
+    [key: string]: any;
+  };
+
   /**
    * 查询表单参数 ,[a|el|n]-form的参数
    */

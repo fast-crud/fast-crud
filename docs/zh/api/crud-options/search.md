@@ -76,9 +76,9 @@ const crudOptions = {
     search:{
         container:{
             is:'your-custom-layout-component-name',
-            collpase:true, //是否展开，你布局组件中定义的props
-            'onUpdate:collpase':(value)=>{
-              crudBiding.value.search.container.collpase = value  
+            collapse:true, //是否展开，你布局组件中定义的props
+            'onUpdate:collapse':(value)=>{
+              crudBiding.value.search.container.collapse = value  
             },
             action:{
                 label:"操作", //查询按钮前缀
