@@ -641,7 +641,8 @@ export class Naive implements UiInterface {
     name: "n-image",
     buildPreviewBind: ({ url, urls, previewUrl, previewUrls }) => {
       return { "preview-src": previewUrl };
-    }
+    },
+    fallback: "fallbackSrc"
   });
   progress: ProgressCI = creator<ProgressCI>({
     name: "n-progress"

@@ -1,11 +1,13 @@
 import { resolveDynamicComponent, defineComponent, computed } from "vue";
 import { useUi } from "../../use/use-ui";
+import "./fs-loading.less";
 /**
  * icon组件
  * antdv的icon需要手动引入才能生效
  */
 export default defineComponent({
   name: "FsIcon",
+  inheritAttrs: false,
   props: {
     /**
      * icon名称
@@ -26,27 +28,27 @@ export default defineComponent({
           return () => {
             //@ts-ignore
             const name = props.icon.replace("svg:", "");
-            return <IconComp icon={name} {...ctx.attrs} />;
+            return <IconComp class={"fs-icon"} icon={name} {...ctx.attrs} />;
           };
         }
 
         const IconComp: any = resolveDynamicComponent("FsIconify");
         //如果是iconify图标
         return () => {
-          return <IconComp icon={props.icon} {...ctx.attrs} />;
+          return <IconComp class={"fs-icon"} icon={props.icon} {...ctx.attrs} />;
         };
       }
       //使用ui内置图标
       if (ui.icon.isComponent) {
         const IconComp: any = resolveDynamicComponent(props.icon);
         return () => {
-          return <IconComp {...ctx.attrs} />;
+          return <IconComp class={"fs-icon"} {...ctx.attrs} />;
         };
       } else {
         const IconComp: any = resolveDynamicComponent(props.icon);
         return () => {
           return (
-            <el-icon {...ctx.attrs}>
+            <el-icon class={"fs-icon"} {...ctx.attrs}>
               <IconComp />
             </el-icon>
           );

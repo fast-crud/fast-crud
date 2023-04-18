@@ -502,13 +502,14 @@ export class Element implements UiInterface {
     name: "el-image",
     buildPreviewBind: ({ url, urls, previewUrl, previewUrls, index }) => {
       return { "preview-src-list": previewUrls, "initial-index": index };
-    }
+    },
+    fallback:"error"
   });
   progress: ProgressCI = creator<ProgressCI>({
     name: "el-progress"
   });
   loading: LoadingCI = creator<LoadingCI>({
-    name: "v-loading",
+    name: "loading",
     type: "directive"
   });
   upload: UploadCI = creator<UploadCI>({

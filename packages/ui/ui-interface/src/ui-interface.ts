@@ -134,7 +134,7 @@ export type DialogOnClosedBindBuilder = (onClose: (visible: boolean) => void) =>
 
 export type DialogBuilderOption = {
   footer?: UiSlot;
-  customClass?:string
+  customClass?: string;
 } & BindBuilderOptions;
 
 export type DialogOpenOption = {
@@ -401,6 +401,7 @@ export type ImagePreviewBindBuilder = (opts: {
 
 export interface ImageCI extends CI {
   buildPreviewBind: ImagePreviewBindBuilder;
+  fallback: string;
 }
 export type ProgressCI = CI;
 export interface LoadingCI extends CI {

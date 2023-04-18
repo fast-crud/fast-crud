@@ -20,7 +20,13 @@ export default function () {
         ]
       },
       column: {
-        component: { name: "fs-images-format", style: "width:30px", previewTeleported: true }
+        component: {
+          name: "fs-images-format",
+          style: "width:30px",
+          previewTeleported: true,
+          // @ts-ignore
+          previewMask: () => <div class={`ant-mask-info`}>{<fs-icon icon={ui.icons.eye} />}</div>
+        }
       },
       viewForm: {
         component: { height: 100, width: 100 }

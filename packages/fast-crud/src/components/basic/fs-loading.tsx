@@ -1,6 +1,6 @@
-import { defineComponent, resolveDynamicComponent, withDirectives } from "vue";
+import { defineComponent, resolveDirective, resolveDynamicComponent, withDirectives } from "vue";
 import { useUi } from "../../use";
-
+import "./fs-loading.less";
 /**
  * loading包装
  */
@@ -10,15 +10,22 @@ export default defineComponent({
     /**
      * 是否loading中
      */
-    loading: {}
+    loading: {},
+
+    icon: {}
   },
-  render() {
+  setup(props) {
     const { ui } = useUi();
-    if (ui.loading.type === "component") {
-      const LoadingComp = resolveDynamicComponent(ui.loading.name);
-      // @ts-ignore
-      return <LoadingComp />;
-    }
-    return withDirectives(<div style={"width:30px;height:30px;"} />, [[this.loading]]);
+
+    return () => {
+      if (!props.loading) {
+        return null;
+      }
+      return (
+        <div class="fs-loading">
+          <fs-icon class={"fs-icon-spin"} icon={ui.icons.refresh}></fs-icon>
+        </div>
+      );
+    };
   }
 });

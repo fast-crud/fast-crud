@@ -653,7 +653,8 @@ export class Antdv implements UiInterface {
           src: previewUrl
         }
       };
-    }
+    },
+    fallback: "fallback"
   });
   progress: ProgressCI = creator<ProgressCI>({
     name: "a-progress"
