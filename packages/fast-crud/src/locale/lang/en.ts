@@ -45,6 +45,14 @@ export default {
       columns: { title: "columns set" }
     },
     search: {
+      container: {
+        collapseButton: {
+          text: {
+            collapse: "collapse",
+            expand: "expand"
+          }
+        }
+      },
       search: { text: "search" },
       reset: { text: "reset" },
       error: {

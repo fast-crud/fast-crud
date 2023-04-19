@@ -45,6 +45,14 @@ export default {
       columns: { title: "列设置" }
     },
     search: {
+      container: {
+        collapseButton: {
+          text: {
+            collapse: "收起",
+            expand: "展开"
+          }
+        }
+      },
       search: { text: "查询" },
       reset: { text: "重置" },
       error: {

@@ -31,7 +31,11 @@
         <slot name="search-buttons"></slot>
         <fs-button
           :icon="collapse ? ui.icons.caretUp : ui.icons.caretDown"
-          text="更多条件"
+          :text="
+            collapse
+              ? t('fs.search.container.collapseButton.text.expand')
+              : t('fs.search.container.collapseButton.text.collapse')
+          "
           v-bind="collapseButton"
           @click="toggleCollapse"
         />
@@ -43,6 +47,7 @@
 import { useUi } from "../../use";
 import { computed, defineComponent, onMounted, ref } from "vue";
 import _ from "lodash-es";
+import { useI18n } from "../../locale";
 export default defineComponent({
   name: "FsSearchLayoutDefault",
   props: {
@@ -86,6 +91,7 @@ export default defineComponent({
   emits: ["update:collapse", "collapse"],
   setup(props, ctx) {
     const { ui } = useUi();
+    const { t } = useI18n();
     const columnsRowRef = ref();
     const computedIsMultiLine = computed(() => {
       return props.layout === "multi-line";
@@ -121,7 +127,8 @@ export default defineComponent({
       computedColumnBoxHeight,
       computedIsMultiLine,
       toggleCollapse,
-      mergeCol
+      mergeCol,
+      t
     };
   }
 });
