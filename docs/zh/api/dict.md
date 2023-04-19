@@ -1,14 +1,15 @@
 # dict【数据字典】
 还不了解什么是数据字典？[看这里](../guide/advance/dict)
 ## 配置项
-### cloneable
-* 说明： 分发时是否需要clone，为false时，dict为单例模式
-* 类型： Boolean
-* 默认：false
 
 ### prototype
 * 说明：是否是原型模式，每个组件都会初始化自己的dict实例，都会发出字典请求
 * 类型：Boolean
+* 默认：false
+
+### cloneable
+* 说明： 分发时是否需要clone，为false时，dict为单例模式
+* 类型： Boolean
 * 默认：false
 
 ### url

@@ -74,6 +74,10 @@ export interface DictOptions<T> {
   prototype?: boolean; // 是否原型配置
 
   /**
+   * 是否分发时复制
+   */
+  cloneable?: boolean; // 是否分发复制
+  /**
    * dict创建后是否立即请求
    */
   immediate?: boolean; //是否立即请求
