@@ -128,6 +128,7 @@ export default defineComponent({
      * 插槽
      */
     slots: {
+      type: Object,
       default() {
         return {};
       }
