@@ -47,7 +47,6 @@ export const buildBinding: UiBuildBinding = (ci, opts, special: UiSpecialBinding
         _.set(mvConf.ref, mvConf.key, value);
         mvConf.onChange && mvConf.onChange(value);
       };
-      console.log("vModel", vModel);
     } else {
       console.warn("vModel配置错误:", ci, mvConf);
     }
