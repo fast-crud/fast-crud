@@ -39,7 +39,7 @@ const crudOptions = {
 ## 包含的字段类型
 你可以在此处查看上传扩展里面使用的哪些组件，
 
-<<<@/../../packages/fast-extends/src/uploader/type/types.ts
+<<<@/../../packages/fast-extends/src/uploader/type/types.tsx
 
 [组件配置参数](/api/components/extends/uploader/components/fs-file-uploader.md)
 ## 参数参考
