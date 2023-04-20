@@ -1,5 +1,5 @@
 import { useTypes } from "@fast-crud/fast-crud";
-import types from "./types.tsx";
+import types from "./types";
 import _ from "lodash-es";
 import defaultConfig from "./config";
 import { AllUploadSuccessValidator } from "./validators";
