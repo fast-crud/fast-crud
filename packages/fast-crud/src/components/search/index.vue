@@ -90,8 +90,7 @@ export default defineComponent({
       type: Object
     },
     /**
-     * tabs
-     * `{ show , options,key, default}`
+     * tabs `{ show , options,key, default}`
      */
     tabs: {
       type: Object
@@ -150,7 +149,7 @@ export default defineComponent({
      * 列的宽度设置，span=xx
      */
     col: {}
-  } as any,
+  },
   emits: [
     /**
      * 查询事件
@@ -161,7 +160,7 @@ export default defineComponent({
      **/
     "reset"
   ],
-  setup(props, ctx) {
+  setup(props: any, ctx) {
     const { ui } = useUi();
 
     let autoSearch: any = null;

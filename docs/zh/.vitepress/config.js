@@ -148,6 +148,10 @@ module.exports = {
                                 {text: 'fs-icon', link: "/api/components/crud/basic/fs-icon"},
                                 {text: 'fs-iconify', link: "/api/components/crud/basic/fs-iconify"},
                                 {text: 'fs-icon-svg', link: "/api/components/crud/basic/fs-icon-svg"},
+                                {text: 'fs-loading', link: "/api/components/crud/basic/fs-loading"},
+                                {text: 'fs-render', link: "/api/components/crud/render/fs-render"},
+                                {text: 'fs-slot-render', link: "/api/components/crud/render/fs-slot-render"},
+                                {text: 'fs-component-render', link: "/api/components/crud/render/fs-component-render"},
                             ]
                         },
                         {
@@ -156,6 +160,7 @@ module.exports = {
                                 {text: 'fs-crud', link: "/api/components/crud/fs-crud"},
                                 {text: 'fs-actionbar', link: "/api/components/crud/actionbar/index"},
                                 {text: 'fs-search', link: "/api/components/crud/search/index"},
+                                {text: 'fs-search-layout-default', link: "/api/components/crud/search/layout-default"},
                                 {text: 'fs-toolbar', link: "/api/components/crud/toolbar/index"},
                                 {text: 'fs-table-columns-filter', link: "/api/components/crud/toolbar/fs-table-columns-filter/index"},
                                 {text: 'fs-toolbar', link: "/api/components/crud/toolbar/index"},
@@ -165,6 +170,8 @@ module.exports = {
                                 {text: 'fs-form', link: "/api/components/crud/crud/fs-form"},
                                 {text: 'fs-form-item', link: "/api/components/crud/crud/fs-form-item"},
                                 {text: 'fs-form-helper', link: "/api/components/crud/crud/fs-form-helper"},
+                                {text: 'fs-cell', link: "/api/components/crud/crud/fs-cell"},
+                                {text: 'fs-editable-cell', link: "/api/components/crud/crud/editable/fs-editable-cell"},
                             ]
                         },
                         {

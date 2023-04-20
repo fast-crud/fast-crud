@@ -10,7 +10,7 @@
 | buttons   | 按钮配置<br/>{<br/> view:{...FsButton,click:Function,order:1},<br/> edit:{...FsButton,click:Function,order:2},<br/> remove:{...FsButton,click:Function,order:3},<br/> ...自定义<br/>} | object | -      |           |
 | group     | 按钮分组,上面的 buttons 为默认分组<br/> {<br/> groupKey:{buttonKey:{},buttonKey2:{}}<br/> }                                                                                           | object | -      |           |
 | active    | 当前激活分组                                                                                                                                                                          | string | -      | "default" |
-| scope     | scope                                                                                                                                                                                 |        | -      |           |
+| scope     | scope                                                                                                                                                                                 | -      | -      |           |
 
 ## Events
 

@@ -31,7 +31,7 @@ export default defineComponent({
   props: {
     /**
      * 文件列表
-     * 支持格式： url , {url} , [url1,url2] ,  [{url:url1},{url:url2}]
+     * 支持格式： `url , {url} , [url1,url2] ,  [{url:url1},{url:url2}]`
      */
     modelValue: {},
     // tag颜色，【primary, success, warning, danger ,info】

@@ -4,6 +4,6 @@
 
 | Prop name | Description | Type | Values | Default |
 | --------- | ----------- | ---- | ------ | ------- |
-| type      |             |      | -      |         |
+| type      |             | -    | -      |         |
 
 ---

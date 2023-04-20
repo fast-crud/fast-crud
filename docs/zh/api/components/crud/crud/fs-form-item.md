@@ -6,7 +6,7 @@
 
 | Prop name    | Description         | Type           | Values | Default   |
 | ------------ | ------------------- | -------------- | ------ | --------- |
-| modelValue   | 表单字段值(v-model) |                | -      |           |
+| modelValue   | 表单字段值(v-model) | -              | -      |           |
 | item         | 字段配置            | object         | -      | undefined |
 | formSlot     | 字段组件插槽        | func           | -      | undefined |
 | getContextFn |                     | func           | -      | undefined |

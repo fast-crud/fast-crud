@@ -12,6 +12,7 @@
 | button         | 复制按钮<br/>show: 是否显示，默认 true<br/>text: 按钮文字<br/>...其他 tag 组件参数 | CopyButton              | -      | function() {<br/> return {};<br/>} |
 | successMessage | 成功信息                                                                           | boolean\|string         | -      | true                               |
 | errorMessage   | 错误时的信息                                                                       | boolean\|string         | -      | true                               |
+| inline         |                                                                                    | boolean                 | -      | false                              |
 
 ## Events
 

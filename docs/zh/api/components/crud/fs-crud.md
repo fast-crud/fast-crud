@@ -18,7 +18,7 @@
 | viewForm    | 查看表单对话框配置，见 FsFormWrapper           | object | -      | {}      |
 | pagination  | 翻页配置,支持 el-pagination\|a-pagination 配置 | object | -      | {}      |
 | container   | 容器配置，见 FsContainer                       | object | -      | {}      |
-| customClass | crud 包裹容器的 class                          |        | -      |         |
+| customClass | crud 包裹容器的 class                          | -      | -      |         |
 | form        | 不要传到 fs-table 去                           | object | -      | {}      |
 
 ## Events
