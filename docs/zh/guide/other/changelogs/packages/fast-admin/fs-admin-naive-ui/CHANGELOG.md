@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.13.2](https://github.com/jekip/naive-ui-admin/compare/v1.13.1...v1.13.2) (2023-04-20)
+
+### Bug Fixes
+
+* dict ts缺少cloneable参数 ([ab9528d](https://github.com/jekip/naive-ui-admin/commit/ab9528d7ae2ab782cccc89d7530a22faa981ee74))
+
 ## [1.13.1](https://github.com/jekip/naive-ui-admin/compare/v1.13.0...v1.13.1) (2023-04-10)
 
 **Note:** Version bump only for package naive-ui-admin
