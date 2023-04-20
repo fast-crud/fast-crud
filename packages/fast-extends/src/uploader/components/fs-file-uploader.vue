@@ -44,7 +44,7 @@ export default defineComponent({
     },
     /**
      * 文件大小限制，单位：字节
-     * 可以直接传一个数字，也可以传 {limit:number,tip:'自定义提示文本'}
+     * 可以直接传一个数字，也可以传 `{limit:number,tip:'自定义提示文本'}`
      */
     sizeLimit: {
       type: [Number, Object]

@@ -11,7 +11,12 @@
         @compositionstart="changeInputEventDisabled(true)"
         @compositionend="changeInputEventDisabled(false)"
       >
-        <component :is="container?.is" v-if="show !== false" v-bind="container" :columns="computedColumns">
+        <component
+          :is="container?.is || 'fs-search-layout-default'"
+          v-if="show !== false"
+          v-bind="container"
+          :columns="computedColumns"
+        >
           <template #search-buttons>
             <template v-for="(item, index) in computedButtons" :key="index">
               <fs-button v-if="item.show !== false" v-bind="item" @click="item._click()" />
@@ -62,12 +67,7 @@ export default defineComponent({
      * 布局容器
      */
     container: {
-      type: Object,
-      default() {
-        return {
-          is: "fs-search-layout-default"
-        };
-      }
+      type: Object
     },
     /**
      * 初始查询条件
@@ -91,14 +91,14 @@ export default defineComponent({
     },
     /**
      * tabs
-     * { show , options,key, default}
+     * `{ show , options,key, default}`
      */
     tabs: {
       type: Object
     },
     /**
      * 按钮配置,可以根据order排序
-     * {search:{...FsButton},reset:{...FsButton}}
+     * `{search:{...FsButton},reset:{...FsButton}}`
      */
     buttons: {
       type: Object
@@ -146,25 +146,10 @@ export default defineComponent({
     validate: {
       default: false
     },
-    // /**
-    //  * 布局, single-line 单行， multi-line 多行（支持展开收起）
-    //  */
-    // layout: {
-    //   type: String,
-    //   default: "single-line"
-    // },
     /**
      * 列的宽度设置，span=xx
      */
     col: {}
-
-    // /**
-    //  * 是否折叠
-    //  */
-    // collapse: {
-    //   type: Boolean,
-    //   default: false
-    // }
   } as any,
   emits: [
     /**

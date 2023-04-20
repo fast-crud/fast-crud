@@ -894,7 +894,10 @@ export type SearchProps = {
    */
   container?: {
     is?: string;
-    collapse: boolean; //是否展开，你布局组件中定义的props
+    collapse?: boolean; //是否展开，你布局组件中定义的props
+    /**
+     * 按钮组 form-item配置
+     */
     action?: {
       label?: string; //查询按钮前缀
       col?: {
@@ -903,7 +906,7 @@ export type SearchProps = {
       };
       [key: string]: any;
     };
-    collapseButton: ButtonProps;
+    collapseButton?: ButtonProps;
     /**
      * 布局方式：【single-line单行, multi-line多行】
      */
