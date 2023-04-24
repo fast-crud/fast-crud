@@ -31,6 +31,23 @@ export default {
    
 ```
 
+```js
+// crud.ts
+import { CreateCrudOptionsProps, CreateCrudOptionsRet, dict } from "@fast-crud/fast-crud";
+import { addRequest, delRequest, editRequest, pageRequest } from "./api";
+
+//------------------------------------↓↓↓↓↓↓↓↓↓↓ 获取传入的额外参数
+export default function ({ crudExpose, context }: CreateCrudOptionsProps): CreateCrudOptionsRet {
+  return {
+    crudOptions: {
+      // 自定义crudOptions配置
+    }
+  }
+}
+```
+
+
+
 ### useFsAsync
 * 说明: 异步初始化crud , 可以从后台获取配置后再初始化crud, 需要事先定义crudRef,crudBinding
 * 类型： `(props:UseFsProps):Promise<UseFsRet>`
