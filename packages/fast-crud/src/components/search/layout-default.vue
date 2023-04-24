@@ -29,7 +29,8 @@
       <div v-if="computedIsMultiLine" class="fs-search-buttons-group fs-search-multi-line-buttons">
         <!-- 多行模式时的查询按钮-->
         <slot name="search-buttons"></slot>
-        <fs-button v-if="collapseButton?.show"
+        <fs-button
+          v-if="showCollapseButton"
           :icon="collapse ? ui.icons.caretUp : ui.icons.caretDown"
           :text="
             collapse
@@ -48,6 +49,7 @@ import { useUi } from "../../use";
 import { computed, defineComponent, onMounted, ref } from "vue";
 import _ from "lodash-es";
 import { useI18n } from "../../locale";
+
 export default defineComponent({
   name: "FsSearchLayoutDefault",
   props: {
@@ -97,6 +99,14 @@ export default defineComponent({
       return props.layout === "multi-line";
       //不要这个，会死循环， && columnsBoxHeightRef.value > columnsLineHeightRef.value;
     });
+    const showCollapseButton = computed(() => {
+      if (!props.collapseButton) {
+        return true;
+      } else if (!Object.keys(props.collapseButton).includes("show")) {
+        return true;
+      }
+      return false;
+    });
     onMounted(() => {
       if (computedIsMultiLine.value && columnsRowRef.value) {
         columnsBoxHeightRef.value = columnsRowRef.value.$el.offsetHeight;
@@ -128,7 +138,8 @@ export default defineComponent({
       computedIsMultiLine,
       toggleCollapse,
       mergeCol,
-      t
+      t,
+      showCollapseButton
     };
   }
 });
@@ -136,6 +147,7 @@ export default defineComponent({
 <style lang="less">
 .fs-search-layout-default {
   width: 100%;
+
   .fs-search-box {
     width: 100%;
     display: flex;
@@ -156,10 +168,13 @@ export default defineComponent({
 
         .fs-search-col {
           min-width: 180px;
+
           & > * {
             margin: 0px 4px;
           }
+
           margin: 4px 0;
+
           &:first-child {
             // margin-left: 0;
           }
@@ -171,6 +186,7 @@ export default defineComponent({
   .fs-search-buttons-group {
     display: flex;
     align-items: center;
+
     .fs-button {
       margin: 0 4px 0 4px;
     }
@@ -183,6 +199,7 @@ export default defineComponent({
         overflow: hidden;
         height: auto;
         transition: max-height 0.2s ease;
+
         &.fs-search-collapse {
           max-height: 42px !important;
         }
@@ -191,6 +208,7 @@ export default defineComponent({
 
     .ant-form-item {
       display: flex;
+
       .ant-form-item-control {
         flex: 1;
         overflow: hidden;
