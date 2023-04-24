@@ -29,7 +29,7 @@
       <div v-if="computedIsMultiLine" class="fs-search-buttons-group fs-search-multi-line-buttons">
         <!-- 多行模式时的查询按钮-->
         <slot name="search-buttons"></slot>
-        <fs-button
+        <fs-button v-if="collapseButton.show"
           :icon="collapse ? ui.icons.caretUp : ui.icons.caretDown"
           :text="
             collapse
