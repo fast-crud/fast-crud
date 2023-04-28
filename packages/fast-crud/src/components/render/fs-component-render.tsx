@@ -9,11 +9,12 @@ import {
   ref,
   defineComponent,
   watch,
-  shallowRef
+  shallowRef,
+  PropType
 } from "vue";
 import _ from "lodash-es";
 import { useUi } from "../../use";
-import { ComponentEventContext } from "../../d";
+import { ComponentEventContext, VModelProps } from "../../d";
 
 function mergeEventHandles(target: any, eventName: string) {
   if (target[eventName] instanceof Array) {
@@ -75,7 +76,7 @@ export default defineComponent({
      * modelValue的属性名
      */
     vModel: {
-      type: String
+      type: [String, Object]
     },
     /**
      * 组件参数，会与attrs合并
@@ -100,16 +101,45 @@ export default defineComponent({
     const targetRef = ref();
     // 带事件的attrs
     const allAttrs = computed(() => {
-      const vModel = props.vModel || "modelValue";
+      const vModel: VModelProps = {
+        name: "modelValue",
+        trim: false,
+        number: false,
+        transform: undefined
+      };
+      if (props.vModel) {
+        if (typeof props.vModel === "string") {
+          vModel.name = props.vModel;
+        } else {
+          _.merge(vModel, props.vModel);
+        }
+      }
+
       const modelValue = props.modelValue ?? (ui.type === "antdv" ? undefined : null);
       const attrs = {
         ref: targetRef,
         // scope: props.scope,
         // fix element display false bug
-        [vModel]: modelValue,
+        [vModel.name]: modelValue,
         ...props.props
       };
-      attrs["onUpdate:" + vModel] = (value: any) => {
+      attrs["onUpdate:" + vModel.name] = (value: any) => {
+        if (value) {
+          if (vModel.trim) {
+            value = value.trim();
+          }
+          if (vModel.number) {
+            const tmp = Number(value);
+            //判断tmp是否NaN
+            if (isNaN(tmp)) {
+            } else {
+              value = tmp;
+            }
+          }
+        }
+        if (vModel.transform) {
+          value = vModel.transform(value);
+        }
         ctx.emit("update:modelValue", value);
       };
 

@@ -219,6 +219,29 @@ export type RequestProp = {
 export type WriteableSlots = {
   [name: string]: UiSlot;
 };
+
+/**
+ * vModel支持trim,number
+ */
+export type VModelProps = {
+  /**
+   * vModel name
+   */
+  name?: string;
+  /**
+   * 是否trim
+   */
+  trim?: boolean;
+  /**
+   * 是否转换成number
+   */
+  number?: boolean;
+  /**
+   * 自定义转换器
+   * @param value
+   */
+  transform?: (value: any) => any;
+};
 /**
  * 组件配置
  */
@@ -234,7 +257,7 @@ export type ComponentProps = {
   /**
    * vmodel绑定的目标属性名
    */
-  vModel?: string;
+  vModel?: string | VModelProps;
 
   /**
    * 当原始组件名的参数被以上属性名占用时，可以配置在这里
