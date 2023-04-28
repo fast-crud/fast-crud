@@ -27,7 +27,34 @@ const curdOptions = {
 
 ### component.vModel
 * 说明：组件通过v-model绑定的字段名，在表单和列表中将数据绑定到组件的哪个字段上。
-* 类型：String
+* 类型：String | VModelProps
+
+```js
+const curdOptions = {
+    columns:{
+        key:{
+            form:{
+                component:{
+                    // 简单配置
+                    vModle:"value", 
+                    // 完整配置
+                    vModel:{ // VModelProps类型
+                        name:"value",//绑定的字段名
+                        trim: true,//是否去除前后空格
+                        number: true,//是否转换为数字
+                        transform: (value:any) => {//自定义转换函数
+                            if(!value){
+                                return undefined
+                            }
+                            return value
+                        }
+                    }
+                }
+            }
+        }
+    }
+}
+```
 
 
 ### component.onXxx
