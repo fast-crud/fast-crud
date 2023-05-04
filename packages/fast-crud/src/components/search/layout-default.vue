@@ -100,7 +100,7 @@ export default defineComponent({
       //不要这个，会死循环， && columnsBoxHeightRef.value > columnsLineHeightRef.value;
     });
     const showCollapseButton = computed(() => {
-      return !!props?.collapseButton?.show;
+      return !!(props.collapseButton?.show);
     });
     onMounted(() => {
       if (computedIsMultiLine.value && columnsRowRef.value) {
