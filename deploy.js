@@ -38,9 +38,9 @@ const element = "http://flow-openapi.aliyun.com/pipeline/webhook/uFTI0XJ9RgqnofX
 
 const webhooks = [doc,naive,antdv,element]
 
-async function sleep(){
+async function sleep(time){
     return new Promise(resolve => {
-        setTimeout(resolve,1000)
+        setTimeout(resolve,time)
     })
 }
 
@@ -55,7 +55,7 @@ async function trigger(){
             data:{}
         })
         console.log(`webhook success:${webhook}`)
-        await sleep()
+        await sleep(1000)
     }
 
 }

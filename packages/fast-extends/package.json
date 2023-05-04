@@ -1,6 +1,6 @@
 {
   "name": "@fast-crud/fast-extends",
-  "version": "1.13.2",
+  "version": "1.13.3",
   "private": false,
   "main": "./src/index.ts",
   "module": "./src/index.ts",
@@ -30,7 +30,7 @@
     "@wangeditor/editor": "^5.1.23",
     "@wangeditor/editor-for-vue": "^5.1.12",
     "ali-oss": "^6.17.1",
-    "cos-js-sdk-v5": "^1.4.16",
+    "cos-js-sdk-v5": "^1.4.17",
     "cropperjs": "^1.5.13",
     "dayjs": "^1.11.7",
     "glob": "^9.3.0",
@@ -43,7 +43,7 @@
     "vue-cropperjs": "^5.0.0"
   },
   "devDependencies": {
-    "@fast-crud/fast-crud": "workspace:^1.13.2",
+    "@fast-crud/fast-crud": "workspace:^1.13.3",
     "@iconify/json": "^2.2.35",
     "@ls-lint/ls-lint": "^1.11.2",
     "@rollup/plugin-commonjs": "^24.0.1",
