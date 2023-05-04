@@ -30,7 +30,7 @@
     "@wangeditor/editor": "^5.1.23",
     "@wangeditor/editor-for-vue": "^5.1.12",
     "ali-oss": "^6.17.1",
-    "cos-js-sdk-v5": "^1.4.16",
+    "cos-js-sdk-v5": "^1.4.17",
     "cropperjs": "^1.5.13",
     "dayjs": "^1.11.7",
     "glob": "^9.3.0",
