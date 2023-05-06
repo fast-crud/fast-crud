@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.13.4](https://github.com/fast-crud/fast-crud/compare/v1.13.3...v1.13.4) (2023-05-06)
+
+### Bug Fixes
+
+* 修复全屏模式错位问题 ([748838a](https://github.com/fast-crud/fast-crud/commit/748838ae85e722a4fe4cb30888420ec22c8ced2c))
+
+### Performance Improvements
+
+* 查询多行模式，行展开按钮支持显隐配置 ([a788977](https://github.com/fast-crud/fast-crud/commit/a788977b713454e0fe1fc10467afd7b9a65f5f41))
+* 服务端过滤示例 ([006bfb2](https://github.com/fast-crud/fast-crud/commit/006bfb23f594eec683e09bb7c9631dd80fa87c83))
+
 ## [1.13.3](https://github.com/fast-crud/fast-crud/compare/v1.13.2...v1.13.3) (2023-05-04)
 
 ### Performance Improvements
