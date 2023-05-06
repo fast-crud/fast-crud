@@ -30,7 +30,7 @@
         <!-- 多行模式时的查询按钮-->
         <slot name="search-buttons"></slot>
         <fs-button
-          v-if="showCollapseButton"
+          v-if="collapseButton?.show !== false"
           :icon="collapse ? ui.icons.caretUp : ui.icons.caretDown"
           :text="
             collapse
@@ -99,14 +99,6 @@ export default defineComponent({
       return props.layout === "multi-line";
       //不要这个，会死循环， && columnsBoxHeightRef.value > columnsLineHeightRef.value;
     });
-    const showCollapseButton = computed(() => {
-      if (!props.collapseButton) {
-        return true;
-      } else if (!Object.keys(props.collapseButton).includes("show")) {
-        return true;
-      }
-      return props.collapseButton.show;
-    });
     onMounted(() => {
       if (computedIsMultiLine.value && columnsRowRef.value) {
         columnsBoxHeightRef.value = columnsRowRef.value.$el.offsetHeight;
@@ -138,8 +130,7 @@ export default defineComponent({
       computedIsMultiLine,
       toggleCollapse,
       mergeCol,
-      t,
-      showCollapseButton
+      t
     };
   }
 });
