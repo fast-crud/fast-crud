@@ -3,6 +3,20 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.13.4](https://github.com/fast-crud/fast-crud/compare/v1.13.3...v1.13.4) (2023-05-06)
+
+### Bug Fixes
+
+* 1.13.3 ([451bd53](https://github.com/fast-crud/fast-crud/commit/451bd5390ce88fcbb875d39a39c88b3226f46b4e))
+* 修复全屏模式错位问题 ([748838a](https://github.com/fast-crud/fast-crud/commit/748838ae85e722a4fe4cb30888420ec22c8ced2c))
+* 修复helloworld，添加记录无效的bug ([a3121f5](https://github.com/fast-crud/fast-crud/commit/a3121f58129734891c1059670d906cee8c43e9e8))
+
+### Performance Improvements
+
+* 查询多行模式，行展开按钮支持显隐配置 ([a788977](https://github.com/fast-crud/fast-crud/commit/a788977b713454e0fe1fc10467afd7b9a65f5f41))
+* 服务端过滤示例 ([006bfb2](https://github.com/fast-crud/fast-crud/commit/006bfb23f594eec683e09bb7c9631dd80fa87c83))
+* naiveui sortable示例完善 ([dcd9e5b](https://github.com/fast-crud/fast-crud/commit/dcd9e5b04df7bda352878f4f1e30874ab9a6f452))
+
 ## [1.13.3](https://github.com/fast-crud/fast-crud/compare/v1.13.2...v1.13.3) (2023-05-04)
 
 ### Bug Fixes
