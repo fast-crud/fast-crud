@@ -413,15 +413,15 @@ export class Element implements UiInterface {
       return {
         onSortChange: (ctx: any) => {
           const { column, prop, order } = ctx;
-          if (!onSortChange) {
-            return;
+          if (onSortChange) {
+            onSortChange({
+              isServerSort: prop && column.sortable === "custom",
+              prop,
+              order,
+              asc: order === "ascending"
+            });
           }
-          onSortChange({
-            isServerSort: prop && column.sortable === "custom",
-            prop,
-            order,
-            asc: order === "ascending"
-          });
+
           bubbleUp((events: any) => {
             if (events.onSortChange) {
               events.onSortChange(ctx);

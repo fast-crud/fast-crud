@@ -530,7 +530,18 @@ export class Naive implements UiInterface {
         },
         "onUpdate:sorter": (scope: any) => {
           if (onSortChange) {
-            onSortChange(scope);
+            /**
+             * columnKey: string | number
+             *   sorter: 'default' | function | boolean
+             *   order: 'ascend' | 'descend' | false
+             */
+            const { columnKey, sorter, order } = scope;
+            onSortChange({
+              isServerSort: sorter === "custom",
+              prop: columnKey,
+              order,
+              asc: order === "ascend"
+            });
           }
           bubbleUp((events: any) => {
             if (events["onUpdate:sorter"]) {
