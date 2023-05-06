@@ -515,24 +515,28 @@ export class Naive implements UiInterface {
     fixedHeaderNeedComputeBodyHeight: true,
     headerDomSelector: ".n-data-table-thead",
     vLoading: false,
-    onChange({ onSortChange, onFilterChange, onPagination }) {
+    onChange({ onSortChange, onFilterChange, onPagination, bubbleUp }) {
       return {
-        onChange: (pagination: any, filters: any, sorter: any, { currentDataSource }: any) => {
-          if (pagination && onPagination) {
-            onPagination({ ...pagination, data: currentDataSource });
+        "onUpdate:filters": (filters: any, initiatorColumn: any) => {
+          if (onFilterChange) {
+            onFilterChange(filters);
           }
-          if (filters && onFilterChange) {
-            onFilterChange({ ...filters, data: currentDataSource });
+
+          bubbleUp((events: any) => {
+            if (events["onUpdate:sorter"]) {
+              events["onUpdate:sorter"](filters, initiatorColumn);
+            }
+          });
+        },
+        "onUpdate:sorter": (scope: any) => {
+          if (onSortChange) {
+            onSortChange(scope);
           }
-          if (sorter && onSortChange) {
-            const { column, field, order } = sorter;
-            onSortChange({
-              isServerSort: order && column.sorter === true,
-              prop: field,
-              order,
-              asc: order === "ascend"
-            });
-          }
+          bubbleUp((events: any) => {
+            if (events["onUpdate:sorter"]) {
+              events["onUpdate:sorter"](scope);
+            }
+          });
         }
       };
     }

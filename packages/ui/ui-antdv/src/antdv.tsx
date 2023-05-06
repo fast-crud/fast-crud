@@ -478,9 +478,10 @@ export class Antdv implements UiInterface {
     fixedHeaderNeedComputeBodyHeight: true,
     headerDomSelector: ".ant-table-thead",
     vLoading: false,
-    onChange({ onSortChange, onFilterChange, onPagination }) {
+    onChange({ onSortChange, onFilterChange, onPagination, bubbleUp }) {
       return {
-        onChange: (pagination: any, filters: any, sorter: any, { currentDataSource }: any) => {
+        onChange: (pagination: any, filters: any, sorter: any, ctx: any) => {
+          const { currentDataSource } = ctx;
           if (pagination && onPagination) {
             onPagination({ ...pagination, data: currentDataSource });
           }
@@ -496,6 +497,12 @@ export class Antdv implements UiInterface {
               asc: order === "ascend"
             });
           }
+
+          bubbleUp((events: any) => {
+            if (events?.onChange) {
+              events.onChange(pagination, filters, sorter, ctx);
+            }
+          });
         }
       };
     }

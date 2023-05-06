@@ -185,6 +185,7 @@ function buildTableColumns(options: any) {
  */
 export default defineComponent({
   name: "FsTable",
+  inheritAttrs: false,
   props: {
     /**
      * table插槽
@@ -296,6 +297,9 @@ export default defineComponent({
       },
       onPagination: (pagination: any) => {
         //
+      },
+      bubbleUp: (onChange) => {
+        onChange(ctx.attrs);
       }
     });
 
@@ -390,12 +394,15 @@ export default defineComponent({
       };
     });
 
+    const computedBinding = computed(() => {
+      return _.merge({}, ctx.attrs, events);
+    });
     if (renderMode === "slot") {
+      //使用slot column ，element-plus
       const computedTableSlots = computed(() => {
         return buildTableSlots({ props, ui, renderRowHandle, renderCellComponent } as BuildTableColumnsOption);
       });
 
-      // 使用config render
       return () => {
         if (props.show === false) {
           return;
@@ -404,9 +411,8 @@ export default defineComponent({
         const tableRender = (
           <tableComp
             ref={tableRef}
-            {...ctx.attrs}
             loading={props.loading}
-            {...events}
+            {...computedBinding.value}
             {...dataSource.value}
             v-slots={computedTableSlots.value}
           />
@@ -418,6 +424,7 @@ export default defineComponent({
         return tableRender;
       };
     } else {
+      //使用 jsx column
       const computedColumns = computed(() => {
         return buildTableColumns({
           props,
@@ -439,8 +446,7 @@ export default defineComponent({
           <tableComp
             ref={tableRef}
             loading={props.loading}
-            {...ctx.attrs}
-            {...events}
+            {...computedBinding.value}
             columns={computedColumns.value}
             {...dataSource.value}
             v-slots={props.slots}

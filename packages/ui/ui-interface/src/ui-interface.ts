@@ -184,6 +184,10 @@ export type TableOnChangeBindingBuilder = (context: {
   onSortChange: (sorter: TableSorterContext) => void;
   onFilterChange: (filters: any) => void;
   onPagination: (pagination: any) => void;
+  /**
+   * 原始事件向上冒泡
+   */
+  bubbleUp(change: (events: any) => void): void;
 }) => any;
 
 export type ComponentBinding = {

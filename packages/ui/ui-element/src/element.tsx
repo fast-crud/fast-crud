@@ -409,9 +409,10 @@ export class Element implements UiInterface {
     rebuildRenderScope: (scope) => {
       return scope;
     },
-    onChange({ onSortChange, onFilterChange }) {
+    onChange({ onSortChange, onFilterChange, bubbleUp }) {
       return {
-        onSortChange: ({ column, prop, order }: any) => {
+        onSortChange: (ctx: any) => {
+          const { column, prop, order } = ctx;
           if (!onSortChange) {
             return;
           }
@@ -421,8 +422,20 @@ export class Element implements UiInterface {
             order,
             asc: order === "ascending"
           });
+          bubbleUp((events: any) => {
+            if (events.onSortChange) {
+              events.onSortChange(ctx);
+            }
+          });
         },
-        onFilterChange
+        onFilterChange: (filters: any) => {
+          onFilterChange(filters);
+          bubbleUp((events: any) => {
+            if (events.onFilterChange) {
+              events.onFilterChange(filters);
+            }
+          });
+        }
       };
     }
   });
@@ -503,7 +516,7 @@ export class Element implements UiInterface {
     buildPreviewBind: ({ url, urls, previewUrl, previewUrls, index }) => {
       return { "preview-src-list": previewUrls, "initial-index": index };
     },
-    fallback:"error"
+    fallback: "error"
   });
   progress: ProgressCI = creator<ProgressCI>({
     name: "el-progress"
