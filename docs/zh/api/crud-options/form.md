@@ -128,8 +128,9 @@
     slots: {
       //插槽，可以自定义标题
     },
+    //当前分组下的所有字段的col配置
     "col": {
-      "span": 12 //当前分组下的所有字段的col配置
+      "span": 12 
     },
     columns: [
       'columnKey1',
