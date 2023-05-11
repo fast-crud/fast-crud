@@ -110,22 +110,35 @@
 ## group.groups
 * 说明: 分组配置
 * 类型：`Object:{[groupKey]:Object}`
+
 ```json
-{  //crudOptions.form.group.groups
-  groupKey: { //分组key，可随意命名
-     // 此处支持el-collapse-item，el-tab-pane，a-collapse-panel，a-tab-pane
-      title: "标题",//el-collapse-item参数
-      label: "标题", //el-tab-pane参数
-      header:"标题", // a-collapse-panel 参数
-      tab: "标题", // a-tab-pane 参数
-      slots: {
-        //插槽，可以自定义标题
-      }, 
-      columns: [ 'columnKey1', 'columnKey2'], //该分组包含的字段keys
+{
+  //crudOptions.form.group.groups
+  groupKey: {
+    //分组key，可随意命名
+    // 此处支持el-collapse-item，el-tab-pane，a-collapse-panel，a-tab-pane
+    title: "标题",
+    //el-collapse-item参数
+    label: "标题",
+    //el-tab-pane参数
+    header: "标题",
+    // a-collapse-panel 参数
+    tab: "标题",
+    // a-tab-pane 参数
+    slots: {
+      //插槽，可以自定义标题
+    },
+    "col": {
+      "span": 12 //当前分组下的所有字段的col配置
+    },
+    columns: [
+      'columnKey1',
+      'columnKey2'
+    ]
+    //该分组包含的字段keys
   }
 }
 ```
-
 
 ## initialForm
 * 说明: 表单的初始数据， 

@@ -60,7 +60,7 @@
                 :is="ui.col.name"
                 v-if="formItemShow(computedColumns[key])"
                 class="fs-col"
-                v-bind="mergeCol(computedColumns[key]?.col)"
+                v-bind="mergeCol(groupItem.col, computedColumns[key]?.col)"
               >
                 <fs-form-item
                   v-if="computedColumns[key] && computedColumns[key]?.blank !== true"
@@ -494,8 +494,8 @@ export default defineComponent({
       }
     }
 
-    function mergeCol(col: any) {
-      return merge({}, props.col, col);
+    function mergeCol(...col: any) {
+      return merge({}, props.col, ...col);
     }
 
     function buildItemScope(item: any): FormScopeContext {
