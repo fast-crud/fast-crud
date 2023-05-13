@@ -91,10 +91,13 @@
 
 
 ### 3. 基于NaiveUi
+
+
+#### 1) fs-admin-naive-ui :
+
 效果还不错的admin，不过开始收费了（免费的连文档都不给看，呵呵）
 <br/>
 
-#### 1) fs-admin-naive-ui :
   [预览](http://fast-crud.docmirror.cn/naive/) /
   [源码](https://github.com/fast-crud/fs-admin-naive-ui/)  /
   [原项目源码](https://github.com/jekip/naive-ui-admin)
@@ -105,10 +108,13 @@
 </div>
 
 
-<br/>
 
+#### 2) fs-in-soybean-admin :
+推荐，tabs很漂亮
 
-
+[预览](http://fast-crud.docmirror.cn/soybean/) /
+[源码](https://github.com/fast-crud/fs-in-soybean-admin/)  /
+[原项目源码](https://github.com/honghuangdc/soybean-admin)
 
 
 ### 等你推荐
