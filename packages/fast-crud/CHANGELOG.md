@@ -3,6 +3,18 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.13.5](https://github.com/fast-crud/fast-crud/compare/v1.13.4...v1.13.5) (2023-05-13)
+
+### Bug Fixes
+
+* 修复本地字典切换列显隐时无法显示label的bug ([35327c8](https://github.com/fast-crud/fast-crud/commit/35327c8ed7bbffb1e51681e05732e0e9b46dfb04))
+* 修复useFormWrapper丢失主题的bug ([35bbf94](https://github.com/fast-crud/fast-crud/commit/35bbf944d90caf14da6f776e93d97db686d77459))
+
+### Performance Improvements
+
+* 每个分组支持统一col配置 ([9ed3465](https://github.com/fast-crud/fast-crud/commit/9ed34658a1d56f544b046ecc500172335cdccf53))
+* 优化对话框全屏按钮居中 ([8f83857](https://github.com/fast-crud/fast-crud/commit/8f83857b65770a6e58641dc52b7c65abcf202dcc))
+
 ## [1.13.4](https://github.com/fast-crud/fast-crud/compare/v1.13.3...v1.13.4) (2023-05-06)
 
 ### Bug Fixes

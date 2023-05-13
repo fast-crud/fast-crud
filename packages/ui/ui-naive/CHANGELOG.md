@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.13.5](https://github.com/fast-crud/fast-crud/compare/v1.13.4...v1.13.5) (2023-05-13)
+
+### Bug Fixes
+
+* 修复useFormWrapper丢失主题的bug ([35bbf94](https://github.com/fast-crud/fast-crud/commit/35bbf944d90caf14da6f776e93d97db686d77459))
+
 ## [1.13.4](https://github.com/fast-crud/fast-crud/compare/v1.13.3...v1.13.4) (2023-05-06)
 
 ### Performance Improvements

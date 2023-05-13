@@ -1,6 +1,6 @@
 {
   "name": "@fast-crud/fast-crud",
-  "version": "1.13.4",
+  "version": "1.13.5",
   "private": false,
   "main": "./src/index.ts",
   "module": "./src/index.ts",
@@ -25,7 +25,7 @@
     "vuedraggable-es": "^4.1.1"
   },
   "devDependencies": {
-    "@fast-crud/ui-interface": "workspace:^1.13.4",
+    "@fast-crud/ui-interface": "workspace:^1.13.5",
     "@iconify/json": "^2.2.35",
     "@ls-lint/ls-lint": "^1.11.2",
     "@rollup/plugin-strip": "^3.0.2",
