@@ -29,12 +29,12 @@ export type FsUploaderGetAuthContext = {
 
 export type FsUploaderOptions = {
   defaultType?: "cos" | "alioss" | "qiniu" | "form" | "s3";
-  cos?: FsUploaderCosOptions;
-  alioss?: FsUploaderAliossOptions;
-  qiniu?: FsUploaderQiniuOptions;
-  form?: FsUploaderFormOptions;
-  s3?: FsUploaderS3Options;
-  buildKey: (context: FsUploaderBuildKeyContext) => Promise<string>;
+  cos?: Partial<FsUploaderCosOptions>;
+  alioss?: Partial<FsUploaderAliossOptions>;
+  qiniu?: Partial<FsUploaderQiniuOptions>;
+  form?: Partial<FsUploaderFormOptions>;
+  s3?: Partial<FsUploaderS3Options>;
+  buildKey?: (context: FsUploaderBuildKeyContext) => Promise<string>;
 };
 
 export type FsUploaderSuccessHandle = (
@@ -43,12 +43,12 @@ export type FsUploaderSuccessHandle = (
 ) => Promise<{ url?: string; key?: string }>;
 
 export type FsUploaderCosOptions = {
-  domain: string; //"https://d2p-demo-1251260344.cos.ap-guangzhou.myqcloud.com",
-  bucket: string; //"d2p-demo-1251260344",
+  domain?: string; //"https://d2p-demo-1251260344.cos.ap-guangzhou.myqcloud.com",
+  bucket?: string; //"d2p-demo-1251260344",
   region?: string; //"",
   secretId?: string; //"", //
   secretKey?: string; //"", // 传了secretKey 和secretId 代表使用本地签名模式（不安全，生产环境不推荐）
-  getAuthorization: (context: FsUploaderCosOptions) => Promise<any>;
+  getAuthorization?: (context: FsUploaderCosOptions) => Promise<any>;
 } & FsUploaderCommonOptions;
 export type FsUploaderAliossOptions = {
   domain: string; //"https://d2p-demo.oss-cn-shenzhen.aliyuncs.com",
