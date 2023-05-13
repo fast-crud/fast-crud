@@ -3,6 +3,10 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.13.6](https://github.com/fast-crud/fast-crud/compare/v1.13.5...v1.13.6) (2023-05-13)
+
+**Note:** Version bump only for package @fast-crud/ui-element
+
 ## [1.13.5](https://github.com/fast-crud/fast-crud/compare/v1.13.4...v1.13.5) (2023-05-13)
 
 **Note:** Version bump only for package @fast-crud/ui-element
@@ -12,6 +16,7 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 ### Performance Improvements
 
 * 服务端过滤示例 ([006bfb2](https://github.com/fast-crud/fast-crud/commit/006bfb23f594eec683e09bb7c9631dd80fa87c83))
+
 * naiveui sortable示例完善 ([dcd9e5b](https://github.com/fast-crud/fast-crud/commit/dcd9e5b04df7bda352878f4f1e30874ab9a6f452))
 
 ## [1.13.3](https://github.com/fast-crud/fast-crud/compare/v1.13.2...v1.13.3) (2023-05-04)
@@ -83,7 +88,9 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 ### Performance Improvements
 
 * ui 支持render ([18b97a3](https://github.com/fast-crud/fast-crud/commit/18b97a3e67ee9410be5eb8ef7e757125a9160852))
+
 * ui package移除对fast-crud的依赖 ([7a7b51f](https://github.com/fast-crud/fast-crud/commit/7a7b51fd9594b29a31e844b0fd2d31396e96a613))
+
 * ui package移除对fast-crud的依赖 ([89a9f2c](https://github.com/fast-crud/fast-crud/commit/89a9f2ccbad4374a6bd92c29fe16afab19bd3744))
 
 ## [1.11.1](https://github.com/fast-crud/fast-crud/compare/v1.11.0...v1.11.1) (2023-03-17)
@@ -147,6 +154,7 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 ### Features
 
 * 对话框支持拖拽 ([1f41d13](https://github.com/fast-crud/fast-crud/commit/1f41d134268848d60b967caf25aa4d5add286b18))
+
 * 优化uploader扩展组件，buildUrl支持异步方法 ([a09f05d](https://github.com/fast-crud/fast-crud/commit/a09f05deed495675cb9a5cc36bc9ea530a44da08))
 
 ## [1.7.2](https://github.com/fast-crud/fast-crud/compare/v1.7.1...v1.7.2) (2022-12-15)
@@ -160,6 +168,7 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 ### Performance Improvements
 
 * 调整ui-*、extends的d.ts编译目录 ([4749dac](https://github.com/fast-crud/fast-crud/commit/4749dac48979f654143e6e8e3f0edf936e80311c))
+
 * extends ts化 ([671ccaf](https://github.com/fast-crud/fast-crud/commit/671ccaffb518c2d6102585f92780e1f77b9131e3))
 
 # [1.7.0](https://github.com/fast-crud/fast-crud/compare/v1.6.1...v1.7.0) (2022-12-14)
@@ -167,6 +176,7 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 ### Bug Fixes
 
 * 修复多级数据 search reset 错误的问题 ([4db5c0f](https://github.com/fast-crud/fast-crud/commit/4db5c0f0d3527577df42092df05de1b81a4f165d))
+
 * 修复文件上传的一些bug ([52cbfff](https://github.com/fast-crud/fast-crud/commit/52cbfff33d85e9e2ae9dc71346e8ade8837a1221))
 
 ### Performance Improvements
@@ -388,6 +398,7 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 ### Features
 
 * 升级依赖版本 ([ded1213](https://github.com/fast-crud/fast-crud/commit/ded121378f878fd4960fb3722fa7bc42987ace91))
+
 * form-helper ([dc749ae](https://github.com/fast-crud/fast-crud/commit/dc749ae82e6cdd0bedef27ebc5d21b9c452f36c7))
 
 # [0.16.0](https://github.com/fast-crud/fast-crud/compare/v0.15.1...v0.16.0) (2021-07-14)
@@ -443,6 +454,7 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 ### Bug Fixes
 
 * sort change ui ([cdd754e](https://github.com/fast-crud/fast-crud/commit/cdd754ebbbfe673ab683b83a773aca8feedd6dfb))
+
 * 修复element pagination 触发antdv的onChange事件的bug ([8915732](https://github.com/fast-crud/fast-crud/commit/8915732f9f083f4d54b5cb7ef76beb5fe28b57ab))
 
 ## [0.9.2](https://github.com/fast-crud/fast-crud/compare/v0.9.1...v0.9.2) (2021-05-30)

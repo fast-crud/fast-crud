@@ -3,6 +3,10 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.13.6](https://github.com/fast-crud/fast-crud/compare/v1.13.5...v1.13.6) (2023-05-13)
+
+**Note:** Version bump only for package @fast-crud/fast-extends
+
 ## [1.13.5](https://github.com/fast-crud/fast-crud/compare/v1.13.4...v1.13.5) (2023-05-13)
 
 **Note:** Version bump only for package @fast-crud/fast-extends
@@ -108,6 +112,7 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 ### Performance Improvements
 
 * 全面ts化 ([168d3a2](https://github.com/fast-crud/fast-crud/commit/168d3a240eb67548195c31a5fa4cb5aedb8a410c))
+
 * uploader支持buildUrls ([0085560](https://github.com/fast-crud/fast-crud/commit/00855600914f670595f3eec3d790bdf91f315953))
 
 # [1.10.0](https://github.com/fast-crud/fast-crud/compare/v1.9.2...v1.10.0) (2023-03-11)
@@ -119,7 +124,9 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 ### Performance Improvements
 
 * 日期增加week、month、year、quarter类型 ([6073b00](https://github.com/fast-crud/fast-crud/commit/6073b006f740072f5fa3e9ad54c109819963ec93))
+
 * 增加s3示例 ([9060b03](https://github.com/fast-crud/fast-crud/commit/9060b036ce9e36ef8f2ddc50b1362682c7d3aa7f))
+
 * upload sdk换成aws-s3 ([6814083](https://github.com/fast-crud/fast-crud/commit/681408321be32ce42245a4aa34e491694a7e3d0e))
 
 ## [1.9.2](https://github.com/fast-crud/fast-crud/compare/v1.9.1...v1.9.2) (2023-03-01)
@@ -177,6 +184,7 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 ### Performance Improvements
 
 * 调整ui-*、extends的d.ts编译目录 ([4749dac](https://github.com/fast-crud/fast-crud/commit/4749dac48979f654143e6e8e3f0edf936e80311c))
+
 * extends ts化 ([671ccaf](https://github.com/fast-crud/fast-crud/commit/671ccaffb518c2d6102585f92780e1f77b9131e3))
 
 # [1.7.0](https://github.com/fast-crud/fast-crud/compare/v1.6.1...v1.7.0) (2022-12-14)
@@ -388,6 +396,7 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 ### Performance Improvements
 
 * 支持json-editor ([56e0203](https://github.com/fast-crud/fast-crud/commit/56e0203dff575b11b8f37b7eea8e75f28bb74c2c))
+
 * image border ([3b459cc](https://github.com/fast-crud/fast-crud/commit/3b459cc06be7ba239c777074e446542ab3c1445c))
 
 # [0.19.0](https://github.com/fast-crud/fast-crud/compare/v0.18.1...v0.19.0) (2021-10-18)
@@ -437,6 +446,7 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 ### Performance Improvements
 
 * 文件上传组件优化 ([0a5afa8](https://github.com/fast-crud/fast-crud/commit/0a5afa8398fd52afae3fc642f1a362760da388aa))
+
 * 文件上传组件优化 ([f46680c](https://github.com/fast-crud/fast-crud/commit/f46680cfdaef2747a59c32230b9098519183f957))
 
 # [0.16.0](https://github.com/fast-crud/fast-crud/compare/v0.15.1...v0.16.0) (2021-07-14)
@@ -456,7 +466,9 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 ### Features
 
 * fast-extends,包含uploader、editors ([1b1becc](https://github.com/fast-crud/fast-crud/commit/1b1beccb59727f698d458fa725182ddd6cd7daca))
+
 * 增加edtior-quill ([73566e4](https://github.com/fast-crud/fast-crud/commit/73566e4492779008011d4bacbc3c1adcfcfef1ac))
+
 * 移除extends-uploader ([0063df7](https://github.com/fast-crud/fast-crud/commit/0063df7bf4421f1793a252166a9a7663ad4945bc))
 
 # [0.13.0](https://github.com/fast-crud/fast-crud/compare/v0.12.0...v0.13.0) (2021-07-04)

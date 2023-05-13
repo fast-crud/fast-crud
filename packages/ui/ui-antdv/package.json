@@ -1,6 +1,6 @@
 {
   "name": "@fast-crud/ui-antdv",
-  "version": "1.13.5",
+  "version": "1.13.6",
   "description": "antdv",
   "main": "./dist/ui-antdv.umd.js",
   "module": "./dist/ui-antdv.mjs",
@@ -14,7 +14,7 @@
   "license": "MIT",
   "devDependencies": {
     "@ant-design/icons-vue": "^6.1.0",
-    "@fast-crud/ui-interface": "^1.13.5",
+    "@fast-crud/ui-interface": "^1.13.6",
     "@rollup/plugin-strip": "^3.0.2",
     "@rollup/plugin-typescript": "^11.0.0",
     "@types/lodash-es": "^4.17.7",

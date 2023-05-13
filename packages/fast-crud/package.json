@@ -1,6 +1,6 @@
 {
   "name": "@fast-crud/fast-crud",
-  "version": "1.13.5",
+  "version": "1.13.6",
   "private": false,
   "main": "./dist/fast-crud.umd.js",
   "module": "./dist/fast-crud.mjs",
@@ -20,7 +20,7 @@
     "vuedraggable-es": "^4.1.1"
   },
   "devDependencies": {
-    "@fast-crud/ui-interface": "^1.13.5",
+    "@fast-crud/ui-interface": "^1.13.6",
     "@iconify/json": "^2.2.35",
     "@ls-lint/ls-lint": "^1.11.2",
     "@rollup/plugin-strip": "^3.0.2",
