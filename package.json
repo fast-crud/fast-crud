@@ -13,7 +13,7 @@
     "docgen:all": "npm run docgen:crud && npm run docgen:extends",
     "prepublishOnly": "npm run before-build && lerna run build --scope */ui-* --scope @fast-crud/fast-crud --scope @fast-crud/fast-extends ",
     "publish": "npm run proxy && npm run prepublishOnly  && lerna publish --conventional-commits && npm run afterpublishOnly",
-    "proxy": "set HTTPS_PROXY=http://127.0.0.1:10809",
+    "proxy": "npm config set proxy=http://127.0.0.1:10809",
     "publish:canary": "lerna publish --canary --conventional-commits && npm run afterpublishOnly",
     "afterpublishOnly": "npm run copylogs && git add . && git commit \"build: publish success\" && git push",
     "copylogs": "copyfiles \"packages/**/CHANGELOG.md\"  ./docs/zh/guide/other/changelogs/ -e **/node_modules/** && copyfiles \"CHANGELOG.md\"  ./docs/zh/guide/other/changelogs/",
