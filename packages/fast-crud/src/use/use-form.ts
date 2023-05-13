@@ -1,8 +1,6 @@
 import { FormProps, OpenDialogProps } from "../d";
 import { ComponentInternalInstance, createVNode, inject, render, VNode } from "vue";
 import { FsFormWrapper } from "../components";
-import { uiContext } from "@fast-crud/ui-interface";
-import logger from "/src/utils/util.log";
 
 export type FormWrapperInstance = {
   id: string;
