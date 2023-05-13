@@ -3,6 +3,16 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.13.6](https://github.com/fast-crud/fast-crud/compare/v1.13.5...v1.13.6) (2023-05-13)
+
+**Note:** Version bump only for package @fast-crud/fs-admin-element
+
+## [1.13.5](https://github.com/fast-crud/fast-crud/compare/v1.13.4...v1.13.5) (2023-05-13)
+
+### Bug Fixes
+
+* 修复element helloworld 添加数据不显示的bug ([752bd24](https://github.com/fast-crud/fast-crud/commit/752bd24ed9e69c76b77dc512d1b74625fd36712b))
+
 ## [1.13.4](https://github.com/fast-crud/fast-crud/compare/v1.13.3...v1.13.4) (2023-05-06)
 
 ### Bug Fixes
@@ -96,6 +106,7 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 ### Performance Improvements
 
 * 全面ts化 ([168d3a2](https://github.com/fast-crud/fast-crud/commit/168d3a240eb67548195c31a5fa4cb5aedb8a410c))
+
 * ts定义优化 ([37bbca9](https://github.com/fast-crud/fast-crud/commit/37bbca9ffe10948f97588d0327e80bf77574879e))
 
 # [1.10.0](https://github.com/fast-crud/fast-crud/compare/v1.9.2...v1.10.0) (2023-03-11)
@@ -107,6 +118,7 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 ### Performance Improvements
 
 * 完善文档，完善部分types ([8fff02d](https://github.com/fast-crud/fast-crud/commit/8fff02d758530bbb1212d7475dc94bc8b562ef97))
+
 * 优化d.ts类型 ([7a51aac](https://github.com/fast-crud/fast-crud/commit/7a51aace532ed6692f28a53332a2103a74f5827a))
 
 ## [1.9.2](https://github.com/fast-crud/fast-crud/compare/v1.9.1...v1.9.2) (2023-03-01)
@@ -122,4 +134,5 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 ### Performance Improvements
 
 * fs-admin 与crud demo ([4e6b20f](https://github.com/fast-crud/fast-crud/commit/4e6b20fe19434460853841f371b9fd5f16e5e2d3))
+
 * fs-admin纳入子模块 ([2940d30](https://github.com/fast-crud/fast-crud/commit/2940d30f419bf4bde1e8e791f1fbdb9184818285))
