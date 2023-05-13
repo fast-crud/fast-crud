@@ -985,7 +985,7 @@ export type SearchItemProps = {
 };
 
 /**
- * 单元格配置
+ * 表格列配置(单元格)
  */
 export type ColumnProps = {
   key?: string;
