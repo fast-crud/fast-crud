@@ -172,6 +172,7 @@ export class Dict<T = any> extends UnMergeable implements DictOptions<T> {
       this.originalData = dict.data;
       this.setData(dict.data);
     }
+    this.toMap();
   }
 
   isDynamic() {

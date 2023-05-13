@@ -355,6 +355,7 @@ export default defineComponent({
         return (
           <fs-editable-cell
             ref={setRef}
+            key={item.key}
             columnKey={item.key}
             index={index}
             item={item}
@@ -368,6 +369,7 @@ export default defineComponent({
         return (
           <fs-cell
             ref={setRef}
+            key={item.key}
             item={item}
             scope={newScope}
             slots={cellSlots}
