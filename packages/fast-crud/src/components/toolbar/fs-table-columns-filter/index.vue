@@ -115,8 +115,6 @@ import { useMerge } from "../../../use/use-merge";
 import { useRoute } from "vue-router";
 import { ColumnProps, TypeMap } from "../../../d";
 
-console.debug("draggable", draggable);
-
 const { cloneDeep } = useMerge();
 //https://cn.vuejs.org/guide/typescript/composition-api.html#typing-component-props
 //https://github.com/vuejs/core/issues/4294
