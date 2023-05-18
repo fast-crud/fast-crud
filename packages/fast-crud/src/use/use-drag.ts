@@ -69,7 +69,6 @@ async function dragModalForNaive(opts: DragModalOptions) {
   const sty = styDom.style;
   dialogHeaderEl.style.cursor = "move";
   dialogHeaderEl.onmousedown = (e) => {
-    console.log("ondragstart");
     // 鼠标按下，计算当前元素距离可视区的距离
     const X = e.clientX; //鼠标位置
     const Y = e.clientY;

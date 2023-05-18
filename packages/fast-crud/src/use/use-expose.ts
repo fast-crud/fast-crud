@@ -540,7 +540,6 @@ export function useExpose(props: UseExposeProps): UseExposeRet {
       }
       const formWrapperRef = this.getFormWrapperRef();
       formWrapperRef.open(formOpts);
-      console.log("formOpts", formOpts);
       return formWrapperRef;
     },
     async _openDialog(mode: string, context: OpenEditContext, formOpts: OpenDialogProps) {

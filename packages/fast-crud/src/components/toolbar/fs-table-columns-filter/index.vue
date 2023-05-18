@@ -318,7 +318,6 @@ function onDraggableMove(e: any, b: any) {
       maxNotIndex = maxNotIndex < i ? i : maxNotIndex;
     }
   }
-  console.log("leftindex", leftIndex, "rightindex", rightIndex, "minnot", minNotIndex, "maxnot", maxNotIndex);
 
   if (minNotIndex < leftIndex || maxNotIndex > rightIndex) {
     //ui.message.error("非fixed字段不得越过fixed字段的顺序");
