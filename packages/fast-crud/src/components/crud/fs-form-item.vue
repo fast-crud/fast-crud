@@ -41,7 +41,12 @@
           <fs-slot-render v-if="formSlot" :slots="formSlot" :scope="scopeFunc()" />
           <template v-else-if="item.component?.show !== false">
             <fs-render
-              v-if="item.render || item.component?.render"
+              v-if="item.conditionalRender && item.conditionalRender.match && item.conditionalRender.match(scopeFunc())"
+              :render-func="item.conditionalRender.render"
+              :scope="scopeFunc()"
+            />
+            <fs-render
+              v-else-if="item.render || item.component?.render"
               :render-func="item.render || item.component.render"
               :scope="scopeFunc()"
             />

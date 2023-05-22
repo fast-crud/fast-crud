@@ -357,10 +357,12 @@ export type RemoveProps = {
   [key: string]: any;
 };
 
-export type CellConditionalRender = {
+export type ConditionalRenderProps = {
   match: (scope: ScopeContext) => boolean;
   render: (scope: ScopeContext) => UiSlotRet;
 };
+
+export type CellConditionalRender = ConditionalRenderProps;
 
 /**
  * 表格配置
@@ -399,7 +401,7 @@ export type TableProps = {
   /**
    * 条件渲染
    */
-  conditionalRender?: CellConditionalRender;
+  conditionalRender?: ConditionalRenderProps;
 
   /**
    * 表格最大高度调整
@@ -663,6 +665,12 @@ export type FormItemProps = {
    * @param context
    */
   valueResolve?: (context: ValueResolveContext) => void;
+
+  /**
+   * 条件渲染
+   * @param scope
+   */
+  conditionalRender?: ConditionalRenderProps;
 
   /**
    * 直接渲染组件
