@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.13.8](https://github.com/fast-crud/fast-crud/compare/v1.13.7...v1.13.8) (2023-05-22)
+
+### Performance Improvements
+
+* **form:** 支持conditionalRender ([270fd52](https://github.com/fast-crud/fast-crud/commit/270fd52e7ffeab605aa89f44dc1b1e8f132ce393))
+
 ## [1.13.7](https://github.com/fast-crud/fast-crud/compare/v1.13.6...v1.13.7) (2023-05-19)
 
 ### Bug Fixes
