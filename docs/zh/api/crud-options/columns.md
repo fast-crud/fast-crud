@@ -65,8 +65,10 @@ const crudOptions = {
     columns: {
         key: {
             column: {
-                // 支持el-table-column / a-table-column的配置
-                component: {}
+                // 此处支持el-table-column / a-table-column的配置
+                component: {
+                  //此处为单元格组件的配置
+                }
             }    
         }
     }
@@ -74,8 +76,8 @@ const crudOptions = {
 ```
 
 
-## [key].column.[对应ui组件配置]
-* 说明：column下支持 el-table-column 或 a-table-column的全部配置
+## [key].column.[x-table-column配置]
+* 说明：column下支持对应ui的table-column组件配置， el-table-column / a-table-column /n-table-column 的全部配置
 * 文档： [el-table-column](https://element-plus.gitee.io/#/zh-CN/component/table#table-column-attributes) | [a-table-column](https://2x.antdv.com/components/table-cn#API)
 * 示例：
 ```js
@@ -131,12 +133,14 @@ const crudOptions = {
 * 默认值： false
 * 场景：配置true，则value当做文本显示；配置string，则直接显示配置的文本
 
+
+
 ## [key].column.cellRender
 * 说明：自定义单元格渲染。
 * 类型：Function(scope)
 * 相关：[jsx/tsx文档](https://cn.vuejs.org/guide/extras/render-function.html#jsx-tsx)
 ```js
-{ //crudOptions
+const crudOptions = { 
     columns:{
        key:{
             column:{
@@ -148,6 +152,31 @@ const crudOptions = {
     }   
 }
 
+```
+
+
+## [key].column.conditionalRender
+* 说明：单元格条件render，符合条件的情况下优先render
+* 类型： `{match:(scope)=>boolean,render:(scope)=>any}`
+* 默认值：无
+* 示例：
+```js
+{
+  columns:{
+      key:{
+          column:{
+              conditionalRender:{
+                  match(scope) {
+                      return scope.form.isPreview;
+                  },
+                  render(scope) {
+                      return <div style={{lineHeight:'32px'}}>{{scope.value}}</div>
+                  }
+              }
+          }
+      }
+  }    
+}
 ```
 
 
@@ -292,6 +321,50 @@ columns:{
 * 说明：是否该字段占一个空白位置。
 * 类型：boolean
 * 默认值： false
+
+## [key].form.render
+* 说明：表单组件自定义render
+* 类型： `(scope)=>slots`
+* 默认值：无
+* 示例：
+
+```jsx
+const crudOptions = {
+    columns:{
+        key:{
+            form:{
+                render(scope) {
+                    return (<div style={{lineHeight:'32px'}}>{{scope.value}}</div>)
+                }
+            }
+        }
+    }
+}
+```
+
+## [key].form.conditionalRender
+* 说明：表单组件条件render，符合条件的情况下优先render
+* 类型： `{match:(scope)=>boolean,render:(scope)=>slots}`
+* 默认值：无
+* 示例：
+```jsx
+{
+  columns:{
+      key:{
+          form:{
+              conditionalRender:{
+                  match(scope) {
+                      return scope.form.isPreview;
+                  },
+                  render(scope) {
+                      return (<div style={{lineHeight:'32px'}}>{{scope.value}}</div>)
+                  }
+              }
+          }
+      }
+  }    
+}
+```
 
 
 ## [key].form.prefixRender
