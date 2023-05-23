@@ -223,7 +223,12 @@ export class Naive implements UiInterface {
         context = {
           title: context
         } as any;
+      } else {
+        if (context.title == null) {
+          context.title = context.message;
+        }
       }
+
       context = Object.assign({ duration: 5000 }, context);
       type = type || (context as any).type;
       if (type) {

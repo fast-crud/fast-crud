@@ -124,20 +124,19 @@ export type PageRes = {
   /**
    * 当前页
    */
-  currentPage?: number;
+  currentPage: number;
   /**
    * 每页条数
    */
-  pageSize?: number;
+  pageSize: number;
   /**
    * 总记录数
    */
-  total?: number;
+  total: number;
   /**
    * 列表数据
    */
-  records?: Array<object>;
-  [key: string]: any;
+  records: Array<object>;
 };
 
 export type EditReq = {

@@ -264,5 +264,10 @@ export default defineComponent({
   .fs-row-handle-dropdown-item {
     display: flex;
   }
+
+  .n-button {
+    disply: flex;
+    align-items: center;
+  }
 }
 </style>
