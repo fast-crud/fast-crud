@@ -93,13 +93,27 @@
 ### 3. 基于NaiveUi
 
 
-#### 1) fs-admin-naive-ui :
+#### 1) fs-in-soybean-admin :
+
+推荐，tabs很漂亮，就是配置router略显繁琐
+
+[预览](http://fast-crud.docmirror.cn/soybean/) / 
+[源码](https://github.com/fast-crud/fs-in-soybean-admin/)  / 
+[原项目源码](https://github.com/honghuangdc/soybean-admin)
+
+<div style="display: flex;">
+<img src="../images/starter/soybean1.png" style="height:200px;margin-right:10px"> 
+<img src="../images/starter/soybean2.png" style="height:200px;">
+</div>
+
+
+#### 2) fs-admin-naive-ui :
 
 效果还不错的admin，不过开始收费了（免费的连文档都不给看，呵呵）
 <br/>
 
-  [预览](http://fast-crud.docmirror.cn/naive/) /
-  [源码](https://github.com/fast-crud/fs-admin-naive-ui/)  /
+  [预览](http://fast-crud.docmirror.cn/naive/) / 
+  [源码](https://github.com/fast-crud/fs-admin-naive-ui/)  / 
   [原项目源码](https://github.com/jekip/naive-ui-admin)
 
 <div style="display: flex;">
@@ -109,17 +123,7 @@
 
 <br/>
 <br/>
-#### 2) fs-in-soybean-admin :
-推荐，tabs很漂亮，就是配置router略显繁琐
 
-[预览](http://fast-crud.docmirror.cn/soybean/) /
-[源码](https://github.com/fast-crud/fs-in-soybean-admin/)  /
-[原项目源码](https://github.com/honghuangdc/soybean-admin)
-
-<div style="display: flex;">
-<img src="../images/starter/soybean1.png" style="height:200px;margin-right:10px"> 
-<img src="../images/starter/soybean2.png" style="height:200px;">
-</div>
 
 ### 等你推荐
 如果你知道比较好的admin项目，欢迎推荐，我将尽快安排它的starter
