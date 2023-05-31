@@ -22,20 +22,15 @@
               <fs-button v-if="item.show !== false" v-bind="item" @click="item._click()" />
             </template>
           </template>
-          <template v-if="slots['search-right']" #search-right>
-            <component :is="ui.formItem.name">
-              <fs-slot-render :slots="slots['search-right']" :scope="searchEventContextRef" />
-            </component>
-          </template>
+
           <template v-if="slots['search-left']" #search-left>
-            <component :is="ui.formItem.name">
-              <fs-slot-render :slots="slots['search-left']" :scope="searchEventContextRef" />
-            </component>
+            <fs-slot-render :slots="slots['search-left']" :scope="searchEventContextRef" />
           </template>
           <template v-if="slots['search-middle']" #search-middle>
-            <component :is="ui.formItem.name">
-              <fs-slot-render :slots="slots['search-left']" :scope="searchEventContextRef" />
-            </component>
+            <fs-slot-render :slots="slots['search-middle']" :scope="searchEventContextRef" />
+          </template>
+          <template v-if="slots['search-right']" #search-right>
+            <fs-slot-render :slots="slots['search-right']" :scope="searchEventContextRef" />
           </template>
         </component>
       </component>
