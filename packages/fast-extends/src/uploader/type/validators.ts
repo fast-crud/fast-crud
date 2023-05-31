@@ -1,7 +1,6 @@
 import { compute } from "@fast-crud/fast-crud";
 export const createAllUploadSuccessValidator = (getFormComponentRef: (key: string, isAsync: boolean) => any) => {
   return async (rule: any, value: any) => {
-    debugger;
     const ref = await getFormComponentRef(rule.fullField, true);
     if (ref && ref.hasUploading()) {
       throw new Error("还有未上传完成的文件");
