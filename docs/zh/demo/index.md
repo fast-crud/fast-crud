@@ -92,6 +92,7 @@
 
 ### 3. 基于NaiveUi
 
+<br/>
 
 #### 1) fs-in-soybean-admin :
 
@@ -105,6 +106,8 @@
 <img src="../images/starter/soybean1.png" style="height:200px;margin-right:10px"> 
 <img src="../images/starter/soybean2.png" style="height:200px;">
 </div>
+<br/>
+<br/>
 
 
 #### 2) fs-admin-naive-ui :
