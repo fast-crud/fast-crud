@@ -7,7 +7,7 @@
         :style="{ maxHeight: computedColumnBoxHeight }"
       >
         <component :is="ui.row.name" ref="columnsRowRef" class="fs-search-columns">
-          <span class="fs-search-col">
+          <span class="fs-search-col fs-search-slot">
             <slot name="search-left"></slot>
           </span>
           <!-- 查询字段render，需要定义props.columns -->
@@ -16,6 +16,9 @@
               <fs-render :render-func="item._cellRender" />
             </component>
           </template>
+          <span class="fs-search-col fs-search-slot">
+            <slot name="search-middle"></slot>
+          </span>
           <component
             :is="ui.col.name"
             v-if="!computedIsMultiLine"
@@ -23,7 +26,6 @@
             v-bind="mergeCol(action?.col)"
           >
             <component :is="ui.formItem.name" :[ui.formItem.label]="action?.label">
-              <slot name="search-middle"></slot>
               <!-- 查询按钮插槽-->
               <slot name="search-buttons"></slot>
               <slot name="search-right"></slot>
@@ -166,7 +168,9 @@ export default defineComponent({
 
         .fs-search-col {
           min-width: 180px;
-
+          &.fs-search-slot {
+            min-width: 0;
+          }
           & > * {
             margin: 0px 4px;
           }
