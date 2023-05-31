@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.13.10](https://github.com/fast-crud/fast-crud/compare/v1.13.9...v1.13.10) (2023-05-31)
+
+### Bug Fixes
+
+* 修复search-middle插槽错位问题 ([6423c14](https://github.com/fast-crud/fast-crud/commit/6423c14b037c18f1aea87b975b8f323db2151fb3))
+
 ## [1.13.9](https://github.com/fast-crud/fast-crud/compare/v1.13.8...v1.13.9) (2023-05-31)
 
 ### Bug Fixes
