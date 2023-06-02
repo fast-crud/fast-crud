@@ -14,7 +14,7 @@ import { useEditable } from "./editable/use-editable";
 import logger from "../../utils/util.log";
 import utilLog from "../../utils/util.log";
 import "./fs-table.less";
-import { CellConditionalRender, ColumnProps, ScopeContext, WriteableSlots } from "../../d";
+import { ConditionalRenderProps, ColumnProps, ScopeContext, WriteableSlots } from "../../d";
 import { UiInterface } from "@fast-crud/ui-interface/src";
 
 type BuildTableColumnsOption = {
@@ -223,7 +223,7 @@ export default defineComponent({
     },
 
     conditionalRender: {
-      type: Object as PropType<CellConditionalRender>
+      type: Object as PropType<ConditionalRenderProps>
     },
 
     /**

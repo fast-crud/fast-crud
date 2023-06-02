@@ -1,6 +1,6 @@
 import { useCompute } from "../../use/use-compute";
 import { defineComponent, PropType, ref } from "vue";
-import { CellConditionalRender } from "../../d";
+import { ConditionalRenderProps } from "../../d";
 
 /**
  * 单元格显示组件
@@ -26,7 +26,7 @@ export default defineComponent({
      * 条件渲染，符合条件的情况下优先渲染
      */
     conditionalRender: {
-      type: Object as PropType<CellConditionalRender>
+      type: Object as PropType<ConditionalRenderProps>
     }
   },
   setup(props: any, ctx) {
@@ -63,9 +63,10 @@ export default defineComponent({
         );
       };
       const scope = { ...props.scope, props: props.item };
-      if (props.conditionalRender && props.conditionalRender.match && props.conditionalRender.match(scope)) {
+      const conditionalRender = props.item.conditionalRender ?? props.conditionalRender;
+      if (conditionalRender && conditionalRender.match && conditionalRender.match(scope)) {
         //条件render
-        return cellContentRender(props.conditionalRender.render(scope));
+        return cellContentRender(conditionalRender.render(scope));
       } else if (props.slots) {
         return cellContentRender(props.slots(scope));
       } else if (props.item.formatter) {

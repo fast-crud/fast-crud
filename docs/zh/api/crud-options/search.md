@@ -93,8 +93,33 @@ const crudOptions = {
 }
 
 ```
+## onSearch
+* 说明：监听查询点击事件
+* 类型：async Function(context)
 
+```js
+const crudOptions = {
+    search:{
+        onSearch(context:any){
+            console.log('search click',context)
+        }
+    }
+}
+```
 
+## onReset
+* 说明：监听重置事件
+* 类型：async Function(context)
+
+```js
+const crudOptions = {
+    search:{
+        onReset(context:any){
+            console.log('reset click',context)
+        }
+    }
+}
+```
 
 ## 更多参数
 * 说明：更多参数见：[FsSearch](/api/components/crud/search/index.md)组件文档

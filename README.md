@@ -101,7 +101,8 @@ const crudOptions= {
 
 ## 谁在用fast-crud？
 * [battcn/wemirr-platform](https://gitee.com/battcn/wemirr-platform) ：中台管理系统 [预览地址](https://cloud.battcn.com/) , [配套前端ui](https://gitee.com/battcn/wemirr-platform-ui)
-
+* [django-vue3-admin](https://gitee.com/huge-dream/django-vue3-admin)
+* 极兔速递，内部使用
 
 
 ## 联系作者

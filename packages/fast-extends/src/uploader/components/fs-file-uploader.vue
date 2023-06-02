@@ -456,7 +456,7 @@ export default defineComponent({
     };
 
     function buildAntdvBinding() {
-      return {
+      const res: any = {
         customRequest,
         beforeUpload,
         listType: props.listType,
@@ -466,6 +466,11 @@ export default defineComponent({
         },
         onPreview: handlePreview
       };
+
+      if (props.limit != null && ctx.attrs.maxCount == null) {
+        res.maxCount = props.limit;
+      }
+      return res;
     }
 
     function buildElementBinding() {

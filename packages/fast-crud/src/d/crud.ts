@@ -124,20 +124,19 @@ export type PageRes = {
   /**
    * 当前页
    */
-  currentPage?: number;
+  currentPage: number;
   /**
    * 每页条数
    */
-  pageSize?: number;
+  pageSize: number;
   /**
    * 总记录数
    */
-  total?: number;
+  total: number;
   /**
    * 列表数据
    */
-  records?: Array<object>;
-  [key: string]: any;
+  records: Array<object>;
 };
 
 export type EditReq = {
@@ -357,10 +356,12 @@ export type RemoveProps = {
   [key: string]: any;
 };
 
-export type CellConditionalRender = {
+export type ConditionalRenderProps = {
   match: (scope: ScopeContext) => boolean;
   render: (scope: ScopeContext) => UiSlotRet;
 };
+
+export type CellConditionalRender = ConditionalRenderProps;
 
 /**
  * 表格配置
@@ -399,7 +400,7 @@ export type TableProps = {
   /**
    * 条件渲染
    */
-  conditionalRender?: CellConditionalRender;
+  conditionalRender?: ConditionalRenderProps;
 
   /**
    * 表格最大高度调整
@@ -663,6 +664,12 @@ export type FormItemProps = {
    * @param context
    */
   valueResolve?: (context: ValueResolveContext) => void;
+
+  /**
+   * 条件渲染
+   * @param scope
+   */
+  conditionalRender?: ConditionalRenderProps;
 
   /**
    * 直接渲染组件

@@ -115,8 +115,6 @@ import { useMerge } from "../../../use/use-merge";
 import { useRoute } from "vue-router";
 import { ColumnProps, TypeMap } from "../../../d";
 
-console.debug("draggable", draggable);
-
 const { cloneDeep } = useMerge();
 //https://cn.vuejs.org/guide/typescript/composition-api.html#typing-component-props
 //https://github.com/vuejs/core/issues/4294
@@ -320,7 +318,6 @@ function onDraggableMove(e: any, b: any) {
       maxNotIndex = maxNotIndex < i ? i : maxNotIndex;
     }
   }
-  console.log("leftindex", leftIndex, "rightindex", rightIndex, "minnot", minNotIndex, "maxnot", maxNotIndex);
 
   if (minNotIndex < leftIndex || maxNotIndex > rightIndex) {
     //ui.message.error("非fixed字段不得越过fixed字段的顺序");

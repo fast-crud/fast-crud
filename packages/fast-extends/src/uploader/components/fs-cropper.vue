@@ -157,7 +157,6 @@ export default defineComponent({
     }
 
     function ready(event: any) {
-      console.debug("cropper ready:", event);
       // this.zoom(-0.3)
       ctx.emit("ready");
     }
@@ -229,7 +228,6 @@ export default defineComponent({
       return cropperRef.value.getCroppedCanvas().toBlob(callback, type, quality);
     }
     function emit(result: any) {
-      console.debug("crop done:", result);
       ctx.emit("done", result);
     }
     function doOutput(file: File) {
@@ -440,7 +438,6 @@ export default defineComponent({
         return def;
       }
       const assign = Object.assign(def, this.cropper);
-      console.info("cropper options:", assign);
       return assign;
     },
     _cropperHeight() {

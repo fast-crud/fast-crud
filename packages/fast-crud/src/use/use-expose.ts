@@ -1,4 +1,4 @@
-import { Ref, toRaw, toRef, unref } from "vue";
+import { Ref, toRaw } from "vue";
 import { CrudExpose, OpenDialogProps, OpenEditContext, SetFormDataOptions } from "../d/expose";
 import _ from "lodash-es";
 import logger from "../utils/util.log";
@@ -338,7 +338,7 @@ export function useExpose(props: UseExposeProps): UseExposeRet {
         logger.warn("pageRequest返回结果不能为空");
         return;
       }
-      let pageRes: PageRes = userPageRes;
+      let pageRes: PageRes = userPageRes as PageRes;
       if (crudBinding.value.request.transformRes) {
         pageRes = crudBinding.value.request.transformRes({
           res: userPageRes,
@@ -540,7 +540,6 @@ export function useExpose(props: UseExposeProps): UseExposeRet {
       }
       const formWrapperRef = this.getFormWrapperRef();
       formWrapperRef.open(formOpts);
-      console.log("formOpts", formOpts);
       return formWrapperRef;
     },
     async _openDialog(mode: string, context: OpenEditContext, formOpts: OpenDialogProps) {

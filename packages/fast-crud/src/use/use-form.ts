@@ -1,6 +1,7 @@
 import { FormProps, OpenDialogProps } from "../d";
 import { ComponentInternalInstance, createVNode, inject, render, VNode } from "vue";
 import { FsFormWrapper } from "../components";
+import logger from "../utils/util.log";
 
 export type FormWrapperInstance = {
   id: string;
@@ -12,6 +13,7 @@ let seed = 0;
 const FsFormWrapperList: {
   [key: string]: FormWrapperInstance;
 } = {};
+
 // 不建议使用，不含上下文，会丢失主题
 async function createFormWrapper(opts: FormProps) {
   const id = opts.id || `${seed++}`;
@@ -54,8 +56,13 @@ async function createFormWrapper(opts: FormProps) {
 }
 
 export function useFormWrapper() {
-  const wrapperProvider: Function = inject("use:form:wrapper", () => {});
-  const pd = wrapperProvider();
+  let pd: any = null;
+  try {
+    const wrapperProvider: Function = inject("use:form:wrapper", () => {});
+    pd = wrapperProvider();
+  } catch (e) {
+    logger.debug("cant inject use:form:wrapper，建议在App.vue中使用<fs-form-provider>组件包裹<router-view/>", e);
+  }
 
   let openDialog = null;
   if (pd == null) {

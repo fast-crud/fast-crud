@@ -259,9 +259,15 @@ export default defineComponent({
   & > * {
     margin: 2px;
     display: inline-flex;
+    align-items: baseline;
   }
   .fs-row-handle-dropdown-item {
     display: flex;
+  }
+
+  .n-button {
+    disply: flex;
+    align-items: center;
   }
 }
 </style>

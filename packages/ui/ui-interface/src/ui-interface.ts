@@ -324,7 +324,7 @@ export interface MessageBoxCI extends CI {
   getInstance?: any;
 }
 
-export type NotificationContext = string | { type?: string; message?: string; text?: string };
+export type NotificationContext = string | { type?: string; message?: string; text?: string; title?: string };
 
 export interface NotificationCI extends CI {
   open: (type: string, context: NotificationContext) => void;
