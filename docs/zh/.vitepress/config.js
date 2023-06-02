@@ -1,5 +1,4 @@
 module.exports = {
-
     title: 'FastCrud',
     description: '面向配置的CRUD编程.',
     //Add a wildcard at the end of the search
@@ -20,11 +19,21 @@ module.exports = {
     ],
 
     themeConfig: {
-        algolia: {
-            appId: 'MS0LML0LJG',
-            apiKey: 'f84fe913d9e34f1c1427e69a64152c2d',
-            indexName: 'crawler_fast-crud',
-            schedule: 'every 1 day at 3:00 pm',
+        logo: '/images/logo.svg',
+        // algolia: {
+        //     appId: 'MS0LML0LJG',
+        //     apiKey: 'f84fe913d9e34f1c1427e69a64152c2d',
+        //     indexName: 'crawler_fast-crud',
+        //     schedule: 'every 1 day at 3:00 pm',
+        // },
+        search: {
+            provider: 'algolia',
+            options: {
+                appId: 'MS0LML0LJG',
+                apiKey: 'f84fe913d9e34f1c1427e69a64152c2d',
+                indexName: 'crawler_fast-crud',
+                schedule: 'every 1 day at 3:00 pm',
+            }
         },
         // search: true,
         sidebar: {
@@ -64,6 +73,7 @@ module.exports = {
                         {text: '升级', link: '/guide/other/upgrade'},
                         {text: '贡献代码', link: '/guide/other/contribution'},
                         {text: 'changelogs', link: '/guide/other/changelogs/index'},
+                        {text: '问AI', link: '/guide/other/helper'},
                         {text: '其他疑难问题', link: '/guide/other/questions'},
                         {text: '联系作者', link: '/guide/other/contact'},
                         {text: '捐赠', link: '/guide/other/donate'}
