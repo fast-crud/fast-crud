@@ -54,3 +54,24 @@ const crudOptions ={
 import {setLogger} from '@fast-crud/fast-crud'
 setLogger({level:'error'})
 ```
+
+## 关于render
+fs中有很多地方可以配置带render的方法，例如：`columns.key.form.render`、`columns.key.form.topRender`、`columns.key.column.cellRender`、`columns.key.form.prefixRender`等等。
+所有这些render方法都是通过`jsx/tsx`进行自定义渲染.
+
+使用方法如下：
+```js
+const crudOptions ={
+    columns:{
+        name:{
+            form:{
+                render:(context)=>{
+                    return <a-input v-model={[context.form.name, "value"]} />    //<------注意这里的v-model写法
+                }
+            }
+        }
+    }
+}
+```
+
+更多jsx语法，请参考文档：https://github.com/vuejs/babel-plugin-jsx
