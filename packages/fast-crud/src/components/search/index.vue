@@ -187,7 +187,6 @@ export default defineComponent({
       function _onInput() {
         onInput(item);
       }
-
       let defaultSlot: any = null;
       if (props.slots["search_" + key]) {
         defaultSlot = <fs-slot-render slots={props.slots["search_" + key]} scope={buildFieldContext(key)} />;

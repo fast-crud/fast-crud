@@ -1,16 +1,14 @@
 import {
   computed,
-  getCurrentInstance,
+  defineComponent,
   mergeProps,
   onMounted,
   provide,
+  ref,
   resolveComponent,
   resolveDynamicComponent,
-  ref,
-  defineComponent,
-  watch,
   shallowRef,
-  PropType
+  watch
 } from "vue";
 import _ from "lodash-es";
 import { useUi } from "../../use";
@@ -250,7 +248,7 @@ export default defineComponent({
       mergeEventHandles(merged, "onChange");
       mergeEventHandles(merged, "onBlur");
       if (props.render) {
-        return props.render(merged);
+        return props.render({ ...props.scope, attrs: merged });
       }
       const inputComp = inputCompRef.value;
       return <inputComp {...merged}>{childrenRendered()}</inputComp>;

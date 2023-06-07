@@ -57,6 +57,13 @@ export type ScopeContext = {
   [key: string]: any;
 } & RowContext;
 
+export type ComponentRenderContext = {
+  /**
+   * 继承component的attrs
+   */
+  attrs: any;
+} & ScopeContext;
+
 export type FormScopeContext = {
   attrs: any;
   /**
@@ -299,10 +306,10 @@ export type ComponentProps = {
   children?: WriteableSlots;
 
   /**
-   * 直接渲染（仅form表单内可用）
+   * 直接渲染
    * @param scope
    */
-  render?: (scope: ScopeContext) => any;
+  render?: (scope: ComponentRenderContext) => any;
 
   /**
    * 组件其他参数，如style、class、onXxx事件等
@@ -1219,7 +1226,8 @@ export type CrudOptions = {
 } & CrudBinding;
 
 type CrudSetting = {
-  viewFormUseCellComponent?: false;
+  viewFormUseCellComponent?: boolean;
+  searchCopyFormProps?: string[];
 };
 type CrudMode = {
   /**
