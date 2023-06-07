@@ -10,7 +10,7 @@ export default {
     const ui = uiContext.get();
     return {
       mode: {},
-      data: [],
+      status: {},
       search: {
         container: {
           is: "fs-search-layout-default",

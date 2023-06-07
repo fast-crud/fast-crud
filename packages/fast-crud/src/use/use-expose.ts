@@ -319,7 +319,7 @@ export function useExpose(props: UseExposeProps): UseExposeRet {
       }
       crudExpose.doValueResolve({ form: searchFormData });
 
-      const sort = crudBinding.value.sort || {};
+      const sort = crudBinding.value.table.sort || {};
       const query: PageQuery = { page, form: searchFormData, sort };
       let userPageQuery: UserPageQuery = query;
       if (crudBinding.value.request.transformQuery) {

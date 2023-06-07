@@ -237,6 +237,10 @@ export default defineComponent({
       type: Boolean,
       default: false
     },
+    /**
+     * 当前sort状态
+     */
+    sort: {},
     request: {}
   } as any,
   emits: ["row-handle", "value-change", "pagination-change", "filter-change", "sort-change", "data-change"],

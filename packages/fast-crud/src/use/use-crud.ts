@@ -214,8 +214,8 @@ export function useCrud(ctx: UseCrudProps): UseCrudRet {
       table: {
         onSortChange(sortChange: { isServerSort: boolean; prop: any; asc: any; order: any }) {
           const { isServerSort, prop, asc, order } = sortChange;
-          const oldSort = crudBinding.value.sort;
-          crudBinding.value.sort = isServerSort ? { prop, order, asc } : null;
+          const oldSort = crudBinding.value.table.sort;
+          crudBinding.value.table.sort = isServerSort ? { prop, order, asc } : null;
           if (isServerSort || oldSort != null) {
             expose.doRefresh();
           }
