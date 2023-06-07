@@ -512,6 +512,7 @@ export default defineComponent({
       getComponentRenderRef,
       getComponentRef,
       getForm,
+      getValidatedForm,
       setForm,
       searchFormRef,
       onInput,

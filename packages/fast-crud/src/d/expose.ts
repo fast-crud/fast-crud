@@ -103,9 +103,12 @@ export type CrudExpose = {
   getSearchRef: () => any;
   /**
    * 获取查询表单数据
-   * @param context
    */
   getSearchFormData: () => any;
+  /**
+   * 获取查询表单校验成功的数据
+   */
+  getSearchValidatedFormData: () => any;
   /**
    * 重新设置查询表单数据
    */

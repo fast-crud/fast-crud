@@ -121,5 +121,25 @@ const crudOptions = {
 }
 ```
 
+## validate
+* 说明：是否启用表单验证
+* 类型：Boolean
+* 默认：`false`
+
+
+## onValidateError
+* 说明：监听校验错误事件
+* 类型：async Function(context)
+* 默认值： `()=>{ui.notification.error({message:'查询表单校验失败'})}` 弹出查询表单校验失败通知
+```js
+const crudOptions = {
+    search:{
+        onValidateError(context:any){
+            console.log('validate  error',context.error)
+        }
+    }
+}
+```
+
 ## 更多参数
 * 说明：更多参数见：[FsSearch](/api/components/crud/search/index.md)组件文档

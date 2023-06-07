@@ -111,13 +111,13 @@
 <script lang="ts">
 import { computed, defineComponent, nextTick, onMounted, provide, ref, SetupContext, toRef } from "vue";
 import _ from "lodash-es";
-import traceUtil from "../utils/util.trace";
 import { uiContext } from "../ui";
 import { useMerge } from "../use/use-merge";
 import utilLog from "../utils/util.log";
 import { SetSearchFormDataProps } from "../d";
 import { useUi } from "../use";
 import { utils } from "../utils";
+
 const { merge } = useMerge();
 
 function useProviders(props: any, ctx: SetupContext) {
@@ -164,6 +164,13 @@ function useSearch(props: any, ctx: SetupContext) {
     return searchFormData.value;
   };
 
+  const getSearchValidatedFormData = () => {
+    if (searchRef.value) {
+      searchFormData.value = searchRef.value.getValidatedForm();
+    }
+    return searchFormData.value;
+  };
+
   /**
    * 设置form值
    * @param form form对象
@@ -191,7 +198,8 @@ function useSearch(props: any, ctx: SetupContext) {
     onSearchReset,
     getSearchRef,
     getSearchFormData,
-    setSearchFormData
+    setSearchFormData,
+    getSearchValidatedFormData
   };
 }
 
