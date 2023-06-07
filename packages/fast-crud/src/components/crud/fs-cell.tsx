@@ -1,7 +1,7 @@
 import { useCompute } from "../../use/use-compute";
 import { defineComponent, PropType, ref } from "vue";
 import { ConditionalRenderProps } from "../../d";
-
+import _ from "lodash-es";
 /**
  * 单元格显示组件
  */
@@ -81,7 +81,7 @@ export default defineComponent({
         }
         return <fs-component-render title={title} ref={targetRef} {...computedComponent.value} scope={scope} />;
       } else {
-        return cellContentRender(value);
+        return cellContentRender(_.toString(value));
       }
     };
   }

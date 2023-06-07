@@ -45,11 +45,7 @@
               :render-func="item.conditionalRender.render"
               :scope="scopeFunc()"
             />
-            <fs-render
-              v-else-if="item.render || item.component?.render"
-              :render-func="item.render || item.component.render"
-              :scope="scopeFunc()"
-            />
+            <fs-render v-else-if="item.render" :render-func="item.render" :scope="scopeFunc()" />
             <fs-component-render
               v-else
               ref="componentRenderRef"
@@ -89,7 +85,7 @@ export default defineComponent({
      * 字段配置
      */
     item: {
-      type: Object,
+      type: Object as PropType<any>,
       default: undefined
     },
     /**
