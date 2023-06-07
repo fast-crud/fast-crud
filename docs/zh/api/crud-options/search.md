@@ -12,19 +12,24 @@
 ## buttons
 * 说明：按钮配置
 * 类型：Object
-* 默认： {search:{},reset:{}}
+* 默认： `{search:{},reset:{}}`
 * 相关：[按钮组配置](../common-options.md#buttons)
 * 示例：
-```json
-{//crudOptions.search.buttons
-    search:{
-        ...FsButton, //fs-button组件的参数
-        order:1, //排序，越小越靠前
-        show:true,//是否显示此按钮
-        click(){} //点击事件，默认触发查询
-    },
-    reset:{...同上},// 重置按钮
-    custom:{...同上}//可以自定义
+
+```js
+const crudOptions = {
+  search: {
+    buttons: {
+        search:{
+            ...FsButton, //fs-button组件的参数
+            order:1, //排序，越小越靠前
+            show:true,//是否显示此按钮
+            click(){} //点击事件，默认触发查询
+        },
+        reset:{...同上},// 重置按钮
+        custom:{...同上}//可以自定义
+    }
+  }
 }
 ```
 [FsButton](../common-options)
@@ -55,21 +60,17 @@
 * 类型：Object
 参考组件配置[component](../common-options.md)
 
-## doSearch
-* 说明：触发查询
-* 类型：async Function(context)
-* 
 
 ## options
 * 说明：表单参数
 * 类型：Object
-* 支持：el-form,a-form的参数
+* 支持：el-form,a-form,n-form的参数
 
 
 ## container
 * 说明：布局容器，支持search自定义布局
 * 类型：Object
-* 默认： {is:'fs-search-layout-default'}
+* 默认： `{is:'fs-search-layout-default'}`
 * 参考： [fs-search-layout-default](https://github.com/fast-crud/fast-crud/blob/main/packages/fast-crud/src/components/search/layout-default.vue)
 ```js
 const crudOptions = {
@@ -95,7 +96,7 @@ const crudOptions = {
 ```
 ## onSearch
 * 说明：监听查询点击事件
-* 类型：async Function(context)
+* 类型：`async Function(context)`
 
 ```js
 const crudOptions = {
@@ -109,7 +110,7 @@ const crudOptions = {
 
 ## onReset
 * 说明：监听重置事件
-* 类型：async Function(context)
+* 类型：`async Function(context)`
 
 ```js
 const crudOptions = {
@@ -125,11 +126,21 @@ const crudOptions = {
 * 说明：是否启用表单验证
 * 类型：Boolean
 * 默认：`false`
-
+* 注意： naive-ui 需要配置 `search.options.showFeedback` 为`true`,才能显示错误提示
+```js
+const crudOptions = {
+    search:{
+        validate:true,
+        options:{
+            showFeedback:true
+        }
+    }
+}
+``` 
 
 ## onValidateError
 * 说明：监听校验错误事件
-* 类型：async Function(context)
+* 类型：`async Function(context)`
 * 默认值： `()=>{ui.notification.error({message:'查询表单校验失败'})}` 弹出查询表单校验失败通知
 ```js
 const crudOptions = {
