@@ -154,7 +154,8 @@ export default defineComponent({
     /**
      * 重置事件
      **/
-    "reset"
+    "reset",
+    "validate-error"
   ],
   setup(props: any, ctx) {
     const { ui } = useUi();
@@ -166,6 +167,10 @@ export default defineComponent({
     }
 
     const form = reactive(createInitialForm());
+    const validateForm = ref({});
+    function onFormValidated() {
+      validateForm.value = _.cloneDeep(form);
+    }
     const { doComputed, AsyncComputeValue } = useCompute();
 
     _.each(props.columns, (item) => {
@@ -179,6 +184,16 @@ export default defineComponent({
     const get = (form: any, key: any) => {
       return _.get(form, key);
     };
+
+    function splitKey(key: string) {
+      if (key == null) {
+        return;
+      }
+      if (key.indexOf(".") >= 0) {
+        return key.split(".");
+      }
+      return key;
+    }
 
     function cellRender(item: any) {
       const key = item.key;
@@ -211,13 +226,15 @@ export default defineComponent({
         );
       }
 
+      const splitedKey = splitKey(key);
+
       return ui.formItem.render({
         prop: key,
         label: item.title,
         props: {
           ...item,
           label: item.title,
-          [ui.formItem.prop]: key,
+          [ui.formItem.prop]: splitedKey,
           path: key,
           rulePath: key
         },
@@ -240,6 +257,7 @@ export default defineComponent({
           //如果关闭validate则去掉rules
           _.forEach(value, (item) => {
             delete item.rules;
+            delete item.rule;
           });
         }
         // 合并col
@@ -322,12 +340,14 @@ export default defineComponent({
         if (props.validate) {
           await ui.form.validateWrap(searchFormRef.value);
         }
+        onFormValidated();
         ctx.emit("search", searchEventContextRef.value);
       } catch (e: any) {
-        logger.debug("search validate error");
-        ui.message.error({
-          message: t("fs.search.error.message")
-        });
+        // logger.debug("search validate error");
+        // ui.message.error({
+        //   message: t("fs.search.error.message")
+        // });
+        ctx.emit("validate-error", { ...searchEventContextRef.value, error: e });
         return false;
       }
     }
@@ -350,6 +370,7 @@ export default defineComponent({
         if (props.validate) {
           await ui.form.validateWrap(searchFormRef.value);
         }
+        onFormValidated();
         if (props.reset) {
           props.reset(searchEventContextRef.value);
         }
@@ -361,10 +382,7 @@ export default defineComponent({
           });
         }
       } catch (e) {
-        logger.debug("reset validate error", e);
-        ui.message.error({
-          message: t("fs.search.error.message")
-        });
+        ctx.emit("validate-error", { ...searchEventContextRef.value, error: e });
         return false;
       }
     }
@@ -423,6 +441,9 @@ export default defineComponent({
     function getForm() {
       return form;
     }
+    function getValidatedForm() {
+      return validateForm.value;
+    }
 
     /**
      * 设置form值
@@ -434,6 +455,7 @@ export default defineComponent({
         });
       }
       doMerge(form, newForm);
+      onFormValidated();
     }
 
     const inputEventDisabled = ref(false);
