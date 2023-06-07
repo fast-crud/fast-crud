@@ -260,7 +260,6 @@ function buildSearchForm(baseOptions: CrudOptions, formType = "search", columnsM
     ];
     formColumnsForSearch[key] = _.pick(item, copyProps);
   });
-
   return merge({ columns: formColumnsForSearch }, { columns: searchColumns }, baseOptions.search);
 }
 

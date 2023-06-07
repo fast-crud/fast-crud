@@ -160,9 +160,11 @@ export default defineComponent({
     const { ui } = useUi();
 
     let autoSearch: any = null;
+
     function createInitialForm() {
       return _.cloneDeep(props.initialForm || {});
     }
+
     const form = reactive(createInitialForm());
     const { doComputed, AsyncComputeValue } = useCompute();
 
@@ -184,9 +186,11 @@ export default defineComponent({
       function _onUpdateModelValue($event: any) {
         onValueChanged($event, item);
       }
+
       function _onInput() {
         onInput(item);
       }
+
       let defaultSlot: any = null;
       if (props.slots["search_" + key]) {
         defaultSlot = <fs-slot-render slots={props.slots["search_" + key]} scope={buildFieldContext(key)} />;
@@ -210,7 +214,13 @@ export default defineComponent({
       return ui.formItem.render({
         prop: key,
         label: item.title,
-        props: { ...item, label: item.title },
+        props: {
+          ...item,
+          label: item.title,
+          [ui.formItem.prop]: key,
+          path: key,
+          rulePath: key
+        },
         slots: {
           default() {
             return defaultSlot;
@@ -283,6 +293,7 @@ export default defineComponent({
     const searchFormRef = ref();
     const { t } = useI18n();
     const componentRenderRefs: Ref = ref({});
+
     function getComponentRenderRef(key: string) {
       return componentRenderRefs.value[key];
     }
@@ -307,10 +318,13 @@ export default defineComponent({
         autoSearch.cancel();
       }
 
-      const valid = await ui.form.validateWrap(searchFormRef.value);
-      if (valid) {
+      try {
+        if (props.validate) {
+          await ui.form.validateWrap(searchFormRef.value);
+        }
         ctx.emit("search", searchEventContextRef.value);
-      } else {
+      } catch (e: any) {
+        logger.debug("search validate error");
         ui.message.error({
           message: t("fs.search.error.message")
         });
@@ -318,7 +332,7 @@ export default defineComponent({
       }
     }
 
-    function doReset() {
+    async function doReset() {
       // debugger;
       // ui.form.resetWrap(searchFormRef.value, { form, initialForm: createInitialForm() });
       const initialForm = createInitialForm();
@@ -332,17 +346,29 @@ export default defineComponent({
         }
       }
 
-      if (props.reset) {
-        props.reset(searchEventContextRef.value);
-      }
-      // 表单重置事件
-      ctx.emit("reset", getContextFn());
-      if (props.searchAfterReset) {
-        nextTick(() => {
-          doSearch();
+      try {
+        if (props.validate) {
+          await ui.form.validateWrap(searchFormRef.value);
+        }
+        if (props.reset) {
+          props.reset(searchEventContextRef.value);
+        }
+        // 表单重置事件
+        ctx.emit("reset", getContextFn());
+        if (props.searchAfterReset) {
+          nextTick(() => {
+            doSearch();
+          });
+        }
+      } catch (e) {
+        logger.debug("reset validate error", e);
+        ui.message.error({
+          message: t("fs.search.error.message")
         });
+        return false;
       }
     }
+
     const computedButtons = computed(() => {
       const btns: any = [];
       const defBtnOptions: ButtonsProps<SearchEventContext> = {
@@ -485,12 +511,15 @@ export default defineComponent({
     //flex-wrap: nowrap;
     .search-left {
     }
+
     .search-right {
       flex: 1;
     }
+
     .ant-form-inline {
       flex-wrap: wrap;
     }
+
     .fs-search-form {
       display: flex;
       align-items: center;
@@ -520,7 +549,33 @@ export default defineComponent({
         align-items: center;
       }
     }
+
+    .fs-search-col {
+      position: relative;
+      // antdv
+      .ant-form-item-explain,
+      .el-form-item__error {
+        float: left;
+        position: absolute;
+        bottom: 3px;
+        right: 8px;
+        pointer-events: none;
+        top: auto;
+        left: auto;
+        visibility: hidden;
+      }
+      .el-form-item__error {
+        bottom: 10px;
+      }
+      &:hover {
+        .ant-form-item-explain,
+        .el-form-item__error {
+          visibility: visible;
+        }
+      }
+    }
   }
+
   .n-form-item-blank {
     min-width: 130px;
   }
