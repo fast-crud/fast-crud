@@ -250,7 +250,15 @@ function buildSearchForm(baseOptions: CrudOptions, formType = "search", columnsM
   const searchColumns = buildFormColumns(columnsMap, formType);
   const formColumnsForSearch: any = {};
   _.forEach(cloneDeep(baseOptions.form.columns), (item, key) => {
-    formColumnsForSearch[key] = _.pick(item, ["component", "valueChange", "title", "key", "label"]);
+    const copyProps = baseOptions.setting?.searchCopyFormProps ?? [
+      "component",
+      "valueChange",
+      "title",
+      "key",
+      "label",
+      "render"
+    ];
+    formColumnsForSearch[key] = _.pick(item, copyProps);
   });
 
   return merge({ columns: formColumnsForSearch }, { columns: searchColumns }, baseOptions.search);
