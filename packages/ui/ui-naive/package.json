@@ -1,6 +1,6 @@
 {
   "name": "@fast-crud/ui-naive",
-  "version": "1.13.11",
+  "version": "1.13.12",
   "description": "",
   "main": "./dist/ui-naive.umd.js",
   "module": "./dist/ui-naive.mjs",
@@ -14,7 +14,7 @@
   "license": "MIT",
   "devDependencies": {
     "@ant-design/icons-vue": "^6.1.0",
-    "@fast-crud/ui-interface": "^1.13.11",
+    "@fast-crud/ui-interface": "^1.13.12",
     "@rollup/plugin-strip": "^3.0.2",
     "@rollup/plugin-typescript": "^11.0.0",
     "@types/lodash-es": "^4.17.7",
