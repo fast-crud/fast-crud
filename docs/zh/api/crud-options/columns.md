@@ -1,5 +1,5 @@
-# columns【字段配置】
-* 说明：字段配置
+# crudOptions.columns
+* 说明：字段复合配置
 * 类型：`Object:{[字段key]:Object}`
 * 示例：
 ```js

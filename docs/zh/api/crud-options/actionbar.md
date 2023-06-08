@@ -1,5 +1,5 @@
 
-# actionbar
+# crudOptions.actionbar
 * 说明: 动作条配置
 * 类型： Object
 * 更多参数： [FsActionbar](/api/components/crud/actionbar/index.md)

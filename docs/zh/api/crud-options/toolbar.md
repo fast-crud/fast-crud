@@ -1,6 +1,6 @@
 
-# toolbar 工具条
-
+# crudOptions.toolbar 
+工具条       
 更多参数见：[FsToolbar](/api/components/crud/toolbar/index.md)
 
 ## show

@@ -1,4 +1,4 @@
-# 设置
+# crudOptions.settings
 一些fs的设置
 
 ## viewFormUseCellComponent

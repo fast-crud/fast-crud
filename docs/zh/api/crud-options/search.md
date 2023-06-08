@@ -1,5 +1,6 @@
 
-# search【查询框】
+# crudOptions.search
+查询框配置    
 更多参数见：[FsSearch](/api/components/crud/search/index.md)
 
 

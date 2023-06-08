@@ -1,4 +1,4 @@
-# rowHandle
+# crudOptions.rowHandle
 * 说明: 操作列配置
 * 类型： Object
 

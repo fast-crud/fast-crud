@@ -1,4 +1,5 @@
-# pagination
+# crudOptions.pagination
+翻页条配置     
 支持 el-pagination / a-pagination 的配置
 
 ## show

@@ -1,8 +1,7 @@
-
-## table【表格配置】
-
+# crudOptions.table
+表格配置     
 更多参数见：[FsTable](/api/components/crud/crud/fs-table.md)
-支持 el-table | a-table的配置
+支持 el-table | a-table | n-table的配置
 
 ## show
 * 说明：显示或隐藏table

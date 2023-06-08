@@ -1,5 +1,5 @@
 
-# tabs
+# crudOptions.tabs
 * 说明: Tabs快捷查询，在表格顶部显示tabs页签进行快捷查询
 * 类型： Object
 * 更多参数： [FsTabsFilter](/api/components/crud/search/tabs-filter.md)

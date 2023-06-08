@@ -155,6 +155,9 @@ export default defineComponent({
      * 重置事件
      **/
     "reset",
+    /**
+     * 校验失败事件
+     */
     "validate-error"
   ],
   setup(props: any, ctx) {
@@ -327,7 +330,7 @@ export default defineComponent({
     const searchEventContextRef: Ref<SearchEventContext> = ref(getContextFn());
 
     function buildFieldContext(key: string) {
-      return { ...searchEventContextRef.value, key };
+      return { ...searchEventContextRef.value, key, value: _.get(form, key) };
     }
 
     async function doSearch() {
