@@ -3,6 +3,24 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.13.12](https://github.com/fast-crud/fast-crud/compare/v1.13.11...v1.13.12) (2023-06-08)
+
+**Note:** Version bump only for package @fast-crud/fast-crud
+
+## [1.13.11](https://github.com/fast-crud/fast-crud/compare/v1.13.10...v1.13.11) (2023-06-08)
+
+### Bug Fixes
+
+* **search:** 修复多了一个search-middle插槽的问题 ([11809c8](https://github.com/fast-crud/fast-crud/commit/11809c8d15dbe1dc30b4c820f0c622b30dd260a9))
+* **sort:** 修复取消sort不触发刷新的bug ([de43d7e](https://github.com/fast-crud/fast-crud/commit/de43d7eeb0f2af5ad81188bc164099da23670a13))
+
+### Performance Improvements
+
+* 支持settings.searchCopyFormProps配置，可以配置哪些属性从form复制 ([b80f748](https://github.com/fast-crud/fast-crud/commit/b80f7487eb74acfa763aa4216140666ece1a485d))
+* crudBinding.value.sort转移到crudBinding.value.table.sort ([0dad531](https://github.com/fast-crud/fast-crud/commit/0dad531273b2719c1a9d1bea4100c5c59405d899))
+* search校验失败后，refresh保持原来的formData ([632a0df](https://github.com/fast-crud/fast-crud/commit/632a0df66d1917d0a402e29d7e57417b2939b16d))
+* **search:** validation支持 ([72b8164](https://github.com/fast-crud/fast-crud/commit/72b81640047904acb7a40048ad6dd036840633c5))
+
 ## [1.13.10](https://github.com/fast-crud/fast-crud/compare/v1.13.9...v1.13.10) (2023-05-31)
 
 ### Bug Fixes
