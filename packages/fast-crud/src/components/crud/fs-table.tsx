@@ -201,11 +201,15 @@ export default defineComponent({
     /**
      * table插槽
      */
-    slots: {},
+    slots: {
+      type: Object as PropType<any>
+    },
     /**
      * 单元格插槽
      */
-    cellSlots: {},
+    cellSlots: {
+      type: Object as PropType<any>
+    },
     /**
      * 列配置，支持el-table-column|a-table-column配置
      */
@@ -217,7 +221,7 @@ export default defineComponent({
      * 操作列
      */
     rowHandle: {
-      type: Object
+      type: Object as PropType<any>
     },
     /**
      * 是否显示表格
@@ -241,7 +245,7 @@ export default defineComponent({
      * 行编辑，批量编辑
      */
     editable: {
-      type: Object
+      type: Object as PropType<any>
     },
 
     loading: {
@@ -251,9 +255,13 @@ export default defineComponent({
     /**
      * 当前sort状态
      */
-    sort: {},
-    request: {}
-  } as any,
+    sort: {
+      type: Object as PropType<any>
+    },
+    request: {
+      type: Object as PropType<any>
+    }
+  },
   emits: ["row-handle", "value-change", "pagination-change", "filter-change", "sort-change", "data-change"],
   setup(props, ctx) {
     const tableRef = ref();

@@ -5,10 +5,10 @@ import * as components from "./components";
 import { FsFormWrapper } from "./components";
 import { i18n, useI18n } from "./locale/";
 import { uiContext } from "./ui";
-import { useDictDefine } from "./use";
+import { GlobalConfig, LoggerConfig, useDictDefine } from "./use";
 import { App } from "vue";
 import { FsSetupOptions } from "./d";
-
+import _ from "lodash-es";
 export * from "./utils/index";
 export * from "./use";
 export * from "./components";
@@ -43,6 +43,18 @@ export const FastCrud = {
     types.install();
 
     app.config.globalProperties.$fsui = uiContext.get();
+
+    _.merge(GlobalConfig.logger, options.logger);
+    printWarningLogger(options.logger);
   }
 };
+
+function printWarningLogger(logger?: LoggerConfig) {
+  if (logger?.off?.tableColumns !== false) {
+    console.warn(
+      `[fast-crud] crudBinding.value.table.columns / toolbar.columnsFilter.originalColumns 由array改成map. 请改成通过key读取，你可以全局代码搜索【value.table.columns / columnsFilter.originalColumns】来检查是否有使用它们。
+      [通过 app.use(FastCrud,{logger:{off:{tableColumns:false}}}) 可关闭此警告] `
+    );
+  }
+}
 export default FastCrud;
