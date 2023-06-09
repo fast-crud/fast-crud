@@ -20,20 +20,11 @@ module.exports = {
 
     themeConfig: {
         logo: '/images/logo.svg',
-        // algolia: {
-        //     appId: 'MS0LML0LJG',
-        //     apiKey: 'f84fe913d9e34f1c1427e69a64152c2d',
-        //     indexName: 'crawler_fast-crud',
-        //     schedule: 'every 1 day at 3:00 pm',
-        // },
-        search: {
-            provider: 'algolia',
-            options: {
-                appId: 'MS0LML0LJG',
-                apiKey: 'f84fe913d9e34f1c1427e69a64152c2d',
-                indexName: 'crawler_fast-crud',
-                schedule: 'every 1 day at 3:00 pm',
-            }
+        algolia: {
+            appId: 'MS0LML0LJG',
+            apiKey: 'f84fe913d9e34f1c1427e69a64152c2d',
+            indexName: 'crawler_fast-crud',
+            schedule: 'every 1 day at 3:00 pm',
         },
         // search: true,
         sidebar: {
