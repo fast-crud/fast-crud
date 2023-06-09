@@ -16,7 +16,7 @@
     "copy-local": "copyfiles -f ./src/locale/lang/* ./dist/locale/lang",
     "test": "jest",
     "lint-fix": "eslint --fix --ext .js --ext .jsx --ext .vue src/",
-    "typedoc": "typedoc --options ./typedoc.json"
+    "typedoc": "typedoc --options typedoc.json"
   },
   "author": "Greper",
   "license": "MIT",

@@ -1,5 +1,5 @@
 {
-  "entryPoints": ["./src/d/index.ts"],
+  "entryPoints": ["src/index.ts"],
   "out": "../../docs/zh/public/d.ts",
   "plugin": []
 }
