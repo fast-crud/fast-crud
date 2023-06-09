@@ -26,7 +26,7 @@
 
 ## columns
 * 说明：列配置
-* 类型：Array
+* 类型：<del>Array</del>  `TableColumnsProps`(v1.14改成map)
 
 ## loading
 * 说明：当前是否加载中
