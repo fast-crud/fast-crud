@@ -1,18 +1,26 @@
 import defaultCrudOptions from "./default-crud-options";
 import _ from "lodash-es";
 import { useMerge } from "./use-merge";
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
 import logger from "../utils/util.log";
 import { uiContext } from "../ui";
 import { useI18n } from "../locale";
-import { ComputeContext, CrudBinding, CrudExpose, DynamicallyCrudOptions, DynamicType, ScopeContext } from "../d";
+import {
+  ColumnsFilterComponentProps,
+  ComputeContext,
+  CrudBinding,
+  CrudExpose,
+  DynamicallyCrudOptions,
+  DynamicType,
+  ScopeContext,
+  TableColumnsProps
+} from "../d";
 import { useCompute } from "./use-compute";
-import { useColumns } from "./use-columns";
+import { buildTableColumnsFlatMap, useColumns } from "./use-columns";
 import { CrudOptions } from "../d/crud";
 import { Ref, ref } from "vue";
 import { useExpose } from "./use-expose";
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
-const { merge, cloneDeep } = useMerge();
+
+const { merge } = useMerge();
 
 export type UseCrudProps<T = UseFsContext> = {
   crudOptions: DynamicallyCrudOptions;
@@ -180,20 +188,23 @@ export function useCrud(ctx: UseCrudProps): UseCrudRet {
       "onUpdate:compact"(value: any) {
         crudBinding.value.toolbar.compact = value;
       },
-      "onUpdate:columns"(value: any) {
+      "onUpdate:columns"(value: TableColumnsProps) {
         const original = crudBinding.value.table.columns;
-        const columns: Array<any> = [];
+        const columns: TableColumnsProps = {};
         _.forEach(value, (item) => {
-          for (const column of original) {
+          for (const key in original) {
+            const column = original[key];
             if (column.key === item.key) {
+              delete column.order;
               merge(column, item);
-              columns.push(column);
+              columns[key] = column;
               return;
             }
           }
         });
 
         crudBinding.value.table.columns = columns;
+        crudBinding.value.table.columnsMap = buildTableColumnsFlatMap({}, columns);
       },
       onRefresh() {
         doRefresh();

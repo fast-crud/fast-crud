@@ -7,7 +7,6 @@ import {
   Ref,
   ref,
   resolveDynamicComponent,
-  ShallowRef,
   useSlots
 } from "vue";
 import _ from "lodash-es";

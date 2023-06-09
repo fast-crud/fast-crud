@@ -44,10 +44,10 @@
 <script lang="ts">
 import FsTableColumnsFilter from "./fs-table-columns-filter/index.vue";
 import _ from "lodash-es";
-import { computed, defineComponent, ref, Ref } from "vue";
+import { computed, defineComponent, PropType, ref, Ref } from "vue";
 import { useI18n } from "../../locale";
 import { Constants } from "../../utils/util.constants";
-import { ButtonProps, ButtonsProps } from "../../d";
+import { ButtonProps, ButtonsProps, TableColumnsProps } from "../../d";
 import { useMerge, useUi } from "../../use";
 
 /**
@@ -88,7 +88,7 @@ export default defineComponent({
      * 列配置
      */
     columns: {
-      type: Array,
+      type: Object as PropType<TableColumnsProps>,
       default: undefined
     },
     /**
@@ -107,8 +107,10 @@ export default defineComponent({
     /**
      * 列设置配置
      */
-    columnsFilter: {}
-  } as any,
+    columnsFilter: {
+      type: Object as PropType<any>
+    }
+  },
   emits: ["refresh", "update:search", "update:compact", "update:columns", "export"],
   setup(props: any, ctx) {
     const { t } = useI18n();

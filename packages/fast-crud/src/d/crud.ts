@@ -397,12 +397,12 @@ export type TableProps = {
   /**
    * 单元格列配置
    */
-  columns?: ColumnProps[];
+  columns?: TableColumnsProps;
 
   /**
    * 列配置 map
    */
-  columnsMap?: TypeMap<ColumnProps>;
+  columnsMap?: TableColumnsProps;
 
   /**
    * 条件渲染
@@ -741,12 +741,12 @@ export type ColumnsFilterComponentProps = {
   /**
    * 列数据
    */
-  columns?: any[];
+  columns?: TableColumnsProps;
 
   /**
    * 原始列数据，还原成此列表
    */
-  originalColumns?: any[];
+  originalColumns?: TableColumnsProps;
   /**
    * 是否保存设置
    */
@@ -814,7 +814,7 @@ export type ToolbarComponentProps = {
   /**
    * 列配置
    */
-  columns?: any[];
+  columns?: TableColumnsProps;
   /**
    * 是否保存用户列设置
    * 传string则表示传入缓存的主key
@@ -998,6 +998,9 @@ export type SearchItemProps = {
   [key: string]: any;
 };
 
+export type TableColumnsProps = {
+  [key: string]: ColumnProps;
+};
 /**
  * 表格列配置(单元格)
  */
@@ -1037,7 +1040,7 @@ export type ColumnProps = {
   /**
    * 多级表头
    */
-  children?: ColumnProps[];
+  children?: TableColumnsProps;
 
   /**
    * 单元格值变化事件处理

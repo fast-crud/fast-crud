@@ -76,6 +76,7 @@ export default {
       rowHandle: {
         width: "250px",
         title: t("fs.rowHandle.title"),
+        order: 1000,
         dropdown: {
           // 操作列折叠
           more: {

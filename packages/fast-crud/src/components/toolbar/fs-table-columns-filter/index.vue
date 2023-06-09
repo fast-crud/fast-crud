@@ -113,7 +113,7 @@ import { computed, nextTick, ref, Ref, watch } from "vue";
 import { uiContext } from "../../../ui";
 import { useMerge } from "../../../use/use-merge";
 import { useRoute } from "vue-router";
-import { ColumnProps, TypeMap } from "../../../d";
+import { ColumnProps, TableColumnsProps, TypeMap } from "../../../d";
 
 const { cloneDeep } = useMerge();
 //https://cn.vuejs.org/guide/typescript/composition-api.html#typing-component-props
@@ -131,12 +131,12 @@ interface ColumnsFilterProps {
   /**
    * 列数据
    */
-  columns?: any[];
+  columns?: TableColumnsProps;
 
   /**
    * 原始列数据
    */
-  originalColumns?: any[];
+  originalColumns?: TableColumnsProps;
   /**
    * 是否保存设置
    */
@@ -252,7 +252,15 @@ function buildColumnFilterItem(item: ColumnProps) {
   };
 }
 
-function transformColumnsMap(value: ColumnProps[]): TypeMap<ColumnsFilterItem> {
+function transformToTableColumns(result: ColumnsFilterItem[]) {
+  const columns: TableColumnsProps = {};
+  _.forEach(result, (item) => {
+    columns[item.key] = item;
+  });
+  return columns;
+}
+
+function transformColumnsMap(value: TableColumnsProps): TypeMap<ColumnsFilterItem> {
   const columns: TypeMap<ColumnsFilterItem> = {};
   _.forEach(value, (item) => {
     const column = buildColumnFilterItem(item);
@@ -268,7 +276,7 @@ function transformColumnsMap(value: ColumnProps[]): TypeMap<ColumnsFilterItem> {
   return columns;
 }
 
-function transformColumns(value: ColumnProps[]): ColumnsFilterItem[] {
+function transformColumns(value: TableColumnsProps): ColumnsFilterItem[] {
   const columns: ColumnsFilterItem[] = [];
   _.forEach(value, (item) => {
     const column = buildColumnFilterItem(item);
@@ -376,8 +384,8 @@ function simpleReset() {
   emit("update:show", false);
 }
 
-function doEmit(result: any) {
-  emit("update:columns", result);
+function doEmit(result: ColumnsFilterItem[]) {
+  emit("update:columns", transformToTableColumns(result));
 }
 
 const storageTableStore = ref();

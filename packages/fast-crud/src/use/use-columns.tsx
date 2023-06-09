@@ -15,6 +15,7 @@ import {
   FormItemProps,
   FormProps,
   ScopeContext,
+  TableColumnsProps,
   TypeMap
 } from "../d";
 import { UseFsContext } from "./use-crud";
@@ -104,16 +105,6 @@ registerMergeColumnPlugin({ name: "dict", handle: mergeColumnDict, order: -1 });
 registerMergeColumnPlugin(viewFormUseCellComponentPlugin);
 
 /**
- * 排序
- * @param arr
- */
-function doArraySort(arr: any) {
-  return _.sortBy(arr, (item) => {
-    return item.order ?? Constants.orderDefault;
-  });
-}
-
-/**
  * 初始化用户配置的列
  * 将dict和fieldType合并
  * @param columns
@@ -142,10 +133,21 @@ function setupOptionsColumns(columns: { [key: string]: ColumnCompositionProps },
  * @param map
  * @param columns
  */
-function buildOptionsColumnsMap(map: CompositionColumns = {}, columns: CompositionColumns) {
+function buildOptionsColumnsFlatMap(map: CompositionColumns = {}, columns: CompositionColumns) {
   _.forEach(columns, (item, key) => {
     if (item.children) {
-      buildOptionsColumnsMap(map, item.children);
+      buildOptionsColumnsFlatMap(map, item.children);
+    } else {
+      map[key] = item;
+    }
+  });
+  return map;
+}
+
+export function buildTableColumnsFlatMap(map: TableColumnsProps = {}, columns: TableColumnsProps) {
+  _.forEach(columns, (item, key) => {
+    if (item.children) {
+      buildTableColumnsFlatMap(map, item.children);
     } else {
       map[key] = item;
     }
@@ -174,41 +176,25 @@ function buildTableColumn(colTemplate: any) {
  * 构建列表表头配置
  * @param columns
  */
-function buildTableColumns(columns: CompositionColumns) {
-  const tableColumns: any = [];
+function buildTableColumns(columns: CompositionColumns): TableColumnsProps {
+  const tableColumns: TableColumnsProps = {};
   //合并为tableColumns
-  _.forEach(columns, (item) => {
-    const column = buildTableColumn(item);
-    tableColumns.push(column);
+  _.forEach(columns, (item, key) => {
+    tableColumns[key] = buildTableColumn(item);
   });
   //排序
-  return doArraySort(tableColumns);
-}
-
-/**
- * 将列表表头拍平
- * @param map
- * @param columns
- */
-function buildTableColumnsMap(map: TypeMap<ColumnProps> = {}, columns: ColumnProps[]) {
-  _.forEach(columns, (item) => {
-    map[item.key] = item;
-    if (item.children) {
-      buildTableColumnsMap(map, item.children);
-    }
-  });
-  return map;
+  return tableColumns;
 }
 
 /**
  * 构建公共表单列配置
- * @param columns
+ * @param columnsFlatMap
  * @param formType
  */
-function buildFormColumns(columns: CompositionColumns, formType: string) {
+function buildFormColumns(columnsFlatMap: CompositionColumns, formType: string) {
   // 合并form
   const formColumns: any = {};
-  _.forEach(columns, (item) => {
+  _.forEach(columnsFlatMap, (item) => {
     const formColumn = cloneDeep(item[formType]) || {};
     if (formType === "form" && formColumn.title == null) {
       formColumn.title = item.title;
@@ -223,16 +209,16 @@ function buildFormColumns(columns: CompositionColumns, formType: string) {
  * 构建表单配置
  * @param baseOptions
  * @param formType 可选[form/addForm/editForm/viewForm]
- * @param columnsMap
+ * @param columnsFlatMap
  * @param onComplete
  */
 function buildForm(
   baseOptions: CrudOptions,
   formType: string,
-  columnsMap: CompositionColumns,
+  columnsFlatMap: CompositionColumns,
   onComplete?: (form: any) => void
 ) {
-  const formColumns = buildFormColumns(columnsMap, formType);
+  const formColumns = buildFormColumns(columnsFlatMap, formType);
   const form = merge(cloneDeep(baseOptions.form), baseOptions[formType], { columns: formColumns });
   if (onComplete) {
     onComplete(form);
@@ -273,7 +259,7 @@ function buildFormOptions(crudOptions: DynamicallyCrudOptions, context?: UseFsCo
     crudOptions
   );
   const initedColumns = setupOptionsColumns(cloneDeep(userOptions.columns), userOptions);
-  const columnsMap = buildOptionsColumnsMap({}, initedColumns);
+  const columnsMap = buildOptionsColumnsFlatMap({}, initedColumns);
   return buildForm(userOptions, "form", columnsMap);
 }
 
@@ -283,19 +269,19 @@ function buildColumns(userOptions: CrudOptions) {
   });
   const columns = setupOptionsColumns(cloneDeep(userOptions.columns), userOptions);
   userOptions.columns = columns;
-  const columnsMap = buildOptionsColumnsMap({}, columns);
+  const columnsFlatMap = buildOptionsColumnsFlatMap({}, columns);
 
   userOptions.table.columns = buildTableColumns(cloneDeep(columns));
-  userOptions.table.columnsMap = buildTableColumnsMap({}, userOptions.table.columns);
+  userOptions.table.columnsMap = buildTableColumnsFlatMap({}, userOptions.table.columns);
   merge(userOptions.toolbar, {
     columnsFilter: {
       originalColumns: cloneDeep(userOptions.table.columns)
     }
   });
-  userOptions.form = buildForm(userOptions, "form", columnsMap);
-  userOptions.addForm = buildForm(userOptions, "addForm", columnsMap);
-  userOptions.editForm = buildForm(userOptions, "editForm", columnsMap);
-  userOptions.viewForm = buildForm(userOptions, "viewForm", columnsMap, (form) => {
+  userOptions.form = buildForm(userOptions, "form", columnsFlatMap);
+  userOptions.addForm = buildForm(userOptions, "addForm", columnsFlatMap);
+  userOptions.editForm = buildForm(userOptions, "editForm", columnsFlatMap);
+  userOptions.viewForm = buildForm(userOptions, "viewForm", columnsFlatMap, (form) => {
     // 单独处理viewForm的component
     _.forEach(form.columns, (value) => {
       if (!value.component) {
@@ -305,7 +291,7 @@ function buildColumns(userOptions: CrudOptions) {
     });
   });
   //处理searchColumns， 只从form里面复制component和valueChange
-  userOptions.search = buildSearchForm(userOptions, "search", columnsMap);
+  userOptions.search = buildSearchForm(userOptions, "search", columnsFlatMap);
 
   //处理editable form
   if (userOptions.table.editable) {
