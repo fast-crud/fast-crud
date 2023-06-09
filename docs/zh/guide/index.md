@@ -13,8 +13,10 @@ FastCrud （简称fs） 是基于Vue3的面向配置的crud开发框架，快速
 * 示例地址:
 [antdv版](http://fast-crud.docmirror.cn/antdv/)  /  [element版](http://fast-crud.docmirror.cn/element/)   /  [naive-ui版](http://fast-crud.docmirror.cn/naive/)
 * starter:
-  [vben-starter](http://fast-crud.docmirror.cn/vben/) / 
-  [cool-admin-starter](http://fast-crud.docmirror.cn/cool/)
+  [vben-starter](http://fast-crud.docmirror.cn/vben/) /
+  [fs-in-soybean](http://fast-crud.docmirror.cn/soybean/) /
+  [cool-admin-starter](http://fast-crud.docmirror.cn/cool/) /
+  [scui](http://fast-crud.docmirror.cn/scui/)
 
 [![lerna](https://img.shields.io/badge/maintained%20with-lerna-cc00ff.svg)](https://lerna.js.org/)
 
