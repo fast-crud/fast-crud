@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.14.1](https://github.com/fast-crud/fast-crud/compare/v1.14.0...v1.14.1) (2023-06-16)
+
+### Bug Fixes
+
+* 修复 search initalForm初始化失效的bug ([0da1be9](https://github.com/fast-crud/fast-crud/commit/0da1be92f58c8e30e250c941806f3ed2c4c9561e))
+
 # [1.14.0](https://github.com/fast-crud/fast-crud/compare/v1.13.12...v1.14.0) (2023-06-09)
 
 ### Features
