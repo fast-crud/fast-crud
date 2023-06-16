@@ -174,6 +174,7 @@ export default defineComponent({
     function onFormValidated() {
       validateForm.value = _.cloneDeep(form);
     }
+    onFormValidated();
     const { doComputed, AsyncComputeValue } = useCompute();
 
     _.each(props.columns, (item) => {
