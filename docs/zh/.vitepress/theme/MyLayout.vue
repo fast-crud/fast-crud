@@ -5,7 +5,7 @@ import DefaultTheme from 'vitepress/theme'
 const {Layout} = DefaultTheme
 
 function goAskAi() {
-  window.open("https://ai.handsfree.work/#/chat?productKey=Repo_GPT35")
+  window.open("https://ai.handsfree.work/#/chat?productKey=repo_gpt-3.5-turbo")
 }
 </script>
 
