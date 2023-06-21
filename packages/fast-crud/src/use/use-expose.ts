@@ -326,7 +326,7 @@ export function useExpose(props: UseExposeProps): UseExposeRet {
       if (crudBinding.value?.search?.columns) {
         crudExpose.doValueResolve({ form: searchFormData }, toRaw(crudBinding.value.search.columns));
       }
-      crudExpose.doValueResolve({ form: searchFormData });
+      //crudExpose.doValueResolve({ form: searchFormData });
 
       const sort = crudBinding.value.table.sort || {};
       const query: PageQuery = { page, form: searchFormData, sort };
