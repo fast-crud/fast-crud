@@ -97,6 +97,21 @@ const crudOptions = {
 ```
 
 
+## [key].column.valueChange
+* 说明: 值变化触发
+* 类型：`(context)=>void`
+* 示例：
+```js
+crudOptions = { //
+    form: {
+        valueChange(context){
+            console.log('value:',context.value, " row:",context.row)
+        },
+    }
+}
+```
+
+
 ## [key].column.component
 * 说明：单元格组件配置
 * 类型：Object
@@ -419,6 +434,27 @@ const crudOptions = {
 }
 ```
 
+## [key].form.valueChange
+* 说明: 值变化触发
+* 类型：`(context)=>void | {immediate:boolean,handle:(context)=>void}`
+* 示例：
+```js
+crudOptions = { //
+  form: {
+    valueChange(context){
+      console.log(context)
+    },
+      // 或者
+    valueChange:{
+        immediate:true, //是否立即执行一次
+        handle(context){
+        //值变化后的处理
+        }
+    }
+  }
+}
+```
+
 
 ## [key].addForm
 * 说明：该字段在添加表单里面的配置
@@ -510,6 +546,20 @@ const crudOptions = {
             }
         }
     }
+}
+```
+
+## [key].search.valueChange
+* 说明: 值变化触发
+* 类型：`(context)=>void`
+* 示例：
+```js
+crudOptions = { //
+  form: {
+    valueChange(context){
+      console.log(context)
+    },
+  }
 }
 ```
 
