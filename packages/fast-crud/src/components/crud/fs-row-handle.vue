@@ -266,7 +266,7 @@ export default defineComponent({
   }
 
   .n-button {
-    disply: flex;
+    display: flex;
     align-items: center;
   }
 }
