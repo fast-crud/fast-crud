@@ -60,6 +60,15 @@ span.fs-iconify {
   }
 }
 
+@keyframes fsLoadingCircle {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
 @-webkit-keyframes fsLoadingCircle {
   from {
     transform: rotate(0deg);
