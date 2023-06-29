@@ -356,9 +356,16 @@ export function useExpose(props: UseExposeProps): UseExposeRet {
       }
       const { currentPage = page[ui.pagination.currentPage], pageSize = page.pageSize, total } = pageRes;
       const { records } = pageRes;
-      if (records == null || total == null || currentPage == null || pageSize == null) {
+      if (
+        records == null ||
+        total == null ||
+        currentPage == null ||
+        currentPage <= 0 ||
+        pageSize == null ||
+        pageSize <= 0
+      ) {
         logger.error(
-          "pageRequest返回结构不正确，请配置正确的request.transformRes，期望：{currentPage, pageSize, total, records:[]},实际返回：",
+          "pageRequest返回结构不正确，请配置正确的request.transformRes，期望：{currentPage>0, pageSize>0, total, records:[]},实际返回：",
           pageRes
         );
         return;
