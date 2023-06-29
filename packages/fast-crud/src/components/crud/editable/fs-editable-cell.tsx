@@ -57,11 +57,30 @@ export default defineComponent({
           );
         }
 
+        let inputComponent = null;
+        const scopeFunc = () => {
+          return props.scope;
+        };
+        if (computedForm.value.blank === false || computedForm.value.component?.show === false) {
+          inputComponent = null;
+        } else if (
+          computedForm.value.conditionalRender &&
+          computedForm.value.conditionalRender.match &&
+          computedForm.value.conditionalRender.match(scopeFunc())
+        ) {
+          inputComponent = (
+            <fs-render render-func={computedForm.value.conditionalRender.render} scope={scopeFunc()} {...ctx.attrs} />
+          );
+        } else if (computedForm.value.render) {
+          inputComponent = <fs-render render-func={computedForm.value.render} scope={scopeFunc()} {...ctx.attrs} />;
+        } else {
+          inputComponent = (
+            <fs-component-render ref={"targetInputRef"} {...computedForm.value.component} {...ctx.attrs} />
+          );
+        }
         return (
           <div class={"fs-cell-edit"}>
-            <div class={"fs-cell-edit-input"}>
-              <fs-component-render ref={"targetInputRef"} {...computedForm.value.component} {...ctx.attrs} />
-            </div>
+            <div class={"fs-cell-edit-input"}>{inputComponent}</div>
             {editIcon}
           </div>
         );

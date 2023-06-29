@@ -1,6 +1,58 @@
 const http = require("axios")
 const exec = require('child_process').exec;
 
+const fs = require("fs")
+
+// 同步npmmirror的包
+async function getPackages(directoryPath) {
+    return new Promise((resolve, reject) => {
+        // 读取目录下的文件和目录列表
+        fs.readdir(directoryPath, {withFileTypes: true}, (err, files) => {
+            if (err) {
+                console.log('无法读取目录:', err);
+                reject(err)
+                return;
+            }
+
+            // 过滤仅保留目录
+            const directories = files
+                .filter(file => file.isDirectory())
+                .map(directory => directory.name);
+
+            console.log('目录列表:', directories);
+            resolve(directories)
+        });
+    })
+
+}
+
+async function getAllPackages(){
+    const base = ["fast-crud",'fast-extends']
+    const ui =await getPackages("./packages/ui")
+
+    return base.concat(ui)
+}
+
+async function sync(){
+    const packages = await getAllPackages()
+    for(const pkg of packages){
+        await http({
+            url: `https://registry-direct.npmmirror.com/@fast-crud/${pkg}/sync?sync_upstream=true`,
+            method: 'PUT',
+            headers: {
+                "Content-Type": "application/json"
+            },
+            data: {}
+        })
+        console.log(`sync success:${pkg}`)
+        await sleep(1000)
+    }
+    await sleep(60000)
+}
+
+
+
+
 //builder
 function execute(cmd){
     return new Promise((resolve,reject)=>{

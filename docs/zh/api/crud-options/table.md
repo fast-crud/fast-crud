@@ -192,3 +192,30 @@
 ## remove.onRemoved
 * 说明：删除后的操作
 * 类型：`(context)=>Promise<any>`
+
+
+## editable
+* 说明：行编辑配置
+* 类型：`object`
+```js
+const crudOptions = {
+    table:{
+        editable:{
+            rowKey: "id",
+            enabled: false,
+            mode: "free", //模式，free=自由编辑，row=行编辑
+            exclusive: true, //是否排他式激活，激活一个，关闭其他
+            activeTrigger: "onClick", //激活触发方式,onClick,onDbClick,false
+            activeDefault: false,
+            isEditable(opts: { index: number; key: string; row: any }) {
+                //单元格是否可编辑
+                return true;
+            },
+            onSetup(){
+                //可编辑初始化完成事件
+            }
+        }
+    }
+}
+
+```
