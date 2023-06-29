@@ -54,6 +54,7 @@ import { request } from "/src/api/service";
 ## mock
 示例项目默认为mock数据
 
+## 正式项目改成真实后端
 如果要改成请求真实后端，请按如下步骤修改
 ### 1、requestForMock改成request
 ```js
@@ -61,6 +62,14 @@ import { requestForMock } from "../../../api/service";
 // 改成请求真实后端 ↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓
 import { request } from "../../../api/service";
 ```
+
+## 删除mock的import
+在main.ts中注释掉mock的import，减小打包体积
+```js
+// 删除mock的import
+// import './mock'
+```
+
 
 ### 2. 修改ip和端口
 
