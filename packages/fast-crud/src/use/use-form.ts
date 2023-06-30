@@ -61,7 +61,7 @@ export function useFormWrapper() {
     const wrapperProvider: Function = inject("use:form:wrapper", () => {});
     pd = wrapperProvider();
   } catch (e) {
-    logger.debug("cant inject use:form:wrapper，建议在App.vue中使用<fs-form-provider>组件包裹<router-view/>", e);
+    logger.warn("cant inject use:form:wrapper，建议在App.vue中使用<fs-form-provider>组件包裹<router-view/>", e);
   }
 
   let openDialog = null;
