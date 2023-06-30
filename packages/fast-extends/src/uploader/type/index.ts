@@ -3,6 +3,7 @@ import types from "./types";
 import _ from "lodash-es";
 import defaultConfig from "./config";
 import { AllUploadSuccessValidator } from "./validators";
+export * from "./validators";
 import { FsUploaderOptions } from "../d.ts/type";
 
 function setConfig(app: any, config: FsUploaderOptions) {
@@ -10,7 +11,8 @@ function setConfig(app: any, config: FsUploaderOptions) {
 }
 //兼容旧版本
 const AllSuccessValidator = AllUploadSuccessValidator;
-export { AllUploadSuccessValidator, AllSuccessValidator };
+export { AllSuccessValidator };
+
 export default {
   install(app: any, options: FsUploaderOptions) {
     const newTypes = types();

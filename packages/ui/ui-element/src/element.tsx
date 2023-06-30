@@ -92,11 +92,7 @@ export class Element implements UiInterface {
   formWrapper: FormWrapperCI = creator<FormWrapperCI>({
     visible: "modelValue",
     customClass: (is: string) => {
-      if (is === "el-dialog") {
-        return "class";
-      } else {
-        return "customClass";
-      }
+      return "class";
     },
     titleSlotName: "header",
     buildOnClosedBind(is: string, onClosed: Function) {
@@ -204,7 +200,7 @@ export class Element implements UiInterface {
   dialog: DialogCI = creator<DialogCI>({
     name: "el-dialog",
     visible: "modelValue",
-    customClass: "customClass",
+    customClass: "class",
     buildOnClosedBind(onClosed) {
       return { onClosed };
     },

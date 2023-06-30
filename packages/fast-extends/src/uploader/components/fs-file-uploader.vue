@@ -16,7 +16,7 @@
 </template>
 
 <script lang="ts">
-import { AppContext, computed, defineComponent, Ref, ref, watch } from "vue";
+import { AppContext, computed, defineComponent, nextTick, Ref, ref, watch } from "vue";
 import { uiContext, useI18n, useUi } from "@fast-crud/fast-crud";
 import _ from "lodash-es";
 import FsUploader from "./fs-uploader.vue";
@@ -207,10 +207,16 @@ export default defineComponent({
       const list = await buildListToFile(array);
       updateFileList(list);
     }
+    async function onFormValueChanged() {
+      await formValidator.onChange();
+      await formValidator.onBlur();
+    }
     async function emitValue(list: FileItem[]) {
       let value = await buildEmitValue(list);
       onInput(value);
-      onChange(value);
+      nextTick(async () => {
+        await onFormValueChanged();
+      });
     }
 
     async function buildEmitValue(fList: FileItem[]) {
@@ -267,18 +273,14 @@ export default defineComponent({
         return props.modelValue;
       },
       async (value) => {
-        await formValidator.onChange();
-        await formValidator.onBlur();
+        onChange(value);
         if (value === currentValue.value) {
           return;
         }
         await initFileList(value);
-      },
-      {
-        immediate: true
       }
     );
-
+    initFileList(props.modelValue);
     function hasUploading() {
       const uploading = fileList.value.filter((item: any) => {
         return item.status === ui.upload.status.uploading;

@@ -15,6 +15,11 @@ export const AllUploadSuccessValidator = () => {
   });
 };
 
+/**
+ * 会附带正在上传的校验规则
+ * @param yourRules
+ * @param uploadingWarningMessage
+ */
 export const createUploaderRules = (yourRules?: RuleRecord[], uploadingWarningMessage?: string): RuleRecord[] => {
   if (yourRules == null) {
     yourRules = [];

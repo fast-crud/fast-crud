@@ -6,7 +6,6 @@ import {
   CascaderCI,
   CheckboxCI,
   CheckboxGroupCI,
-  CI,
   ColCI,
   CollapseCI,
   CollapseItemCI,
@@ -57,6 +56,8 @@ import {
   useUiRender
 } from "@fast-crud/ui-interface";
 import _ from "lodash-es";
+import { formItemInjectionKey } from "naive-ui/es/_mixins/use-form-item";
+import { inject } from "vue";
 
 export type NaiveUiProviders = {
   notification: any;
@@ -442,7 +443,18 @@ export class Naive implements UiInterface {
     name: "n-form-item",
     prop: "name",
     label: "label",
-    rules: "rule"
+    rules: "rule",
+    injectFormItemContext: () => {
+      const formItemContext = inject(formItemInjectionKey);
+      return {
+        async onBlur() {
+          formItemContext.handleContentBlur();
+        },
+        async onChange() {
+          formItemContext.handleContentChange();
+        }
+      };
+    }
   });
 
   option: OptionCI = creator<OptionCI>({

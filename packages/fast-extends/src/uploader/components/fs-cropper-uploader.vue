@@ -11,7 +11,7 @@
             </template>
           </component>
           <div class="delete">
-            <fs-icon v-if="!disabled" :icon="ui.icons.remove" @click="removeImage(index)" />
+            <fs-icon v-if="!disabled" :icon="ui.icons.remove" @click="removeImage(index as number)" />
             <fs-icon :icon="ui.icons.search" @click="preview(item)" />
           </div>
           <div v-if="item.status === 'uploading'" class="status-uploading">
@@ -133,7 +133,7 @@ export default defineComponent({
 
     const indexRef: Ref = ref();
     const listRef: Ref = ref([]);
-
+    const formValidator = ui.formItem.injectFormItemContext();
     // eslint-disable-next-line vue/no-setup-props-destructure
     let emitValue: any = props.modelValue;
     initValue(props.modelValue);
@@ -226,7 +226,7 @@ export default defineComponent({
       return await uploaderRef?.upload(option);
     }
 
-    function doEmit() {
+    async function doEmit() {
       const list = [];
       for (const item of listRef.value) {
         if (typeof item === "string") {
@@ -241,6 +241,8 @@ export default defineComponent({
       }
       emitValue = ret;
       ctx.emit("update:modelValue", ret);
+      await formValidator.onChange();
+      await formValidator.onBlur();
     }
 
     function getImageSrc(item: any) {
@@ -261,12 +263,12 @@ export default defineComponent({
       () => {
         return props.modelValue;
       },
-      (val: any) => {
+      async (val: any) => {
         ctx.emit("change", val);
         if (val === emitValue) {
           return;
         }
-        initValue(val);
+        await initValue(val);
       }
     );
     return {
