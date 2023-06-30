@@ -12,8 +12,8 @@ export type TxtParams = {
   text: string;
 } & CsvParams;
 export type ExcelParams = {
-  header: any;
-  merges: [];
+  header?: any;
+  merges?: any[];
 } & CsvParams;
 export type CsvParams = {
   columns: CsvColumn[];

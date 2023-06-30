@@ -34,6 +34,7 @@
     "cos-js-sdk-v5": "^1.4.17",
     "cropperjs": "^1.5.13",
     "dayjs": "^1.11.7",
+    "file-saver": "^2.0.0",
     "glob": "^9.3.0",
     "humanize-duration": "^3.28.0",
     "jsoneditor": "^9.10.0",
@@ -42,7 +43,6 @@
     "qiniu-js": "3.4.1",
     "quill": "^1.3.7",
     "vue-cropperjs": "^5.0.0",
-    "file-saver": "^2.0.0",
     "xlsx": "^0.14.1"
   },
   "devDependencies": {
@@ -54,6 +54,7 @@
     "@rollup/plugin-typescript": "^11.0.0",
     "@types/ali-oss": "^6.16.7",
     "@types/chai": "^4.3.4",
+    "@types/file-saver": "^2.0.5",
     "@types/humanize-duration": "^3.27.1",
     "@types/lodash-es": "^4.17.7",
     "@types/minio": "^7.0.17",

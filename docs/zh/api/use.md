@@ -142,4 +142,66 @@ async function openCustomDialog(){
 :::
 
 
+## 懒加载lib
+
+### useAsync
+
+* 说明: 异步加载lib
+* 类型： `():{loadAsyncLib,registerAsyncLib}`
+* 使用： 分三步（以exportUtil为例）
+
+先在全局注册异步组件
+```js
+// main.ts
+import {FsExtendExport} from '@fast-crud/fast-extends'
+app.use(FsExtendExport)
+```
+
+然后在App.vue中注册异步lib
+```js
+// App.vue
+import {useAsync} from "@fast-crud/fast-crud";
+const {loadAsyncLib,registerAsyncLib} = useAsync();
+registerAsyncLib("FsExportUtil")
+```
+
+然后在需要调用的地方加载
+```js
+//crud.ts
+import {useAsync} from "@fast-crud/fast-crud";
+import {ExportUtil} from '@fast-crud/fast-extends'
+const crudOptions = {
+    toolbar:{
+        buttons:{
+            export:{
+                show:true,
+                async click(){
+                  const { loadAsyncLib } = useAsync();
+                  //加载异步库，不影响首页加载速度
+                  const exportUtil: ExportUtil = await loadAsyncLib({
+                    name: 'FsExportUtil',
+                  });
+
+                  const columns: CsvColumn[] = [];
+                  _.each(crudBinding.value.table.columnsMap, (col: ColumnCompositionProps) => {
+                    if (col.exportable !== false && col.key !== '_index') {
+                      columns.push({
+                        prop: col.key,
+                        label: col.title,
+                      });
+                    }
+                  });
+                  //导出csv
+                  await exportUtil.csv({
+                    columns,
+                    data: crudBinding.value.data,
+                    title: 'table',
+                    noHeader: false,
+                  });
+                }
+            }
+        }
+    }
+}
+```
 

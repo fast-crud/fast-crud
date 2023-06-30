@@ -6,7 +6,6 @@
 <script setup lang="ts">
 import { provide, Ref, ref } from "vue";
 import FsFormWrapper from "./fs-form-wrapper.js";
-import { defineOptions } from "unplugin-vue-define-options/macros";
 import { OpenDialogProps } from "../../d";
 
 defineOptions({

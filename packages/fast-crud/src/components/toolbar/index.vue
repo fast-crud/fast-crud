@@ -123,6 +123,7 @@ export default defineComponent({
           type: "primary",
           icon: ui.icons.refresh,
           title: t("fs.toolbar.refresh.title"), // '刷新',
+          order: 1,
           circle: true,
           click: () => {
             ctx.emit("refresh");
@@ -132,6 +133,7 @@ export default defineComponent({
           type: "primary",
           icon: ui.icons.search,
           title: t("fs.toolbar.search.title"), // '查询显示',
+          order: 2,
           circle: true,
           click: () => {
             ctx.emit("update:search", !props.search);
@@ -141,6 +143,7 @@ export default defineComponent({
           type: "primary",
           icon: ui.icons.compact,
           title: t("fs.toolbar.compact.title"), // '紧凑模式',
+          order: 3,
           circle: true,
           click: () => {
             ctx.emit("update:compact", !props.compact);
@@ -150,6 +153,7 @@ export default defineComponent({
           show: false,
           type: "primary",
           icon: ui.icons.export,
+          order: 4,
           title: t("fs.toolbar.export.title"), // '导出',
           circle: true,
           click: () => {
@@ -161,6 +165,7 @@ export default defineComponent({
           icon: ui.icons.columnsFilter,
           title: t("fs.toolbar.columns.title"), // '列设置',
           circle: true,
+          order: 5,
           click: () => {
             columnsFilterRef.value.start();
           }
