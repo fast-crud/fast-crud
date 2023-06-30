@@ -12,6 +12,7 @@
       :default-config="editorConfigRef"
       :mode="mode"
       v-bind="$attrs"
+      @onChange="onChange"
       @onCreated="handleCreated"
     />
     <fs-uploader ref="uploaderImplRef" :type="uploader?.type" />
@@ -27,6 +28,7 @@ import { Editor, Toolbar } from "@wangeditor/editor-for-vue";
 import { defaultConfig } from "../../type/config.js";
 import _ from "lodash-es";
 import { FsUploaderDoUploadOptions } from "../../../uploader/d.ts/type";
+import { useUi } from "@fast-crud/fast-crud";
 type InsertFnType = (url: string, alt?: string, href?: string) => void;
 /**
  * wangEditor5组件封装
@@ -212,6 +214,11 @@ export default defineComponent({
     function getToolRef() {
       return toolbarRef;
     }
+    const { ui } = useUi();
+    let formItemContext = ui.formItem.injectFormItemContext();
+    function onChange() {
+      formItemContext.onChange();
+    }
 
     return {
       uploaderImplRef,
@@ -222,7 +229,8 @@ export default defineComponent({
       valueHtml,
       toolbarConfigRef,
       editorConfigRef,
-      handleCreated
+      handleCreated,
+      onChange
     };
   }
 });

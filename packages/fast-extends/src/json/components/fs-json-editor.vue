@@ -15,6 +15,7 @@ import "./style.css";
 //@ts-ignore
 import JSONEditor from "jsoneditor";
 import "jsoneditor/dist/jsoneditor.css";
+import { useUi } from "@fast-crud/fast-crud";
 export default defineComponent({
   name: "FsJsonEditor",
   props: {
@@ -72,6 +73,8 @@ export default defineComponent({
       { immediate: true }
     );
 
+    const { ui } = useUi();
+    const formItemContext = ui.formItem.injectFormItemContext();
     onMounted(() => {
       const options = {
         mode: props.mode,
@@ -87,6 +90,7 @@ export default defineComponent({
             root.$nextTick(function () {
               state.internalChange = false;
             });
+            formItemContext.onChange();
           } catch (e) {
             state.error = true;
             emit("error", e);
