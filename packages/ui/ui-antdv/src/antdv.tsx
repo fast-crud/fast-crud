@@ -61,7 +61,7 @@ import {
 } from "@fast-crud/ui-interface";
 
 import _ from "lodash-es";
-import { Modal } from "ant-design-vue";
+import { Form, Modal } from "ant-design-vue";
 
 export type AntdvUiProvider = {
   Notification: any;
@@ -379,6 +379,17 @@ export class Antdv implements UiInterface {
     prop: "name",
     label: "label",
     rules: "rules",
+    injectFormItemContext() {
+      const formItemContext = Form.useInjectFormItemContext();
+      return {
+        async onChange() {
+          formItemContext.onFieldChange();
+        },
+        async onBlur() {
+          formItemContext.onFieldBlur();
+        }
+      };
+    },
     builder(opts) {
       return buildBinding(this, opts, {});
     }

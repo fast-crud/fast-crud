@@ -15,7 +15,7 @@ export default function () {
           {
             validator: AllUploadSuccessValidator(),
             message: t("fs.extends.fileUploader.hasUploading"),
-            trigger: "change"
+            trigger: "blur"
           }
         ]
       },
@@ -38,7 +38,7 @@ export default function () {
           {
             validator: AllUploadSuccessValidator(),
             message: t("fs.extends.fileUploader.hasUploading"),
-            trigger: "change"
+            trigger: "blur"
           }
         ],
         component: {
@@ -76,7 +76,7 @@ export default function () {
           {
             validator: AllUploadSuccessValidator(),
             message: t("fs.extends.fileUploader.hasUploading"),
-            trigger: "change"
+            trigger: "blur"
           }
         ]
       },
@@ -95,7 +95,7 @@ export default function () {
           {
             validator: AllUploadSuccessValidator(),
             message: t("fs.extends.fileUploader.hasUploading"),
-            trigger: "change"
+            trigger: "blur"
           }
         ]
       },

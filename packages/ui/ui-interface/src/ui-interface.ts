@@ -49,15 +49,6 @@ export type CI<P = any> = {
   render: (options: P) => UiSlotRet;
 };
 
-export type FormBuilderOption = {} & BindBuilderOptions;
-export interface FormCI extends CI<FormBuilderOption> {
-  name: string;
-  inlineLayout: Object;
-  // resetWrap: Function;
-  validateWrap: (formRef: any) => Promise<any>;
-  transformValidateErrors: (e: Error) => ComponentBinding;
-}
-
 export type SelectBuilderOption = {
   multiple?: boolean;
   clearable?: boolean;
@@ -339,10 +330,23 @@ export interface IconCI extends CI {
   isComponent: boolean;
   circle?: Record<string, any>;
 }
+export type FsUiFormItemContext = {
+  onChange: () => Promise<void>;
+  onBlur: () => Promise<void>;
+};
+export type FormBuilderOption = {} & BindBuilderOptions;
+export interface FormCI extends CI<FormBuilderOption> {
+  name: string;
+  inlineLayout: Object;
+  // resetWrap: Function;
+  validateWrap: (formRef: any) => Promise<any>;
+  transformValidateErrors: (e: Error) => ComponentBinding;
+}
 export interface FormItemCI extends CI {
   prop: string;
   label: string;
   rules: string;
+  injectFormItemContext: () => FsUiFormItemContext;
 }
 
 export interface TooltipCI extends CI {

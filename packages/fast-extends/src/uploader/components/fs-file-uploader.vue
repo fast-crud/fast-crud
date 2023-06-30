@@ -207,7 +207,6 @@ export default defineComponent({
       const list = await buildListToFile(array);
       updateFileList(list);
     }
-
     async function emitValue(list: FileItem[]) {
       let value = await buildEmitValue(list);
       onInput(value);
@@ -262,16 +261,18 @@ export default defineComponent({
       currentValue.value = value;
       ctx.emit("update:modelValue", value);
     }
-
+    const formValidator = ui.formItem.injectFormItemContext();
     watch(
       () => {
         return props.modelValue;
       },
-      (value) => {
+      async (value) => {
+        await formValidator.onChange();
+        await formValidator.onBlur();
         if (value === currentValue.value) {
           return;
         }
-        initFileList(value);
+        await initFileList(value);
       },
       {
         immediate: true
