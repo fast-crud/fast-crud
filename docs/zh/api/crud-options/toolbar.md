@@ -40,11 +40,34 @@ const crudOptions = {
 }
 ```
 
-## buttons.export
 
+
+## export
 * 说明：导出配置
-* 类型：Object
-* 相关：参考 [useAsync配置](../use.md#useasync)
+* 类型：`ExportProps`
+* 示例：
+
+```js
+const crudOptions = {
+    toolbar:{
+        buttons:{
+          export:{
+              show:true
+          }  
+        },
+        export:{
+            server:()=>Promise<void>, // 服务端导出方法，配置则开启服务端导出，本地导出则不生效
+            //以下为本地导出配置
+            columns:  null, // 导出的列配置，不配置则导出全部，类型为 {key:string,title:string}[],
+            noHeader: false, // 是否需要表头
+            dataMapping:(row:any)=>row, // 类型(row:any)=>any
+            filename: 'table', // 导出文件名
+            fileType: 'csv' ,// 导出文件类型，可选值：csv | excel
+            merge: [], // excel 合并单元格配置
+        }
+    }
+}
+```
 
 
 ## compact
