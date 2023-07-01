@@ -49,7 +49,6 @@ import { useI18n } from "../../locale";
 import { Constants } from "../../utils/util.constants";
 import { ButtonProps, ButtonsProps, TableColumnsProps } from "../../d";
 import { useMerge, useUi } from "../../use";
-
 /**
  * 工具条
  */
@@ -111,7 +110,7 @@ export default defineComponent({
       type: Object as PropType<any>
     }
   },
-  emits: ["refresh", "update:search", "update:compact", "update:columns", "export"],
+  emits: ["update:columns"],
   setup(props: any, ctx) {
     const { t } = useI18n();
     const columnsFilterRef: Ref = ref();
@@ -119,53 +118,7 @@ export default defineComponent({
     const { merge } = useMerge();
     const computedButtons = computed(() => {
       const defaultButtons: ButtonsProps<void> = {
-        refresh: {
-          type: "primary",
-          icon: ui.icons.refresh,
-          title: t("fs.toolbar.refresh.title"), // '刷新',
-          order: 1,
-          circle: true,
-          click: () => {
-            ctx.emit("refresh");
-          }
-        },
-        search: {
-          type: "primary",
-          icon: ui.icons.search,
-          title: t("fs.toolbar.search.title"), // '查询显示',
-          order: 2,
-          circle: true,
-          click: () => {
-            ctx.emit("update:search", !props.search);
-          }
-        },
-        compact: {
-          type: "primary",
-          icon: ui.icons.compact,
-          title: t("fs.toolbar.compact.title"), // '紧凑模式',
-          order: 3,
-          circle: true,
-          click: () => {
-            ctx.emit("update:compact", !props.compact);
-          }
-        },
-        export: {
-          show: false,
-          type: "primary",
-          icon: ui.icons.export,
-          order: 4,
-          title: t("fs.toolbar.export.title"), // '导出',
-          circle: true,
-          click: () => {
-            ctx.emit("export");
-          }
-        },
         columns: {
-          type: "primary",
-          icon: ui.icons.columnsFilter,
-          title: t("fs.toolbar.columns.title"), // '列设置',
-          circle: true,
-          order: 5,
           click: () => {
             columnsFilterRef.value.start();
           }

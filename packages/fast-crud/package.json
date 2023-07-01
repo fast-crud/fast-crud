@@ -2,9 +2,9 @@
   "name": "@fast-crud/fast-crud",
   "version": "1.14.1",
   "private": false,
-  "main": "./src/index.ts",
-  "module": "./src/index.ts",
-  "types": "./src/index.ts",
+  "main": "./dist/fast-crud.umd.js",
+  "module": "./dist/fast-crud.mjs",
+  "types": "./dist/d/index.d.ts",
   "publishConfig": {
     "main": "./dist/fast-crud.umd.js",
     "module": "./dist/fast-crud.mjs",
@@ -21,8 +21,10 @@
   "author": "Greper",
   "license": "MIT",
   "dependencies": {
+    "file-saver": "^2.0.0",
     "lru-cache": "^8.0.3",
-    "vuedraggable-es": "^4.1.1"
+    "vuedraggable-es": "^4.1.1",
+    "xlsx": "^0.14.1"
   },
   "devDependencies": {
     "@fast-crud/ui-interface": "^1.14.1",
@@ -31,6 +33,7 @@
     "@rollup/plugin-strip": "^3.0.2",
     "@rollup/plugin-typescript": "^11.0.0",
     "@types/chai": "^4.3.4",
+    "@types/file-saver": "^2.0.5",
     "@types/jest": "^29.4.4",
     "@types/mocha": "^10.0.1",
     "@types/node": "^18.15.3",

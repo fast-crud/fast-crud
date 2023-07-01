@@ -2,8 +2,16 @@ import ExportCsv from "./_export-csv";
 import Csv from "./_csv";
 import * as Excel from "./_export2Excel";
 import FileSaver from "file-saver";
-import { CsvParams, ExcelParams, ExportUtil, TxtParams } from "../../d";
+import { CsvParams, ExcelParams, ExportColumn, ExportLibColumn, ExportUtil, TxtParams } from "./d";
 
+function transformExportColumn(columns: ExportColumn[]): ExportLibColumn[] {
+  return columns.map((item) => {
+    return {
+      prop: item.key,
+      label: item.title
+    } as ExportLibColumn;
+  });
+}
 export const exportUtil: ExportUtil = {
   // 导出 csv
   csv(params: CsvParams) {
@@ -12,15 +20,15 @@ export const exportUtil: ExportUtil = {
       const paramsDefault: CsvParams = {
         columns: [],
         data: [],
-        title: "table",
+        filename: "table",
         noHeader: false
       };
       // 合并参数
       const _params: CsvParams = Object.assign({}, paramsDefault, params);
       // 生成数据
-      const data = Csv(_params.columns, _params.data, params, _params.noHeader);
+      const data = Csv(transformExportColumn(_params.columns), _params.data, params, _params.noHeader);
       // 下载数据
-      ExportCsv.download(_params.title, data);
+      ExportCsv.download(_params.filename, data);
       // 完成
       resolve();
     });
@@ -32,7 +40,7 @@ export const exportUtil: ExportUtil = {
       const paramsDefault: ExcelParams = {
         columns: [],
         data: [],
-        title: "table",
+        filename: "table",
         header: null,
         merges: [],
         noHeader: false
@@ -40,17 +48,17 @@ export const exportUtil: ExportUtil = {
       // 合并参数
       const _params: ExcelParams = Object.assign({}, paramsDefault, params);
       // 从参数中派生数据
-      const header = _params.columns.map((e) => e.label);
-      const data = _params.data.map((row) => _params.columns.map((col) => row[col.prop]));
+      const header = _params.columns.map((e) => e.title);
+      const data = _params.data.map((row) => _params.columns.map((col) => row[col.key]));
 
       const cols = _params.columns.map((e) => {
         const col = { ...e };
-        delete col.label;
-        delete col.prop;
+        delete col.title;
+        delete col.key;
         return col;
       });
       // 导出
-      Excel.export_json_to_excel(header, data, _params.title, {
+      Excel.export_json_to_excel(header, data, _params.filename, {
         merges: _params.merges,
         header: _params.header,
         //@ts-ignore
@@ -66,13 +74,13 @@ export const exportUtil: ExportUtil = {
       // 默认值
       const paramsDefault: Partial<TxtParams> = {
         text: "",
-        title: "文本"
+        filename: "文本"
       };
       // 合并参数
       const _params: TxtParams = Object.assign({}, paramsDefault, params);
       // 导出
       const blob = new Blob([_params.text], { type: "text/plain;charset=utf-8" });
-      FileSaver.saveAs(blob, _params.title + ".txt");
+      FileSaver.saveAs(blob, _params.filename + ".txt");
       // 完成
       resolve();
     });

@@ -42,18 +42,7 @@
     <template #toolbar>
       <div v-if="toolbar && toolbar.show !== false" class="fs-crud-toolbar">
         <slot name="toolbar-left"></slot>
-        <fs-toolbar
-          ref="toolbarRef"
-          v-bind="toolbar"
-          :slots="computedToolbarSlots"
-          :search="search.show"
-          :compact="toolbar.compact"
-          :columns="table.columns"
-          @update:search="$emit('update:search', $event)"
-          @update:compact="$emit('update:compact', $event)"
-          @update:columns="$emit('update:columns', $event)"
-          @refresh="$emit('refresh')"
-        />
+        <fs-toolbar ref="toolbarRef" v-bind="toolbar" :slots="computedToolbarSlots" :columns="table.columns" />
         <slot name="toolbar-right"></slot>
       </div>
     </template>

@@ -31,6 +31,9 @@ export type AsyncComponentInstance = {
 export function setupAppContext(context: any) {
   _appContext = context;
 }
+export function getAppContext() {
+  return _appContext;
+}
 async function createAsyncComponent(opts: CreateAsyncComponentOptions): Promise<AsyncComponentInstance> {
   const resolveComponent = getAsyncLib(opts.name);
   const name = opts.name;
@@ -83,6 +86,7 @@ async function loadAsyncLib<T = any>(opts: LoadAsyncLibOptions) {
 }
 export function useAsync() {
   return {
+    getAppContext,
     setupAppContext,
     createAsyncComponent,
     loadAsyncLib,

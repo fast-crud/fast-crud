@@ -5,7 +5,6 @@ import logger from "../utils/util.log";
 import { uiContext } from "../ui";
 import { useI18n } from "../locale";
 import {
-  ColumnsFilterComponentProps,
   ComputeContext,
   CrudBinding,
   CrudExpose,
@@ -17,8 +16,9 @@ import {
 import { useCompute } from "./use-compute";
 import { buildTableColumnsFlatMap, useColumns } from "./use-columns";
 import { CrudOptions } from "../d/crud";
-import { Ref, ref } from "vue";
+import { computed, Ref, ref } from "vue";
 import { useExpose } from "./use-expose";
+import { exportTable } from "./lib/fs-export";
 
 const { merge } = useMerge();
 
@@ -180,34 +180,81 @@ export function useCrud(ctx: UseCrudProps): UseCrudRet {
     };
   }
 
-  function useEvent() {
+  function useToolbar() {
     return {
-      "onUpdate:search"(value: any) {
-        crudBinding.value.search.show = value;
-      },
-      "onUpdate:compact"(value: any) {
-        crudBinding.value.toolbar.compact = value;
-      },
-      "onUpdate:columns"(value: TableColumnsProps) {
-        const original = crudBinding.value.table.columns;
-        const columns: TableColumnsProps = {};
-        _.forEach(value, (item) => {
-          for (const key in original) {
-            const column = original[key];
-            if (column.key === item.key) {
-              delete column.order;
-              merge(column, item);
-              columns[key] = column;
-              return;
+      toolbar: {
+        buttons: {
+          refresh: {
+            type: "primary",
+            icon: ui.icons.refresh,
+            title: t("fs.toolbar.refresh.title"), // '刷新',
+            order: 1,
+            circle: true,
+            click: async () => {
+              await crudExpose.doRefresh();
             }
+          },
+          search: {
+            type: computed(() => {
+              return crudBinding.value.search.show ? "primary" : "default";
+            }),
+            icon: ui.icons.search,
+            title: t("fs.toolbar.search.title"), // '查询显示',
+            order: 2,
+            circle: true,
+            click: () => {
+              crudBinding.value.search.show = !crudBinding.value.search.show;
+            }
+          },
+          compact: {
+            type: computed(() => {
+              return crudBinding.value.toolbar.compact ? "primary" : "default";
+            }),
+            icon: ui.icons.compact,
+            title: t("fs.toolbar.compact.title"), // '紧凑模式',
+            order: 3,
+            circle: true,
+            click: () => {
+              crudBinding.value.toolbar.compact = !crudBinding.value.toolbar.compact;
+            }
+          },
+          export: {
+            show: true,
+            type: "primary",
+            icon: ui.icons.export,
+            order: 4,
+            title: t("fs.toolbar.export.title"), // '导出',
+            circle: true,
+            click: async () => {
+              await exportTable(crudBinding, crudBinding.value.toolbar.export);
+            }
+          },
+          columns: {
+            type: "primary",
+            icon: ui.icons.columnsFilter,
+            title: t("fs.toolbar.columns.title"), // '列设置',
+            circle: true,
+            order: 5
           }
-        });
+        },
+        "onUpdate:columns"(value: TableColumnsProps) {
+          const original = crudBinding.value.table.columns;
+          const columns: TableColumnsProps = {};
+          _.forEach(value, (item) => {
+            for (const key in original) {
+              const column = original[key];
+              if (column.key === item.key) {
+                delete column.order;
+                merge(column, item);
+                columns[key] = column;
+                return;
+              }
+            }
+          });
 
-        crudBinding.value.table.columns = columns;
-        crudBinding.value.table.columnsMap = buildTableColumnsFlatMap({}, columns);
-      },
-      onRefresh() {
-        doRefresh();
+          crudBinding.value.table.columns = columns;
+          crudBinding.value.table.columnsMap = buildTableColumnsFlatMap({}, columns);
+        }
       }
     };
   }
@@ -331,7 +378,7 @@ export function useCrud(ctx: UseCrudProps): UseCrudRet {
       useRowHandle(),
       useSearch(),
       useTabs(),
-      useEvent(),
+      useToolbar(),
       useTable(),
       useActionbar(),
       useEditable(),

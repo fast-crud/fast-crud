@@ -5,6 +5,7 @@ import { DoRemoveContext } from "../d/expose";
 
 import { RuleItem } from "async-validator";
 import { UiSlot, UiSlotRet } from "@fast-crud/ui-interface";
+import { ExportProps } from "/src/use/lib/fs-export";
 
 // export type FsRefValue<T> = T | Ref<T> | ComputedRef<T>;
 // export type FsComputeValue<T> = FsRefValue<T> | ComputeValue<T> | AsyncComputeValue<T>;
@@ -811,10 +812,17 @@ export type ToolbarComponentProps = {
    * 当前是否紧凑模式
    */
   compact?: boolean;
+
+  /**
+   * 导出配置
+   */
+  export?: ExportProps;
+
   /**
    * 列配置
    */
   columns?: TableColumnsProps;
+
   /**
    * 是否保存用户列设置
    * 传string则表示传入缓存的主key

@@ -146,11 +146,11 @@ async function openCustomDialog(){
 
 ### useAsync
 
-* 说明: 异步加载lib
+* 说明: 异步加载lib，懒加载大尺寸的库，减少首页体积
 * 类型： `():{loadAsyncLib,registerAsyncLib}`
 * 使用： 分三步（以exportUtil为例）
 
-先在全局注册异步组件
+先在main.ts中全局注册组件
 ```js
 // main.ts
 import {FsExtendExport} from '@fast-crud/fast-extends'
@@ -161,47 +161,50 @@ app.use(FsExtendExport)
 ```js
 // App.vue
 import {useAsync} from "@fast-crud/fast-crud";
-const {loadAsyncLib,registerAsyncLib} = useAsync();
+const {registerAsyncLib} = useAsync();
 registerAsyncLib("FsExportUtil")
 ```
 
-然后在需要调用的地方加载
+然后在需要调用的地方加载并使用
+
 ```js
 //crud.ts
 import {useAsync} from "@fast-crud/fast-crud";
 import {ExportUtil} from '@fast-crud/fast-extends'
-const crudOptions = {
-    toolbar:{
-        buttons:{
-            export:{
-                show:true,
-                async click(){
-                  const { loadAsyncLib } = useAsync();
-                  //加载异步库，不影响首页加载速度
-                  const exportUtil: ExportUtil = await loadAsyncLib({
-                    name: 'FsExportUtil',
-                  });
 
-                  const columns: CsvColumn[] = [];
-                  _.each(crudBinding.value.table.columnsMap, (col: ColumnCompositionProps) => {
-                    if (col.exportable !== false && col.key !== '_index') {
-                      columns.push({
-                        prop: col.key,
-                        label: col.title,
-                      });
-                    }
-                  });
-                  //导出csv
-                  await exportUtil.csv({
-                    columns,
-                    data: crudBinding.value.data,
-                    title: 'table',
-                    noHeader: false,
-                  });
-                }
+const crudOptions = {
+  toolbar: {
+    buttons: {
+      export: {
+        show: true,
+        async click() {
+          const {loadAsyncLib} = useAsync();
+          //加载异步库，不影响首页加载速度
+          const exportUtil: ExportUtil = await loadAsyncLib({
+            name: 'FsExportUtil',
+          });
+
+          const columns: ExportColumn[] = [];
+          //构建csv列
+          _.each(crudBinding.value.table.columnsMap, (col: ColumnCompositionProps) => {
+            if (col.show !== false && col.exportable !== false && col.key !== '_index') {
+              columns.push({
+                prop: col.key,
+                label: col.title,
+              });
             }
+          });
+          //导出csv
+          await exportUtil.csv({
+            columns,
+            data: crudBinding.value.data,
+            title: 'table',
+            noHeader: false,
+          });
         }
+      }
     }
+  }
 }
 ```
 
