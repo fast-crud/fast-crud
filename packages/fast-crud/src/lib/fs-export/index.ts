@@ -41,7 +41,7 @@ function defaultDataFormatter({ originalRow, row, key, col }: DataFormatterConte
     if (nodes != null && nodes.length > 0) {
       row[key] = _.map(nodes, (node) => {
         return dict.getLabel(node);
-      }).join(",");
+      }).join("|");
     }
   }
   return row;
