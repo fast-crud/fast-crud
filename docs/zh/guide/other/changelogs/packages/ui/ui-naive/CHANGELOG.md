@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.14.2](https://github.com/fast-crud/fast-crud/compare/v1.14.1...v1.14.2) (2023-07-02)
+
+### Performance Improvements
+
+* naiveui 自定义组件支持change validation ([9e8b75d](https://github.com/fast-crud/fast-crud/commit/9e8b75d3a0d640f86d66f9b78ac5ec57f687c339))
+
 ## [1.14.1](https://github.com/fast-crud/fast-crud/compare/v1.14.0...v1.14.1) (2023-06-16)
 
 **Note:** Version bump only for package @fast-crud/ui-naive

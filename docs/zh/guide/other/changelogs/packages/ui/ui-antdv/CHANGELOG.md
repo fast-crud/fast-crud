@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.14.2](https://github.com/fast-crud/fast-crud/compare/v1.14.1...v1.14.2) (2023-07-02)
+
+### Performance Improvements
+
+* 自定义组件支持触发validation ([ac15f11](https://github.com/fast-crud/fast-crud/commit/ac15f11b57ebcafb9a7dcd4846ae53b577e69b50))
+
 ## [1.14.1](https://github.com/fast-crud/fast-crud/compare/v1.14.0...v1.14.1) (2023-06-16)
 
 **Note:** Version bump only for package @fast-crud/ui-antdv

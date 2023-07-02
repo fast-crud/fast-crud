@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.14.2](https://github.com/jekip/naive-ui-admin/compare/v1.14.1...v1.14.2) (2023-07-02)
+
+### Bug Fixes
+
+* 修复某些情况下fs-icon spin失效的bug ([2499a33](https://github.com/jekip/naive-ui-admin/commit/2499a338def7436356c91a9b547e570c4204286d))
+
 ## [1.14.1](https://github.com/jekip/naive-ui-admin/compare/v1.14.0...v1.14.1) (2023-06-16)
 
 **Note:** Version bump only for package naive-ui-admin
