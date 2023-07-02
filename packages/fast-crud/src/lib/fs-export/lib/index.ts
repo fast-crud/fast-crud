@@ -3,6 +3,7 @@ import Csv from "./_csv";
 import * as Excel from "./_export2Excel";
 import FileSaver from "file-saver";
 import { CsvParams, ExcelParams, ExportColumn, ExportLibColumn, ExportUtil, TxtParams } from "./d";
+import { importCsvFromFile } from "./_import.csv";
 
 function transformExportColumn(columns: ExportColumn[]): ExportLibColumn[] {
   return columns.map((item) => {
@@ -84,5 +85,11 @@ export const exportUtil: ExportUtil = {
       // 完成
       resolve();
     });
+  }
+};
+
+export const importUtil = {
+  async csv(file: File) {
+    return await importCsvFromFile(file);
   }
 };

@@ -25,3 +25,12 @@ export type ExportLibColumn = {
   prop: string;
   label: string;
 };
+
+export type ImportData = {
+  data: any[];
+  columns: ExportColumn[];
+};
+
+export type ImportUtil = {
+  csv: (file: File) => Promise<ImportData>;
+};

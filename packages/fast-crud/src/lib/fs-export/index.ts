@@ -1,6 +1,6 @@
 import _ from "lodash-es";
 import { ColumnCompositionProps, ColumnProps, CrudBinding } from "/src/d";
-import { ExcelParams, ExportColumn, ExportUtil } from "./lib/d";
+import { ExcelParams, ExportColumn, ExportUtil, ImportUtil } from "./lib/d";
 import { Ref } from "vue";
 
 export async function loadFsExportUtil(): Promise<ExportUtil> {
@@ -13,6 +13,18 @@ export async function loadFsExportUtil(): Promise<ExportUtil> {
   const lib = await target();
   console.log("lib", lib);
   return lib.exportUtil;
+}
+
+export async function loadFsImportUtil(): Promise<ImportUtil> {
+  const module = await import.meta.glob("./lib/index.ts");
+  console.log("module", module);
+  let target: any = null;
+  _.each(module, (item) => {
+    target = item;
+  });
+  const lib = await target();
+  console.log("lib", lib);
+  return lib.importUtil;
 }
 
 export type DataFormatterContext = {
@@ -107,4 +119,21 @@ export async function exportTable(crudBinding: Ref<CrudBinding>, opts: ExportPro
   } else {
     await exportUtil.csv(expOpts);
   }
+}
+
+export type ImportProps = {
+  file: File;
+};
+export async function importTable(crudBinding: Ref<CrudBinding>, opts: ImportProps) {
+  const importUtil = await loadFsImportUtil();
+  const importData = await importUtil.csv(opts.file);
+  // const columns = importData.columns;
+  // const localColumns = crudBinding.value.table.columnsMap;
+  // const keys = [];
+  // for (const column of columns) {
+  //   const col = localColumns[column.key];
+  //   keys.push(column.key);
+  // }
+
+  crudBinding.value.data = importData.data;
 }

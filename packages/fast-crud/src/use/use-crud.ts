@@ -18,7 +18,7 @@ import { buildTableColumnsFlatMap, useColumns } from "./use-columns";
 import { CrudOptions } from "../d/crud";
 import { computed, Ref, ref } from "vue";
 import { useExpose } from "./use-expose";
-import { exportTable } from "./lib/fs-export";
+import { exportTable } from "../lib/fs-export";
 
 const { merge } = useMerge();
 
