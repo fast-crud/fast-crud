@@ -1,6 +1,6 @@
 {
   "name": "@fast-crud/fast-extends",
-  "version": "1.14.2",
+  "version": "1.14.3",
   "private": false,
   "main": "./src/index.ts",
   "module": "./src/index.ts",
@@ -44,7 +44,7 @@
     "vue-cropperjs": "^5.0.0"
   },
   "devDependencies": {
-    "@fast-crud/fast-crud": "^1.14.2",
+    "@fast-crud/fast-crud": "^1.14.3",
     "@iconify/json": "^2.2.35",
     "@ls-lint/ls-lint": "^1.11.2",
     "@rollup/plugin-commonjs": "^24.0.1",

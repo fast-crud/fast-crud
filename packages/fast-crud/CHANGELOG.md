@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.14.3](https://github.com/fast-crud/fast-crud/compare/v1.14.2...v1.14.3) (2023-07-02)
+
+### Bug Fixes
+
+* export lib ([b93f554](https://github.com/fast-crud/fast-crud/commit/b93f554e1586cb923ea0795fa11dd317d1118b45))
+
 ## [1.14.2](https://github.com/fast-crud/fast-crud/compare/v1.14.1...v1.14.2) (2023-07-02)
 
 ### Bug Fixes
