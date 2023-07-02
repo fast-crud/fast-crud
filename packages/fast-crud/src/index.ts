@@ -9,7 +9,6 @@ import { GlobalConfig, LoggerConfig, useDictDefine } from "./use";
 import { App } from "vue";
 import { FsSetupOptions } from "./d";
 import _ from "lodash-es";
-import { setupAppContext } from "./use/use-async";
 export * from "./utils/index";
 export * from "./use";
 export * from "./components";
@@ -40,7 +39,6 @@ export const FastCrud = {
     }
 
     FsFormWrapper._context = app._context;
-    setupAppContext(app._context);
 
     types.install();
 

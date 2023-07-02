@@ -1,5 +1,5 @@
 import _ from "lodash-es";
-import { ColumnCompositionProps, CrudBinding } from "/src/d";
+import { ColumnCompositionProps, ColumnProps, CrudBinding } from "/src/d";
 import { ExcelParams, ExportColumn, ExportUtil } from "./lib/d";
 import { Ref } from "vue";
 
@@ -15,6 +15,26 @@ export async function loadFsExportUtil(): Promise<ExportUtil> {
   return lib.exportUtil;
 }
 
+export type DataFormatterContext = {
+  row: any;
+  originalRow: any;
+  key: string;
+  col: ColumnProps;
+};
+function defaultDataFormatter({ originalRow, row, key, col }: DataFormatterContext) {
+  if (col.component?.dict && originalRow[key] != null) {
+    //处理dict
+    const dict = col.component.dict;
+    const nodes = dict.getNodesFromDataMap(originalRow[key]);
+    if (nodes != null && nodes.length > 0) {
+      row[key] = _.map(nodes, (node) => {
+        return dict.getLabel(node);
+      }).join(",");
+    }
+  }
+  return row;
+}
+
 /**
  * 导出配置
  */
@@ -25,9 +45,8 @@ export type ExportProps = {
   server?: () => Promise<void>;
   /**
    * 数据mapping
-   * @param row
    */
-  dataMapping?: (row: any) => any;
+  dataFormatter?: (context: DataFormatterContext) => void;
   /**
    * 导出文件类型
    */
@@ -53,9 +72,24 @@ export async function exportTable(crudBinding: Ref<CrudBinding>, opts: ExportPro
   //加载异步组件，不影响首页加载速度
   const exportUtil: ExportUtil = await loadFsExportUtil();
   const data = [];
-  const dataMapping = opts.dataMapping || ((row) => row);
   for (const row of crudBinding.value.data) {
-    data.push(dataMapping(row));
+    const clone = _.cloneDeep(row);
+    _.each(crudBinding.value.table.columnsMap, (col: ColumnCompositionProps) => {
+      if (col.exportable !== false && col.key !== "_index") {
+        const mapping = {
+          row: clone,
+          originalRow: row,
+          key: col.key,
+          col
+        };
+        defaultDataFormatter(mapping);
+        if (opts.dataFormatter) {
+          opts.dataFormatter(mapping);
+        }
+      }
+    });
+
+    data.push(clone);
   }
   const expOpts = _.merge(
     {
