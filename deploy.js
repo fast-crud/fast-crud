@@ -46,7 +46,6 @@ async function sync(){
         console.log(`sync success:${pkg}`)
         await sleep(10000)
     }
-    await sleep(60000)
 }
 
 
