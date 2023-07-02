@@ -1,6 +1,5 @@
 const http = require("axios")
 const exec = require('child_process').exec;
-
 const fs = require("fs")
 
 // 同步npmmirror的包
@@ -30,7 +29,7 @@ async function getAllPackages(){
     const base = ["fast-crud",'fast-extends']
     const ui =await getPackages("./packages/ui")
 
-    return base.concat(ui)
+    return ui.concat(base)
 }
 
 async function sync(){
@@ -40,7 +39,7 @@ async function sync(){
             url: `https://registry-direct.npmmirror.com/@fast-crud/${pkg}/sync?sync_upstream=true`,
             method: 'PUT',
             headers: {
-                "Content-Type": "application/json"
+                "Content-Type": "application/json; charset=utf-8"
             },
             data: {}
         })
