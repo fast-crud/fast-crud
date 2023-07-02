@@ -123,17 +123,15 @@ export async function exportTable(crudBinding: Ref<CrudBinding>, opts: ExportPro
 
 export type ImportProps = {
   file: File;
+  append?: boolean;
 };
 export async function importTable(crudBinding: Ref<CrudBinding>, opts: ImportProps) {
   const importUtil = await loadFsImportUtil();
   const importData = await importUtil.csv(opts.file);
-  // const columns = importData.columns;
-  // const localColumns = crudBinding.value.table.columnsMap;
-  // const keys = [];
-  // for (const column of columns) {
-  //   const col = localColumns[column.key];
-  //   keys.push(column.key);
-  // }
 
-  crudBinding.value.data = importData.data;
+  if (opts.append === false) {
+    crudBinding.value.data = importData.data;
+  } else {
+    crudBinding.value.data = crudBinding.value.data.concat(importData.data);
+  }
 }
