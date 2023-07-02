@@ -188,7 +188,7 @@ export type CrudExpose = {
   editable: Editable;
 };
 export type EditableAddRowOptions = {
-  row: any;
+  row?: any;
   active?: boolean;
 };
 export type EditableEditColsOptions = {
@@ -211,7 +211,7 @@ export type Editable = {
   /**
    * 添加行
    */
-  addRow(opts: EditableAddRowOptions): void;
+  addRow(opts?: EditableAddRowOptions): void;
   /**
    * 编辑cols
    * @param opts
