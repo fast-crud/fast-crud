@@ -194,7 +194,7 @@ export type EditableEditColsOptions = {
   cols: any[];
 };
 export type Editable = {
-  enable(opts: any, onEnabled: (opts: EditableOnEnabledProps) => void): Promise<void>;
+  enable(opts: any, onEnabled?: (opts: EditableOnEnabledProps) => void): Promise<void>;
   /**
    * 禁用编辑
    */
