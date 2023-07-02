@@ -45,7 +45,7 @@ async function sync(){
             data: {}
         })
         console.log(`sync success:${pkg}`)
-        await sleep(1000)
+        await sleep(10000)
     }
     await sleep(60000)
 }
@@ -107,7 +107,7 @@ async function trigger(){
             data:{}
         })
         console.log(`webhook success:${webhook}`)
-        await sleep(1000)
+        await sleep(10000)
     }
 
 }
