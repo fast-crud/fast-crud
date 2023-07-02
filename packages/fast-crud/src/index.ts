@@ -16,7 +16,7 @@ export * from "./ui";
 const { setDictRequest } = useDictDefine();
 export { utils, useI18n, uiContext };
 export * from "./d/index";
-
+export * from "./lib";
 export const FastCrud = {
   install(app: App, options: FsSetupOptions = {}) {
     if (options.ui) {
