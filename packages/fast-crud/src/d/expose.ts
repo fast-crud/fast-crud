@@ -1,7 +1,6 @@
-import { ColumnCompositionProps, CompositionColumns, CrudBinding, FormProps, RemoveProps } from "./crud";
+import { CompositionColumns, CrudBinding, FormProps, RemoveProps } from "./crud";
 import { Ref } from "vue";
-import logger from "/src/utils/util.log";
-import { EditableOnEnabledProps } from "/src/use";
+import { EditableOnEnabledProps } from "../use";
 
 export type DoValueResolveProps = {
   form: any;

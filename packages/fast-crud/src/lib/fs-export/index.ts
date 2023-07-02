@@ -1,5 +1,5 @@
 import _ from "lodash-es";
-import { ColumnCompositionProps, ColumnProps, CrudBinding, CrudExpose } from "/src/d";
+import { ColumnCompositionProps, ColumnProps, CrudBinding, CrudExpose } from "../../d";
 import { ExcelParams, ExportColumn, ExportUtil, ImportUtil } from "./lib/d";
 import { Ref } from "vue";
 
