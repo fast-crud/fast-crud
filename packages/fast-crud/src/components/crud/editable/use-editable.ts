@@ -428,7 +428,7 @@ export function useEditable(props: any, ctx: any, tableRef: any) {
 
   let addIndex = 0;
 
-  function addRow(opts: { row: any } = { row: undefined }) {
+  function addRow(opts: { row: any; active: boolean } = { row: undefined, active: true }) {
     const row = opts.row || { [options.value.rowKey]: --addIndex };
     if (opts.row === undefined) {
       for (let i = 0; i < props.columns.length; i++) {
@@ -447,8 +447,11 @@ export function useEditable(props: any, ctx: any, tableRef: any) {
     }
     const firstRow = unshiftEditableRow(row, index);
     firstRow.isAdd = true;
-    firstRow.isEditing = true;
-    firstRow.active();
+    if (opts.active !== false) {
+      firstRow.isEditing = true;
+      firstRow.active();
+    }
+
     actionHistory.push({
       type: "add",
       index: 0

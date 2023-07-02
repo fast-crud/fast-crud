@@ -1,5 +1,13 @@
 import { Ref, toRaw } from "vue";
-import { CrudExpose, OpenDialogProps, OpenEditContext, SetFormDataOptions } from "../d/expose";
+import {
+  CrudExpose,
+  Editable,
+  EditableAddRowOptions,
+  EditableEditColsOptions,
+  OpenDialogProps,
+  OpenEditContext,
+  SetFormDataOptions
+} from "../d/expose";
 import _ from "lodash-es";
 import logger from "../utils/util.log";
 import { useMerge } from "../use/use-merge";
@@ -44,7 +52,7 @@ function useEditable(props: UseEditableProps) {
   const { ui } = useUi();
   const { t } = useI18n();
   const { merge } = useMerge();
-  const editable = {
+  const editable: Editable = {
     /**
      * 启用编辑
      * @param opts
@@ -86,10 +94,10 @@ function useEditable(props: UseEditableProps) {
     /**
      * 添加行
      */
-    addRow(opts: any) {
+    addRow(opts: EditableAddRowOptions) {
       crudExpose.getTableRef().editable.addRow(opts);
     },
-    editCol(opts: any) {
+    editCol(opts: EditableEditColsOptions) {
       crudExpose.getTableRef().editable.editCol(opts);
     },
     /**

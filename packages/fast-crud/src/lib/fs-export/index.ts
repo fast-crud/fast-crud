@@ -1,5 +1,5 @@
 import _ from "lodash-es";
-import { ColumnCompositionProps, ColumnProps, CrudBinding } from "/src/d";
+import { ColumnCompositionProps, ColumnProps, CrudBinding, CrudExpose } from "/src/d";
 import { ExcelParams, ExportColumn, ExportUtil, ImportUtil } from "./lib/d";
 import { Ref } from "vue";
 
@@ -125,13 +125,19 @@ export type ImportProps = {
   file: File;
   append?: boolean;
 };
-export async function importTable(crudBinding: Ref<CrudBinding>, opts: ImportProps) {
+export async function importTable(crudExpose: CrudExpose, opts: ImportProps) {
   const importUtil = await loadFsImportUtil();
   const importData = await importUtil.csv(opts.file);
-
+  const crudBinding = crudExpose.crudBinding;
   if (opts.append === false) {
-    crudBinding.value.data = importData.data;
-  } else {
-    crudBinding.value.data = crudBinding.value.data.concat(importData.data);
+    crudBinding.value.data.length = 0;
+  }
+  const isEditable = crudBinding.value.table.editable.enabled;
+  for (const row of importData.data) {
+    if (isEditable) {
+      crudExpose.editable.addRow({ row, active: false });
+    } else {
+      crudBinding.value.data.push(row);
+    }
   }
 }
