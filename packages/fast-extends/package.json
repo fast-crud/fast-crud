@@ -19,7 +19,8 @@
     "copy:type": "copyfiles -f ./dist/extends-uploader.es.js ./dist/index.type.js",
     "copy:index": "copyfiles -f ./src/index.vite.es.js ./dist/",
     "lint-fix": "eslint --fix --ext .js --ext .jsx --ext .vue src/",
-    "tsc": "vue-tsc --noEmit --skipLibCheck"
+    "tsc": "vue-tsc --noEmit --skipLibCheck",
+    "afterPubPush": ""
   },
   "author": "Greper",
   "license": "MIT",

@@ -14,7 +14,8 @@
     "tsc": "vue-tsc --noEmit --skipLibCheck",
     "build": "npm run tsc && vite build",
     "test": "jest",
-    "lint-fix": "eslint --fix --ext .js --ext .jsx --ext .vue src/"
+    "lint-fix": "eslint --fix --ext .js --ext .jsx --ext .vue src/",
+    "afterPubPush": ""
   },
   "author": "Greper",
   "license": "MIT",
