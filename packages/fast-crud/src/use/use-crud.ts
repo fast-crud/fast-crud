@@ -196,7 +196,7 @@ export function useCrud(ctx: UseCrudProps): UseCrudRet {
           },
           search: {
             type: computed(() => {
-              return crudBinding.value.search.show ? "primary" : "default";
+              return crudBinding.value.search.show !== false ? "primary" : "default";
             }),
             icon: ui.icons.search,
             title: t("fs.toolbar.search.title"), // '查询显示',

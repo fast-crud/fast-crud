@@ -70,13 +70,6 @@ export default defineComponent({
       type: Object
     },
     /**
-     * 当前是否显示查询。
-     * 注意：如果要隐藏search，请配置crudOptions.search.show=false
-     */
-    search: {
-      type: Boolean
-    },
-    /**
      * 当前是否紧凑模式
      */
     compact: {
@@ -126,12 +119,12 @@ export default defineComponent({
       };
 
       merge(defaultButtons, props.buttons);
-      if (defaultButtons.search) {
-        defaultButtons.search.type = props.search ? "primary" : "default";
-      }
-      if (defaultButtons.compact) {
-        defaultButtons.compact.type = props.compact ? "primary" : "default";
-      }
+      // if (defaultButtons.search) {
+      //   defaultButtons.search.type = props.search ? "primary" : "default";
+      // }
+      // if (defaultButtons.compact) {
+      //   defaultButtons.compact.type = props.compact ? "primary" : "default";
+      // }
 
       let sortArr: ButtonProps[] = [];
       for (let defaultButtonsKey in defaultButtons) {
