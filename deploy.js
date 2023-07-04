@@ -36,7 +36,7 @@ async function sync(){
     const packages = await getAllPackages()
     for(const pkg of packages){
         await http({
-            url: `https://registry-direct.npmmirror.com/@fast-crud/${pkg}/sync?sync_upstream=true`,
+            url: `http://registry-direct.npmmirror.com/@fast-crud/${pkg}/sync?sync_upstream=true`,
             method: 'PUT',
             headers: {
                 "Content-Type": "application/json; charset=utf-8"
