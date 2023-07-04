@@ -425,11 +425,11 @@ export type UseFsContext = {
 };
 
 export type CreateCrudOptionsProps<T = UseFsContext> = {
-  crudExpose?: CrudExpose;
+  crudExpose: CrudExpose;
 
   expose?: CrudExpose;
 
-  context?: T;
+  context: T;
 };
 
 export type CreateCrudOptionsRet = {
