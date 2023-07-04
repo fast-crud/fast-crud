@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.14.5](https://github.com/fast-crud/fast-crud/compare/v1.14.4...v1.14.5) (2023-07-04)
+
+### Bug Fixes
+
+* 修复search.value第一次查询无效的bug ([d9a907a](https://github.com/fast-crud/fast-crud/commit/d9a907a477bae66662a8a8720a24ab3506772d30))
+* 修复toolbar search按钮高亮问题 ([a677d97](https://github.com/fast-crud/fast-crud/commit/a677d97a800308c47a14a5e22a4c23df53464417))
+
+### Performance Improvements
+
+* 优化export,支持查询导出 ([181828e](https://github.com/fast-crud/fast-crud/commit/181828e65159f2643c40957f24157701017f1013))
+
 ## [1.14.4](https://github.com/fast-crud/fast-crud/compare/v1.14.3...v1.14.4) (2023-07-02)
 
 **Note:** Version bump only for package fast-crud-root
