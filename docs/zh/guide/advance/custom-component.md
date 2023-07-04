@@ -95,5 +95,5 @@ const crudOptions= {
 [嵌套子表格当做输入组件](http://fast-crud.docmirror.cn/antdv/#/crud/advanced/nest)
 
 
-[独立使用表单自定义组件](http://fast-crud.docmirror.cn/antdv/#/crud/feature/v-model)
+[独立使用表单自定义组件](http://fast-crud.docmirror.cn/antdv/#/crud/feature/local-v-model)
 
