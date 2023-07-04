@@ -105,6 +105,20 @@ export type ValueChangeProps = {
  */
 export type ValueChangeHandle = (context: ValueChangeContext) => Promise<void>;
 
+export type Page = {
+  /**
+   * 当前页
+   */
+  currentPage?: number;
+  /**
+   * 每页条数
+   */
+  pageSize?: number;
+};
+/**
+ * 查询排序参数
+ */
+export type PageSort = { prop?: string; order?: string; asc?: boolean };
 /**
  * 查询
  */
@@ -112,7 +126,7 @@ export type PageQuery = {
   /**
    * 翻页参数
    */
-  page?: any;
+  page?: Page;
   /**
    * 查询表单
    */
@@ -120,7 +134,7 @@ export type PageQuery = {
   /**
    * 远程排序配置
    */
-  sort?: any;
+  sort?: PageSort;
 };
 
 /**
@@ -1055,6 +1069,10 @@ export type ColumnProps = {
    */
   valueChange?: ValueChangeHandle | ValueChangeProps;
 
+  /**
+   * 是否支持导出
+   */
+  exportable?: boolean;
   /**
    * 其他x-table-column配置
    */

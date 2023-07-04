@@ -20,6 +20,7 @@ import {
   PageQuery,
   PageRes,
   RemoveProps,
+  SearchOptions,
   UserPageQuery,
   UserPageRes
 } from "../d";
@@ -312,6 +313,61 @@ export function useExpose(props: UseExposeProps): UseExposeRet {
       checkCrudRef();
       return crudRef.value.getSearchRef();
     },
+
+    async search(pageQuery: PageQuery, options: SearchOptions = {}) {
+      const page = pageQuery.page;
+
+      let searchFormData = pageQuery.form;
+      if (searchFormData == null) {
+        searchFormData = _.cloneDeep(crudExpose.getSearchValidatedFormData());
+        //配置searchValueResolve
+        if (crudBinding.value?.search?.columns) {
+          crudExpose.doValueResolve({ form: searchFormData }, toRaw(crudBinding.value.search.columns));
+        }
+      }
+
+      let sort = pageQuery.sort;
+      if (sort == null) {
+        sort = crudBinding.value.table.sort || {};
+      }
+
+      const query: PageQuery = { page, form: searchFormData, sort };
+      let userPageQuery: UserPageQuery = query;
+      if (crudBinding.value.request.transformQuery) {
+        userPageQuery = crudBinding.value.request.transformQuery(query);
+      }
+
+      let userPageRes: UserPageRes;
+      try {
+        if (options.silence !== true) {
+          crudBinding.value.table.loading = true;
+        }
+
+        logger.debug("pageRequest", userPageQuery);
+        userPageRes = await crudBinding.value.request.pageRequest(userPageQuery);
+      } finally {
+        if (options.silence !== true) {
+          crudBinding.value.table.loading = false;
+        }
+      }
+      if (userPageRes == null) {
+        logger.warn("pageRequest返回结果不能为空");
+        return;
+      }
+      let pageRes: PageRes = userPageRes as PageRes;
+      if (crudBinding.value.request.transformRes) {
+        pageRes = crudBinding.value.request.transformRes({
+          res: userPageRes,
+          query: userPageQuery
+        });
+      }
+
+      //valueBuild
+      if (pageRes.records) {
+        crudExpose.doValueBuilder(pageRes.records);
+      }
+      return pageRes;
+    },
     async doRefresh(props?) {
       if (crudBinding.value.request.pageRequest == null) {
         return;
@@ -328,40 +384,7 @@ export function useExpose(props: UseExposeProps): UseExposeRet {
           pageSize: crudBinding.value.pagination.pageSize
         };
       }
-
-      const searchFormData = _.cloneDeep(crudExpose.getSearchValidatedFormData());
-      //配置searchValueResolve
-      if (crudBinding.value?.search?.columns) {
-        crudExpose.doValueResolve({ form: searchFormData }, toRaw(crudBinding.value.search.columns));
-      }
-      //crudExpose.doValueResolve({ form: searchFormData });
-
-      const sort = crudBinding.value.table.sort || {};
-      const query: PageQuery = { page, form: searchFormData, sort };
-      let userPageQuery: UserPageQuery = query;
-      if (crudBinding.value.request.transformQuery) {
-        userPageQuery = crudBinding.value.request.transformQuery(query);
-      }
-
-      let userPageRes: UserPageRes;
-      try {
-        crudBinding.value.table.loading = true;
-        logger.debug("pageRequest", userPageQuery);
-        userPageRes = await crudBinding.value.request.pageRequest(userPageQuery);
-      } finally {
-        crudBinding.value.table.loading = false;
-      }
-      if (userPageRes == null) {
-        logger.warn("pageRequest返回结果不能为空");
-        return;
-      }
-      let pageRes: PageRes = userPageRes as PageRes;
-      if (crudBinding.value.request.transformRes) {
-        pageRes = crudBinding.value.request.transformRes({
-          res: userPageRes,
-          query: userPageQuery
-        });
-      }
+      const pageRes = await crudExpose.search({ page });
       const { currentPage = page[ui.pagination.currentPage], pageSize = page.pageSize, total } = pageRes;
       const { records } = pageRes;
       if (
@@ -369,8 +392,10 @@ export function useExpose(props: UseExposeProps): UseExposeRet {
         total == null ||
         currentPage == null ||
         currentPage <= 0 ||
+        isNaN(currentPage) ||
         pageSize == null ||
-        pageSize <= 0
+        pageSize <= 0 ||
+        isNaN(pageSize)
       ) {
         logger.error(
           "pageRequest返回结构不正确，请配置正确的request.transformRes，期望：{currentPage>0, pageSize>0, total, records:[]},实际返回：",
@@ -378,9 +403,6 @@ export function useExpose(props: UseExposeProps): UseExposeRet {
         );
         return;
       }
-
-      //valueBuild
-      crudExpose.doValueBuilder(records);
 
       crudBinding.value.data = records;
       if (crudBinding.value.pagination) {

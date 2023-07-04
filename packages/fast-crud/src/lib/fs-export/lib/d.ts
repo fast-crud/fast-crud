@@ -9,16 +9,23 @@ export type TxtParams = {
 export type ExcelParams = {
   header?: any;
   merges?: any[];
-} & CsvParams;
+  columns?: ExportColumn[];
+  data?: any[];
+  filename?: string;
+};
 export type CsvParams = {
   columns?: ExportColumn[];
   data?: any[];
   filename?: string;
   noHeader?: boolean;
+  separator?: string;
+  quoted?: boolean;
 };
 export type ExportColumn = {
   key: string;
   title: string;
+  width?: number;
+  [key: string]: any;
 };
 
 export type ExportLibColumn = {

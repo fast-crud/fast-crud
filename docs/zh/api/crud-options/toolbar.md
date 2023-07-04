@@ -59,11 +59,18 @@ const crudOptions = {
             server:()=>Promise<void>, // 服务端导出方法，配置则开启服务端导出，本地导出则不生效
             //以下为本地导出配置
             columns:  null, // 导出的列配置，不配置则导出全部，类型为 {key:string,title:string}[],
-            noHeader: false, // 是否需要表头
-            dataMapping:(row:any)=>row, // 类型(row:any)=>any
+            noHeader: false, // 是否不需要表头
             filename: 'table', // 导出文件名
             fileType: 'csv' ,// 导出文件类型，可选值：csv | excel
-            merge: [], // excel 合并单元格配置
+            merge: [], // excel 合并单元格配置,仅excel生效
+            dataFormatter: (opts:DataFormatterContext)=>{
+                //自定义修改导出数据
+                // DataFormatterContext = {row: any,originalRow: any, key: string, col: ColumnProps}
+                // row = 当前行数据
+                // originalRow = 当前行原始数据
+                // key = 当前列的key
+                // col = 当前列的配置
+            } ,
         }
     }
 }

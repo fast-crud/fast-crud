@@ -226,7 +226,7 @@ export function useCrud(ctx: UseCrudProps): UseCrudRet {
             title: t("fs.toolbar.export.title"), // '导出',
             circle: true,
             click: async () => {
-              await exportTable(crudBinding, crudBinding.value.toolbar.export);
+              await exportTable(crudExpose, crudBinding.value.toolbar.export);
             }
           },
           columns: {

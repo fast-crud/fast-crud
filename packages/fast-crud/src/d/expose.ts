@@ -1,6 +1,10 @@
-import { CompositionColumns, CrudBinding, FormProps, RemoveProps } from "./crud";
+import { CompositionColumns, CrudBinding, FormProps, PageQuery, PageRes, RemoveProps } from "./crud";
 import { Ref } from "vue";
 import { EditableOnEnabledProps } from "../use";
+
+export type SearchOptions = {
+  silence?: boolean;
+};
 
 export type DoValueResolveProps = {
   form: any;
@@ -70,6 +74,12 @@ export type CrudExpose = {
    * @param opts {form, goFirstPage =true,mergeForm=false}
    */
   doSearch: (props: DoSearchProps) => Promise<void>;
+
+  /**
+   * 执行搜索，返回页面数据
+   * @param pageQuery
+   */
+  search: (pageQuery: PageQuery, options?: SearchOptions) => Promise<PageRes>;
   /**
    * 删除行按钮点击
    * @param context = {index / row}

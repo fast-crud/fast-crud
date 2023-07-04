@@ -53,7 +53,7 @@ function datenum(v, date1904) {
     return (epoch - new Date(Date.UTC(1899, 11, 30))) / (24 * 60 * 60 * 1000);
 }
 
-function sheet_from_array_of_arrays(data, opts) {
+function sheet_from_array_of_arrays(data, opts={}) {
     var ws = {};
     var range = {s: {c: 10000000, r: 10000000}, e: {c: 0, r: 0}};
     for (var R = 0; R != data.length; ++R) {
@@ -74,7 +74,6 @@ function sheet_from_array_of_arrays(data, opts) {
                 cell.v = datenum(cell.v);
             }
             else cell.t = 's';
-
             ws[cell_ref] = cell;
         }
     }
@@ -133,7 +132,9 @@ export function export_json_to_excel(th, jsonData, defaultTitle, options = { mer
     if (options.header) data.unshift([options.header]);
     var ws_name = "SheetJS";
 
-    var wb = new Workbook(), ws = sheet_from_array_of_arrays(data);
+    const opts = {
+    }
+    var wb = new Workbook(), ws = sheet_from_array_of_arrays(data,opts);
 
     /* add merges area to worksheet */
     let { merges } = options;

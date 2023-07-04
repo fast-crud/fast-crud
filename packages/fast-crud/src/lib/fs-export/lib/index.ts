@@ -43,8 +43,7 @@ export const exportUtil: ExportUtil = {
         data: [],
         filename: "table",
         header: null,
-        merges: [],
-        noHeader: false
+        merges: []
       };
       // 合并参数
       const _params: ExcelParams = Object.assign({}, paramsDefault, params);
