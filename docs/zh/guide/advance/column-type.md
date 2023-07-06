@@ -64,7 +64,7 @@ columns:{
 比如`antdv`的字段跨列配置需要配置三条，就相当繁琐    
 ```js
 { //key.column
-    type:"text-area"
+    type:"textarea"
     form:{
         col:{span:24}, //配置在表单中此字段独占整行,
         // 由于antdv的label也是通过row,col来配置的
@@ -77,7 +77,7 @@ columns:{
 以上配置可以如下写法进行简化，`colspan`背后就是上面的配置
 ```js
 { //key.column
-    type:["text-area","colspan"]
+    type:["textarea","colspan"]
 }
 ```
 
