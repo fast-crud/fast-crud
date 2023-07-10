@@ -567,9 +567,10 @@ export default defineComponent({
         align-items: center;
       }
 
-      .el-form--inline {
-        display: flex;
-        align-items: center;
+      &.el-form--inline {
+        .el-input {
+          width: 100%;
+        }
       }
 
       .el-form-item__content {
