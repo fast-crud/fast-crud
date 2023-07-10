@@ -207,9 +207,9 @@ const createCrudOptions = function ({ crudOptions, context }: CreateCrudOptionsP
   //本地模拟后台crud接口方法 ----开始
   const records = [{ id: 1, name: "Hello World", type: 1 }];
   const pageRequest = async (query: UserPageQuery): Promise<UserPageRes> => {
-    return {
+    return {  //由于上面request.transformRes配置了透传，所以此处返回的数据结构为fs-crud要求的结构：{records,currentPage,pageSize,total}
       records:[...records],
-      currentPage: 1,
+      currentPage: 1,  
       pageSize: 20,
       total: records.length
     };

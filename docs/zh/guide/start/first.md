@@ -85,7 +85,7 @@ export default function ({ crudExpose, context }: CreateCrudOptionsProps): Creat
 
 <script lang="ts">
     import { defineComponent, onMounted } from "vue";
-    import { useFs } from "@fast-crud/fast-crud";
+    import { useFs ,OnExposeContext } from "@fast-crud/fast-crud";
     import createCrudOptions from "./crud";
 
     //此处为组件定义
@@ -105,9 +105,9 @@ export default function ({ crudExpose, context }: CreateCrudOptionsProps): Creat
 
             //  =======以上为fs的初始化代码=========
             //  =======你可以简写为下面这一行========
-            const customValue: any = {}; // 自定义变量, 将会传递给createCrudOptions
-            const onExpose(e:OnExposeContext){} //将在createOptions之前触发，可以获取到crudExpose,和context
-            const { crudRef, crudBinding, crudExpose, context } = useFs({ createCrudOptions, onExpose, context:customValue});
+            const context: any = {}; // 自定义变量, 将会传递给createCrudOptions
+            function onExpose(e:OnExposeContext){} //将在createOptions之前触发，可以获取到crudExpose,和context
+            const { crudRef, crudBinding, crudExpose } = useFs({ createCrudOptions, onExpose, context});
             
             // 页面打开后获取列表数据
             onMounted(() => {
@@ -141,9 +141,9 @@ import _ from "lodash-es";
 const records = [{ id: 1, name: "Hello World", type: 1 }];
 export const pageRequest = async (query: UserPageQuery): Promise<UserPageRes> => {
     return {
-        records,
-        currentPage: 1,
-        pageSize: 20,
+        records, //此处跟fs所需字段一致，无需转换
+        offset: 0, //后续会在transformRes里面做转化，转换为currentPage
+        limit: 20,//后续会在transformRes里面做转化，转换为pageSize
         total: records.length
     };
 };
