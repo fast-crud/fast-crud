@@ -36,12 +36,15 @@ const crudOptions:{
 * 类型：Object
 * 示例: [antdv](http://fast-crud.docmirror.cn/antdv/#/form/independent) |  [element](http://fast-crud.docmirror.cn/element/#/form/independent)
 * 
-```json
-//element
-{ // crudOptions.form
-    labelPosition: "right",
-    labelWidth: "100px", //
-    //更多配置请查看对应ui库文档，form表单章节
+```js
+const crudOptions = {
+    form: { // crudOptions.form
+        // 以下仅element，其他ui的相关配置请看对应ui的form组件文档
+        labelPosition: "right", // 标签位置
+        labelWidth: "100px", //标签宽度
+        //更多配置请查看对应ui库文档，form表单章节
+    }
+    
 }
 ```
 
@@ -183,8 +186,8 @@ const crudOptions:{
 * 可选：el-dialog / el-drawer / a-modal / a-drawer
 
 ## 对应ui库对话框或抽屉组件的参数
+* 说明： 对话框或抽屉组件的参数，比如宽度、样式、高度、标题等，具体参数请前往对应ui库的文档查找相应组件的配置
 * 支持： 支持fs-form-wrapper，el-dialog，el-drawer，a-modal，a-drawer的配置，取决于[wrapper.is](#wrapper-is)配置
-* 配置： 具体配置请根据你使用的ui库，前往对应ui库的文档查找相应组件的配置
 * 示例：
 
 ```json
