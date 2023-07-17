@@ -182,3 +182,7 @@ QQ群
 > 解谜提示  
 > 谜题共三层，前两层是两种不同的编码方式，第三层这里就不剧透了，留一点小乐趣。
 * 
+
+## 感谢支持
+* [jetbrains](https://jb.gg/OpenSourceSupport) ：感谢jetbrains提供的免费开源license    
+![](https://resources.jetbrains.com/storage/products/company/brand/logos/jb_beam.svg)
