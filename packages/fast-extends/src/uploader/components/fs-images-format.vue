@@ -93,7 +93,7 @@ export default defineComponent({
       }
       if (typeof props.modelValue === "string") {
         urls.push(props.modelValue);
-      } else {
+      } else if (Array.isArray(props.modelValue)) {
         for (const item of props.modelValue) {
           if (item == null) {
             continue;
@@ -103,6 +103,13 @@ export default defineComponent({
           } else {
             urls.push(item);
           }
+        }
+      } else {
+        //object
+        if (props.modelValue.url != null) {
+          urls.push(props.modelValue.url);
+        } else {
+          urls.push(props.modelValue);
         }
       }
       return urls;
