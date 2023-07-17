@@ -1,6 +1,6 @@
 import _ from "lodash-es";
 import { ColumnCompositionProps, ColumnProps, CrudExpose, PageQuery } from "../../d";
-import { ExcelParams, ExportColumn, ExportUtil, ImportUtil } from "./lib/d";
+import { CsvParams, ExcelParams, ExportColumn, ExportUtil, ImportUtil } from "./lib/d";
 
 export async function loadFsExportUtil(): Promise<ExportUtil> {
   const module = await import.meta.glob("./lib/index.ts");
@@ -82,6 +82,7 @@ export type ExportProps = {
    * 查询参数
    */
   searchParams?: PageQuery;
+
   /**
    * 数据分隔符
    */
@@ -90,7 +91,8 @@ export type ExportProps = {
    * 数据是否加引号
    */
   quoted?: boolean; //每项数据是否加引号
-} & ExcelParams;
+} & CsvParams &
+  ExcelParams;
 export async function exportTable(crudExpose: CrudExpose, opts: ExportProps = {}): Promise<any> {
   if (opts.server) {
     await opts.server();

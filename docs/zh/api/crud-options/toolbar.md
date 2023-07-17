@@ -59,9 +59,20 @@ const crudOptions = {
             server:()=>Promise<void>, // 服务端导出方法，配置则开启服务端导出，本地导出则不生效
             //以下为本地导出配置
             columns:  null, // 导出的列配置，不配置则导出全部，类型为 {key:string,title:string}[],
-            noHeader: false, // 是否不需要表头
+            noHeader: false, // 是否不需要表头，仅csv
             filename: 'table', // 导出文件名
-            fileType: 'csv' ,// 导出文件类型，可选值：csv | excel
+            fileType: 'csv' ,// 导出文件类型，可选值：csv | excel=数据比较复杂时使用（包含逗号，换行等）
+            dataFrom: 'local', //导出数据来源，可选值：local=本地页面数据 | search=导出前请求接口获取数据
+            searchParams: { //当dataFrom=search时，导出前请求接口获取数据的参数
+                //查询条件
+                page: {
+                    currentPage: 1,
+                    pageSize: 99999999
+                }
+                // 如果以下参数不传，以当前查询条件为准
+                // form: {},
+                // sort: {}
+            },
             merge: [], // excel 合并单元格配置,仅excel生效
             dataFormatter: (opts:DataFormatterContext)=>{
                 //自定义修改导出数据

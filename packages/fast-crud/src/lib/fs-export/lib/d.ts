@@ -21,6 +21,9 @@ export type CsvParams = {
   separator?: string;
   quoted?: boolean;
 };
+/**
+ * 导出列配置
+ */
 export type ExportColumn = {
   key: string;
   title: string;
