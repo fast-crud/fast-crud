@@ -56,7 +56,7 @@
 
 ### fs-crud组件
 其他的都交给`fs-crud`吧     
-具体`fs-crud`需要哪些参数，请查看[fs-crud组件的参数](/api/components/crud/fs-crud)文档
+
 
 
 
