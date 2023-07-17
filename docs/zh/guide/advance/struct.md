@@ -1,16 +1,20 @@
-# 配置与组件的对应关系
+# CrudOptions
 
 
 ## 总览
 页面crud配置概览
-其中`对应xx-xxxx配置`指的是这个地方的配置项对应着fs-crud中使用的组件，你可以到对应的组件文档中查找属性，配置到这里来达到你想要的效果。
 ```js
 const crudOptions ={
     request:{},     //http请求
     columns:{       //字段配置
-        column:{},  //对应table-column配置
-        form:{},    //对应form-item配置
-        search:{}   //对应查询表单的form-item配置
+        key:{       //字段key
+            column:{},  //对应table-column配置
+            form:{},    //表单中该字段的公共配置，viewForm、addForm、editForm、search会集成此配置，支持对应ui的form-item配置
+            viewForm:{}, //查看表单中该字段的配置，支持对应ui的form-item配置
+            addForm:{}, // 添加表单中该字段的配置，支持对应ui的form-item配置
+            editForm:{}, //编辑表单中该字段的配置，支持对应ui的form-item配置
+            search:{}   //对应查询表单的form-item配置
+        }
     },     
     search:{        //查询框配置 ，对应fs-search组件
         options:{}  //查询表单配置 ，对应el-from, a-form配置    
@@ -35,13 +39,9 @@ const crudOptions ={
 
 ```
 
-## 页面组件与配置对应图
-
-可以右键新窗口打开图片查看原图
-
+## 页面布局
 ![](../../images/struct.png)
 
 
-
-
-
+##  配置API
+更多详细配置请[参考API](../../api/index.md)
