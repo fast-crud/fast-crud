@@ -9,14 +9,18 @@ import uiUtil from "./ui/util.ts";
 
 export * from "./naive";
 export { FsUiContext };
-
+export type UiSetupOptions = {
+  setupIcons?: boolean;
+};
 export default {
-  install(app: any) {
+  install(app: any, options: UiSetupOptions = {}) {
     // @ts-ignore
     const naiveUi = new Naive();
     uiContext.set(naiveUi);
     app.component("FsUiContext", FsUiContext);
-    setupIcons(app);
+    if (options.setupIcons !== false) {
+      setupIcons(app);
+    }
     return naiveUi;
   },
   init() {

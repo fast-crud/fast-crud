@@ -6,14 +6,21 @@ import { Element } from "./element";
 import setupIcons from "./icons";
 
 export * from "./element";
+
+export type UiSetupOptions = {
+  setupIcons?: boolean;
+};
+
 export default {
-  install(app: any) {
+  install(app: any, options: UiSetupOptions = {}) {
     const elementUi = new Element({
       Message: ElMessage,
       Notification: ElNotification,
       MessageBox: ElMessageBox
     });
-    setupIcons(app);
+    if (options.setupIcons !== false) {
+      setupIcons(app);
+    }
     uiContext.set(elementUi);
     return elementUi;
   }
