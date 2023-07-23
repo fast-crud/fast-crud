@@ -31,7 +31,7 @@ export default defineComponent({
     // 图片的url
     // 'value' 或 ['value','value']
     modelValue: {
-      type: [String, Array],
+      type: [String, Array, Object],
       require: true
     },
     /**
