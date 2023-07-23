@@ -3,6 +3,14 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.14.6](https://github.com/fast-crud/fast-crud/compare/v1.14.5...v1.14.6) (2023-07-23)
+
+### Bug Fixes
+
+* 修复图片value值为object时报错的bug ([157da86](https://github.com/fast-crud/fast-crud/commit/157da86cb9623357554de6a415a13aeaefe510bc))
+* 修复element 版 search select组件右边超出显示的问题 ([ff11cf4](https://github.com/fast-crud/fast-crud/commit/ff11cf4f9c6ac63d997b5cad2067123c01cd299b))
+* 修复hello world 返回数据格式错误 ([99fbe46](https://github.com/fast-crud/fast-crud/commit/99fbe46a535f4a33722777ad90170d8a7ab83f1d))
+
 ## [1.14.5](https://github.com/fast-crud/fast-crud/compare/v1.14.4...v1.14.5) (2023-07-04)
 
 ### Bug Fixes
