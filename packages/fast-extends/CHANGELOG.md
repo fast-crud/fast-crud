@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.14.6](https://github.com/fast-crud/fast-crud/compare/v1.14.5...v1.14.6) (2023-07-23)
+
+### Bug Fixes
+
+* 修复图片value值为object时报错的bug ([157da86](https://github.com/fast-crud/fast-crud/commit/157da86cb9623357554de6a415a13aeaefe510bc))
+
 ## [1.14.5](https://github.com/fast-crud/fast-crud/compare/v1.14.4...v1.14.5) (2023-07-04)
 
 **Note:** Version bump only for package @fast-crud/fast-extends
