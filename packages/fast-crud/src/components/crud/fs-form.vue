@@ -202,7 +202,7 @@ export default defineComponent({
       default: undefined
     },
     /**
-     * 行数据
+     * a-row配置
      */
     row: {
       type: Object,

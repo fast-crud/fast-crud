@@ -541,6 +541,11 @@ export type FormProps = {
    * 可以配置跨列 {span:24}表示此字段占满一行
    */
   col?: ColProps;
+
+  /**
+   * a-row的配置
+   */
+  row?: any;
   /**
    * 字段组件之前render
    * @param scope

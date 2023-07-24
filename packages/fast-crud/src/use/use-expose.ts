@@ -602,6 +602,7 @@ export function useExpose(props: UseExposeProps): UseExposeRet {
         mode,
         initialForm: row
       };
+      delete context.row;
       const xxForm = toRaw(crudBinding.value[mode + "Form"]);
       merge(options, xxForm, context, formOpts);
       return await this.openDialog(options);
