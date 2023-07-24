@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.14.7](https://github.com/fast-crud/fast-crud/compare/v1.14.6...v1.14.7) (2023-07-24)
+
+### Bug Fixes
+
+* 修复row会导致editForm不显示字段的bug ([0c337ef](https://github.com/fast-crud/fast-crud/commit/0c337efb656b804b02a73af72955978f76ee5691))
+
 ## [1.14.6](https://github.com/fast-crud/fast-crud/compare/v1.14.5...v1.14.6) (2023-07-23)
 
 ### Bug Fixes

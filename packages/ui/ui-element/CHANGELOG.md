@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.14.7](https://github.com/fast-crud/fast-crud/compare/v1.14.6...v1.14.7) (2023-07-24)
+
+### Performance Improvements
+
+* ui add setup options , to optional setup icons ([86b7bcf](https://github.com/fast-crud/fast-crud/commit/86b7bcf862d5b6c61e190adae66f69b517fbaf18))
+
 ## [1.14.6](https://github.com/fast-crud/fast-crud/compare/v1.14.5...v1.14.6) (2023-07-23)
 
 **Note:** Version bump only for package @fast-crud/ui-element

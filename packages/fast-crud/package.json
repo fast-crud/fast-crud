@@ -1,6 +1,6 @@
 {
   "name": "@fast-crud/fast-crud",
-  "version": "1.14.6",
+  "version": "1.14.7",
   "private": false,
   "main": "./src/index.ts",
   "module": "./src/index.ts",
@@ -28,7 +28,7 @@
     "xlsx": "^0.14.1"
   },
   "devDependencies": {
-    "@fast-crud/ui-interface": "^1.14.6",
+    "@fast-crud/ui-interface": "^1.14.7",
     "@iconify/json": "^2.2.35",
     "@ls-lint/ls-lint": "^1.11.2",
     "@rollup/plugin-strip": "^3.0.2",
