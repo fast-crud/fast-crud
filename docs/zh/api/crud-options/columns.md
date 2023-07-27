@@ -8,6 +8,10 @@ const crudOptions = {
         key:{ //字段key
             title: '字段名',
             type: 'text'
+        },
+        'user.name':{ //数据支持多级结构 row={key:xx,user:{name:xxx}}
+            title: '用户名称',
+            type: 'text'
         }
     }
 }
