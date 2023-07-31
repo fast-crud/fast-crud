@@ -14,8 +14,17 @@
 ### 3. naive
 [NaiveUI示例地址](http://fast-crud.docmirror.cn/naive/)
 
+## 二、集成示例
 
-## 二、admin脚手架starter
+### 1. certd
+* [certd 证书自动化](https://github.com/certd/certd)    
+* [在线预览](https://certd.handsfree.work/)   
+
+### 2. fs-bpmn
+* [fs-bpmn 流程设计器](https://github.com/fast-crud/fs-bpmn-demo/)
+* [在线预览](http://fast-crud.docmirror.cn/bpmn/)
+
+## 三、admin脚手架starter
 
 基于目前市面上开源的高星admin项目fork，集成fast-crud，免去您自己手动集成fast-crud的烦恼。
 您可以选择以下任意一个项目作为脚手架开始你的项目开发。
@@ -132,5 +141,5 @@
 如果你知道比较好的admin项目，欢迎推荐，我将尽快安排它的starter
 
 
-## 三、 starter如何升级
+## 四、 starter如何升级
 请参考升级教程 [脚手架升级](../guide/other/upgrade.html#fs-admin或者starter升级)
