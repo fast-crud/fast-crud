@@ -174,10 +174,7 @@
 * 说明：删除确认框内容，当confirmFn未配置时生效
 * 类型：string
 
-## remove.showSuccessNotification
-* 说明：是否显示成功删除提示
-* 类型：boolean
-* 默认值： true
+
 
 ## remove.refreshTable
 * 说明：删除后是否刷新表格
@@ -189,9 +186,15 @@
 * 说明：取消后的操作
 * 类型：`(context)=>Promise<any>`
 
+
+## remove.showSuccessNotification
+* 说明：是否显示成功删除提示
+* 类型：boolean
+* 默认值： true
+* 
 ## remove.onRemoved
-* 说明：删除后的操作
-* 类型：`(context)=>Promise<any>`
+* 说明：删除后的操作（可以自定义提示，记得关掉showSuccessNotification）
+* 类型：`({...context,res=删除请求返回值})=>Promise<any>`
 
 
 ## editable
