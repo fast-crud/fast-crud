@@ -20,14 +20,7 @@
 
     <template #search>
       <div class="fs-crud-search">
-        <component
-          :is="search.is || 'fs-search'"
-          ref="searchRef"
-          v-bind="search"
-          :slots="computedSearchSlots"
-          @search="onSearchSubmit"
-          @reset="onSearchReset"
-        />
+        <component :is="search.is || 'fs-search'" ref="searchRef" v-bind="search" :slots="computedSearchSlots" />
       </div>
     </template>
 
@@ -106,6 +99,7 @@ import utilLog from "../utils/util.log";
 import { SetSearchFormDataProps } from "../d";
 import { useUi } from "../use";
 import { utils } from "../utils";
+import logger from "../utils/util.log";
 
 const { merge } = useMerge();
 
@@ -124,40 +118,24 @@ function useProviders(props: any, ctx: SetupContext) {
 
 function useSearch(props: any, ctx: SetupContext) {
   const searchRef = ref();
-  const searchFormData = ref(_.cloneDeep(props.search.initialForm || {}));
-  const onSearchSubmit = async (e: any) => {
-    searchFormData.value = e.form;
-    if (props.search.doSearch) {
-      props.search.doSearch(e);
-      return;
-    }
-    ctx.emit("search-submit", e);
-  };
-
-  const onSearchReset = (e: any) => {
-    if (props.search.doReset) {
-      props.search.doReset(e);
-      return;
-    }
-    ctx.emit("search-reset", e);
-  };
-
   const getSearchRef = () => {
     return searchRef.value;
   };
 
   const getSearchFormData = () => {
     if (searchRef.value) {
-      searchFormData.value = searchRef.value.getForm();
+      return searchRef.value.getForm();
     }
-    return searchFormData.value;
+    logger.warn("请使用expose.getSearchFormData代替");
+    return {};
   };
 
   const getSearchValidatedFormData = () => {
     if (searchRef.value) {
-      searchFormData.value = searchRef.value.getValidatedForm();
+      return searchRef.value.getValidatedForm();
     }
-    return searchFormData.value;
+    logger.warn("请使用expose.getSearchValidatedFormData代替");
+    return {};
   };
 
   /**
@@ -168,23 +146,13 @@ function useSearch(props: any, ctx: SetupContext) {
    * }
    */
   function setSearchFormData({ form, mergeForm = false }: SetSearchFormDataProps) {
-    const baseForm = {};
-    if (mergeForm) {
-      merge(baseForm, searchFormData.value, form);
-    } else {
-      merge(baseForm, form);
-    }
-    searchFormData.value = baseForm;
     if (searchRef.value) {
-      searchRef.value.setForm(baseForm, false);
+      searchRef.value.setForm(form, mergeForm);
     }
   }
 
   return {
     searchRef,
-    searchFormData,
-    onSearchSubmit,
-    onSearchReset,
     getSearchRef,
     getSearchFormData,
     setSearchFormData,
@@ -212,9 +180,9 @@ function useTabs(searchRet: any, props: any, ctx: SetupContext) {
 
       return {
         ...defaultTabs,
-        modelValue: searchRet.searchFormData.value[props.tabs.name],
+        modelValue: props.search.validatedForm[props.tabs.name],
         "onUpdate:modelValue": (value: any) => {
-          searchRet.setSearchFormData({ form: { [props.tabs.name]: value } });
+          ctx.emit("tab-change", { [props.tabs.name]: value });
         }
       };
     }
@@ -488,16 +456,7 @@ export default defineComponent({
       }
     }
   },
-  emits: [
-    "search-submit",
-    "search-reset",
-    "refresh",
-    "update:search",
-    "update:compact",
-    "update:columns",
-    "form-value-change",
-    "update:modelValue"
-  ],
+  emits: ["update:search", "update:compact", "update:columns", "form-value-change", "update:modelValue", "tab-change"],
   setup(props: any, ctx: any) {
     const { ui } = useUi();
     useProviders(props, ctx);

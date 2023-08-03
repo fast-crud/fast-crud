@@ -153,5 +153,9 @@ const crudOptions = {
 }
 ```
 
+## autoSearch
+* 说明：是否字段变更后自动触发查询
+* 默认值：true
+
 ## 更多参数
 * 说明：更多参数见：[FsSearch](/api/components/crud/search/index.md)组件文档

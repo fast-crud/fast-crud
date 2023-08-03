@@ -4,7 +4,7 @@
       <component
         :is="ui.form.name"
         ref="searchFormRef"
-        :model="form"
+        :model="formData"
         v-bind="options"
         :rules="computedRules"
         class="fs-search-form"
@@ -39,7 +39,7 @@
 </template>
 
 <script lang="tsx">
-import { computed, defineComponent, nextTick, reactive, ref, Ref, unref } from "vue";
+import { computed, defineComponent, nextTick, reactive, ref, Ref, unref, watch } from "vue";
 import _ from "lodash-es";
 import { useCompute } from "../../use/use-compute";
 import { useI18n } from "../../locale";
@@ -72,6 +72,12 @@ export default defineComponent({
       type: Object
     },
     /**
+     * 校验后的查询表单数据
+     */
+    validatedForm: {
+      type: Object
+    },
+    /**
      * 表单参数
      * 支持el-form | a-form的属性
      */
@@ -82,12 +88,6 @@ export default defineComponent({
      * 查询字段配置
      */
     columns: {
-      type: Object
-    },
-    /**
-     * tabs `{ show , options,key, default}`
-     */
-    tabs: {
       type: Object
     },
     /**
@@ -158,7 +158,11 @@ export default defineComponent({
     /**
      * 校验失败事件
      */
-    "validate-error"
+    "validate-error",
+    /**
+     * 校验后的表单数据变化
+     */
+    "update:validatedForm"
   ],
   setup(props: any, ctx) {
     const { ui } = useUi();
@@ -169,11 +173,23 @@ export default defineComponent({
       return _.cloneDeep(props.initialForm || {});
     }
 
-    const form = reactive(createInitialForm());
-    const validateForm = ref({});
+    const formData = reactive(createInitialForm());
     function onFormValidated() {
-      validateForm.value = _.cloneDeep(form);
+      const validateForm = _.cloneDeep(formData);
+      ctx.emit("update:validatedForm", validateForm);
     }
+
+    watch(
+      () => {
+        return props.validatedForm;
+      },
+      (value: any) => {
+        _.merge(formData, value || {});
+      },
+      {
+        deep: true
+      }
+    );
 
     const { doComputed, AsyncComputeValue } = useCompute();
 
@@ -202,7 +218,7 @@ export default defineComponent({
     function cellRender(item: any) {
       const key = item.key;
 
-      function _onUpdateModelValue($event: any) {
+      async function _onUpdateModelValue($event: any) {
         onValueChanged($event, item);
       }
 
@@ -221,7 +237,7 @@ export default defineComponent({
             ref={(value: any) => {
               componentRenderRefs.value[key] = value;
             }}
-            model-value={get(form, key)}
+            model-value={get(formData, key)}
             {...item.component}
             scope={buildFieldContext(key)}
             onUpdate:modelValue={_onUpdateModelValue}
@@ -309,7 +325,7 @@ export default defineComponent({
       const defValue = unref(column.value);
       if (defValue !== undefined && column.show !== false && column.component?.show !== false) {
         //默认值
-        form[key] = defValue;
+        formData[key] = defValue;
       }
     });
     const searchFormRef = ref();
@@ -325,13 +341,23 @@ export default defineComponent({
     }
 
     function getContextFn(): SearchEventContext {
-      return { form, getComponentRef };
+      return { form: formData, validatedForm: props.validatedForm, getComponentRef };
     }
 
-    const searchEventContextRef: Ref<SearchEventContext> = ref(getContextFn());
-
     function buildFieldContext(key: string) {
-      return { ...searchEventContextRef.value, key, value: _.get(form, key) };
+      return { ...getContextFn(), key, value: _.get(formData, key) };
+    }
+
+    async function doValidate(): Promise<boolean> {
+      try {
+        if (props.validate) {
+          await ui.form.validateWrap(searchFormRef.value);
+        }
+        return true;
+      } catch (e: any) {
+        ctx.emit("validate-error", { ...getContextFn(), error: e });
+        return false;
+      }
     }
 
     async function doSearch() {
@@ -340,19 +366,10 @@ export default defineComponent({
         autoSearch.cancel();
       }
 
-      try {
-        if (props.validate) {
-          await ui.form.validateWrap(searchFormRef.value);
-        }
+      if (await doValidate()) {
         onFormValidated();
-        ctx.emit("search", searchEventContextRef.value);
-      } catch (e: any) {
-        // logger.debug("search validate error");
-        // ui.message.error({
-        //   message: t("fs.search.error.message")
-        // });
-        ctx.emit("validate-error", { ...searchEventContextRef.value, error: e });
-        return false;
+        await nextTick();
+        ctx.emit("search", getContextFn());
       }
     }
 
@@ -360,34 +377,27 @@ export default defineComponent({
       // debugger;
       // ui.form.resetWrap(searchFormRef.value, { form, initialForm: createInitialForm() });
       const initialForm = createInitialForm();
-      const entries = _.entries(form);
+      const entries = _.entries(formData);
       for (const entry of entries) {
         const initialValue = _.get(initialForm, entry[0]);
         if (initialValue == null) {
-          _.unset(form, entry[0]);
+          _.unset(formData, entry[0]);
         } else {
-          _.set(form, entry[0], initialValue);
+          _.set(formData, entry[0], initialValue);
         }
       }
 
-      try {
-        if (props.validate) {
-          await ui.form.validateWrap(searchFormRef.value);
-        }
+      if (await doValidate()) {
         onFormValidated();
+        await nextTick();
         if (props.reset) {
-          props.reset(searchEventContextRef.value);
+          props.reset(getContextFn());
         }
         // 表单重置事件
         ctx.emit("reset", getContextFn());
         if (props.searchAfterReset) {
-          nextTick(() => {
-            doSearch();
-          });
+          doSearch();
         }
-      } catch (e) {
-        ctx.emit("validate-error", { ...searchEventContextRef.value, error: e });
-        return false;
       }
     }
 
@@ -443,10 +453,10 @@ export default defineComponent({
     initAutoSearch();
 
     function getForm() {
-      return form;
+      return formData;
     }
     function getValidatedForm() {
-      return validateForm.value;
+      return props.validatedForm;
     }
 
     /**
@@ -454,11 +464,11 @@ export default defineComponent({
      */
     function setForm(newForm: any, merge = true) {
       if (!merge) {
-        _.each(_.keys(form), (item) => {
-          delete form[item];
+        _.each(_.keys(formData), (item) => {
+          delete formData[item];
         });
       }
-      doMerge(form, newForm);
+      doMerge(formData, newForm);
       onFormValidated();
     }
 
@@ -485,10 +495,10 @@ export default defineComponent({
 
     function onValueChanged(value: any, item: SearchItemProps) {
       const key = item.key;
-      _.set(form, key, value);
+      _.set(formData, key, value);
       if (item.valueChange) {
         const key = item.key;
-        const value = form[key];
+        const value = formData[key];
         const componentRef = getComponentRef(key);
         const valueChange = item.valueChange instanceof Function ? item.valueChange : item.valueChange.handle;
         valueChange({ key, value, componentRef, ...getContextFn() });
@@ -510,9 +520,10 @@ export default defineComponent({
       get,
       ui,
       onValueChanged,
+      doValidate,
       doSearch,
       doReset,
-      form,
+      formData,
       componentRenderRefs,
       getComponentRenderRef,
       getComponentRef,
@@ -526,7 +537,6 @@ export default defineComponent({
       computedColumns,
       computedButtons,
       computedRules,
-      searchEventContextRef,
       buildFieldContext
     };
   }
