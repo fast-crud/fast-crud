@@ -955,11 +955,6 @@ export type SearchProps = {
   initialForm?: Record<string, any>;
 
   /**
-   * 查询表单数据，无需手动配置
-   */
-  form?: Record<string, any>;
-
-  /**
    * 校验成功后的表单数据，无需手动配置
    */
   validatedForm?: Record<string, any>;
