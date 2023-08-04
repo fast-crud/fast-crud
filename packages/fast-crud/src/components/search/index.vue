@@ -215,11 +215,18 @@ export default defineComponent({
       return key;
     }
 
+    const debounceValidate = _.debounce(async () => {
+      if (await doValidate()) {
+        onFormValidated();
+      }
+    }, 500);
+
     function cellRender(item: any) {
       const key = item.key;
 
       async function _onUpdateModelValue($event: any) {
         onValueChanged($event, item);
+        await debounceValidate();
       }
 
       function _onInput() {

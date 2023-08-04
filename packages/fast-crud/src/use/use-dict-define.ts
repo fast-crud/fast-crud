@@ -1,10 +1,10 @@
 import _ from "lodash-es";
 import { useMerge } from "./use-merge";
 import logger from "../utils/util.log";
-import { reactive, shallowReactive, UnwrapRef } from "vue";
-import LRU from "lru-cache";
-import { UnwrapNestedRefs } from "vue";
-const DictGlobalCache = new LRU<string, any>({
+import { shallowReactive, UnwrapNestedRefs } from "vue";
+import { LRUCache } from "lru-cache";
+
+const DictGlobalCache = new LRUCache<string, any>({
   max: 500,
   maxSize: 5000,
   ttl: 1000 * 60 * 30,
