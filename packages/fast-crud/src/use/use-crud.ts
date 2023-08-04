@@ -16,7 +16,7 @@ import {
 import { useCompute } from "./use-compute";
 import { buildTableColumnsFlatMap, useColumns } from "./use-columns";
 import { CrudOptions } from "../d/crud";
-import { computed, Ref, ref } from "vue";
+import { computed, nextTick, Ref, ref } from "vue";
 import { useExpose } from "./use-expose";
 import { exportTable } from "../lib/fs-export";
 
@@ -156,7 +156,15 @@ export function useCrud(ctx: UseCrudProps): UseCrudRet {
   function useSearch() {
     return {
       search: {
-        doSearch,
+        onSearch() {
+          crudExpose.doRefresh();
+        },
+        ["onUpdate:form"]: (value: any) => {
+          crudBinding.value.search.form = value;
+        },
+        ["onUpdate:validatedForm"]: (value: any) => {
+          crudBinding.value.search.validatedForm = value;
+        },
         ["onUpdate:collapse"]: (value: any) => {
           crudBinding.value.search.collapse = value;
         },
@@ -172,10 +180,10 @@ export function useCrud(ctx: UseCrudProps): UseCrudRet {
 
   function useTabs() {
     return {
-      tabs: {
-        onChange: () => {
-          doRefresh();
-        }
+      tabs: {},
+      onTabChange(formData: any) {
+        crudExpose.setSearchFormData({ form: formData });
+        doRefresh();
       }
     };
   }
@@ -370,6 +378,10 @@ export function useCrud(ctx: UseCrudProps): UseCrudRet {
     };
   }
 
+  function afterUseCrud(bindings: CrudBinding) {
+    bindings.search.validatedForm = _.cloneDeep(bindings.search.initialForm);
+  }
+
   function rebuildCrudBindings(options: DynamicallyCrudOptions) {
     const userOptions = merge(
       defaultCrudOptions.defaultOptions({ t }),
@@ -388,7 +400,9 @@ export function useCrud(ctx: UseCrudProps): UseCrudRet {
 
     const { buildColumns } = useColumns();
     //初始化columns，将crudOptions.columns里面的配置转化为crudBinding
-    return buildColumns(userOptions);
+    const bindings = buildColumns(userOptions);
+    afterUseCrud(bindings);
+    return bindings;
   }
 
   function resetCrudOptions(options: DynamicallyCrudOptions) {

@@ -278,30 +278,20 @@ export function useExpose(props: UseExposeProps): UseExposeRet {
       });
       logger.debug("valueResolve success:", form);
     },
+    doSearchValidate() {
+      crudExpose.getSearchRef().doValidate();
+    },
     getSearchFormData() {
-      if (!crudRef.value) {
-        return {};
-      }
-      if (crudRef.value.getSearchFormData) {
-        return crudRef.value.getSearchFormData();
-      }
-      return {};
+      return crudBinding.value.search.validatedForm;
     },
     getSearchValidatedFormData() {
-      if (!crudRef.value) {
-        return {};
-      }
-      if (crudRef.value.getSearchValidatedFormData) {
-        return crudRef.value.getSearchValidatedFormData();
-      }
-      return {};
+      return crudBinding.value.search.validatedForm;
     },
     /**
      * {form,mergeForm}
      */
     setSearchFormData(context) {
-      checkCrudRef();
-      crudRef.value.setSearchFormData(context);
+      _.merge(crudBinding.value.search.validatedForm, context.form);
       if (context.triggerSearch) {
         crudExpose.doRefresh();
       }
@@ -311,7 +301,7 @@ export function useExpose(props: UseExposeProps): UseExposeRet {
      */
     getSearchRef() {
       checkCrudRef();
-      return crudRef.value.getSearchRef();
+      return crudRef.value?.getSearchRef();
     },
 
     async search(pageQuery: PageQuery, options: SearchOptions = {}) {
@@ -465,6 +455,7 @@ export function useExpose(props: UseExposeProps): UseExposeRet {
       }
       if (opts.form && crudRef.value) {
         crudRef.value.setSearchFormData(opts);
+        crudExpose.setSearchFormData({ form: opts.form, mergeForm: opts.mergeForm, refWarning: false });
       }
 
       await crudExpose.doRefresh();

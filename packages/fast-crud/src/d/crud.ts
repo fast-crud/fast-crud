@@ -939,7 +939,7 @@ export type ActionbarProps = {
   [key: string]: any;
 };
 
-export type SearchEventContext = { form: any; getComponentRef?: (key: string) => any };
+export type SearchEventContext = { form: any; validatedForm: any; getComponentRef?: (key: string) => any };
 /**
  * 查询框配置
  */
@@ -948,6 +948,21 @@ export type SearchProps = {
    * 是否显示查询框
    */
   show?: boolean;
+
+  /**
+   * 初始化查询表单数据，reset会还原成此对象
+   */
+  initialForm?: Record<string, any>;
+
+  /**
+   * 查询表单数据，无需手动配置
+   */
+  form?: Record<string, any>;
+
+  /**
+   * 校验成功后的表单数据，无需手动配置
+   */
+  validatedForm?: Record<string, any>;
   /**
    * 查询框的按钮配置（查询和重置按钮，你还可以添加自定义按钮）
    */
@@ -1262,6 +1277,7 @@ export type CrudOptions = {
 type CrudSetting = {
   viewFormUseCellComponent?: boolean;
   searchCopyFormProps?: string[];
+  onUseCrud?: (bindings: CrudBinding) => void;
 };
 type CrudMode = {
   /**

@@ -112,6 +112,11 @@ export type CrudExpose = {
    *  获取查询组件ref
    */
   getSearchRef: () => any;
+
+  /**
+   * 触发查询表单校验
+   */
+  doSearchValidate: () => void;
   /**
    * 获取查询表单数据
    */
@@ -271,7 +276,7 @@ export type OpenDialogProps = {
 /**
  * crudExpose.setSearchFormData参数
  */
-export type SetSearchFormDataProps = { form: any; mergeForm?: boolean; triggerSearch?: boolean };
+export type SetSearchFormDataProps = { form: any; mergeForm?: boolean; triggerSearch?: boolean; refWarning?: boolean };
 /**
  * crudExpose.doRemove参数
  */

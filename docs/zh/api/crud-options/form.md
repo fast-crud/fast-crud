@@ -211,6 +211,7 @@ const crudOptions = {
 ## wrapper.title
 * 说明: 对话框标题
 * 类型：string
+* 注意: 需要在editForm/viewForm/addForm下的wrapper中配置，否则无效
 
 ## wrapper.buttons
 * 说明: 对话框按钮配置
