@@ -3,7 +3,7 @@ import { uiContext } from "@fast-crud/ui-interface";
 import setupIcons from "./icons";
 import { Antdv } from "./antdv";
 export * from "./antdv";
-
+import "./style.less";
 export type UiSetupOptions = {
   setupIcons?: boolean;
 };

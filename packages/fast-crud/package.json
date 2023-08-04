@@ -28,7 +28,7 @@
     "xlsx": "^0.18.5"
   },
   "devDependencies": {
-    "@fast-crud/ui-interface": "workspace:^1.14.7",
+    "@fast-crud/ui-interface": "^1.14.7",
     "@iconify/json": "^2.2.98",
     "@ls-lint/ls-lint": "^2.0.1",
     "@rollup/plugin-strip": "^3.0.2",
