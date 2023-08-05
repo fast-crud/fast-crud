@@ -1,6 +1,6 @@
 {
   "name": "@fast-crud/ui-antdv4",
-  "version": "1.15.1",
+  "version": "1.14.0",
   "description": "antdv",
   "main": "./src/index.ts",
   "module": "./src/index.ts",
