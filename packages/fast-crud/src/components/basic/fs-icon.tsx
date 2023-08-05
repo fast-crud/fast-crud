@@ -39,13 +39,17 @@ export default defineComponent({
         };
       }
       //使用ui内置图标
+      const IconComp: any = resolveDynamicComponent(props.icon);
+      if (typeof IconComp === "string") {
+        return () => {
+          return <span title={"error icon name"}>{IconComp}</span>;
+        };
+      }
       if (ui.icon.isComponent) {
-        const IconComp: any = resolveDynamicComponent(props.icon);
         return () => {
           return <IconComp class={"fs-icon"} {...ctx.attrs} />;
         };
       } else {
-        const IconComp: any = resolveDynamicComponent(props.icon);
         return () => {
           return (
             <el-icon class={"fs-icon"} {...ctx.attrs}>
