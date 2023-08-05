@@ -89,7 +89,7 @@ export class Antdv implements UiInterface {
   modelValue = "value";
 
   formWrapper = creator<FormWrapperCI>({
-    visible: "visible",
+    visible: "open",
     customClass: () => {
       return "class";
     },
@@ -244,8 +244,8 @@ export class Antdv implements UiInterface {
 
   dialog: DialogCI = creator<DialogCI>({
     name: "a-modal",
-    modelValue: "visible",
-    visible: "visible",
+    modelValue: "open",
+    visible: "open",
     customClass: "wrapClassName",
     footer(footer: any = null) {
       return { footer };
@@ -339,10 +339,10 @@ export class Antdv implements UiInterface {
 
   drawer = creator<DrawerCI>({
     name: "a-drawer",
-    visible: "visible",
+    visible: "open",
     customClass: "class",
     width: "width",
-    modelValue: "visible",
+    modelValue: "open",
     builder(opts) {
       return buildBinding(this, opts, {
         props: {
@@ -764,7 +764,7 @@ export class Antdv implements UiInterface {
     name: "a-popover",
     contentSlotName: "content",
     triggerSlotName: "default",
-    visible: "visible",
+    visible: "open",
     builder(opts: PopoverBuilderOptions) {
       function position() {
         if (opts.position) {
