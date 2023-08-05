@@ -34,7 +34,7 @@
                         <fs-component-render
                           v-if="item.component && item.component.show !== false"
                           :ref="
-                            (el:any) => {
+                            (el: any) => {
                               if (el) {
                                 componentRenderRefs[item.key] = el;
                               }
@@ -301,7 +301,7 @@ export default defineComponent({
     }
 
     function getContextFn(): SearchEventContext {
-      return { form, getComponentRef };
+      return { form, validatedForm: form, getComponentRef };
     }
 
     const searchEventContextRef: Ref<SearchEventContext> = ref(getContextFn());
