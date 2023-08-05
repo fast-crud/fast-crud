@@ -4,7 +4,7 @@
 
 import './_blob'
 import FileSaver from 'file-saver'
-import XLSX from 'xlsx'
+import * as XLSX from 'xlsx'
 
 function generateArray(table) {
     var out = [];

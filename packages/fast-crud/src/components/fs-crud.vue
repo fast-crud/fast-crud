@@ -180,7 +180,7 @@ function useTabs(searchRet: any, props: any, ctx: SetupContext) {
 
       return {
         ...defaultTabs,
-        modelValue: props.search.validatedForm[props.tabs.name],
+        modelValue: props.search.validatedForm && props.search.validatedForm[props.tabs.name],
         "onUpdate:modelValue": (value: any) => {
           ctx.emit("tab-change", { [props.tabs.name]: value });
         }

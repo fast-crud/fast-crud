@@ -1,6 +1,6 @@
 // process CSV data
 import { ImportData } from "./d";
-import XLSX from "xlsx";
+import * as XLSX from "xlsx";
 
 const processCsvData = (dataString: string): ImportData => {
   const dataStringLines = dataString.split(/\r\n|\n/);
