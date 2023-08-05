@@ -16,6 +16,7 @@
           v-if="show !== false"
           v-bind="container"
           :columns="computedColumns"
+          :get-context-fn="getContextFn"
         >
           <template #search-buttons>
             <template v-for="(item, index) in computedButtons" :key="index">
@@ -24,13 +25,13 @@
           </template>
 
           <template v-if="slots['search-left']" #search-left>
-            <fs-slot-render :slots="slots['search-left']" :scope="searchEventContextRef" />
+            <fs-slot-render :slots="slots['search-left']" :scope="getContextFn()" />
           </template>
           <template v-if="slots['search-middle']" #search-middle>
-            <fs-slot-render :slots="slots['search-middle']" :scope="searchEventContextRef" />
+            <fs-slot-render :slots="slots['search-middle']" :scope="getContextFn()" />
           </template>
           <template v-if="slots['search-right']" #search-right>
-            <fs-slot-render :slots="slots['search-right']" :scope="searchEventContextRef" />
+            <fs-slot-render :slots="slots['search-right']" :scope="getContextFn()" />
           </template>
         </component>
       </component>
@@ -164,7 +165,7 @@ export default defineComponent({
      */
     "update:validatedForm"
   ],
-  setup(props: any, ctx) {
+  setup(props: any, ctx: any) {
     const { ui } = useUi();
 
     let autoSearch: any = null;
@@ -544,7 +545,8 @@ export default defineComponent({
       computedColumns,
       computedButtons,
       computedRules,
-      buildFieldContext
+      buildFieldContext,
+      getContextFn
     };
   }
 });
