@@ -3,6 +3,26 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.15.1](https://github.com/fast-crud/fast-crud/compare/v1.15.0...v1.15.1) (2023-08-05)
+
+**Note:** Version bump only for package @fast-crud/fast-crud
+
+# [1.15.0](https://github.com/fast-crud/fast-crud/compare/v1.14.7...v1.15.0) (2023-08-05)
+
+### Bug Fixes
+
+* 修复升级xlxs之后加载XLXS错误 ([32b76fd](https://github.com/fast-crud/fast-crud/commit/32b76fd60c935d49d7d380d6a4571894b0cad54c))
+
+### Features
+
+* 重构search，支持search.validatedForm直接修改查询表单数据，修复tab变化后清空查询表单的bug ([8678f2f](https://github.com/fast-crud/fast-crud/commit/8678f2f4763f2c8b1ff6b0f6b8b9a7ee401a78ce))
+* antdv4 支持 ([1935614](https://github.com/fast-crud/fast-crud/commit/19356142cda925d1248fe7c84c18cb8324ce5f70))
+
+### Performance Improvements
+
+* 升级依赖版本 ([1007384](https://github.com/fast-crud/fast-crud/commit/1007384e5e45f504b2106554c5411a3c50745ec6))
+* **icon:** 找不到icon时，避免报错，显示error ([614c144](https://github.com/fast-crud/fast-crud/commit/614c1447440ad93bfb9790940d168da493471518))
+
 ## [1.14.7](https://github.com/fast-crud/fast-crud/compare/v1.14.6...v1.14.7) (2023-07-24)
 
 ### Bug Fixes
