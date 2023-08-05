@@ -125,9 +125,7 @@ start()
 
 /**
  * 打包前 修改 lerna
- * nodemodules里面搜索如下
- * return childProcess.exec("git", ["add", "--", ...files], execOpts);
- *
+ * nodemodules @lerna-lite里面搜索如下
  * ('git', ['add', '--', ...files]
- * ('git', ['add', '.']
+ * 改成 ('git', ['add', '.']
  */
