@@ -751,6 +751,10 @@ export type ContainerProps = {
 
 export type ColumnsFilterComponentProps = {
   /**
+   * 列配置组件名称
+   */
+  is?: string | ShallowRef;
+  /**
    * 是否显示列设置抽屉
    */
   show?: boolean;

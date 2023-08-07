@@ -26,6 +26,7 @@ import FsCell from "./crud/fs-cell";
 import FsEditableCell from "./crud/editable/fs-editable-cell";
 import FsActionbar from "./actionbar/index.vue";
 import FsToolbar from "./toolbar/index.vue";
+import FsColumnsFilterLayoutDefault from "./toolbar/fs-table-columns-filter/fs-columns-filter-layout-default.vue";
 
 import FsSearch from "./search/index.vue";
 import FsSearchV1 from "./search/search_v1.vue";
@@ -71,6 +72,7 @@ export {
   FsTabsFilter,
   FsActionbar,
   FsToolbar,
+  FsColumnsFilterLayoutDefault,
   FsDictRadio,
   FsDictSelect,
   FsValuesFormat,

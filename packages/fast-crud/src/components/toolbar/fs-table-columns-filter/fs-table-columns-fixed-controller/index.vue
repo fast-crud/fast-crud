@@ -13,7 +13,7 @@
 
 <script lang="ts">
 import { defineComponent, ref } from "vue";
-import { useUi } from "../../../use";
+import { useUi } from "../../../../use";
 
 export default defineComponent({
   name: "FsTableColumnsFixedController",

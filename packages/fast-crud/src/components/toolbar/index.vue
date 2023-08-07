@@ -15,7 +15,8 @@
             <fs-button v-bind="item" @click="handleSimpleClick" />
           </template>
           <template #[ui.popover.contentSlotName]>
-            <fs-table-columns-filter
+            <component
+              :is="columnsFilter.is || 'fs-table-columns-filter'"
               v-if="columns"
               ref="columnsFilterRef"
               v-model:show="popoverVisible"
@@ -30,7 +31,8 @@
         <fs-button v-else v-bind="item" @click="item.click()" />
       </template>
     </template>
-    <fs-table-columns-filter
+    <component
+      :is="columnsFilter.is || 'fs-table-columns-filter'"
       v-if="columns && columnsFilter?.mode !== 'simple'"
       ref="columnsFilterRef"
       v-bind="columnsFilter"
