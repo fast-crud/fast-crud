@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [1.16.0](https://github.com/fast-crud/fast-crud/compare/v1.15.1...v1.16.0) (2023-08-07)
+
+### Features
+
+* 列设置支持自定义样式 ([df86e04](https://github.com/fast-crud/fast-crud/commit/df86e04dcbc615f254e15abbe10758b934d69492))
+
 ## [1.15.1](https://github.com/fast-crud/fast-crud/compare/v1.15.0...v1.15.1) (2023-08-05)
 
 **Note:** Version bump only for package @fast-crud/fs-admin-element
