@@ -755,6 +755,7 @@ export type ColumnsFilterComponentProps = {
    */
   container?: {
     is?: string | ShallowRef;
+    [key: string]: any;
   };
 
   /**
