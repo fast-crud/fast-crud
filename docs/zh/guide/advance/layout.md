@@ -108,3 +108,22 @@ const crudOptions = {
     }
 }
 ```
+
+
+# 列设置自定义布局
+配置 `toolbar.columnsFilter.container.is=xxxxxxx` 可以自定义列设置组件布局容器（使用方法同上）
+
+* 默认布局：`fs-columns-filter-layout-default`
+* 参考：[fs-columns-filter-layout-default源码](https://github.com/fast-crud/fast-crud/blob/main/packages/fast-crud/src/components/toolbar/fs-table-columns-filter/fs-columns-filter-layout-default.vue)
+
+```js
+const crudOptions = {
+    toolbar:{
+        columnsFilter:{
+            container:{
+                is:'your-custom-layout-component-name',
+            },
+        }
+    }
+}
+```

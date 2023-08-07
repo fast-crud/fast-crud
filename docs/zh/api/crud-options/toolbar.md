@@ -117,3 +117,10 @@ crudBinding.value.toolbar.columnsFilter.originalColumns[2].columnSetShow = false
 crudBinding.value.toolbar.columnsFilter.originalColumns[2].columnSetDisabled = true
 
 ```
+
+## columnsFilter.container
+* 说明：自定义列设置布局
+* 类型：`{is：string|ShallowRef}`
+* 默认值： `{is:"fs-columns-filter-layout-default"}`
+* 布局参考： [fs-columns-filter-layout-default](https://github.com/fast-crud/fast-crud/blob/main/packages/fast-crud/src/components/toolbar/fs-table-columns-filter/fs-columns-filter-layout-default.vue)
+* 关键： 通过 `inject(ColumnsFilterProvideKey)`获取 `ColumnsFilterContext`, 修改currentColumns内每个列的show值即可

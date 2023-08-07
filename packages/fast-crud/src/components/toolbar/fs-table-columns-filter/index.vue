@@ -34,15 +34,9 @@
     </component>
   </template>
   <!-- 完全模式 -->
-  <component :is="ui.drawer.name" v-else :title="_text.title" v-bind="drawerBind" append-to-body>
-    <component
-      :is="ui.drawer.hasContentWrap || 'div'"
-      class="fs-drawer-wrapper fs-table-columns-filter"
-      :title="_text.title"
-    >
-      <div class="fs-table-columns-filter-style">
-        <component :is="container?.is || 'fs-columns-filter-layout-default'" v-bind="container" />
-      </div>
+
+  <component :is="container?.is || 'fs-columns-filter-layout-default'" v-else v-bind="container">
+    <template #buttons>
       <component :is="ui.row.name" class="fs-drawer-footer" :gutter="10">
         <component :is="ui.col.name" :span="12">
           <fs-button :icon="ui.icons.refresh" :text="_text.reset" block @click="reset" />
@@ -51,7 +45,7 @@
           <fs-button type="primary" :icon="ui.icons.check" :text="_text.confirm" block @click="submit(false)" />
         </component>
       </component>
-    </component>
+    </template>
   </component>
 </template>
 
@@ -62,16 +56,20 @@
 import _ from "lodash-es";
 import TableStore from "../../../utils/util.store";
 import { useI18n } from "../../../locale";
-import { computed, nextTick, ref, Ref, watch, provide } from "vue";
+import { computed, nextTick, provide, Ref, ref, watch } from "vue";
 import { uiContext } from "../../../ui";
 import { useMerge } from "../../../use/use-merge";
 import { useRoute } from "vue-router";
-import { ColumnProps, TableColumnsProps, TypeMap } from "../../../d";
-import type { ColumnsFilterProps, ColumnsFilterItem } from "./fs-columns-filter-types";
-import { ColumnsFilterProvideKey } from "./fs-columns-filter-types";
-const { cloneDeep } = useMerge();
+import {
+  ColumnProps,
+  ColumnsFilterItem,
+  ColumnsFilterProvideKey,
+  TableColumnsProps,
+  TypeMap,
+  ColumnsFilterComponentProps
+} from "../../../d";
 
-const props = withDefaults(defineProps<ColumnsFilterProps>(), {
+const props = withDefaults(defineProps<ColumnsFilterComponentProps>(), {
   storage: true,
   mode: "default"
 });
@@ -80,16 +78,6 @@ const emit = defineEmits(["update:columns", "update:show"]);
 const { t } = useI18n();
 const ui = uiContext.get();
 const active = ref(false);
-const drawerBind = computed(() => {
-  return {
-    [ui.drawer.visible]: active.value,
-    ["onUpdate:" + ui.drawer.visible]: (e: any) => {
-      active.value = e;
-    },
-    [ui.drawer.width]: "300px"
-  };
-});
-
 const start = () => {
   active.value = true;
 };
@@ -113,7 +101,7 @@ const _text = computed(() => {
   return def;
 });
 
-provide(ColumnsFilterProvideKey, { original, currentColumns, _text });
+provide(ColumnsFilterProvideKey, { originalColumns: original, currentColumns, text: _text, active });
 
 function buildColumnFilterItem(item: ColumnProps) {
   return {

@@ -1,68 +1,91 @@
 <template>
-  <div class="fs-columns-filter-layout-default">
-    <component :is="ui.card.name" shadow="never">
-      <div class="component--list">
-        <div key="__first__" class="component--list-item" flex="main:justify cross:center">
-          <span :span="12">
-            <!-- 全选 反选 -->
-            <component :is="ui.checkbox.name" :indeterminate="isIndeterminate" v-bind="checkAllBind">
-              {{ showLength }} / {{ allLength }}
-            </component>
-          </span>
-          <span class="title">{{ _text.fixed }} / {{ _text.order }}</span>
-        </div>
-
-        <draggable v-model="currentColumns" item-key="key" :move="onDraggableMove">
-          <template #item="{ element, index }">
-            <div
-              v-show="original[element.key]?.__show !== false"
-              :title="buildText(element)"
-              class="component--list-item"
-              flex="main:justify cross:center"
-              :i="index"
-            >
-              <component
-                :is="ui.checkbox.name"
-                v-model:[ui.checkbox.modelValue]="element.show"
-                :disabled="original[element.key]?.__disabled === true"
-                class="item-label"
-                :title="buildText(element)"
-                @change="allCheckedUpdate"
-              >
-                {{ buildText(element) }}
+  <component
+    :is="ui.drawer.name"
+    class="fs-columns-filter-layout-default"
+    :title="text.title"
+    v-bind="drawerBind"
+    append-to-body
+  >
+    <component
+      :is="ui.drawer.hasContentWrap || 'div'"
+      class="fs-drawer-wrapper fs-table-columns-filter"
+      :title="text.title"
+    >
+      <component :is="ui.card.name" shadow="never">
+        <div class="component--list">
+          <div key="__first__" class="component--list-item" flex="main:justify cross:center">
+            <span :span="12">
+              <!-- 全选 反选 -->
+              <component :is="ui.checkbox.name" :indeterminate="isIndeterminate" v-bind="checkAllBind">
+                {{ showLength }} / {{ allLength }}
               </component>
-              <div class="item-right">
-                <fs-table-columns-fixed-controller
-                  v-model="element.fixed"
-                  flex-box="0"
-                  class="d2-mr-10"
-                  @change="fixedChange(index, $event)"
-                />
-                <div flex-box="0" class="component--list-item-handle handle">
-                  <fs-icon :icon="ui.icons.sort" />
+            </span>
+            <span class="title">{{ text.fixed }} / {{ text.order }}</span>
+          </div>
+
+          <draggable v-model="currentColumns" item-key="key" :move="onDraggableMove">
+            <template #item="{ element, index }">
+              <div
+                v-show="originalColumns[element.key]?.__show !== false"
+                :title="buildText(element)"
+                class="component--list-item"
+                flex="main:justify cross:center"
+                :i="index"
+              >
+                <component
+                  :is="ui.checkbox.name"
+                  v-model:[ui.checkbox.modelValue]="element.show"
+                  :disabled="originalColumns[element.key]?.__disabled === true"
+                  class="item-label"
+                  :title="buildText(element)"
+                  @change="allCheckedUpdate"
+                >
+                  {{ buildText(element) }}
+                </component>
+                <div class="item-right">
+                  <fs-table-columns-fixed-controller
+                    v-model="element.fixed"
+                    flex-box="0"
+                    class="d2-mr-10"
+                    @change="fixedChange(index, $event)"
+                  />
+                  <div flex-box="0" class="component--list-item-handle handle">
+                    <fs-icon :icon="ui.icons.sort" />
+                  </div>
                 </div>
               </div>
-            </div>
-          </template>
-        </draggable>
-      </div>
+            </template>
+          </draggable>
+        </div>
+      </component>
+      <slot name="buttons"></slot>
     </component>
-  </div>
+  </component>
 </template>
 
 <script lang="ts" setup>
 //不要删
+//@ts-ignore
 import draggable from "vuedraggable-es";
 import FsTableColumnsFixedController from "./fs-table-columns-fixed-controller/index.vue";
 import { useUi } from "../../../use";
-import { computed, inject, ref, Ref, watch } from "vue";
-import { ColumnsFilterItem, ColumnsFilterProvideKey } from "./fs-columns-filter-types";
+import { computed, inject, ref, watch } from "vue";
+import { ColumnsFilterItem, ColumnsFilterProvideKey, ColumnsFilterContext } from "../../../d/";
 
 const { ui } = useUi();
 
-const { original, currentColumns, _text } = inject<{ original: Ref; currentColumns: Ref; _text: Ref }>(
-  ColumnsFilterProvideKey
-);
+const { originalColumns, currentColumns, text, active } = inject<ColumnsFilterContext>(ColumnsFilterProvideKey);
+
+const drawerBind = computed(() => {
+  return {
+    [ui.drawer.visible]: active.value,
+    ["onUpdate:" + ui.drawer.visible]: (e: any) => {
+      active.value = e;
+    },
+    [ui.drawer.width]: "300px"
+  };
+});
+
 const checkAll = ref(false);
 // 全选和反选发生变化时触发
 function onCheckAllChange(value: any) {
@@ -159,7 +182,7 @@ function allCheckedUpdate() {
 }
 
 function buildText(element: any) {
-  return element.label || element.title || element.key || _text.value.unnamed;
+  return element.label || element.title || element.key || text.value.unnamed;
 }
 </script>
 

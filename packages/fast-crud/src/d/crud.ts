@@ -751,6 +751,13 @@ export type ContainerProps = {
 
 export type ColumnsFilterComponentProps = {
   /**
+   * 布局容器组件配置
+   */
+  container?: {
+    is?: string | ShallowRef;
+  };
+
+  /**
    * 列配置组件名称
    */
   is?: string | ShallowRef;
