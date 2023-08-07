@@ -6,7 +6,7 @@
 以下为各ui的官方示例，里面包含丰富的crud特性配置示例
 
 ### 1. antdv
-[antdv示例地址](http://fast-crud.docmirror.cn/antdv/)
+[antdv示例地址](http://fast-crud.docmirror.cn/antdv/)  /  [antdv4示例地址](http://fast-crud.docmirror.cn/antdv4/)
 
 ### 2. element-plus
 [element示例地址](http://fast-crud.docmirror.cn/element/)
@@ -37,8 +37,11 @@
 #### 1) fs-admin-antdv :
 轻量级admin，功能单一  
 
-  [预览](http://fast-crud.docmirror.cn/antdv/) /
+  [antdv3 预览](http://fast-crud.docmirror.cn/antdv/) /
   [源码](https://github.com/fast-crud/fs-admin-antdv/)
+
+  [antdv4 预览](http://fast-crud.docmirror.cn/antdv4/) /
+  [源码](https://github.com/fast-crud/fs-admin-antdv4/)
 
 <br/>
 
