@@ -15,7 +15,6 @@
           :disabled="original[key]?.__disabled === true"
           class="item-label"
           :title="buildText(element)"
-          @update:[ui.checkbox.modelValue]="showChange"
         >
           {{ buildText(element) }}
         </component>
@@ -286,6 +285,10 @@ defineExpose({
   original,
   columns: currentColumns
 });
+
+function buildText(element: any) {
+  return element.label || element.title || element.key || _text.value.unnamed;
+}
 </script>
 <style lang="less">
 .fs-table-columns-filter-simple {
