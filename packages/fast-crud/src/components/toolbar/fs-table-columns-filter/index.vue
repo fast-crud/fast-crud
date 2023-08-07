@@ -70,7 +70,9 @@ import {
 
 const props = withDefaults(defineProps<ColumnsFilterComponentProps>(), {
   storage: true,
-  mode: "default"
+  mode: "default",
+  //@ts-ignore
+  container: {}
 });
 const emit = defineEmits(["update:columns", "update:show"]);
 
