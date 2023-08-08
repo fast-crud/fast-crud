@@ -107,10 +107,13 @@ const crudOptions = {
 * 示例：
 ```js
 crudOptions = { //
-    form: {
-        valueChange(context){
-            console.log('value:',context.value, " row:",context.row)
-        },
+    columns:{
+        key:{
+            column:{
+                valueChange(context){
+                    console.log('value:',context.value, " row:",context.row)
+                }
+            }
     }
 }
 ```
@@ -444,17 +447,21 @@ const crudOptions = {
 * 示例：
 ```js
 crudOptions = { //
-  form: {
-    valueChange(context){
-      console.log(context)
-    },
-      // 或者
-    valueChange:{
-        immediate:true, //是否立即执行一次
-        handle(context){
-        //值变化后的处理
-        }
-    }
+  columns:{
+      key:{
+          form: {
+              valueChange(context){
+                  console.log(context)
+              },
+              // 或者
+              valueChange:{
+                  immediate:true, //是否立即执行一次
+                  handle(context){
+                      //值变化后的处理
+                  }
+              }
+          }
+      }
   }
 }
 ```
@@ -559,10 +566,14 @@ const crudOptions = {
 * 示例：
 ```js
 crudOptions = { //
-  form: {
-    valueChange(context){
-      console.log(context)
-    },
+  columns:{
+      key:{
+          search:{
+              valueChange(context){
+                  console.log(context)
+              },
+          }
+      }
   }
 }
 ```

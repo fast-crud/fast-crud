@@ -41,6 +41,9 @@ pnpm i  @fast-crud/ui-element
 # or antdv
 pnpm i  ant-design-vue
 pnpm i  @fast-crud/ui-antdv
+# antdv4
+pnpm i  @fast-crud/ui-antdv4  # <<<-----------------antdv4注意这里
+
 # or naive-ui
 pnpm i  naive-ui
 pnpm i  @fast-crud/ui-naive
@@ -86,8 +89,15 @@ import "@fast-crud/fast-crud/dist/style.css";
 // 请选择ui: element/ antdv /naive。三选一，不支持动态切换
 // element 
 import ui from "@fast-crud/ui-element";
+
 // antdv 
 import ui from "@fast-crud/ui-antdv";
+
+// antdv4
+import ui from '@fast-crud/ui-antdv4'  // <<<-----------antdv4注意这里
+// antdv4 需要额外加载css样式
+import "@fast-crud/ui-antdv4/dist/style.css";
+
 // naive 
 import ui from "@fast-crud/ui-naive";
 
