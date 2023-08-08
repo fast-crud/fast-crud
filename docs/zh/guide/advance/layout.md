@@ -123,7 +123,7 @@ const crudOptions = {
 
 * 默认布局：`fs-columns-filter-layout-default`
 * 参考：[fs-columns-filter-layout-default源码](https://github.com/fast-crud/fast-crud/blob/main/packages/fast-crud/src/components/toolbar/fs-table-columns-filter/fs-columns-filter-layout-default.vue)
-
+* 关键：主要通过`inject`获取`columnsFilterContext`,然后你就可以自由发挥了，修改`context.currentColumns[key].show`等参数就可让列显示或隐藏等相关效果
 ```js
 const crudOptions = {
     toolbar:{
