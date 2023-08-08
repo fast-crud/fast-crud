@@ -1,13 +1,21 @@
-# 自定义页面布局
+# 自定义布局
+以下三处地方支持自定义布局：    
+1. crud主界面
+2. 查询框
+3. 列设置
+
+通过自定义布局，你可以更换展示效果，增加你自己的需求，美化功能页面等
+
+
+## 一、crud主界面自定义布局
+通过自定义布局，你可以将crud子组件任意摆放位置，改变样式使之适合您项目的整体风格。    
+自定义布局需要编写您自己的layout组件，全局注册之后，通过配置`container.is=自定义组件名称`来使用。
+
 配置 `container.is=xxxxxxx` 可以修改页面布局.         
 对于布局您有如下选择:
 * 默认布局：`fs-layout-default`
 * Card布局：`fs-layout-card` [Card布局演示](http://fast-crud.docmirror.cn/antdv/#/crud/basis/layout-card)
 * 自定义布局：见下文，[自定义布局演示](http://fast-crud.docmirror.cn/antdv/#/crud/basis/layout-card)
-
-## 自定义布局
-通过自定义布局，你可以将crud子组件任意摆放位置，改变样式使之适合您项目的整体风格。    
-自定义布局需要编写您自己的layout组件，全局注册之后，通过配置`container.is=自定义组件名称`来使用。
 
 
 ### 1. 编写自定义layout组件
@@ -89,7 +97,7 @@ const crudOptions = {
 
 
 
-# 查询框自定义布局
+## 二、查询框自定义布局
 配置 `search.container.is=xxxxxxx` 可以自定义查询框组件布局容器（使用方法同上）         
 
 * 默认布局：`fs-search-layout-default`
@@ -110,7 +118,7 @@ const crudOptions = {
 ```
 
 
-# 列设置自定义布局
+## 三、列设置自定义布局
 配置 `toolbar.columnsFilter.container.is=xxxxxxx` 可以自定义列设置组件布局容器（使用方法同上）
 
 * 默认布局：`fs-columns-filter-layout-default`
