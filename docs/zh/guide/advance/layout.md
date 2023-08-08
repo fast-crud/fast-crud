@@ -1,4 +1,4 @@
-# 页面布局
+# 自定义页面布局
 配置 `container.is=xxxxxxx` 可以修改页面布局.         
 对于布局您有如下选择:
 * 默认布局：`fs-layout-default`
