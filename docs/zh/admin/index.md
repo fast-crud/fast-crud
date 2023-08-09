@@ -5,7 +5,7 @@
 
 
 
-## 各版本源码地址
+## 一、 各版本源码地址
 [FsAdminAntdv](https://github.com/fast-crud/fs-admin-antdv)   
 
 [FsAdminElement](https://github.com/fast-crud/fs-admin-element)
@@ -18,11 +18,11 @@
 `FsAdminNaiveUi`的使用文档请参考原项目文档：[naive-admin](https://www.naiveadmin.com/home)   
 ::: 
 
-## 启动方法
+## 二、启动运行方法
 
 请前往 [start](../guide/start/demo.md)
 
-## 路由与菜单
+## 三、路由与菜单
 `/src/router/source/modules` 目录下配置，每一项具备路由和菜单的双重功能
 
 ```js
@@ -34,72 +34,12 @@ const routeItem = {
     meta: { //额外的配置
         "cache": true, //是否缓存页面
         "isMenu": true, //是否是菜单，=false则为纯路由配置，不在左侧菜单显示
-        "icon": "ion:disc-outline" //菜单图标
+        "icon": "ion:disc-outline", //菜单图标
+        auth: true, //是否需要登录
+        permission:"sys:user:read" //权限标识
     },
     children: []//子路由
 }
-```
-
-## Api请求
-
-api请求采用axios模块
-
-```js
-// mock请求
-import { requestForMock } from "/src/api/service";
-// 真实后端请求
-import { request } from "/src/api/service";
-```
-
-## mock
-示例项目默认为mock数据
-
-## 正式项目改成真实后端
-如果要改成请求真实后端，请按如下步骤修改
-### 1、requestForMock改成request
-```js
-import { requestForMock } from "../../../api/service";
-// 改成请求真实后端 ↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓
-import { request } from "../../../api/service";
-```
-
-## 删除mock的import
-在main.ts中注释掉mock的import，减小打包体积
-```js
-// 删除mock的import
-// import './mock'
-```
-
-
-### 2. 修改ip和端口
-
-#### 2.1 开发环境
-```js
-//修改 vite.config.ts
-export function (){
-    
-    
-    return {
-        ...
-            server: {
-                proxy: {
-                // with options
-                "/api": {
-                    //  修改为你的本地后端服务地址↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓
-                    target: "http://127.0.0.1:7001"
-                }
-            }
-        }
-    };
-}
-
-```
-
-#### 2.2 生产环境
-```shell
-# 修改 .env.production 文件
-# 改为你的后端生产环境地址↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓
-VITE_APP_API=http://www.docmirror.cn:7001/api
 ```
 
 ## Tabs页签
@@ -186,7 +126,7 @@ pageStore.keepAliveRefresh()
 
 <script>
 export default {
-  name: 'foo-page'      // <-----------
+  name: 'foo-page'      // <----------- 注意这里，要和router一致
 }
 </script>
 
@@ -195,10 +135,10 @@ export default {
 ```js
 const routeItem = {
     path: '/foo/page',
-    name: 'foo-page',   // <-----------
+    name: 'foo-page',   // <----------- 注意这里，要和上面一致
     meta: {
         title: '这是一个会被缓存的页面',
-        cache: true     // <-----------
+        cache: true     // <----------- 注意这里，要设置为true
     },
     component: () => import('page/foo/page.vue')
 }
@@ -215,8 +155,8 @@ const routeItem = {
 暂不支持
 
 
-## 开始使用
-本教程演示如何将FsAdmin对接你的后台。
+## 快速开始
+本教程演示如何将FsAdmin原始版本改成对接你的后台。
 
 ### 1、clone代码，本地启动
 
@@ -227,4 +167,89 @@ pnpm install
 npm run dev
 ```
 
-### 2、
+### 2. 修改配置文件
+.env文件修改
+```shell
+VITE_APP_API=/api         #<------修改请求接口前缀  
+#登录与权限关闭
+VITE_APP_PM_ENABLED=true  #<------设置为true，启用登录请求与权限管理
+```
+
+### 3. 修改后端ip和端口
+
+#### 3.1 开发环境
+```js
+//修改 vite.config.ts
+export function (){
+    return {
+        ...
+            server: {
+                proxy: {
+                // with options
+                "/api": {
+                    //  修改为你的本地后端服务地址↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓
+                    target: "http://127.0.0.1:7001"
+                }
+            }
+        }
+    };
+}
+
+```
+
+#### 3.2 生产环境
+```shell
+# 修改 .env.production 文件
+# 改为你的后端生产环境地址↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓
+VITE_APP_API=http://www.docmirror.cn:7001/api
+```
+
+
+### 4、禁用mock
+
+```js
+// main.ts
+import plugin from "./plugin/";
+// 正式项目请删除mock，避免影响性能
+// import "./mock";   //<---------注释掉这行
+
+```
+### 5、 api请求改成真实后端
+
+```js
+import { requestForMock } from "../../../api/service";
+// 改成请求真实后端 ↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓
+import { request } from "../../../api/service";
+```
+
+### 6. 修改登录接口
+`src/api/modules/api.user.ts`
+
+```js
+export async function login(data: LoginReq): Promise<LoginRes> {
+    // ...
+    //如果开启了登录与权限模块，则真实登录
+    return await request({
+        url: "/login",              // <------修改成你的登录地址，和登录参数
+        method: "post",
+        data
+    });
+}
+```
+### 7. 修改 FastCrud公共配置
+根据集成文档修改transform配置    
+修改 `src/plugins/fast_crud.ts` 处
+```js
+common(){
+   return {
+       request:{
+           transformQuery(query){
+               //这里将query转换为你后台查询请求格式
+           },
+           transformRes(){
+               //这里将后台返回的数据转换为FastCrud的格式
+           }
+       }
+   } 
+}
+```
