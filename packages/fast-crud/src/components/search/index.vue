@@ -505,6 +505,9 @@ export default defineComponent({
     };
 
     async function onValueChanged(value: any, item: SearchItemProps) {
+      if (await doValidate()) {
+        onFormValidated();
+      }
       const key = item.key;
       _.set(formData, key, value);
       if (item.valueChange) {
@@ -513,10 +516,6 @@ export default defineComponent({
         const componentRef = getComponentRef(key);
         const valueChange = item.valueChange instanceof Function ? item.valueChange : item.valueChange.handle;
         valueChange({ key, value, componentRef, ...getContextFn() });
-      }
-
-      if (await doValidate()) {
-        onFormValidated();
       }
 
       if (item.autoSearchTrigger == null || item.autoSearchTrigger === true || item.autoSearchTrigger === "change") {
