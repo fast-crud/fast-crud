@@ -213,3 +213,18 @@ const routeItem = {
 
 ## 主题颜色
 暂不支持
+
+
+## 开始使用
+本教程演示如何将FsAdmin对接你的后台。
+
+### 1、clone代码，本地启动
+
+```shell
+git clone https://github.com/fast-crud/fs-admin-antdv
+cd fs-admin-antdv
+pnpm install
+npm run dev
+```
+
+### 2、

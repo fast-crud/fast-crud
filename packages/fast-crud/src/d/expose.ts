@@ -19,6 +19,7 @@ export class SetFormDataOptions {
 
 export type DoRefreshProps = {
   goFirstPage?: boolean;
+  silence?: boolean;
 };
 
 /**

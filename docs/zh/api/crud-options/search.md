@@ -157,5 +157,20 @@ const crudOptions = {
 * 说明：是否字段变更后自动触发查询
 * 默认值：true
 
+## col
+* 说明：每项宽度统一配置
+* 示例：
+```js
+const crudOptions = {
+    search:{
+        col:{
+            span:6  // 表示每列占6/24宽度，一行4列
+            //为了自适应，你也可以配置 {xs:6,sm:4,md:3,lg:2,xl:1}
+            //或者直接配置 'auto'，流式排列
+        }
+    }
+}
+```
+
 ## 更多参数
 * 说明：更多参数见：[FsSearch](/api/components/crud/search/index.md)组件文档

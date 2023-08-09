@@ -545,7 +545,7 @@ const crudOptions ={
 
 
 ## [key].search.col
-* 说明：col配置，el-col,a-col,n-col的配置
+* 说明：查询字段的单独col配置，设置查询字段宽度，支持el-col,a-col,n-col的配置
 * 类型：Object
 * 示例：
 ```js
@@ -554,6 +554,7 @@ const crudOptions = {
         key:{
             search:{
                 col:{span:4} //占据一行的4格
+                //像时间范围查询这种，可以配置为{span:8}，占据一行的8格，就可以实现规整的查询框布局
             }
         }
     }

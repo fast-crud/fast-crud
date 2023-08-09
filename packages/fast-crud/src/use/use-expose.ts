@@ -374,7 +374,7 @@ export function useExpose(props: UseExposeProps): UseExposeRet {
           pageSize: crudBinding.value.pagination.pageSize
         };
       }
-      const pageRes = await crudExpose.search({ page });
+      const pageRes = await crudExpose.search({ page }, { silence: props?.silence });
       const { currentPage = page[ui.pagination.currentPage], pageSize = page.pageSize, total } = pageRes;
       const { records } = pageRes;
       if (
