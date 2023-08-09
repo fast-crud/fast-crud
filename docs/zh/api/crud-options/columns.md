@@ -561,6 +561,23 @@ const crudOptions = {
 }
 ```
 
+## [key].search.autoSearchTrigger
+* 说明：是否在该字段变化时触发自动查询
+* 类型： boolean
+* 示例：
+```js
+const crudOptions = {
+    columns:{
+        key:{
+            search:{
+                autoSearchTrigger: true
+            }
+        }
+    }
+}
+```
+
+
 ## [key].search.valueChange
 * 说明: 值变化触发
 * 类型：`(context)=>void`
