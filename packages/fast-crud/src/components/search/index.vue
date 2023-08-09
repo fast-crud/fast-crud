@@ -194,6 +194,7 @@ export default defineComponent({
 
     const { doComputed, AsyncComputeValue } = useCompute();
 
+    // eslint-disable-next-line vue/no-setup-props-destructure
     _.each(props.columns, (item) => {
       if (item.value != null && item.value instanceof AsyncComputeValue) {
         logger.warn("search.value配置不支持AsyncCompute类型的动态计算");
@@ -216,18 +217,18 @@ export default defineComponent({
       return key;
     }
 
-    const debounceValidate = _.debounce(async () => {
-      if (await doValidate()) {
-        onFormValidated();
-      }
-    }, 500);
+    // const debounceValidate = _.debounce(async () => {
+    //   if (await doValidate()) {
+    //     onFormValidated();
+    //   }
+    // }, 500);
 
     function cellRender(item: any) {
       const key = item.key;
 
       async function _onUpdateModelValue($event: any) {
+        // await debounceValidate();
         onValueChanged($event, item);
-        await debounceValidate();
       }
 
       function _onInput() {
@@ -416,6 +417,7 @@ export default defineComponent({
           show: true,
           type: "primary",
           disabled: false,
+          // eslint-disable-next-line @typescript-eslint/no-unused-vars
           click: (context: SearchEventContext) => {
             doSearch();
           },
@@ -425,6 +427,7 @@ export default defineComponent({
         reset: {
           show: true,
           disabled: false,
+          // eslint-disable-next-line @typescript-eslint/no-unused-vars
           click: (context: SearchEventContext) => {
             doReset();
           },
@@ -501,7 +504,7 @@ export default defineComponent({
       doAutoSearch();
     };
 
-    function onValueChanged(value: any, item: SearchItemProps) {
+    async function onValueChanged(value: any, item: SearchItemProps) {
       const key = item.key;
       _.set(formData, key, value);
       if (item.valueChange) {
@@ -511,6 +514,11 @@ export default defineComponent({
         const valueChange = item.valueChange instanceof Function ? item.valueChange : item.valueChange.handle;
         valueChange({ key, value, componentRef, ...getContextFn() });
       }
+
+      if (await doValidate()) {
+        onFormValidated();
+      }
+
       if (item.autoSearchTrigger == null || item.autoSearchTrigger === true || item.autoSearchTrigger === "change") {
         doAutoSearch();
       }
