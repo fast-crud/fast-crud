@@ -1038,7 +1038,7 @@ export type SearchItemProps = {
   col?: ColProps;
 
   /**
-   * 此字段是否开启触发自动查询, 传入string则表示，[input,change]事件时触发
+   * 此字段是否开启触发自动查询, 传入string则表示，[input,change,enter]事件时触发
    */
   autoSearchTrigger?: boolean | string;
   /**
