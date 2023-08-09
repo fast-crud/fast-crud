@@ -562,15 +562,15 @@ const crudOptions = {
 ```
 
 ## [key].search.autoSearchTrigger
-* 说明：是否在该字段变化时触发自动查询
-* 类型： boolean
+* 说明：是否在该字段变化时触发自动查询，需要总的autoSearch开启状态才会生效
+* 类型： boolean | 'input' 输入触发 | 'change' 变化时触发 | 'enter'  回车键触发
 * 示例：
 ```js
 const crudOptions = {
     columns:{
         key:{
             search:{
-                autoSearchTrigger: true
+                autoSearchTrigger: true  // change | enter | input
             }
         }
     }
