@@ -228,11 +228,19 @@ export default defineComponent({
 
       async function _onUpdateModelValue($event: any) {
         // await debounceValidate();
-        await onValueChanged($event, item);
+        onValueChanged($event, item);
       }
 
       function _onInput() {
         onInput(item);
+      }
+
+      function onKeyup(item: any, key: any) {
+        if (key.code === "Enter") {
+          if (item.autoSearchTrigger === "enter") {
+            doSearch();
+          }
+        }
       }
 
       let defaultSlot: any = null;
@@ -247,6 +255,9 @@ export default defineComponent({
               componentRenderRefs.value[key] = value;
             }}
             model-value={get(formData, key)}
+            onKeyup={($event: any) => {
+              onKeyup(item, $event);
+            }}
             {...item.component}
             scope={buildFieldContext(key)}
             onUpdate:modelValue={_onUpdateModelValue}
@@ -505,11 +516,13 @@ export default defineComponent({
     };
 
     async function onValueChanged(value: any, item: SearchItemProps) {
+      const key = item.key;
+      _.set(formData, key, value);
+
       if (await doValidate()) {
         onFormValidated();
       }
-      const key = item.key;
-      _.set(formData, key, value);
+
       if (item.valueChange) {
         const key = item.key;
         const value = formData[key];

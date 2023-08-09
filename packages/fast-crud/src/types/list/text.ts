@@ -10,6 +10,9 @@ export default function () {
           vModel: ui.textArea.modelValue,
           [ui.input.clearable]: true
         }
+      },
+      search: {
+        autoSearchTrigger: "enter"
       }
     },
     password: {
@@ -20,6 +23,9 @@ export default function () {
           vModel: ui.inputPassword.modelValue,
           ...ui.inputPassword.passwordType
         }
+      },
+      search: {
+        autoSearchTrigger: "enter"
       }
     },
     textarea: {
@@ -29,7 +35,8 @@ export default function () {
           name: ui.input.name,
           type: "text",
           [ui.input.clearable]: true
-        }
+        },
+        autoSearchTrigger: "enter"
       },
       form: {
         component: {
