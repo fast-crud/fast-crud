@@ -228,7 +228,7 @@ export default defineComponent({
 
       async function _onUpdateModelValue($event: any) {
         // await debounceValidate();
-        onValueChanged($event, item);
+        await onValueChanged($event, item);
       }
 
       function _onInput() {
