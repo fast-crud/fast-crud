@@ -42,7 +42,7 @@ const routeItem = {
 }
 ```
 
-## Tabs页签
+## 四、 Tabs页签
 
 tabs页签由 [pageStore](https://github.com/fast-crud/fs-admin-antdv/blob/main/src/store/modules/page.ts) 控制
 
@@ -105,7 +105,7 @@ pageStore.closeAll()
  */
 pageStore.keepAliveRefresh()
 ```
-## 页面缓存
+## 五、页面缓存
 
 页面缓存的效果是：切换页面tabs标签，回到之前打开过的页面，不会重新加载页面数据。
 
@@ -144,18 +144,18 @@ const routeItem = {
 }
 ```
 
-## 国际化
+## 六、 国际化
 
 请参考 [i18n](../guide/start/i18n.md)
 
-## 图标
+## 七、 图标
 请参考 [icon](../guide/start/icon.md)
 
-## 主题颜色
+## 八、主题颜色
 暂不支持
 
 
-## 快速开始
+## 九、快速开始
 本教程演示如何将FsAdmin原始版本改成对接你的后台。
 
 ### 1、clone代码，本地启动
