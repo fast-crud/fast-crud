@@ -89,28 +89,27 @@ export function useCrud(ctx: UseCrudProps): UseCrudRet {
 
   function useFormSubmit() {
     return {
-      editForm: {
+      form: {
         async doSubmit(context: ScopeContext) {
-          doValueResolve(context);
-          if (options.mode?.name === "local") {
-            expose.updateTableRow(context.index, context.form, options.mode.isMergeWhenUpdate);
-          } else {
-            const res = await crudBinding.value.request.editRequest(context);
-            doRefresh();
-            return res;
-          }
-        }
-      },
-      addForm: {
-        async doSubmit(context: ScopeContext) {
-          doValueResolve(context);
-          if (options.mode?.name === "local") {
-            const index = options.mode.isAppendWhenAdd ? expose.getTableData().length : 0;
-            expose.insertTableRow(index, context.form);
-          } else {
-            const res = await crudBinding.value.request.addRequest(context);
-            doRefresh();
-            return res;
+          if (context.mode === "add") {
+            doValueResolve(context);
+            if (options.mode?.name === "local") {
+              expose.updateTableRow(context.index, context.form, options.mode.isMergeWhenUpdate);
+            } else {
+              const res = await crudBinding.value.request.editRequest(context);
+              doRefresh();
+              return res;
+            }
+          } else if (context.mode === "edit") {
+            doValueResolve(context);
+            if (options.mode?.name === "local") {
+              const index = options.mode.isAppendWhenAdd ? expose.getTableData().length : 0;
+              expose.insertTableRow(index, context.form);
+            } else {
+              const res = await crudBinding.value.request.addRequest(context);
+              doRefresh();
+              return res;
+            }
           }
         }
       }
