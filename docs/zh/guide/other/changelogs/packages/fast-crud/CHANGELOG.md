@@ -3,6 +3,20 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.16.2](https://github.com/fast-crud/fast-crud/compare/v1.16.1...v1.16.2) (2023-08-10)
+
+**Note:** Version bump only for package @fast-crud/fast-crud
+
+## [1.16.1](https://github.com/fast-crud/fast-crud/compare/v1.16.0...v1.16.1) (2023-08-09)
+
+### Bug Fixes
+
+* 修复第一次自动触发查询不带参数的bug ([484277f](https://github.com/fast-crud/fast-crud/commit/484277f81581756d3873758f2919cd174dcfd052))
+
+### Performance Improvements
+
+* text字段类型默认需要回车才能触发查询 ([394848e](https://github.com/fast-crud/fast-crud/commit/394848ee5dcafdee12970e922f9b576a8b1f4392))
+
 # [1.16.0](https://github.com/fast-crud/fast-crud/compare/v1.15.1...v1.16.0) (2023-08-07)
 
 ### Features
