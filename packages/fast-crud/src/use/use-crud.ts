@@ -91,7 +91,7 @@ export function useCrud(ctx: UseCrudProps): UseCrudRet {
     return {
       form: {
         async doSubmit(context: ScopeContext) {
-          if (context.mode === "add") {
+          if (context.mode === "edit") {
             doValueResolve(context);
             if (options.mode?.name === "local") {
               expose.updateTableRow(context.index, context.form, options.mode.isMergeWhenUpdate);
@@ -100,7 +100,7 @@ export function useCrud(ctx: UseCrudProps): UseCrudRet {
               doRefresh();
               return res;
             }
-          } else if (context.mode === "edit") {
+          } else if (context.mode === "add") {
             doValueResolve(context);
             if (options.mode?.name === "local") {
               const index = options.mode.isAppendWhenAdd ? expose.getTableData().length : 0;
