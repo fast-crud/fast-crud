@@ -159,24 +159,21 @@ const crudOptions = {
 * 注意：仅在独立使用表单组件时有效，fs-crud中会被行数据代替，你可以在字段中配置columns.key.form.value=默认值
 * 类型：Object
 
+## beforeSubmit
+* 说明: 表单提交前触发，返回false则中止提交
+* 类型：async Function(context)
 
 ## doSubmit
 * 说明: 提交表单时执行的方法（独立使用表单时，通过`formRef.submit()`可触发此方法）
 * 类型：async Function(context)
 * 默认：默认无需配置，通过`useCrud`自动生成
 
-
-## beforeSubmit
-* 说明: 表单提交前触发，返回false则中止提交
-* 类型：async Function(context)
-
-
 ## afterSubmit
-* 说明: 表单提交后触发
+* 说明: 表单提交后触发，可以抛异常阻止后续操作
 * 类型：async Function(context)
 
 ## onSuccess
-* 说明: afterSubmit没有抛异常后触发，默认刷新表格
+* 说明: afterSubmit没有抛异常时触发，默认为刷新表格
 * 类型：async Function(context)
 
 

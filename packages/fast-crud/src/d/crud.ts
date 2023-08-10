@@ -560,19 +560,27 @@ export type FormProps = {
    * 表单对话框/抽屉配置
    */
   wrapper?: FormWrapperProps;
+
+  /**
+   * 提交前做一些操作,返回false或抛异常，阻止后续操作
+   */
+  beforeSubmit?: (context: FormScopeContext) => Promise<boolean>;
+
   /**
    * 提交表单的方法（默认已经配置好，将会调用addRequest或者updateRequest）
    */
   doSubmit?: (context: FormScopeContext) => Promise<any>;
   /**
-   * 提交前做一些操作
-   */
-  beforeSubmit?: (context: FormScopeContext) => Promise<any>;
-  /**
-   * 提交后做一些操作
+   * 提交后做一些操作，可以抛异常来阻止后续操作，其中context.res = doSubmit的返回值
    * @param context
    */
   afterSubmit?: (context: FormScopeContext) => Promise<any>;
+
+  /**
+   * 成功后的操作，afterSubmit未抛异常时执行，默认为刷新表格
+   * @param context
+   */
+  onSuccess?: (context: FormScopeContext) => Promise<any>;
 
   /**
    * 表单重置时的操作
