@@ -16,7 +16,7 @@ import {
 import { useCompute } from "./use-compute";
 import { buildTableColumnsFlatMap, useColumns } from "./use-columns";
 import { CrudOptions } from "../d/crud";
-import { computed, nextTick, Ref, ref } from "vue";
+import { computed, Ref, ref } from "vue";
 import { useExpose } from "./use-expose";
 import { exportTable } from "../lib/fs-export";
 
@@ -96,9 +96,7 @@ export function useCrud(ctx: UseCrudProps): UseCrudRet {
             if (options.mode?.name === "local") {
               expose.updateTableRow(context.index, context.form, options.mode.isMergeWhenUpdate);
             } else {
-              const res = await crudBinding.value.request.editRequest(context);
-              doRefresh();
-              return res;
+              return await crudBinding.value.request.editRequest(context);
             }
           } else if (context.mode === "add") {
             doValueResolve(context);
@@ -106,11 +104,12 @@ export function useCrud(ctx: UseCrudProps): UseCrudRet {
               const index = options.mode.isAppendWhenAdd ? expose.getTableData().length : 0;
               expose.insertTableRow(index, context.form);
             } else {
-              const res = await crudBinding.value.request.addRequest(context);
-              doRefresh();
-              return res;
+              return await crudBinding.value.request.addRequest(context);
             }
           }
+        },
+        async onSuccess() {
+          doRefresh();
         }
       }
     };

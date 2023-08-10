@@ -175,6 +175,11 @@ const crudOptions = {
 * 说明: 表单提交后触发
 * 类型：async Function(context)
 
+## onSuccess
+* 说明: afterSubmit没有抛异常后触发，默认刷新表格
+* 类型：async Function(context)
+
+
 ## wrapper(表单容器,dialog/drawer)
 * 说明: 表单容器配置的配置（`对话框dialog`或`抽屉drawer`）
 * 类型：Object

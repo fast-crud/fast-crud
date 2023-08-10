@@ -231,7 +231,7 @@ export default defineComponent({
       type: Object
     }
   },
-  emits: ["reset", "submit", "validationError", "value-change"],
+  emits: ["reset", "submit", "success", "validationError", "value-change"],
   setup(props, ctx) {
     const { merge } = useMerge();
     const { ui } = useUi();
@@ -490,6 +490,7 @@ export default defineComponent({
       if (props.afterSubmit) {
         await props.afterSubmit(submitScope);
       }
+      ctx.emit("success", submitScope);
     }
 
     function getFormData() {
