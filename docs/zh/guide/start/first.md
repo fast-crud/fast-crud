@@ -91,7 +91,7 @@ export default function ({ crudExpose, context }: CreateCrudOptionsProps): Creat
     //此处为组件定义
     export default defineComponent({
         name: "FsCrudFirst",
-        setup() {
+        setup(props:any,ctx:any) {
             // // crud组件的ref
             // const crudRef = ref();
             // // crud 配置的ref
@@ -105,7 +105,7 @@ export default function ({ crudExpose, context }: CreateCrudOptionsProps): Creat
 
             //  =======以上为fs的初始化代码=========
             //  =======你可以简写为下面这一行========
-            const context: any = {}; // 自定义变量, 将会传递给createCrudOptions
+            const context: any = {props,ctx}; // 自定义变量, 将会传递给createCrudOptions, 比如直接把props,和ctx直接传过去使用
             function onExpose(e:OnExposeContext){} //将在createOptions之前触发，可以获取到crudExpose,和context
             const { crudRef, crudBinding, crudExpose } = useFs({ createCrudOptions, onExpose, context});
             

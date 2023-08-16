@@ -16,10 +16,11 @@
 import {onMounted, ref} from "vue";
 import {useFs} from "./@fast-crud/fast-crud";
 import createCrudOptions from "./crud";
-
+const props =defineProps({...})
 const fooRef = ref(0)
 const context: any = {
   fooRef //将fooRef 通过context传递给crud.tsx
+  props,
 };
 const {crudRef, crudBinding, crudExpose} = useFs({createCrudOptions, context});
 
@@ -38,7 +39,7 @@ import { CreateCrudOptionsProps, CreateCrudOptionsRet, dict } from "@fast-crud/f
 import { addRequest, delRequest, editRequest, pageRequest } from "./api";
 
 export default function ({ crudExpose, context }: CreateCrudOptionsProps): CreateCrudOptionsRet {
-  const {fooRef} = context  //从context中获取fooRef
+  const {fooRef,props} = context  //从context中获取fooRef
   return {
     crudOptions: {
       columns:{

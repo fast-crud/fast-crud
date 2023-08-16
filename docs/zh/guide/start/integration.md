@@ -214,6 +214,7 @@ import _ from "lodash-es";
 
 //此处为crudOptions配置
 const createCrudOptions = function ({ crudOptions, context }: CreateCrudOptionsProps): CreateCrudOptionsRet {
+  const {props,ctx} = context
   //本地模拟后台crud接口方法 ----开始
   const records = [{ id: 1, name: "Hello World", type: 1 }];
   const pageRequest = async (query: UserPageQuery): Promise<UserPageRes> => {
@@ -284,11 +285,13 @@ const createCrudOptions = function ({ crudOptions, context }: CreateCrudOptionsP
 //此处为组件定义
 export default defineComponent({
   name: "FsCrudHelloWorld",
-  setup() {
+  setup(props:any,ctx:any) {
     // 演示自定义变量传递, 将会传递给createCrudOptions
-    const customValue: any = {};
+    const context: any = {
+      props,ctx
+    };
     //  =======你可以简写为下面这一行========
-    const { crudRef, crudBinding, crudExpose, context } = useFs({ createCrudOptions, context:customValue });
+    const { crudRef, crudBinding, crudExpose } = useFs({ createCrudOptions, context });
 
     // 页面打开后获取列表数据
     onMounted(() => {

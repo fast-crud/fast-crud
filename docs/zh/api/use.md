@@ -14,13 +14,15 @@
 ```js
 //index.vue
 export default {
-    setup(){
-        const custom: any = {}; //自定义变量，传给createCrudOptions的额外参数（可以任意命名，任意多个）
+    setup(props:any,ctx:any){
+        const context: any = {
+            props,ctx
+        }; //自定义变量，传给createCrudOptions的额外参数（可以任意命名，传任意参数）
         const crudExposeRef:Ref<CrudExpose> = ref() //crudExpose创建好之后，会填充进此ref，可以在useFs之前创建使用crudExpose的方法
         const customAdd = ()=>{
             crudExposeRef.value.openAdd({row:{}})
         }
-        const { crudBinding, crudRef, crudExpose, resetCrudOptions,context } = useFs({ createCrudOptions, context: custom, crudExposeRef});
+        const { crudBinding, crudRef, crudExpose, resetCrudOptions } = useFs({ createCrudOptions, context, crudExposeRef});
         return {
             crudBinding,
             crudRef,
@@ -38,7 +40,8 @@ import { addRequest, delRequest, editRequest, pageRequest } from "./api";
 
 //------------------------------------↓↓↓↓↓↓↓↓↓↓ 获取传入的额外参数
 export default function ({ crudExpose, context }: CreateCrudOptionsProps): CreateCrudOptionsRet {
-  return {
+   const {props,ctx} = context
+    return {
     crudOptions: {
       // 自定义crudOptions配置
     }
