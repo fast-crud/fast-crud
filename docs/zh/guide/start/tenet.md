@@ -20,10 +20,26 @@ const crudOptions = {
 
 ```
 ## 2. 文档中类似x-table-column的属性说明
+文档中有很多【类似`x-table-column`组件属性 或者 `对应ui组件的属性`】的说法。
 x是指对应的ui的前缀，比如 `el-table-column/ n-table-column / a-table-column `
 
-当看到此类说明时，表示该处地方可以配置对应组件的属性
+当看到此类说明时，表示该处地方可以配置对应组件的属性，你需要去查看对应ui组件的文档
 
+```js
+const crudOptions = {
+    columns:{
+        key:{
+            type:"text",
+            column:{
+                //...这里可以配置x-table-column的属性
+                width: '200px' //列的宽度  <----此属性是由[el|a|n]-table-column提供的
+            }
+        }
+    }
+}
+
+``
+```
 
 ## 3. 组件配置说明
 1. 组件配置是通过 `fs-component-render`来渲染的，component下面可以配置`fs-component-render`的属性

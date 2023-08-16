@@ -38,7 +38,8 @@ module.exports = {
                         {text: '集成到你的项目', link: '/guide/start/integration'},
                         {text: '国际化', link: '/guide/start/i18n'},
                         {text: '图标', link: '/guide/start/icon'},
-                        {text: '新手必看', link: '/guide/start/grow'}
+                        {text: '新手必看', link: '/guide/start/grow'},
+                        {text: '通用规则', link: '/guide/start/tenet'}
                     ],
                 },
                 {
