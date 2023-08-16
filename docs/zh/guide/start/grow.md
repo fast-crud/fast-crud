@@ -124,7 +124,6 @@ onMounted(() => {
 
 </script>
 ```
-
 ## 二、其他入门常见问题
 
 [入门常见问题](../advance/improve.md)
