@@ -143,31 +143,23 @@ function useEditable(props: UseEditableProps) {
       editableRow.inactive();
     },
     async doRemoveRow(opts: { index: number }) {
-      const { index } = opts;
-      try {
-        await ui.messageBox.confirm({
-          title: t("fs.rowHandle.remove.confirmTitle"), // '提示',
-          message: t("fs.rowHandle.remove.confirmMessage"), // '确定要删除此记录吗?',
-          type: "warn"
-        });
-      } catch (e) {
-        // @ts-ignore
-        logger.info("delete canceled", e.message);
-        return;
-      }
+      const index = opts.index;
       const row = editable.getEditableRow(index);
-      if (row.isAdd) {
-        editable.removeRow(index);
-      } else {
-        if (crudBinding.value.mode.name === "local") {
-          // do nothing
-        } else {
-          const rowData = row.getRowData(index);
-          await crudBinding.value.request.delRequest({ row: rowData });
-          crudExpose.doRefresh();
+      const rowData = row.getRowData(index);
+      const context = { index, row: rowData };
+      await crudExpose.doRemove(context, {
+        async handle() {
+          if (row.isAdd) {
+            editable.removeRow(index);
+          } else {
+            if (crudBinding.value.mode.name === "local") {
+              editable.removeRow(index);
+            } else {
+              await crudBinding.value.request.delRequest({ row: rowData });
+            }
+          }
         }
-      }
-      ui.notification.success(t("fs.rowHandle.remove.success"));
+      });
     },
     getInstance() {
       crudExpose.getTableRef().editable;
@@ -547,18 +539,25 @@ export function useExpose(props: UseExposeProps): UseExposeRet {
         return;
       }
       let res = null;
-      if (crudBinding.value.mode?.name === "local") {
-        crudExpose.removeTableRow(context?.index);
+      const isLocal = crudBinding.value.mode?.name === "local";
+      if (opts.handler) {
+        await opts.handler(context);
       } else {
-        res = await crudBinding.value.request.delRequest(context);
+        if (isLocal) {
+          crudExpose.removeTableRow(context?.index);
+        } else {
+          res = await crudBinding.value.request.delRequest(context);
+        }
       }
 
       if (removeBinding.showSuccessNotification !== false) {
         ui.notification.success(t("fs.rowHandle.remove.success"));
       }
 
-      if (removeBinding.refreshTable !== false) {
-        await crudExpose.doRefresh();
+      if (!isLocal) {
+        if (removeBinding.refreshTable !== false) {
+          await crudExpose.doRefresh();
+        }
       }
 
       if (removeBinding.onRemoved) {
