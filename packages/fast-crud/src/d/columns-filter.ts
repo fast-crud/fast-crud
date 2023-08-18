@@ -1,5 +1,5 @@
 import { Ref } from "vue";
-import { TableColumnsProps } from "/src/d/crud";
+import { TableColumnsProps } from "../d/crud";
 
 export type ColumnsFilterItem = {
   key: string;
