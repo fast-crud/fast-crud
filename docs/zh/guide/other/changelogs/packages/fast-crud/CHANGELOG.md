@@ -3,6 +3,25 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.16.4](https://github.com/fast-crud/fast-crud/compare/v1.16.3...v1.16.4) (2023-08-18)
+
+**Note:** Version bump only for package @fast-crud/fast-crud
+
+## [1.16.3](https://github.com/fast-crud/fast-crud/compare/v1.16.2...v1.16.3) (2023-08-18)
+
+### Bug Fixes
+
+* 修复服务端导出会继续执行本地导出的bug ([0a2df13](https://github.com/fast-crud/fast-crud/commit/0a2df13c592ad5c44280c3dae62e343923c9aa0b))
+* 修复v-model模式删除无效的bug ([d177cba](https://github.com/fast-crud/fast-crud/commit/d177cbac0ef8a73aec36cf0cace84a957f5e44cd))
+* **i18n:** 修复无法覆盖默认国际化配置的bug ([97f5870](https://github.com/fast-crud/fast-crud/commit/97f5870f4d5a186ac15023d8a490e91c84f7edc0))
+
+### Performance Improvements
+
+* 增加查看表单使用单元格组件示例 ([aeb4868](https://github.com/fast-crud/fast-crud/commit/aeb48685d4791b1e6f95e186a7eb094efc067b4b))
+* columnsFilterContext增加submit和reset ([fb8b030](https://github.com/fast-crud/fast-crud/commit/fb8b03019360a3bc08006618f86ff7e3d251531d))
+* columnsFilterContext增加submit和reset ([b65b62d](https://github.com/fast-crud/fast-crud/commit/b65b62de363335c3f311a6e094c74929d280da45))
+* fs-button增加buttonProps参数，当fs-button的属性与x-button属性名重复时使用 ([5ca5333](https://github.com/fast-crud/fast-crud/commit/5ca53330f8bcf8d7acf4eb921aa92b83c41de52a))
+
 ## [1.16.2](https://github.com/fast-crud/fast-crud/compare/v1.16.1...v1.16.2) (2023-08-10)
 
 **Note:** Version bump only for package @fast-crud/fast-crud
