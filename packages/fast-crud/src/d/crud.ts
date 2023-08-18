@@ -375,6 +375,12 @@ export type RemoveProps = {
    */
   onRemoved?: (context: any) => Promise<any>;
 
+  /**
+   * 实际删除操作
+   * @param context
+   */
+  handle?: (context: any) => Promise<any>;
+
   [key: string]: any;
 };
 

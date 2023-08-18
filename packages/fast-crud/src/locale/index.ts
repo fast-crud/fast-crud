@@ -28,18 +28,16 @@ class I18n {
     if (instance.global) {
       instance = instance.global;
     }
-    const { merge } = useMerge();
     const locales: string[] = instance.availableLocales;
-    debugger;
     for (const item of locales) {
       if (item.startsWith("zh")) {
         const message = instance.getLocaleMessage(item);
-        const fsClone = _.cloneDeep(message.fs);
+        const fsClone = _.cloneDeep(message.fs || {});
         instance.mergeLocaleMessage(item, { fs: zhCN.fs });
         instance.mergeLocaleMessage(item, { fs: fsClone });
       } else if (item.startsWith("en")) {
         const message = instance.getLocaleMessage(item);
-        const fsClone = _.cloneDeep(message.fs);
+        const fsClone = _.cloneDeep(message.fs || {});
         instance.mergeLocaleMessage(item, { fs: en.fs });
         instance.mergeLocaleMessage(item, { fs: fsClone });
       }

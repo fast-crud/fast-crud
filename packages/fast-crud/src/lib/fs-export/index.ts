@@ -96,6 +96,7 @@ export type ExportProps = {
 export async function exportTable(crudExpose: CrudExpose, opts: ExportProps = {}): Promise<any> {
   if (opts.server) {
     await opts.server();
+    return;
   }
   const crudBinding = crudExpose.crudBinding;
   let columns: ExportColumn[] = opts.columns;

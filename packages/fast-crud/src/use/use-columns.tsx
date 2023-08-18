@@ -78,6 +78,9 @@ function mergeColumnType(item: ColumnCompositionProps) {
   return item;
 }
 
+const mergeColumnPlugin = { name: "type", handle: mergeColumnType, order: -2 };
+const dictPlugin = { name: "dict", handle: mergeColumnDict, order: -1 };
+
 const viewFormUseCellComponentPlugin = {
   name: "viewFormUseCellComponent",
   order: 10,
@@ -100,8 +103,9 @@ const viewFormUseCellComponentPlugin = {
     return columnProps;
   }
 };
-registerMergeColumnPlugin({ name: "type", handle: mergeColumnType, order: -2 });
-registerMergeColumnPlugin({ name: "dict", handle: mergeColumnDict, order: -1 });
+
+registerMergeColumnPlugin(mergeColumnPlugin);
+registerMergeColumnPlugin(dictPlugin);
 registerMergeColumnPlugin(viewFormUseCellComponentPlugin);
 
 /**
