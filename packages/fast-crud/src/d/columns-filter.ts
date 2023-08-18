@@ -1,4 +1,5 @@
 import { Ref } from "vue";
+import { TableColumnsProps } from "/src/d/crud";
 
 export type ColumnsFilterItem = {
   key: string;
@@ -10,10 +11,12 @@ export type ColumnsFilterItem = {
 };
 
 export type ColumnsFilterContext = {
-  originalColumns: Ref;
-  currentColumns: Ref;
+  originalColumns: Ref<TableColumnsProps>;
+  currentColumns: Ref<ColumnsFilterItem[]>;
   text: Ref;
   active: Ref;
+  submit: () => void;
+  reset: () => void;
 };
 
 export const ColumnsFilterProvideKey = "ColumnsFilterContext";
