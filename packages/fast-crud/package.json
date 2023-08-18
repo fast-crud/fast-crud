@@ -2,14 +2,9 @@
   "name": "@fast-crud/fast-crud",
   "version": "1.16.3",
   "private": false,
-  "main": "./src/index.ts",
-  "module": "./src/index.ts",
-  "types": "./src/index.ts",
-  "publishConfig": {
-    "main": "./dist/fast-crud.umd.js",
-    "module": "./dist/fast-crud.mjs",
-    "types": "./dist/d/index.d.ts"
-  },
+  "main": "./dist/fast-crud.umd.js",
+  "module": "./dist/fast-crud.mjs",
+  "types": "./dist/d/index.d.ts",
   "scripts": {
     "tsc": "vue-tsc --noEmit --skipLibCheck",
     "build": "npm run tsc && vite build && npm run copy-local",
@@ -89,5 +84,5 @@
     "vue-router": "^4.2.4",
     "vue-tsc": "^1.8.8"
   },
-  "gitHead": "348f7f12cabad83488dd25a87e3e73f117a1a38c"
+  "gitHead": "e0829574dc08ce4fb257dbcf4888487ae94b4a37"
 }
