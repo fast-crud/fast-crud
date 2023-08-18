@@ -41,7 +41,7 @@ export default defineComponent({
      * x-button的配置，当x-button的配置与fs-button的配置有冲突时可以配置在此处
      * 比如：n-button的text
      */
-    props: {
+    buttonProps: {
       type: Object,
       default: undefined
     }
@@ -115,7 +115,7 @@ export default defineComponent({
             "is-thin": !props.text && !ctx.slots.default
           }
         },
-        { ...ctx.attrs, ...props.props }
+        { ...ctx.attrs, ...props.buttonProps }
       );
       if (iconProp) {
         // @ts-ignore
