@@ -103,8 +103,6 @@ const _text = computed(() => {
   return def;
 });
 
-provide(ColumnsFilterProvideKey, { originalColumns: original, currentColumns, text: _text, active });
-
 function buildColumnFilterItem(item: ColumnProps) {
   return {
     key: item.key,
@@ -184,6 +182,8 @@ function submit(noSave = false) {
   doEmit(result);
   active.value = false;
 }
+
+provide(ColumnsFilterProvideKey, { originalColumns: original, currentColumns, text: _text, active, submit, reset });
 
 function simpleSubmit() {
   submit(false);
