@@ -2,9 +2,14 @@
   "name": "@fast-crud/fast-extends",
   "version": "1.16.3",
   "private": false,
-  "main": "./dist/fast-extends.umd.js",
-  "module": "./dist/fast-extends.mjs",
-  "types": "./dist/d/index.d.ts",
+  "main": "./src/index.ts",
+  "module": "./src/index.ts",
+  "types": "./src/index.ts",
+  "publishConfig": {
+    "main": "./dist/fast-extends.umd.js",
+    "module": "./dist/fast-extends.mjs",
+    "types": "./dist/d/index.d.ts"
+  },
   "scripts": {
     "build:all": "npm run build:type && npm run build && npm run copy:index",
     "build": " npm run tsc && npm run build:umd && npm run build:es",
@@ -93,4 +98,4 @@
     "wangeditor": "^4.7.15"
   },
   "gitHead": "e0829574dc08ce4fb257dbcf4888487ae94b4a37"
-}
+},
