@@ -588,19 +588,17 @@ export function useExpose(props: UseExposeProps): UseExposeRet {
       if (crudBinding.value?.request?.infoRequest) {
         row = await crudBinding.value.request.infoRequest({ mode, row });
       }
-      const options = {
-        mode,
-        initialForm: row
-      };
+      const options = {};
       delete context.row;
       const xxForm = toRaw(crudBinding.value[mode + "Form"]);
-      merge(options, xxForm, context, formOpts);
+      merge(options, xxForm, { initialForm: row }, context, formOpts);
       return await this.openDialog(options);
     },
     async openAdd(context: OpenEditContext, formOpts: OpenDialogProps = {}) {
       return this._openDialog("add", context, formOpts);
     },
     async openEdit(context: OpenEditContext, formOpts: OpenDialogProps = {}) {
+      debugger;
       return this._openDialog("edit", context, formOpts);
     },
     async openView(context: OpenEditContext, formOpts: OpenDialogProps = {}) {
