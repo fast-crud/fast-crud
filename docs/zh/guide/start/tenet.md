@@ -96,7 +96,7 @@ const crudOptions = {
 }
 ```
 
-[更多组件配置说明](../api/common-options.html#component【组件配置】)
+[更多组件配置说明](../../api/common-options.md#component【组件配置】)
 
 ## 4. 关于render后缀方法的说明
 
