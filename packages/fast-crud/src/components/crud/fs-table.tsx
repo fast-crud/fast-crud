@@ -77,7 +77,7 @@ function buildTableSlots({ props, ui, sortedColumns, renderRowHandle, renderCell
         />
       );
     };
-    _.forEach(sortedColumns.value, (item) => {
+    _.forEach(sortedColumns, (item) => {
       if (item.show === false) {
         return;
       }
@@ -449,7 +449,7 @@ export default defineComponent({
         return buildTableSlots({
           props,
           ui,
-          sortedColumns,
+          sortedColumns: sortedColumns.value,
           renderRowHandle,
           renderCellComponent
         } as BuildTableColumnsOption);
