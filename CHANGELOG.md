@@ -3,6 +3,13 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.16.7](https://github.com/fast-crud/fast-crud/compare/v1.16.6...v1.16.7) (2023-08-21)
+
+### Bug Fixes
+
+* 修复查询不会重置page信息的bug ([bb0bd5a](https://github.com/fast-crud/fast-crud/commit/bb0bd5af4d9289cdbe99dc7a420ef191ff8ac411))
+* 修复element table 字段排序无效的bug ([9a9aba9](https://github.com/fast-crud/fast-crud/commit/9a9aba91b131a4024256fab61325b6bd703670f7))
+
 ## [1.16.6](https://github.com/fast-crud/fast-crud/compare/v1.16.5...v1.16.6) (2023-08-21)
 
 **Note:** Version bump only for package fast-crud-root
