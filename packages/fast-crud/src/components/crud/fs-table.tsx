@@ -336,7 +336,7 @@ export default defineComponent({
       onFilterChange: (filters: any) => {
         ctx.emit("filter-change", filters);
       },
-      onPagination: (pagination: any) => {
+      onPagination: () => {
         //
       },
       bubbleUp: (onChange) => {
