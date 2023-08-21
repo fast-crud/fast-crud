@@ -155,7 +155,7 @@ export function useCrud(ctx: UseCrudProps): UseCrudRet {
     return {
       search: {
         onSearch() {
-          crudExpose.doRefresh();
+          crudExpose.doRefresh({ goFirstPage: true });
         },
         ["onUpdate:form"]: (value: any) => {
           crudBinding.value.search.form = value;
