@@ -126,7 +126,7 @@ function doColumnsSort(columns: TableColumnsProps): TableColumnsProps {
   for (const key in columns) {
     const item = columns[key];
     item.key = key;
-    if (item.children) {
+    if (item.children && _.size(item.children) > 0) {
       item.children = doColumnsSort(item.children);
     }
     list.push(item);
@@ -149,7 +149,7 @@ function doColumnsSort(columns: TableColumnsProps): TableColumnsProps {
 function buildTableColumns(options: any): any[] {
   const { props, renderRowHandle, renderCellComponent, sortedColumns } = options;
   const { ui } = useUi();
-  const originalColumns = sortedColumns.value ?? {};
+  const originalColumns = sortedColumns ?? {};
   const columns: ColumnProps[] = [];
 
   for (const key in originalColumns) {
@@ -162,7 +162,7 @@ function buildTableColumns(options: any): any[] {
     columns.push(item);
     if (column.children != null) {
       // 表头分组
-      const childOptions = { ...options, columns: column.children };
+      const childOptions = { ...options, sortedColumns: column.children };
       delete childOptions.renderRowHandle;
       item.children = buildTableColumns(childOptions);
     } else if (column.type != null) {
@@ -483,7 +483,7 @@ export default defineComponent({
           ctx,
           ui,
           getContextFn,
-          sortedColumns,
+          sortedColumns: sortedColumns.value,
           componentRefs,
           renderRowHandle,
           renderCellComponent,
