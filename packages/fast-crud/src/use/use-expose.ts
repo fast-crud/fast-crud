@@ -540,7 +540,7 @@ export function useExpose(props: UseExposeProps): UseExposeRet {
       }
       let res = null;
       const isLocal = crudBinding.value.mode?.name === "local";
-      if (opts.handler) {
+      if (opts?.handler) {
         await opts.handler(context);
       } else {
         if (isLocal) {
