@@ -589,7 +589,9 @@ export function useExpose(props: UseExposeProps): UseExposeRet {
       if (crudBinding.value?.request?.infoRequest) {
         row = await crudBinding.value.request.infoRequest({ mode, row });
       }
-      const options = {};
+      const options = {
+        mode
+      };
       const xxForm = toRaw(crudBinding.value[mode + "Form"]);
       merge(options, xxForm, { initialForm: row }, context, formOpts);
       return await this.openDialog(options);
@@ -598,7 +600,6 @@ export function useExpose(props: UseExposeProps): UseExposeRet {
       return this._openDialog("add", context, formOpts);
     },
     async openEdit(context: OpenEditContext, formOpts: OpenDialogProps = {}) {
-      debugger;
       return this._openDialog("edit", context, formOpts);
     },
     async openView(context: OpenEditContext, formOpts: OpenDialogProps = {}) {
