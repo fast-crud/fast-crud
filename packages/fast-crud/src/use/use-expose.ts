@@ -8,7 +8,7 @@ import {
   OpenEditContext,
   SetFormDataOptions
 } from "../d/expose";
-import _ from "lodash-es";
+import _, { isArray } from "lodash-es";
 import logger from "../utils/util.log";
 import { useMerge } from "../use/use-merge";
 import { useUi } from "../use/use-ui";
@@ -241,6 +241,11 @@ export function useExpose(props: UseExposeProps): UseExposeRet {
             column: col
           });
         });
+
+        //children
+        if (row.children && isArray(row.children)) {
+          crudExpose.doValueBuilder(row.children, columns);
+        }
       });
       logger.debug("valueBuilder success:", records);
     },
