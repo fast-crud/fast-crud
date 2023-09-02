@@ -23,10 +23,11 @@ import { Constants } from "../../utils/util.constants";
 type BuildTableColumnsOption = {
   props: any;
   ui: UiInterface;
+  sortedColumns: TableColumnsProps;
   renderRowHandle: any;
   renderCellComponent: any;
 };
-function buildTableSlots({ props, ui, renderRowHandle, renderCellComponent }: BuildTableColumnsOption) {
+function buildTableSlots({ props, ui, sortedColumns, renderRowHandle, renderCellComponent }: BuildTableColumnsOption) {
   const tableComp = resolveDynamicComponent(ui.table.name);
   const tableColumnComp = resolveDynamicComponent(ui.tableColumn.name);
   const tableColumnGroupComp = resolveDynamicComponent(ui.tableColumnGroup.name);
@@ -78,7 +79,7 @@ function buildTableSlots({ props, ui, renderRowHandle, renderCellComponent }: Bu
         />
       );
     };
-    _.forEach(props.columns, (item) => {
+    _.forEach(sortedColumns, (item) => {
       if (item.show === false) {
         return;
       }
@@ -122,6 +123,24 @@ function doArraySort(arr: any) {
   });
 }
 
+function doColumnsSort(columns: TableColumnsProps): TableColumnsProps {
+  const list: ColumnProps[] = [];
+  for (const key in columns) {
+    const item = columns[key];
+    item.key = key;
+    if (item.children && _.size(item.children) > 0) {
+      item.children = doColumnsSort(item.children);
+    }
+    list.push(item);
+  }
+  const columnsArr: ColumnProps[] = doArraySort(list);
+  const columnsMap: TableColumnsProps = {};
+  for (const item of columnsArr) {
+    columnsMap[item.key] = item;
+  }
+  return columnsMap;
+}
+
 /**
  * 通过config来渲染列
  * @param props
@@ -130,10 +149,10 @@ function doArraySort(arr: any) {
  * @returns {*[]}
  */
 function buildTableColumns(options: any): any[] {
-  const { props, renderRowHandle, renderCellComponent } = options;
+  const { props, renderRowHandle, renderCellComponent, sortedColumns } = options;
   const { ui } = useUi();
-  const originalColumns = options.columns ?? {};
-  let columns: ColumnProps[] = [];
+  const originalColumns = sortedColumns ?? {};
+  const columns: ColumnProps[] = [];
 
   for (const key in originalColumns) {
     const column = originalColumns[key];
@@ -145,7 +164,7 @@ function buildTableColumns(options: any): any[] {
     columns.push(item);
     if (column.children != null) {
       // 表头分组
-      const childOptions = { ...options, columns: column.children };
+      const childOptions = { ...options, sortedColumns: column.children };
       delete childOptions.renderRowHandle;
       item.children = buildTableColumns(childOptions);
     } else if (column.type != null) {
@@ -187,7 +206,6 @@ function buildTableColumns(options: any): any[] {
     columns.push(rowHandle);
   }
 
-  columns = doArraySort(columns);
   utilLog.debug("table columns:", columns);
   return columns;
 }
@@ -327,7 +345,7 @@ export default defineComponent({
       onFilterChange: (filters: any) => {
         ctx.emit("filter-change", filters);
       },
-      onPagination: (pagination: any) => {
+      onPagination: () => {
         //
       },
       bubbleUp: (onChange) => {
@@ -431,10 +449,19 @@ export default defineComponent({
     const computedBinding = computed(() => {
       return _.merge({}, ctx.attrs, events);
     });
+    const sortedColumns = computed(() => {
+      return doColumnsSort(props.columns);
+    });
     if (renderMode === "slot") {
       //使用slot column ，element-plus
       const computedTableSlots = computed(() => {
-        return buildTableSlots({ props, ui, renderRowHandle, renderCellComponent } as BuildTableColumnsOption);
+        return buildTableSlots({
+          props,
+          ui,
+          sortedColumns: sortedColumns.value,
+          renderRowHandle,
+          renderCellComponent
+        } as BuildTableColumnsOption);
       });
 
       return () => {
@@ -465,6 +492,7 @@ export default defineComponent({
           ctx,
           ui,
           getContextFn,
+          sortedColumns: sortedColumns.value,
           componentRefs,
           renderRowHandle,
           renderCellComponent,

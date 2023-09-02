@@ -53,7 +53,7 @@
 * 默认：false
 
 ### getNodesByValues
-* 说明：根据value数组，返回节点数据，用于懒加载时，行展示组件的label显示   
+* 说明：根据value数组，返回节点数据，用于表格单元格组件的label显示，当dict的data过多或懒加载时需要配置   
 * 类型：`async Function(Array<value>):Array<Options>`
 * 默认：undefined
 

@@ -544,7 +544,7 @@ export function useExpose(props: UseExposeProps): UseExposeRet {
       }
       let res = null;
       const isLocal = crudBinding.value.mode?.name === "local";
-      if (opts.handler) {
+      if (opts?.handler) {
         await opts.handler(context);
       } else {
         if (isLocal) {
@@ -586,6 +586,7 @@ export function useExpose(props: UseExposeProps): UseExposeRet {
       const { merge } = useMerge();
       // @ts-ignore
       let row = context.row || context[ui.tableColumn.row];
+      delete context.row;
       if (row == null && context.index != null) {
         row = crudExpose.getTableDataRow(context.index);
       }
@@ -593,12 +594,10 @@ export function useExpose(props: UseExposeProps): UseExposeRet {
         row = await crudBinding.value.request.infoRequest({ mode, row });
       }
       const options = {
-        mode,
-        initialForm: row
+        mode
       };
-      delete context.row;
       const xxForm = toRaw(crudBinding.value[mode + "Form"]);
-      merge(options, xxForm, context, formOpts);
+      merge(options, xxForm, { initialForm: row }, context, formOpts);
       return await this.openDialog(options);
     },
     async openAdd(context: OpenEditContext, formOpts: OpenDialogProps = {}) {

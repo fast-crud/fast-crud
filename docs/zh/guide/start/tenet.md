@@ -96,7 +96,7 @@ const crudOptions = {
 }
 ```
 
-[更多组件配置说明](../api/common-options.html#component【组件配置】)
+[更多组件配置说明](../../api/common-options.md#component【组件配置】)
 
 ## 4. 关于render后缀方法的说明
 
@@ -123,6 +123,19 @@ const crudOptions ={
 
 更多jsx语法，请参考文档：https://github.com/vuejs/babel-plugin-jsx
 
+
+## 5. 关于 scope 或 context的说明
+文档中有时候会出现 scope 或  context。说明该参数是上下文,格式如下（注意：不一定包含所有的字段，你可以打印出来看看）
+```js
+type ScopeContext = {
+    value:any; //当前单元格/表单字段的值
+    key:string; //当前单元格/表单字段的key
+    index: number; // form表单内没有
+    form: any; //单元格渲染时没有
+    row: any; //当前行的值
+    getComponentRef; //某些情况下没有
+}
+```
 
 
 ## 遗漏补充
