@@ -2,6 +2,7 @@ import FsUploaderType from "./type";
 export * from "./type";
 export * from "./d";
 export * from "./components/libs/";
+export * from "./components/utils";
 import { ColumnCompositionProps, CrudOptions, utils } from "@fast-crud/fast-crud";
 // @ts-ignore
 const asyncModules = import.meta.glob("./components/*.vue");
