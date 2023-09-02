@@ -1,6 +1,8 @@
 import {
   computed,
   defineComponent,
+  getCurrentInstance,
+  getCurrentScope,
   PropType,
   ref,
   resolveDirective,
@@ -275,16 +277,23 @@ export default defineComponent({
       return cellRef?.getTargetRef();
     };
 
+    const { ui } = useUi();
+
+    const currentRef = getCurrentInstance();
     watch(
       () => {
         return props.data;
       },
       (value) => {
+        ui.table.scrollTo({
+          top: 0,
+          tableRef,
+          fsTableRef: currentRef
+        });
         ctx.emit("data-change", { data: value });
       }
     );
 
-    const { ui } = useUi();
     const tableComp = resolveDynamicComponent(ui.table.name);
     const tableColumnCI = ui.tableColumn;
 

@@ -48,6 +48,7 @@ import {
   SwitchCI,
   TableCI,
   TableColumnCI,
+  TableScrollReq,
   TabPaneCI,
   TabsCI,
   TagCI,
@@ -489,6 +490,13 @@ export class Antdv implements UiInterface {
     fixedHeaderNeedComputeBodyHeight: true,
     headerDomSelector: ".ant-table-thead",
     vLoading: false,
+    scrollTo(req: TableScrollReq) {
+      try {
+        req.fsTableRef.vnode.el.querySelector(".ant-table-body").scrollTop = req.top;
+      } catch (e) {
+        console.error("scroll to top error:", e);
+      }
+    },
     onChange({ onSortChange, onFilterChange, onPagination, bubbleUp }) {
       return {
         onChange: (pagination: any, filters: any, sorter: any, ctx: any) => {

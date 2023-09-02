@@ -1,4 +1,4 @@
-import { Ref, toRaw } from "vue";
+import { nextTick, Ref, toRaw } from "vue";
 import {
   CrudExpose,
   Editable,
@@ -385,7 +385,6 @@ export function useExpose(props: UseExposeProps): UseExposeRet {
         );
         return;
       }
-
       crudBinding.value.data = records;
       if (crudBinding.value.pagination) {
         crudBinding.value.pagination[ui.pagination.currentPage] = currentPage;
