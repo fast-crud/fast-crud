@@ -37,10 +37,12 @@ export type FsUploaderOptions = {
   buildKey?: (context: FsUploaderBuildKeyContext) => Promise<string>;
 };
 
-export type FsUploaderSuccessHandle = (
-  ret: any,
-  options?: FsUploaderImplOptions
-) => Promise<{ url?: string; key?: string }>;
+export type FsUploaderResult = {
+  url?: string;
+  key?: string;
+  [key: string]: any;
+};
+export type FsUploaderSuccessHandle = (ret: any, options?: FsUploaderImplOptions) => Promise<FsUploaderResult>;
 
 export type FsUploaderCosOptions = {
   domain?: string; //"https://d2p-demo-1251260344.cos.ap-guangzhou.myqcloud.com",
@@ -56,7 +58,7 @@ export type FsUploaderAliossOptions = {
   region: string; //"oss-cn-shenzhen",
   accessKeyId?: string; // "",
   accessKeySecret?: string; // "", // 传了secretKey 和secretId 代表使用本地签名模式（不安全，生产环境不推荐）
-  getAuthorization: (context: FsUploaderGetAuthContext) => Promise<any>;
+  getAuthorization: (context: FsUploaderGetAuthContext) => Promise<FsUploaderAliossSTS>;
   keepName?: boolean;
   sdkOpts?: any;
 } & FsUploaderCommonOptions;
@@ -133,3 +135,35 @@ export type FsUploaderFormRequestOptions = {
   onProgress: (progress: { percent: number }) => void;
   timeout: number;
 } & FsUploaderImplOptions;
+
+export type FsUploaderLib = {
+  upload(context: FsUploaderDoUploadOptions): Promise<FsUploaderResult>;
+};
+export type FsUploaderAlioss = {
+  getSts(config: FsUploaderGetAuthContext): Promise<FsUploaderAliossSTS>;
+  getOssClient(options: FsUploaderAliossOptions, key: string, file: File): Promise<any>;
+} & FsUploaderLib;
+
+export type FsUploaderAliossSTS = {
+  accessKeyId: string;
+  accessKeySecret: string;
+  expiration?: string;
+  securityToken: string;
+  expiresTime?: number;
+};
+
+export type FsUploaderCos = {
+  getOssClient(options: FsUploaderCosOptions): Promise<any>;
+} & FsUploaderLib;
+
+export type FsUploaderQiniu = {
+  getToken(file: File, fileName: string, key: string, config: FsUploaderQiniuOptions): Promise<string>;
+} & FsUploaderLib;
+
+export type FsUploaderS3 = {
+  getSignedUrl(bucket: string, key: string, options: FsUploaderS3Options): Promise<string>;
+  uploadUsingSignedUrl(props: FsUploaderDoUploadOptions, key: string): Promise<any>;
+} & FsUploaderLib;
+
+export type FsUploaderForm = {} & FsUploaderLib;
+

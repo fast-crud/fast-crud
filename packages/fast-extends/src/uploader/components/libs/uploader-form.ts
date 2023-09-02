@@ -1,12 +1,7 @@
-<template>
-  <span class="fs-uploader-form"></span>
-</template>
-<script lang="ts">
 import _ from "lodash-es";
-import ajax, { doAjax } from "./utils/ajax";
-import { useUploader, buildKey } from "./utils/index";
-import { defineComponent, getCurrentInstance } from "vue";
-import { FsUploaderDoUploadOptions, FsUploaderFormOptions } from "../d.ts/type";
+import { doAjax } from "../utils/ajax";
+import { buildKey, useUploader } from "../utils/index";
+import { FsUploaderDoUploadOptions, FsUploaderFormOptions } from "../../d/type";
 
 /**
  *
@@ -41,17 +36,10 @@ async function doUpload(opts: FsUploaderDoUploadOptions) {
   }
   return res;
 }
-export default defineComponent({
-  name: "FsUploaderForm",
-  setup() {
-    const { proxy } = getCurrentInstance();
-    const { getConfig } = useUploader(proxy);
-    const global = getConfig("form");
-    async function upload(context: FsUploaderDoUploadOptions) {
-      context.options = _.merge({}, _.cloneDeep(global), context.options);
-      return await doUpload(context);
-    }
-    return { upload };
-  }
-});
-</script>
+
+export async function upload(context: FsUploaderDoUploadOptions) {
+  const { getConfig } = useUploader();
+  const global = getConfig("form");
+  context.options = _.merge({}, _.cloneDeep(global), context.options);
+  return await doUpload(context);
+}

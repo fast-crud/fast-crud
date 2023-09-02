@@ -1,7 +1,7 @@
 import FsUploaderType from "./type";
 export * from "./type";
-export * from "./d.ts";
-
+export * from "./d";
+export * from "./components/libs/";
 import { ColumnCompositionProps, CrudOptions, utils } from "@fast-crud/fast-crud";
 // @ts-ignore
 const asyncModules = import.meta.glob("./components/*.vue");
@@ -13,7 +13,7 @@ import { useColumns } from "@fast-crud/fast-crud";
 const { registerMergeColumnPlugin } = useColumns();
 
 import _ from "lodash-es";
-import { FsUploaderOptions } from "./d.ts/type";
+import { FsUploaderOptions } from "./d/type";
 registerMergeColumnPlugin({
   name: "uploader-merge-plugin",
   order: 5,

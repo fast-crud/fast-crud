@@ -1,13 +1,9 @@
-<template>
-  <span class="fs-uploader-qiniu"></span>
-</template>
-<script lang="ts">
 import _ from "lodash-es";
-import { useUploader, buildKey } from "./utils/index";
+import { buildKey, useUploader } from "../utils/index";
 import * as qiniu from "qiniu-js";
-import { defineComponent, getCurrentInstance } from "vue";
-import { FsUploaderDoUploadOptions, FsUploaderQiniuOptions } from "../d.ts/type";
-async function getToken(file: File, fileName: string, key: string, config: FsUploaderQiniuOptions) {
+import { FsUploaderDoUploadOptions, FsUploaderQiniuOptions } from "../../d/type";
+
+export async function getToken(file: File, fileName: string, key: string, config: FsUploaderQiniuOptions) {
   const ret = await config.getToken({
     fileName,
     key,
@@ -56,19 +52,12 @@ async function doUpload({ file, fileName, onProgress, options }: FsUploaderDoUpl
     // subscription.unsubscribe() // 上传取消
   });
 }
-export default defineComponent({
-  name: "FsUploaderQiniu",
-  setup() {
-    const { proxy } = getCurrentInstance();
-    const { getConfig } = useUploader(proxy);
-    const global = getConfig("qiniu");
-    async function upload(context: FsUploaderDoUploadOptions) {
-      const options = context.options;
-      const config = _.merge(_.cloneDeep(global), options);
-      context.options = config;
-      return await doUpload(context);
-    }
-    return { upload };
-  }
-});
-</script>
+
+export async function upload(context: FsUploaderDoUploadOptions) {
+  const { getConfig } = useUploader();
+  const global = getConfig("qiniu");
+  const options = context.options;
+  const config = _.merge(_.cloneDeep(global), options);
+  context.options = config;
+  return await doUpload(context);
+}
