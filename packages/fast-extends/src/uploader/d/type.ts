@@ -1,5 +1,4 @@
 import { S3ClientConfig } from "@aws-sdk/client-s3";
-import { buildSignedUrl } from "@/uploader/components/libs/uploader-s3";
 
 export type FileItem = {
   url?: string;
