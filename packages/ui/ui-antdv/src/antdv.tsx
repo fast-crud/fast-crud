@@ -492,7 +492,10 @@ export class Antdv implements UiInterface {
     vLoading: false,
     scrollTo(req: TableScrollReq) {
       try {
-        req.fsTableRef.vnode.el.querySelector(".ant-table-body").scrollTop = req.top;
+        const body = req.fsTableRef.vnode.el.querySelector(".ant-table-body");
+        if (body) {
+          body.scrollTop = req.top;
+        }
       } catch (e) {
         console.error("scroll to top error:", e);
       }
