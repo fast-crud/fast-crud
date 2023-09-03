@@ -191,7 +191,10 @@ export default defineComponent({
           .ant-picker,
           .el-input-number,
           .el-cascader,
-          .el-date-editor {
+          .el-date-editor,
+          .n-select,
+          .n-date-picker,
+          .n-input-number {
             width: 100%;
           }
           .el-date-editor .el-range__icon {

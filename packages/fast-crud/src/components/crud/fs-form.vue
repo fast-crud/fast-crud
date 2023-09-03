@@ -606,7 +606,10 @@ export default defineComponent({
     .ant-input-number,
     .el-cascader,
     .el-date-editor,
-    .el-input-number {
+    .el-input-number,
+    .n-select,
+    .n-date-picker,
+    .n-input-number{
       width: 100%;
     }
 
