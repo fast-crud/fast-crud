@@ -2,17 +2,20 @@ import _ from "lodash-es";
 import { buildKey, useUploader } from "../utils/index.js";
 import { PutObjectCommand, S3Client } from "@aws-sdk/client-s3";
 import { axiosInstance } from "../utils/axios";
-import { FsUploaderDoUploadOptions, FsUploaderS3Options } from "../../d/type";
+import { FsUploaderDoUploadOptions, FsUploaderS3Options, FsUploaderS3SignedUrlType } from "../../d/type";
 
-export async function buildSignedUrl(s3Options: FsUploaderS3Options, key: string) {
-  const signedUrl = await s3Options.getSignedUrl(s3Options.bucket, key, s3Options);
+export async function buildSignedUrl(s3Options: FsUploaderS3Options, key: string, type: FsUploaderS3SignedUrlType) {
+  if (!s3Options.getSignedUrl) {
+    console.error("请先配置uploader.getSignedUrl，该方法应该从后端获取签名url");
+  }
+  const signedUrl = await s3Options.getSignedUrl(s3Options.bucket, key, s3Options, type);
   return signedUrl;
 }
 
 export async function uploadUsingSignedUrl(props: FsUploaderDoUploadOptions, key: string) {
   const { file, onProgress, options } = props;
   const s3Options: FsUploaderS3Options = options as FsUploaderS3Options;
-  const signedUrl = await buildSignedUrl(s3Options, key);
+  const signedUrl = await buildSignedUrl(s3Options, key, "put");
   const decodedURL = decodeURIComponent(signedUrl);
 
   return await axiosInstance.put(decodedURL, file, {

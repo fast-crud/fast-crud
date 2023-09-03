@@ -37,8 +37,8 @@
       :cropper="cropper"
       output="all"
       @done="cropComplete"
+      @ready="doReady"
     />
-    <fs-uploader ref="uploaderImplRef" :type="uploader?.type" />
     <div class="fs-cropper-preview" :class="{ open: previewVisible }" @click="closePreview">
       <div class="fs-cropper-preview-content">
         <img v-if="previewUrl" :src="previewUrl" class="preview-image" />
@@ -48,7 +48,7 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, reactive, ref, Ref, watch } from "vue";
+import { defineComponent, getCurrentInstance, reactive, ref, Ref, watch } from "vue";
 import { useUi } from "@fast-crud/fast-crud";
 import { FsUploaderDoUploadOptions } from "../d/type";
 import { useUploader } from "./utils";
@@ -124,7 +124,7 @@ export default defineComponent({
       default: "url"
     }
   } as any,
-  emits: ["update:modelValue", "change"],
+  emits: ["update:modelValue", "change", "ready"],
   setup(props: any, ctx: any) {
     const { ui } = useUi();
     const cropperRef: Ref = ref();
@@ -271,6 +271,13 @@ export default defineComponent({
         await initValue(val);
       }
     );
+    const current = getCurrentInstance();
+    function doReady(context: any) {
+      ctx.emit("ready", {
+        uploaderRef: current,
+        ...context
+      });
+    }
     return {
       ui,
       cropperRef,
@@ -286,7 +293,8 @@ export default defineComponent({
       previewUrl,
       previewVisible,
       preview,
-      closePreview
+      closePreview,
+      doReady
     };
   }
 });

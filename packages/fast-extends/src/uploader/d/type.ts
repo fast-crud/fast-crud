@@ -1,4 +1,5 @@
 import { S3ClientConfig } from "@aws-sdk/client-s3";
+import { buildSignedUrl } from "@/uploader/components/libs/uploader-s3";
 
 export type FileItem = {
   url?: string;
@@ -101,7 +102,12 @@ export type FsUploaderS3Options = {
   bucket?: string;
   sdkOpts?: S3ClientConfig;
 
-  getSignedUrl?: (bucket: string, key: string, options: FsUploaderS3Options) => Promise<string>;
+  getSignedUrl?: (
+    bucket: string,
+    key: string,
+    options: FsUploaderS3Options,
+    type: FsUploaderS3SignedUrlType
+  ) => Promise<string>;
 } & FsUploaderCommonOptions;
 
 export type FsUploaderImplOptions =
@@ -161,9 +167,8 @@ export type FsUploaderQiniu = {
 } & FsUploaderLib;
 
 export type FsUploaderS3 = {
-  getSignedUrl(bucket: string, key: string, options: FsUploaderS3Options): Promise<string>;
+  buildSignedUrl(options: FsUploaderS3Options, key: string, type: FsUploaderS3SignedUrlType): Promise<string>;
   uploadUsingSignedUrl(props: FsUploaderDoUploadOptions, key: string): Promise<any>;
 } & FsUploaderLib;
 
 export type FsUploaderForm = {} & FsUploaderLib;
-
