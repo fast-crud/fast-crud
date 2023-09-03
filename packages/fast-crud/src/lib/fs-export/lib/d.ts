@@ -27,7 +27,7 @@ export type CsvParams = {
  * 导出列配置
  */
 export type ExportColumn = {
-  columnProps: ColumnProps;
+  columnProps?: ColumnProps;
   key: string;
   title: string;
   width?: number;
