@@ -114,34 +114,6 @@ function buildTableSlots({ props, ui, sortedColumns, renderRowHandle, renderCell
 }
 
 /**
- * 排序
- * @param arr
- */
-function doArraySort(arr: any) {
-  return _.sortBy(arr, (item) => {
-    return item.order ?? Constants.orderDefault;
-  });
-}
-
-function doColumnsSort(columns: TableColumnsProps): TableColumnsProps {
-  const list: ColumnProps[] = [];
-  for (const key in columns) {
-    const item = columns[key];
-    item.key = key;
-    if (item.children && _.size(item.children) > 0) {
-      item.children = doColumnsSort(item.children);
-    }
-    list.push(item);
-  }
-  const columnsArr: ColumnProps[] = doArraySort(list);
-  const columnsMap: TableColumnsProps = {};
-  for (const item of columnsArr) {
-    columnsMap[item.key] = item;
-  }
-  return columnsMap;
-}
-
-/**
  * 通过config来渲染列
  * @param props
  * @param componentRefs
@@ -450,7 +422,8 @@ export default defineComponent({
       return _.merge({}, ctx.attrs, events);
     });
     const sortedColumns = computed(() => {
-      return doColumnsSort(props.columns);
+      // 已经在useColumns中排序过了
+      return props.columns;
     });
     if (renderMode === "slot") {
       //使用slot column ，element-plus

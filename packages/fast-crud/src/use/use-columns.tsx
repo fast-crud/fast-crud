@@ -1,6 +1,5 @@
 import { useMerge } from "./use-merge";
 import types from "../types";
-import { Constants } from "../utils/util.constants";
 import defaultCrudOptions from "./default-crud-options";
 import _ from "lodash-es";
 import { reactive } from "vue";
@@ -15,10 +14,10 @@ import {
   FormItemProps,
   FormProps,
   ScopeContext,
-  TableColumnsProps,
-  TypeMap
+  TableColumnsProps
 } from "../d";
 import { UseFsContext } from "./use-crud";
+import { Constants } from "../utils/util.constants";
 
 const { merge, cloneDeep } = useMerge();
 // mergeColumnPlugin 注册
@@ -181,13 +180,38 @@ function buildTableColumn(colTemplate: any) {
  * @param columns
  */
 function buildTableColumns(columns: CompositionColumns): TableColumnsProps {
-  const tableColumns: TableColumnsProps = {};
+  let tableColumns: TableColumnsProps = {};
   //合并为tableColumns
   _.forEach(columns, (item, key) => {
     tableColumns[key] = buildTableColumn(item);
   });
   //排序
+  tableColumns = doColumnsSort(tableColumns);
   return tableColumns;
+}
+
+function doArraySort(arr: any) {
+  return _.sortBy(arr, (item) => {
+    return item.order ?? Constants.orderDefault;
+  });
+}
+
+function doColumnsSort(columns: TableColumnsProps): TableColumnsProps {
+  const list: ColumnProps[] = [];
+  for (const key in columns) {
+    const item = columns[key];
+    item.key = key;
+    if (item.children && _.size(item.children) > 0) {
+      item.children = doColumnsSort(item.children);
+    }
+    list.push(item);
+  }
+  const columnsArr: ColumnProps[] = doArraySort(list);
+  const columnsMap: TableColumnsProps = {};
+  for (const item of columnsArr) {
+    columnsMap[item.key] = item;
+  }
+  return columnsMap;
 }
 
 /**

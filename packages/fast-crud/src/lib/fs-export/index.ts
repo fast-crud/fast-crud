@@ -1,6 +1,7 @@
 import _ from "lodash-es";
 import { ColumnCompositionProps, ColumnProps, CrudExpose, PageQuery } from "../../d";
 import { CsvParams, ExcelParams, ExportColumn, ExportUtil, ImportUtil } from "./lib/d";
+import { unref } from "vue";
 
 export async function loadFsExportUtil(): Promise<ExportUtil> {
   const module = await import.meta.glob("./lib/index.ts");
@@ -31,6 +32,7 @@ export type DataFormatterContext = {
   originalRow: any;
   key: string;
   col: ColumnProps;
+  exportCol: ExportColumn;
 };
 function defaultDataFormatter({ originalRow, row, key, col }: DataFormatterContext) {
   if (col.component?.dict && originalRow[key] != null) {
@@ -59,6 +61,15 @@ export type ExportProps = {
   server?: () => Promise<void>;
 
   /**
+   * 仅导出显示的列
+   */
+  onlyShow?: boolean;
+  /**
+   * 列过滤器
+   * @param col
+   */
+  columnFilter?: (col: ColumnCompositionProps) => boolean;
+  /**
    * 列配置构建器
    */
   columnBuilder?: (context: ColumnBuilderContext) => void;
@@ -66,6 +77,7 @@ export type ExportProps = {
    * 数据mapping
    */
   dataFormatter?: (context: DataFormatterContext) => void;
+
   /**
    * 导出文件类型
    */
@@ -102,20 +114,31 @@ export async function exportTable(crudExpose: CrudExpose, opts: ExportProps = {}
   let columns: ExportColumn[] = opts.columns;
   if (columns == null) {
     columns = [];
-    _.each(crudBinding.value.table.columnsMap, (col: ColumnCompositionProps) => {
+    _.each(crudBinding.value.table.columnsMap, (col: ColumnProps) => {
+      if (opts.columnFilter) {
+        //列过滤器
+        if (opts.columnFilter(col) === false) {
+          return;
+        }
+      }
+      // 是否仅导出显示的列
+      if (opts.onlyShow && unref(col.show) === false) {
+        return;
+      }
       if (col.exportable !== false && col.key !== "_index") {
-        columns.push({
+        const exportCol: ExportColumn = {
           key: col.key,
-          title: col.title
-        });
+          title: col.title,
+          columnProps: col
+        };
+        //构建列配置
+        if (opts.columnBuilder) {
+          opts.columnBuilder({ col: exportCol });
+        }
+        columns.push(exportCol);
       }
     });
   }
-  columns.forEach((col) => {
-    if (opts.columnBuilder) {
-      opts.columnBuilder({ col });
-    }
-  });
 
   //加载异步组件，不影响首页加载速度
   const exportUtil: ExportUtil = await loadFsExportUtil();
@@ -136,18 +159,18 @@ export async function exportTable(crudExpose: CrudExpose, opts: ExportProps = {}
   }
   for (const row of originalData) {
     const clone = _.cloneDeep(row);
-    _.each(crudBinding.value.table.columnsMap, (col: ColumnCompositionProps) => {
-      if (col.exportable !== false && col.key !== "_index") {
-        const mapping = {
-          row: clone,
-          originalRow: row,
-          key: col.key,
-          col
-        };
-        defaultDataFormatter(mapping);
-        if (opts.dataFormatter) {
-          opts.dataFormatter(mapping);
-        }
+    _.each(columns, (exportCol: ExportColumn) => {
+      const col = exportCol.columnProps;
+      const mapping = {
+        row: clone,
+        originalRow: row,
+        key: col.key,
+        col,
+        exportCol
+      };
+      defaultDataFormatter(mapping);
+      if (opts.dataFormatter) {
+        opts.dataFormatter(mapping);
       }
     });
 
