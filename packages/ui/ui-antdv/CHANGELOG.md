@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.16.9](https://github.com/fast-crud/fast-crud/compare/v1.16.8...v1.16.9) (2023-09-03)
+
+### Bug Fixes
+
+* 修复 useFs返回值里面没有context的bug ([b88fea7](https://github.com/fast-crud/fast-crud/commit/b88fea7b963c9d51565745447e47f7425b1f6363))
+
 ## [1.16.8](https://github.com/fast-crud/fast-crud/compare/v1.16.7...v1.16.8) (2023-09-03)
 
 ### Performance Improvements
