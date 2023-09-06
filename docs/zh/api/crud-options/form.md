@@ -76,6 +76,25 @@ const crudOptions = {
 }
 ```
 
+## formItem
+* 说明: 表单下面字段`x-form-item`的公共配置
+* 类型：Object
+
+```js
+const crudOptions = {
+  form:{
+      formItem:{
+          labelCol: { // 演示antdv版设置label宽度 
+              style:{
+                  // 配置label的宽度，并且超出部分隐藏
+                    width: '100px',
+                    overflow: 'hidden',
+              }
+          },
+      }
+  }
+}
+```
 
 
 ## columns

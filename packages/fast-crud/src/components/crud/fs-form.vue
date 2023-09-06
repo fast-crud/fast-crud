@@ -225,6 +225,13 @@ export default defineComponent({
       default: undefined
     },
     /**
+     * formItem的公共配置
+     */
+    formItem: {
+      type: Object,
+      default: undefined
+    },
+    /**
      * helper位置：{position:'label'}
      */
     helper: {
@@ -384,6 +391,8 @@ export default defineComponent({
       const columns: any = [];
       //default columns排序
       _.forEach(computedColumns.value, (value, key) => {
+        const item = _.cloneDeep(props.formItem || {});
+        value = _.merge(item, value);
         value.key = key;
         if (value.order == null) {
           value.order = Constants.orderDefault;
