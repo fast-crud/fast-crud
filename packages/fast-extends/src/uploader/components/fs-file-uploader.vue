@@ -3,7 +3,6 @@
     <component :is="ui.upload.name" ref="fileUploaderRef" v-model:fileList="fileList" v-bind="computedBinding">
       <component :is="computedFileSelectBtn.is" v-bind="computedFileSelectBtn" />
     </component>
-    <fs-uploader ref="uploaderImplRef" :type="uploader?.type" />
     <component
       :is="ui.dialog.name"
       v-if="isPicture()"
@@ -16,11 +15,11 @@
 </template>
 
 <script lang="ts">
-import { AppContext, computed, defineComponent, nextTick, Ref, ref, watch } from "vue";
-import { uiContext, useI18n, useUi } from "@fast-crud/fast-crud";
+import { computed, defineComponent, nextTick, Ref, ref, watch } from "vue";
+import { useI18n, useUi } from "@fast-crud/fast-crud";
 import _ from "lodash-es";
-import FsUploader from "./fs-uploader.vue";
-import { FileItem, FsUploaderDoUploadOptions } from "../d.ts/type";
+import { FileItem, FsUploaderDoUploadOptions } from "../d/type";
+import { useUploader } from "./utils";
 
 /**
  * 文件上传组件
@@ -28,7 +27,6 @@ import { FileItem, FsUploaderDoUploadOptions } from "../d.ts/type";
  */
 export default defineComponent({
   name: "FsFileUploader",
-  components: { FsUploader },
   inheritAttrs: false,
   props: {
     /**
@@ -282,6 +280,7 @@ export default defineComponent({
         await initFileList(value);
       }
     );
+    //@ts-ignore
     initFileList(props.modelValue);
     function hasUploading() {
       const uploading = fileList.value.filter((item: any) => {
@@ -299,8 +298,6 @@ export default defineComponent({
       ctx.emit("success", { res, file, fileList: list });
       handleChange(file, list);
     }
-
-    const uploaderImplRef: Ref = ref();
 
     function formatFileSize(fileSize: number) {
       let sizeTip;
@@ -371,8 +368,9 @@ export default defineComponent({
     }
 
     async function doUpload(option: FsUploaderDoUploadOptions) {
-      option.options = props.uploader;
-      let uploaderRef = uploaderImplRef.value.getUploaderRef();
+      option.options = props.uploader || {};
+      const { getUploaderImpl } = useUploader();
+      let uploaderRef = await getUploaderImpl(option.options.type);
       if (uploaderRef == null) {
         ui.message.warn("Sorry，The uploader component is not ready yet");
         throw new Error("Sorry，The component is not ready yet");
@@ -595,7 +593,6 @@ export default defineComponent({
       onInput,
       hasUploading,
       isPicture,
-      uploaderImplRef,
       computedFileSelectBtn,
       previewVisible,
       previewImage,

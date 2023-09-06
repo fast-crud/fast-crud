@@ -1,9 +1,7 @@
-<template>
-  <component :is="computedUploaderImpl" ref="uploaderImplRef" />
-</template>
 <script lang="ts">
-import { getCurrentInstance, computed, ref, defineComponent, Ref } from "vue";
+import { defineComponent } from "vue";
 import { useUploader } from "./utils";
+import { loadUploader } from "./libs";
 
 export default defineComponent({
   name: "FsUploader",
@@ -11,21 +9,13 @@ export default defineComponent({
     type: {}
   },
   setup(props) {
-    const uploaderImplRef: Ref = ref();
-    const computedUploaderImpl = computed(() => {
-      const { proxy } = getCurrentInstance();
-      const { getDefaultType, getUploaderImpl } = useUploader(proxy);
+    async function getUploaderRef() {
+      const { getDefaultType } = useUploader();
       const type = props.type || getDefaultType();
-      return getUploaderImpl(type);
-    });
-
-    function getUploaderRef() {
-      return uploaderImplRef.value;
+      return await loadUploader(type as string);
     }
 
     return {
-      uploaderImplRef,
-      computedUploaderImpl,
       getUploaderRef
     };
   }

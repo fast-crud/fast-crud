@@ -187,8 +187,6 @@ export default defineComponent({
       try {
         await formRef.value.submit();
         close();
-      } catch (e) {
-        console.warn("submit error", e);
       } finally {
         loading.value = false;
       }

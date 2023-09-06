@@ -27,7 +27,7 @@ import { Editor, Toolbar } from "@wangeditor/editor-for-vue";
 
 import { defaultConfig } from "../../type/config.js";
 import _ from "lodash-es";
-import { FsUploaderDoUploadOptions } from "../../../uploader/d.ts/type";
+import { FsUploaderDoUploadOptions } from "../../../uploader/d/type";
 import { useUi } from "@fast-crud/fast-crud";
 type InsertFnType = (url: string, alt?: string, href?: string) => void;
 /**

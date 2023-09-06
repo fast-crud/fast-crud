@@ -1,18 +1,21 @@
-<template>
-  <span class="fs-uploader-s3"></span>
-</template>
-<script lang="ts">
 import _ from "lodash-es";
-import { useUploader, buildKey } from "./utils/index.js";
-import { defineComponent, getCurrentInstance } from "vue";
+import { buildKey, useUploader } from "../utils/index.js";
 import { PutObjectCommand, S3Client } from "@aws-sdk/client-s3";
-import { axiosInstance } from "./utils/axios";
-import { FsUploaderDoUploadOptions, FsUploaderS3Options } from "../d.ts/type";
+import { axiosInstance } from "../utils/axios";
+import { FsUploaderDoUploadOptions, FsUploaderS3Options, FsUploaderS3SignedUrlType } from "../../d/type";
 
-async function uploadUsingSignedUrl(props: FsUploaderDoUploadOptions, key: string) {
+export async function buildSignedUrl(s3Options: FsUploaderS3Options, key: string, type: FsUploaderS3SignedUrlType) {
+  if (!s3Options.getSignedUrl) {
+    console.error("请先配置uploader.getSignedUrl，该方法应该从后端获取签名url");
+  }
+  const signedUrl = await s3Options.getSignedUrl(s3Options.bucket, key, s3Options, type);
+  return signedUrl;
+}
+
+export async function uploadUsingSignedUrl(props: FsUploaderDoUploadOptions, key: string) {
   const { file, onProgress, options } = props;
   const s3Options: FsUploaderS3Options = options as FsUploaderS3Options;
-  const signedUrl = await s3Options.getSignedUrl(s3Options.bucket, key, options);
+  const signedUrl = await buildSignedUrl(s3Options, key, "put");
   const decodedURL = decodeURIComponent(signedUrl);
 
   return await axiosInstance.put(decodedURL, file, {
@@ -31,7 +34,7 @@ async function doUpload(props: FsUploaderDoUploadOptions) {
 
   const key = await buildKey(file, fileName, s3Options);
   async function complete() {
-    let ret = { url: s3Options.sdkOpts.endpoint + "/" + s3Options.bucket + "/" + key, key: key };
+    const ret = { url: s3Options.sdkOpts.endpoint + "/" + s3Options.bucket + "/" + key, key: key };
     if (s3Options.successHandle) {
       return await s3Options.successHandle(ret);
     }
@@ -49,19 +52,12 @@ async function doUpload(props: FsUploaderDoUploadOptions) {
   }
   return await complete();
 }
-export default defineComponent({
-  name: "FsUploaderS3",
-  setup() {
-    const { proxy } = getCurrentInstance();
-    const { getConfig } = useUploader(proxy);
-    const global = getConfig("s3");
-    async function upload(context: FsUploaderDoUploadOptions) {
-      const options = context.options;
-      const config = _.merge(_.cloneDeep(global), options);
-      context.options = config;
-      return await doUpload(context);
-    }
-    return { upload };
-  }
-});
-</script>
+
+export async function upload(context: FsUploaderDoUploadOptions) {
+  const { getConfig } = useUploader();
+  const global = getConfig("s3");
+  const options = context.options;
+  const config = _.merge(_.cloneDeep(global), options);
+  context.options = config;
+  return await doUpload(context);
+}

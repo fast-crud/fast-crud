@@ -1,4 +1,4 @@
-import { Ref, toRaw } from "vue";
+import { nextTick, Ref, toRaw } from "vue";
 import {
   CrudExpose,
   Editable,
@@ -8,7 +8,7 @@ import {
   OpenEditContext,
   SetFormDataOptions
 } from "../d/expose";
-import _ from "lodash-es";
+import _, { isArray } from "lodash-es";
 import logger from "../utils/util.log";
 import { useMerge } from "../use/use-merge";
 import { useUi } from "../use/use-ui";
@@ -241,6 +241,11 @@ export function useExpose(props: UseExposeProps): UseExposeRet {
             column: col
           });
         });
+
+        //children
+        if (row.children && isArray(row.children)) {
+          crudExpose.doValueBuilder(row.children, columns);
+        }
       });
       logger.debug("valueBuilder success:", records);
     },
@@ -385,7 +390,6 @@ export function useExpose(props: UseExposeProps): UseExposeRet {
         );
         return;
       }
-
       crudBinding.value.data = records;
       if (crudBinding.value.pagination) {
         crudBinding.value.pagination[ui.pagination.currentPage] = currentPage;

@@ -1,6 +1,8 @@
 import {
   computed,
   defineComponent,
+  getCurrentInstance,
+  getCurrentScope,
   PropType,
   ref,
   resolveDirective,
@@ -109,34 +111,6 @@ function buildTableSlots({ props, ui, sortedColumns, renderRowHandle, renderCell
   }
 
   return tableSlots;
-}
-
-/**
- * 排序
- * @param arr
- */
-function doArraySort(arr: any) {
-  return _.sortBy(arr, (item) => {
-    return item.order ?? Constants.orderDefault;
-  });
-}
-
-function doColumnsSort(columns: TableColumnsProps): TableColumnsProps {
-  const list: ColumnProps[] = [];
-  for (const key in columns) {
-    const item = columns[key];
-    item.key = key;
-    if (item.children && _.size(item.children) > 0) {
-      item.children = doColumnsSort(item.children);
-    }
-    list.push(item);
-  }
-  const columnsArr: ColumnProps[] = doArraySort(list);
-  const columnsMap: TableColumnsProps = {};
-  for (const item of columnsArr) {
-    columnsMap[item.key] = item;
-  }
-  return columnsMap;
 }
 
 /**
@@ -293,16 +267,23 @@ export default defineComponent({
       return cellRef?.getTargetRef();
     };
 
+    const { ui } = useUi();
+
+    const currentRef = getCurrentInstance();
     watch(
       () => {
         return props.data;
       },
       (value) => {
+        ui.table.scrollTo({
+          top: 0,
+          tableRef,
+          fsTableRef: currentRef
+        });
         ctx.emit("data-change", { data: value });
       }
     );
 
-    const { ui } = useUi();
     const tableComp = resolveDynamicComponent(ui.table.name);
     const tableColumnCI = ui.tableColumn;
 
@@ -441,7 +422,8 @@ export default defineComponent({
       return _.merge({}, ctx.attrs, events);
     });
     const sortedColumns = computed(() => {
-      return doColumnsSort(props.columns);
+      // 已经在useColumns中排序过了
+      return props.columns;
     });
     if (renderMode === "slot") {
       //使用slot column ，element-plus

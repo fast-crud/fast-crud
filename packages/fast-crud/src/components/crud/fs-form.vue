@@ -610,6 +610,26 @@ export default defineComponent({
   .fs-form-invalid {
   }
 
+  .fs-form-item-component {
+    .ant-picker,
+    .ant-input-number,
+    .el-cascader,
+    .el-date-editor,
+    .el-input-number,
+    .n-select,
+    .n-date-picker,
+    .n-input-number{
+      width: 100%;
+    }
+
+    .el-date-editor .el-range__icon {
+      margin-left: 10px;
+    }
+    .el-date-editor .el-range__close-icon {
+      margin-right: 10px;
+    }
+  }
+
   //.el-date-editor.el-input__wrapper {
   //  width: 100%;
   //}

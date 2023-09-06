@@ -89,7 +89,12 @@ export default function () {
         component: {
           name: "fs-cropper-uploader",
           accept: ".png,.jpeg,.jpg,.ico,.bmp,.gif,.svg,.webp",
-          cropper: { viewMode: 1 }
+          cropper: { viewMode: 1 },
+          async onReady(context: any) {
+            context.zoom(-0.1);
+            context.zoom(-0.1);
+            context.zoom(-0.1);
+          }
         },
         [ui.formItem.rules]: [
           {

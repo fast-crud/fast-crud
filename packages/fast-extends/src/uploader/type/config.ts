@@ -1,6 +1,7 @@
-import { FsUploaderOptions } from "../d.ts/type";
+import { FsUploaderOptions, FsUploaderGetAuthContext } from "../d/type";
+import _ from "lodash-es";
 
-export default {
+export const defaultConfig: FsUploaderOptions = {
   defaultType: "cos", // 默认的上传后端类型
   cos: {
     // 腾讯云 cos 的配置
@@ -20,7 +21,7 @@ export default {
     region: "oss-cn-shenzhen",
     accessKeyId: "", // "",
     accessKeySecret: "",
-    getAuthorization(context) {
+    getAuthorization(context: FsUploaderGetAuthContext) {
       // 不传secretKey代表使用临时签名模式时（安全）
       return new Promise((resolve, reject) => {
         reject(new Error("请实现config.alioss.getAuthorization，返回Promise获取临时授权token"));
@@ -42,11 +43,13 @@ export default {
   s3: {
     bucket: "fast-crud",
     sdkOpts: {
-      endPoint: "play.min.io",
-      port: 9000,
-      useSSL: true,
-      accessKey: "Q3AM3UQ867SPQQA43P2F",
-      secretKey: "zuf+tfteSlswRu7BJ86wekitnifILbZam1KYY3TG"
+      region: "us-east-1",
+      forcePathStyle: true,
+      endpoint: "https://play.min.io",
+      credentials: {
+        accessKeyId: "Q3AM3UQ867SPQQA43P2F", //访问登录名
+        secretAccessKey: "zuf+tfteSlswRu7BJ86wekitnifILbZam1KYY3TG" //访问密码
+      }
     }
   },
   form: {
@@ -91,4 +94,6 @@ export default {
       ext
     );
   }
-} as FsUploaderOptions;
+};
+
+export const uploaderConfig: FsUploaderOptions = _.cloneDeep(defaultConfig);

@@ -37,8 +37,8 @@
       :cropper="cropper"
       output="all"
       @done="cropComplete"
+      @ready="doReady"
     />
-    <fs-uploader ref="uploaderImplRef" :type="uploader?.type" />
     <div class="fs-cropper-preview" :class="{ open: previewVisible }" @click="closePreview">
       <div class="fs-cropper-preview-content">
         <img v-if="previewUrl" :src="previewUrl" class="preview-image" />
@@ -48,10 +48,10 @@
 </template>
 
 <script lang="ts">
-import { computed, defineComponent, reactive, ref, Ref, watch } from "vue";
-import FsUploader from "./fs-uploader.vue";
+import { defineComponent, getCurrentInstance, reactive, ref, Ref, watch } from "vue";
 import { useUi } from "@fast-crud/fast-crud";
-import { FsUploaderDoUploadOptions } from "../d.ts/type";
+import { FsUploaderDoUploadOptions } from "../d/type";
+import { useUploader } from "./utils";
 
 /**
  * 图片裁剪上传组件,封装了fs-cropper, fs-cropper内部封装了cropperjs
@@ -59,7 +59,6 @@ import { FsUploaderDoUploadOptions } from "../d.ts/type";
 
 export default defineComponent({
   name: "FsCropperUploader",
-  components: { FsUploader },
   props: {
     disabled: {},
     // 初始图片url,或者是数组
@@ -125,7 +124,7 @@ export default defineComponent({
       default: "url"
     }
   } as any,
-  emits: ["update:modelValue", "change"],
+  emits: ["update:modelValue", "change", "ready"],
   setup(props: any, ctx: any) {
     const { ui } = useUi();
     const cropperRef: Ref = ref();
@@ -218,8 +217,9 @@ export default defineComponent({
     }
 
     async function doUpload(option: FsUploaderDoUploadOptions) {
-      option.options = props.uploader;
-      let uploaderRef = uploaderImplRef.value?.getUploaderRef();
+      option.options = props.uploader || {};
+      const { getUploaderImpl } = useUploader();
+      let uploaderRef = await getUploaderImpl(option.options.type);
       if (uploaderRef == null) {
         throw new Error("Sorry，The component is not ready yet");
       }
@@ -271,6 +271,13 @@ export default defineComponent({
         await initValue(val);
       }
     );
+    const current = getCurrentInstance();
+    function doReady(context: any) {
+      ctx.emit("ready", {
+        uploaderRef: current,
+        ...context
+      });
+    }
     return {
       ui,
       cropperRef,
@@ -286,7 +293,8 @@ export default defineComponent({
       previewUrl,
       previewVisible,
       preview,
-      closePreview
+      closePreview,
+      doReady
     };
   }
 });

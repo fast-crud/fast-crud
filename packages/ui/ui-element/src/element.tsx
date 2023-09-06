@@ -53,7 +53,8 @@ import {
   ButtonGroupCI,
   ColCI,
   RowCI,
-  CardCI
+  CardCI,
+  TableScrollReq
 } from "@fast-crud/ui-interface";
 // @ts-ignore
 import _ from "lodash-es";
@@ -403,6 +404,9 @@ export class Element implements UiInterface {
     vLoading: "loading",
     rebuildRenderScope: (scope) => {
       return scope;
+    },
+    scrollTo(req: TableScrollReq) {
+      req.tableRef.value.setScrollTop(req.top);
     },
     onChange({ onSortChange, onFilterChange, bubbleUp }) {
       return {

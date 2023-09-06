@@ -75,13 +75,30 @@ const crudOptions = {
             },
             merge: [], // excel 合并单元格配置,仅excel生效
             dataFormatter: (opts:DataFormatterContext)=>{
-                //自定义修改导出数据
-                // DataFormatterContext = {row: any,originalRow: any, key: string, col: ColumnProps}
+                //自定义修改导出数据展示值
+                if(opts.col.key === 'name'){
+                    //例如： 给名字值后面加星号
+                    return opts.col.name +"※"
+                }
+                //参数说明
+                // DataFormatterContext = {row: any,originalRow: any, key: string, col: ColumnProps, exportCol:ExportColumn}
                 // row = 当前行数据
                 // originalRow = 当前行原始数据
                 // key = 当前列的key
                 // col = 当前列的配置
+                // exportCol = 当前列的导出配置
             } ,
+            columnFilter: (col:ColumnProps)=>{
+                //列过滤器，返回true则导出该列
+                //例如： 只导出show=true的列
+                return col.show ===true
+            },
+            onlyShow:boolean, //仅导出当前显示的列，与上面的配置效果相同
+            columnBuilder: ({col:ExportColumn})=>{
+                //列构建器，调整列宽
+                col.width = 100
+            },
+            
         }
     }
 }

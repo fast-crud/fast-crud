@@ -44,6 +44,7 @@ import {
   SwitchCI,
   TableCI,
   TableColumnCI,
+  TableScrollReq,
   TabPaneCI,
   TabsCI,
   TagCI,
@@ -532,6 +533,9 @@ export class Naive implements UiInterface {
     fixedHeaderNeedComputeBodyHeight: true,
     headerDomSelector: ".n-data-table-thead",
     vLoading: false,
+    scrollTo(req: TableScrollReq) {
+      req.tableRef.value.scrollTo({ top: req.top });
+    },
     onChange({ onSortChange, onFilterChange, onPagination, bubbleUp }) {
       return {
         "onUpdate:filters": (filters: any, initiatorColumn: any) => {

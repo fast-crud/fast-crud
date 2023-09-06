@@ -3,6 +3,25 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.16.11](https://github.com/fast-crud/fast-crud/compare/v1.16.10...v1.16.11) (2023-09-03)
+
+**Note:** Version bump only for package @fast-crud/fast-extends
+
+## [1.16.10](https://github.com/fast-crud/fast-crud/compare/v1.16.9...v1.16.10) (2023-09-03)
+
+**Note:** Version bump only for package @fast-crud/fast-extends
+
+## [1.16.9](https://github.com/fast-crud/fast-crud/compare/v1.16.8...v1.16.9) (2023-09-03)
+
+**Note:** Version bump only for package @fast-crud/fast-extends
+
+## [1.16.8](https://github.com/fast-crud/fast-crud/compare/v1.16.7...v1.16.8) (2023-09-03)
+
+### Performance Improvements
+
+* 文件上传优化，导出上传方法 ([9f3c821](https://github.com/fast-crud/fast-crud/commit/9f3c8214cda27cf6411ecad7d0729b23afdcaf4e))
+* 组件独立使用示例 ([ace357c](https://github.com/fast-crud/fast-crud/commit/ace357c152d6a30d5b8fbebf885db53e26a02ae6))
+
 ## [1.16.7](https://github.com/fast-crud/fast-crud/compare/v1.16.6...v1.16.7) (2023-08-21)
 
 **Note:** Version bump only for package @fast-crud/fast-extends

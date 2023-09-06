@@ -50,7 +50,7 @@
 </template>
 
 <script lang="ts">
-import { computed, defineComponent, ref, Ref } from "vue";
+import { computed, defineComponent, getCurrentInstance, ref, Ref } from "vue";
 import VueCropper from "./utils/vue-cropperjs.js";
 import "cropperjs/dist/cropper.css";
 import { useI18n, useUi } from "@fast-crud/fast-crud";
@@ -155,10 +155,20 @@ export default defineComponent({
     function getCropperRef() {
       return cropperRef.value;
     }
+    const scope = {
+      cropper: getCropperRef(),
+      zoom,
+      clear,
+      close,
+      open
+    };
 
     function ready(event: any) {
       // this.zoom(-0.3)
-      ctx.emit("ready");
+      ctx.emit("ready", {
+        event,
+        ...scope
+      });
     }
     function preventDefault(e: any) {
       e.preventDefault();

@@ -24,6 +24,7 @@ module.exports = {
   ],
   rules: {
     // "comma-dangle": "off",
+    "@typescript-eslint/no-unused-vars": "off",
     "max-len": [0, 160, 2, { ignoreUrls: true }],
     "@typescript-eslint/ban-ts-ignore": "off",
     "@typescript-eslint/explicit-function-return-type": "off",

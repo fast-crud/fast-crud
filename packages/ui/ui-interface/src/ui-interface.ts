@@ -192,6 +192,7 @@ export type TableSorterContext = {
   asc: boolean;
 };
 export type TableBuilderOption = {} & BindBuilderOptions;
+export type TableScrollReq = { top: number; tableRef: any; fsTableRef: any };
 export interface TableCI extends CI<TableBuilderOption> {
   defaultRowKey?: string | ((rowData: any) => any);
   data: string;
@@ -213,6 +214,8 @@ export interface TableCI extends CI<TableBuilderOption> {
    * render 方法触发时的参数构建出一个scope
    */
   rebuildRenderScope?: (scope: any, prop2?: any, prop3?: any, prop4?: any) => ComponentBinding;
+
+  scrollTo(req: TableScrollReq): void;
 }
 
 export type CheckboxGroupBuilderOption = {} & BindBuilderOptions;

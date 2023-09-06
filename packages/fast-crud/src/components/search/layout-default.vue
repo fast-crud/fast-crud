@@ -186,6 +186,23 @@ export default defineComponent({
           &:first-child {
             // margin-left: 0;
           }
+
+          .ant-input-number,
+          .ant-picker,
+          .el-input-number,
+          .el-cascader,
+          .el-date-editor,
+          .n-select,
+          .n-date-picker,
+          .n-input-number {
+            width: 100%;
+          }
+          .el-date-editor .el-range__icon {
+            margin-left: 10px;
+          }
+          .el-date-editor .el-range__close-icon {
+            margin-right: 10px;
+          }
         }
       }
     }

@@ -1,14 +1,10 @@
-<template>
-  <span class="fs-uploader-cos"></span>
-</template>
-<script lang="ts">
 import _ from "lodash-es";
-import { defineComponent, getCurrentInstance } from "vue";
-import { buildKey, useUploader } from "./utils";
+import { buildKey, useUploader } from "../utils";
 import COS from "cos-js-sdk-v5";
 import dayjs from "dayjs";
-import { FsUploaderDoUploadOptions, FsUploaderCosOptions } from "../d.ts/type";
-function newClient(options: FsUploaderCosOptions) {
+import { FsUploaderCosOptions, FsUploaderDoUploadOptions, FsUploaderResult } from "../../d/type";
+
+export function getOssClient(options: FsUploaderCosOptions) {
   let client = null;
   const secretId = options.secretId;
   const secretKey = options.secretKey;
@@ -36,11 +32,11 @@ function newClient(options: FsUploaderCosOptions) {
 
   return client;
 }
-async function doUpload({ file, fileName, onProgress, options }: FsUploaderDoUploadOptions) {
+async function doUpload({ file, fileName, onProgress, options }: FsUploaderDoUploadOptions): Promise<FsUploaderResult> {
   const key = await buildKey(file, fileName, options);
   const config = options as FsUploaderCosOptions;
   // TODO 大文件需要分片上传
-  const cos = newClient(config);
+  const cos = getOssClient(config);
   return new Promise((resolve, reject) => {
     // onProgress({
     //   total: 0,
@@ -77,19 +73,12 @@ async function doUpload({ file, fileName, onProgress, options }: FsUploaderDoUpl
     );
   });
 }
-export default defineComponent({
-  name: "FsUploaderCos",
-  setup() {
-    const { proxy } = getCurrentInstance();
-    const { getConfig } = useUploader(proxy);
-    const global = getConfig("cos");
-    async function upload(context: FsUploaderDoUploadOptions) {
-      const options = context.options;
-      const config = _.merge(_.cloneDeep(global), options);
-      context.options = config;
-      return await doUpload(context);
-    }
-    return { upload };
-  }
-});
-</script>
+
+export async function upload(context: FsUploaderDoUploadOptions): Promise<FsUploaderResult> {
+  const { getConfig } = useUploader();
+  const global = getConfig("cos");
+  const options = context.options;
+  const config = _.merge(_.cloneDeep(global), options);
+  context.options = config;
+  return await doUpload(context);
+}

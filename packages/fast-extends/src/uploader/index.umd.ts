@@ -1,7 +1,9 @@
 import FsUploaderType from "./type";
 export * from "./type";
 import { utils } from "@fast-crud/fast-crud";
-import { FsUploaderOptions } from "./d.ts/type";
+import { FsUploaderOptions } from "./d/type";
+export * from "./components/libs/";
+export * from "./components/utils";
 // @ts-ignore
 const modules = import.meta.globEager("./components/*.vue");
 const FsUploaderComponents = {

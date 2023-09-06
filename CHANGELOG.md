@@ -3,6 +3,39 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.16.11](https://github.com/fast-crud/fast-crud/compare/v1.16.10...v1.16.11) (2023-09-03)
+
+**Note:** Version bump only for package fast-crud-root
+
+## [1.16.10](https://github.com/fast-crud/fast-crud/compare/v1.16.9...v1.16.10) (2023-09-03)
+
+**Note:** Version bump only for package fast-crud-root
+
+## [1.16.9](https://github.com/fast-crud/fast-crud/compare/v1.16.8...v1.16.9) (2023-09-03)
+
+### Bug Fixes
+
+* 修复 useFs返回值里面没有context的bug ([b88fea7](https://github.com/fast-crud/fast-crud/commit/b88fea7b963c9d51565745447e47f7425b1f6363))
+
+### Performance Improvements
+
+* 表单下所有组件优化为宽度100% ([3317eae](https://github.com/fast-crud/fast-crud/commit/3317eae1c89746a31b5eed8e270e82c27f16e8d7))
+* 表单下所有组件优化为宽度100% ([da38460](https://github.com/fast-crud/fast-crud/commit/da384605f9c6bfc26359a369613dce4f48a3ba64))
+
+## [1.16.8](https://github.com/fast-crud/fast-crud/compare/v1.16.7...v1.16.8) (2023-09-03)
+
+### Bug Fixes
+
+* 修复树形表格子节点没有执行valueBuilder的bug ([56755a5](https://github.com/fast-crud/fast-crud/commit/56755a511eadfa8d528bd12c57c7d6e7f8aa5807))
+
+### Performance Improvements
+
+* 表单labelWidth演示 ([72f5372](https://github.com/fast-crud/fast-crud/commit/72f5372948f9aefebb0aba8671c277e8d80566bd))
+* 导出增加 onlyShow 和 columnFilter配置 ([f5579a1](https://github.com/fast-crud/fast-crud/commit/f5579a11e396fd0e30f08621be801fc33f6181d8))
+* 翻页后自动滚动到顶部 ([a6e5f67](https://github.com/fast-crud/fast-crud/commit/a6e5f6740a59780995283c7d787864fdd65f0d4b))
+* 文件上传优化，导出上传方法 ([9f3c821](https://github.com/fast-crud/fast-crud/commit/9f3c8214cda27cf6411ecad7d0729b23afdcaf4e))
+* 组件独立使用示例 ([ace357c](https://github.com/fast-crud/fast-crud/commit/ace357c152d6a30d5b8fbebf885db53e26a02ae6))
+
 ## [1.16.7](https://github.com/fast-crud/fast-crud/compare/v1.16.6...v1.16.7) (2023-08-21)
 
 ### Bug Fixes

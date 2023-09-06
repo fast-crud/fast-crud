@@ -429,6 +429,7 @@ export type UseFsRet = {
   crudRef: Ref;
   crudBinding: Ref<CrudBinding>;
   crudExpose: CrudExpose;
+  context: UseFsContext;
 } & UseCrudRet &
   CreateCrudOptionsRet;
 
@@ -510,7 +511,8 @@ function useFsImpl(props: UseFsProps): UseFsRet | Promise<UseCrudRet> {
       ...useCrudRet,
       crudRef,
       crudExpose,
-      crudBinding
+      crudBinding,
+      context
     };
   }
 
