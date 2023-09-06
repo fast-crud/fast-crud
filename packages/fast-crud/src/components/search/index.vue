@@ -145,7 +145,15 @@ export default defineComponent({
     /**
      * 列的宽度设置，span=xx
      */
-    col: {}
+    col: {},
+
+    /**
+     * 统一字段的formItem属性
+     */
+    formItem: {
+      type: Object,
+      default: undefined
+    }
   },
   emits: [
     /**
@@ -292,7 +300,9 @@ export default defineComponent({
       },
       getContextFn,
       null,
-      (value) => {
+      (value: any) => {
+        const formItem = _.cloneDeep(props.formItem || {});
+        value = _.merge(formItem, value);
         if (!props.validate) {
           //如果关闭validate则去掉rules
           _.forEach(value, (item) => {
