@@ -54,9 +54,11 @@ const crudOptions = {
 * 可选：flex , grid
 * 默认：flex
 
-> flex模式：通过`a-col`/`el-col`分栏组件控制字段布局    
+> flex模式：通过`a-col`/`el-col`分栏组件控制字段布局     
 > grid模式：通过`display:grid`样式来控制字段布局
 
+表单元素结构如下：
+![](../../images/form-layout.png)
 
 ## col
 * 说明: `el-col`|`a-col`配置
@@ -67,13 +69,13 @@ const crudOptions = {
 * 说明: `el-row`|`a-row`配置,可以配置`gutter`
 * 类型：Object
 
-```json
-//antdv
-{ //crudOptions.form
-    labelAlign: "right",
-    labelCol: { span: 8},
-    wrapperCol: {span: 14 },
+```js
+const crudOptions = {
+    row:{
+        gutter: 2 //form表单两列之间的间距
+    }
 }
+
 ```
 
 ## formItem
