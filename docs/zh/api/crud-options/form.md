@@ -72,7 +72,7 @@ const crudOptions = {
 ```js
 const crudOptions = {
     row:{
-        gutter: 2 //form表单两列之间的间距
+        gutter: 20 //form表单两列之间的间距
     }
 }
 
