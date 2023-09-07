@@ -53,7 +53,7 @@
             <fs-render :render-func="item" :scope="{ ...scope, hasError: errorsRef['group.' + groupKey] }" />
           </template>
           <!-- row -->
-          <component :is="ui.row.name" class="fs-row">
+          <component :is="ui.row.name" class="fs-row" v-bind="row">
             <!-- col -->
             <template v-for="key in groupItem.columns" :key="key">
               <component
@@ -618,7 +618,7 @@ export default defineComponent({
     .el-input-number,
     .n-select,
     .n-date-picker,
-    .n-input-number{
+    .n-input-number {
       width: 100%;
     }
 
