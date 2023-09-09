@@ -25,14 +25,12 @@
 
 | Event name        | Properties | Description |
 | ----------------- | ---------- | ----------- |
+| form-value-change |            |
 | update:search     |            |
 | update:compact    |            |
 | update:columns    |            |
-| refresh           |            |
-| form-value-change |            |
-| search-submit     |            |
-| search-reset      |            |
 | update:modelValue |            |
+| tab-change        |            |
 
 ## Slots
 

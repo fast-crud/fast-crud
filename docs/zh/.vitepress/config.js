@@ -191,6 +191,7 @@ module.exports = {
                                 {text: 'fs-dict-switch', link: "/api/components/crud/extends/fs-dict-switch"},
                                 {text: 'fs-dict-tree', link: "/api/components/crud/extends/fs-dict-tree"},
                                 {text: 'fs-values-format', link: "/api/components/crud/extends/fs-values-format"},
+                                {text: 'fs-table-select', link: "/api/components/crud/extends/fs-table-select"},
                             ]
                         },
                         {

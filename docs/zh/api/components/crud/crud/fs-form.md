@@ -20,8 +20,9 @@
 | display      | 布局方式【flex\|grid】                                                                                                                            | string | -      | "flex"    |
 | index        | 序号，编辑时会传入                                                                                                                                | number | -      | undefined |
 | mode         | 模式 [add,edit,view,自定义]                                                                                                                       | string | -      | undefined |
-| row          | 行数据                                                                                                                                            | object | -      | undefined |
+| row          | a-row 配置                                                                                                                                        | object | -      | undefined |
 | col          | el-col\|a-col 配置，可配置跨列                                                                                                                    | object | -      | undefined |
+| formItem     | formItem 的公共配置                                                                                                                               | object | -      | undefined |
 | helper       | helper 位置：{position:'label'}                                                                                                                   | object | -      |           |
 
 ## Events
@@ -30,6 +31,7 @@
 | --------------- | ---------- | ----------- |
 | reset           |            |
 | submit          |            |
+| success         |            |
 | validationError |            |
 | value-change    |            |
 

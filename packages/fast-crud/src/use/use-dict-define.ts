@@ -198,10 +198,10 @@ export class Dict<T = any> extends UnMergeable implements DictOptions<T> {
 
     let data: any[] = null;
     if (this.getNodesByValues) {
-      if (!this.prototype) {
-        logger.warn("您配置了getNodesByValues，根据value值获取节点数据需要dict.prototype=true");
-        return [];
-      }
+      // if (!this.prototype) {
+      //   logger.warn("您配置了getNodesByValues，根据value值获取节点数据需要dict.prototype=true");
+      //   return [];
+      // }
 
       if (context.value) {
         let cacheKey = null;
