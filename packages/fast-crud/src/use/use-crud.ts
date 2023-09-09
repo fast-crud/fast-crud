@@ -44,7 +44,11 @@ export type UseCrudRet = {
    * @param overOptions
    */
   resetCrudOptions: (options: DynamicType<CrudOptions>) => void;
-
+  /**
+   * 覆盖crudOptions配置
+   * @param overOptions
+   */
+  appendCrudOptions: (options: DynamicType<CrudOptions>) => DynamicType<CrudOptions>;
   /**
    * 追加配置,注意是覆盖crudBinding的结构，而不是crudOptions的结构
    * @param overBinding
@@ -56,7 +60,7 @@ export type UseCrudRet = {
 export function useCrud(ctx: UseCrudProps): UseCrudRet {
   const ui = uiContext.get();
   const { t } = useI18n();
-  const options: CrudOptions = ctx.crudOptions as CrudOptions;
+  let options: CrudOptions = ctx.crudOptions as CrudOptions;
   const crudExpose = ctx.expose || ctx.crudExpose;
   if (!crudExpose) {
     throw new Error("crudExpose不能为空，请给useCrud传入{crudExpose}参数");
@@ -409,6 +413,13 @@ export function useCrud(ctx: UseCrudProps): UseCrudRet {
     logger.info("fast-crud inited, crudBinding=", crudBinding.value);
   }
 
+  function appendCrudOptions(overOptions: DynamicallyCrudOptions): DynamicallyCrudOptions {
+    const newOptions = merge({}, options, overOptions);
+    resetCrudOptions(newOptions);
+    options = newOptions;
+    return newOptions;
+  }
+
   resetCrudOptions(options);
 
   /**
@@ -420,6 +431,7 @@ export function useCrud(ctx: UseCrudProps): UseCrudRet {
   }
 
   return {
+    appendCrudOptions,
     resetCrudOptions,
     appendCrudBinding
   };
@@ -462,7 +474,7 @@ export type UseFsProps<T = UseFsContext> = {
 
   crudExposeRef?: Ref<CrudExpose>;
   createCrudOptions: CreateCrudOptions | CreateCrudOptionsAsync;
-
+  crudOptionsOverride?: DynamicallyCrudOptions;
   onExpose?: (context: OnExposeContext<T>) => any;
 
   context?: T;
@@ -505,6 +517,7 @@ function useFsImpl(props: UseFsProps): UseFsRet | Promise<UseCrudRet> {
   });
 
   function initCrud(createCrudOptionsRet: CreateCrudOptionsRet) {
+    merge(createCrudOptionsRet.crudOptions, props.crudOptionsOverride);
     const useCrudRet = useCrud({ crudExpose, ...createCrudOptionsRet, context });
     return {
       ...createCrudOptionsRet,

@@ -4,6 +4,10 @@
 ## 1. FastCrud运行过程
 构建`crudOptions` --> 调用`useCrud` --> 获得`crudBinding` --> 传入`fs-crud`组件    
 
+:::tip    
+新版本将以上过程封装为了一个[useFs方法](../../api/use.md#useFs)，你可以一步到位    
+::: 
+
 ### crudOptions
 使用`fast-crud`，你只需要掌握如何配置正确的`crudOptions`，即可完成一个`crud`的开发工作。       
 其中  [**字段配置**](./component.md)  是重点，一定要看      
@@ -11,6 +15,41 @@
 当你不知道`crudOptions`有什么参数时，请参考如下文档：
 * [CrudOptions API文档](../../api/crud-options/index.md) 
 * [CrudOptions typedoc文档](/d.ts/types/CrudOptions.html)
+
+::: tip   
+表格与配置对应关系
+* `crudOptions.table` 表格配置
+* `crudOptions.search` 查询框配置
+* `crudOptions.pagination` 分页配置
+* `crudOptions.columns` 字段配置
+* `crudOptions.columns[key].column` 表格列配置（图中columns[key]部分）
+* `crudOptions.columns[key].search` 查询表单内字段配置(图中状态字段在查询框内的配置)
+:::
+
+![](../../images/struct.png)
+
+表单与配置对应关系    
+::: tip   
+* `crudOptions.form` 添加表单配置
+* `crudOptions.viewForm` 查看表单配置
+* `crudOptions.editForm` 编辑表单配置
+* `crudOptions.addForm` 添加表单配置
+
+* `crudOptions.columns` 字段配置
+* `crudOptions.columns.form` 所有表单内该字段公共配置
+
+* `crudOptions.columns.viewForm` 查看表单内字段配置
+* `crudOptions.columns.addForm` 添加表单内字段配置
+* `crudOptions.columns.editForm` 编辑表单内字段配置
+
+:::
+
+![](../../images/form-layout.png)
+
+
+
+
+当你想要调整对应位置的配置，找到`crudOptions`里面对应的位置修改配置即可。
 
 
 ### useCrud
@@ -31,18 +70,6 @@
     <fs-crud ref="crudRef" v-bind="crudBinding"/>
 </template>
 ```
-
-::: tip
-`crudBinding.table`驱动表格    
-`crudBinding.search`驱动查询框    
-`crudBinding.viewForm`驱动查看表单      
-`crudBinding.editForm`驱动编辑表单      
-`crudBinding.addForm`驱动添加表单   
-:::
-
-配置对应如图
-![](../../images/struct.png)
-
 
 ::: tip
 

@@ -46,7 +46,7 @@ export function useDict(props: any, ctx: any, vModel = "modelValue") {
   const getScope: Function = inject("get:scope", function () {});
 
   function getCurrentScope() {
-    const value = props[vModel];
+    const value = props[vModel] || ctx.attrs[vModel];
     return {
       ...getScope(),
       componentRef: proxy,

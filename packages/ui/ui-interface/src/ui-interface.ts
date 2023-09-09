@@ -124,6 +124,8 @@ export type DialogFooterBuilder = (footer?: any) => ComponentBinding;
 export type DialogOnClosedBindBuilder = (onClose: (visible: boolean) => void) => ComponentBinding;
 
 export type DialogBuilderOption = {
+  title?: string;
+  width?: string;
   footer?: UiSlot;
   customClass?: string;
 } & BindBuilderOptions;
@@ -193,6 +195,12 @@ export type TableSorterContext = {
 };
 export type TableBuilderOption = {} & BindBuilderOptions;
 export type TableScrollReq = { top: number; tableRef: any; fsTableRef: any };
+export type TableSelectionReq = {
+  multiple?: boolean;
+  crossPage?: boolean;
+  selectedRowKeys: Ref<any[]>;
+  onChanged?: (selectedRowKeys: any[]) => void;
+};
 export interface TableCI extends CI<TableBuilderOption> {
   defaultRowKey?: string | ((rowData: any) => any);
   data: string;
@@ -216,6 +224,8 @@ export interface TableCI extends CI<TableBuilderOption> {
   rebuildRenderScope?: (scope: any, prop2?: any, prop3?: any, prop4?: any) => ComponentBinding;
 
   scrollTo(req: TableScrollReq): void;
+
+  buildSelectionBinding(req: TableSelectionReq): ComponentBinding;
 }
 
 export type CheckboxGroupBuilderOption = {} & BindBuilderOptions;
@@ -350,6 +360,7 @@ export interface FormItemCI extends CI {
   label: string;
   rules: string;
   injectFormItemContext: () => FsUiFormItemContext;
+  skipValidationWrapper: string;
 }
 
 export interface TooltipCI extends CI {
