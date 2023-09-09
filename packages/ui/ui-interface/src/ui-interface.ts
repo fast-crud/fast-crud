@@ -59,6 +59,7 @@ export type SelectBuilderOption = {
 export interface SelectCI extends CI<SelectBuilderOption> {
   modelValue: string;
   clearable: string;
+  buildMultiBinding: (multiple: boolean) => ComponentBinding;
 }
 
 export type OptionBuilderOption = {} & BindBuilderOptions;
@@ -147,6 +148,7 @@ export interface DialogCI extends CI<DialogBuilderOption> {
   footer: DialogFooterBuilder;
   buildOnClosedBind: DialogOnClosedBindBuilder;
   customClass: string;
+  footerSlotName?: string;
   titleSlotName?: string;
   buildWidthBind?: (width: any) => ComponentBinding;
   buildInitBind?: () => ComponentBinding;
@@ -200,6 +202,7 @@ export type TableSelectionReq = {
   crossPage?: boolean;
   selectedRowKeys: Ref<any[]>;
   onChanged?: (selectedRowKeys: any[]) => void;
+  rowKey?: string;
 };
 export interface TableCI extends CI<TableBuilderOption> {
   defaultRowKey?: string | ((rowData: any) => any);

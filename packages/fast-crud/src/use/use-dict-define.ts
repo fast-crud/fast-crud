@@ -1,8 +1,9 @@
 import _ from "lodash-es";
 import { useMerge } from "./use-merge";
 import logger from "../utils/util.log";
-import { shallowReactive, UnwrapNestedRefs } from "vue";
+import { nextTick, shallowReactive, UnwrapNestedRefs } from "vue";
 import { LRUCache } from "lru-cache";
+import { commentTags } from "typedoc/dist/lib/output/themes/default/partials/comment";
 
 const DictGlobalCache = new LRUCache<string, any>({
   max: 500,
@@ -106,7 +107,6 @@ export interface DictOptions<T> {
 export type LoadDictOpts = {
   reload?: boolean;
   value?: any;
-
   [key: string]: any;
 };
 
@@ -193,18 +193,7 @@ export class Dict<T = any> extends UnMergeable implements DictOptions<T> {
     }
 
     if (this.loading) {
-      let notify: SuccessNotify = null;
-      //如果正在加载中，则等待加载完成
-      const ret: Promise<any[]> = new Promise((resolve) => {
-        notify = (data: any[]) => {
-          resolve(data);
-        };
-      });
-      if (!this.notifies) {
-        this.notifies = [];
-      }
-      this.notifies.push(notify);
-      return ret;
+      return this._registerNotify();
     }
 
     let data: any[] = null;
@@ -250,6 +239,10 @@ export class Dict<T = any> extends UnMergeable implements DictOptions<T> {
       this.onReady({ dict: this, ...context });
     }
     // notify
+    this._triggerNotify();
+  }
+
+  private _triggerNotify() {
     if (this.notifies && this.notifies.length > 0) {
       _.forEach(this.notifies, (call) => {
         call(this.data);
@@ -258,16 +251,75 @@ export class Dict<T = any> extends UnMergeable implements DictOptions<T> {
     }
   }
 
+  private _registerNotify() {
+    let notify: SuccessNotify = null;
+    //如果正在加载中，则等待加载完成
+    const ret: Promise<any[]> = new Promise((resolve) => {
+      notify = (data: any[]) => {
+        resolve(data);
+      };
+    });
+    if (!this.notifies) {
+      this.notifies = [];
+    }
+    this.notifies.push(notify);
+    return ret;
+  }
+
   /**
    * 加载字典
    * @param context 当prototype=true时会传入
    */
-  async loadDict(context?: any) {
+  async loadDict(context?: LoadDictOpts) {
     return await this._loadDict({ ...context });
   }
 
-  async reloadDict(context?: any) {
+  async reloadDict(context?: LoadDictOpts) {
     return await this.loadDict({ ...context, reload: true });
+  }
+
+  _unfetchValues: Record<any, { loading: boolean; value: any }> = {};
+  /**
+   * 根据value获取nodes 追加数据
+   * @param values
+   */
+  async appendByValues(values: any[]) {
+    if (this.getNodesByValues == null) {
+      logger.warn("请配置getNodesByValues");
+      return;
+    }
+    for (const v of values) {
+      if (this.dataMap[v] || this._unfetchValues[v]) {
+        continue;
+      }
+      this._unfetchValues[v] = {
+        loading: false,
+        value: v
+      };
+    }
+    await nextTick();
+    await nextTick();
+    await nextTick();
+    const toFetchValues: any[] = [];
+    _.forEach(this._unfetchValues, (v) => {
+      if (!v.loading) {
+        v.loading = true;
+        toFetchValues.push(v.value);
+      }
+    });
+    if (toFetchValues.length > 0) {
+      const data = await this.getNodesByValues(toFetchValues);
+      this.setData([...(this.data || []), ...data]);
+      for (const key of toFetchValues) {
+        delete this._unfetchValues[key];
+      }
+      if (Object.keys(this._unfetchValues).length === 0) {
+        this._triggerNotify();
+      }
+      return this.data;
+    } else {
+      return this._registerNotify();
+    }
   }
 
   clear() {

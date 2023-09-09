@@ -12,6 +12,7 @@
         size="small"
         v-bind="item"
         :icon="null"
+        :name="null"
         @click="doClick(item)"
       >
         <template v-if="item.icon">

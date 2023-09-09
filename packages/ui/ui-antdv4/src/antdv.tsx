@@ -248,6 +248,7 @@ export class Antdv implements UiInterface {
     modelValue: "open",
     visible: "open",
     customClass: "wrapClassName",
+    footerSlotName: "footer",
     footer(footer: any = null) {
       return { footer };
     },
@@ -456,6 +457,11 @@ export class Antdv implements UiInterface {
     name: "a-select",
     modelValue: "value",
     clearable: "allowClear",
+    buildMultiBinding(multiple: boolean) {
+      return {
+        mode: multiple ? "multiple" : ""
+      };
+    },
     builder(opts) {
       return buildBinding(this, opts, {
         props: {

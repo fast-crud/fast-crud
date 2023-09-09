@@ -296,6 +296,7 @@ export class Naive implements UiInterface {
     visible: "show",
     customClass: "class",
     titleSlotName: "header",
+    footerSlotName: "action",
     footer(footer = null) {
       return { footer };
     },
@@ -326,7 +327,18 @@ export class Naive implements UiInterface {
       });
     },
     builder(opts) {
-      return buildBinding(this, opts, {});
+      return buildBinding(this, opts, {
+        props: {
+          preset: "dialog",
+          title: opts.title,
+          style: {
+            width: opts.width
+          }
+        },
+        slots: {
+          footer: opts.footer
+        }
+      });
     }
   });
 
@@ -445,6 +457,7 @@ export class Naive implements UiInterface {
     prop: "name",
     label: "label",
     rules: "rule",
+    skipValidationWrapper: "div",
     injectFormItemContext: () => {
       const formItemContext = inject(formItemInjectionKey);
       return {
@@ -501,7 +514,10 @@ export class Naive implements UiInterface {
   select: SelectCI = creator<SelectCI>({
     name: "n-select",
     modelValue: "value",
-    clearable: "clearable"
+    clearable: "clearable",
+    buildMultiBinding: (multiple) => {
+      return { multiple };
+    }
   });
 
   treeSelect: TreeSelectCI = creator<TreeSelectCI>({
@@ -535,6 +551,34 @@ export class Naive implements UiInterface {
     vLoading: false,
     scrollTo(req: TableScrollReq) {
       req.tableRef.value.scrollTo({ top: req.top });
+    },
+    buildSelectionBinding(req) {
+      const onSelectionChange = (changed: any) => {
+        req.selectedRowKeys.value = changed;
+        if (req.onChanged) {
+          req.onChanged(req.selectedRowKeys.value);
+        }
+      };
+
+      return {
+        table: {
+          checkedRowKeys: req.selectedRowKeys,
+          "onUpdate:checkedRowKeys": onSelectionChange
+        },
+        columns: {
+          _checked: {
+            form: { show: false },
+            column: {
+              multiple: !!req.multiple,
+              type: "selection",
+              align: "center",
+              width: "55px",
+              order: -9999,
+              columnSetDisabled: true //禁止在列设置中选择
+            }
+          }
+        }
+      };
     },
     onChange({ onSortChange, onFilterChange, onPagination, bubbleUp }) {
       return {

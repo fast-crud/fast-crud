@@ -248,6 +248,8 @@ export class Antdv implements UiInterface {
     modelValue: "visible",
     visible: "visible",
     customClass: "wrapClassName",
+    titleSlotName: "title",
+    footerSlotName: "footer",
     footer(footer: any = null) {
       return { footer };
     },
@@ -262,6 +264,10 @@ export class Antdv implements UiInterface {
     },
     builder(opts) {
       return buildBinding(this, opts, {
+        props: {
+          title: opts.title,
+          width: opts.width
+        },
         slots: {
           footer: opts.footer
         }
@@ -380,6 +386,7 @@ export class Antdv implements UiInterface {
     prop: "name",
     label: "label",
     rules: "rules",
+    skipValidationWrapper: "a-form-item-rest",
     injectFormItemContext() {
       const formItemContext = Form.useInjectFormItemContext();
       return {
@@ -451,6 +458,11 @@ export class Antdv implements UiInterface {
     name: "a-select",
     modelValue: "value",
     clearable: "allowClear",
+    buildMultiBinding(multiple: boolean) {
+      return {
+        mode: multiple ? "multiple" : ""
+      };
+    },
     builder(opts) {
       return buildBinding(this, opts, {
         props: {
@@ -490,6 +502,27 @@ export class Antdv implements UiInterface {
     fixedHeaderNeedComputeBodyHeight: true,
     headerDomSelector: ".ant-table-thead",
     vLoading: false,
+    buildSelectionBinding(req) {
+      const selectedRowKeys = req.selectedRowKeys;
+      const onChange = (changed: any) => {
+        console.log("selection", changed);
+        selectedRowKeys.value = changed;
+        if (req.onChanged) {
+          req.onChanged(selectedRowKeys.value);
+        }
+      };
+      let type = "radio";
+      if (req.multiple === true) {
+        type = "checkbox";
+      }
+      return {
+        rowSelection: {
+          type,
+          selectedRowKeys,
+          onChange
+        }
+      };
+    },
     scrollTo(req: TableScrollReq) {
       try {
         const body = req.fsTableRef.vnode.el.querySelector(".ant-table-body");

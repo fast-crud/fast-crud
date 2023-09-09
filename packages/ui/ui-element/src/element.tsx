@@ -59,6 +59,7 @@ import {
 // @ts-ignore
 import _ from "lodash-es";
 import { ElDialog, useFormItem } from "element-plus";
+import { ref } from "vue";
 
 export type ElementUiProvider = {
   Notification: any;
@@ -202,6 +203,8 @@ export class Element implements UiInterface {
     name: "el-dialog",
     visible: "modelValue",
     customClass: "class",
+    titleSlotName: "header",
+    footerSlotName: "footer",
     buildOnClosedBind(onClosed) {
       return { onClosed };
     },
@@ -210,6 +213,17 @@ export class Element implements UiInterface {
     },
     open(opts) {
       ElDialog.open(opts);
+    },
+    builder(opts) {
+      return buildBinding(this, opts, {
+        props: {
+          title: opts.title,
+          width: opts.width
+        },
+        slots: {
+          footer: opts.footer
+        }
+      });
     }
   });
 
@@ -267,7 +281,10 @@ export class Element implements UiInterface {
   select: SelectCI = creator<SelectCI>({
     name: "el-select",
     modelValue: "modelValue",
-    clearable: "clearable"
+    clearable: "clearable",
+    buildMultiBinding(multiple) {
+      return { multiple };
+    }
   });
 
   treeSelect: TreeSelectCI = creator<TreeSelectCI>({
@@ -329,6 +346,7 @@ export class Element implements UiInterface {
     prop: "prop",
     label: "label",
     rules: "rules",
+    skipValidationWrapper: "div",
     injectFormItemContext() {
       const { formItem } = useFormItem();
       return {
@@ -402,6 +420,48 @@ export class Element implements UiInterface {
     },
     headerDomSelector: "",
     vLoading: "loading",
+    buildSelectionBinding(req) {
+      if (req.multiple) {
+        const onSelectionChange = (changed) => {
+          console.log("selection", changed);
+          req.selectedRowKeys.value = changed.map((item) => item[req.rowKey || "id"]);
+          if (req.onChanged) {
+            req.onChanged(req.selectedRowKeys.value);
+          }
+        };
+        return {
+          table: {
+            onSelectionChange
+          },
+          columns: {
+            $checked: {
+              form: { show: false },
+              column: {
+                type: "selection",
+                align: "center",
+                width: "55px",
+                order: -9999,
+                columnSetDisabled: true //禁止在列设置中选择
+              }
+            }
+          }
+        };
+      } else {
+        //单选
+        const onCurrentChange = (changed: any) => {
+          req.selectedRowKeys.value = [changed[req.rowKey || "id"]];
+          if (req.onChanged) {
+            req.onChanged(req.selectedRowKeys.value);
+          }
+        };
+        return {
+          table: {
+            highlightCurrentRow: true,
+            onCurrentChange: onCurrentChange
+          }
+        };
+      }
+    },
     rebuildRenderScope: (scope) => {
       return scope;
     },
