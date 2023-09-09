@@ -86,7 +86,7 @@ export interface DictOptions<T> {
    * 根据values 远程获取字典，prototype=true时有效
    * @param values
    */
-  getNodesByValues?: (values: any, options?: LoadDictOpts) => Promise<T[]>;
+  getNodesByValues?: (values: any[], options?: LoadDictOpts) => Promise<T[]>;
 
   /**
    * dict数据远程加载完后触发
@@ -228,7 +228,8 @@ export class Dict<T = any> extends UnMergeable implements DictOptions<T> {
         if (cached) {
           data = cached;
         } else {
-          data = await this.getNodesByValues(context.value, context);
+          const value = Array.isArray(context.value) ? context.value : [context.value];
+          data = await this.getNodesByValues(value, context);
           if (cacheKey) {
             DictGlobalCache.set(cacheKey, data);
           }
@@ -262,11 +263,11 @@ export class Dict<T = any> extends UnMergeable implements DictOptions<T> {
    * @param context 当prototype=true时会传入
    */
   async loadDict(context?: any) {
-    return this._loadDict({ ...context });
+    return await this._loadDict({ ...context });
   }
 
   async reloadDict(context?: any) {
-    return this.loadDict({ ...context, reload: true });
+    return await this.loadDict({ ...context, reload: true });
   }
 
   clear() {
