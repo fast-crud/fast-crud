@@ -170,6 +170,7 @@ module.exports = {
                                 {text: 'fs-table', link: "/api/components/crud/crud/fs-table"},
                                 {text: 'fs-row-handle', link: "/api/components/crud/crud/fs-row-handle"},
                                 {text: 'fs-form-wrapper', link: "/api/components/crud/crud/fs-form-wrapper"},
+                                {text: 'fs-form-provider', link: "/api/components/crud/crud/fs-form-provider"},
                                 {text: 'fs-form', link: "/api/components/crud/crud/fs-form"},
                                 {text: 'fs-form-item', link: "/api/components/crud/crud/fs-form-item"},
                                 {text: 'fs-form-helper', link: "/api/components/crud/crud/fs-form-helper"},
