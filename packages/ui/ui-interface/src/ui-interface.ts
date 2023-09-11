@@ -198,12 +198,10 @@ export type TableSorterContext = {
 export type TableBuilderOption = {} & BindBuilderOptions;
 export type TableScrollReq = { top: number; tableRef: any; fsTableRef: any };
 export type TableSelectionReq = {
-  getPageData?: () => any[];
-  rowKey?: string;
-  multiple?: boolean;
-  crossPage?: boolean;
+  getRowKey: () => any;
+  multiple: boolean;
   selectedRowKeys: Ref<any[]>;
-  onChanged?: (selectedRowKeys: any[]) => void;
+  onSelectedKeysChanged: (selectedRowKeys: any[], onlyCurPage: boolean) => void;
 };
 export interface TableCI extends CI<TableBuilderOption> {
   defaultRowKey?: string | ((rowData: any) => any);

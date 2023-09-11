@@ -422,12 +422,10 @@ export class Element implements UiInterface {
     vLoading: "loading",
     buildSelectionBinding(req) {
       if (req.multiple) {
-        const onSelectionChange = (changed) => {
-          console.log("selection", changed);
-          req.selectedRowKeys.value = changed.map((item) => item[req.rowKey || "id"]);
-          if (req.onChanged) {
-            req.onChanged(req.selectedRowKeys.value);
-          }
+        const onSelectionChange = (changedRows: any[]) => {
+          const rowKey = req.getRowKey();
+          const selectedKeys = changedRows.map((item: any) => item[rowKey]);
+          req.onSelectedKeysChanged(selectedKeys, true);
         };
         return {
           table: {
@@ -449,10 +447,9 @@ export class Element implements UiInterface {
       } else {
         //单选
         const onCurrentChange = (changed: any) => {
-          req.selectedRowKeys.value = [changed[req.rowKey || "id"]];
-          if (req.onChanged) {
-            req.onChanged(req.selectedRowKeys.value);
-          }
+          const rowKey = req.getRowKey();
+          const selectedKeys = [changed[rowKey]];
+          req.onSelectedKeysChanged(selectedKeys, true);
         };
         return {
           table: {

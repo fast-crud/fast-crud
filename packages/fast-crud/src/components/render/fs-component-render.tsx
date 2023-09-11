@@ -83,7 +83,15 @@ export default defineComponent({
     /**
      * 自定义render
      */
-    render: {}
+    render: {},
+
+    /**
+     * 当输入框的值上报为undefine时，转为null
+     */
+    undefineToNull: {
+      type: Boolean,
+      default: true
+    }
   },
   emits: ["update:dict", "update:modelValue", "mounted"],
   setup(props: any, ctx) {
@@ -137,6 +145,9 @@ export default defineComponent({
         }
         if (vModel.transform) {
           value = vModel.transform(value);
+        }
+        if (value === undefined && props.undefineToNull) {
+          value = null;
         }
         ctx.emit("update:modelValue", value);
       };

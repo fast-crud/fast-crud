@@ -503,12 +503,8 @@ export class Antdv implements UiInterface {
     vLoading: false,
     buildSelectionBinding(req) {
       const selectedRowKeys = req.selectedRowKeys;
-      const onChange = (changed: any) => {
-        console.log("selection", changed);
-        selectedRowKeys.value = changed;
-        if (req.onChanged) {
-          req.onChanged(selectedRowKeys.value);
-        }
+      const onChange = (changed: any[]) => {
+        req.onSelectedKeysChanged(changed, true);
       };
       let type = "radio";
       if (req.multiple === true) {

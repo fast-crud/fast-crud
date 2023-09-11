@@ -1,32 +1,37 @@
 <template>
   <span class="fs-values-format">
-    <template v-if="type === 'text'">
+    <template v-if="itemRender">
+      <fs-render v-for="item in computedValueItems" :key="getValue(item)" :render-func="itemRender" :scope="item" />
+    </template>
+    <template v-else-if="type === 'text'">
       <span v-for="item in computedValueItems" :key="getValue(item)" @click="doClick(item)">{{ getLabel(item) }}</span>
     </template>
     <template v-else>
-      <component
-        :is="ui.tag.name"
-        v-for="item in computedValueItems"
-        :key="getValue(item)"
-        class="fs-tag"
-        size="small"
-        v-bind="item"
-        :icon="null"
-        :name="null"
-        @click="doClick(item)"
-      >
-        <template v-if="item.icon">
-          <fs-icon :icon="item.icon" class="fs-tag-icon" />
-        </template>
-        {{ getLabel(item) }}
-      </component>
+      <template v-for="(item, index) in computedValueItems" :key="getValue(item)">
+        <component
+          :is="ui.tag.name"
+          class="fs-tag"
+          size="small"
+          :closable="closable"
+          v-bind="item"
+          :icon="null"
+          :name="null"
+          @close="doClose(index, item)"
+          @click="doClick(item)"
+        >
+          <template v-if="item.icon">
+            <fs-icon :icon="item.icon" class="fs-tag-icon" />
+          </template>
+          {{ getLabel(item) }}
+        </component>
+      </template>
     </template>
   </span>
 </template>
 
 <script lang="ts">
 import _ from "lodash-es";
-import { computed, defineComponent } from "vue";
+import { computed, defineComponent, Ref } from "vue";
 import { useDict } from "../../use/use-dict";
 import { useUi } from "../../use";
 function getHashCode(str: string) {
@@ -120,10 +125,28 @@ export default defineComponent({
     /**
      * 当value值不在字典中时默认显示的文本
      */
-    defaultLabel: {}
-  } as any,
-  emits: ["click", "dict-change"],
-  setup(props, ctx) {
+    defaultLabel: {},
+
+    /**
+     * label自定义render
+     */
+    labelFormatter: {
+      type: Function
+    },
+    /**
+     * 自定义选项render
+     */
+    itemRender: {
+      type: Function
+    },
+
+    closable: {
+      type: Boolean,
+      default: false
+    }
+  },
+  emits: ["click", "dict-change", "close", "update:modelValue"],
+  setup(props: any, ctx: any) {
     // trace.trace("values-format");
     // console.log("values-format init", props.modelValue);
     //const dict = useDict(props, ctx);
@@ -161,7 +184,7 @@ export default defineComponent({
       }
     }
 
-    const computedValueItems = computed(() => {
+    const computedValueItems: Ref<any[]> = computed(() => {
       const dict = usedDict.getDict();
       if (props.modelValue == null || props.modelValue === "") {
         return [];
@@ -208,12 +231,23 @@ export default defineComponent({
     function doClick(item: any) {
       ctx.emit("click", { item: item });
     }
+    function doClose(index: number, item: any) {
+      ctx.emit("close", { item, index });
+      const newValues: any[] = [];
+      for (let i = 0; i < computedValueItems.value.length; i++) {
+        if (i !== index) {
+          newValues.push(getValue(computedValueItems.value[i]));
+        }
+      }
+      ctx.emit("update:modelValue", newValues);
+    }
 
     return {
       ui,
       ...usedDict,
       doClick,
-      computedValueItems
+      computedValueItems,
+      doClose
     };
   }
 });
@@ -221,6 +255,7 @@ export default defineComponent({
 <style lang="less">
 .fs-values-format .fs-tag {
   margin: 2px;
+  cursor: pointer;
   .fs-tag-icon {
   }
 }

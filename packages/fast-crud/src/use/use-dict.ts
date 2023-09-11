@@ -160,6 +160,9 @@ export function useDict(props: any, ctx: any, vModel = "modelValue") {
     return getPropValue(item, "children");
   };
   const getLabel = (item: any) => {
+    if (props.labelFormatter) {
+      return props.labelFormatter(item);
+    }
     return String(getPropValue(item, "label"));
   };
   const getColor = (item: any) => {

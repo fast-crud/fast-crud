@@ -554,10 +554,7 @@ export class Naive implements UiInterface {
     },
     buildSelectionBinding(req) {
       const onSelectionChange = (changed: any) => {
-        req.selectedRowKeys.value = changed;
-        if (req.onChanged) {
-          req.onChanged(req.selectedRowKeys.value);
-        }
+        req.onSelectedKeysChanged(changed, false);
       };
 
       return {
@@ -566,7 +563,7 @@ export class Naive implements UiInterface {
           "onUpdate:checkedRowKeys": onSelectionChange
         },
         columns: {
-          _checked: {
+          $checked: {
             form: { show: false },
             column: {
               multiple: !!req.multiple,

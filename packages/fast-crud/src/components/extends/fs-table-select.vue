@@ -1,6 +1,14 @@
 <template>
   <div class="fs-table-select">
-    <fs-dict-select ref="dictSelectRef" :dict="dict" v-bind="computedSelect" :open="false" @click="openTableSelect" />
+    <fs-dict-select
+      ref="dictSelectRef"
+      :dict="dict"
+      :disabled="disabled"
+      :readonly="readonly"
+      v-bind="computedSelect"
+      :open="false"
+      @click="openTableSelect"
+    />
     <component :is="ui.formItem.skipValidationWrapper">
       <component :is="ui.dialog.name" v-model:[ui.dialog.visible]="dialogOpen" v-bind="computedDialogBinding">
         <div :style="{ width: '100%', height: height || '60vh' }">
@@ -8,7 +16,13 @@
             <template #header-top>
               <div class="fs-table-select-current">
                 当前选中：
-                <fs-values-format ref="valuesFormatRef" :model-value="selectedRowKeys" :dict="dict"></fs-values-format>
+                <fs-values-format
+                  ref="valuesFormatRef"
+                  v-model="selectedRowKeys"
+                  :dict="dict"
+                  :closable="true"
+                  v-bind="valuesFormat"
+                ></fs-values-format>
               </div>
             </template>
           </fs-crud>
@@ -24,8 +38,9 @@
 <script lang="tsx" setup>
 import { CreateCrudOptions, Dict, useFs, useMerge, useUi } from "../../use";
 import { computed, nextTick, ref, Ref, watch } from "vue";
-import { DynamicallyCrudOptions } from "../../d";
-import _ from "lodash-es";
+import { ColumnsFilterComponentProps, DynamicallyCrudOptions } from "../../d";
+import _, { isFunction } from "lodash-es";
+import { withDefaults } from "vue";
 // defineOptions({
 //   name: "FsTableSelect"
 // });
@@ -50,10 +65,16 @@ type FsTableSelectProps = {
    * 选择框配置
    */
   select?: any;
+
   /**
    * 对话框配置
    */
   dialog?: any;
+
+  /**
+   * 当前选中值 values-format配置
+   */
+  valuesFormat?: any;
 
   /**
    * crud高度
@@ -72,14 +93,31 @@ type FsTableSelectProps = {
    * 可选
    */
   rowKey?: string;
+
+  disabled?: boolean;
+
+  readonly?: boolean;
 };
-const props = defineProps<FsTableSelectProps>();
+const props = withDefaults(defineProps<FsTableSelectProps>(), {
+  crossPage: true,
+  rowKey: undefined,
+  disabled: false,
+  readonly: false,
+  height: undefined,
+  valuesFormat: undefined,
+  dialog: undefined,
+  select: undefined,
+  crudOptionsOverride: undefined
+});
 const emits = defineEmits(["change", "update:modelValue"]);
 const { ui } = useUi();
 const dictSelectRef = ref();
 const valuesFormatRef = ref();
 const dialogOpen = ref(false);
 const openTableSelect = async () => {
+  if (props.disabled || props.readonly || props.select?.disabled || props.select?.readonly) {
+    return;
+  }
   dialogOpen.value = true;
   if (props.modelValue == null || (Array.isArray(props.modelValue) && props.modelValue.length == 0)) {
     selectedRowKeys.value = [];
@@ -131,16 +169,33 @@ watch(
 const selectedRowKeys: Ref<any[]> = ref([]);
 
 const override: DynamicallyCrudOptions = computed(() => {
+  function getCrossPageSelected(curSelected: any[]) {
+    const rowKey: any = crudBinding.value.table.rowKey || props.rowKey;
+    const data = crudBinding.value.data;
+    let mapId = rowKey;
+    if (!isFunction(rowKey)) {
+      mapId = (item: any) => {
+        return item[rowKey];
+      };
+    }
+    const currentIds = data.map(mapId);
+    //已选中数据中，排除掉本页数据
+    const otherPageSelected = selectedRowKeys.value.filter((item: any) => !currentIds.includes(item));
+    return otherPageSelected.concat(curSelected);
+  }
   let selection = ui.table.buildSelectionBinding({
-    getPageData: () => {
-      return crudBinding.value.data;
+    getRowKey() {
+      return props.rowKey || crudBinding.value.table.rowKey || "id";
     },
-    rowKey: crudBinding.value.table.rowKey || props.rowKey,
     multiple: props.multiple,
     selectedRowKeys,
-    crossPage: props.crossPage,
-    onChanged: async (keys) => {
-      selectedRowKeys.value = [...keys];
+    onSelectedKeysChanged: async (changed, onlyCurPage = true) => {
+      if (props.crossPage && onlyCurPage && props.multiple === true) {
+        //跨页选择
+        selectedRowKeys.value = getCrossPageSelected(changed);
+      } else {
+        selectedRowKeys.value = [...changed];
+      }
       await nextTick();
       await props.dict.appendByValues(selectedRowKeys.value);
       // if (valuesFormatRef.value) {
