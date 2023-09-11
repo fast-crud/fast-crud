@@ -197,12 +197,20 @@ export type TableSorterContext = {
 };
 export type TableBuilderOption = {} & BindBuilderOptions;
 export type TableScrollReq = { top: number; tableRef: any; fsTableRef: any };
+export type TableSetSelectedRows = {
+  selectedRowKeys: Ref<any[]>;
+  data?: any[];
+  tableRef: any;
+  multiple: boolean;
+  getRowKey: any;
+};
 export type TableSelectionReq = {
   crossPage: boolean;
-  getRowKey: () => any;
+  getRowKey?: () => any;
+  getPageData?: () => any[];
   multiple: boolean;
   selectedRowKeys: Ref<any[]>;
-  onSelectedKeysChanged: (selectedRowKeys: any[], onlyCurPage: boolean) => void;
+  onSelectedKeysChanged: (selectedRowKeys: any[]) => void;
 };
 export interface TableCI extends CI<TableBuilderOption> {
   defaultRowKey?: string | ((rowData: any) => any);
@@ -229,6 +237,7 @@ export interface TableCI extends CI<TableBuilderOption> {
   scrollTo(req: TableScrollReq): void;
 
   buildSelectionBinding(req: TableSelectionReq): ComponentBinding;
+  setSelectedRows?: (req: TableSetSelectedRows) => void;
 }
 
 export type CheckboxGroupBuilderOption = {} & BindBuilderOptions;

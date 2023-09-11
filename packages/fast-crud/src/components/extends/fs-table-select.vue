@@ -168,35 +168,22 @@ watch(
 );
 const selectedRowKeys: Ref<any[]> = ref([]);
 
+function getRowKey() {
+  return props.rowKey || crudBinding.value.table.rowKey || "id";
+}
+const refreshing = ref(false);
+
 const override: DynamicallyCrudOptions = computed(() => {
-  function getCrossPageSelected(curSelected: any[]) {
-    const rowKey: any = crudBinding.value.table.rowKey || props.rowKey;
-    const data = crudBinding.value.data;
-    let mapId = rowKey;
-    if (!isFunction(rowKey)) {
-      mapId = (item: any) => {
-        return item[rowKey];
-      };
-    }
-    const currentIds = data.map(mapId);
-    //已选中数据中，排除掉本页数据
-    const otherPageSelected = selectedRowKeys.value.filter((item: any) => !currentIds.includes(item));
-    return otherPageSelected.concat(curSelected);
-  }
-  let selection = ui.table.buildSelectionBinding({
+  let selectionOptions = ui.table.buildSelectionBinding({
     crossPage: props.crossPage,
-    getRowKey() {
-      return props.rowKey || crudBinding.value.table.rowKey || "id";
+    getRowKey,
+    getPageData() {
+      return crudBinding.value.data;
     },
     multiple: props.multiple,
     selectedRowKeys,
-    onSelectedKeysChanged: async (changed, onlyCurPage = true) => {
-      if (props.crossPage && onlyCurPage && props.multiple === true) {
-        //跨页选择
-        selectedRowKeys.value = getCrossPageSelected(changed);
-      } else {
-        selectedRowKeys.value = [...changed];
-      }
+    onSelectedKeysChanged: async (changed) => {
+      selectedRowKeys.value = [...changed];
       await nextTick();
       await props.dict.appendByValues(selectedRowKeys.value);
       // if (valuesFormatRef.value) {
@@ -204,8 +191,25 @@ const override: DynamicallyCrudOptions = computed(() => {
       // }
     }
   });
-  const crudOptions = { ...selection };
-  return merge(crudOptions, props.crudOptionsOverride);
+  const crudOptions = {
+    table: {
+      async onRefreshed() {
+        if (ui.table.setSelectedRows) {
+          refreshing.value = true;
+          await nextTick();
+          await nextTick();
+          ui.table.setSelectedRows({
+            getRowKey,
+            multiple: props.multiple,
+            tableRef: crudExpose.getBaseTableRef(),
+            selectedRowKeys
+          });
+          refreshing.value = false;
+        }
+      }
+    }
+  };
+  return merge(crudOptions, selectionOptions, props.crudOptionsOverride);
 });
 
 const { merge } = useMerge();
@@ -226,8 +230,6 @@ watch(
     const cur = crudBinding.value?.pagination[ui.pagination.currentPage];
     appendCrudOptions(value);
     if (crudRef.value) {
-      await nextTick();
-      await nextTick();
       crudBinding.value.pagination[ui.pagination.currentPage] = cur;
       await crudExpose.doRefresh({ goFirstPage: false });
     }

@@ -472,7 +472,7 @@ export function useExpose(props: UseExposeProps): UseExposeRet {
         logger.warn("fs-table还未挂载");
         return;
       }
-      return tableRef.value.tableRef;
+      return tableRef.tableRef;
     },
     /**
      * 获取表格数据

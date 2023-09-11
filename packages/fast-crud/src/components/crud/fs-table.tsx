@@ -2,7 +2,6 @@ import {
   computed,
   defineComponent,
   getCurrentInstance,
-  getCurrentScope,
   PropType,
   ref,
   resolveDirective,
@@ -17,8 +16,7 @@ import logger from "../../utils/util.log";
 import utilLog from "../../utils/util.log";
 import "./fs-table.less";
 import { ColumnProps, ConditionalRenderProps, ScopeContext, TableColumnsProps, WriteableSlots } from "../../d";
-import { UiInterface } from "@fast-crud/ui-interface/src";
-import { Constants } from "../../utils/util.constants";
+import { UiInterface } from "@fast-crud/ui-interface";
 
 type BuildTableColumnsOption = {
   props: any;
