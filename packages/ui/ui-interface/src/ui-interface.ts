@@ -198,6 +198,7 @@ export type TableSorterContext = {
 export type TableBuilderOption = {} & BindBuilderOptions;
 export type TableScrollReq = { top: number; tableRef: any; fsTableRef: any };
 export type TableSelectionReq = {
+  crossPage: boolean;
   getRowKey: () => any;
   multiple: boolean;
   selectedRowKeys: Ref<any[]>;

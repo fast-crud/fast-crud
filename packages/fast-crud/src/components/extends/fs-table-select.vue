@@ -184,6 +184,7 @@ const override: DynamicallyCrudOptions = computed(() => {
     return otherPageSelected.concat(curSelected);
   }
   let selection = ui.table.buildSelectionBinding({
+    crossPage: props.crossPage,
     getRowKey() {
       return props.rowKey || crudBinding.value.table.rowKey || "id";
     },

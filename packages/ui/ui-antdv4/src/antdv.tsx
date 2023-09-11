@@ -504,7 +504,7 @@ export class Antdv implements UiInterface {
     buildSelectionBinding(req) {
       const selectedRowKeys = req.selectedRowKeys;
       const onChange = (changed: any[]) => {
-        req.onSelectedKeysChanged(changed, true);
+        req.onSelectedKeysChanged(changed, false);
       };
       let type = "radio";
       if (req.multiple === true) {
@@ -514,7 +514,8 @@ export class Antdv implements UiInterface {
         rowSelection: {
           type,
           selectedRowKeys,
-          onChange
+          onChange,
+          preserveSelectedRowKeys: req.crossPage
         }
       };
     },
