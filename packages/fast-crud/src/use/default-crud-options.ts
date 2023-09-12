@@ -45,6 +45,9 @@ export default {
         style: {
           "grid-template-columns": "50% 50%" // grid布局，默认两列
         },
+        row: {
+          gutter: 10
+        },
         col: { span: 12 },
         labelAlign: "right", // antdv
         labelCol: { span: 4 }, // antdv

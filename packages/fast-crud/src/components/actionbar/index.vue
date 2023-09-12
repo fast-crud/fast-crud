@@ -70,7 +70,6 @@ export default defineComponent({
 </script>
 <style lang="less">
 .fs-actionbar {
-  min-width: 1px;
   .fs-button {
     margin: 0 2px;
   }

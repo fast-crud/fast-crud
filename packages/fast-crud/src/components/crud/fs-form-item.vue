@@ -9,10 +9,10 @@
     :rule-path="item.key"
   >
     <template #label>
-      <span v-if="computedLabelIsRender">
+      <span v-if="computedLabelIsRender" class="fs-form-item-label-text">
         <fs-render :render-func="computedLabelRender"></fs-render>
       </span>
-      <span v-else>
+      <span v-else class="fs-form-item-label-text" :title="computedLabel">
         {{ computedLabel }}
       </span>
 
@@ -173,6 +173,12 @@ export default defineComponent({
 .fs-form-item {
   .ant-form-item-label {
     line-height: 1;
+    .fs-form-item-label-text {
+      width: 100%;
+      text-overflow: ellipsis;
+      overflow: hidden;
+      white-space: nowrap;
+    }
   }
   .el-form-item {
     .fs-form-item-label-icon {

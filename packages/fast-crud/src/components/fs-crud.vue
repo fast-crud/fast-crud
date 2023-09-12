@@ -534,6 +534,7 @@ export default defineComponent({
       display: flex;
       flex: 1;
       align-items: center;
+      min-width: 1px;
     }
 
     .fs-crud-toolbar {
