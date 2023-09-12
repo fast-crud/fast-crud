@@ -38,9 +38,8 @@
 <script lang="tsx" setup>
 import { CreateCrudOptions, Dict, useFs, useMerge, useUi } from "../../use";
 import { computed, nextTick, ref, Ref, watch } from "vue";
-import { ColumnsFilterComponentProps, DynamicallyCrudOptions } from "../../d";
-import _, { isFunction } from "lodash-es";
-import { withDefaults } from "vue";
+import { DynamicallyCrudOptions } from "../../d";
+import _ from "lodash-es";
 // defineOptions({
 //   name: "FsTableSelect"
 // });

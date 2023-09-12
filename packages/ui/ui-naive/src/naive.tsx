@@ -554,7 +554,7 @@ export class Naive implements UiInterface {
     },
     buildSelectionBinding(req) {
       const onSelectionChange = (changed: any) => {
-        req.onSelectedKeysChanged(changed, false);
+        req.onSelectedKeysChanged(changed);
       };
 
       return {
