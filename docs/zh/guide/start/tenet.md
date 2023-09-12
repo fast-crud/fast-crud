@@ -51,7 +51,11 @@ const crudOptions = {
                 component:{
                     //这两个属性是fs-component-render的属性
                     name:"xxxx",
-                    on:{}
+                    on:{
+                        onXxxx(context){
+                            //监听组件事件,具备上下文，注意on开头
+                        }
+                    }
                 }
             }
         }

@@ -5,6 +5,8 @@ import logger from "../utils/util.log";
 import { uiContext } from "../ui";
 import { useI18n } from "../locale";
 import {
+  ColumnCompositionProps,
+  ColumnProps,
   ComputeContext,
   CrudBinding,
   CrudExpose,
@@ -14,9 +16,9 @@ import {
   TableColumnsProps
 } from "../d";
 import { useCompute } from "./use-compute";
-import { buildTableColumnsFlatMap, useColumns } from "./use-columns";
+import { buildTableColumnsFlatMap, forEachTableColumns, useColumns } from "./use-columns";
 import { CrudOptions } from "../d/crud";
-import { computed, Ref, ref } from "vue";
+import { computed, nextTick, Ref, ref } from "vue";
 import { useExpose } from "./use-expose";
 import { exportTable } from "../lib/fs-export";
 
@@ -158,6 +160,18 @@ export function useCrud(ctx: UseCrudProps): UseCrudRet {
   function useSearch() {
     return {
       search: {
+        on_reset() {
+          crudBinding.value.table.sort = {};
+          forEachTableColumns(crudBinding.value.table.columns, (column: ColumnCompositionProps) => {
+            //清空sort
+            column.sortOrder = false;
+          });
+          //element 清空sort
+          const baseTableRef = crudExpose.getBaseTableRef();
+          if (baseTableRef?.clearSort) {
+            baseTableRef.clearSort();
+          }
+        },
         onSearch() {
           crudExpose.doRefresh({ goFirstPage: true });
         },
@@ -274,6 +288,15 @@ export function useCrud(ctx: UseCrudProps): UseCrudRet {
       table: {
         onSortChange(sortChange: { isServerSort: boolean; prop: any; asc: any; order: any }) {
           const { isServerSort, prop, asc, order } = sortChange;
+
+          forEachTableColumns(crudBinding.value.table.columns, (column: ColumnProps) => {
+            if (column.key === prop) {
+              column.sortOrder = order;
+            } else {
+              column.sortOrder = false;
+            }
+          });
+
           const oldSort = crudBinding.value.table.sort;
           crudBinding.value.table.sort = isServerSort ? { prop, order, asc } : null;
           if (isServerSort || oldSort != null) {

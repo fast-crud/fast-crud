@@ -161,9 +161,13 @@ export default defineComponent({
      **/
     "search",
     /**
-     * 重置事件
+     * 重置事件，供用户使用
      **/
     "reset",
+    /**
+     * 重置事件，此事件供系统调用
+     */
+    "_reset",
     /**
      * 校验失败事件
      */
@@ -424,6 +428,7 @@ export default defineComponent({
           props.reset(getContextFn());
         }
         // 表单重置事件
+        ctx.emit("_reset", getContextFn());
         ctx.emit("reset", getContextFn());
         if (props.searchAfterReset) {
           doSearch();
