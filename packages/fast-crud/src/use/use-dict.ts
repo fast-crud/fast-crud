@@ -163,7 +163,11 @@ export function useDict(props: any, ctx: any, vModel = "modelValue") {
     if (props.labelFormatter) {
       return props.labelFormatter(item);
     }
-    return String(getPropValue(item, "label"));
+    const label = getPropValue(item, "label");
+    if (label == null) {
+      return "";
+    }
+    return String(label);
   };
   const getColor = (item: any) => {
     return getPropValue(item, "color");

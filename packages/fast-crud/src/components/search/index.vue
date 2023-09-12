@@ -655,7 +655,6 @@ export default defineComponent({
   }
 
   .n-form-item-blank {
-    min-width: 130px;
   }
 }
 </style>

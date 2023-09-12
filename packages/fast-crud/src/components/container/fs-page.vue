@@ -71,7 +71,7 @@ export default defineComponent({
   }
   .fs-page-content {
     flex: 1;
-    overflow-y: auto;
+    overflow: auto;
   }
 }
 </style>
