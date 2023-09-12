@@ -3,6 +3,16 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [1.17.0](https://github.com/fast-crud/fast-crud/compare/v1.16.11...v1.17.0) (2023-09-12)
+
+### Features
+
+* table-select支持 ([1c5b749](https://github.com/fast-crud/fast-crud/commit/1c5b7493a7782581a5f2a5bff843b135eb531f92))
+
+### Performance Improvements
+
+* table-select支持跨页选择 ([ab89508](https://github.com/fast-crud/fast-crud/commit/ab8950857dccaf294f1ea2548d605a96d03d85fc))
+
 ## [1.16.11](https://github.com/fast-crud/fast-crud/compare/v1.16.10...v1.16.11) (2023-09-03)
 
 **Note:** Version bump only for package @fast-crud/ui-interface

@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [1.17.0](https://github.com/fast-crud/fast-crud/compare/v1.16.11...v1.17.0) (2023-09-12)
+
+### Bug Fixes
+
+* 修复element 图片裁剪组件无法横向排列的bug ([25fa258](https://github.com/fast-crud/fast-crud/commit/25fa25855e9750813d5a959a8b09ff6e90b04c1c))
+
 ## [1.16.11](https://github.com/fast-crud/fast-crud/compare/v1.16.10...v1.16.11) (2023-09-03)
 
 **Note:** Version bump only for package @fast-crud/fast-extends

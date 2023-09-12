@@ -3,6 +3,27 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [1.17.0](https://github.com/fast-crud/fast-crud/compare/v1.16.11...v1.17.0) (2023-09-12)
+
+### Bug Fixes
+
+* 修复row.gutter在分组模式下无效的bug ([b3568b4](https://github.com/fast-crud/fast-crud/commit/b3568b4c464bb9964e81a9d5518645280448b658))
+* 修复wrapper.zIndex无效的bug ([695621c](https://github.com/fast-crud/fast-crud/commit/695621c561ba60cd3b5d761e46d0114e7982f83b))
+* getNodesByValues传入参数必为数组格式，为破坏性变更，请全文搜索getNodesByValues，并修改成只接受数组格式。 ([d9583ef](https://github.com/fast-crud/fast-crud/commit/d9583eff6c394e96c65a5da1cd5d1ccc831cdac5))
+
+### Features
+
+* table-select支持 ([1c5b749](https://github.com/fast-crud/fast-crud/commit/1c5b7493a7782581a5f2a5bff843b135eb531f92))
+
+### Performance Improvements
+
+* 默认label宽度超出后省略+title提示 ([3953dee](https://github.com/fast-crud/fast-crud/commit/3953deeaf33e11ef2501ae99e54d15d62d2a5edb))
+* 增加重置后清空排序设置演示 ([6a563ad](https://github.com/fast-crud/fast-crud/commit/6a563ad67b87f66e2765e47f72c5d4831cf06801))
+* 增加form.formItem公共配置，可以统一配置表单下所有字段的一些配置 ([ad77c3c](https://github.com/fast-crud/fast-crud/commit/ad77c3cb9001ad4c1418d858aed9f118fcc185e8))
+* 增加search.formItem公共配置，可以统一配置表单下所有字段的一些配置 ([af678c5](https://github.com/fast-crud/fast-crud/commit/af678c531f4ce1343fadd9b9217fe0197d196cb5))
+* 重置后清空排序 ([8e7d958](https://github.com/fast-crud/fast-crud/commit/8e7d958e0cc33d6c1aa5e7f8a91964010c13865b))
+* table-select支持跨页选择 ([ab89508](https://github.com/fast-crud/fast-crud/commit/ab8950857dccaf294f1ea2548d605a96d03d85fc))
+
 ## [1.16.11](https://github.com/fast-crud/fast-crud/compare/v1.16.10...v1.16.11) (2023-09-03)
 
 **Note:** Version bump only for package @fast-crud/fast-crud
