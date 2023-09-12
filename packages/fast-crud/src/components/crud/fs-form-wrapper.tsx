@@ -392,7 +392,7 @@ export default defineComponent({
       };
 
       const vStyle = {
-        zIndex: props.zIndex
+        zIndex: formWrapperBind.value.zIndex || props.zIndex
       };
 
       const formWrapperComp = resolveDynamicComponent(is);
