@@ -329,6 +329,19 @@ function buildColumns(userOptions: CrudOptions) {
   return userOptions;
 }
 
+export function forEachTableColumns(columns: TableColumnsProps, callback: (col: ColumnProps, key: string) => void) {
+  _.forEach(columns, (item, key) => {
+    if (!item.key) {
+      item.key = key;
+    }
+    if (item.children) {
+      forEachTableColumns(item.children, callback);
+    } else {
+      callback(item, key);
+    }
+  });
+}
+
 export function forEachColumns(
   columns: CompositionColumns,
   callback: (col: ColumnCompositionProps, key: string) => void
