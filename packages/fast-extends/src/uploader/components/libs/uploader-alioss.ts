@@ -7,7 +7,7 @@ import {
   FsUploaderGetAuthContext,
   FsUploaderResult
 } from "../../d/type";
-import { FsUploaderAliossSTS } from "@/uploader";
+import { FsUploaderAliossSTS } from "../../d";
 
 let sts: any = null;
 export async function getSts(config: FsUploaderGetAuthContext): Promise<FsUploaderAliossSTS> {
