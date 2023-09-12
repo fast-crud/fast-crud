@@ -302,6 +302,10 @@ export default defineComponent({
 
 <style lang="less">
 .fs-cropper-uploader {
+  .fs-box {
+    display: flex;
+    flex-wrap: wrap;
+  }
   .el-image-viewer__close {
     color: #fff;
   }
