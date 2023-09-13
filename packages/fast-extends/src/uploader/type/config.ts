@@ -67,6 +67,7 @@ export const defaultConfig: FsUploaderOptions = {
     // }
   },
   async buildKey(context) {
+    debugger;
     const { fileName } = context;
     // 文件key的构建规则
     const date = new Date();

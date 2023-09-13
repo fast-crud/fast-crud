@@ -117,6 +117,7 @@ export type FsUploaderImplOptions =
   | FsUploaderS3Options;
 
 export type FsUploaderCommonOptions = {
+  keepName?: boolean;
   successHandle?: FsUploaderSuccessHandle;
   buildKey?: (context: FsUploaderBuildKeyContext) => Promise<string>;
 

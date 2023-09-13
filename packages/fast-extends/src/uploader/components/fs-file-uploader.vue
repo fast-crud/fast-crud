@@ -613,10 +613,12 @@ export default defineComponent({
   }
   .ant-upload-list-item-actions {
     display: flex;
+    justify-content: center;
     align-items: center;
     > a {
       display: flex;
       align-items: center;
+      justify-content: center;
     }
   }
 
