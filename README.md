@@ -104,7 +104,7 @@ const crudOptions= {
 * [django-vue3-admin](https://gitee.com/huge-dream/django-vue3-admin)
 * 极兔速递，内部使用
 
-好评如潮，快来试试吧     
+好评如潮，你还不试试？     
 ![](images/good.png)
 
 ## 联系作者
