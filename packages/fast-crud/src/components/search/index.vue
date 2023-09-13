@@ -614,6 +614,12 @@ export default defineComponent({
         width: 100%;
       }
 
+      &.el-form--label-top {
+        .el-form-item {
+          display: block;
+        }
+      }
+
       .el-form-item {
         margin-bottom: 4px;
         margin-top: 4px;
