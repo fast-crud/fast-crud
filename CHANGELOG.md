@@ -3,6 +3,16 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.17.1](https://github.com/fast-crud/fast-crud/compare/v1.17.0...v1.17.1) (2023-09-13)
+
+### Bug Fixes
+
+* 修复element 版 search label无法上置的问题 ([09ede7c](https://github.com/fast-crud/fast-crud/commit/09ede7c6be18029ec3cbdcb2d327c3017ee1290f))
+
+### Performance Improvements
+
+* table select 支持返回object对象 ([08c5d20](https://github.com/fast-crud/fast-crud/commit/08c5d20a2570e824b2698335ef23c806fc979788))
+
 # [1.17.0](https://github.com/fast-crud/fast-crud/compare/v1.16.11...v1.17.0) (2023-09-12)
 
 ### Bug Fixes
