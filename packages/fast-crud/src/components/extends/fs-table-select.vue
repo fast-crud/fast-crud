@@ -21,7 +21,7 @@
                   v-model="selectedRowKeys"
                   :dict="dict"
                   :closable="true"
-                  v-bind="valuesFormat"
+                  v-bind="computedValuesFormat"
                 ></fs-values-format>
               </div>
             </template>
@@ -96,6 +96,11 @@ type FsTableSelectProps = {
   disabled?: boolean;
 
   readonly?: boolean;
+
+  /**
+   * 值类型
+   */
+  valueType?: "value" | "object";
 };
 const props = withDefaults(defineProps<FsTableSelectProps>(), {
   crossPage: true,
@@ -106,7 +111,8 @@ const props = withDefaults(defineProps<FsTableSelectProps>(), {
   valuesFormat: undefined,
   dialog: undefined,
   select: undefined,
-  crudOptionsOverride: undefined
+  crudOptionsOverride: undefined,
+  valueType: "value"
 });
 const emits = defineEmits(["change", "update:modelValue"]);
 const { ui } = useUi();
@@ -126,21 +132,43 @@ const openTableSelect = async () => {
     } else {
       selectedRowKeys.value = [props.modelValue];
     }
+    if (props.valueType === "object") {
+      selectedRowKeys.value = selectedRowKeys.value.map((item) => {
+        return props.dict.getValue(item);
+      });
+    }
   }
   await crudExpose.doRefresh();
 };
 
+const computedValuesFormat = computed(() => {
+  return {
+    ...props.valuesFormat
+  };
+});
+
 const computedSelect = computed(() => {
   const updateKey = `onUpdate:${ui.select.modelValue}`;
+
+  let value = props.modelValue;
+  if (props.valueType === "object" && props.modelValue) {
+    if (props.multiple) {
+      value = props.modelValue.map((item: any) => {
+        return props.dict.getValue(item);
+      });
+    } else {
+      value = props.dict.getValue(props.modelValue);
+    }
+  }
   return {
-    ...props.select,
-    [ui.select.modelValue]: props.modelValue,
+    [ui.select.modelValue]: value,
     [updateKey]: (value: any) => {
       emits("update:modelValue", value);
     },
     [ui.select.clearable]: true,
     ...ui.select.buildMultiBinding(props.multiple),
-    show: false
+    show: false,
+    ...props.select
   };
 });
 
@@ -236,13 +264,24 @@ watch(
 );
 
 function onOk() {
+  if (props.dict.loading) {
+    return;
+  }
   let value = null;
   if (selectedRowKeys.value?.length > 0) {
     value = [...selectedRowKeys.value];
+
+    if (props.valueType === "object") {
+      value = value.map((item) => {
+        return props.dict.getDictMap()[item];
+      });
+    }
+
     if (props.multiple !== true) {
       value = value[0];
     }
   }
+
   emits("update:modelValue", value);
   emits("change", value);
   dialogOpen.value = false;

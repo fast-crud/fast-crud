@@ -569,7 +569,6 @@ export default defineComponent({
 
       .fs-pagination {
         flex: 1;
-        overflow: auto;
 
         .ant-pagination-options {
           .ant-select {

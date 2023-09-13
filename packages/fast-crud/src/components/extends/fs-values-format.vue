@@ -123,6 +123,12 @@ export default defineComponent({
       default: "tag"
     },
     /**
+     * 值的类型，【 value | object】
+     */
+    valueType: {
+      type: String
+    },
+    /**
      * 当value值不在字典中时默认显示的文本
      */
     defaultLabel: {},
@@ -185,6 +191,13 @@ export default defineComponent({
     }
 
     const computedValueItems: Ref<any[]> = computed(() => {
+      if (props.valueType === "object") {
+        if (props.modelValue && !Array.isArray(props.modelValue)) {
+          return [props.modelValue];
+        }
+        return props.modelValue;
+      }
+
       const dict = usedDict.getDict();
       if (props.modelValue == null || props.modelValue === "") {
         return [];
