@@ -153,7 +153,6 @@ export default defineComponent({
       const { getUploaderImpl } = useUploader();
       let uploaderRef = await getUploaderImpl(option.options.type);
       if (uploaderRef == null) {
-        ui.message.warn("Sorry，The uploader component is not ready yet");
         throw new Error("Sorry，The component is not ready yet");
       }
       return await uploaderRef?.upload(option);
