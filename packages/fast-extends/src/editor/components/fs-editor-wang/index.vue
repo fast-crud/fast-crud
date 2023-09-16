@@ -2,7 +2,6 @@
   <div class="fs-editor-wang">
     <div :id="uniqueId"></div>
     <textarea v-model="currentValue" class="fs-editor-wang-preview" readonly></textarea>
-    <fs-uploader ref="uploaderImplRef" :type="uploader?.type" />
   </div>
 </template>
 
@@ -12,6 +11,7 @@ import wangConfig from "./utils/config";
 import { defaultConfig } from "../../type/config";
 import _ from "lodash-es";
 import { defineComponent } from "vue";
+import { useUploader } from "../../../uploader";
 export default defineComponent({
   name: "FsEditorWang",
   props: {
@@ -150,9 +150,10 @@ export default defineComponent({
     },
     async doUpload(option: any) {
       option.options = this.uploader;
-      let uploaderImplRef: any = this.$refs.uploaderImplRef;
-      let uploaderRef = uploaderImplRef.getUploaderRef();
+      const { getUploaderImpl } = useUploader();
+      let uploaderRef = await getUploaderImpl(option.options.type);
       if (uploaderRef == null) {
+        ui.message.warn("Sorry，The uploader component is not ready yet");
         throw new Error("Sorry，The component is not ready yet");
       }
       return await uploaderRef?.upload(option);

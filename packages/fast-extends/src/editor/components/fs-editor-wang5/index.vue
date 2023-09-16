@@ -15,7 +15,6 @@
       @onChange="onChange"
       @onCreated="handleCreated"
     />
-    <fs-uploader ref="uploaderImplRef" :type="uploader?.type" />
   </div>
 </template>
 
@@ -29,6 +28,7 @@ import { defaultConfig } from "../../type/config.js";
 import _ from "lodash-es";
 import { FsUploaderDoUploadOptions } from "../../../uploader/d/type";
 import { useUi } from "@fast-crud/fast-crud";
+import { useUploader } from "../../../uploader";
 type InsertFnType = (url: string, alt?: string, href?: string) => void;
 /**
  * wangEditor5组件封装
@@ -134,10 +134,14 @@ export default defineComponent({
     if (props.uploader) {
       async function doUpload(option: FsUploaderDoUploadOptions) {
         option.options = props.uploader;
-        let uploaderRef = uploaderImplRef.value.getUploaderRef();
+
+        const { getUploaderImpl } = useUploader();
+        let uploaderRef = await getUploaderImpl(option.options.type);
         if (uploaderRef == null) {
+          ui.message.warn("Sorry，The uploader component is not ready yet");
           throw new Error("Sorry，The component is not ready yet");
         }
+
         return await uploaderRef?.upload(option);
       }
 
