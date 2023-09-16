@@ -102,18 +102,9 @@ export class Naive implements UiInterface {
     },
     titleSlotName: "header",
     buildOnClosedBind(is: string, onClosed: Function): {} {
-      if (is === "n-modal") {
-        return { afterClose: onClosed };
-      } else if (is === "n-drawer") {
-        return {
-          afterVisibleChange: (visible: boolean) => {
-            if (visible === false) {
-              onClosed(visible);
-            }
-          }
-        };
-      }
-      return {};
+      return {
+        onAfterLeave: onClosed
+      };
     },
     buildWidthBind(is: string, width: any) {
       return { style: { width: width } };
@@ -301,7 +292,9 @@ export class Naive implements UiInterface {
       return { footer };
     },
     buildOnClosedBind(onClosed: Function): {} {
-      return { afterClose: onClosed };
+      return {
+        onAfterLeave: onClosed
+      };
     },
     buildWidthBind(width) {
       return { style: { width: width } };
