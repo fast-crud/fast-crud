@@ -22,7 +22,11 @@ export default function () {
       },
       valueBuilder({ row, key, value }) {
         if (value != null) {
-          row[key] = dayjs(value);
+          if (ui.type === "naive") {
+            row[key] = dayjs(value).valueOf();
+          } else {
+            row[key] = dayjs(value);
+          }
         }
       }
     },
@@ -41,7 +45,11 @@ export default function () {
       },
       valueBuilder({ row, key, value }) {
         if (value != null) {
-          row[key] = dayjs(value);
+          if (ui.type === "naive") {
+            row[key] = dayjs(value).valueOf();
+          } else {
+            row[key] = dayjs(value);
+          }
         }
       }
     },
@@ -56,7 +64,13 @@ export default function () {
       column: { width: 210, formatter: daterangeFormatter },
       valueBuilder({ row, key, value }) {
         if (value != null && Array.isArray(value) && value.length === 2) {
-          row[key] = [dayjs(value[0]), dayjs(value[1])];
+          if (value != null) {
+            if (ui.type === "naive") {
+              row[key] = [dayjs(value[0]).valueOf(), dayjs(value[1]).valueOf()];
+            } else {
+              row[key] = [dayjs(value[0]), dayjs(value[1])];
+            }
+          }
         }
       }
     },
@@ -73,7 +87,11 @@ export default function () {
       },
       valueBuilder({ row, key, value }) {
         if (value != null && Array.isArray(value) && value.length === 2) {
-          row[key] = [dayjs(value[0]), dayjs(value[1])];
+          if (ui.type === "naive") {
+            row[key] = [dayjs(value[0]).valueOf(), dayjs(value[1]).valueOf()];
+          } else {
+            row[key] = [dayjs(value[0]), dayjs(value[1])];
+          }
         }
       }
     },
@@ -91,7 +109,9 @@ export default function () {
         component: { name: "fs-date-format", format: "HH:mm:ss" }
       },
       valueBuilder({ row, key, value }) {
-        if (value != null) {
+        if (ui.type === "naive") {
+          row[key] = dayjs(value).valueOf();
+        } else {
           row[key] = dayjs(value);
         }
       }
@@ -110,7 +130,9 @@ export default function () {
         component: { name: "fs-date-format", format: "YYYY-MM" }
       },
       valueBuilder({ row, key, value }) {
-        if (value != null) {
+        if (ui.type === "naive") {
+          row[key] = dayjs(value).valueOf();
+        } else {
           row[key] = dayjs(value);
         }
       }
@@ -129,7 +151,9 @@ export default function () {
         component: { name: "fs-date-format", format: "YYYY-ww[周]" }
       },
       valueBuilder({ row, key, value }) {
-        if (value != null) {
+        if (ui.type === "naive") {
+          row[key] = dayjs(value).valueOf();
+        } else {
           row[key] = dayjs(value);
         }
       }
@@ -148,7 +172,9 @@ export default function () {
         component: { name: "fs-date-format", format: "YYYY-[Q]Q" }
       },
       valueBuilder({ row, key, value }) {
-        if (value != null) {
+        if (ui.type === "naive") {
+          row[key] = dayjs(value).valueOf();
+        } else {
           row[key] = dayjs(value);
         }
       }
@@ -158,7 +184,8 @@ export default function () {
         component: {
           //el-date-picker,a-date-picker
           ...ui.datePicker.buildDateType("year"),
-          vModel: ui.datePicker.modelValue
+          vModel: ui.datePicker.modelValue,
+          format: "yyyy"
         }
       },
       column: {
@@ -167,7 +194,9 @@ export default function () {
         component: { name: "fs-date-format", format: "YYYY" }
       },
       valueBuilder({ row, key, value }) {
-        if (value != null) {
+        if (ui.type === "naive") {
+          row[key] = dayjs(value).valueOf();
+        } else {
           row[key] = dayjs(value);
         }
       }
