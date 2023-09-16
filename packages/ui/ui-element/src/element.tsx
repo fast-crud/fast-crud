@@ -503,7 +503,7 @@ export class Element implements UiInterface {
       return scope;
     },
     scrollTo(req: TableScrollReq) {
-      req.tableRef.value.setScrollTop(req.top);
+      req.tableRef?.value?.setScrollTop(req.top);
     },
     onChange({ onSortChange, onFilterChange, bubbleUp }) {
       return {

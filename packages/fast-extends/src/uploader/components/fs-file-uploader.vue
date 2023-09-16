@@ -213,8 +213,6 @@ export default defineComponent({
     }
     async function emitValue(list: FileItem[]) {
       let value = await buildEmitValue(list);
-      console.log("update value:", value);
-      debugger;
       onInput(value);
       nextTick(async () => {
         await onFormValueChanged();
@@ -555,12 +553,10 @@ export default defineComponent({
         },
         onRemove: (opts: any) => {
           const { file, fileList } = opts;
-          console.log("onremove:", opts);
           // handleChange(file, [...fileList]);
         },
         onChange: (opts: any) => {
           const { event, file, fileList } = opts;
-          console.log("onChange:", opts);
           const list = appendExtra(fileList);
           handleChange(file, [...list]);
         },
