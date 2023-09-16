@@ -213,6 +213,8 @@ export default defineComponent({
     }
     async function emitValue(list: FileItem[]) {
       let value = await buildEmitValue(list);
+      console.log("update value:", value);
+      debugger;
       onInput(value);
       nextTick(async () => {
         await onFormValueChanged();
@@ -281,6 +283,7 @@ export default defineComponent({
       }
     );
     //@ts-ignore
+    // eslint-disable-next-line vue/no-setup-props-destructure
     initFileList(props.modelValue);
     function hasUploading() {
       const uploading = fileList.value.filter((item: any) => {
@@ -550,12 +553,16 @@ export default defineComponent({
           checkLimit();
           ctx.emit("exceed", { fileList: fileList.value });
         },
-        onRemove: (file: any) => {
-          handleChange(file, fileList.value);
+        onRemove: (opts: any) => {
+          const { file, fileList } = opts;
+          console.log("onremove:", opts);
+          // handleChange(file, [...fileList]);
         },
-        onChange: ({ event, file, fileList }: any) => {
-          fileList = appendExtra(fileList);
-          handleChange(file, fileList);
+        onChange: (opts: any) => {
+          const { event, file, fileList } = opts;
+          console.log("onChange:", opts);
+          const list = appendExtra(fileList);
+          handleChange(file, [...list]);
         },
         onFinish: (file: any) => {
           const extra = naiveExtraCache[file.id];
