@@ -532,7 +532,7 @@ export default defineComponent({
     .fs-crud-actionbar {
       // padding-top: 5px;
       display: flex;
-      flex: 1;
+      flex: 10000;
       align-items: center;
       min-width: 1px;
     }
@@ -542,6 +542,7 @@ export default defineComponent({
       justify-content: flex-end;
       align-items: center;
       margin-right: 10px;
+      flex: 1;
     }
   }
 
