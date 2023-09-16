@@ -3,6 +3,13 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.17.2](https://github.com/fast-crud/fast-crud/compare/v1.17.1...v1.17.2) (2023-09-16)
+
+### Bug Fixes
+
+* 修复naive 时间示例无法修改的bug ([6ab9218](https://github.com/fast-crud/fast-crud/commit/6ab92188fc19d792de8bed0190853c444784b009))
+* antdv 查询框label上置错位的bug ([00a35ad](https://github.com/fast-crud/fast-crud/commit/00a35ade86de3f2b9c3c336f3c8dda6f224e1abf))
+
 ## [1.17.1](https://github.com/fast-crud/fast-crud/compare/v1.17.0...v1.17.1) (2023-09-13)
 
 **Note:** Version bump only for package @fast-crud/fs-admin-antdv4

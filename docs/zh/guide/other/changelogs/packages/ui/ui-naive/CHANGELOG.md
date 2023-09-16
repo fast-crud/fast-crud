@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.17.2](https://github.com/fast-crud/fast-crud/compare/v1.17.1...v1.17.2) (2023-09-16)
+
+### Bug Fixes
+
+* 修复naive 对话框关闭onClosed事件无效的bug ([9adc6c0](https://github.com/fast-crud/fast-crud/commit/9adc6c064a89c13bc9df156bae807dd7d90c1a2e))
+
 ## [1.17.1](https://github.com/fast-crud/fast-crud/compare/v1.17.0...v1.17.1) (2023-09-13)
 
 **Note:** Version bump only for package @fast-crud/ui-naive
