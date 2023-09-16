@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.17.2](https://github.com/fast-crud/fast-crud/compare/v1.17.1...v1.17.2) (2023-09-16)
+
+### Bug Fixes
+
+* antdv 查询框label上置错位的bug ([7545586](https://github.com/fast-crud/fast-crud/commit/7545586472eeddeca98d7097534b658403049996))
+
 ## [1.17.1](https://github.com/fast-crud/fast-crud/compare/v1.17.0...v1.17.1) (2023-09-13)
 
 **Note:** Version bump only for package @fast-crud/ui-antdv4
