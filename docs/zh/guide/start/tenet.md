@@ -100,6 +100,12 @@ const crudOptions = {
 }
 ```
 
+4. 如果对应ui文档上写的 'xxx-yyy'这样的属性名
+
+你可以通过驼峰的方式来配置,比如`xxxYyy`，或者加双引号`"xxx-yyy"`。
+
+5. 更多组件配置说明
+
 [更多组件配置说明](../../api/common-options.md#component【组件配置】)
 
 ## 4. 关于render后缀方法的说明
