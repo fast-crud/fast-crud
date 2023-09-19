@@ -26,6 +26,10 @@ export default defineComponent({
      * select组件的插槽
      */
     slots: {},
+
+    /**
+     * 自定义label的render方法
+     */
     renderLabel: {
       type: Function
     }

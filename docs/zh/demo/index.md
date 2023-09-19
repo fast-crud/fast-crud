@@ -17,12 +17,28 @@
 ## 二、集成示例
 
 ### 1. certd
-* [certd 证书自动化](https://github.com/certd/certd)    
-* [在线预览](https://certd.handsfree.work/)   
+* 简介：证书自动化申请和续期，让你的证书永不过期
+* 技术：`js server, midwayjs` + `fast-crud`
+* 开源地址: [certd 证书自动化](https://github.com/certd/certd) : 
+* 预览地址：[在线预览](https://certd.handsfree.work/)   
 
 ### 2. fs-bpmn
-* [fs-bpmn 流程设计器](https://github.com/fast-crud/fs-bpmn-demo/)
-* [在线预览](http://fast-crud.docmirror.cn/bpmn/)
+* 简介：工作流流程设计器
+* 开源地址： [fs-bpmn 流程设计器](https://github.com/fast-crud/fs-bpmn-demo/)
+* 预览地址： [在线预览](http://fast-crud.docmirror.cn/bpmn/)
+
+### 3. embeddings-store
+* 简介： 向量仓库，嵌入向量存储和检索
+* 技术： `python server ，fastapi`  + `fast-crud`
+* 开源地址：[embeddings-store](https://github.com/handsfree/embeddings-store/) 
+
+### 4. dvadmin
+* 简介：基于python，django的后台管理系统框架，fast-crud做client
+* 开源地址：[dvadmin](https://gitee.com/huge-dream/django-vue3-admin)
+
+### 5. wemirr-platform
+* 简介： 基于java的微服务平台，与fast-crud深度集成
+* 开源地址：[battcn/wemirr-platform](https://gitee.com/battcn/wemirr-platform)
 
 ## 三、admin脚手架starter
 

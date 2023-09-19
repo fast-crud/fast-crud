@@ -1,6 +1,9 @@
 import StringUtils from "../utils/util.string";
 import dayjs from "dayjs";
 import { useI18n } from "../locale";
+import advancedFormat from "dayjs/plugin/advancedFormat";
+dayjs.extend(advancedFormat);
+
 function doFormat(date: any, format: string) {
   if (StringUtils.isEmpty(date)) {
     return undefined;

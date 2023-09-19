@@ -281,6 +281,7 @@ export default defineComponent({
       }
     );
     //@ts-ignore
+    // eslint-disable-next-line vue/no-setup-props-destructure
     initFileList(props.modelValue);
     function hasUploading() {
       const uploading = fileList.value.filter((item: any) => {
@@ -550,12 +551,14 @@ export default defineComponent({
           checkLimit();
           ctx.emit("exceed", { fileList: fileList.value });
         },
-        onRemove: (file: any) => {
-          handleChange(file, fileList.value);
+        onRemove: (opts: any) => {
+          const { file, fileList } = opts;
+          // handleChange(file, [...fileList]);
         },
-        onChange: ({ event, file, fileList }: any) => {
-          fileList = appendExtra(fileList);
-          handleChange(file, fileList);
+        onChange: (opts: any) => {
+          const { event, file, fileList } = opts;
+          const list = appendExtra(fileList);
+          handleChange(file, [...list]);
         },
         onFinish: (file: any) => {
           const extra = naiveExtraCache[file.id];
@@ -613,10 +616,12 @@ export default defineComponent({
   }
   .ant-upload-list-item-actions {
     display: flex;
+    justify-content: center;
     align-items: center;
     > a {
       display: flex;
       align-items: center;
+      justify-content: center;
     }
   }
 

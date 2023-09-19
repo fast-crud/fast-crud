@@ -3,6 +3,18 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.17.2](https://github.com/fast-crud/fast-crud/compare/v1.17.1...v1.17.2) (2023-09-16)
+
+### Bug Fixes
+
+* 修复富文本编辑器图片上传报错的bug ([fa18d93](https://github.com/fast-crud/fast-crud/commit/fa18d93980d358382e191480a7e20ddf3d59fe63))
+* 修复naive 最后一个文件无法删除的bug ([49c0e6f](https://github.com/fast-crud/fast-crud/commit/49c0e6f869b2587e19368ddd8915656f48e04009))
+* antdv 查询框label上置错位的bug ([7545586](https://github.com/fast-crud/fast-crud/commit/7545586472eeddeca98d7097534b658403049996))
+
+## [1.17.1](https://github.com/fast-crud/fast-crud/compare/v1.17.0...v1.17.1) (2023-09-13)
+
+**Note:** Version bump only for package @fast-crud/fast-extends
+
 # [1.17.0](https://github.com/fast-crud/fast-crud/compare/v1.16.11...v1.17.0) (2023-09-12)
 
 ### Bug Fixes

@@ -3,6 +3,27 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.17.2](https://github.com/fast-crud/fast-crud/compare/v1.17.1...v1.17.2) (2023-09-16)
+
+### Bug Fixes
+
+* 修复富文本编辑器图片上传报错的bug ([fa18d93](https://github.com/fast-crud/fast-crud/commit/fa18d93980d358382e191480a7e20ddf3d59fe63))
+* 修复naive 对话框关闭onClosed事件无效的bug ([9adc6c0](https://github.com/fast-crud/fast-crud/commit/9adc6c064a89c13bc9df156bae807dd7d90c1a2e))
+* 修复naive 时间示例无法修改的bug ([6ab9218](https://github.com/fast-crud/fast-crud/commit/6ab92188fc19d792de8bed0190853c444784b009))
+* 修复naive 最后一个文件无法删除的bug ([49c0e6f](https://github.com/fast-crud/fast-crud/commit/49c0e6f869b2587e19368ddd8915656f48e04009))
+* antdv 查询框label上置错位的bug ([00a35ad](https://github.com/fast-crud/fast-crud/commit/00a35ade86de3f2b9c3c336f3c8dda6f224e1abf))
+* antdv 查询框label上置错位的bug ([7545586](https://github.com/fast-crud/fast-crud/commit/7545586472eeddeca98d7097534b658403049996))
+
+## [1.17.1](https://github.com/fast-crud/fast-crud/compare/v1.17.0...v1.17.1) (2023-09-13)
+
+### Bug Fixes
+
+* 修复element 版 search label无法上置的问题 ([09ede7c](https://github.com/fast-crud/fast-crud/commit/09ede7c6be18029ec3cbdcb2d327c3017ee1290f))
+
+### Performance Improvements
+
+* table select 支持返回object对象 ([08c5d20](https://github.com/fast-crud/fast-crud/commit/08c5d20a2570e824b2698335ef23c806fc979788))
+
 # [1.17.0](https://github.com/fast-crud/fast-crud/compare/v1.16.11...v1.17.0) (2023-09-12)
 
 ### Bug Fixes

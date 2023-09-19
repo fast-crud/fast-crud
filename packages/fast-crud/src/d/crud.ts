@@ -455,6 +455,11 @@ export type FormWrapperProps = {
    * 对话框使用什么组件，[el-dialog,a-modal,n-modal,el-drawer,a-drawer,n-drawer]
    */
   is?: string;
+
+  /**
+   * 是否支持拖拽
+   */
+  draggable?: boolean;
   /**
    * 对话框打开前事件处理
    * @param opts
