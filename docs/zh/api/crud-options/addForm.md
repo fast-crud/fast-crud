@@ -7,7 +7,9 @@
 const crudOptions:{
     addForm:{
         //...form配置
-        title:"添加用户"
+        wrapper:{
+            title:"添加用户"
+        }
     }
 }
 ```

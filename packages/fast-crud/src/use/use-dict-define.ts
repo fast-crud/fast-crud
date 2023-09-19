@@ -3,7 +3,6 @@ import { useMerge } from "./use-merge";
 import logger from "../utils/util.log";
 import { nextTick, shallowReactive, UnwrapNestedRefs } from "vue";
 import { LRUCache } from "lru-cache";
-import { commentTags } from "typedoc/dist/lib/output/themes/default/partials/comment";
 
 const DictGlobalCache = new LRUCache<string, any>({
   max: 500,
@@ -66,7 +65,7 @@ export interface DictOptions<T> {
    */
   isTree?: boolean;
   /**
-   * 是否全局缓存
+   * 是否全局缓存， 建议将dict()实例放到全局文件中引用，相当于store，也可达到全局缓存的效果
    */
   cache?: boolean; // 获取到结果是否进行全局缓存
   /**
@@ -84,7 +83,7 @@ export interface DictOptions<T> {
   immediate?: boolean; //是否立即请求
 
   /**
-   * 根据values 远程获取字典，prototype=true时有效
+   * 根据values 远程获取字典
    * @param values
    */
   getNodesByValues?: (values: any[], options?: LoadDictOpts) => Promise<T[]>;
@@ -147,7 +146,6 @@ export class Dict<T = any> extends UnMergeable implements DictOptions<T> {
   loading = false;
   custom = {};
   getNodesByValues?: (values: any, options?: LoadDictOpts) => Promise<T[]>;
-  cacheNodes = {};
   onReady?: (context: DictOnReadyContext) => void = undefined;
   notifies: Array<any> = []; //loadDict成功后的通知
   constructor(dict: DictOptions<T>) {
