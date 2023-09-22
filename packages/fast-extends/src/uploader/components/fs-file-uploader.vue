@@ -146,7 +146,12 @@ export default defineComponent({
       const arr = [];
       for (let value of list) {
         let fileValue: any;
-        if (typeof value === "string") {
+        if (
+          typeof value === "string" ||
+          typeof value === "number" ||
+          typeof value === "boolean" ||
+          value instanceof Date
+        ) {
           fileValue = {
             url: undefined,
             key: value,
