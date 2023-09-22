@@ -104,7 +104,8 @@ export default defineComponent({
     },
     /**
      * 返回值类型
-     * 支持：`[object,url,key,其他（successHandle返回的object内要有该字段）]`
+     * 支持：`[object,url,key,其他（successHandle返回的object内要有该字段，不要用'id'）]`
+     * 如果配置了非url，则需要配置buildUrl用于反显
      */
     valueType: {
       type: String, // url ,key, object
