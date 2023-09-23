@@ -23,7 +23,7 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, Ref, ref, watch } from "vue";
+import { computed, defineComponent, Ref, ref, watch } from "vue";
 import { useUi } from "@fast-crud/fast-crud";
 // 文件格式化展示组件
 export default defineComponent({
@@ -53,21 +53,28 @@ export default defineComponent({
         return value;
       }
     },
-    buildUrls: {}
+    buildUrls: {},
+    // 根据value构建文件名
+    getFileName: {}
   } as any,
   setup(props: any, ctx) {
     const { ui } = useUi();
-    function getFileName(url: string) {
-      if (url?.lastIndexOf("/") >= 0) {
-        return url.substring(url.lastIndexOf("/") + 1);
-      }
-      return url;
-    }
+    const getFileName = computed(() => {
+      return (
+        props.getFileName ||
+        function (value: any) {
+          if (url?.lastIndexOf("/") >= 0) {
+            return url.substring(url.lastIndexOf("/") + 1);
+          }
+          return url;
+        }
+      );
+    });
     function getItem(value: any): any {
       return {
         url: undefined,
         value: value,
-        name: getFileName(value),
+        name: getFileName.value(value),
         color: props.color
       };
     }
