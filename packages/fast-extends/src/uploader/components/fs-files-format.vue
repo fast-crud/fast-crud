@@ -63,6 +63,10 @@ export default defineComponent({
       return (
         props.getFileName ||
         function (value: any) {
+          if (typeof url !== "string") {
+            console.warn("获取文件名失败，请配置getFileName");
+            return url;
+          }
           if (url?.lastIndexOf("/") >= 0) {
             return url.substring(url.lastIndexOf("/") + 1);
           }

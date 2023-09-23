@@ -110,7 +110,11 @@ export default defineComponent({
     valueType: {
       type: String, // url ,key, object
       default: "url"
-    }
+    },
+    /**
+     * 根据value获取文件名，用于显示在fileList里面
+     */
+    getFileName: {}
   },
   emits: ["change", "update:modelValue", "success", "exceed"],
   setup(props: any, ctx: any) {
@@ -121,14 +125,23 @@ export default defineComponent({
     const currentValue: Ref = ref();
     const fileUploaderRef: Ref = ref();
 
-    function pickFileName(url: string) {
-      const suffix = url.substring(url.lastIndexOf("/") + 1);
-      const wenIndex = suffix.indexOf("?");
-      if (wenIndex >= 0) {
-        return suffix.substring(0, wenIndex);
-      }
-      return suffix;
-    }
+    const pickFileName = computed(() => {
+      return (
+        props.getFileName ||
+        ((url: string) => {
+          if (typeof url !== "string") {
+            console.warn("获取文件名失败，请配置getFileName");
+            return url;
+          }
+          const suffix = url.substring(url.lastIndexOf("/") + 1);
+          const wenIndex = suffix.indexOf("?");
+          if (wenIndex >= 0) {
+            return suffix.substring(0, wenIndex);
+          }
+          return suffix;
+        })
+      );
+    });
 
     function getValueByValueType(item: any) {
       if (props.valueType === "object") {
@@ -176,7 +189,7 @@ export default defineComponent({
       for (const item of arr) {
         if (!item.name) {
           const url = item.url || item.value;
-          item.name = pickFileName(url);
+          item.name = pickFileName.value(url);
         }
       }
       return arr;
