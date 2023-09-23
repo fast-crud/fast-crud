@@ -62,7 +62,7 @@ export default defineComponent({
     const getFileName = computed(() => {
       return (
         props.getFileName ||
-        function (value: any) {
+        function (url: any) {
           if (typeof url !== "string") {
             console.warn("获取文件名失败，请配置getFileName");
             return url;
