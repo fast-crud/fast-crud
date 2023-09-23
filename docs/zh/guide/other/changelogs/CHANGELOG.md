@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.17.3](https://github.com/fast-crud/fast-crud/compare/v1.17.2...v1.17.3) (2023-09-23)
+
+### Bug Fixes
+
+* upload输入值支持int boolean等类型 ([60c641f](https://github.com/fast-crud/fast-crud/commit/60c641f3bc6e69608e173d98c800105d47862476))
+
+### Performance Improvements
+
+* fs-files-format 支持自定义getFileName ([994f3af](https://github.com/fast-crud/fast-crud/commit/994f3aff0fe749b8165de3891542b0c53f1dcd57))
+* fs-files-uploader支持自定义getFileName ([1a6a3e4](https://github.com/fast-crud/fast-crud/commit/1a6a3e4ba180ea93ab5aaa08a2315528c52fa617))
+
 ## [1.17.2](https://github.com/fast-crud/fast-crud/compare/v1.17.1...v1.17.2) (2023-09-16)
 
 ### Bug Fixes
