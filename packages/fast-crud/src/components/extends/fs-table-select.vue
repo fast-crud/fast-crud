@@ -123,6 +123,9 @@ const openTableSelect = async () => {
   if (props.disabled || props.readonly || props.select?.disabled || props.select?.readonly) {
     return;
   }
+  if (props.dict == null) {
+    throw new Error("必须配置dict，且必须配置dict.getNodesByValues");
+  }
   dialogOpen.value = true;
   if (props.modelValue == null || (Array.isArray(props.modelValue) && props.modelValue.length == 0)) {
     selectedRowKeys.value = [];
