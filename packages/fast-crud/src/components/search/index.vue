@@ -151,13 +151,6 @@ export default defineComponent({
       type: Boolean
     },
     /**
-     * 是否在value变化时触发的校验，不发射validate-error事件
-     */
-    validateOnChangeSilent: {
-      default: false,
-      type: Boolean
-    },
-    /**
      * 列的宽度设置，span=xx
      */
     col: {},
