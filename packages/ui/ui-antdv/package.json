@@ -2,14 +2,9 @@
   "name": "@fast-crud/ui-antdv",
   "version": "1.17.4",
   "description": "antdv",
-  "main": "./src/index.ts",
-  "module": "./src/index.ts",
-  "types": "./src/index.ts",
-  "publishConfig": {
-    "main": "./dist/ui-antdv.umd.js",
-    "module": "./dist/ui-antdv.mjs",
-    "types": "./dist/d/index.d.ts"
-  },
+  "main": "./dist/ui-antdv.umd.js",
+  "module": "./dist/ui-antdv.mjs",
+  "types": "./dist/d/index.d.ts",
   "scripts": {
     "tsc": "vue-tsc --noEmit --skipLibCheck",
     "build": "npm run tsc && vite build",
@@ -54,5 +49,5 @@
     "vue-eslint-parser": "^9.3.1",
     "vue-tsc": "^1.8.8"
   },
-  "gitHead": "e0829574dc08ce4fb257dbcf4888487ae94b4a37"
+  "gitHead": "03cb26c47916d6932077881bd611c29a5c674033"
 }
