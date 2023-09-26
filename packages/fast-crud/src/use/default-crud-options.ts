@@ -24,8 +24,8 @@ export default {
           // n-form 是否显示校验反馈
           showFeedback: false
         },
-        onValidateError({ src }: any) {
-          if (src === "search") {
+        onValidateError({ trigger }: any) {
+          if (trigger === "search") {
             ui.notification.error({ message: t("fs.search.error.message") });
           }
         },
