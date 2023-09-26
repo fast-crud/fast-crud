@@ -534,9 +534,9 @@ export default defineComponent({
       const key = item.key;
       _.set(formData, key, value);
 
-      if (await doValidate()) {
-        onFormValidated();
-      }
+      // if (await doValidate()) {
+      //   onFormValidated();
+      // }
 
       if (item.valueChange) {
         const key = item.key;
