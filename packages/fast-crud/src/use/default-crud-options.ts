@@ -24,9 +24,7 @@ export default {
           // n-form 是否显示校验反馈
           showFeedback: false
         },
-        onValidateError() {
-          ui.notification.error({ message: t("fs.search.error.message") });
-        },
+        onValidateError() {},
         collapse: true,
         show: true,
         buttons: {

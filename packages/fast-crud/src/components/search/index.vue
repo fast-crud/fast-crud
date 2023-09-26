@@ -142,6 +142,21 @@ export default defineComponent({
     validate: {
       default: false
     },
+
+    /**
+     * 是否任意值变化就触发校验
+     */
+    validateOnChange: {
+      default: true,
+      type: Boolean
+    },
+    /**
+     * 是否在value变化时触发的校验，不发射validate-error事件
+     */
+    validateOnChangeSilent: {
+      default: false,
+      type: Boolean
+    },
     /**
      * 列的宽度设置，span=xx
      */
@@ -382,14 +397,17 @@ export default defineComponent({
       return { ...getContextFn(), key, value: _.get(formData, key) };
     }
 
-    async function doValidate(): Promise<boolean> {
+    async function doValidate(silent: boolean = false, trigger: string = "search"): Promise<boolean> {
       try {
         if (props.validate) {
           await ui.form.validateWrap(searchFormRef.value);
         }
         return true;
       } catch (e: any) {
-        ctx.emit("validate-error", { ...getContextFn(), error: e });
+        if (!silent) {
+          ctx.emit("validate-error", { ...getContextFn(), error: e, trigger });
+        }
+
         return false;
       }
     }
@@ -534,9 +552,10 @@ export default defineComponent({
       const key = item.key;
       _.set(formData, key, value);
 
-      // if (await doValidate()) {
-      //   onFormValidated();
-      // }
+      const silent = props.validateOnChangeSilent;
+      if (props.validateOnChange && (await doValidate(silent, "change"))) {
+        onFormValidated();
+      }
 
       if (item.valueChange) {
         const key = item.key;
