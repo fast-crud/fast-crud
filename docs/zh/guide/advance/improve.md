@@ -23,7 +23,7 @@
 请参考 [valueBuilder与valueResolve](/api/crud-options/columns.md#valuebuilder与valueresolve)
 
 ## 如何配置组件参数
-fast-crud文档里面不会包含底层ui组件的文档。当你要配置组件不同的参数时，需要去查找对应的组件文档，然后配置在`xxx.component`下    
+fast-crud文档里面不会包含底层ui组件的文档。当你要配置组件不同的参数时，需要去查找对应的组件文档，然后配置在对应的地方    
 具体请参考[字段组件配置](./component.md#字段组件配置)
  
 ## 后台接口参数和返回数据结构与fast-crud的数据结构不一致

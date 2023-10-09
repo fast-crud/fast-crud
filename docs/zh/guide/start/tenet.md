@@ -19,6 +19,7 @@ const crudOptions = {
 }
 
 ```
+
 ## 2. 文档中类似x-table-column的属性说明
 文档中有很多【类似`x-table-column`组件属性 或者 `对应ui组件的属性`】的说法。
 x是指对应的ui的前缀，比如 `el-table-column/ n-table-column / a-table-column `
@@ -146,6 +147,36 @@ type ScopeContext = {
     getComponentRef; //某些情况下没有
 }
 ```
+
+## 6. 做公共字段配置的三种方式
+
+### 方式1： 如果有固定的key    
+
+在`commonOptions`里面写固定key的配置即可    
+比如 created_time, updated_time    
+
+```js
+commonOptions(context){
+    return {
+        columns:{
+            created_time:{
+                valueResolve({form,key,value}){
+                    if(value){
+                        form[key] = value.format("YYYY-MM-DD HH:mm:ss")
+                    }
+                }
+            }
+        }
+    }
+}
+
+```
+### 方式2： 有固定的字段类型
+请参考：[修改官方字段类型](../advance/column-type.md#修改官方字段类型配置)
+
+### 方式3： 以上都没有，请使用字段merge插件
+请参考：[字段merge插件](../advance/column-type.md#字段merge插件)
+
 
 
 ## 遗漏补充
