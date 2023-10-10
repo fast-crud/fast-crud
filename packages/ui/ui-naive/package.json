@@ -2,9 +2,14 @@
   "name": "@fast-crud/ui-naive",
   "version": "1.17.5",
   "description": "",
-  "main": "./dist/ui-naive.umd.js",
-  "module": "./dist/ui-naive.mjs",
-  "types": "./dist/d/index.d.ts",
+  "main": "./src/index.ts",
+  "module": "./src/index.ts",
+  "types": "./src/index.ts",
+  "publishConfig": {
+    "main": "./dist/ui-naive.umd.js",
+    "module": "./dist/ui-naive.mjs",
+    "types": "./dist/d/index.d.ts"
+  },
   "scripts": {
     "tsc": "vue-tsc --noEmit --skipLibCheck",
     "build": "npm run tsc && vite build",
