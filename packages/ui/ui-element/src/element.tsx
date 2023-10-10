@@ -328,14 +328,10 @@ export class Element implements UiInterface {
       return formRef.validate();
     },
     transformValidateErrors: (e: any) => {
-      const errorFields = e.code || e.validation || {};
       const errors: any = {};
-      if (errorFields && errorFields instanceof Array) {
-        for (const errorField of errorFields) {
-          const name = errorField.field;
-          errors[name] = true;
-        }
-      }
+      _.forEach(e, (item, key) => {
+        errors[key] = true;
+      });
 
       return errors;
     }
