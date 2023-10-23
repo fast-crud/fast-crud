@@ -1,4 +1,13 @@
-import { CompositionColumns, CrudBinding, FormProps, PageQuery, PageRes, RemoveProps } from "./crud";
+import {
+  CompositionColumns,
+  CrudBinding,
+  FormProps,
+  Page,
+  PageQuery,
+  PageRes,
+  RemoveProps,
+  UserPageQuery
+} from "./crud";
 import { Ref } from "vue";
 import { EditableOnEnabledProps } from "../use";
 
@@ -76,6 +85,16 @@ export type CrudExpose = {
    */
   doSearch: (props: DoSearchProps) => Promise<void>;
 
+  /**
+   * 构建page查询参数
+   * @param pageQuery
+   */
+  buildPageQuery(pageQuery: PageQuery): UserPageQuery;
+
+  /**
+   * 获取当前分页参数
+   */
+  getPage(): Page;
   /**
    * 执行搜索，返回页面数据
    * @param pageQuery
