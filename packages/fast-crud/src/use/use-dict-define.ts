@@ -1,7 +1,7 @@
 import _ from "lodash-es";
 import { useMerge } from "./use-merge";
 import logger from "../utils/util.log";
-import { nextTick, shallowReactive, UnwrapNestedRefs } from "vue";
+import { isShallow, nextTick, shallowReactive, UnwrapNestedRefs } from "vue";
 import { LRUCache } from "lru-cache";
 
 const DictGlobalCache = new LRUCache<string, any>({

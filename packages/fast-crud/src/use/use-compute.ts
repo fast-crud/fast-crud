@@ -1,5 +1,5 @@
 import _ from "lodash-es";
-import { computed, ref, Ref, watch } from "vue";
+import { computed, isShallow, ref, Ref, watch } from "vue";
 import { useMerge } from "./use-merge";
 import { ComputeContext } from "../d/compute";
 import { AsyncComputeRef, ComputeFn, ComputeRef, ScopeContext } from "../d";
@@ -38,6 +38,10 @@ function findComputeValues(target: any, excludes: any[], isAsync: boolean) {
           }
         }
         foundMap[path] = value;
+        return false;
+      }
+      //如果是shallow对象，不再往下检索，提升性能，比如dict对象
+      if (isShallow(value)) {
         return false;
       }
       return true;

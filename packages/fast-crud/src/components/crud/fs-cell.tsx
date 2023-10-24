@@ -1,5 +1,5 @@
 import { useCompute } from "../../use/use-compute";
-import { defineComponent, PropType, ref } from "vue";
+import { computed, defineComponent, isShallow, PropType, ref } from "vue";
 import { ConditionalRenderProps } from "../../d";
 import _ from "lodash-es";
 /**
@@ -37,7 +37,15 @@ export default defineComponent({
     const getScope = () => {
       return props.scope;
     };
+
+    // eslint-disable-next-line vue/no-setup-props-destructure
+    const ddd = props.item.component?.dict;
+
     const computedComponent = doComputed(computedPropsComponent, getScope);
+    const end = new Date().getTime();
+
+    const ddd2 = computedComponent.value?.dict;
+
     const targetRef = ref();
 
     function getTargetRef() {
@@ -49,19 +57,28 @@ export default defineComponent({
       targetRef
     });
 
-    return () => {
+    const computedTitle = computed(() => {
       let title = props.item.showTitle;
       const value = props.scope.value;
       if (title === true) {
         title = value;
       }
+      return title;
+    });
+    const computedCellContentRender = computed(() => {
       const cellContentRender = (slot: any) => {
         return (
-          <span class={"fs-cell"} title={title}>
+          <span class={"fs-cell"} title={computedTitle.value}>
             {slot}
           </span>
         );
       };
+      return cellContentRender;
+    });
+
+    return () => {
+      const value = props.scope.value;
+      const cellContentRender = computedCellContentRender.value;
       const scope = { ...props.scope, props: props.item };
       const conditionalRender = props.item.conditionalRender ?? props.conditionalRender;
       if (conditionalRender && conditionalRender.match && conditionalRender.match(scope)) {
@@ -79,7 +96,9 @@ export default defineComponent({
         if (computedComponent.value?.show === false) {
           return;
         }
-        return <fs-component-render title={title} ref={targetRef} {...computedComponent.value} scope={scope} />;
+        return (
+          <fs-component-render title={computedTitle.value} ref={targetRef} {...computedComponent.value} scope={scope} />
+        );
       } else {
         return cellContentRender(_.toString(value));
       }
