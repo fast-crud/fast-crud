@@ -192,6 +192,10 @@ export default defineComponent({
       }
     }
 
+    async function reset() {
+      await formRef.value.reset();
+    }
+
     function getFormData() {
       return formRef.value?.getFormData();
     }
@@ -205,6 +209,12 @@ export default defineComponent({
           text: t("fs.form.cancel"),
           onClick: () => {
             close();
+          }
+        },
+        reset: {
+          text: t("fs.form.reset"),
+          onClick: () => {
+            reset();
           }
         },
         ok: {

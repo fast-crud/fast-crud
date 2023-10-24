@@ -26,7 +26,8 @@ export default {
     },
     form: {
       cancel: "cancel",
-      ok: "ok"
+      ok: "ok",
+      reset: "reset"
     },
     actionbar: { add: "add" },
     toolbar: {

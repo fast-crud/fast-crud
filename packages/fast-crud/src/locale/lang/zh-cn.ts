@@ -26,7 +26,8 @@ export default {
     },
     form: {
       cancel: "取消",
-      ok: "确定"
+      ok: "确定",
+      reset: "重置"
     },
     actionbar: { add: "添加" },
     toolbar: {
