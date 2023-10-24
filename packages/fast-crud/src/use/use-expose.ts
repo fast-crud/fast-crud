@@ -289,7 +289,6 @@ export function useExpose(props: UseExposeProps): UseExposeRet {
      * {form,mergeForm}
      */
     setSearchFormData(context) {
-      debugger;
       if (context.mergeForm === false) {
         for (const key in crudBinding.value.search.validatedForm) {
           delete crudBinding.value.search.validatedForm[key];

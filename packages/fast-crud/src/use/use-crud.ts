@@ -205,6 +205,7 @@ export function useCrud(ctx: UseCrudProps): UseCrudRet {
   }
 
   function useToolbar() {
+    const exporting = ref(false);
     return {
       toolbar: {
         buttons: {
@@ -247,10 +248,16 @@ export function useCrud(ctx: UseCrudProps): UseCrudRet {
             type: "primary",
             icon: ui.icons.export,
             order: 4,
+            loading: exporting,
             title: t("fs.toolbar.export.title"), // '导出',
             circle: true,
             click: async () => {
-              await exportTable(crudExpose, crudBinding.value.toolbar.export);
+              exporting.value = true;
+              try {
+                await exportTable(crudExpose, crudBinding.value.toolbar.export);
+              } finally {
+                exporting.value = false;
+              }
             }
           },
           columns: {
