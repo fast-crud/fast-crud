@@ -213,7 +213,7 @@ export default defineComponent({
     align-items: center;
 
     .fs-button {
-      margin: 0 4px 0 4px;
+      margin: 0 2px 0 2px;
     }
   }
 
