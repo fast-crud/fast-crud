@@ -190,8 +190,83 @@ export default defineComponent({
 
     let autoSearch: any = null;
 
+    const { doComputed, AsyncComputeValue } = useCompute();
+    // eslint-disable-next-line vue/no-setup-props-destructure
+    _.each(props.columns, (item) => {
+      if (item.value != null && item.value instanceof AsyncComputeValue) {
+        logger.warn("search.value配置不支持AsyncCompute类型的动态计算");
+      }
+    });
+
+    const computedColumns: Ref<TypeMap<SearchItemProps>> = doComputed(
+      () => {
+        return props.columns;
+      },
+      getContextFn,
+      null,
+      (value: any) => {
+        const formItem = _.cloneDeep(props.formItem || {});
+        value = _.merge(formItem, value);
+        if (!props.validate) {
+          //如果关闭validate则去掉rules
+          _.forEach(value, (item) => {
+            delete item.rules;
+            delete item.rule;
+          });
+        }
+        // 合并col
+        if (props.col) {
+          _.forEach(value, (v) => {
+            v.col = merge({}, props.col, v.col);
+          });
+        }
+
+        //cellRender
+        _.forEach(value, (item) => {
+          item._cellRender = () => {
+            return cellRender(item);
+          };
+        });
+
+        //字段排序
+        let sortArr: SearchItemProps[] = [];
+        _.forEach(value, (v, key) => {
+          v._key = key;
+          sortArr.push(v);
+        });
+        sortArr = _.sortBy(sortArr, (item) => {
+          return item.order ?? Constants.orderDefault;
+        });
+
+        const sortedColumns: {
+          [key: string]: SearchItemProps;
+        } = {};
+
+        sortArr.forEach((item) => {
+          let _key = item._key;
+          delete item._key;
+          sortedColumns[_key] = item;
+        });
+        return sortedColumns;
+      }
+    );
+
     function createInitialForm() {
-      return _.cloneDeep(props.initialForm || {});
+      //默认值
+      const form = {};
+
+      _.forEach(computedColumns.value, (column, key) => {
+        if (column.value === undefined) {
+          return;
+        }
+        const defValue = unref(column.value);
+        if (defValue !== undefined && column.show !== false && column.component?.show !== false) {
+          //默认值
+          form[key] = defValue;
+        }
+      });
+
+      return _.cloneDeep(_.merge(props.initialForm, form));
     }
 
     const formData = reactive(createInitialForm());
@@ -205,6 +280,9 @@ export default defineComponent({
         return props.validatedForm;
       },
       (value: any) => {
+        for (const key in formData) {
+          delete formData[key];
+        }
         _.merge(formData, value || {});
       },
       {
@@ -212,14 +290,6 @@ export default defineComponent({
       }
     );
 
-    const { doComputed, AsyncComputeValue } = useCompute();
-
-    // eslint-disable-next-line vue/no-setup-props-destructure
-    _.each(props.columns, (item) => {
-      if (item.value != null && item.value instanceof AsyncComputeValue) {
-        logger.warn("search.value配置不支持AsyncCompute类型的动态计算");
-      }
-    });
     const { merge } = useMerge();
     const doMerge = merge;
 
@@ -306,70 +376,6 @@ export default defineComponent({
       });
     }
 
-    const computedColumns: Ref<TypeMap<SearchItemProps>> = doComputed(
-      () => {
-        return props.columns;
-      },
-      getContextFn,
-      null,
-      (value: any) => {
-        const formItem = _.cloneDeep(props.formItem || {});
-        value = _.merge(formItem, value);
-        if (!props.validate) {
-          //如果关闭validate则去掉rules
-          _.forEach(value, (item) => {
-            delete item.rules;
-            delete item.rule;
-          });
-        }
-        // 合并col
-        if (props.col) {
-          _.forEach(value, (v) => {
-            v.col = merge({}, props.col, v.col);
-          });
-        }
-
-        //cellRender
-        _.forEach(value, (item) => {
-          item._cellRender = () => {
-            return cellRender(item);
-          };
-        });
-
-        //字段排序
-        let sortArr: SearchItemProps[] = [];
-        _.forEach(value, (v, key) => {
-          v._key = key;
-          sortArr.push(v);
-        });
-        sortArr = _.sortBy(sortArr, (item) => {
-          return item.order ?? Constants.orderDefault;
-        });
-
-        const sortedColumns: {
-          [key: string]: SearchItemProps;
-        } = {};
-
-        sortArr.forEach((item) => {
-          let _key = item._key;
-          delete item._key;
-          sortedColumns[_key] = item;
-        });
-        return sortedColumns;
-      }
-    );
-
-    //默认值
-    _.forEach(computedColumns.value, (column, key) => {
-      if (column.value === undefined) {
-        return;
-      }
-      const defValue = unref(column.value);
-      if (defValue !== undefined && column.show !== false && column.component?.show !== false) {
-        //默认值
-        formData[key] = defValue;
-      }
-    });
     const searchFormRef = ref();
     const { t } = useI18n();
     const componentRenderRefs: Ref = ref({});
