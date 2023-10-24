@@ -37,6 +37,7 @@ export default defineComponent({
   }
   .content {
     flex: 1;
+    min-width: 100px;
   }
 }
 </style>
