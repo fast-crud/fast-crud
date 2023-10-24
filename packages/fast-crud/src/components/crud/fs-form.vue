@@ -494,10 +494,16 @@ export default defineComponent({
       if (props.doSubmit) {
         const res = await props.doSubmit(submitScope);
         submitScope.res = res;
+        if (res === false) {
+          return;
+        }
       }
       ctx.emit("submit", submitScope);
       if (props.afterSubmit) {
-        await props.afterSubmit(submitScope);
+        const success = await props.afterSubmit(submitScope);
+        if (success === false) {
+          return;
+        }
       }
       ctx.emit("success", submitScope);
     }
