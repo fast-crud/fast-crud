@@ -1,3 +1,6 @@
+import { SearchPlugin } from "vitepress-plugin-search";
+//default options
+
 module.exports = {
     title: 'FastCrud',
     description: '面向配置的CRUD编程.',

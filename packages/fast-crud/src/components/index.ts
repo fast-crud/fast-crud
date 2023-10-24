@@ -7,6 +7,7 @@ import FsButton from "./basic/fs-button";
 import FsIcon from "./basic/fs-icon";
 import FsIconify from "./basic/fs-iconify.vue";
 import FsIconSvg from "./basic/fs-icon-svg.vue";
+import FsLabel from "./basic/fs-label.vue";
 
 import FsLoading from "./basic/fs-loading.js";
 import FsBox from "./basic/fs-box.vue";
@@ -57,6 +58,7 @@ export {
   FsIcon,
   FsIconify,
   FsIconSvg,
+  FsLabel,
   FsForm,
   FsFormItem,
   FsFormHelper,
