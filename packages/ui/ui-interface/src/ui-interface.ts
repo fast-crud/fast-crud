@@ -79,13 +79,22 @@ export interface TreeSelectCI extends CI<TreeSelectBuilderOption> {
   children: string;
 }
 
-export type RadioBuilderOption = {} & BindBuilderOptions;
+export type RadioBuilderOption = {
+  value?: string;
+} & BindBuilderOptions;
 export interface RadioCI extends CI<RadioBuilderOption> {
   value: string;
 }
 
 export type RadioGroupBuilderOption = {} & BindBuilderOptions;
 export interface RadioGroupCI extends CI<RadioGroupBuilderOption> {
+  modelValue: string;
+}
+
+export type RadioButtonBuilderOption = {
+  value?: string;
+} & BindBuilderOptions;
+export interface RadioButtonCI extends CI<RadioButtonBuilderOption> {
   modelValue: string;
 }
 
@@ -583,6 +592,7 @@ export interface UiInterface {
   formItem: FormItemCI;
   tooltip: TooltipCI;
   radioGroup: RadioGroupCI;
+  radioButton: RadioButtonCI;
   radio: RadioCI;
   checkboxGroup: CheckboxGroupCI;
   checkbox: CheckboxCI;

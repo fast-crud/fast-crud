@@ -54,7 +54,8 @@ import {
   ColCI,
   RowCI,
   CardCI,
-  TableScrollReq
+  TableScrollReq,
+  RadioButtonCI
 } from "@fast-crud/ui-interface";
 // @ts-ignore
 import _, { isFunction } from "lodash-es";
@@ -299,7 +300,26 @@ export class Element implements UiInterface {
 
   radio: RadioCI = creator<RadioCI>({
     name: "el-radio",
-    value: "label"
+    value: "label",
+    builder(opts) {
+      return buildBinding(this, opts, {
+        props: {
+          [this.value]: opts.value
+        }
+      });
+    }
+  });
+
+  radioButton: RadioButtonCI = creator<RadioButtonCI>({
+    name: "el-radio-button",
+    value: "label",
+    builder(opts) {
+      return buildBinding(this, opts, {
+        props: {
+          [this.value]: opts.value
+        }
+      });
+    }
   });
 
   radioGroup: RadioGroupCI = creator<RadioGroupCI>({

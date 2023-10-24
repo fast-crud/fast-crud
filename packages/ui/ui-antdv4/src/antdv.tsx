@@ -41,6 +41,7 @@ import {
   PopoverBuilderOptions,
   PopoverCI,
   ProgressCI,
+  RadioButtonCI,
   RadioCI,
   RadioGroupCI,
   RowCI,
@@ -434,7 +435,23 @@ export class Antdv implements UiInterface {
     name: "a-radio",
     value: "value",
     builder(opts) {
-      return buildBinding(this, opts, {});
+      return buildBinding(this, opts, {
+        props: {
+          [this.value]: opts.value
+        }
+      });
+    }
+  });
+
+  radioButton: RadioButtonCI = creator<RadioButtonCI>({
+    name: "a-radio-button",
+    value: "value",
+    builder(opts) {
+      return buildBinding(this, opts, {
+        props: {
+          [this.value]: opts.value
+        }
+      });
     }
   });
 

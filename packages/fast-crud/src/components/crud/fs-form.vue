@@ -612,6 +612,7 @@ export default defineComponent({
 
   .fs-form-item-component {
     .ant-picker,
+    .ant-input-affix-wrapper,
     .ant-input-number,
     .el-cascader,
     .el-date-editor,

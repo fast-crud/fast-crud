@@ -8,18 +8,23 @@ export type UiSetupOptions = {
   setupIcons?: boolean;
 };
 
+function set() {
+  const antdvUi = new Antdv({
+    Message: message,
+    Notification: notification,
+    MessageBox: Modal
+  });
+  uiContext.set(antdvUi);
+  return antdvUi;
+}
 export default {
   install(app: any, options: UiSetupOptions = {}) {
-    const antdvUi = new Antdv({
-      Message: message,
-      Notification: notification,
-      MessageBox: Modal
-    });
-    uiContext.set(antdvUi);
+    const antdvUi = set();
 
     if (options.setupIcons !== false) {
       setupIcons(app);
     }
     return antdvUi;
-  }
+  },
+  set
 };

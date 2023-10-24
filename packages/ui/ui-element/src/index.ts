@@ -11,17 +11,23 @@ export type UiSetupOptions = {
   setupIcons?: boolean;
 };
 
+function set() {
+  const elementUi = new Element({
+    Message: ElMessage,
+    Notification: ElNotification,
+    MessageBox: ElMessageBox
+  });
+  uiContext.set(elementUi);
+  return elementUi;
+}
+
 export default {
   install(app: any, options: UiSetupOptions = {}) {
-    const elementUi = new Element({
-      Message: ElMessage,
-      Notification: ElNotification,
-      MessageBox: ElMessageBox
-    });
     if (options.setupIcons !== false) {
       setupIcons(app);
     }
-    uiContext.set(elementUi);
-    return elementUi;
-  }
+
+    return set();
+  },
+  set
 };

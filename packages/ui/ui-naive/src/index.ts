@@ -12,11 +12,16 @@ export { FsUiContext };
 export type UiSetupOptions = {
   setupIcons?: boolean;
 };
+
+function set() {
+  const naiveUi = new Naive();
+  uiContext.set(naiveUi);
+  return naiveUi;
+}
 export default {
   install(app: any, options: UiSetupOptions = {}) {
     // @ts-ignore
-    const naiveUi = new Naive();
-    uiContext.set(naiveUi);
+    const naiveUi = set();
     app.component("FsUiContext", FsUiContext);
     if (options.setupIcons !== false) {
       setupIcons(app);
@@ -25,5 +30,6 @@ export default {
   },
   init() {
     uiUtil.init();
-  }
+  },
+  set
 };
