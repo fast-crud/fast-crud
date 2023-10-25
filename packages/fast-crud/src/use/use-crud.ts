@@ -8,6 +8,7 @@ import {
   ColumnCompositionProps,
   ColumnProps,
   ComputeContext,
+  CreateCrudOptionsRet,
   CrudBinding,
   CrudExpose,
   CrudOptionsPluginHandle,
@@ -16,7 +17,8 @@ import {
   TableColumnsProps,
   UseCrudProps,
   UseCrudRet,
-  UseFsProps
+  UseFsProps,
+  UseFsRet
 } from "../d";
 import { useCompute } from "./use-compute";
 import { buildTableColumnsFlatMap, forEachTableColumns, useColumns } from "./use-columns";

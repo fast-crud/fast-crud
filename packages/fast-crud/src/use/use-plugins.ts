@@ -1,6 +1,5 @@
-import { CrudOptions, CrudOptionsPluginHandle, RowSelectionProps } from "/src/d";
+import { CrudOptions, CrudOptionsPluginHandle, RowSelectionProps, UseCrudProps } from "../d";
 import { nextTick } from "vue";
-import { UseCrudProps } from "/src/use/use-crud";
 import { useUi } from "@fast-crud/ui-interface";
 import logger from "../utils/util.log";
 

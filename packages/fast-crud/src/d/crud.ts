@@ -1406,7 +1406,7 @@ export type CompositionColumns = {
   [prop: string]: ColumnCompositionProps;
 };
 
-export type CrudOptionsPluginHandle<T> = (props: T, ctx: UseCrudProps) => CrudOptions;
+export type CrudOptionsPluginHandle<T = any> = (props: T, ctx: UseCrudProps) => CrudOptions;
 export type CrudOptionsPlugin<T> = {
   /**
    * 是否启用,默认启用
