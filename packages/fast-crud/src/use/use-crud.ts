@@ -11,7 +11,9 @@ import {
   CreateCrudOptionsRet,
   CrudBinding,
   CrudExpose,
+  CrudOptionsPlugin,
   CrudOptionsPluginHandle,
+  CrudOptionsPlugins,
   CrudSettings,
   DynamicallyCrudOptions,
   ScopeContext,
@@ -392,30 +394,28 @@ export function useCrud(ctx: UseCrudProps): UseCrudRet {
 
   function rebuildCrudBindings(options: DynamicallyCrudOptions) {
     options = merge(defaultCrudOptions.commonOptions(ctx), options);
-    if (options.settings) {
-      const settings: CrudSettings = unref(options.settings);
-      if (settings) {
-        const plugins = unref(settings.plugins);
-        _.forEach(plugins, (plugin, key) => {
-          if (plugin.enabled === false) {
-            return;
-          }
-          let handle: CrudOptionsPluginHandle = plugin.handle;
-          if (handle == null) {
-            handle = getCrudOptionsPlugin(key);
-          }
-          if (handle == null) {
-            return;
-          }
-          const before = plugin.before;
-          const pluginOptions = handle(plugin.props, ctx);
-          if (before !== false) {
-            options = merge(pluginOptions, options);
-          } else {
-            merge(options, pluginOptions);
-          }
-        });
-      }
+    const settings: CrudSettings = unref(options.settings) as CrudSettings;
+    if (settings) {
+      const plugins = unref(settings.plugins) as CrudOptionsPlugins;
+      _.forEach(plugins, (plugin, key) => {
+        if (plugin.enabled === false) {
+          return;
+        }
+        let handle: CrudOptionsPluginHandle = plugin.handle;
+        if (handle == null) {
+          handle = getCrudOptionsPlugin(key);
+        }
+        if (handle == null) {
+          return;
+        }
+        const before = plugin.before;
+        const pluginOptions = handle(plugin.props, ctx);
+        if (before !== false) {
+          options = merge(pluginOptions, options);
+        } else {
+          merge(options, pluginOptions);
+        }
+      });
     }
 
     const userOptions = merge(

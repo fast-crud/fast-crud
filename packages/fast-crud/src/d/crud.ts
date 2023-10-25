@@ -1430,6 +1430,14 @@ export type CrudOptionsPlugin<T> = {
   handle?: CrudOptionsPluginHandle<T>;
 };
 
+export type CrudOptionsPlugins = {
+  /**
+   * 行选择插件
+   */
+  rowSelection?: CrudOptionsPlugin<RowSelectionProps>;
+  [key: string]: CrudOptionsPlugin<any>;
+};
+
 /**
  * crud配置
  */
@@ -1447,13 +1455,7 @@ export type CrudSettings = {
   /**
    * crudOptions插件，插件能够生成一些crudOptions配置，并与用户的crudOptions进行合并
    */
-  plugins?: {
-    /**
-     * 行选择插件
-     */
-    rowSelection?: CrudOptionsPlugin<RowSelectionProps>;
-    [key: string]: CrudOptionsPlugin<any>;
-  };
+  plugins?: CrudOptionsPlugins;
 };
 export type CrudMode = {
   /**
