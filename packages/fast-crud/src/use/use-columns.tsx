@@ -263,16 +263,31 @@ function buildForm(
 function buildSearchForm(baseOptions: CrudOptions, formType = "search", columnsMap: CompositionColumns) {
   const searchColumns = buildFormColumns(columnsMap, formType);
   const formColumnsForSearch: any = {};
+  const copyProps = baseOptions.setting?.searchCopyFormProps ?? [
+    "component",
+    "valueChange",
+    "title",
+    "key",
+    "label",
+    "render",
+    "valueResolve"
+  ];
+
+  function copyFromCompositionColumn(target, key, field) {
+    const needCopy = _.includes(copyProps, field);
+    if (needCopy && baseOptions.columns[key]) {
+      const common = baseOptions.columns[key][field];
+      if (common) {
+        target[field] = common;
+      }
+    }
+  }
+
   _.forEach(cloneDeep(baseOptions.form.columns), (item, key) => {
-    const copyProps = baseOptions.setting?.searchCopyFormProps ?? [
-      "component",
-      "valueChange",
-      "title",
-      "key",
-      "label",
-      "render"
-    ];
-    formColumnsForSearch[key] = _.pick(item, copyProps);
+    const def = {};
+    copyFromCompositionColumn(def, key, "valueResolve");
+    copyFromCompositionColumn(def, key, "valueBuilder");
+    formColumnsForSearch[key] = _.merge(def, _.pick(item, copyProps));
   });
   return merge({ columns: formColumnsForSearch }, { columns: searchColumns }, baseOptions.search);
 }
