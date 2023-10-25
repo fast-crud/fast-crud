@@ -36,9 +36,9 @@
   </div>
 </template>
 <script lang="tsx" setup>
-import { CreateCrudOptions, Dict, useFs, useMerge, useUi } from "../../use";
+import { Dict, useFs, useMerge, useUi } from "../../use";
 import { computed, nextTick, ref, Ref, watch } from "vue";
-import { DynamicallyCrudOptions } from "../../d";
+import { CreateCrudOptions, DynamicallyCrudOptions } from "../../d";
 import _ from "lodash-es";
 // defineOptions({
 //   name: "FsTableSelect"

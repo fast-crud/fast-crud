@@ -1,6 +1,6 @@
 import { UiInterface } from "@fast-crud/ui-interface";
-import { CrudOptions } from "../d/crud";
-import { DictRequest, LoggerConfig, UseCrudProps } from "../use";
+import { CrudOptions, UseCrudProps } from "../d/crud";
+import { DictRequest, LoggerConfig } from "../use";
 
 export type FsSetupOptions = {
   ui?: UiInterface;

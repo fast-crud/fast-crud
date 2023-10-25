@@ -188,7 +188,7 @@ export default defineComponent({
   setup(props: any, ctx: any) {
     const { ui } = useUi();
 
-    const { doComputed, AsyncComputeValue } = useCompute();
+    const { doComputed, AsyncComputeValue, ComputeValue } = useCompute();
     // eslint-disable-next-line vue/no-setup-props-destructure
     _.each(props.columns, (item) => {
       if (item.value != null && (item.value instanceof AsyncComputeValue || item.value instanceof ComputeValue)) {
