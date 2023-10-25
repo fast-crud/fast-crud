@@ -109,7 +109,7 @@ const { ui } = useUi();
   }
 
   .n-tab-pane {
-    padding: 0;
+    padding: 0 !important;
   }
 }
 </style>
