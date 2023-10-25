@@ -5,7 +5,7 @@ import { CrudExpose, DoRemoveContext } from "../d/expose";
 import { RuleItem } from "async-validator";
 import { UiSlot, UiSlotRet } from "@fast-crud/ui-interface";
 import { ExportProps } from "../lib/fs-export";
-import { Dict, GetContextFn } from "/src/use";
+import { Dict, GetContextFn } from "../use";
 
 // export type FsRefValue<T> = T | Ref<T> | ComputedRef<T>;
 // export type FsComputeValue<T> = FsRefValue<T> | ComputeValue<T> | AsyncComputeValue<T>;
