@@ -196,7 +196,7 @@ export default defineComponent({
       }
     });
 
-    function createInitialForm() {
+    function createInitialForm(): any {
       //默认值
       const form = {};
 

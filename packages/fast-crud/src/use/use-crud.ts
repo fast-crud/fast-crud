@@ -392,8 +392,8 @@ export function useCrud(ctx: UseCrudProps): UseCrudRet {
   function rebuildCrudBindings(options: DynamicallyCrudOptions) {
     options = merge(defaultCrudOptions.commonOptions(ctx), options);
 
-    const plugins = options?.settings?.plugins;
-    if (plugins) {
+    if (options.settings && options.settings.plugins) {
+      const plugins = options.settings.plugins;
       _.forEach(plugins, (plugin, key) => {
         if (plugin.enabled === false) {
           return;
