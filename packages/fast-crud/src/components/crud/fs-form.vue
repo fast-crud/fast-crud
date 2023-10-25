@@ -100,7 +100,7 @@ import {
   UnwrapNestedRefs
 } from "vue";
 import _ from "lodash-es";
-import { useCompute } from "../../use/use-compute";
+import { ComputeValue, useCompute } from "../../use/use-compute";
 import logger from "../../utils/util.log";
 import { useMerge } from "../../use/use-merge";
 import { Constants } from "../../utils/util.constants";
@@ -246,34 +246,37 @@ export default defineComponent({
     const formRef = ref();
     const form: UnwrapNestedRefs<any> = reactive({});
     const { proxy } = getCurrentInstance();
-    // eslint-disable-next-line vue/no-setup-props-destructure
-    const initialForm = _.cloneDeep(props.initialForm);
 
     // eslint-disable-next-line vue/no-setup-props-destructure
     _.each(props.columns, (item) => {
-      if (item.value != null && item.value instanceof AsyncComputeValue) {
-        logger.warn("form.value配置不支持AsyncCompute类型的动态计算");
+      if (item.value != null && (item.value instanceof AsyncComputeValue || item.value instanceof ComputeValue)) {
+        logger.warn("form.value配置不支持Compute/AsyncCompute类型的动态计算");
       }
     });
 
-    const computedColumns = doComputed(() => {
-      return props.columns;
-    }, getContextFn);
+    function createInitialForm() {
+      // eslint-disable-next-line vue/no-setup-props-destructure
+      const initialForm = _.cloneDeep(props.initialForm);
 
-    // 初始数据赋值
-    _.each(computedColumns.value, (item, key) => {
-      _.set(form, key, undefined);
-      const defValue = unref(item.value);
-      if (defValue !== undefined) {
-        _.set(form, key, defValue);
-      }
-      if (initialForm) {
-        const value = _.get(initialForm, key);
-        if (value != null) {
-          _.set(form, key, value);
+      // 初始数据赋值
+      // eslint-disable-next-line vue/no-setup-props-destructure
+      _.each(props.columns, (item, key) => {
+        _.set(form, key, undefined);
+        const defValue = unref(item.value);
+        if (defValue !== undefined) {
+          _.set(form, key, defValue);
         }
-      }
-    });
+        if (initialForm) {
+          const value = _.get(initialForm, key);
+          if (value != null) {
+            _.set(form, key, value);
+          }
+        }
+      });
+      return initialForm;
+    }
+
+    const initialForm = createInitialForm();
 
     const scope: Ref<FormScopeContext> = computed(() => {
       return {
@@ -291,6 +294,9 @@ export default defineComponent({
       return scope.value;
     }
 
+    const computedColumns = doComputed(() => {
+      return props.columns;
+    }, getContextFn);
     //form.valueBuilder
     function doValueBuilder(form: any) {
       if (form == null) {
@@ -302,7 +308,8 @@ export default defineComponent({
           item.valueBuilder({
             value,
             key,
-            row: props.initialForm,
+            initialForm,
+            row: form,
             form,
             index: props.index,
             mode: props.mode
@@ -414,9 +421,6 @@ export default defineComponent({
 
     function getFormRef() {
       return formRef.value;
-    }
-    function createInitialForm() {
-      return _.cloneDeep(initialForm || {});
     }
     async function reset() {
       // ui.form.resetWrap(formRef.value, { form, initialForm: createInitialForm() });

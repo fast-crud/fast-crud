@@ -188,15 +188,35 @@ export default defineComponent({
   setup(props: any, ctx: any) {
     const { ui } = useUi();
 
-    let autoSearch: any = null;
-
     const { doComputed, AsyncComputeValue } = useCompute();
     // eslint-disable-next-line vue/no-setup-props-destructure
     _.each(props.columns, (item) => {
-      if (item.value != null && item.value instanceof AsyncComputeValue) {
-        logger.warn("search.value配置不支持AsyncCompute类型的动态计算");
+      if (item.value != null && (item.value instanceof AsyncComputeValue || item.value instanceof ComputeValue)) {
+        logger.warn("search.value配置不支持ComputeValue/AsyncCompute类型的动态计算");
       }
     });
+
+    function createInitialForm() {
+      //默认值
+      const form = {};
+
+      _.forEach(props.columns, (column, key) => {
+        if (column.value === undefined) {
+          return;
+        }
+        const defValue = unref(column.value);
+        if (defValue !== undefined && column.show !== false && column.component?.show !== false) {
+          //默认值
+          form[key] = defValue;
+        }
+      });
+
+      return _.cloneDeep(_.merge({}, props.initialForm, form));
+    }
+
+    const formData = reactive(createInitialForm());
+
+    let autoSearch: any = null;
 
     const computedColumns: Ref<TypeMap<SearchItemProps>> = doComputed(
       () => {
@@ -251,25 +271,6 @@ export default defineComponent({
       }
     );
 
-    function createInitialForm() {
-      //默认值
-      const form = {};
-
-      _.forEach(computedColumns.value, (column, key) => {
-        if (column.value === undefined) {
-          return;
-        }
-        const defValue = unref(column.value);
-        if (defValue !== undefined && column.show !== false && column.component?.show !== false) {
-          //默认值
-          form[key] = defValue;
-        }
-      });
-
-      return _.cloneDeep(_.merge(props.initialForm, form));
-    }
-
-    const formData = reactive(createInitialForm());
     function onFormValidated() {
       const validateForm = _.cloneDeep(formData);
       ctx.emit("update:validatedForm", validateForm);
