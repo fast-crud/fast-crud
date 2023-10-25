@@ -95,7 +95,7 @@ export type RadioButtonBuilderOption = {
   value?: string;
 } & BindBuilderOptions;
 export interface RadioButtonCI extends CI<RadioButtonBuilderOption> {
-  modelValue: string;
+  value: string;
 }
 
 export type InputBuilderOptions = {
