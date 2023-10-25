@@ -60,6 +60,9 @@ export type UseCrudRet = {
 
 // 导出useCrud
 export function useCrud(ctx: UseCrudProps): UseCrudRet {
+  if (ctx.context == null) {
+    ctx.context = {};
+  }
   const ui = uiContext.get();
   const { t } = useI18n();
   let options: CrudOptions = ctx.crudOptions as CrudOptions;

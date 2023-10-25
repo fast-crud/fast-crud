@@ -101,7 +101,7 @@ export class Antdv implements UiInterface {
         return { afterClose: onClosed };
       } else if (is === "a-drawer") {
         return {
-          onAfterVisibleChange: (visible: boolean) => {
+          onAfterOpenChange: (visible: boolean) => {
             if (visible === false) {
               onClosed(visible);
             }
