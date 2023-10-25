@@ -245,7 +245,7 @@ export interface TableCI extends CI<TableBuilderOption> {
 
   scrollTo(req: TableScrollReq): void;
 
-  buildSelectionBinding(req: TableSelectionReq): ComponentBinding;
+  buildSelectionCrudOptions(req: TableSelectionReq): ComponentBinding;
   setSelectedRows?: (req: TableSetSelectedRows) => void;
 }
 

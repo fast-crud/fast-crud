@@ -17,6 +17,7 @@
   //crudOptions
   "pagination": {
     "pageSize": 10 //默认pageSize
+    //.... 更多配置，请阅读对应组件的文档
   }
 }
 ```

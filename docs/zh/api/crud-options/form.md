@@ -42,7 +42,7 @@ const crudOptions = {
         // 以下仅element，其他ui的相关配置请看对应ui的form组件文档
         labelPosition: "right", // 标签位置
         labelWidth: "100px", //标签宽度
-        //更多配置请查看对应ui库文档，form表单章节
+        //... 更多配置请查看对应ui库文档，form表单章节
     }
     
 }
@@ -219,6 +219,7 @@ const crudOptions = {
   form: {
     wrapper: {
       width: '800px' //antdv对话框的宽度
+      //....更多 fs-form-wrapper，el-dialog，el-drawer，a-modal，a-drawer的配置
     }
   }
 }

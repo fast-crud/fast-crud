@@ -263,7 +263,7 @@ function buildForm(
 function buildSearchForm(baseOptions: CrudOptions, formType = "search", columnsMap: CompositionColumns) {
   const searchColumns = buildFormColumns(columnsMap, formType);
   const formColumnsForSearch: any = {};
-  const copyProps = baseOptions.setting?.searchCopyFormProps ?? [
+  const copyProps = baseOptions.settings?.searchCopyFormProps ?? [
     "component",
     "valueChange",
     "title",

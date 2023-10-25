@@ -506,6 +506,7 @@ const crudOptions = {
         key:{
             search:{
                 labelWidth:200 //配置查询框的label宽度(此字段仅限element-plus,其他ui请查阅对应ui的文档)
+                //... 更多配置，请阅读对应组件的文档
             }
         }
     }

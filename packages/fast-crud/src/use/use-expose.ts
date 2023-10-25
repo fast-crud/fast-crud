@@ -294,7 +294,8 @@ export function useExpose(props: UseExposeProps): UseExposeRet {
           delete crudBinding.value.search.validatedForm[key];
         }
       }
-      _.merge(crudBinding.value.search.validatedForm, context.form);
+      const { merge } = useMerge();
+      merge(crudBinding.value.search.validatedForm, context.form);
       if (context.triggerSearch) {
         crudExpose.doRefresh();
       }

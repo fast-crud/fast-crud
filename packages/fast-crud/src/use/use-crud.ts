@@ -10,53 +10,23 @@ import {
   ComputeContext,
   CrudBinding,
   CrudExpose,
+  CrudOptionsPluginHandle,
   DynamicallyCrudOptions,
-  DynamicType,
   ScopeContext,
-  TableColumnsProps
+  TableColumnsProps,
+  UseCrudProps,
+  UseCrudRet,
+  UseFsProps
 } from "../d";
 import { useCompute } from "./use-compute";
 import { buildTableColumnsFlatMap, forEachTableColumns, useColumns } from "./use-columns";
 import { CrudOptions } from "../d/crud";
-import { computed, nextTick, Ref, ref } from "vue";
+import { computed, Ref, ref } from "vue";
 import { useExpose } from "./use-expose";
 import { exportTable } from "../lib/fs-export";
+import { getCrudOptionsPlugin } from "../use/use-plugins";
 
 const { merge } = useMerge();
-
-export type UseCrudProps<T = UseFsContext> = {
-  crudOptions: DynamicallyCrudOptions;
-  /**
-   * 即将废弃，请使用crudExpose
-   */
-  expose?: CrudExpose;
-  crudExpose: CrudExpose;
-
-  context: T;
-  /**
-   * 自定义参数
-   * common里面可以使用
-   */
-  [key: string]: any;
-};
-
-export type UseCrudRet = {
-  /**
-   * 重新设置crudOptions
-   * @param overOptions
-   */
-  resetCrudOptions: (options: DynamicType<CrudOptions>) => void;
-  /**
-   * 覆盖crudOptions配置
-   * @param overOptions
-   */
-  appendCrudOptions: (options: DynamicType<CrudOptions>) => DynamicType<CrudOptions>;
-  /**
-   * 追加配置,注意是覆盖crudBinding的结构，而不是crudOptions的结构
-   * @param overBinding
-   */
-  appendCrudBinding: (overBinding: CrudBinding) => void;
-};
 
 // 导出useCrud
 export function useCrud(ctx: UseCrudProps): UseCrudRet {
@@ -74,7 +44,7 @@ export function useCrud(ctx: UseCrudProps): UseCrudRet {
 
   const { crudBinding } = expose;
 
-  const { doRefresh, doValueResolve, doSearch } = expose;
+  const { doRefresh, doValueResolve } = expose;
 
   function usePagination() {
     const events = ui.pagination.onChange({
@@ -418,6 +388,31 @@ export function useCrud(ctx: UseCrudProps): UseCrudRet {
   }
 
   function rebuildCrudBindings(options: DynamicallyCrudOptions) {
+    options = merge(defaultCrudOptions.commonOptions(ctx), options);
+
+    const plugins = options?.settings?.plugins;
+    if (plugins) {
+      _.forEach(plugins, (plugin, key) => {
+        if (plugin.enabled === false) {
+          return;
+        }
+        let handle: CrudOptionsPluginHandle = plugin.handle;
+        if (handle == null) {
+          handle = getCrudOptionsPlugin(key);
+        }
+        if (handle == null) {
+          return;
+        }
+        const before = plugin.before;
+        const pluginOptions = handle(plugin.props, ctx);
+        if (before !== false) {
+          options = merge(pluginOptions, options);
+        } else {
+          merge(options, pluginOptions);
+        }
+      });
+    }
+
     const userOptions = merge(
       defaultCrudOptions.defaultOptions({ t }),
       usePagination(),
@@ -429,7 +424,6 @@ export function useCrud(ctx: UseCrudProps): UseCrudRet {
       useTable(),
       useActionbar(),
       useEditable(),
-      defaultCrudOptions.commonOptions(ctx),
       options
     );
 
@@ -470,58 +464,6 @@ export function useCrud(ctx: UseCrudProps): UseCrudRet {
   };
 }
 
-export type UseFsRet = {
-  crudRef: Ref;
-  crudBinding: Ref<CrudBinding>;
-  crudExpose: CrudExpose;
-  context: UseFsContext;
-} & UseCrudRet &
-  CreateCrudOptionsRet;
-
-export type UseFsContext = {
-  [key: string]: any;
-};
-
-export type CreateCrudOptionsProps<T = UseFsContext> = {
-  crudExpose: CrudExpose;
-
-  expose?: CrudExpose;
-
-  context: T;
-};
-
-export type CreateCrudOptionsRet = {
-  /**
-   * crudOptions
-   */
-  crudOptions: DynamicallyCrudOptions;
-
-  /**
-   * 自定义返回变量
-   */
-  [key: string]: any;
-};
-export type UseFsProps<T = UseFsContext> = {
-  crudRef?: Ref;
-  crudBinding?: Ref<CrudBinding>;
-
-  crudExposeRef?: Ref<CrudExpose>;
-  createCrudOptions: CreateCrudOptions | CreateCrudOptionsAsync;
-  crudOptionsOverride?: DynamicallyCrudOptions;
-  onExpose?: (context: OnExposeContext<T>) => any;
-
-  context?: T;
-};
-export type CreateCrudOptions = (props: CreateCrudOptionsProps) => CreateCrudOptionsRet;
-export type OnExposeContext<T = UseFsContext> = {
-  crudRef: Ref;
-  crudBinding: Ref<CrudBinding>;
-  crudExpose: CrudExpose;
-  context: T;
-};
-
-export type CreateCrudOptionsAsync = (props: CreateCrudOptionsProps) => Promise<CreateCrudOptionsRet>;
-
 function useFsImpl(props: UseFsProps): UseFsRet | Promise<UseCrudRet> {
   const { createCrudOptions, crudExposeRef } = props;
   const crudRef = props.crudRef || ref();
@@ -550,8 +492,11 @@ function useFsImpl(props: UseFsProps): UseFsRet | Promise<UseCrudRet> {
   });
 
   function initCrud(createCrudOptionsRet: CreateCrudOptionsRet) {
+    const useCrudProps: UseCrudProps = { crudExpose, ...createCrudOptionsRet, context };
+
     merge(createCrudOptionsRet.crudOptions, props.crudOptionsOverride);
-    const useCrudRet = useCrud({ crudExpose, ...createCrudOptionsRet, context });
+
+    const useCrudRet = useCrud(useCrudProps);
     return {
       ...createCrudOptionsRet,
       ...useCrudRet,

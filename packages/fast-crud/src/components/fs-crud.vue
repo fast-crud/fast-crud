@@ -91,12 +91,12 @@
   </component>
 </template>
 <script lang="ts">
-import { computed, defineComponent, nextTick, onMounted, provide, ref, SetupContext, toRef } from "vue";
+import { computed, defineComponent, nextTick, onMounted, PropType, provide, ref, SetupContext, toRef } from "vue";
 import _ from "lodash-es";
 import { uiContext } from "../ui";
 import { useMerge } from "../use/use-merge";
 import utilLog from "../utils/util.log";
-import { SetSearchFormDataProps } from "../d";
+import { RowSelectionProps, SetSearchFormDataProps } from "../d";
 import { useUi } from "../use";
 import { utils } from "../utils";
 import logger from "../utils/util.log";
@@ -453,6 +453,16 @@ export default defineComponent({
       type: Object,
       default() {
         return {};
+      }
+    },
+
+    /**
+     * 可选择
+     */
+    selection: {
+      type: Object as PropType<RowSelectionProps>,
+      default() {
+        return { show: false };
       }
     }
   },

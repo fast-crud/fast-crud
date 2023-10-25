@@ -89,7 +89,7 @@ type FsTableSelectProps = {
   crossPage?: boolean; //跨页选中
 
   /**
-   * 可选
+   * 可选,element-plus必传
    */
   rowKey?: string;
 
@@ -204,7 +204,7 @@ function getRowKey() {
 const refreshing = ref(false);
 
 const override: DynamicallyCrudOptions = computed(() => {
-  let selectionOptions = ui.table.buildSelectionBinding({
+  let selectionOptions = ui.table.buildSelectionCrudOptions({
     crossPage: props.crossPage,
     getRowKey,
     getPageData() {

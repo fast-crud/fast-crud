@@ -14,6 +14,7 @@
 { //crudOptions
   rowHandle: {
       align: 'center' //文本居中
+      //...更多配置请阅读对应组件的文档
   }
 }
 ```

@@ -457,7 +457,7 @@ export class Element implements UiInterface {
         }
       }
     },
-    buildSelectionBinding(req) {
+    buildSelectionCrudOptions(req) {
       function getCrossPageSelected(curSelectedIds: any[]) {
         const rowKey: any = req.getRowKey();
         const data = req.getPageData();

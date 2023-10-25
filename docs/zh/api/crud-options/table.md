@@ -19,7 +19,8 @@
           height: "100%",
           rowKey: "id",
           size: "small",
-          stripe: true
+          stripe: true,
+          //...更多配置，请阅读对应组件的文档
     }
 }
 ```

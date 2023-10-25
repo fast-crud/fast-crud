@@ -116,6 +116,7 @@ export default {
 ```
 
 
+
 ## form对话框
 
 ### useFormWrapper
@@ -145,3 +146,7 @@ async function openCustomDialog(){
 :::
 
 
+
+## 插件
+
+### registerCrudOptionsPlugin

@@ -519,7 +519,7 @@ export class Antdv implements UiInterface {
     fixedHeaderNeedComputeBodyHeight: true,
     headerDomSelector: ".ant-table-thead",
     vLoading: false,
-    buildSelectionBinding(req) {
+    buildSelectionCrudOptions(req) {
       const selectedRowKeys = req.selectedRowKeys;
       const onChange = (changed: any[]) => {
         req.onSelectedKeysChanged(changed);
@@ -529,11 +529,13 @@ export class Antdv implements UiInterface {
         type = "checkbox";
       }
       return {
-        rowSelection: {
-          type,
-          selectedRowKeys,
-          onChange,
-          preserveSelectedRowKeys: req.crossPage
+        table: {
+          rowSelection: {
+            type,
+            selectedRowKeys,
+            onChange,
+            preserveSelectedRowKeys: req.crossPage
+          }
         }
       };
     },
