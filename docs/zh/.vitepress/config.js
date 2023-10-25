@@ -155,6 +155,7 @@ module.exports = {
                                 {text: 'fs-iconify', link: "/api/components/crud/basic/fs-iconify"},
                                 {text: 'fs-icon-svg', link: "/api/components/crud/basic/fs-icon-svg"},
                                 {text: 'fs-loading', link: "/api/components/crud/basic/fs-loading"},
+                                {text: 'fs-label', link: "/api/components/crud/basic/fs-label"},
                                 {text: 'fs-render', link: "/api/components/crud/render/fs-render"},
                                 {text: 'fs-slot-render', link: "/api/components/crud/render/fs-slot-render"},
                                 {text: 'fs-component-render', link: "/api/components/crud/render/fs-component-render"},
