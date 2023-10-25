@@ -3,6 +3,32 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [1.18.0](https://github.com/fast-crud/fast-crud/compare/v1.17.5...v1.18.0) (2023-10-25)
+
+### Bug Fixes
+
+* 修复antdv4，drawer弹窗过时的api ([9514db6](https://github.com/fast-crud/fast-crud/commit/9514db6768b5a5e1bef283b961438a6671f7df79))
+* 修复element表单分组title校验错误是不变红的bug ([3297984](https://github.com/fast-crud/fast-crud/commit/32979846d432e47f7ba76037f465db62bbebca5a))
+* 修复element下按钮图标异常问题 ([4959c2e](https://github.com/fast-crud/fast-crud/commit/4959c2e15b89f6d2fec50864f1453f2965a85159))
+* 修复setSearchFormData 参数 mergeForm无效的bug ([5ada5c1](https://github.com/fast-crud/fast-crud/commit/5ada5c16f88f4f1c115b4a74339b94fbfe8674b4))
+* 增加文档链接 ([2b9f525](https://github.com/fast-crud/fast-crud/commit/2b9f525988c34ea322695b1a40de0628a627e50a))
+* afterSubmit 返回false 阻止管理窗口 ([c26a9e4](https://github.com/fast-crud/fast-crud/commit/c26a9e4ae9180f4db003793aa6129e89b6a4d575))
+* **table-select:** 修复element版本中选中记录上点击删除按钮，清空所有value后，报异常的bug ([5d95b40](https://github.com/fast-crud/fast-crud/commit/5d95b4093b80852050e000d51e60f3c566d53d47))
+* valueResolve默认复制到search里面 ([d32dc9d](https://github.com/fast-crud/fast-crud/commit/d32dc9d09daaf635ee730c0465b89f25826ec3c7))
+
+### Features
+
+* 新特性，CrudOptionsPlugin ([9e1ac6d](https://github.com/fast-crud/fast-crud/commit/9e1ac6df56622b3b75cd5a23ea565f5c722085de))
+* ui-demo，ui-interface独立 ([d78f040](https://github.com/fast-crud/fast-crud/commit/d78f040cd666d072937b0350edb2da11871206e6))
+
+### Performance Improvements
+
+* 表单重置按钮 ([19c74e9](https://github.com/fast-crud/fast-crud/commit/19c74e92e85539f39083000b92a89d34a1321706))
+* 导出增加loading ([6530c29](https://github.com/fast-crud/fast-crud/commit/6530c29615be9e1ff04029a962d521bed2df30a6))
+* 服务端导出方法支持pageQuery参数 ([f9fbf4c](https://github.com/fast-crud/fast-crud/commit/f9fbf4c412a7b737086869362f9f3cecb2a357e6))
+* 优化文档搜索 ([19fff41](https://github.com/fast-crud/fast-crud/commit/19fff41b3f431e2bd1c84274a7d17ad96a547b03))
+* 优化values-format组件的dict性能 ([c67c18f](https://github.com/fast-crud/fast-crud/commit/c67c18fc0b48983bc675e1749ccf2833f307246e))
+
 ## [1.17.5](https://github.com/fast-crud/fast-crud/compare/v1.17.4...v1.17.5) (2023-09-26)
 
 **Note:** Version bump only for package fast-crud-root
