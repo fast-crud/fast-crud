@@ -10,12 +10,13 @@
 ## 基本组件
 
 ### 选择框
-* 字段类型 dict-select | dict-radio | dict-checkbox | dict-switch  
+* 字段类型 dict-select| table-select | dict-radio | dict-checkbox | dict-switch  
   
 <<<@/../../packages/fast-crud/src/types/list/select.ts
 
 * 相关组件参数：
-    * [fs-dict-select](/api/components/crud/extends/fs-dict-select.md)  
+    * [fs-dict-select](/api/components/crud/extends/fs-dict-select.md) 
+    * [fs-table-select](/api/components/crud/extends/fs-table-select.md)
     * [fs-dict-radio](/api/components/crud/extends/fs-dict-radio.md)  
     * [fs-dict-checkbox](/api/components/crud/extends/fs-dict-checkbox)  
     * [fs-values-format](/api/components/crud/extends/fs-values-format)
@@ -110,6 +111,40 @@ type = dict-cascader
 
 * 相关组件文档：
   * [fs-editor-wang](/api/components/extends/editor/components/fs-editor-wang/index.md)
+
+
+### json
+* 类型
+  *  json
+  * 
+<<< @/../../packages/fast-extends/src/json/type/types.ts
+* 示例：[antdv](http://fast-crud.docmirror.cn/antdv/#/crud/component/json) | [element](http://fast-crud.docmirror.cn/element/#/component/json)
+
+* 相关组件文档：
+  * [fs-json-editor](/api/components/json/editor/components/fs-json-editor/index.md)
+
+
+### copyable
+* 类型
+  *  copyable
+  * 
+<<< @/../../packages/fast-extends/src/copyable/type/types.ts
+* 示例：[antdv](http://fast-crud.docmirror.cn/antdv/#/crud/component/text) | [element](http://fast-crud.docmirror.cn/element/#/component/text)
+
+* 相关组件文档：
+  * [fs-copyable](/api/components/extends/copyable/components/fs-copyable/index.md)
+
+
+### time
+* 类型
+  *  time-humanize(人性化时间格式)
+<<< @/../../packages/fast-extends/src/time/type/types.ts
+* 示例：[antdv](http://fast-crud.docmirror.cn/antdv/#/crud/component/date) | [element](http://fast-crud.docmirror.cn/element/#/component/date)
+
+* 相关组件文档：
+  * [fs-time-humanize](/api/components/extends/time/components/fs-time-humanize/index.md)
+
+
 
 ## 辅助类型
 
