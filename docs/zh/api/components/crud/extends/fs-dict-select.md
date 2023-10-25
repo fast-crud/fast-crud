@@ -11,7 +11,7 @@
 | options     | 可选项，比 dict.data 优先级高 | array  | -      |         |
 | placeholder | placeholder                   | string | -      |         |
 | slots       | select 组件的插槽             | -      | -      |         |
-| renderLabel |                               | func   | -      |         |
+| renderLabel | 自定义 label 的 render 方法   | func   | -      |         |
 
 ## Events
 

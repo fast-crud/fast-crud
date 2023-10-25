@@ -18,16 +18,18 @@
 | slots            | 插槽                                                                          | object          | -      | {}        |
 | show             | 是否显示查询框                                                                | boolean         | -      | true      |
 | validate         | 是否启用校验                                                                  | boolean         | -      | false     |
+| validateOnChange | 是否任意值变化就触发校验                                                      | boolean         | -      | true      |
 | col              | 列的宽度设置，span=xx                                                         | -               | -      |           |
 | formItem         | 统一字段的 formItem 属性                                                      | object          | -      | undefined |
 
 ## Events
 
-| Event name           | Properties | Description          |
-| -------------------- | ---------- | -------------------- |
-| search               |            | 查询事件             |
-| reset                |            | 重置事件             |
-| validate-error       |            | 校验失败事件         |
-| update:validatedForm |            | 校验后的表单数据变化 |
+| Event name           | Properties | Description                |
+| -------------------- | ---------- | -------------------------- |
+| search               |            | 查询事件                   |
+| reset                |            | 重置事件，供用户使用       |
+| \_reset              |            | 重置事件，此事件供系统调用 |
+| validate-error       |            | 校验失败事件               |
+| update:validatedForm |            | 校验后的表单数据变化       |
 
 ---

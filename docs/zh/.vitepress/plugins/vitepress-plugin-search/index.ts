@@ -36,7 +36,7 @@ export function SearchPlugin(searchOptions?: Partial<Options>): Plugin {
 
     config: () => ({
       resolve: {
-        alias: { "./VPNavBarSearch.vue": "./.vitepress/plugins/vitepress-plugin-search/Search.vue" },
+        alias: { "./VPNavBarSearch.vue": "./docs/zh/.vitepress/plugins/vitepress-plugin-search/Search.vue" },
       },
     }),
 

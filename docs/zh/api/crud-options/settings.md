@@ -9,19 +9,20 @@
 
 ## searchCopyFormProps
 * 说明：search字段从form配置中继承哪些属性
-* 类型：string[]
+* 类型：`string[]`
 * 默认：`["component", "valueChange","title", "key","label", "render","valueResolve"]`
 
 ## onUseCrud
 * 说明：useCrud结束后触发，最后可以修改一下crudBinding
-* 类型：(bindings: CrudBinding) => void;
+* 类型：`(bindings: CrudBinding) => void;`
 * 默认： null
 
 ## plugins
 * 说明：crudOptions插件，插件能够生成一些crudOptions配置，并与用户的crudOptions进行合并
-* 类型：Record<string,CrudOptionsPlugin<any>>
+* 类型：`Record<string,CrudOptionsPlugin<any>>`
 * 默认： null
 * 示例：
+
 ```js
 const crudOptions = {
     settings:{

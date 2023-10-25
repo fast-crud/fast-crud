@@ -250,6 +250,14 @@ module.exports = {
                                             link: '/api/components/extends/copyable/components/fs-copyable'
                                         }
                                     ]
+                                },
+                                {
+                                    text: 'Time', items: [
+                                        {
+                                            text: "fs-time-humanize",
+                                            link: '/api/components/extends/time/components/fs-time-humanize'
+                                        }
+                                    ]
                                 }
                             ]
                         },

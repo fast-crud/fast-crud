@@ -1,4 +1,4 @@
-import { SearchPlugin } from "./.vitepress/plugins/vitepress-plugin-search/index";
+import { SearchPlugin } from "./.vitepress/plugins/vitepress-plugin-search/index.ts";
 import { defineConfig } from "vite";
 // 载入模块
 import { Segment, useDefault } from 'segmentit';

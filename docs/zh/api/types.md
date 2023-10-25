@@ -121,7 +121,7 @@ type = dict-cascader
 * 示例：[antdv](http://fast-crud.docmirror.cn/antdv/#/crud/component/json) | [element](http://fast-crud.docmirror.cn/element/#/component/json)
 
 * 相关组件文档：
-  * [fs-json-editor](/api/components/json/editor/components/fs-json-editor/index.md)
+  * [fs-json-editor](/api/components/extends/json/components/fs-json-editor.md)
 
 
 ### copyable
@@ -132,7 +132,7 @@ type = dict-cascader
 * 示例：[antdv](http://fast-crud.docmirror.cn/antdv/#/crud/component/text) | [element](http://fast-crud.docmirror.cn/element/#/component/text)
 
 * 相关组件文档：
-  * [fs-copyable](/api/components/extends/copyable/components/fs-copyable/index.md)
+  * [fs-copyable](/api/components/extends/copyable/components/fs-copyable.md)
 
 
 ### time
@@ -142,7 +142,7 @@ type = dict-cascader
 * 示例：[antdv](http://fast-crud.docmirror.cn/antdv/#/crud/component/date) | [element](http://fast-crud.docmirror.cn/element/#/component/date)
 
 * 相关组件文档：
-  * [fs-time-humanize](/api/components/extends/time/components/fs-time-humanize/index.md)
+  * [fs-time-humanize](/api/components/extends/time/components/fs-time-humanize.md)
 
 
 
