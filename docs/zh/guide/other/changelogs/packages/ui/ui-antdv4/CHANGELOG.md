@@ -3,6 +3,18 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [1.18.0](https://github.com/fast-crud/fast-crud/compare/v1.17.5...v1.18.0) (2023-10-25)
+
+### Bug Fixes
+
+* 修复antdv4，drawer弹窗过时的api ([9514db6](https://github.com/fast-crud/fast-crud/commit/9514db6768b5a5e1bef283b961438a6671f7df79))
+* **table-select:** 修复element版本中选中记录上点击删除按钮，清空所有value后，报异常的bug ([5d95b40](https://github.com/fast-crud/fast-crud/commit/5d95b4093b80852050e000d51e60f3c566d53d47))
+
+### Features
+
+* 新特性，CrudOptionsPlugin ([9e1ac6d](https://github.com/fast-crud/fast-crud/commit/9e1ac6df56622b3b75cd5a23ea565f5c722085de))
+* ui-demo，ui-interface独立 ([d78f040](https://github.com/fast-crud/fast-crud/commit/d78f040cd666d072937b0350edb2da11871206e6))
+
 ## [1.17.5](https://github.com/fast-crud/fast-crud/compare/v1.17.4...v1.17.5) (2023-09-26)
 
 **Note:** Version bump only for package @fast-crud/ui-antdv4

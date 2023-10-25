@@ -3,6 +3,13 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [1.18.0](https://github.com/fast-crud/fast-crud/compare/v1.17.5...v1.18.0) (2023-10-25)
+
+### Bug Fixes
+
+* 修复element表单分组title校验错误是不变红的bug ([3297984](https://github.com/fast-crud/fast-crud/commit/32979846d432e47f7ba76037f465db62bbebca5a))
+* 增加文档链接 ([2b9f525](https://github.com/fast-crud/fast-crud/commit/2b9f525988c34ea322695b1a40de0628a627e50a))
+
 ## [1.17.5](https://github.com/fast-crud/fast-crud/compare/v1.17.4...v1.17.5) (2023-09-26)
 
 **Note:** Version bump only for package @fast-crud/fs-admin-element

@@ -3,6 +3,24 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [1.18.0](https://github.com/fast-crud/fast-crud/compare/v1.17.5...v1.18.0) (2023-10-25)
+
+### Bug Fixes
+
+* 修复antdv4，drawer弹窗过时的api ([9514db6](https://github.com/fast-crud/fast-crud/commit/9514db6768b5a5e1bef283b961438a6671f7df79))
+* 修复element下按钮图标异常问题 ([4959c2e](https://github.com/fast-crud/fast-crud/commit/4959c2e15b89f6d2fec50864f1453f2965a85159))
+* 增加文档链接 ([2b9f525](https://github.com/fast-crud/fast-crud/commit/2b9f525988c34ea322695b1a40de0628a627e50a))
+
+### Features
+
+* 新特性，CrudOptionsPlugin ([9e1ac6d](https://github.com/fast-crud/fast-crud/commit/9e1ac6df56622b3b75cd5a23ea565f5c722085de))
+* ui-demo，ui-interface独立 ([d78f040](https://github.com/fast-crud/fast-crud/commit/d78f040cd666d072937b0350edb2da11871206e6))
+
+### Performance Improvements
+
+* 导出增加loading ([6530c29](https://github.com/fast-crud/fast-crud/commit/6530c29615be9e1ff04029a962d521bed2df30a6))
+* 优化文档搜索 ([19fff41](https://github.com/fast-crud/fast-crud/commit/19fff41b3f431e2bd1c84274a7d17ad96a547b03))
+
 ## [1.17.5](https://github.com/fast-crud/fast-crud/compare/v1.17.4...v1.17.5) (2023-09-26)
 
 **Note:** Version bump only for package @fast-crud/fs-admin-antdv4
