@@ -198,7 +198,7 @@ export default defineComponent({
 
     function createInitialForm(): any {
       //默认值
-      const form = {};
+      const form: any = {};
 
       _.forEach(props.columns, (column, key) => {
         if (column.value === undefined) {

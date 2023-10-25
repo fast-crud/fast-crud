@@ -23,7 +23,7 @@ import {
 import { useCompute } from "./use-compute";
 import { buildTableColumnsFlatMap, forEachTableColumns, useColumns } from "./use-columns";
 import { CrudOptions } from "../d/crud";
-import { computed, Ref, ref } from "vue";
+import { computed, Ref, ref, unref } from "vue";
 import { useExpose } from "./use-expose";
 import { exportTable } from "../lib/fs-export";
 import { getCrudOptionsPlugin } from "../use/use-plugins";
@@ -391,28 +391,30 @@ export function useCrud(ctx: UseCrudProps): UseCrudRet {
 
   function rebuildCrudBindings(options: DynamicallyCrudOptions) {
     options = merge(defaultCrudOptions.commonOptions(ctx), options);
-
-    if (options.settings && options.settings.plugins) {
-      const plugins = options.settings.plugins;
-      _.forEach(plugins, (plugin, key) => {
-        if (plugin.enabled === false) {
-          return;
-        }
-        let handle: CrudOptionsPluginHandle = plugin.handle;
-        if (handle == null) {
-          handle = getCrudOptionsPlugin(key);
-        }
-        if (handle == null) {
-          return;
-        }
-        const before = plugin.before;
-        const pluginOptions = handle(plugin.props, ctx);
-        if (before !== false) {
-          options = merge(pluginOptions, options);
-        } else {
-          merge(options, pluginOptions);
-        }
-      });
+    if (options.settings) {
+      const settings = unref(options.settings);
+      if (settings) {
+        const plugins = unref(settings.plugins);
+        _.forEach(plugins, (plugin, key) => {
+          if (plugin.enabled === false) {
+            return;
+          }
+          let handle: CrudOptionsPluginHandle = plugin.handle;
+          if (handle == null) {
+            handle = getCrudOptionsPlugin(key);
+          }
+          if (handle == null) {
+            return;
+          }
+          const before = plugin.before;
+          const pluginOptions = handle(plugin.props, ctx);
+          if (before !== false) {
+            options = merge(pluginOptions, options);
+          } else {
+            merge(options, pluginOptions);
+          }
+        });
+      }
     }
 
     const userOptions = merge(
