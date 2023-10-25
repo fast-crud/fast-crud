@@ -12,6 +12,7 @@ import {
   CrudBinding,
   CrudExpose,
   CrudOptionsPluginHandle,
+  CrudSettings,
   DynamicallyCrudOptions,
   ScopeContext,
   TableColumnsProps,
@@ -392,7 +393,7 @@ export function useCrud(ctx: UseCrudProps): UseCrudRet {
   function rebuildCrudBindings(options: DynamicallyCrudOptions) {
     options = merge(defaultCrudOptions.commonOptions(ctx), options);
     if (options.settings) {
-      const settings = unref(options.settings);
+      const settings: CrudSettings = unref(options.settings);
       if (settings) {
         const plugins = unref(settings.plugins);
         _.forEach(plugins, (plugin, key) => {
