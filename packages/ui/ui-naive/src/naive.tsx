@@ -566,7 +566,7 @@ export class Naive implements UiInterface {
       req.tableRef.value.scrollTo({ top: req.top });
     },
     buildSelectionBinding(req) {
-      const onSelectionChange = (changed: any) => {
+      const onSelectionChange = (changed: any = []) => {
         req.onSelectedKeysChanged(changed);
       };
 

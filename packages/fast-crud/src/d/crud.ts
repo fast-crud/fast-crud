@@ -66,6 +66,13 @@ export type ComponentRenderContext = {
 } & ScopeContext;
 
 export type FormScopeContext = {
+  /**
+   * 初始form数据
+   */
+  initialForm: any;
+  /**
+   * 属性
+   */
   attrs: any;
   /**
    * 提交成功后的response

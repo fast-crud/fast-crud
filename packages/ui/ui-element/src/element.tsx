@@ -474,7 +474,7 @@ export class Element implements UiInterface {
       }
 
       if (req.multiple) {
-        const onSelectionChange = (changedRows: any[]) => {
+        const onSelectionChange = (changedRows: any[] = []) => {
           const rowKey = req.getRowKey();
           let selectedKeys = changedRows.map((item: any) => item[rowKey]);
           if (req.crossPage) {
@@ -503,6 +503,10 @@ export class Element implements UiInterface {
       } else {
         //单选
         const onCurrentChange = (changed: any) => {
+          if (changed == null) {
+            req.onSelectedKeysChanged([]);
+            return;
+          }
           const rowKey = req.getRowKey();
           const selectedKeys = [changed[rowKey]];
           req.onSelectedKeysChanged(selectedKeys);

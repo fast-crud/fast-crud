@@ -61,7 +61,7 @@ type FsTableSelectProps = {
    */
   dict: Dict;
   /**
-   * 选择框配置
+   * 选择框 fs-dict-select配置
    */
   select?: any;
 
@@ -71,7 +71,7 @@ type FsTableSelectProps = {
   dialog?: any;
 
   /**
-   * 当前选中值 values-format配置
+   * 当前选中值 fs-values-format组件 配置
    */
   valuesFormat?: any;
 

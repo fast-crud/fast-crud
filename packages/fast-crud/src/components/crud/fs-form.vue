@@ -250,20 +250,6 @@ export default defineComponent({
     const initialForm = _.cloneDeep(props.initialForm);
 
     // eslint-disable-next-line vue/no-setup-props-destructure
-    const scope: Ref<FormScopeContext> = ref({
-      row: initialForm,
-      form,
-      index: props.index,
-      mode: props.mode,
-      attrs: ctx.attrs,
-      getComponentRef
-    } as FormScopeContext);
-
-    function getContextFn() {
-      return scope.value;
-    }
-
-    // eslint-disable-next-line vue/no-setup-props-destructure
     _.each(props.columns, (item) => {
       if (item.value != null && item.value instanceof AsyncComputeValue) {
         logger.warn("form.value配置不支持AsyncCompute类型的动态计算");
@@ -288,6 +274,23 @@ export default defineComponent({
         }
       }
     });
+
+    const scope: Ref<FormScopeContext> = computed(() => {
+      return {
+        initialForm,
+        row: form,
+        form,
+        index: props.index,
+        mode: props.mode || "add",
+        attrs: ctx.attrs,
+        getComponentRef
+      } as FormScopeContext;
+    });
+
+    function getContextFn() {
+      return scope.value;
+    }
+
     //form.valueBuilder
     function doValueBuilder(form: any) {
       if (form == null) {
@@ -335,7 +338,6 @@ export default defineComponent({
 
     const groupActiveKey = ref([]);
 
-    // eslint-disable-next-line vue/no-setup-props-destructure
     _.forEach(props.group?.groups, (groupItem, key) => {
       if (groupItem.collapsed !== true) {
         groupActiveKey.value.push(key);
@@ -414,7 +416,7 @@ export default defineComponent({
       return formRef.value;
     }
     function createInitialForm() {
-      return _.cloneDeep(props.initialForm || {});
+      return _.cloneDeep(initialForm || {});
     }
     async function reset() {
       // ui.form.resetWrap(formRef.value, { form, initialForm: createInitialForm() });
