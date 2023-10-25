@@ -1,6 +1,5 @@
 import { Ref, ShallowRef } from "vue";
 import { ComputeContext } from "./compute";
-import { Dict, GetContextFn, UseCrudProps, UseFsContext } from "../use";
 import { CrudExpose, DoRemoveContext } from "../d/expose";
 
 import { RuleItem } from "async-validator";
@@ -1440,7 +1439,7 @@ export type CrudOptions = {
   columns?: CompositionColumns;
 } & CrudBinding;
 
-type CrudSettings = {
+export type CrudSettings = {
   viewFormUseCellComponent?: boolean;
   searchCopyFormProps?: string[];
   onUseCrud?: (bindings: CrudBinding) => void;
@@ -1455,7 +1454,7 @@ type CrudSettings = {
     [key: string]: CrudOptionsPlugin<any>;
   };
 };
-type CrudMode = {
+export type CrudMode = {
   /**
    * 模式名称: local,remote
    */

@@ -14,9 +14,9 @@ import {
   FormItemProps,
   FormProps,
   ScopeContext,
-  TableColumnsProps
+  TableColumnsProps,
+  UseFsContext
 } from "../d";
-import { UseFsContext } from "./use-crud";
 import { Constants } from "../utils/util.constants";
 
 const { merge, cloneDeep } = useMerge();
@@ -273,7 +273,7 @@ function buildSearchForm(baseOptions: CrudOptions, formType = "search", columnsM
     "valueResolve"
   ];
 
-  function copyFromCompositionColumn(target, key, field) {
+  function copyFromCompositionColumn(target: any, key: string, field: string) {
     const needCopy = _.includes(copyProps, field);
     if (needCopy && baseOptions.columns[key]) {
       const common = baseOptions.columns[key][field];
