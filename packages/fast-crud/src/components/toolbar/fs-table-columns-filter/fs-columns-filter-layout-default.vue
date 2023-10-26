@@ -70,19 +70,24 @@ import draggable from "vuedraggable-es";
 import FsTableColumnsFixedController from "./fs-table-columns-fixed-controller/index.vue";
 import { useUi } from "../../../use";
 import { computed, inject, ref, watch } from "vue";
-import { ColumnsFilterItem, ColumnsFilterProvideKey, ColumnsFilterContext } from "../../../d/";
+import {
+  ColumnsFilterItem,
+  ColumnsFilterProvideKey,
+  ColumnsFilterContext,
+  ColumnsFilterContainerProps
+} from "../../../d/";
 
 const { ui } = useUi();
 
 const { originalColumns, currentColumns, text, active } = inject<ColumnsFilterContext>(ColumnsFilterProvideKey);
-
+const props = defineProps<ColumnsFilterContainerProps>();
 const drawerBind = computed(() => {
   return {
     [ui.drawer.visible]: active.value,
     ["onUpdate:" + ui.drawer.visible]: (e: any) => {
       active.value = e;
     },
-    [ui.drawer.width]: "300px"
+    [ui.drawer.width]: props.width || "300px"
   };
 });
 

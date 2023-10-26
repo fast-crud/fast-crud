@@ -883,6 +883,9 @@ export type ContainerProps = {
   is?: string | ShallowRef;
   [key: string]: any;
 };
+export type ColumnsFilterContainerProps = {
+  width: string;
+};
 
 export type ColumnsFilterComponentProps = {
   /**
@@ -891,7 +894,7 @@ export type ColumnsFilterComponentProps = {
   container?: {
     is?: string | ShallowRef;
     [key: string]: any;
-  };
+  } & ColumnsFilterContainerProps;
 
   /**
    * 列配置组件名称
