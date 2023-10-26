@@ -627,6 +627,8 @@ export default defineComponent({
     .el-cascader,
     .el-date-editor,
     .el-input-number,
+    .el-input,
+    .el-select,
     .n-select,
     .n-date-picker,
     .n-input-number {
