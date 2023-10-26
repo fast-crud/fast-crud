@@ -58,7 +58,10 @@ const crudOptions = {
         export:{
             server:()=>Promise<void>, // 服务端导出方法，配置则开启服务端导出，本地导出则不生效
             //以下为本地导出配置
-            columns:  null, // 导出的列配置，不配置则导出全部，类型为 {key:string,title:string}[],
+
+            // 导出的列配置，不配置则导出全部，类型为 {key:string,title:string,width?:number}[],
+            // 推荐通过 crudOptions.columns.key.column.exportable=true 来控制列是否导出
+            columns:  null,
             noHeader: false, // 是否不需要表头，仅csv
             filename: 'table', // 导出文件名
             fileType: 'csv' ,// 导出文件类型，可选值：csv | excel=数据比较复杂时使用（包含逗号，换行等）
