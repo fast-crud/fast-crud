@@ -38,13 +38,7 @@ export default defineComponent({
       return props.scope;
     };
 
-    // eslint-disable-next-line vue/no-setup-props-destructure
-    const ddd = props.item.component?.dict;
-
     const computedComponent = doComputed(computedPropsComponent, getScope);
-    const end = new Date().getTime();
-
-    const ddd2 = computedComponent.value?.dict;
 
     const targetRef = ref();
 
