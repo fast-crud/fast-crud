@@ -3,6 +3,19 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.18.3](https://github.com/fast-crud/fast-crud/compare/v1.18.2...v1.18.3) (2023-10-26)
+
+### Bug Fixes
+
+* 修复表单form.value默认值无法赋值的bug ([d40def3](https://github.com/fast-crud/fast-crud/commit/d40def3f1201484612df6a27faba214f6d7d9e4d))
+* 修复局部组件报错的bug ([648fe0e](https://github.com/fast-crud/fast-crud/commit/648fe0e44b59db0c88304b6665221e560ecf6213))
+* 修复dict ts报错 ([6cf2f44](https://github.com/fast-crud/fast-crud/commit/6cf2f441e282b4155373e970fb89f8a540be1290))
+* 修复table-selectmodelValue变化，不会刷新dict的bug ([7eeb229](https://github.com/fast-crud/fast-crud/commit/7eeb229c5d0a57c987b977270344e21537fc6f9c))
+
+### Performance Improvements
+
+* component.name局部引用无需shallowRef包裹 ([96c56d8](https://github.com/fast-crud/fast-crud/commit/96c56d86607b27b6f2f4f3270dc828ac68fe4d8d))
+
 ## [1.18.2](https://github.com/fast-crud/fast-crud/compare/v1.18.1...v1.18.2) (2023-10-26)
 
 ### Bug Fixes
