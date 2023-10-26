@@ -256,28 +256,20 @@ export default defineComponent({
     });
 
     function createInitialForm() {
-      // eslint-disable-next-line vue/no-setup-props-destructure
-      const initialForm = _.cloneDeep(props.initialForm);
+      const form = _.cloneDeep(props.initialForm);
 
       // 初始数据赋值
-      // eslint-disable-next-line vue/no-setup-props-destructure
       _.each(props.columns, (item, key) => {
-        _.set(form, key, undefined);
         const defValue = unref(item.value);
         if (defValue !== undefined) {
           _.set(form, key, defValue);
         }
-        if (initialForm) {
-          const value = _.get(initialForm, key);
-          if (value != null) {
-            _.set(form, key, value);
-          }
-        }
       });
-      return initialForm;
+      return form;
     }
 
     const initialForm = createInitialForm();
+    setFormData(initialForm);
 
     const scope: Ref<FormScopeContext> = computed(() => {
       return {
@@ -298,11 +290,12 @@ export default defineComponent({
       return props.columns;
     }, getContextFn);
     //form.valueBuilder
+
     function doValueBuilder(form: any) {
       if (form == null) {
         return;
       }
-      _.each(computedColumns.value, (item, key) => {
+      _.each(props.columns, (item, key) => {
         let value = _.get(form, key);
         if (item.valueBuilder) {
           item.valueBuilder({
@@ -380,11 +373,13 @@ export default defineComponent({
 
     const groupActiveKey = ref([]);
 
+    // eslint-disable-next-line vue/no-setup-props-destructure
     _.forEach(props.group?.groups, (groupItem, key) => {
       if (groupItem.collapsed !== true) {
         groupActiveKey.value.push(key);
       }
     });
+    // eslint-disable-next-line vue/no-setup-props-destructure
     if (props.group?.groupType === "tabs") {
       groupActiveKey.value = groupActiveKey.value.length > 0 ? groupActiveKey.value[0] : null;
     }
@@ -460,6 +455,7 @@ export default defineComponent({
     async function reset() {
       // ui.form.resetWrap(formRef.value, { form, initialForm: createInitialForm() });
       const initialForm = createInitialForm();
+      debugger;
       const entries = _.entries(form);
       for (const entry of entries) {
         const initialValue = _.get(initialForm, entry[0]);
