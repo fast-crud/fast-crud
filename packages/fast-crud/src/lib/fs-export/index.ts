@@ -126,16 +126,20 @@ export async function exportTable(crudExpose: CrudExpose, opts: ExportProps = {}
       if (col.exportable !== false && col.key !== "_index") {
         const exportCol: ExportColumn = {
           key: col.key,
-          title: col.title,
-          columnProps: col
+          title: col.title
         };
-        //构建列配置
-        if (opts.columnBuilder) {
-          opts.columnBuilder({ col: exportCol });
-        }
         columns.push(exportCol);
       }
     });
+  }
+
+  for (const exportCol of columns) {
+    //构建列配置
+    const columnProps = crudBinding.value.table.columnsMap[exportCol.key];
+    exportCol.columnProps = columnProps || {};
+    if (opts.columnBuilder) {
+      opts.columnBuilder({ col: exportCol });
+    }
   }
 
   //加载异步组件，不影响首页加载速度
