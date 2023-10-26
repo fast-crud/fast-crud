@@ -64,6 +64,7 @@
 </template>
 
 <script lang="ts" setup>
+import _ from "lodash-es";
 //不要删
 //@ts-ignore
 import draggable from "vuedraggable-es";
@@ -82,13 +83,16 @@ const { ui } = useUi();
 const { originalColumns, currentColumns, text, active } = inject<ColumnsFilterContext>(ColumnsFilterProvideKey);
 const props = defineProps<ColumnsFilterContainerProps>();
 const drawerBind = computed(() => {
-  return {
-    [ui.drawer.visible]: active.value,
-    ["onUpdate:" + ui.drawer.visible]: (e: any) => {
-      active.value = e;
+  return _.merge(
+    {
+      [ui.drawer.visible]: active.value,
+      ["onUpdate:" + ui.drawer.visible]: (e: any) => {
+        active.value = e;
+      },
+      [ui.drawer.width]: props.width || "300px"
     },
-    [ui.drawer.width]: props.width || "300px"
-  };
+    props.drawer
+  );
 });
 
 const checkAll = ref(false);

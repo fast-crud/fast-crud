@@ -884,17 +884,15 @@ export type ContainerProps = {
   [key: string]: any;
 };
 export type ColumnsFilterContainerProps = {
-  width: string;
+  width?: string;
+  drawer?: any;
 };
 
 export type ColumnsFilterComponentProps = {
   /**
    * 布局容器组件配置
    */
-  container?: {
-    is?: string | ShallowRef;
-    [key: string]: any;
-  } & ColumnsFilterContainerProps;
+  container?: ContainerProps & ColumnsFilterContainerProps;
 
   /**
    * 列配置组件名称
