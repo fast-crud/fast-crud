@@ -2,11 +2,11 @@ import { SearchPlugin } from "vitepress-plugin-search";
 //default options
 
 module.exports = {
-    vite:{
-        ssr: {
-            noExternal: ['segmentit']
-        }
-    },
+    // vite:{
+    //     ssr: {
+    //         noExternal: ['segmentit']
+    //     }
+    // },
     title: 'FastCrud',
     description: '面向配置的CRUD编程.',
     //Add a wildcard at the end of the search
@@ -28,12 +28,33 @@ module.exports = {
 
     themeConfig: {
         logo: '/images/logo.svg',
-        algolia: {
-            appId: 'MS0LML0LJG',
-            apiKey: 'f84fe913d9e34f1c1427e69a64152c2d',
-            indexName: 'crawler_fast-crud',
-            schedule: 'every 1 day at 3:00 pm',
+        search:{
+            provider: 'local',
+            options:{
+                detailedView: true,
+                translations:{
+                    button:{
+                        buttonText: '搜索文档',
+                        buttonAriaLabel: '搜索文档'
+                    },
+                    modal: {
+                        noResultsText: '无法找到相关结果',
+                        resetButtonTitle: '清除查询条件',
+                        footer: {
+                            selectText: '选择',
+                            closeText: '关闭',
+                            navigateText: '切换'
+                        }
+                    }
+                }
+            }
         },
+        // algolia: {
+        //     appId: 'MS0LML0LJG',
+        //     apiKey: 'f84fe913d9e34f1c1427e69a64152c2d',
+        //     indexName: 'crawler_fast-crud',
+        //     schedule: 'every 1 day at 3:00 pm',
+        // },
         // search: true,
         sidebar: {
             '/guide/': [
