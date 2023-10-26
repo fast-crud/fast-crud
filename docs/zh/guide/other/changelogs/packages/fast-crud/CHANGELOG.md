@@ -3,6 +3,16 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.18.2](https://github.com/fast-crud/fast-crud/compare/v1.18.1...v1.18.2) (2023-10-26)
+
+### Bug Fixes
+
+* 导出配置columns报错的bug ([d12f881](https://github.com/fast-crud/fast-crud/commit/d12f881f83e8c521673dc49d656e457a4fc67102))
+* 修复动态切换component.name报 resolveComponent 只能在setup和render中使用的问题 ([8792962](https://github.com/fast-crud/fast-crud/commit/8792962156346dbf05445d8f143b23296d60c781))
+* 修复editRequest 获取到row值的bug ([108c994](https://github.com/fast-crud/fast-crud/commit/108c994ea1026e9e27750c7e7bbf70b6d345e460))
+* 修复element 独立使用表单 el-select宽度问题 ([7fd9ef5](https://github.com/fast-crud/fast-crud/commit/7fd9ef559da8365e0135f00598c2621718c52a3e))
+* export columns重构 ([3252095](https://github.com/fast-crud/fast-crud/commit/32520950f8b92aea576450f0f4f9a43a515dd915))
+
 ## [1.18.1](https://github.com/fast-crud/fast-crud/compare/v1.18.0...v1.18.1) (2023-10-26)
 
 ### Bug Fixes
