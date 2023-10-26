@@ -341,12 +341,12 @@ export default defineComponent({
 
     doValueBuilder(form);
 
-    watch(
-      () => props.initialForm,
-      () => {
-        setFormData(createInitialForm(), { mergeForm: false });
-      }
-    );
+    // watch(
+    //   () => props.initialForm,
+    //   () => {
+    //     setFormData(createInitialForm(), { mergeForm: false });
+    //   }
+    // );
 
     function doValueChange(key: string, value: any) {
       const event = { key, value, formRef: proxy, ...scope.value, immediate: false };
