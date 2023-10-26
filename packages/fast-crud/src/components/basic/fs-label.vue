@@ -1,7 +1,10 @@
 <template>
   <div class="fs-label">
-    <div class="label" v-bind="labelAttrs">{{ label }}</div>
-    <div class="content">
+    <div class="label" v-bind="labelAttrs">
+      {{ label }}
+      <slot name="label"></slot>
+    </div>
+    <div class="content" v-bind="contentAttrs">
       <slot></slot>
     </div>
   </div>
@@ -22,6 +25,10 @@ export default defineComponent({
     labelAttrs: {
       type: Object,
       default: () => ({})
+    },
+    contentAttrs: {
+      type: Object,
+      default: () => ({})
     }
   }
 });
@@ -31,13 +38,19 @@ export default defineComponent({
   display: flex;
   align-items: center;
   .label {
+    display: flex;
     text-align: right;
     margin-right: 10px;
     min-width: 100px;
   }
   .content {
     flex: 1;
+    display: flex;
     min-width: 100px;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    justify-content: left;
+    align-items: center;
   }
 }
 </style>
