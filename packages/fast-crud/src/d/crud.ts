@@ -1009,7 +1009,7 @@ export type ToolbarProps = {
   [key: string]: any;
 } & ToolbarComponentProps;
 
-type ButtonIconProps = string | { icon: string; [key: string]: any } | UiSlot;
+type ButtonIconProps = string | { icon: string;[key: string]: any } | UiSlot;
 type NullableString = string | null;
 
 export type FormWrapperContext = {
@@ -1188,7 +1188,7 @@ export type TableColumnsProps = {
 /**
  * 表格列配置(单元格)
  */
-export type ColumnProps = {
+export type ColumnPropsBase = {
   key?: string;
   /**
    * 单元格组件配置
@@ -1240,6 +1240,21 @@ export type ColumnProps = {
    */
   [key: string]: any;
 };
+export type ColumnPropsWithType<T = any> = ColumnPropsBase & {
+  /**
+   * 字段类型,【默认可以用：text】
+   */
+  type?: string | string[];
+  /**
+   * 格式化方法，比如格式化一下时间
+   * @param value
+   */
+  formatter?: (value: T) => string;
+}
+/**
+ * 表格列配置(单元格)
+ */
+export type ColumnProps = ColumnPropsBase | ColumnPropsWithType;
 
 /**
  * valueBuild参数
@@ -1474,7 +1489,7 @@ export type CrudMode = {
 };
 
 export type TabsFilterDefaultOption = { show?: boolean; value?: any; label?: string };
-export type TabsFilterOption = { value: any; label: string; [key: string]: any };
+export type TabsFilterOption = { value: any; label: string;[key: string]: any };
 export interface TabsFilterProps {
   /**
    * 目标字段的key，查询时作为search的key
