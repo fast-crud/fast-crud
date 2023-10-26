@@ -140,7 +140,7 @@ crudOptions = { //
 
 
 ## [key].column.formatter
-* 说明：格式化显示
+* 说明：格式化显示，此参数与antdv、element的原始属性名重叠，非特殊列以此为准。
 * 类型：Function(context):String
 
 ## [key].column.order
