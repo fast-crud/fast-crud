@@ -392,7 +392,7 @@ export function useExpose(props: UseExposeProps): UseExposeRet {
 
       const page = crudExpose.getPage();
       const pageRes = await crudExpose.search({ page }, { silence: props?.silence });
-      const { currentPage = page.currentPage, pageSize = page.pageSize, total } = pageRes;
+      const { currentPage = page.currentPage || 1, pageSize = page.pageSize, total } = pageRes;
       const { records } = pageRes;
       if (
         records == null ||
