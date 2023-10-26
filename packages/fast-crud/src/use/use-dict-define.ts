@@ -34,7 +34,7 @@ export type DictGetData<T> = (context?: any) => Promise<T[]>;
 /**
  * Dict参数
  */
-export interface DictOptions<T> {
+export interface DictOptions<T = any> {
   /**
    * dict请求url
    */
