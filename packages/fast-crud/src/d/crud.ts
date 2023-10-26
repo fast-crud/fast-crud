@@ -1,4 +1,4 @@
-import { Ref, ShallowRef } from "vue";
+import { Component, Ref, ShallowRef } from "vue";
 import { ComputeContext } from "./compute";
 import { CrudExpose, DoRemoveContext } from "../d/expose";
 
@@ -368,7 +368,7 @@ export type ComponentProps = {
   /**
    * 组件的名称
    */
-  name?: string | ShallowRef;
+  name?: string | Component;
   /**
    * vmodel绑定的目标属性名
    */
