@@ -280,8 +280,7 @@ export default defineComponent({
 
     const scope: Ref<FormScopeContext> = computed(() => {
       return {
-        initialForm,
-        row: form,
+        row: initialForm,
         form,
         index: props.index,
         mode: props.mode || "add",
@@ -308,8 +307,7 @@ export default defineComponent({
           item.valueBuilder({
             value,
             key,
-            initialForm,
-            row: form,
+            row: initialForm,
             form,
             index: props.index,
             mode: props.mode
