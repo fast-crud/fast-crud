@@ -1,18 +1,22 @@
 import {
   computed,
   defineComponent,
+  markRaw,
   mergeProps,
   onMounted,
   provide,
+  Ref,
   ref,
   resolveComponent,
-  resolveDynamicComponent,
   shallowRef,
+  unref,
   watch
 } from "vue";
 import _ from "lodash-es";
 import { useUi } from "../../use";
 import { ComponentEventContext, VModelProps } from "../../d";
+import { useI18n } from "../../locale";
+import { useRouter } from "vue-router";
 
 function mergeEventHandles(target: any, eventName: string) {
   if (target[eventName] instanceof Array) {
@@ -183,31 +187,33 @@ export default defineComponent({
       return children;
     };
 
-    const inputCompRef = shallowRef();
-    const isAsyncComponent = ref(false);
-    watch(
-      () => {
-        return props.name;
-      },
-      (value) => {
-        const inputComp = value || ui.input.name;
-        if (!htmlTags.includes(inputComp)) {
-          if (inputComp?.name === "AsyncComponentWrapper") {
-            //如果是异步组件
-            isAsyncComponent.value = true;
-          }
+    type InputCompType = {
+      isAsyncComponent: boolean;
+      component: any;
+    };
+    const computedInputComp: Ref<InputCompType> = computed(() => {
+      const res: InputCompType = {
+        isAsyncComponent: false,
+        component: unref(props.name) || ui.input.name
+      };
+      let inputComp = res.component;
+      if (!htmlTags.includes(inputComp)) {
+        if (typeof inputComp === "string") {
+          inputComp = resolveComponent(inputComp);
         }
-        inputCompRef.value = inputComp;
-      },
-      {
-        immediate: true
+        if (inputComp?.name === "AsyncComponentWrapper") {
+          //如果是异步组件
+          res.isAsyncComponent = true;
+        }
       }
-    );
+      res.component = inputComp;
+      return res;
+    });
 
     const childrenRendered = childrenRender;
 
     function getTargetRef() {
-      if (isAsyncComponent.value) {
+      if (computedInputComp.value.isAsyncComponent) {
         return getTargetRefAsync();
       }
       return getTargetRefSync();
@@ -257,10 +263,7 @@ export default defineComponent({
       if (props.render) {
         return props.render({ ...props.scope, attrs: merged });
       }
-      let inputComp = inputCompRef.value;
-      if (typeof inputComp === "string") {
-        inputComp = resolveComponent(inputComp);
-      }
+      const inputComp = markRaw(computedInputComp.value.component);
       return <inputComp {...merged}>{childrenRendered()}</inputComp>;
     };
   }
