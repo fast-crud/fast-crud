@@ -97,7 +97,8 @@ import {
   ref,
   toRaw,
   unref,
-  UnwrapNestedRefs
+  UnwrapNestedRefs,
+  watch
 } from "vue";
 import _ from "lodash-es";
 import { ComputeValue, useCompute } from "../../use/use-compute";
@@ -316,7 +317,43 @@ export default defineComponent({
       });
     }
 
+    function getFormData() {
+      return form;
+    }
+    function setFormData(formData: any, options: SetFormDataOptions = {}) {
+      doValueBuilder(formData);
+
+      if (options.mergeForm === false) {
+        for (const key in form) {
+          delete form[key];
+        }
+      }
+      merge(form, formData);
+      const { valueChange } = options;
+      if (valueChange) {
+        _.forEach(props.columns, (column, key) => {
+          const value = form[key];
+          doValueChange(key, value);
+        });
+      }
+    }
+
+    function mergeCol(...col: any) {
+      return merge({}, props.col, ...col);
+    }
+
+    function buildItemScope(item: any): FormScopeContext {
+      return { key: item.key, ...scope.value };
+    }
+
     doValueBuilder(form);
+
+    watch(
+      () => props.initialForm,
+      () => {
+        setFormData(createInitialForm(), { mergeForm: false });
+      }
+    );
 
     function doValueChange(key: string, value: any) {
       const event = { key, value, formRef: proxy, ...scope.value, immediate: false };
@@ -510,29 +547,6 @@ export default defineComponent({
         }
       }
       ctx.emit("success", submitScope);
-    }
-
-    function getFormData() {
-      return form;
-    }
-    function setFormData(formData: any, options: SetFormDataOptions = {}) {
-      doValueBuilder(formData);
-      merge(form, formData);
-      const { valueChange } = options;
-      if (valueChange) {
-        _.forEach(props.columns, (column, key) => {
-          const value = form[key];
-          doValueChange(key, value);
-        });
-      }
-    }
-
-    function mergeCol(...col: any) {
-      return merge({}, props.col, ...col);
-    }
-
-    function buildItemScope(item: any): FormScopeContext {
-      return { key: item.key, ...scope.value };
     }
 
     onMounted(() => {

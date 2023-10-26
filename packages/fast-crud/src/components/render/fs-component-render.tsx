@@ -5,6 +5,7 @@ import {
   onMounted,
   provide,
   ref,
+  resolveComponent,
   resolveDynamicComponent,
   shallowRef,
   watch
@@ -189,9 +190,8 @@ export default defineComponent({
         return props.name;
       },
       (value) => {
-        let inputComp = value || ui.input.name;
+        const inputComp = value || ui.input.name;
         if (!htmlTags.includes(inputComp)) {
-          inputComp = resolveDynamicComponent(inputComp);
           if (inputComp?.name === "AsyncComponentWrapper") {
             //如果是异步组件
             isAsyncComponent.value = true;
@@ -257,7 +257,10 @@ export default defineComponent({
       if (props.render) {
         return props.render({ ...props.scope, attrs: merged });
       }
-      const inputComp = inputCompRef.value;
+      let inputComp = inputCompRef.value;
+      if (typeof inputComp === "string") {
+        inputComp = resolveComponent(inputComp);
+      }
       return <inputComp {...merged}>{childrenRendered()}</inputComp>;
     };
   }

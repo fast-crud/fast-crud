@@ -24,6 +24,8 @@ export class SetFormDataOptions {
    * 是否执行valueChange
    */
   valueChange?: boolean;
+
+  mergeForm?: boolean;
 }
 
 export type DoRefreshProps = {
