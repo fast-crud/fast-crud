@@ -240,7 +240,7 @@ export class Dict<T = any> extends UnMergeable implements DictOptions<T> {
     this._triggerNotify();
   }
 
-  private _triggerNotify() {
+  _triggerNotify() {
     if (this.notifies && this.notifies.length > 0) {
       _.forEach(this.notifies, (call) => {
         call(this.data);
@@ -249,7 +249,7 @@ export class Dict<T = any> extends UnMergeable implements DictOptions<T> {
     }
   }
 
-  private _registerNotify() {
+  _registerNotify() {
     let notify: SuccessNotify = null;
     //如果正在加载中，则等待加载完成
     const ret: Promise<any[]> = new Promise((resolve) => {

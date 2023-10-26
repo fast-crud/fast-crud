@@ -5,7 +5,7 @@ import { CrudExpose, DoRemoveContext } from "../d/expose";
 import { RuleItem } from "async-validator";
 import { UiSlot, UiSlotRet } from "@fast-crud/ui-interface";
 import { ExportProps } from "../lib/fs-export";
-import { DictOptions, GetContextFn } from "../use";
+import { Dict, GetContextFn } from "../use";
 
 // export type FsRefValue<T> = T | Ref<T> | ComputedRef<T>;
 // export type FsComputeValue<T> = FsRefValue<T> | ComputeValue<T> | AsyncComputeValue<T>;
@@ -1316,7 +1316,7 @@ export type ColumnCompositionProps = {
   /**
    * dict，会复制到各个component中去
    */
-  dict?: DictOptions;
+  dict?: Dict;
 
   /**
    * 多级表头
