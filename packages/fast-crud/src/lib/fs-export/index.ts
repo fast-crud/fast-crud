@@ -162,7 +162,7 @@ export async function exportTable(crudExpose: CrudExpose, opts: ExportProps = {}
       const mapping = {
         row: clone,
         originalRow: row,
-        key: col.key,
+        key: exportCol.key,
         col,
         exportCol
       };
