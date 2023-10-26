@@ -140,6 +140,13 @@ QQ群
 <img height="380" src="./images/donate.png">
 </p>
 
+## 技术支持
+* 群里问问题免费解答
+* 疑难杂症提供远程控制付费技术支持：
+  * 半小时内解决，88元
+  * 高于半小时，188元
+  * 解决不了，不收费
+
 ## 依赖
 ### ui组件库
 * [Antdv 3x](https://github.com/vueComponent/ant-design-vue) 、[Element-Plus](https://github.com/element-plus/element-plus) 、[NaiveUI](https://github.com/TuSimple/naive-ui) 三选一

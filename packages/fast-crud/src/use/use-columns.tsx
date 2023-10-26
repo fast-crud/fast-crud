@@ -269,8 +269,7 @@ function buildSearchForm(baseOptions: CrudOptions, formType = "search", columnsM
     "title",
     "key",
     "label",
-    "render",
-    "valueResolve"
+    "render"
   ];
 
   function copyFromCompositionColumn(target: any, key: string, field: string) {

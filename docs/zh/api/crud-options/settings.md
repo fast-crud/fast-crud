@@ -8,9 +8,9 @@
 
 
 ## searchCopyFormProps
-* 说明：search字段从form配置中继承哪些属性
+* 说明：search字段从form配置中继承哪些属性，其中`valueResolve`,`valueBuilder`会先从columns中继承
 * 类型：`string[]`
-* 默认：`["component", "valueChange","title", "key","label", "render","valueResolve"]`
+* 默认：`["component", "valueChange","title", "key","label", "render"]`
 
 ## onUseCrud
 * 说明：useCrud结束后触发，最后可以修改一下crudBinding
