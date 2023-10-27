@@ -50,7 +50,7 @@ const crudOptions = {
     }
 }
 ```
-::: tips
+::: tip
 ### registerCrudOptionsPlugin方法
 * 说明：注册自定义插件，注意：这是一个全局方法，不是配置，你应该写在app.use(FastCrud)后面
 * 类型：(name:string,plugin:(props:any,ctx:UseCrudProps)=>CrudOptions)

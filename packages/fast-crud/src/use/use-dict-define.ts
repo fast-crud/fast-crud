@@ -321,8 +321,8 @@ export class Dict<T = any> extends UnMergeable implements DictOptions<T> {
   }
 
   clear() {
-    this.data = null;
-    this.dataMap = {};
+    this.originalData = null;
+    this.setData(null);
   }
 
   async getRemoteDictData(context?: any) {
@@ -397,9 +397,13 @@ export class Dict<T = any> extends UnMergeable implements DictOptions<T> {
   }
 
   toMap() {
+    if (this._data == null) {
+      this.dataMap = {};
+      return;
+    }
     const map = {};
     if (this.data) {
-      this.buildMap(map, this.data);
+      this.buildMap(map, this.data || []);
     }
     // if (this.getNodesByValues) {
     //   _.merge(this.dataMap, map);
