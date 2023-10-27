@@ -517,7 +517,7 @@ export default defineComponent({
       if (props.beforeSubmit) {
         const ret = await props.beforeSubmit(submitScope);
         if (ret === false) {
-          return;
+          return false;
         }
       }
 
@@ -532,14 +532,14 @@ export default defineComponent({
         const res = await props.doSubmit(submitScope);
         submitScope.res = res;
         if (res === false) {
-          return;
+          return false;
         }
       }
       ctx.emit("submit", submitScope);
       if (props.afterSubmit) {
         const success = await props.afterSubmit(submitScope);
         if (success === false) {
-          return;
+          return false;
         }
       }
       ctx.emit("success", submitScope);

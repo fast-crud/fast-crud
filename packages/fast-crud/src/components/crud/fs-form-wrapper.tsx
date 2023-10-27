@@ -185,7 +185,10 @@ export default defineComponent({
     async function submit() {
       loading.value = true;
       try {
-        await formRef.value.submit();
+        const success = await formRef.value.submit();
+        if (success === false) {
+          return;
+        }
         close();
       } finally {
         loading.value = false;
