@@ -543,7 +543,8 @@ export interface ColorPickerCI extends CI {
 }
 
 export type ButtonGroupBuilderOptions = {} & BindBuilderOptions;
-export type ButtonGroupCI = CI<ButtonGroupBuilderOptions>;
+export interface ButtonGroupCI extends CI<ButtonGroupBuilderOptions> {}
+
 export interface Icons {
   refresh: string;
   search: string;

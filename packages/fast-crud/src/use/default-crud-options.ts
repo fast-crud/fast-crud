@@ -110,7 +110,8 @@ export default {
         border: true,
         bordered: true,
         singleLine: false, //naive
-        editable: { enabled: false }
+        editable: { enabled: false },
+        pagination: false //antdv 关闭默认分页
       },
       toolbar: {
         compact: true
