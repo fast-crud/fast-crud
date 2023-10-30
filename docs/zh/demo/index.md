@@ -30,7 +30,7 @@
 ### 3. embeddings-store
 * 简介： 向量仓库，嵌入向量存储和检索
 * 技术： `python server ，fastapi`  + `fast-crud`
-* 开源地址：[embeddings-store](https://github.com/handsfree/embeddings-store/) 
+* 开源地址：[embeddings-store](https://github.com/handsfree-work/embeddings-store/) 
 
 ### 4. dvadmin
 * 简介：基于python，django的后台管理系统框架，fast-crud做client
