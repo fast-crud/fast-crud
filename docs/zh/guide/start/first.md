@@ -196,7 +196,7 @@ export const crudResources = [
                 title: "myFirstCrud",
                 name: "myFirstCrud",
                 path: "/test/myFirstCrud",
-                component: "/test/myFirstCrud.vue"
+                component: "/test/myFirstCrud/index.vue"
             },
         ]
     }
