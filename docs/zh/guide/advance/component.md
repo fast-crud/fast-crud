@@ -31,12 +31,12 @@ const crudOptions ={
 * 另外一种是form输入组件，出现在查询框、添加表单、修改表单、查看表单中。
 
 对应到具体的配置中：
- 1. column.form.component = 表单组件配置
- 2. column.column.component = 表格行展示组件配置
- 3. column.search.component = 查询表单组件配置
- 4. column.viewForm.component = 查看表单组件独立配置
- 5. column.addForm.component = 添加表单组件独立配置
- 6. column.editForm.component = 编辑表单组件配置
+ 1. columns.key.form.component = 表单组件配置
+ 2. columns.key.column.component = 表格行展示组件配置
+ 3. columns.key.search.component = 查询表单组件配置
+ 4. columns.key.viewForm.component = 查看表单组件独立配置
+ 5. columns.key.addForm.component = 添加表单组件独立配置
+ 6. columns.key.editForm.component = 编辑表单组件配置
 
 ::: warning
 使用相关组件前，需要通过`app.use` 、 `app.component`全局引入组件    
