@@ -138,10 +138,10 @@ import _ from "lodash-es";
 /**
  * 此处本地方式模拟远程接口，实际开发，你需要替换成你的后台请求
  */
-const records = [{ id: 1, name: "Hello World", type: 1 }];
+const records = [{ id: 1, name: "Hello World", type: 1 }]
 export const pageRequest = async (query: UserPageQuery): Promise<UserPageRes> => {
     return {
-        records, //此处跟fs所需字段一致，无需转换
+        records:_.cloneDeep(records), //此处跟fs所需字段一致，无需转换
         offset: 0, //后续会在transformRes里面做转化，转换为currentPage
         limit: 20,//后续会在transformRes里面做转化，转换为pageSize
         total: records.length
@@ -169,6 +169,9 @@ export const addRequest = async ({ form }: AddReq) => {
 };
 
 ```  
+::: tip
+此处以本地方式模拟远程接口，实际开发，你需要替换成你的后台请求
+:::
 
 :::warning
 实际开发过程中，你后台接口返回的数据大概率与fast-crud所需要的数据结构是不一致的，所以你需要配置公共的`request`转化方法，将请求结果转化为`fast-crud`所需要的结构           
