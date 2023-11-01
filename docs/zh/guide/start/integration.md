@@ -34,7 +34,7 @@ pnpm i  @fast-crud/fast-crud
 pnpm i  @fast-crud/fast-extends
 pnpm i  @fast-crud/ui-interface
 
-#安装ui，根据你选择的基础组件 三选一
+#安装ui，根据你选择的基础组件 四选一
 # element-plus
 pnpm i  element-plus
 pnpm i  @fast-crud/ui-element
@@ -62,7 +62,7 @@ import "element-plus/dist/index.css";
 import "dayjs/locale/zh-cn";
 app.use(ElementPlus,{size:"small",locale: zhCn})
 
-// 或者 antdv 
+// 或者 antdv （antdv4是一样的）
 import Antdv from 'ant-design-vue'
 import "ant-design-vue/dist/antd.less";
 app.use(Antdv)
@@ -86,7 +86,7 @@ app.use(Naive)
 import {FastCrud} from "@fast-crud/fast-crud";
 import "@fast-crud/fast-crud/dist/style.css";
 
-// 请选择ui: element/ antdv /naive。三选一，不支持动态切换
+// 请选择ui: element/ antdv /naive。四选一，不支持动态切换
 // element 
 import ui from "@fast-crud/ui-element";
 
@@ -100,6 +100,7 @@ import "@fast-crud/ui-antdv4/dist/style.css";
 
 // naive 
 import ui from "@fast-crud/ui-naive";
+//以上四选一
 
 // 先安装ui
 app.use(ui); 
