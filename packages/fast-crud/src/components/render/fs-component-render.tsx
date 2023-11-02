@@ -159,8 +159,12 @@ export default defineComponent({
       const events: {
         [key: string]: (e: ComponentEventContext) => void;
       } = { ...props.events, ...props.on };
+
       _.forEach(events, (value, key) => {
         const handler = value;
+        if (!key.startsWith("on")) {
+          key = _.camelCase("on_" + key);
+        }
         attrs[key] = ($event: any) => {
           return handler({ ...props.scope, $event });
         };
