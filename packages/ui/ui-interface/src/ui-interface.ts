@@ -55,6 +55,7 @@ export type SelectBuilderOption = {
   valueName?: string;
   labelName?: string;
   options?: any[];
+  searchable?: boolean;
 } & BindBuilderOptions;
 export interface SelectCI extends CI<SelectBuilderOption> {
   modelValue: string;

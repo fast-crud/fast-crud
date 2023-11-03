@@ -485,7 +485,8 @@ export class Antdv implements UiInterface {
           mode: opts.multiple ? "multiple" : "combobox",
           options: opts.options,
           fieldNames: { value: opts.valueName || "value", label: opts.labelName || "label" },
-          [this.clearable]: opts.clearable
+          [this.clearable]: opts.clearable,
+          showSearch: opts.searchable
         }
       });
     }

@@ -41,12 +41,16 @@ export default defineComponent({
         }, // 当modelValue值触发后，同步修改data.value的值
         {immediate: true} // 立即触发一次，给data赋值初始值
     )
-
+    //获取表单校验上下文
+    const formValidator = ui.formItem.injectFormItemContext();
     // 当data需要变化时，上报给父组件
     // 父组件监听到update:modelValue事件后，会更新props.modelValue的值
     // 然后watch会被触发，修改data.value的值。
     function onDataChange(value) {
       ctx.emit('update:modelValue', value)
+      //触发校验
+      formValidator.onChange()
+      formValidator.onBlur()
     }
     
     //你也可以发射自定义事件
