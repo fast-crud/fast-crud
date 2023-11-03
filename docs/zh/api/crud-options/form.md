@@ -34,7 +34,7 @@ const crudOptions:{
 * 说明: 支持`el-form`|`a-form` | `n-form` 配置
 * 配置： 具体配置请根据你使用的ui库，前往对应ui库的文档查找相应组件的配置
 * 类型：Object
-* 示例: [antdv](http://fast-crud.docmirror.cn/antdv/#/form/independent) |  [element](http://fast-crud.docmirror.cn/element/#/form/independent)
+* 示例: [antdv](http://fast-crud.docmirror.cn/antdv/#/crud/form/independent) |  [element](http://fast-crud.docmirror.cn/element/#//crudform/independent)
 * 
 ```js
 const crudOptions = {
@@ -117,10 +117,10 @@ const crudOptions = {
 ## group
 * 说明: 表单分组配置
 * 类型：Object
-* 示例： [antdv-collapse](http://fast-crud.docmirror.cn/antdv/#/form/group) | 
-[antdv-tabs](http://fast-crud.docmirror.cn/antdv/#/form/group-tabs) | 
-[element-collapse](http://fast-crud.docmirror.cn/element/#/form/group) | 
-[element-tabs](http://fast-crud.docmirror.cn/element/#/form/group-tabs)
+* 示例： [antdv-collapse](http://fast-crud.docmirror.cn/antdv/#/crud/form/group) | 
+[antdv-tabs](http://fast-crud.docmirror.cn/antdv/#/crud/form/group-tabs) | 
+[element-collapse](http://fast-crud.docmirror.cn/element/#/crud/form/group) | 
+[element-tabs](http://fast-crud.docmirror.cn/element/#/crud/form/group-tabs)
 ```json
 { // crudOptions.form
     group: {

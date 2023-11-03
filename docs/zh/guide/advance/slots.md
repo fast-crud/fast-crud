@@ -29,7 +29,7 @@ FastCrud内可以有很多地方都能通过插槽自定义内容。
 * footer-bottom
 
 ### 表单占位插槽
-* 示例：[antdv](http://fast-crud.docmirror.cn/antdv/#/slots/form) | [element](http://fast-crud.docmirror.cn/element/#/slots/form)
+* 示例：[antdv](http://fast-crud.docmirror.cn/antdv/#/crud/slots/form) | [element](http://fast-crud.docmirror.cn/crud/element/#/crud/slots/form)
 * scope: {index`序号`,mode`模式：add/view/edit`,_self:`formWrapper实例`,getFormData:`获取表单数据方法`}
 #### form-header
 * form-header-left
@@ -52,15 +52,15 @@ FastCrud内可以有很多地方都能通过插槽自定义内容。
 字段插槽通过`_`作为连接符
 ### search【查询字段插槽】
 * 命名规则：`'search_'+字段key`
-* 示例：[antdv](http://fast-crud.docmirror.cn/antdv/#/slots/search) | [element](http://fast-crud.docmirror.cn/element/#/slots/search)
+* 示例：[antdv](http://fast-crud.docmirror.cn/antdv/#/crud/slots/search) | [element](http://fast-crud.docmirror.cn/element/#/crud/slots/search)
 * scope: {index`序号`,mode`模式：search`,row:`行数据`,form:`表单数据`}
 
 ### cell【单元格字段插槽】
 * 命名规则：`'cell_'+字段key`
-* 示例：[antdv](http://fast-crud.docmirror.cn/antdv/#/slots/cell) | [element](http://fast-crud.docmirror.cn/element/#/slots/cell)
+* 示例：[antdv](http://fast-crud.docmirror.cn/antdv/#/crud/slots/cell) | [element](http://fast-crud.docmirror.cn/element/#/crud/slots/cell)
 * scope: {index`序号`,row:`行数据`}
 
 ### form【表单字段插槽】
 * 命名规则：`'form_'+字段key`
-* 示例：[antdv](http://fast-crud.docmirror.cn/antdv/#/slots/form-item) | [element](http://fast-crud.docmirror.cn/element/#/slots/form-item)
+* 示例：[antdv](http://fast-crud.docmirror.cn/antdv/#/crud/slots/form-item) | [element](http://fast-crud.docmirror.cn/element/#/crud/slots/form-item)
 * scope: {index`序号`,mode`模式：add/view/edit`,row:`行数据`,form:`表单数据`}

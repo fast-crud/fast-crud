@@ -20,7 +20,7 @@
     * [fs-dict-radio](/api/components/crud/extends/fs-dict-radio.md)  
     * [fs-dict-checkbox](/api/components/crud/extends/fs-dict-checkbox)  
     * [fs-values-format](/api/components/crud/extends/fs-values-format)
-* 示例：[antdv](http://fast-crud.docmirror.cn/antdv/#/crud/component/select) | [element](http://fast-crud.docmirror.cn/element/#/component/select)
+* 示例：[antdv](http://fast-crud.docmirror.cn/antdv/#/crud/component/select) | [element](http://fast-crud.docmirror.cn/element/#/crud/component/select)
 * 配置示例：
 ```javascript
 let column={
@@ -58,7 +58,7 @@ type = dict-cascader
 * 相关组件：
     * [fs-dict-cascader](/api/components/crud/extends/fs-dict-cascader.md)  
     * [fs-dict-cascader-format](/api/components/crud/extends/fs-dict-cascader-format.md)
-* 示例：[antdv](http://fast-crud.docmirror.cn/antdv/#/crud/component/cascader) | [element](http://fast-crud.docmirror.cn/element/#/component/cascader)
+* 示例：[antdv](http://fast-crud.docmirror.cn/antdv/#/crud/component/cascader) | [element](http://fast-crud.docmirror.cn/element/#/crud/component/cascader)
 
 ### 日期时间选择
 * type = datetime | date | time | daterange | datetimerange
@@ -69,7 +69,7 @@ type = dict-cascader
     * [el-date-picker](https://element-plus.gitee.io/#/zh-CN/component/date-picker#attributes)  
     * [el-time-picker](https://element-plus.gitee.io/#/zh-CN/component/time-picker)  
     * [fs-date-format](/api/components/crud/extends/fs-date-format)
-* 示例：[antdv](http://fast-crud.docmirror.cn/antdv/#/crud/component/date) | [element](http://fast-crud.docmirror.cn/element/#/component/date)
+* 示例：[antdv](http://fast-crud.docmirror.cn/antdv/#/crud/component/date) | [element](http://fast-crud.docmirror.cn/element/#/crud/component/date)
  
    
 
@@ -80,7 +80,7 @@ type = dict-cascader
 
 * 表单组件：
     * [el-input-number](https://element-plus.gitee.io/#zh-CN/component/input-number)
-* 示例：[antdv](http://fast-crud.docmirror.cn/antdv/#/crud/component/number) | [element](http://fast-crud.docmirror.cn/element/#/component/number)
+* 示例：[antdv](http://fast-crud.docmirror.cn/antdv/#/crud/component/number) | [element](http://fast-crud.docmirror.cn/element/#/crud/component/number)
  
 
 ## 扩展组件
@@ -91,7 +91,7 @@ type = dict-cascader
     *  avatar-cropper (头像裁剪上传)
     
 <<< @/../../packages/fast-extends/src/uploader/type/types.tsx
-* 示例：[antdv](http://fast-crud.docmirror.cn/antdv/#/crud/component/uploader/form) | [element](http://fast-crud.docmirror.cn/element/#/component/uploader/form)
+* 示例：[antdv](http://fast-crud.docmirror.cn/antdv/#/crud/component/uploader/form) | [element](http://fast-crud.docmirror.cn/element/#/crud/component/uploader/form)
 
 * 相关组件文档：
     * [fs-file-uploader](/api/components/extends/uploader/components/fs-file-uploader.md) 
@@ -107,7 +107,7 @@ type = dict-cascader
   *  cropper-uploader (头像裁剪上传)
 
 <<< @/../../packages/fast-extends/src/editor/type/types.ts
-* 示例：[antdv](http://fast-crud.docmirror.cn/antdv/#/crud/component/editor) | [element](http://fast-crud.docmirror.cn/element/#/component/editor)
+* 示例：[antdv](http://fast-crud.docmirror.cn/antdv/#/crud/component/editor) | [element](http://fast-crud.docmirror.cn/element/#/crud/component/editor)
 
 * 相关组件文档：
   * [fs-editor-wang](/api/components/extends/editor/components/fs-editor-wang/index.md)
@@ -118,7 +118,7 @@ type = dict-cascader
   *  json
   * 
 <<< @/../../packages/fast-extends/src/json/type/types.ts
-* 示例：[antdv](http://fast-crud.docmirror.cn/antdv/#/crud/component/json) | [element](http://fast-crud.docmirror.cn/element/#/component/json)
+* 示例：[antdv](http://fast-crud.docmirror.cn/antdv/#/crud/component/json) | [element](http://fast-crud.docmirror.cn/element/#/crud/component/json)
 
 * 相关组件文档：
   * [fs-json-editor](/api/components/extends/json/components/fs-json-editor.md)
@@ -129,7 +129,7 @@ type = dict-cascader
   *  copyable
   * 
 <<< @/../../packages/fast-extends/src/copyable/type/types.ts
-* 示例：[antdv](http://fast-crud.docmirror.cn/antdv/#/crud/component/text) | [element](http://fast-crud.docmirror.cn/element/#/component/text)
+* 示例：[antdv](http://fast-crud.docmirror.cn/antdv/#/crud/component/text) | [element](http://fast-crud.docmirror.cn/element/#/crud/component/text)
 
 * 相关组件文档：
   * [fs-copyable](/api/components/extends/copyable/components/fs-copyable.md)
@@ -139,7 +139,7 @@ type = dict-cascader
 * 类型
   *  time-humanize(人性化时间格式)
 <<< @/../../packages/fast-extends/src/time/type/types.ts
-* 示例：[antdv](http://fast-crud.docmirror.cn/antdv/#/crud/component/date) | [element](http://fast-crud.docmirror.cn/element/#/component/date)
+* 示例：[antdv](http://fast-crud.docmirror.cn/antdv/#/crud/component/date) | [element](http://fast-crud.docmirror.cn/element/#/crud/component/date)
 
 * 相关组件文档：
   * [fs-time-humanize](/api/components/extends/time/components/fs-time-humanize.md)
