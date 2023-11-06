@@ -57,7 +57,9 @@ type FsTableSelectProps = {
    */
   crudOptionsOverride?: DynamicallyCrudOptions;
   /**
-   * 数据字典, 必須配置getNodesByValues参数
+   * 数据字典
+   * 必須配置`getNodesByValues`参数
+   * `dict.value必须与table.rowKey一致`
    */
   dict: Dict;
   /**
