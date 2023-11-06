@@ -58,7 +58,7 @@ type FsTableSelectProps = {
   crudOptionsOverride?: DynamicallyCrudOptions;
   /**
    * 数据字典
-   * 必須配置`getNodesByValues`参数
+   * 必須配置`getNodesByValues`参数,你需要实现：根据id列表向后台请求多行数据并返回
    * `dict.value必须与table.rowKey一致`
    */
   dict: Dict;
