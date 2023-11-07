@@ -47,9 +47,8 @@ export default defineComponent({
     // tag配置
     tag: {},
     // 构建下载url方法，支持异步
-    buildUrl: {
-      type: Function
-    },
+    buildUrl: {},
+    // 批量构建下载url方法，支持异步
     buildUrls: {},
     // 根据value构建文件名
     getFileName: {}
