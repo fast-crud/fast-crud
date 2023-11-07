@@ -1,4 +1,4 @@
-import { message, notification, Modal } from "ant-design-vue";
+import { message, notification, Modal, Button } from "ant-design-vue";
 import { uiContext } from "@fast-crud/ui-interface";
 import setupIcons from "./icons";
 import { Antdv } from "./antdv";
@@ -24,6 +24,7 @@ export default {
     if (options.setupIcons !== false) {
       setupIcons(app);
     }
+    app.component("AButtonGroup", Button.Group);
     return antdvUi;
   },
   set

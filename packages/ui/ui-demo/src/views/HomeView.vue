@@ -80,6 +80,17 @@ const radioButtonRender = ()=>{
       } }
   })
 }
+
+const buttonGroupRender = ()=>{
+  return ui.value.buttonGroup.render({
+    slots:{default:()=> {
+        return [
+          ui.value.button.render({slots:{default:()=>'按钮1'}}),
+          ui.value.button.render({slots:{default:()=>'按钮2'}})
+        ]
+      } }
+  })
+}
 </script>
 
 <template>
@@ -136,6 +147,18 @@ const radioButtonRender = ()=>{
           </td>
           <td>
             <ui-render :render-func="radioButtonRender"></ui-render>
+          </td>
+        </tr>
+        <tr>
+          <td>buttonGroup</td>
+          <td>
+            <component :is="ui.buttonGroup.name">
+              <component :is="ui.button.name" >按钮1</component>
+              <component :is="ui.button.name" >按钮2</component>
+            </component>
+          </td>
+          <td>
+            <ui-render :render-func="buttonGroupRender"></ui-render>
           </td>
         </tr>
 

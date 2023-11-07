@@ -299,7 +299,7 @@ export class Antdv implements UiInterface {
   });
 
   buttonGroup = creator<ButtonGroupCI>({
-    name: "a-space",
+    name: "a-button-group",
     builder(opts) {
       return buildBinding(this, opts, {});
     }

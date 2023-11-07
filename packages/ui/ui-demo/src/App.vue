@@ -7,7 +7,9 @@ import Application from "@/components/Application.vue";
   <a-config-provider >
   <NConfigProvider>
     <Application>
+      <fs-ui-context>
         <RouterView />
+      </fs-ui-context>
     </Application>
   </NConfigProvider>
   </a-config-provider>
