@@ -3,6 +3,19 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.18.4](https://github.com/fast-crud/fast-crud/compare/v1.18.3...v1.18.4) (2023-11-07)
+
+### Bug Fixes
+
+* 关闭antdv的默认分页 ([dc36caa](https://github.com/fast-crud/fast-crud/commit/dc36caaff1eb16d1769d2ed55cf465a01297475a))
+* 修复afterSubmit返回false仍然关闭对话框的bug ([80337ff](https://github.com/fast-crud/fast-crud/commit/80337ffc46eda74d526562d9f27c43a2b6eb0534))
+
+### Performance Improvements
+
+* 新增国际手机号输入框 ([ebabee2](https://github.com/fast-crud/fast-crud/commit/ebabee2f61caed3678f0681330ed3cb044803a2f))
+* antdv 支持按钮组 ([cfdefdf](https://github.com/fast-crud/fast-crud/commit/cfdefdf89bfe7e037d1a8d3c6416cf38678074c9))
+* component.on.event配置 ，兼容事件名称不用on开头的写法 ([28ccfa5](https://github.com/fast-crud/fast-crud/commit/28ccfa57b7bb9481fbdaae60d891b2ba74b6a489))
+
 ## [1.18.3](https://github.com/fast-crud/fast-crud/compare/v1.18.2...v1.18.3) (2023-10-26)
 
 ### Bug Fixes
