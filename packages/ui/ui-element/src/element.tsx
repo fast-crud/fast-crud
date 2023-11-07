@@ -283,6 +283,7 @@ export class Element implements UiInterface {
     name: "el-select",
     modelValue: "modelValue",
     clearable: "clearable",
+    filterable: "filterable",
     buildMultiBinding(multiple) {
       return { multiple };
     }

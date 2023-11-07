@@ -285,6 +285,14 @@ module.exports = {
                                             link: '/api/components/extends/time/components/fs-time-humanize'
                                         }
                                     ]
+                                },
+                                {
+                                    text: '输入', items: [
+                                        {
+                                            text: "fs-phone-input",
+                                            link: '/api/components/extends/input/components/fs-phone-input'
+                                        }
+                                    ]
                                 }
                             ]
                         },

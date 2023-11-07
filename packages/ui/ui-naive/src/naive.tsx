@@ -528,6 +528,7 @@ export class Naive implements UiInterface {
     name: "n-select",
     modelValue: "value",
     clearable: "clearable",
+    filterable: "filterable",
     buildMultiBinding: (multiple) => {
       return { multiple };
     }

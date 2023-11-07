@@ -139,10 +139,8 @@ const countryOptions = computed(() => {
 
 const computedSelect = computed(() => {
   const def = {
-    style: {
-      maxWidth: "200px"
-    },
     placeholder: "请选择",
+    [ui.select.filterable]: true,
     [ui.select.modelValue]: selectValue.value.countryCode,
     ["onUpdate:" + ui.select.modelValue]: handleSelectInput
   };
@@ -273,6 +271,7 @@ watch(
   align-items: center;
   .ant-select-selector {
     width: 100px;
+    max-width: 50%;
     border-top-right-radius: 0;
     border-bottom-right-radius: 0;
   }
@@ -281,6 +280,45 @@ watch(
     border-bottom-left-radius: 0;
     border-top-left-radius: 0;
     border-left: 0;
+  }
+
+  .el-select {
+    width: 100px;
+    max-width: 50%;
+
+    .el-input {
+      border-right: 0;
+    }
+    .el-input__wrapper {
+      border-right: 0;
+      border-top-right-radius: 0;
+      border-bottom-right-radius: 0;
+    }
+  }
+  .el-input {
+    border-left: 0;
+    .el-input__wrapper {
+      border-bottom-left-radius: 0;
+      border-top-left-radius: 0;
+      border-left: 0;
+    }
+  }
+
+  .n-select {
+    width: 100px;
+    max-width: 50%;
+    .n-base-selection {
+      border-top-right-radius: 0;
+      border-bottom-right-radius: 0;
+    }
+    .n-base-selection__border {
+      border-right: 0;
+    }
+  }
+
+  .n-input {
+    border-bottom-left-radius: 0;
+    border-top-left-radius: 0;
   }
 }
 </style>

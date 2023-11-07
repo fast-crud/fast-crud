@@ -67,6 +67,7 @@ export default defineComponent({
     > .more {
       justify-self: flex-end;
       margin-right: 18px;
+      font-size: 14px;
     }
   }
   .fs-page-content {
