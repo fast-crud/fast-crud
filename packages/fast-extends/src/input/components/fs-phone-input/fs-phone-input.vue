@@ -182,8 +182,8 @@ function setValue(value: any) {
     selectValue.value.phoneNumber = undefined;
   }
 }
-function getCountryByValue(value: any) {
-  let ret = null;
+function getCountryByValue(value: any): any {
+  let ret: any = null;
   if (value != null) {
     if (value.countryCode != null) {
       ret = countryOptions.value.find((item) => item.iso2 === value.countryCode);
@@ -213,10 +213,10 @@ function handleSelectInput(countryCode: any) {
   formValidator.onBlur();
 }
 
-function handleNumberInput(number) {
+function handleNumberInput(number: any) {
   selectValue.value.phoneNumber = number;
   if (selectValue.value.callingCode == null && selectValue.value.countryCode == null) {
-    selectValue.value.countryCode = defaultCountry;
+    selectValue.value.countryCode = props.defaultCountry;
     const country = getCountryByValue(selectValue.value);
     if (country) {
       selectValue.value.callingCode = country.callingCode;
