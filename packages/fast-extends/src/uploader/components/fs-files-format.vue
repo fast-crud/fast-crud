@@ -48,10 +48,7 @@ export default defineComponent({
     tag: {},
     // 构建下载url方法，支持异步
     buildUrl: {
-      type: Function,
-      default: function (value: any) {
-        return value;
-      }
+      type: Function
     },
     buildUrls: {},
     // 根据value构建文件名
