@@ -141,6 +141,7 @@ const computedSelect = computed(() => {
   const def = {
     placeholder: "请选择",
     [ui.select.filterable]: true,
+    [ui.select.clearable]: true,
     [ui.select.modelValue]: selectValue.value.countryCode,
     ["onUpdate:" + ui.select.modelValue]: handleSelectInput
   };
@@ -150,6 +151,7 @@ const computedSelect = computed(() => {
 const computedInput = computed(() => {
   const def: any = {
     placeholder: "请输入",
+    [ui.select.clearable]: true,
     [ui.input.modelValue]: selectValue.value.phoneNumber,
     [`onUpdate:${ui.input.modelValue}`]: handleNumberInput
   };
@@ -269,12 +271,15 @@ watch(
 .fs-phone-input {
   display: flex;
   align-items: center;
-  .ant-select-selector {
-    width: 100px;
+  .ant-select {
+    width: 120px;
     max-width: 50%;
-    border-top-right-radius: 0;
-    border-bottom-right-radius: 0;
+    .ant-select-selector {
+      border-top-right-radius: 0;
+      border-bottom-right-radius: 0;
+    }
   }
+
   .ant-input,
   .ant-input-affix-wrapper {
     border-bottom-left-radius: 0;
