@@ -34,13 +34,13 @@ export default defineComponent({
      * 支持格式： `url , {url} , [url1,url2] ,  [{url:url1},{url:url2}]`
      */
     modelValue: {},
-    // tag颜色，【primary, success, warning, danger ,info】
+    // tag颜色，`【primary, success, warning, danger ,info】`
     color: {
       default: ""
     },
-    // 展示类型【text, tag】
+    // 展示类型`【text, tag】`
     type: {
-      default: "tag" // 可选【text,tag】
+      default: "tag" // `可选【text,tag】`
     },
     // 链接配置
     a: {},
