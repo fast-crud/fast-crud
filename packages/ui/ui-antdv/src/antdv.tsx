@@ -475,6 +475,7 @@ export class Antdv implements UiInterface {
     name: "a-select",
     modelValue: "value",
     clearable: "allowClear",
+    filterable: "showSearch",
     buildMultiBinding(multiple: boolean) {
       return {
         mode: multiple ? "multiple" : ""
