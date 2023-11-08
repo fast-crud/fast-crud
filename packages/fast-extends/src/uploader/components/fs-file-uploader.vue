@@ -9,7 +9,7 @@
       v-model:[ui.dialog.visible]="previewVisible"
       v-bind="computedPreview"
     >
-      <img style="width: 100%" :src="previewImage" />
+      <img style="max-width: 100%; max-height: 100%" :src="previewImage" />
     </component>
   </div>
 </template>
