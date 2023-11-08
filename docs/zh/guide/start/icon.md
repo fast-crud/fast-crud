@@ -57,7 +57,7 @@ import "@purge-icons/generated";
 
 ### 4. fs中配置使用`iconify`图标
 
-1. 从[iconify图标库](https://iconify.design/icon-sets/ion/) 中查找你要使用的图标，复制图标名称，配置到`icon`属性上即可.
+1. 从[iconify图标库](https://icon-sets.iconify.design/) 中查找你要使用的图标，复制图标名称，配置到`icon`属性上即可.
 2. 注意图标名称要是`xxx:yyyy`格式的，中间要有冒号，例如：`ion:add-circle`。
 3. 如果图标没有冒号的，请确认当前图标所在图标库名，图标库名后面的第一个`-`换成`:`即可
 
