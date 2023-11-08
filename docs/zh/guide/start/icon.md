@@ -69,7 +69,7 @@ import "@purge-icons/generated";
 
 
 
-## 三、使用 `iconfont svg` 图标
+## 三、使用阿里巴巴`iconfont svg` 图标
 
 ### 1. 创建图标js，并引入项目中
 1. 前往iconfont注册账号： https://www.iconfont.cn/
