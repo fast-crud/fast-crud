@@ -254,10 +254,8 @@ export default defineComponent({
         logger.warn("form.value配置不支持Compute/AsyncCompute类型的动态计算");
       }
     });
-
     function createInitialForm() {
-      const form = _.cloneDeep(props.initialForm);
-
+      const form = {};
       // 初始数据赋值
       _.each(props.columns, (item, key) => {
         const defValue = unref(item.value);
@@ -265,6 +263,7 @@ export default defineComponent({
           _.set(form, key, defValue);
         }
       });
+      merge(form, _.cloneDeep(props.initialForm));
       return form;
     }
 
