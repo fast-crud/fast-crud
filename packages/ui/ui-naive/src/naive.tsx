@@ -564,7 +564,7 @@ export class Naive implements UiInterface {
     headerDomSelector: ".n-data-table-thead",
     vLoading: false,
     scrollTo(req: TableScrollReq) {
-      req.tableRef.value.scrollTo({ top: req.top });
+      req.tableRef?.value?.scrollTo({ top: req.top });
     },
     buildSelectionCrudOptions(req) {
       const onSelectionChange = (changed: any = []) => {
