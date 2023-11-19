@@ -10,7 +10,6 @@ export type EditableTable = {
   active: () => void;
   saveEach: () => Promise<void>;
   cancelAll: () => void;
-  getChangedData: () => { changed: any[]; removed: any[] };
   persist: () => void;
   submit: (call: (opts: any) => any) => Promise<void>;
   resume: () => void;
@@ -61,7 +60,10 @@ export type EditableRow = {
   cancel: () => void;
   save: (opts: { index: number; doSave: (opts: any) => Promise<void> }) => Promise<void>;
   loading: boolean;
-  getRowData: (index: number) => any;
+  /**
+   * 获取可以提交的行数据
+   */
+  getRowData: () => any;
   getChangeData: (index: number) => any;
   rowData: any;
   editableId: any;

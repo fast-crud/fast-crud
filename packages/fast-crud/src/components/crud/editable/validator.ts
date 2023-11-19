@@ -7,10 +7,24 @@ export function createValidator(editableCells: Record<string, EditableCell>) {
   for (const key in editableCells) {
     const form = editableCells[key].getForm();
     const rules = form.rules || form.rule;
+    const keys: [] = key.split(".");
+    let curDesc = descriptor;
     if (rules) {
-      descriptor[key] = rules;
+      for (let i = 0; i < keys.length; i++) {
+        const key = keys[i];
+        if (!curDesc[key]) {
+          curDesc[key] = { type: "object", fields: {} };
+        }
+        if (i == keys.length - 1) {
+          //最后一个
+          curDesc[key] = rules;
+        } else {
+          curDesc = curDesc[key].fields;
+        }
+      }
     }
   }
+  console.log("descriptor", descriptor);
   return new Schema(descriptor);
 }
 // const descriptor = {

@@ -282,6 +282,11 @@ export type Editable = {
   getInstance(): any;
   eachCells(opts: EditableEachCellsOpts): void;
   eachRows(opts: EditableEachRowsOpts): void;
+  validate(): Promise<boolean>;
+  /**
+   * 获取可提交数据
+   */
+  getTableData(): any[];
 };
 /**
  * index or row 必须传一个

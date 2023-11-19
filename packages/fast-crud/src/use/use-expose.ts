@@ -137,8 +137,7 @@ function useEditable(props: UseEditableProps) {
       await editableRow.save({
         async doSave(opts: { isAdd: boolean; row: any; setData: (data: any) => void }) {
           const { isAdd, row, setData } = opts;
-          const rowData = _.cloneDeep(row);
-          delete rowData[crudBinding.value.table.editable.rowKey];
+          const rowData = row;
           if (crudBinding.value?.mode?.name === "local") {
             return;
           }
@@ -197,6 +196,12 @@ function useEditable(props: UseEditableProps) {
     },
     eachRows(opts: EditableEachCellsOpts) {
       crudExpose.getTableRef().editable?.eachRows(opts);
+    },
+    async validate() {
+      return await crudExpose.getTableRef().editable?.validate();
+    },
+    getTableData(): any[] {
+      return crudExpose.getTableRef().editable?.getTableData()();
     }
   };
   return editable;
