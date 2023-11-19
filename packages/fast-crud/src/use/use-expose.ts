@@ -131,7 +131,7 @@ function useEditable(props: UseEditableProps) {
       let editableId = opts.editableId;
       if (!editableId) {
         const row = opts.row;
-        editableId = row[crudBinding.value.table.rowKey];
+        editableId = row[crudBinding.value.table.editable.rowKey];
       }
       const editableRow = editable.getEditableRow(editableId);
       await editableRow.save({
@@ -158,7 +158,7 @@ function useEditable(props: UseEditableProps) {
       let editableId = opts.editableId;
       if (!editableId) {
         const row = opts.row;
-        editableId = row[crudBinding.value.table.rowKey];
+        editableId = row[crudBinding.value.table.editable.rowKey];
       }
 
       const editableRow = editable.getEditableRow(editableId);
@@ -168,7 +168,7 @@ function useEditable(props: UseEditableProps) {
       let editableId = opts.editableId;
       if (!editableId) {
         const row = opts.row;
-        editableId = row[crudBinding.value.table.rowKey];
+        editableId = row[crudBinding.value.table.editable.rowKey];
       }
 
       const editableRow = editable.getEditableRow(editableId);

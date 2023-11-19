@@ -11,6 +11,7 @@ import {
   EditableRow,
   EditableTable
 } from "./d";
+import { createValidator } from "./validator";
 
 // import { useValidation } from "./validation/use-validation";
 function eachTree(tree: any, callback: any) {
@@ -214,12 +215,16 @@ export function useEditable(props: any, ctx: any, tableRef: any): { editable: Ed
     eachTree(props.columns, (item: ColumnProps) => {
       cells[item.key] = createEditableCell(rowData, item.key, editableId, item);
     });
+    const validator = computed(() => {
+      return createValidator(cells);
+    });
     const editableRow: EditableRow = reactive({
       rowData,
       editableId,
       isEditing: false,
       loading: false,
       cells,
+      validator,
       inactive: () => {
         editableRow.isEditing = false;
         _.forEach(editableRow.cells, (cell) => {
@@ -256,6 +261,14 @@ export function useEditable(props: any, ctx: any, tableRef: any): { editable: Ed
         const row = editableRow.rowData;
         const { merge } = useMerge();
 
+        try {
+          await editableRow.validator.validate(row);
+        } catch (e: any) {
+          const { errors, fields } = e;
+          console.error("校验失败:", e, e.errors, e.fields);
+          return;
+        }
+
         function setData(newRow: any) {
           if (newRow) {
             merge(row, newRow);
@@ -290,12 +303,13 @@ export function useEditable(props: any, ctx: any, tableRef: any): { editable: Ed
         return changed;
       }
     });
+
     return editableRow;
   }
 
   function unshiftEditableRow(rowData: any) {
     const editableId = nextEditableAddId();
-    rowData[props.rowKey] = editableId;
+    rowData[props.editable.rowKey] = editableId;
     const editableRow = createEditableRow(editableId, rowData);
     editableRows[editableId] = editableRow;
     return editableRow;
@@ -307,6 +321,11 @@ export function useEditable(props: any, ctx: any, tableRef: any): { editable: Ed
     return editableAddIdGen;
   }
 
+  let editableIdGen = 0;
+  function nextEditableId() {
+    editableIdGen++;
+    return editableIdGen;
+  }
   function setupEditable(data?: any) {
     if (data == null) {
       data = tableData.getData();
@@ -317,10 +336,10 @@ export function useEditable(props: any, ctx: any, tableRef: any): { editable: Ed
     });
 
     _.forEach(data, (rowData: any) => {
-      if (rowData[props.rowKey] == null) {
-        throw new Error("rowKey不能为空，rowData：", rowData);
+      if (!rowData[props.editable.rowKey]) {
+        rowData[props.editable.rowKey] = nextEditableId();
       }
-      const editableId = rowData[props.rowKey];
+      const editableId = rowData[props.editable.rowKey];
       editableRows[editableId] = createEditableRow(editableId, rowData);
     });
     if (options.value.onSetup) {

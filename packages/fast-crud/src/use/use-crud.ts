@@ -344,12 +344,12 @@ export function useCrud(ctx: UseCrudProps): UseCrudRet {
               }),
               click: (context: ScopeContext) => {
                 const { index, row } = context;
-                const editableId = row[crudBinding.value.table.rowKey];
+                const editableId = row[crudBinding.value.table.editable.rowKey];
                 expose.editable.getEditableRow(editableId)?.active();
               },
               show: compute((context: ComputeContext) => {
                 const { index, row } = context;
-                const editableId = row[crudBinding.value.table.rowKey];
+                const editableId = row[crudBinding.value.table.editable.rowKey];
                 return !expose.editable?.getEditableRow(editableId)?.isEditing;
               })
             },
@@ -362,7 +362,7 @@ export function useCrud(ctx: UseCrudProps): UseCrudRet {
               },
               show: compute((context: ComputeContext) => {
                 const { index, row } = context;
-                const editableId = row[crudBinding.value.table.rowKey];
+                const editableId = row[crudBinding.value.table.editable.rowKey];
                 return !!expose.editable?.getEditableRow(editableId)?.isEditing;
               })
             },
@@ -374,7 +374,7 @@ export function useCrud(ctx: UseCrudProps): UseCrudRet {
               },
               show: compute((context: ComputeContext) => {
                 const { index, row } = context;
-                const editableId = row[crudBinding.value.table.rowKey];
+                const editableId = row[crudBinding.value.table.editable.rowKey];
                 return !!expose.editable?.getEditableRow(editableId)?.isEditing;
               })
             },

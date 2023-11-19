@@ -1,6 +1,7 @@
 import { Ref, UnwrapNestedRefs } from "vue";
-import { ColumnProps, EditableProps, EditableUpdateCellRequest } from "/src/d";
+import { ColumnProps, EditableProps, EditableUpdateCellRequest, FormProps } from "/src/d";
 import { ComputedRef } from "vue/dist/vue";
+import Schema from "async-validator";
 
 export type EditableTable = {
   options: Ref<EditableProps>;
@@ -34,7 +35,7 @@ export type EditableCell = {
   activeTrigger: "onClick" | "onDbClick" | false;
   isEditable: () => boolean;
   isChanged: () => boolean;
-  getForm: () => any;
+  getForm: () => FormProps;
   active: (opts?: EditableCellActiveProps) => void;
   inactive: () => void;
   resume: () => void;
@@ -63,6 +64,7 @@ export type EditableRow = {
   getChangeData: (index: number) => any;
   rowData: any;
   editableId: any;
+  validator?: Schema;
 };
 
 export type EditableRowData = {

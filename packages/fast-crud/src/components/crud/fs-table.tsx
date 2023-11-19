@@ -15,7 +15,14 @@ import { useEditable } from "./editable/use-editable";
 import logger from "../../utils/util.log";
 import utilLog from "../../utils/util.log";
 import "./fs-table.less";
-import { ColumnProps, ConditionalRenderProps, ScopeContext, TableColumnsProps, WriteableSlots } from "../../d";
+import {
+  ColumnProps,
+  ConditionalRenderProps,
+  EditableProps,
+  ScopeContext,
+  TableColumnsProps,
+  WriteableSlots
+} from "../../d";
 import { UiInterface } from "@fast-crud/ui-interface";
 
 type BuildTableColumnsOption = {
@@ -235,7 +242,7 @@ export default defineComponent({
      * 行编辑，批量编辑
      */
     editable: {
-      type: Object as PropType<any>
+      type: Object as PropType<EditableProps>
     },
 
     loading: {
@@ -371,7 +378,7 @@ export default defineComponent({
       };
 
       const index = scope[ui.tableColumn.index];
-      const editableId = row[props.rowKey];
+      const editableId = row[props.editable.rowKey];
 
       const cellSlots = props.cellSlots && props.cellSlots[cellSlotName];
       if (editableWrap.editable?.options?.value?.enabled === true) {
