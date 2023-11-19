@@ -338,8 +338,9 @@ export function useCrud(ctx: UseCrudProps): UseCrudRet {
             edit: {
               text: "编辑",
               loading: compute((context: ComputeContext) => {
-                const { index } = context;
-                const editableRow = expose.editable.getEditableRow(index);
+                const { index, row } = context;
+                const editableId = row[crudBinding.value.table.editable.rowKey];
+                const editableRow = expose.editable.getEditableRow(editableId);
                 return !!editableRow?.loading;
               }),
               click: (context: ScopeContext) => {

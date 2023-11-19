@@ -72,6 +72,8 @@ export default defineComponent({
     const scopeFunc = () => {
       return props.scope;
     };
+
+    //拦截v-model
     const slots = {
       default: () => {
         return <fs-cell ref={"targetRef"} item={props.item} scope={props.scope} {...ctx.attrs} />;
@@ -119,6 +121,7 @@ export default defineComponent({
           onCancel={onCancel}
           loading={editableCell?.loading}
           trigger={trigger}
+          validateErrors={editableCell?.validateErrors}
         />
       );
     };

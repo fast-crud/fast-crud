@@ -241,7 +241,8 @@ export class Antdv implements UiInterface {
     question: "QuestionCircleOutlined",
     caretUp: "CaretUpOutlined",
     caretDown: "CaretDownOutlined",
-    eye: "EyeOutlined"
+    eye: "EyeOutlined",
+    info: "InfoCircleOutlined"
   };
 
   dialog: DialogCI = creator<DialogCI>({

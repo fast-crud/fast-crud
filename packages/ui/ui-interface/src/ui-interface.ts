@@ -576,6 +576,7 @@ export interface Icons {
   caretUp: string;
   caretDown: string;
   eye: string;
+  info: string;
 }
 export interface UiInterface {
   modelValue: string;

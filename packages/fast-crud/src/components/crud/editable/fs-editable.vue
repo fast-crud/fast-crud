@@ -9,14 +9,26 @@
         <fs-icon :icon="ui.icons.edit" />
       </div>
     </div>
-    <div v-else class="fs-editable-inner">
+    <div v-else class="fs-editable-inner" :class="{ 'fs-validate-error': hasError() }">
       <div class="fs-editable-input">
         <slot name="edit"></slot>
       </div>
-      <div v-if="editing && showAction" class="fs-editable-action">
-        <fs-icon v-if="loading" size="mini" :spin="true" :icon="ui.icons.refresh" />
-        <fs-icon v-else size="mini" :icon="ui.icons.check" @click="doSubmit" />
-        <fs-icon :class="{ hidden: loading }" size="mini" :icon="ui.icons.close" @click="doCancel" />
+      <div class="fs-editable-action">
+        <template v-if="showAction">
+          <fs-icon v-if="loading" size="mini" :spin="true" :icon="ui.icons.refresh" />
+          <fs-icon v-else size="mini" :icon="ui.icons.check" @click="doSubmit" />
+          <fs-icon :class="{ hidden: loading }" size="mini" :icon="ui.icons.close" @click="doCancel" />
+        </template>
+        <component :is="ui.tooltip.name">
+          <template #[ui.tooltip.content]>
+            <span class="error-icon">
+              {{ getValidateErrorMessage() }}
+            </span>
+          </template>
+          <template #[ui.tooltip.trigger]>
+            <fs-icon :class="{ hidden: !hasError(), 'error-icon': true }" size="mini" :icon="ui.icons.info" />
+          </template>
+        </component>
       </div>
     </div>
   </div>
@@ -32,13 +44,17 @@ type FsEditableProps = {
   trigger?: "onClick" | "onDbClick" | false;
   loading?: boolean;
   showAction?: boolean;
+  validateErrors?: any[];
 };
 const props = withDefaults(defineProps<FsEditableProps>(), {
   editing: false,
   dirty: false,
   loading: false,
   showAction: true,
-  trigger: "onClick"
+  trigger: "onClick",
+  validateErrors: () => {
+    return [];
+  }
 });
 
 const { ui } = useUi();
@@ -58,6 +74,15 @@ function doSubmit() {
 }
 function doCancel() {
   emits("cancel");
+}
+function hasError() {
+  return props.validateErrors?.length > 0;
+}
+function getValidateErrorMessage() {
+  if (props.validateErrors?.length === 0) {
+    return;
+  }
+  return props.validateErrors?.map((item) => item.message).join(",");
 }
 </script>
 
@@ -112,6 +137,16 @@ function doCancel() {
       margin-right: 5px;
       .el-radio__label {
         padding: 2px;
+      }
+    }
+
+    &.fs-validate-error {
+      .error-icon {
+        color: #ff4d4f;
+      }
+      .ant-input-affix-wrapper {
+        border-color: #ff4d4f;
+        box-shadow: 0 0 0 2px rgb(255 38 5 / 6%);
       }
     }
   }

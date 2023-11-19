@@ -30,7 +30,8 @@ import {
   EyeOutlined,
   QuestionCircleOutlined,
   CaretUpOutlined,
-  CaretDownOutlined
+  CaretDownOutlined,
+  InfoCircleOutlined
   // @ts-ignore
 } from "@ant-design/icons-vue";
 
@@ -66,7 +67,8 @@ const icons: any = {
   EyeOutlined,
   QuestionCircleOutlined,
   CaretUpOutlined,
-  CaretDownOutlined
+  CaretDownOutlined,
+  InfoCircleOutlined
 };
 export default function (app: any) {
   for (const key in icons) {

@@ -256,21 +256,41 @@ export function useEditable(props: any, ctx: any, tableRef: any): { editable: Ed
       cancel: () => {
         editableRow.resume();
       },
+      validate: async (row?: any) => {
+        try {
+          _.forEach(editableRow.cells, (cell, key) => {
+            cell.validateErrors = [];
+          });
+          if (row == null) {
+            row = editableRow.rowData;
+          }
+          await editableRow.validator.validate(row);
+          return true;
+        } catch (e: any) {
+          const { errors, fields } = e;
+          _.forEach(fields, (errors: any, key: string) => {
+            const cell = editableRow.cells[key];
+            if (cell) {
+              cell.validateErrors = errors;
+            }
+          });
+          // console.error("校验失败:", e, e.errors, e.fields);
+          return fields;
+        }
+      },
       save: async (opts: { doSave: (opts: any) => Promise<void> }) => {
         const { doSave } = opts;
         const row = editableRow.rowData;
         const { merge } = useMerge();
-
-        try {
-          await editableRow.validator.validate(row);
-        } catch (e: any) {
-          const { errors, fields } = e;
-          console.error("校验失败:", e, e.errors, e.fields);
+        const errors = await editableRow.validate();
+        if (errors !== true) {
           return;
         }
-
         function setData(newRow: any) {
           if (newRow) {
+            if (newRow[props.rowKey] == null) {
+              console.error("保存接口没有返回rowKey,无法更新该行的id,newRow:", newRow);
+            }
             merge(row, newRow);
           }
         }
@@ -304,6 +324,27 @@ export function useEditable(props: any, ctx: any, tableRef: any): { editable: Ed
       }
     });
 
+    watch(
+      () => {
+        return rowData;
+      },
+      async (value, oldValue, p3) => {
+        await editableRow.validate();
+      },
+      {
+        deep: true
+      }
+    );
+    //多级数据
+    if (rowData.children && rowData.children.length > 0) {
+      for (const child of rowData.children) {
+        if (!child[props.editable.rowKey]) {
+          child[props.editable.rowKey] = nextEditableId();
+        }
+        const editableId = child[props.editable.rowKey];
+        editableRows[editableId] = createEditableRow(editableId, child);
+      }
+    }
     return editableRow;
   }
 

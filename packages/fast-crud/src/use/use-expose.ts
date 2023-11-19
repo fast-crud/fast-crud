@@ -137,19 +137,21 @@ function useEditable(props: UseEditableProps) {
       await editableRow.save({
         async doSave(opts: { isAdd: boolean; row: any; setData: (data: any) => void }) {
           const { isAdd, row, setData } = opts;
+          const rowData = _.cloneDeep(row);
+          delete rowData[crudBinding.value.table.editable.rowKey];
           if (crudBinding.value?.mode?.name === "local") {
             return;
           }
           try {
-            editableRow.isLoading = true;
+            editableRow.loading = true;
             if (isAdd) {
-              const ret = await crudBinding.value.request.addRequest({ form: row });
+              const ret = await crudBinding.value.request.addRequest({ form: rowData });
               setData(ret);
             } else {
-              await crudBinding.value.request.editRequest({ form: row, row });
+              await crudBinding.value.request.editRequest({ form: rowData, row: rowData });
             }
           } finally {
-            editableRow.isLoading = false;
+            editableRow.loading = false;
           }
         }
       });
