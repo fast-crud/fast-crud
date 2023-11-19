@@ -250,6 +250,10 @@ export default defineComponent({
     },
     request: {
       type: Object as PropType<any>
+    },
+    rowKey: {
+      type: String,
+      default: "id"
     }
   },
   emits: ["row-handle", "value-change", "pagination-change", "filter-change", "sort-change", "data-change"],
@@ -341,7 +345,7 @@ export default defineComponent({
     const renderCellComponent = (item: any, scope: any) => {
       // console.log("render cell component",item.key,scope.record)
       const cellSlotName = "cell_" + item.key;
-      scope.row = scope[tableColumnCI.row];
+      const row = (scope.row = scope[tableColumnCI.row]);
       // const getScopeFn = () => {
       //   return getContextFn(item, scope);
       // };
@@ -367,19 +371,22 @@ export default defineComponent({
       };
 
       const index = scope[ui.tableColumn.index];
+      const editableId = row[props.rowKey];
 
       const cellSlots = props.cellSlots && props.cellSlots[cellSlotName];
       if (editableWrap.editable?.options?.value?.enabled === true) {
-        // if (props.editable && props.editable?.options?.value?.enabled === true) {
-        const editable = editableWrap.editable.getEditableCell(index, item.key);
+        // if (props.editableCell && props.editableCell?.options?.value?.enabled === true) {
+        const editableCell = editableWrap.editable.getEditableCell(editableId, item.key);
         return (
           <fs-editable-cell
             ref={setRef}
             key={item.key}
             columnKey={item.key}
             index={index}
+            editableId={editableId}
             item={item}
-            editable={editable}
+            editableCell={editableCell}
+            editableOpts={editableWrap.editable?.options?.value}
             scope={newScope}
             slots={cellSlots}
             {...vModel}

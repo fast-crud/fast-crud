@@ -3,7 +3,7 @@ import {
   CrudExpose,
   Editable,
   EditableAddRowOptions,
-  EditableEditColsOptions,
+  EditableActiveColsOptions,
   OpenDialogProps,
   OpenEditContext,
   SetFormDataOptions
@@ -27,6 +27,7 @@ import {
 } from "../d";
 import { useFormWrapper } from "./use-form";
 import { forEachColumns } from "../use/use-columns";
+import { EditableEachCellsOpts } from "../components/crud/editable/d";
 
 const { merge } = useMerge();
 const doMerge = merge;
@@ -84,8 +85,8 @@ function useEditable(props: UseEditableProps) {
     /**
      * 激活所有编辑
      */
-    active() {
-      crudExpose.getTableRef().editable.active();
+    active(opts) {
+      crudExpose.getTableRef().editable.active(opts);
     },
     /**
      * 退出编辑
@@ -99,8 +100,8 @@ function useEditable(props: UseEditableProps) {
     addRow(opts: EditableAddRowOptions) {
       crudExpose.getTableRef().editable.addRow(opts);
     },
-    editCol(opts: EditableEditColsOptions) {
-      crudExpose.getTableRef().editable.editCol(opts);
+    activeCols(opts: EditableActiveColsOptions) {
+      crudExpose.getTableRef().editable.activeCols(opts);
     },
     /**
      * 还原，取消编辑
@@ -108,29 +109,44 @@ function useEditable(props: UseEditableProps) {
     resume() {
       crudExpose.getTableRef().editable.resume();
     },
-    removeRow(index: number) {
-      crudExpose.getTableRef().editable.removeRow(index);
+    /**
+     * 还原，取消编辑,同resume
+     */
+    cancel() {
+      crudExpose.getTableRef().editable.cancelAll();
     },
-    getEditableRow(index: number) {
-      return crudExpose.getTableRef()?.editable?.getEditableRow(index);
+    /**
+     * 本地保存，不提交到后台
+     */
+    persist() {
+      crudExpose.getTableRef().editable.persist();
     },
-    async doSaveRow(opts: { index: number }) {
-      const { index } = opts;
-      const editableRow = editable.getEditableRow(index);
-      editableRow.save({
-        index,
-        async doSave(opts: { isAdd: boolean; changed: boolean; row: any; setData: (data: any) => void }) {
-          const { isAdd, changed, row, setData } = opts;
+    removeRow(editableId: any) {
+      crudExpose.getTableRef().editable.removeRow(editableId);
+    },
+    getEditableRow(editableId: any) {
+      return crudExpose.getTableRef()?.editable?.getEditableRow(editableId);
+    },
+    async doSaveRow(opts: { editableId: any; row: any }) {
+      let editableId = opts.editableId;
+      if (!editableId) {
+        const row = opts.row;
+        editableId = row[crudBinding.value.table.rowKey];
+      }
+      const editableRow = editable.getEditableRow(editableId);
+      await editableRow.save({
+        async doSave(opts: { isAdd: boolean; row: any; setData: (data: any) => void }) {
+          const { isAdd, row, setData } = opts;
           if (crudBinding.value?.mode?.name === "local") {
             return;
           }
           try {
             editableRow.isLoading = true;
             if (isAdd) {
-              const ret = await crudBinding.value.request.addRequest({ form: changed });
+              const ret = await crudBinding.value.request.addRequest({ form: row });
               setData(ret);
             } else {
-              await crudBinding.value.request.editRequest({ form: changed, row });
+              await crudBinding.value.request.editRequest({ form: row, row });
             }
           } finally {
             editableRow.isLoading = false;
@@ -138,23 +154,32 @@ function useEditable(props: UseEditableProps) {
         }
       });
     },
-    async doCancelRow(opts: { index: number }) {
-      const { index } = opts;
-      const editableRow = editable.getEditableRow(index);
-      editableRow.inactive();
+    async doCancelRow(opts: { editableId: any; row: any }) {
+      let editableId = opts.editableId;
+      if (!editableId) {
+        const row = opts.row;
+        editableId = row[crudBinding.value.table.rowKey];
+      }
+
+      const editableRow = editable.getEditableRow(editableId);
+      editableRow.cancel();
     },
-    async doRemoveRow(opts: { index: number }) {
-      const index = opts.index;
-      const row = editable.getEditableRow(index);
-      const rowData = row.getRowData(index);
-      const context = { index, row: rowData };
-      await crudExpose.doRemove(context, {
+    async doRemoveRow(opts: { editableId: any; row: any }) {
+      let editableId = opts.editableId;
+      if (!editableId) {
+        const row = opts.row;
+        editableId = row[crudBinding.value.table.rowKey];
+      }
+
+      const editableRow = editable.getEditableRow(editableId);
+      const rowData = editableRow.rowData;
+      await crudExpose.doRemove(opts, {
         async handle() {
-          if (row.isAdd) {
-            editable.removeRow(index);
+          if (editableRow.isAdd) {
+            editable.removeRow(editableId);
           } else {
             if (crudBinding.value.mode.name === "local") {
-              editable.removeRow(index);
+              editable.removeRow(editableId);
             } else {
               await crudBinding.value.request.delRequest({ row: rowData });
             }
@@ -164,6 +189,12 @@ function useEditable(props: UseEditableProps) {
     },
     getInstance() {
       crudExpose.getTableRef().editable;
+    },
+    eachCells(opts: EditableEachCellsOpts) {
+      crudExpose.getTableRef().editable?.eachCells(opts);
+    },
+    eachRows(opts: EditableEachCellsOpts) {
+      crudExpose.getTableRef().editable?.eachRows(opts);
     }
   };
   return editable;

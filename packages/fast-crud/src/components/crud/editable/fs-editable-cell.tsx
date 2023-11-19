@@ -1,7 +1,8 @@
-import { computed, defineComponent } from "vue";
+import { computed, ComputedRef, defineComponent, defineExpose, PropType, ref } from "vue";
 import { uiContext } from "../../../ui";
 import { useCompute } from "../../../use/use-compute";
-import "./fs-editable-cell.less";
+import { EditableCell } from "./d";
+import { EditableProps, EditableUpdateCellRequest } from "/src/d";
 /**
  * 可编辑单元格组件
  */
@@ -15,8 +16,14 @@ export default defineComponent({
     item: {},
     scope: {},
     index: {},
+    editableId: {},
     columnKey: {},
-    editable: {}
+    editableCell: {
+      type: Object as PropType<EditableCell>
+    },
+    editableOpts: {
+      type: Object as PropType<EditableProps>
+    }
   },
   setup(props: any, ctx: any) {
     const ui = uiContext.get();
@@ -25,104 +32,100 @@ export default defineComponent({
 
     // let editable = getEditable(props.index, props.columnKey);
     if (props.index === -1) {
+      //fix element plus
       return () => {};
     }
 
     const getFormRefFunc = () => {
-      return props.editable?.getForm();
+      return props.editableCell?.getForm();
     };
 
     const computedForm = doComputed(getFormRefFunc, () => {
       return props.scope;
     });
 
-    const computedIsEditable = computed(() => {
-      return computedForm.value && computedForm.value.show !== false && props.editable?.isEditable();
+    const computedIsEditable: ComputedRef<EditableUpdateCellRequest> = computed(() => {
+      return computedForm.value && computedForm.value.show !== false && props.editableCell?.isEditable();
     });
+
+    function editingUpdate(active: boolean) {
+      if (active) {
+        if (computedIsEditable.value) {
+          props.editableCell.active();
+        }
+      }
+    }
+    async function onSubmit() {
+      await props.editableCell.save();
+    }
+    function onCancel() {
+      props.editableCell.cancel();
+    }
+
+    const showAction: ComputedRef<boolean> = computed(() => {
+      return props.editableOpts?.mode === "cell" && props.editableCell.showAction !== false;
+    });
+    const isDirty: ComputedRef<boolean> = computed(() => {
+      return props.editableCell.isChanged && props.editableCell.isChanged();
+    });
+
+    const scopeFunc = () => {
+      return props.scope;
+    };
+    const slots = {
+      default: () => {
+        return <fs-cell ref={"targetRef"} item={props.item} scope={props.scope} {...ctx.attrs} />;
+      },
+      edit: () => {
+        let inputComponent: any = null;
+        if (props.editableCell?.isEditing) {
+          if (computedForm.value.blank === false || computedForm.value.component?.show === false) {
+            inputComponent = null;
+          } else if (
+            computedForm.value.conditionalRender &&
+            computedForm.value.conditionalRender.match &&
+            computedForm.value.conditionalRender.match(scopeFunc())
+          ) {
+            inputComponent = (
+              <fs-render render-func={computedForm.value.conditionalRender.render} scope={scopeFunc()} {...ctx.attrs} />
+            );
+          } else if (computedForm.value.render) {
+            inputComponent = <fs-render render-func={computedForm.value.render} scope={scopeFunc()} {...ctx.attrs} />;
+          } else {
+            inputComponent = (
+              <fs-component-render ref={"targetInputRef"} {...computedForm.value.component} {...ctx.attrs} />
+            );
+          }
+        }
+        return inputComponent;
+      }
+    };
 
     return () => {
       if (!computedIsEditable.value) {
         return <fs-cell ref={"targetRef"} item={props.item} scope={props.scope} {...ctx.attrs} />;
       }
-      const editable = props.editable;
-
-      if (editable?.isEditing) {
-        let editIcon = null;
-        if (props.editable?.activeTrigger) {
-          editIcon = (
-            <div key={props.index} class={"fs-cell-edit-action"}>
-              <fs-icon size={"mini"} icon={ui.icons.check} onClick={editable.inactive} />
-              <fs-icon size={"mini"} icon={ui.icons.close} onClick={editable.resume} />
-            </div>
-          );
-        }
-
-        let inputComponent = null;
-        const scopeFunc = () => {
-          return props.scope;
-        };
-        if (computedForm.value.blank === false || computedForm.value.component?.show === false) {
-          inputComponent = null;
-        } else if (
-          computedForm.value.conditionalRender &&
-          computedForm.value.conditionalRender.match &&
-          computedForm.value.conditionalRender.match(scopeFunc())
-        ) {
-          inputComponent = (
-            <fs-render render-func={computedForm.value.conditionalRender.render} scope={scopeFunc()} {...ctx.attrs} />
-          );
-        } else if (computedForm.value.render) {
-          inputComponent = <fs-render render-func={computedForm.value.render} scope={scopeFunc()} {...ctx.attrs} />;
-        } else {
-          inputComponent = (
-            <fs-component-render ref={"targetInputRef"} {...computedForm.value.component} {...ctx.attrs} />
-          );
-        }
-        return (
-          <div class={"fs-cell-edit"}>
-            <div class={"fs-cell-edit-input"}>{inputComponent}</div>
-            {editIcon}
-          </div>
-        );
-      }
-
-      let dirty = null;
-      if (editable.isChanged && editable.isChanged()) {
-        dirty = <div class={"fs-cell-edit-dirty"} />;
-      }
-
-      let activeTrigger = {};
-      let actions = null;
-      if (props.editable?.activeTrigger) {
-        activeTrigger = {
-          [props.editable?.activeTrigger]: () => {
-            if (computedIsEditable.value) {
-              props.editable.active();
-            }
-          }
-        };
-        actions = (
-          <div class={"fs-cell-edit-action fs-cell-edit-icon"}>
-            <fs-icon icon={ui.icons.edit} />
-          </div>
-        );
-      }
+      const editableCell: EditableCell = props.editableCell;
+      const trigger = props.editableOpts.mode === "cell" ? props.editableOpts?.activeTrigger : false;
       return (
-        <div key={props.index} class={"fs-cell-edit"} {...activeTrigger}>
-          <div class={"fs-cell-edit-input"}>
-            {dirty}
-            <fs-cell ref={"targetRef"} item={props.item} scope={props.scope} {...ctx.attrs} />
-          </div>
-          {actions}
-        </div>
+        <fs-editable
+          class={"fs-editable-cell"}
+          editing={editableCell?.isEditing}
+          showAction={showAction.value}
+          dirty={isDirty.value}
+          v-slots={slots}
+          onUpdate:editing={editingUpdate}
+          onSubmit={onSubmit}
+          onCancel={onCancel}
+          loading={editableCell?.loading}
+          trigger={trigger}
+        />
       );
     };
   },
   methods: {
-    //@ts-ignore
     getTargetRef() {
-      //@ts-ignore
-      return this.$refs.targetRef?.getTargetRef();
+      return this.$refs.targetRef;
     }
   }
 });

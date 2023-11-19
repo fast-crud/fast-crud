@@ -42,6 +42,7 @@ export default defineComponent({
     text-align: right;
     margin-right: 10px;
     min-width: 100px;
+    justify-content: flex-end;
   }
   .content {
     flex: 1;

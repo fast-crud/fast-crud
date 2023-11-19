@@ -110,7 +110,7 @@ crudOptions = { //
     columns:{
         key:{
             column:{
-                valueChange(context){
+                valueChange(context:ValueChangeContext){
                     console.log('value:',context.value, " row:",context.row)
                 }
             }
@@ -141,7 +141,21 @@ crudOptions = { //
 
 ## [key].column.formatter
 * 说明：格式化显示，此参数与antdv、element的原始属性名重叠，非特殊列以此为准。
-* 类型：Function(context):String
+* 类型：`Function(context:ScopeContext):String`
+* 示例：
+```js
+const crudOptions = {
+    columns:{
+        key:{
+            column:{
+                formatter({value,row,index}){
+                    return value + '元'
+                }
+            }
+        }
+    }
+}
+``` 
 
 ## [key].column.order
 * 说明：列排序号，数字越小越靠前排列。
@@ -159,14 +173,14 @@ crudOptions = { //
 
 ## [key].column.cellRender
 * 说明：自定义单元格渲染。
-* 类型：Function(scope)
+* 类型：`Function(scope:ScopeContext)`
 * 相关：[jsx/tsx文档](https://cn.vuejs.org/guide/extras/render-function.html#jsx-tsx)
 ```js
 const crudOptions = { 
     columns:{
        key:{
             column:{
-                cellRender(scope){
+                cellRender(scope:ScopeContext){
                     return <div>{scope.value}</div>
                 }
             }
@@ -179,7 +193,7 @@ const crudOptions = {
 
 ## [key].column.conditionalRender
 * 说明：单元格条件render，符合条件的情况下优先render
-* 类型： `{match:(scope)=>boolean,render:(scope)=>any}`
+* 类型： `{match:(scope:ScopeContext)=>boolean,render:(scope:ScopeContext)=>any}`
 * 默认值：无
 * 示例：
 ```js
@@ -204,7 +218,7 @@ const crudOptions = {
 
 ## [key].column.editable.disabled
 * 说明：定义列是否支持行编辑。
-* 类型：boolean / Function(scope)
+* 类型：`boolean / Function(scope:ScopeContext)`
 ```js
 { //crudOptions
     columns:{
@@ -259,7 +273,7 @@ const crudOptions = {
 
 ## [key].form.label 
 * 说明：表单字段label ,也可以配置为 `[key].form.title`
-* 类型：string | render(context)
+* 类型：`string | render(context:ScopeContext)`
 * 默认：默认继承 `columns.[key].title`
 
 ```js
@@ -304,15 +318,15 @@ columns:{
 
 ## [key].form.helper
 * 说明：字段的帮助说明，显示在组件的下方
-* 类型：string | { render:()=>{} }
-```
+* 类型：string | { render:(scope:ScopeContext)=>{} }
+```jsx
 columns:{
     fieldKey:{
         form:{
             helper: "我这里是字段的帮助说明"
             // 也支持jsx形式的复杂显示
             helper:{
-                render(){
+                render(scope){
                     return <div class="red">我这里是通过jsx显示的帮助说明</div>
                 }
             }
@@ -346,7 +360,7 @@ columns:{
 
 ## [key].form.render
 * 说明：表单组件自定义render
-* 类型： `(scope)=>slots`
+* 类型： `(scope:ScopeContext)=>slots`
 * 默认值：无
 * 示例：
 
@@ -366,7 +380,7 @@ const crudOptions = {
 
 ## [key].form.conditionalRender
 * 说明：表单组件条件render，符合条件的情况下优先render
-* 类型： `{match:(scope)=>boolean,render:(scope)=>slots}`
+* 类型： `{match:(scope:ScopeContext)=>boolean,render:(scope:ScopeContext)=>slots}`
 * 默认值：无
 * 示例：
 ```jsx
@@ -391,7 +405,7 @@ const crudOptions = {
 
 ## [key].form.prefixRender
 * 说明: 可以在字段组件前面自定义渲染
-* 类型：Function
+* 类型：`(scope:ScopeContext)=>jsx`
 * 默认：无
 * 相关：[jsx/tsx文档](https://cn.vuejs.org/guide/extras/render-function.html#jsx-tsx)
 ```js
@@ -404,7 +418,7 @@ const crudOptions = {
 
 ## [key].form.suffixRender
 * 说明: 可以在字段组件后面自定义渲染
-* 类型：Function
+* 类型：`(scope:ScopeContext)=>jsx`
 * 默认：无
 * 相关：[jsx/tsx文档](https://cn.vuejs.org/guide/extras/render-function.html#jsx-tsx)
 ```js
@@ -417,7 +431,7 @@ const crudOptions = {
 
 ## [key].form.topRender
 * 说明: 可以在字段组件上面自定义渲染
-* 类型：Function
+* 类型：`(scope:ScopeContext)=>jsx`
 * 默认：无
 * 相关：[jsx/tsx文档](https://cn.vuejs.org/guide/extras/render-function.html#jsx-tsx)
 ```js
@@ -430,7 +444,7 @@ const crudOptions = {
 
 ## [key].form.bottomRender
 * 说明: 可以在字段组件下面自定义渲染
-* 类型：Function
+* 类型：`(scope:ScopeContext)=>jsx`
 * 默认：无
 * 相关：[jsx/tsx文档](https://cn.vuejs.org/guide/extras/render-function.html#jsx-tsx)
 ```js
@@ -443,7 +457,7 @@ const crudOptions = {
 
 ## [key].form.valueChange
 * 说明: 值变化触发
-* 类型：`(context)=>void | {immediate:boolean,handle:(context)=>void}`
+* 类型：`(context:ValueChangeContext)=>void` | `{immediate:boolean,handle:(context:ValueChangeContext)=>void}`
 * 示例：
 ```js
 crudOptions = { //
@@ -469,7 +483,7 @@ crudOptions = { //
 
 ## [key].addForm
 * 说明：该字段在添加表单里面的配置
-* 类型：Object
+* 类型：`FormProps`
 * 配置同`[key].form`  
 
 >初始化时会与`[key].form`合并，然后放入`crudOptions.addForm.columns[key]`
@@ -477,7 +491,7 @@ crudOptions = { //
 
 ## [key].viewForm
 * 说明：该字段在查看表单里面的配置
-* 类型：Object
+* 类型：`FormProps`
 * 配置同`[key].form`   
 
 >初始化时会与`[key].form`合并，然后放入`crudOptions.viewForm.columns[key]`
@@ -485,20 +499,20 @@ crudOptions = { //
 
 ## [key].editForm
 * 说明：该字段在编辑表单里面的配置
-* 类型：Object
+* 类型：`FormProps`
 * 配置同`[key].form`
 >初始化时会与`[key].form`合并，然后放入`crudOptions.editForm.columns[key]`
 
 ## [key].search
 * 说明：该字段在查询框表单里面的配置
-* 类型：Object
+* 类型：`SearchProps`
 * 配置同`[key].form`
 >初始化时会与`[key].form`合并，然后放入`crudOptions.search.columns[key]`
 
 ## [key].search[对应ui组件的配置]
 * 说明：formItem配置，支持el-form-item,a-form-item,n-form-item的配置
 * 配置： 具体配置请根据你使用的ui库，前往对应ui库的文档查找相应组件的配置
-* 类型：Object
+* 类型：any
 * 示例：
 ```js
 const crudOptions = {
@@ -515,19 +529,19 @@ const crudOptions = {
 
 ## [key].search.component
 * 说明：查询框字段组件配置
-* 类型：Object
+* 类型：`ComponentProps`
 参考组件配置[component](../common-options.md)
 
 
 ## [key].search.valueResolve
 * 说明：查询字段值转化，doRefresh查询数据时会被执行
-* 类型：Function({form})
+* 类型：`(context:ValueResolveContext)=>void`
 ```js
 const crudOptions ={
   columns:{
       test:{
           search:{
-              valueResolve({key,value,form}){
+              valueResolve({key,value,form}){  //  <------注意这里是form，不是row
                   if(value!= null){
                       //当后台需要的是int类型，输入的是string，就需要转化一下
                       form[key] = parseInt(value)
@@ -581,7 +595,7 @@ const crudOptions = {
 
 ## [key].search.valueChange
 * 说明: 值变化触发
-* 类型：`(context)=>void`
+* 类型：`(context:ValueChangeScope)=>void`
 * 示例：
 ```js
 crudOptions = { //
@@ -605,15 +619,17 @@ crudOptions = { //
 ```js
 columns:{
     key:{
-        valueBuilder(context){
+        valueBuilder(context:ValueBuilderContext){
             //value构建，就是把后台传过来的值转化为前端组件所需要的值
             //在pageRequest之后执行转化，然后将转化后的数据放到table里面显示
             context.row.imageUrl = context.row.imageUrl?.split(',')
+            //  ↑↑↑↑↑ 注意这里是row，不是form
         }, 
-        valueResolve(context){
+        valueResolve(context:ValueBuilderContext){
             //value解析，就是把组件的值转化为后台所需要的值
             //在form表单点击保存按钮后，提交到后台之前执行转化
             context.form.imageUrl = context.form.imageUrl?.join(',')
+            //  ↑↑↑↑↑ 注意这里是form，不是row
         }, 
         form:{
             //有时候，行展示组件的值与form表单所需要的值也是不一样的
@@ -625,6 +641,7 @@ columns:{
                 // 但在表单编辑时，组件所需要的value值为roles =[1]，所以需要将value转化为id数组
                 // context.form.roles = [{roleId:1,roleName:'管理员'}]
                 context.form.roles = context.form.roles.map(item=>item.roleId)
+                //  ↑↑↑↑↑ 注意这里是form，不是row
             }, 
             valueResolve(context){
                 //与builder相反，提交表单时，需要将value值转换为后台所需要的格式提交给后台

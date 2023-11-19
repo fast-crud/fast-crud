@@ -329,8 +329,8 @@ export function useCrud(ctx: UseCrudProps): UseCrudRet {
               text: "删除",
               ...ui.button.colors("danger"),
               click: (context: ScopeContext) => {
-                const { index } = context;
-                expose.editable.doRemoveRow({ index });
+                const { index, row } = context;
+                expose.editable.doRemoveRow({ index, row });
               }
             }
           },
@@ -340,46 +340,50 @@ export function useCrud(ctx: UseCrudProps): UseCrudRet {
               loading: compute((context: ComputeContext) => {
                 const { index } = context;
                 const editableRow = expose.editable.getEditableRow(index);
-                return !!editableRow?.isLoading;
+                return !!editableRow?.loading;
               }),
               click: (context: ScopeContext) => {
-                const { index } = context;
-                expose.editable.getEditableRow(index)?.active();
+                const { index, row } = context;
+                const editableId = row[crudBinding.value.table.rowKey];
+                expose.editable.getEditableRow(editableId)?.active();
               },
               show: compute((context: ComputeContext) => {
-                const { index } = context;
-                return !expose.editable?.getEditableRow(index)?.isEditing;
+                const { index, row } = context;
+                const editableId = row[crudBinding.value.table.rowKey];
+                return !expose.editable?.getEditableRow(editableId)?.isEditing;
               })
             },
             save: {
               text: "保存",
               loading: false,
-              click: (context: ScopeContext) => {
-                const { index } = context;
-                expose.editable.doSaveRow({ index });
+              click: async (context: ScopeContext) => {
+                const { index, row } = context;
+                await expose.editable.doSaveRow({ row });
               },
               show: compute((context: ComputeContext) => {
-                const { index } = context;
-                return !!expose.editable?.getEditableRow(index)?.isEditing;
+                const { index, row } = context;
+                const editableId = row[crudBinding.value.table.rowKey];
+                return !!expose.editable?.getEditableRow(editableId)?.isEditing;
               })
             },
             cancel: {
               text: "取消",
               click: async (context: ScopeContext) => {
-                const { index } = context;
-                await expose.editable?.doCancelRow({ index });
+                const { index, row } = context;
+                await expose.editable?.doCancelRow({ row });
               },
               show: compute((context: ComputeContext) => {
-                const { index } = context;
-                return !!expose.editable?.getEditableRow(index)?.isEditing;
+                const { index, row } = context;
+                const editableId = row[crudBinding.value.table.rowKey];
+                return !!expose.editable?.getEditableRow(editableId)?.isEditing;
               })
             },
             remove: {
               text: "删除",
               ...ui.button.colors("danger"),
               click: async (context: ScopeContext) => {
-                const { index } = context;
-                expose.editable?.doRemoveRow({ index });
+                const { index, row } = context;
+                await expose.editable?.doRemoveRow({ row });
               }
             }
           }

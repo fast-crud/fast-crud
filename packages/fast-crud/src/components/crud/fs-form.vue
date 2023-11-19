@@ -454,7 +454,6 @@ export default defineComponent({
     async function reset() {
       // ui.form.resetWrap(formRef.value, { form, initialForm: createInitialForm() });
       const initialForm = createInitialForm();
-      debugger;
       const entries = _.entries(form);
       for (const entry of entries) {
         const initialValue = _.get(initialForm, entry[0]);

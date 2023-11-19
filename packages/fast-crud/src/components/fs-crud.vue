@@ -348,6 +348,7 @@ export default defineComponent({
     /**
      * 表格数据
      */
+    // eslint-disable-next-line vue/require-default-prop
     data: {
       type: Array
     },
