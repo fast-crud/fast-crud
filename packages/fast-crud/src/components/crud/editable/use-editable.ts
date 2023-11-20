@@ -578,7 +578,7 @@ export function useEditable(props: any, ctx: any, tableRef: any): { editable: Ed
   }
 
   async function validate() {
-    const errors = {};
+    const errors: any = {};
     let hasError = false;
     for (const key in editableRows) {
       const row = editableRows[key];
@@ -601,9 +601,10 @@ export function useEditable(props: any, ctx: any, tableRef: any): { editable: Ed
         removeDataEditableId(row.children);
       }
     }
+    return data;
   }
   function getTableData(): any[] {
-    const data = _.cloneDeep(tableData.getData());
+    const data: any = _.cloneDeep(tableData.getData());
     return removeDataEditableId(data);
   }
 

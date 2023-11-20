@@ -242,7 +242,10 @@ export default defineComponent({
      * 行编辑，批量编辑
      */
     editable: {
-      type: Object as PropType<EditableProps>
+      type: Object as PropType<EditableProps>,
+      default() {
+        return {};
+      }
     },
 
     loading: {
@@ -378,7 +381,7 @@ export default defineComponent({
       };
 
       const index = scope[ui.tableColumn.index];
-      const editableId = row[props.editable.rowKey];
+      const editableId = row[props.editable?.rowKey];
 
       const cellSlots = props.cellSlots && props.cellSlots[cellSlotName];
       if (editableWrap.editable?.options?.value?.enabled === true) {

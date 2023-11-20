@@ -21,6 +21,8 @@ export type EditableTable = {
   getEditableCell: (editableId: any, key: string) => EditableCell;
   eachRows: (call: (opts: EditableEachRowsOpts) => void) => void;
   eachCells: (call: (opts: EditableEachCellsOpts) => void) => void;
+  validate: () => Promise<any>;
+  getTableData: () => any[];
 };
 export type EditableCellActiveProps = {
   showAction?: boolean;
