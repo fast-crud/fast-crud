@@ -1,8 +1,7 @@
 import { computed, ComputedRef, defineComponent, defineExpose, PropType, ref } from "vue";
 import { uiContext } from "../../../ui";
 import { useCompute } from "../../../use/use-compute";
-import { EditableCell } from "./d";
-import { EditableProps, EditableUpdateCellRequest } from "../../../d";
+import { EditableCell,EditableProps, EditableUpdateCellRequest } from "../../../d";
 /**
  * 可编辑单元格组件
  */

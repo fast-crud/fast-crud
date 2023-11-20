@@ -2,15 +2,17 @@ import _ from "lodash-es";
 import { computed, ComputedRef, reactive, unref, watch } from "vue";
 import { uiContext } from "../../../ui";
 import { useMerge } from "../../../use";
-import { ColumnProps, EditableActiveColsOptions, EditableProps } from "../../../d";
 import {
+  ColumnProps,
+  EditableActiveColsOptions,
+  EditableProps,
   EditableCell,
   EditableCellActiveProps,
   EditableEachCellsOpts,
   EditableEachRowsOpts,
   EditableRow,
   EditableTable
-} from "./d";
+} from "../../../d";
 import { createValidator } from "./validator";
 
 // import { useValidation } from "./validation/use-validation";

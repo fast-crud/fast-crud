@@ -23,11 +23,11 @@ import {
   RemoveProps,
   SearchOptions,
   UserPageQuery,
-  UserPageRes
+  UserPageRes,
+  EditableEachCellsOpts
 } from "../d";
 import { useFormWrapper } from "./use-form";
 import { forEachColumns } from "../use/use-columns";
-import { EditableEachCellsOpts } from "../components/crud/editable/d";
 
 const { merge } = useMerge();
 const doMerge = merge;

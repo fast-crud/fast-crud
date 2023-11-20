@@ -1,5 +1,5 @@
 import Schema from "async-validator";
-import { EditableCell } from "./d";
+import { EditableCell } from "../../../d";
 import { Rules } from "async-validator/dist-types/interface";
 
 export function createValidator(editableCells: Record<string, EditableCell>) {

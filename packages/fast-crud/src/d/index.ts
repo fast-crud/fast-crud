@@ -3,3 +3,4 @@ export * from "./crud";
 export * from "./compute";
 export * from "./fs";
 export * from "./columns-filter";
+export * from "./editable";

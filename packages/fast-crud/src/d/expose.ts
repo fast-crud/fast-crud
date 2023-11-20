@@ -15,7 +15,7 @@ import {
   EditableEachCellsOpts,
   EditableEachRowsOpts,
   EditableRow
-} from "../components/crud/editable/d";
+} from "../components/crud/editable/editable";
 
 export type SearchOptions = {
   silence?: boolean;
