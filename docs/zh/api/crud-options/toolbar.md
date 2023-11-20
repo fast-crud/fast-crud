@@ -78,11 +78,13 @@ const crudOptions = {
             },
             merge: [], // excel 合并单元格配置,仅excel生效
             dataFormatter: (opts:DataFormatterContext)=>{
-                //自定义修改导出数据展示值
-                if(opts.col.key === 'name'){
-                    //例如： 给名字值后面加星号
-                    return opts.col.name +"※"
+                // 此方法里面要做的是修改row里面的数据
+                // { row, originalRow, col } :DataFormatterContext
+                //例如 格式化日期
+                if (col.key === "date" && originalRow.date) {
+                    row.date = dayjs(originalRow.date).format("YYYY-MM-DD HH:mm:ss");
                 }
+                
                 //参数说明
                 // DataFormatterContext = {row: any,originalRow: any, key: string, col: ColumnProps, exportCol:ExportColumn}
                 // row = 当前行数据
