@@ -2,7 +2,7 @@ import { computed, ComputedRef, defineComponent, defineExpose, PropType, ref } f
 import { uiContext } from "../../../ui";
 import { useCompute } from "../../../use/use-compute";
 import { EditableCell } from "./d";
-import { EditableProps, EditableUpdateCellRequest } from "/src/d";
+import { EditableProps, EditableUpdateCellRequest } from "../../../d";
 /**
  * 可编辑单元格组件
  */

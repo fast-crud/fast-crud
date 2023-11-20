@@ -1,6 +1,5 @@
-import { Ref } from "vue";
-import { ColumnProps, EditableProps, EditableUpdateCellRequest, FormItemProps } from "/src/d";
-import { ComputedRef } from "vue/dist/vue";
+import { Ref, ComputedRef } from "vue";
+import { ColumnProps, EditableProps, EditableUpdateCellRequest, FormItemProps } from "../../../d";
 import Schema from "async-validator";
 
 export type EditableTable = {

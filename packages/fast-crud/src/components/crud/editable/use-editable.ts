@@ -1,8 +1,8 @@
 import _ from "lodash-es";
-import { computed, ComputedRef, reactive, Ref, unref, UnwrapNestedRefs, watch } from "vue";
+import { computed, ComputedRef, reactive, unref, watch } from "vue";
 import { uiContext } from "../../../ui";
 import { useMerge } from "../../../use";
-import { ColumnProps, EditableActiveColsOptions, EditableProps, EditableUpdateCellRequest } from "/src/d";
+import { ColumnProps, EditableActiveColsOptions, EditableProps } from "../../../d";
 import {
   EditableCell,
   EditableCellActiveProps,
