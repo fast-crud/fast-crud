@@ -14,11 +14,6 @@
         <slot name="edit"></slot>
       </div>
       <div class="fs-editable-action">
-        <template v-if="showAction">
-          <fs-icon v-if="loading" size="mini" :spin="true" :icon="ui.icons.refresh" />
-          <fs-icon v-else size="mini" :icon="ui.icons.check" @click="doSubmit" />
-          <fs-icon :class="{ hidden: loading }" size="mini" :icon="ui.icons.close" @click="doCancel" />
-        </template>
         <component :is="ui.tooltip.name">
           <template #[ui.tooltip.content]>
             <span class="error-icon">
@@ -29,6 +24,11 @@
             <fs-icon :class="{ hidden: !hasError(), 'error-icon': true }" size="mini" :icon="ui.icons.info" />
           </template>
         </component>
+        <template v-if="showAction">
+          <fs-icon v-if="loading" size="mini" :spin="true" :icon="ui.icons.refresh" />
+          <fs-icon v-else size="mini" :icon="ui.icons.check" @click="doSubmit" />
+          <fs-icon :class="{ hidden: loading }" size="mini" :icon="ui.icons.close" @click="doCancel" />
+        </template>
       </div>
     </div>
   </div>
@@ -146,6 +146,14 @@ function getValidateErrorMessage() {
       }
       .ant-input-affix-wrapper {
         border-color: #ff4d4f;
+        box-shadow: 0 0 0 2px rgb(255 38 5 / 6%);
+      }
+      .el-input__wrapper {
+        border-color: #ff4d4f !important;
+        box-shadow: 0 0 0 1px #ff4d4f inset !important;
+      }
+      .n-input .n-input__state-border {
+        border-color: #ff4d4f !important;
         box-shadow: 0 0 0 2px rgb(255 38 5 / 6%);
       }
     }

@@ -58,6 +58,13 @@ export function useEditable(props: any, ctx: any, tableRef: any): { editable: Ed
   const tableData = useTableData(props, tableRef);
   const editableRows: Record<number, EditableRow> = reactive([]);
 
+  function getIdFromRow(row: any) {
+    if (typeof props.rowKey === "string") {
+      return row[props.rowKey];
+    }
+    return props.rowKey(row);
+  }
+
   function editableEachRows(call: (opts: EditableEachRowsOpts) => any) {
     for (const key in editableRows) {
       const row = editableRows[key];
@@ -217,7 +224,7 @@ export function useEditable(props: any, ctx: any, tableRef: any): { editable: Ed
     const validator = computed(() => {
       return createValidator(cells);
     });
-    const id = rowData[props.rowKey];
+    const id = getIdFromRow(rowData);
     const isAdd = id == null || id < 0;
     const editableRow: EditableRow = reactive({
       isAdd,
@@ -296,7 +303,7 @@ export function useEditable(props: any, ctx: any, tableRef: any): { editable: Ed
         }
         function setData(newRow: any) {
           if (newRow) {
-            if (newRow[props.rowKey] == null) {
+            if (getIdFromRow(newRow) == null) {
               console.error("保存接口没有返回rowKey,无法更新该行的id,newRow:", newRow);
             }
             merge(row, newRow);
@@ -561,7 +568,8 @@ export function useEditable(props: any, ctx: any, tableRef: any): { editable: Ed
   function removeTableRowByEditableId(editableId: number) {
     const data = tableData.getData();
     for (let i = 0; i < data.length; i++) {
-      if (data[i][props.rowKey] === editableId) {
+      const id = getIdFromRow(data[i]);
+      if (id === editableId) {
         tableData.remove(i);
         break;
       }

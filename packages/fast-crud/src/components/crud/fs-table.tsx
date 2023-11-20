@@ -259,7 +259,7 @@ export default defineComponent({
       type: Object as PropType<any>
     },
     rowKey: {
-      type: String,
+      type: [String, Function],
       default: "id"
     }
   },
@@ -458,6 +458,7 @@ export default defineComponent({
           <tableComp
             ref={tableRef}
             loading={props.loading}
+            rowKey={props.rowKey}
             {...computedBinding.value}
             {...dataSource.value}
             v-slots={computedTableSlots.value}
@@ -493,6 +494,7 @@ export default defineComponent({
           <tableComp
             ref={tableRef}
             loading={props.loading}
+            rowKey={props.rowKey}
             {...computedBinding.value}
             columns={computedColumns.value}
             {...dataSource.value}

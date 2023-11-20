@@ -24,7 +24,6 @@ export function createValidator(editableCells: Record<string, EditableCell>) {
       }
     }
   }
-  console.log("descriptor", descriptor);
   return new Schema(descriptor);
 }
 // const descriptor = {
