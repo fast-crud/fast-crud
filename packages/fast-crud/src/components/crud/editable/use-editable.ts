@@ -15,7 +15,6 @@ import {
 } from "../../../d";
 import { createValidator } from "./validator";
 
-// import { useValidation } from "./validation/use-validation";
 function eachTree(tree: any, callback: any) {
   _.forEach(tree, (item) => {
     if (item.children) {
