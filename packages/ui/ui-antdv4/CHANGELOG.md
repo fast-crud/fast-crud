@@ -3,6 +3,16 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [1.19.0](https://github.com/fast-crud/fast-crud/compare/v1.18.5...v1.19.0) (2023-11-20)
+
+### Bug Fixes
+
+* 修复某些情况下 scrollTo Top 报异常的问题 ([f8c0829](https://github.com/fast-crud/fast-crud/commit/f8c0829e943edfd54115dc2dd5bb9c34d0b456a9))
+
+### Features
+
+* **editable:** 行编辑支持表单校验 ([5cf8c91](https://github.com/fast-crud/fast-crud/commit/5cf8c91455d48d0080b8bb0ae7f3336d7bd6e941))
+
 ## [1.18.5](https://github.com/fast-crud/fast-crud/compare/v1.18.4...v1.18.5) (2023-11-08)
 
 **Note:** Version bump only for package @fast-crud/ui-antdv4
