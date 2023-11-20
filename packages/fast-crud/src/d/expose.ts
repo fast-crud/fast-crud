@@ -275,8 +275,8 @@ export type Editable = {
   doCancelRow(opts: { editableId?: any; row?: any }): Promise<void>;
   doRemoveRow(opts: { editableId?: any; row?: any }): Promise<void>;
   getInstance(): any;
-  eachCells(call: (opts: EditableEachCellsOpts) => void): void;
-  eachRows(call: (opts: EditableEachRowsOpts) => void): void;
+  eachCells(callback: (opts: EditableEachCellsOpts) => void): void;
+  eachRows(callback: (opts: EditableEachRowsOpts) => void): void;
   validate(): Promise<boolean>;
   /**
    * 获取可提交数据

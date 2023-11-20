@@ -17,8 +17,8 @@ export type EditableTable = {
   activeCols: (opts: { cols: string[] }) => void;
   hasDirty: () => void;
   getEditableCell: (editableId: any, key: string) => EditableCell;
-  eachRows: (call: (opts: EditableEachRowsOpts) => void) => void;
-  eachCells: (call: (opts: EditableEachCellsOpts) => void) => void;
+  eachRows: (callback: (opts: EditableEachRowsOpts) => void) => void;
+  eachCells: (callback: (opts: EditableEachCellsOpts) => void) => void;
   validate: () => Promise<any>;
   getTableData: () => any[];
 };

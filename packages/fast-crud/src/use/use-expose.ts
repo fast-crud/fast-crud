@@ -24,7 +24,8 @@ import {
   SearchOptions,
   UserPageQuery,
   UserPageRes,
-  EditableEachCellsOpts
+  EditableEachCellsOpts,
+  EditableEachRowsOpts
 } from "../d";
 import { useFormWrapper } from "./use-form";
 import { forEachColumns } from "../use/use-columns";
@@ -191,11 +192,11 @@ function useEditable(props: UseEditableProps) {
     getInstance() {
       crudExpose.getTableRef().editable;
     },
-    eachCells(opts: EditableEachCellsOpts) {
-      crudExpose.getTableRef().editable?.eachCells(opts);
+    eachCells(callback: (opts: EditableEachCellsOpts) => void) {
+      crudExpose.getTableRef().editable?.eachCells(callback);
     },
-    eachRows(opts: EditableEachCellsOpts) {
-      crudExpose.getTableRef().editable?.eachRows(opts);
+    eachRows(callback: (opts: EditableEachRowsOpts) => void) {
+      crudExpose.getTableRef().editable?.eachRows(callback);
     },
     async validate() {
       return await crudExpose.getTableRef().editable?.validate();
