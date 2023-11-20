@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [1.19.0](https://github.com/fast-crud/fast-crud/compare/v1.18.5...v1.19.0) (2023-11-20)
+
+### Bug Fixes
+
+* **editable:** 支持多级数据 ([89db59e](https://github.com/fast-crud/fast-crud/commit/89db59ea2b3dbe8227399086513e27aa7c2ab7aa))
+
 ## [1.18.5](https://github.com/fast-crud/fast-crud/compare/v1.18.4...v1.18.5) (2023-11-08)
 
 ### Bug Fixes

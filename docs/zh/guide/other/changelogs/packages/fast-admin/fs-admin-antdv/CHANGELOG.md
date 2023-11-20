@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [1.19.0](https://github.com/fast-crud/fast-crud/compare/v1.18.5...v1.19.0) (2023-11-20)
+
+### Features
+
+* **editable:** editable优化重构，分三种模式：free、row、cell，本次为破坏性更新，请谨慎升级 ([a592780](https://github.com/fast-crud/fast-crud/commit/a592780697dc723117bce8759b2c02223ed930c8))
+
 ## [1.18.5](https://github.com/fast-crud/fast-crud/compare/v1.18.4...v1.18.5) (2023-11-08)
 
 ### Bug Fixes

@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [1.19.0](https://github.com/jekip/naive-ui-admin/compare/v1.18.5...v1.19.0) (2023-11-20)
+
+### Bug Fixes
+
+* **form:** 修复form.wrapper.fullscreen无效的bug ([08e0493](https://github.com/jekip/naive-ui-admin/commit/08e0493af8fb7ed93eca594c99d2cc2395b78689))
+
 ## [1.18.5](https://github.com/jekip/naive-ui-admin/compare/v1.18.4...v1.18.5) (2023-11-08)
 
 ### Bug Fixes

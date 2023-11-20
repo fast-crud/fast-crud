@@ -3,6 +3,25 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [1.19.0](https://github.com/fast-crud/fast-crud/compare/v1.18.5...v1.19.0) (2023-11-20)
+
+### Bug Fixes
+
+* 修复某些情况下 scrollTo Top 报异常的问题 ([f8c0829](https://github.com/fast-crud/fast-crud/commit/f8c0829e943edfd54115dc2dd5bb9c34d0b456a9))
+* **columnsFilter:** 修复列设置简单模式disabled和show无效的bug ([80fd97a](https://github.com/fast-crud/fast-crud/commit/80fd97abaca475a16de4354572c8f418f2505aa1))
+* **editable:** 支持多级数据 ([89db59e](https://github.com/fast-crud/fast-crud/commit/89db59ea2b3dbe8227399086513e27aa7c2ab7aa))
+* **form:** 修复form.wrapper.fullscreen无效的bug ([08e0493](https://github.com/fast-crud/fast-crud/commit/08e0493af8fb7ed93eca594c99d2cc2395b78689))
+
+### Features
+
+* **editable:** 行编辑支持表单校验 ([5cf8c91](https://github.com/fast-crud/fast-crud/commit/5cf8c91455d48d0080b8bb0ae7f3336d7bd6e941))
+* **editable:** 子表格editable ([01fb2b2](https://github.com/fast-crud/fast-crud/commit/01fb2b245560aa5c6ef51630e20ead0e212ced26))
+* **editable:** editable优化重构，分三种模式：free、row、cell，本次为破坏性更新，请谨慎升级 ([a592780](https://github.com/fast-crud/fast-crud/commit/a592780697dc723117bce8759b2c02223ed930c8))
+
+### Performance Improvements
+
+* **editable:** 增加示例 ([b0e2d84](https://github.com/fast-crud/fast-crud/commit/b0e2d840c1333a23b3270f84cb725c790510db50))
+
 ## [1.18.5](https://github.com/fast-crud/fast-crud/compare/v1.18.4...v1.18.5) (2023-11-08)
 
 ### Bug Fixes
