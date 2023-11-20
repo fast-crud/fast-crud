@@ -58,16 +58,15 @@ export type EditableRow = {
   persist: () => void;
   resume: () => void;
   cancel: () => void;
-  save: (opts: { index: number; doSave: (opts: any) => Promise<void> }) => Promise<void>;
+  save: (opts: { doSave: (opts: any) => Promise<void> }) => Promise<void>;
   loading: boolean;
   /**
    * 获取可以提交的行数据
    */
   getRowData: () => any;
-  getChangeData: (index: number) => any;
   rowData: any;
   editableId: any;
-  validate: (row?: any) => Promise<void>;
+  validate: (row?: any) => Promise<any>;
   validator?: Schema;
 };
 

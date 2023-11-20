@@ -391,9 +391,9 @@ export function useEditable(props: any, ctx: any, tableRef: any): { editable: Ed
 
   function buildThinData(data: any[]) {
     const rowKey = props.editable.rowKey;
-    const thinData = [];
+    const thinData: any = [];
     for (const row of data) {
-      const thinRow = { [rowKey]: row[rowKey] };
+      const thinRow: any = { [rowKey]: row[rowKey] };
       if (row.children && row.children.length) {
         thinRow.children = buildThinData(row.children);
       }
@@ -507,21 +507,6 @@ export function useEditable(props: any, ctx: any, tableRef: any): { editable: Ed
     });
   }
 
-  function resumeLast() {
-    const type = action.type;
-    const editableId = action.editableId;
-    const index = action.index;
-    const dataRow = action.dataRow;
-    const editableRow = action.editableRow;
-    if (type === "add") {
-      delete editableRows[editableId];
-      tableData.remove(index);
-    } else {
-      editableRows[editableId] = editableRow;
-      tableData.insert(index, dataRow);
-    }
-  }
-
   /**
    * 还原
    */
@@ -612,7 +597,7 @@ export function useEditable(props: any, ctx: any, tableRef: any): { editable: Ed
   function removeDataEditableId(data: any[]) {
     for (const row of data) {
       delete row[props.editable.rowKey];
-      if (row.children && row.children.length) {
+      if (row.children && row.children.length > 0) {
         removeDataEditableId(row.children);
       }
     }

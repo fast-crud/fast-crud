@@ -8,7 +8,7 @@ export function createValidator(editableCells: Record<string, EditableCell>) {
     const form = editableCells[key].getForm();
     const rules = form.rules || form.rule;
     const keys: [] = key.split(".");
-    let curDesc = descriptor;
+    let curDesc: any = descriptor;
     if (rules) {
       for (let i = 0; i < keys.length; i++) {
         const key = keys[i];
