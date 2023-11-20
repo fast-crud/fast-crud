@@ -11,7 +11,6 @@ import {
   CreateCrudOptionsRet,
   CrudBinding,
   CrudExpose,
-  CrudOptionsPlugin,
   CrudOptionsPluginHandle,
   CrudOptionsPlugins,
   CrudSettings,
@@ -328,9 +327,10 @@ export function useCrud(ctx: UseCrudProps): UseCrudRet {
             remove: {
               text: "删除",
               ...ui.button.colors("danger"),
-              click: (context: ScopeContext) => {
+              click: async (context: ScopeContext) => {
                 const { index, row } = context;
-                expose.editable.doRemoveRow({ index, row });
+                const editableId = row[crudBinding.value.table.editable.rowKey];
+                await expose.editable.doRemoveRow({ editableId, row });
               }
             }
           },
