@@ -5,14 +5,14 @@
       <component
         :is="ui.col.name"
         v-for="(element, key) in currentColumns"
-        v-show="original[key]?.__show !== false"
+        v-show="original[element.key]?.__show !== false"
         :key="key"
         :span="6"
       >
         <component
           :is="ui.checkbox.name"
           v-model:[ui.checkbox.modelValue]="element.show"
-          :disabled="original[key]?.__disabled === true"
+          :disabled="original[element.key]?.__disabled === true"
           class="item-label"
           :title="buildText(element)"
         >
