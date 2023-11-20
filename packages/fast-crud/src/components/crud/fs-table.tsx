@@ -267,7 +267,7 @@ export default defineComponent({
     }
   },
   emits: ["row-handle", "value-change", "pagination-change", "filter-change", "sort-change", "data-change"],
-  setup(props, ctx) {
+  setup(props: any, ctx) {
     const tableRef = ref();
     const componentRefs = ref([]);
     const getComponentRef = (index?: number, key?: string) => {

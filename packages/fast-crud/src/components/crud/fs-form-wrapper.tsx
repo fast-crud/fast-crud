@@ -10,11 +10,11 @@ import {
   useSlots
 } from "vue";
 import _ from "lodash-es";
-import { useI18n } from "../../locale";
-import { uiContext } from "../../ui";
-import { Constants } from "../../utils/util.constants";
+import {useI18n} from "../../locale";
+import {uiContext} from "../../ui";
+import {Constants} from "../../utils/util.constants";
 import "./fs-form-wrapper.less";
-import { useDrag, useMerge } from "../../use";
+import {useDrag, useMerge} from "../../use";
 import {
   FormProps,
   FormWrapperContext,
@@ -63,8 +63,8 @@ export default defineComponent({
   },
   emits: ["reset", "submit", "validationError", "value-change", "open", "opened", "mounted", "closed", "inner-change"],
   setup(props: any, ctx: any) {
-    const { t } = useI18n();
-    const { merge } = useMerge();
+    const {t} = useI18n();
+    const {merge} = useMerge();
     const formWrapperOpen: Ref<boolean> = ref(false);
     const formWrapperIs: Ref<string> = ref();
     const formOptions: Ref<FormProps> = ref();
@@ -99,7 +99,7 @@ export default defineComponent({
 
     const open = async (opts: OpenDialogProps) => {
       //提取formrapper的配置
-      const { wrapper } = opts;
+      const {wrapper} = opts;
       if (wrapper.onOpen) {
         wrapper.onOpen(opts);
       }
@@ -173,7 +173,7 @@ export default defineComponent({
         emitOnOpened.value();
       }
       if (formWrapperBind.value.draggable) {
-        const { dragModal } = useDrag();
+        const {dragModal} = useDrag();
         dragModal({
           getModal: () => {
             return document.querySelector(`.${formWrapperIdClass}`);
@@ -206,6 +206,7 @@ export default defineComponent({
     function getFormData() {
       return formRef.value?.getFormData();
     }
+
     function setFormData(form: any, options?: SetFormDataOptions) {
       formRef.value?.setFormData(form, options);
     }
@@ -260,6 +261,7 @@ export default defineComponent({
     const fullscreenEnabled = computed(() => {
       return !formWrapperIs.value?.endsWith("drawer");
     });
+
     function toggleFullscreen() {
       fullscreen.value = !fullscreen.value;
     }
@@ -311,7 +313,7 @@ export default defineComponent({
       }
       const ui = uiContext.get();
       let children = {};
-      const _slots: any = { ...slots, ...formWrapperSlots.value };
+      const _slots: any = {...slots, ...formWrapperSlots.value};
       const slotsRender = (key: string, scope: any, slots = _slots) => {
         if (!slots[key]) {
           return null;
@@ -320,8 +322,8 @@ export default defineComponent({
       };
       const is = formWrapperIs.value || "el-dialog";
       if (formOptions.value) {
-        const { index, mode } = formOptions.value || {};
-        const scope = { _self: this, index, mode, getFormData: getFormData };
+        const {index, mode} = formOptions.value || {};
+        const scope = {_self: this, index, mode, getFormData: getFormData};
         children = {
           [ui.formWrapper.titleSlotName]: () => {
             let fullScreenIcon = null;
@@ -361,7 +363,7 @@ export default defineComponent({
               <div class={"fs-form-wrapper-body"}>
                 <div class={"fs-form-body"}>
                   {slotsRender("form-body-top", scope)}
-                  <fs-form ref={formRef} {...formOptions.value} onValueChange={onValueChange} />
+                  <fs-form ref={formRef} {...formOptions.value} onValueChange={onValueChange}/>
                   {slotsRender("form-body-bottom", scope)}
                 </div>
                 <div class={"fs-form-footer-btns"}>

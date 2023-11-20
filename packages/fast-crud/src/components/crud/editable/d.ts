@@ -11,7 +11,6 @@ export type EditableTable = {
   saveEach: () => Promise<void>;
   cancelAll: () => void;
   persist: () => void;
-  submit: (call: (opts: any) => any) => Promise<void>;
   resume: () => void;
   addRow: () => void;
   removeRow: (editableId: any) => void;
