@@ -4,15 +4,17 @@
 
 ## Props
 
-| Prop name  | Description | Type   | Values | Default |
-| ---------- | ----------- | ------ | ------ | ------- |
-| label      |             | string | -      | ""      |
-| labelAttrs |             | object | -      | {}      |
+| Prop name    | Description | Type   | Values | Default |
+| ------------ | ----------- | ------ | ------ | ------- |
+| label        |             | string | -      | ""      |
+| labelAttrs   |             | object | -      | {}      |
+| contentAttrs |             | object | -      | {}      |
 
 ## Slots
 
 | Name    | Description | Bindings |
 | ------- | ----------- | -------- |
+| label   |             |          |
 | default |             |          |
 
 ---

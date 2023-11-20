@@ -4,12 +4,14 @@
 
 ## Props
 
-| Prop name | Description | Type | Values | Default |
-| --------- | ----------- | ---- | ------ | ------- |
-| item      | 组件配置    | -    | -      |         |
-| scope     |             | -    | -      |         |
-| index     |             | -    | -      |         |
-| columnKey |             | -    | -      |         |
-| editable  |             | -    | -      |         |
+| Prop name    | Description | Type          | Values | Default |
+| ------------ | ----------- | ------------- | ------ | ------- |
+| item         | 组件配置    | -             | -      |         |
+| scope        |             | -             | -      |         |
+| index        |             | -             | -      |         |
+| editableId   |             | -             | -      |         |
+| columnKey    |             | -             | -      |         |
+| editableCell |             | EditableCell  | -      |         |
+| editableOpts |             | EditableProps | -      |         |
 
 ---
