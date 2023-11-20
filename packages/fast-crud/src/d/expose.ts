@@ -10,12 +10,7 @@ import {
 } from "./crud";
 import { Ref } from "vue";
 import { EditableOnEnabledProps } from "../use";
-import {
-  EditableCellActiveProps,
-  EditableEachCellsOpts,
-  EditableEachRowsOpts,
-  EditableRow
-} from "../components/crud/editable/editable";
+import { EditableCellActiveProps, EditableEachCellsOpts, EditableEachRowsOpts, EditableRow } from "./editable";
 
 export type SearchOptions = {
   silence?: boolean;
@@ -238,7 +233,7 @@ export type EditableActiveColsOptions = {
   cols: string[];
 } & EditableCellActiveProps;
 export type Editable = {
-  enable(opts: any, onEnabled?: (opts: EditableOnEnabledProps) => void): Promise<void>;
+  enable(opts?: any, onEnabled?: (opts: EditableOnEnabledProps) => void): Promise<void>;
   /**
    * 禁用编辑
    */
@@ -246,7 +241,7 @@ export type Editable = {
   /**
    * 激活所有编辑
    */
-  active(opts: EditableCellActiveProps): void;
+  active(opts?: EditableCellActiveProps): void;
   /**
    * 退出编辑
    */
@@ -280,8 +275,8 @@ export type Editable = {
   doCancelRow(opts: { editableId?: any; row?: any }): Promise<void>;
   doRemoveRow(opts: { editableId?: any; row?: any }): Promise<void>;
   getInstance(): any;
-  eachCells(opts: EditableEachCellsOpts): void;
-  eachRows(opts: EditableEachRowsOpts): void;
+  eachCells(call: (opts: EditableEachCellsOpts) => void): void;
+  eachRows(call: (opts: EditableEachRowsOpts) => void): void;
   validate(): Promise<boolean>;
   /**
    * 获取可提交数据

@@ -11,7 +11,7 @@
     "docgen:crud": "vue-docgen -c docgen/crud.config.js",
     "docgen:extends": "vue-docgen -c docgen/extends.config.js",
     "docgen:all": "npm run docgen:crud && npm run docgen:extends",
-    "prepublishOnly": "npm run before-build && lerna run build --scope */ui-* --scope @fast-crud/fast-crud --scope @fast-crud/fast-extends ",
+    "prepublishOnly": "npm run before-build && lerna run build --scope @fast-crud/fast-crud --scope @fast-crud/fs-admin-antdv  --scope @fast-crud/fast-extends --scope */ui-* ",
     "publish": "npm run proxy && npm run prepublishOnly  && lerna publish --conventional-commits && npm run afterpublishOnly",
     "proxy": "npm config set proxy=http://127.0.0.1:10809",
     "publish:canary": "lerna publish --canary --conventional-commits && npm run afterpublishOnly",
