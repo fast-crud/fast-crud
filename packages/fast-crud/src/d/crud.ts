@@ -505,12 +505,7 @@ export type EditableProps = {
 };
 
 export type TableColumnEditableDisabledFunc = (opts: { column: ColumnProps; editableId: any; row: any }) => boolean;
-export type EditableUpdateCellRequest = (opts: {
-  editableId: any;
-  row: any;
-  key: string;
-  value: any;
-}) => Promise<any>;
+export type EditableUpdateCellRequest = (opts: { editableId: any; row: any; key: string; value: any }) => Promise<any>;
 export type EditableUpdateColumnRequest = (opts: {
   editableId: any;
   row: any;
@@ -645,6 +640,10 @@ export type FormWrapperProps = {
   buttons?: {
     [key: string]: ButtonProps<FormWrapperContext>;
   };
+  /**
+   * 打开对话框时是否全屏
+   */
+  fullscreen?: boolean;
   /**
    * 对应对话框组件的配置
    */

@@ -140,6 +140,10 @@ export default defineComponent({
         }
       };
 
+      if (wrapper.fullscreen != null) {
+        fullscreen.value = wrapper.fullscreen;
+      }
+
       /**
        * 是否内部打开对话框
        */
