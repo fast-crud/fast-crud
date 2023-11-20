@@ -505,11 +505,9 @@ export function useEditable(props: any, ctx: any, tableRef: any): { editable: Ed
       delete cell.newValue;
       delete cell.oldValue;
     });
-    actionHistory.length = 0;
   }
 
   function resumeLast() {
-    const action = actionHistory.pop();
     const type = action.type;
     const editableId = action.editableId;
     const index = action.index;
