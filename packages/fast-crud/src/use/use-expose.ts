@@ -194,8 +194,8 @@ function useEditable(props: UseEditableProps) {
     async validate() {
       return await crudExpose.getTableRef().editable?.validate();
     },
-    getTableData(): any[] {
-      return crudExpose.getTableRef().editable?.getTableData()();
+    getTableData(data?: any[]): any[] {
+      return crudExpose.getTableRef().editable?.getTableData(data);
     }
   };
   return editable;

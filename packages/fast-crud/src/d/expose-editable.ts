@@ -98,7 +98,9 @@ export type Editable = {
   validate(): Promise<EditableValidateResult>;
   /**
    * 获取可提交的表格数据（移除$editable_id字段）
+   * 如果传data则移除传入data的editable_id，否则从表格中获取
    */
-  getTableData(): any[];
+  getTableData(data?: any[]): any[];
+
   getInstance(): any;
 };

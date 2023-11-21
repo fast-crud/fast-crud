@@ -22,7 +22,7 @@ export type EditableTable = {
   eachRows: (callback: (opts: EditableEachRowsOpts) => void) => void;
   eachCells: (callback: (opts: EditableEachCellsOpts) => void) => void;
   validate: () => Promise<EditableValidateResult>;
-  getTableData: () => any[];
+  getTableData: (data?: any[]) => any[];
 };
 export type EditableCellActiveProps = {
   showAction?: boolean;

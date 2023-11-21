@@ -604,8 +604,13 @@ export function useEditable(props: any, ctx: any, tableRef: any): { editable: Ed
     }
     return data;
   }
-  function getTableData(): any[] {
-    const data: any = _.cloneDeep(tableData.getData());
+  function getTableData(data?: any[]): any[] {
+    if (data == null) {
+      data = _.cloneDeep(tableData.getData());
+    }
+    if (data == null) {
+      return [];
+    }
     return removeDataEditableId(data);
   }
 
