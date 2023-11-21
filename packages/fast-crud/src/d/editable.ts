@@ -1,7 +1,9 @@
 import { Ref, ComputedRef } from "vue";
 import { ColumnProps, EditableProps, EditableUpdateCellRequest, FormItemProps } from "./crud";
 import Schema from "async-validator";
+import { ValidateFieldsError } from "async-validator/dist-types/interface";
 
+export type EditableValidateResult = boolean | ValidateFieldsError;
 export type EditableTable = {
   options: Ref<EditableProps>;
   setupEditable: (data?: any[]) => void;
@@ -19,7 +21,7 @@ export type EditableTable = {
   getEditableCell: (editableId: any, key: string) => EditableCell;
   eachRows: (callback: (opts: EditableEachRowsOpts) => void) => void;
   eachCells: (callback: (opts: EditableEachCellsOpts) => void) => void;
-  validate: () => Promise<any>;
+  validate: () => Promise<EditableValidateResult>;
   getTableData: () => any[];
 };
 export type EditableCellActiveProps = {
@@ -66,7 +68,7 @@ export type EditableRow = {
   getRowData: () => any;
   rowData: any;
   editableId: any;
-  validate: (row?: any) => Promise<any>;
+  validate: (row?: any) => Promise<EditableValidateResult>;
   validator?: Schema;
 };
 

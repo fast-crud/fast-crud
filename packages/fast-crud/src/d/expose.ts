@@ -10,7 +10,13 @@ import {
 } from "./crud";
 import { Ref } from "vue";
 import { EditableOnEnabledProps } from "../use";
-import { EditableCellActiveProps, EditableEachCellsOpts, EditableEachRowsOpts, EditableRow } from "./editable";
+import {
+  EditableCellActiveProps,
+  EditableEachCellsOpts,
+  EditableEachRowsOpts,
+  EditableRow,
+  EditableValidateResult
+} from "./editable";
 
 export type SearchOptions = {
   silence?: boolean;
@@ -277,7 +283,7 @@ export type Editable = {
   getInstance(): any;
   eachCells(callback: (opts: EditableEachCellsOpts) => void): void;
   eachRows(callback: (opts: EditableEachRowsOpts) => void): void;
-  validate(): Promise<boolean>;
+  validate(): Promise<EditableValidateResult>;
   /**
    * 获取可提交数据
    */
