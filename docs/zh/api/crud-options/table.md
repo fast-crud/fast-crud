@@ -248,7 +248,23 @@ const crudOptions = {
                 return res
             } 
         }
+    },
+    
+    columns:{
+        key:{
+            column:{
+                //此处可以给某列单独进行一些配置，比table.editable优先级高
+                editable:{
+                    //该列是否禁用编辑, boolean | TableColumnEditableDisabledFunc;
+                    //比table.editable.isEditable优先级更高
+                    disabled: false,
+                    // 单元格提交的请求，示例同上
+                    updateCell: undefine //EditableUpdateCellRequest;
+                }
+            }
+        }
     }
 }
+
 
 ```
