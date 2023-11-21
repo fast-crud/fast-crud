@@ -25,7 +25,9 @@
 <script lang="ts">
 import { computed, defineComponent, Ref, ref, watch } from "vue";
 import { useUi } from "@fast-crud/fast-crud";
-// 文件格式化展示组件
+/**
+ * 文件格式化展示组件
+ */
 export default defineComponent({
   name: "FsFilesFormat",
   props: {

@@ -12,6 +12,10 @@ import { defaultConfig } from "../../type/config";
 import _ from "lodash-es";
 import { defineComponent } from "vue";
 import { useUploader } from "../../../uploader";
+
+/**
+ * 已废弃
+ */
 export default defineComponent({
   name: "FsEditorWang",
   props: {

@@ -54,7 +54,10 @@ import { FsUploaderDoUploadOptions } from "../d/type";
 import { useUploader } from "./utils";
 
 /**
- * 图片裁剪上传组件,封装了fs-cropper, fs-cropper内部封装了cropperjs
+ * 图片裁剪上传组件,封装了fs-cropper
+ *
+ * fs-cropper内部封装了[cropperjs](https://github.com/fengyuanchen/cropperjs)
+ *
  */
 
 export default defineComponent({

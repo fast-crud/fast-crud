@@ -54,7 +54,10 @@ import { computed, defineComponent, getCurrentInstance, ref, Ref } from "vue";
 import VueCropper from "./utils/vue-cropperjs.js";
 import "cropperjs/dist/cropper.css";
 import { useI18n, useUi } from "@fast-crud/fast-crud";
-// 图片裁剪对话框，封装cropperjs
+/**
+ * 图片裁剪对话框
+ * 内部封装了[cropperjs](https://github.com/fengyuanchen/cropperjs)
+ */
 export default defineComponent({
   name: "FsCropper",
   components: {
