@@ -3,7 +3,20 @@
 ## 依赖版本升级
 如果你只想升级fast-crud，则只需要升级依赖版本即可，可以选择如下两种方式：
 
-### 1.命令行升级
+### 1.手动升级 【推荐】
+
+修改`package.json`的`dependencies`如下依赖包的版本号     
+  
+* @fast-crud/fast-crud:xxx
+* @fast-crud/fast-extends:xxx
+* @fast-crud/ui-xxx:xxx
+     
+将以上依赖版本号全部改成最新的   
+然后执行`npm install` 或 `yarn install` 即可
+
+> 最新的版本号请查看 [changelog](./changelogs/CHANGELOG.md)
+
+### 2.命令行升级
 项目根目录下执行如下命令即可升级`fast-crud`到最新版本
 ```
 #使用npm
@@ -15,17 +28,6 @@ yarn upgrade
 #或手动选择升级版本
 yarn upgrade-interactive --latest
 ```
-
-### 2.手动升级
-
-修改`package.json`的`dependencies`如下依赖包的版本号    
-然后执行`npm install` 或 `yarn install` 即可
-   
-* @fast-crud/fast-crud:xxx
-* @fast-crud/fast-extends:xxx
-* @fast-crud/ui-xxx:xxx
-
-> 具体的版本号请查看 [changelog](./changelogs/CHANGELOG.md)
 
 ### 其他命令参考
 ```shell script
