@@ -1,13 +1,5 @@
-import { nextTick, Ref, toRaw } from "vue";
-import {
-  CrudExpose,
-  Editable,
-  EditableAddRowOptions,
-  EditableActiveColsOptions,
-  OpenDialogProps,
-  OpenEditContext,
-  SetFormDataOptions
-} from "../d/expose";
+import { Ref, toRaw } from "vue";
+import { CrudExpose, OpenDialogProps, OpenEditContext, SetFormDataOptions } from "../d/expose";
 import _, { isArray } from "lodash-es";
 import logger from "../utils/util.log";
 import { useMerge } from "../use/use-merge";
@@ -17,18 +9,19 @@ import {
   ColumnCompositionProps,
   CrudBinding,
   DoRemoveContext,
+  EditableEachCellsOpts,
+  EditableEachRowsOpts,
   Page,
   PageQuery,
   PageRes,
   RemoveProps,
   SearchOptions,
   UserPageQuery,
-  UserPageRes,
-  EditableEachCellsOpts,
-  EditableEachRowsOpts
+  UserPageRes
 } from "../d";
 import { useFormWrapper } from "./use-form";
 import { forEachColumns } from "../use/use-columns";
+import { Editable, EditableActiveColsOptions, EditableAddRowOptions } from "../d/expose-editable";
 
 const { merge } = useMerge();
 const doMerge = merge;

@@ -267,4 +267,10 @@ const crudOptions = {
 }
 
 
+
 ```
+
+### crudExpose.editable 
+crudExpose.editable暴露了很多editable相关的方法
+
+<<<@/../../packages/fast-crud/src/d/expose-editable.ts

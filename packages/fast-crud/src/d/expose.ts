@@ -9,14 +9,7 @@ import {
   UserPageQuery
 } from "./crud";
 import { Ref } from "vue";
-import { EditableOnEnabledProps } from "../use";
-import {
-  EditableCellActiveProps,
-  EditableEachCellsOpts,
-  EditableEachRowsOpts,
-  EditableRow,
-  EditableValidateResult
-} from "./editable";
+import { Editable } from "./expose-editable";
 
 export type SearchOptions = {
   silence?: boolean;
@@ -231,64 +224,7 @@ export type CrudExpose = {
    */
   editable: Editable;
 };
-export type EditableAddRowOptions = {
-  row?: any;
-  active?: boolean;
-};
-export type EditableActiveColsOptions = {
-  cols: string[];
-} & EditableCellActiveProps;
-export type Editable = {
-  enable(opts?: any, onEnabled?: (opts: EditableOnEnabledProps) => void): Promise<void>;
-  /**
-   * 禁用编辑
-   */
-  disable(): void;
-  /**
-   * 激活所有编辑
-   */
-  active(opts?: EditableCellActiveProps): void;
-  /**
-   * 退出编辑
-   */
-  inactive(): void;
 
-  /**
-   * 取消所有编辑
-   */
-  cancel(): void;
-
-  /**
-   * 保存所有编辑，不提交到后台，仅让本地保存
-   */
-  persist(): void;
-  /**
-   * 添加行
-   */
-  addRow(opts?: EditableAddRowOptions): void;
-  /**
-   * 编辑cols
-   * @param opts
-   */
-  activeCols(opts: EditableActiveColsOptions): void;
-  /**
-   * 还原，取消编辑
-   */
-  resume(): void;
-  removeRow(editableId: any): void;
-  getEditableRow(editableId: any): EditableRow;
-  doSaveRow(opts: { editableId?: any; row?: any }): Promise<void>;
-  doCancelRow(opts: { editableId?: any; row?: any }): Promise<void>;
-  doRemoveRow(opts: { editableId?: any; row?: any }): Promise<void>;
-  getInstance(): any;
-  eachCells(callback: (opts: EditableEachCellsOpts) => void): void;
-  eachRows(callback: (opts: EditableEachRowsOpts) => void): void;
-  validate(): Promise<EditableValidateResult>;
-  /**
-   * 获取可提交数据
-   */
-  getTableData(): any[];
-};
 /**
  * index or row 必须传一个
  */
