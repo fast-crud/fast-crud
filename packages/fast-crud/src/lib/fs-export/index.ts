@@ -31,14 +31,18 @@ export type DataFormatterContext = {
   exportCol: ExportColumn;
 };
 function defaultDataFormatter({ originalRow, row, key, col }: DataFormatterContext) {
-  if (col.component?.dict && originalRow[key] != null) {
+  const value = originalRow[key];
+  const dict = col.component?.dict;
+  if (dict && value != null) {
     //处理dict
-    const dict = col.component.dict;
-    const nodes = dict.getNodesFromDataMap(originalRow[key]);
+    const nodes = dict.getNodesFromDataMap(value);
     if (nodes != null && nodes.length > 0) {
-      row[key] = _.map(nodes, (node) => {
-        return dict.getLabel(node);
+      const label = _.map(nodes, (node) => {
+        return dict.getLabel(node) || dict.getValue(node);
       }).join("|");
+      if (label) {
+        row[key] = label;
+      }
     }
   }
   return row;
@@ -90,6 +94,12 @@ export type ExportProps = {
    * 查询参数
    */
   searchParams?: PageQuery;
+
+  /**
+   * 配置了dict的字段是否自动根据value获取label
+   * 默认值：true
+   */
+  autoUseDictLabel?: boolean;
 
   /**
    * 数据分隔符
@@ -170,7 +180,10 @@ export async function exportTable(crudExpose: CrudExpose, opts: ExportProps = {}
         col,
         exportCol
       };
-      defaultDataFormatter(mapping);
+      if (opts.autoUseDictLabel !== false) {
+        defaultDataFormatter(mapping);
+      }
+
       if (opts.dataFormatter) {
         opts.dataFormatter(mapping);
       }

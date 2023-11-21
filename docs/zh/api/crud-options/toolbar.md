@@ -66,6 +66,7 @@ const crudOptions = {
             filename: 'table', // 导出文件名
             fileType: 'csv' ,// 导出文件类型，可选值：csv | excel=数据比较复杂时使用（包含逗号，换行等）
             dataFrom: 'local', //导出数据来源，可选值：local=本地页面数据 | search=导出前请求接口获取数据
+            autoUseDictLabel: true, //是否自动使用字典标签
             searchParams: { //当dataFrom=search时，导出前请求接口获取数据的参数
                 //查询条件
                 page: {
