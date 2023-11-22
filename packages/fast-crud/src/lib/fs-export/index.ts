@@ -40,7 +40,7 @@ function defaultDataFormatter({ originalRow, row, key, col }: DataFormatterConte
       const label = _.map(nodes, (node) => {
         return dict.getLabel(node) || dict.getValue(node);
       }).join("|");
-      if (label) {
+      if (label != null && label !== "") {
         row[key] = label;
       }
     }
