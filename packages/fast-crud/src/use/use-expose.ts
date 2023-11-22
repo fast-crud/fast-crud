@@ -552,6 +552,24 @@ export function useExpose(props: UseExposeProps): UseExposeRet {
       checkCrudBindingRef();
       crudBinding.value.data.splice(index, 1);
     },
+    removeTableRowByRowKey: (rowKey: any, data?: any[]) => {
+      checkCrudBindingRef();
+      if (data == null) {
+        data = crudBinding.value.data;
+      }
+      for (let i = 0; i < data.length; i++) {
+        const row = data[i];
+        if (row[crudBinding.value.table.rowKey] === rowKey) {
+          data.splice(i, 1);
+          return true;
+        }
+        if (row.children && isArray(row.children)) {
+          if (crudExpose.removeTableRowByRowKey(rowKey, row.children)) {
+            return true;
+          }
+        }
+      }
+    },
     getTableDataRow(index: number) {
       const data = crudExpose.getTableData();
       if (data == null) {
@@ -596,8 +614,8 @@ export function useExpose(props: UseExposeProps): UseExposeRet {
       }
       let res = null;
       const isLocal = crudBinding.value.mode?.name === "local";
-      if (opts?.handler) {
-        await opts.handler(context);
+      if (opts?.handle) {
+        await opts.handle(context);
       } else {
         if (isLocal) {
           crudExpose.removeTableRow(context?.index);

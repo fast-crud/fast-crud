@@ -211,9 +211,15 @@ export type CrudExpose = {
   removeTableRow: (index: number) => void;
 
   /**
-   * 获取表格数据某一行
+   * 获取表格数据某一行,不支持树形结构
    */
   getTableDataRow: (index: number) => any;
+
+  /**
+   * 根据rowKey删除某一行
+   * @param rowKey
+   */
+  removeTableRowByRowKey: (rowKey: any, data?: any[]) => boolean;
   /**
    * 选中某一行
    * @param context = {row}

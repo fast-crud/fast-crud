@@ -66,6 +66,10 @@ export function useEditable(props: any, ctx: any, tableRef: any): { editable: Ed
     return props.rowKey(row);
   }
 
+  function getEditableIdFromRow(row: any) {
+    return row[props.editable.rowKey];
+  }
+
   function editableEachRows(call: (opts: EditableEachRowsOpts) => any) {
     for (const key in editableRows) {
       const row = editableRows[key];
@@ -549,20 +553,28 @@ export function useEditable(props: any, ctx: any, tableRef: any): { editable: Ed
     }
   }
 
-  function removeTableRowByEditableId(editableId: number) {
-    const data = tableData.getData();
+  function removeTableRowByEditableId(editableId: number, data: any[]): boolean {
     for (let i = 0; i < data.length; i++) {
-      const id = getIdFromRow(data[i]);
+      const row = data[i];
+      const id = getEditableIdFromRow(row);
       if (id === editableId) {
-        tableData.remove(i);
-        break;
+        _.remove(data, row);
+        return true;
+      }
+      if (row.children && row.children.length > 0) {
+        const del = removeTableRowByEditableId(editableId, row.children);
+        if (del) {
+          return;
+        }
       }
     }
+    return false;
   }
 
   function removeRow(editableId: any) {
+    debugger;
     delete editableRows[editableId];
-    removeTableRowByEditableId(editableId);
+    removeTableRowByEditableId(editableId, tableData.getData());
   }
 
   function activeCols(opts: EditableActiveColsOptions) {
