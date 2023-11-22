@@ -195,7 +195,10 @@ function useEditable(props: UseEditableProps) {
       return await crudExpose.getTableRef().editable?.validate();
     },
     getTableData(data?: any[]): any[] {
-      return crudExpose.getTableRef().editable?.getTableData(data);
+      return crudExpose.getTableRef().editable?.getCleanTableData(data);
+    },
+    getCleanTableData(data?: any[]): any[] {
+      return crudExpose.getTableRef().editable?.getCleanTableData(data);
     }
   };
   return editable;

@@ -616,7 +616,7 @@ export function useEditable(props: any, ctx: any, tableRef: any): { editable: Ed
     }
     return data;
   }
-  function getTableData(data?: any[]): any[] {
+  function getCleanTableData(data?: any[]): any[] {
     if (data == null) {
       data = _.cloneDeep(tableData.getData());
     }
@@ -645,7 +645,7 @@ export function useEditable(props: any, ctx: any, tableRef: any): { editable: Ed
       eachRows: editableEachRows,
       eachCells: editableEachCells,
       validate,
-      getTableData
+      getCleanTableData
     }
   };
 }
