@@ -182,21 +182,44 @@ const crudOptions = {
 
 ## beforeSubmit
 * 说明: 表单提交前触发，，返回false或抛异常即可中止提交
-* 类型：async Function(context)
+* 类型：`async (context)=>void`
 
 ## doSubmit
 * 说明: 提交表单时执行的方法（独立使用表单时，通过`formRef.submit()`可触发此方法），返回false或抛异常即可阻止后续操作，比如阻止关闭窗口
-* 类型：async Function(context)
+* 类型：`async (context)=>void`
 * 默认：默认无需配置，通过`useCrud`自动生成
 
 ## afterSubmit
-* 说明: 表单提交后触发，返回false或抛异常即可阻止后续操作，比如阻止关闭窗口
-* 类型：async Function(context)
+* 说明: 表单提交后触发，可以弹出成功提示等，返回false或抛异常即可阻止后续操作，比如阻止关闭窗口
+* 类型：`async (context)=>void`
+* 示例：
+```js
+const crudOptions = {
+    form:{
+        afterSubmit({mode}){
+            if (mode === "add") {
+                notification.success({ message: "添加成功" });
+            } else if (mode === "edit") {
+                notification.success({ message: "保存成功" });
+            }
+        }
+    }
+}
+```
 
 ## onSuccess
 * 说明: afterSubmit没有抛异常且没有返回false时触发，默认为刷新表格
-* 类型：async Function(context)
-
+* 类型：`async (context)=>void`
+* 默认值：
+```js
+const crudOptions = {
+    form:{
+        onSuccess({mode}){
+            crudExpose.doRefresh()
+        }
+    }
+}
+```
 
 ## wrapper(表单容器,dialog/drawer)
 * 说明: 表单容器配置的配置（`对话框dialog`或`抽屉drawer`）
