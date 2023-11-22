@@ -595,7 +595,6 @@ export function useEditable(props: any, ctx: any, tableRef: any): { editable: Ed
   }
 
   function removeRow(editableId: any) {
-    debugger;
     delete editableRows[editableId];
     removeTableRowByEditableId(editableId, tableData.getData());
   }

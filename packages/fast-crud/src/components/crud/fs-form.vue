@@ -541,6 +541,8 @@ export default defineComponent({
         }
       }
       ctx.emit("success", submitScope);
+
+      return submitScope;
     }
 
     onMounted(() => {
