@@ -11,7 +11,8 @@ import {
   EditableEachCellsOpts,
   EditableEachRowsOpts,
   EditableRow,
-  EditableTable
+  EditableTable,
+  FormItemProps
 } from "../../../d";
 import { createValidator } from "./validator";
 
@@ -130,7 +131,7 @@ export function useEditable(props: any, ctx: any, tableRef: any): { editable: Ed
       return col.editable?.updateCell || options.value.updateCell;
     });
     const cell: EditableCell = reactive({
-      mode: "edit",
+      mode: editableId < 0 ? "add" : "edit",
       oldValue: undefined,
       newValue: undefined,
       loading: false,
@@ -177,7 +178,13 @@ export function useEditable(props: any, ctx: any, tableRef: any): { editable: Ed
           cell.showAction = null;
         }
         cell.isEditing = true;
+
         cell.oldValue = getValue(key);
+
+        const formItem = options.value.editForm[key];
+        if (formItem) {
+          setDefaultValue(formItem, tableRow);
+        }
       },
       inactive: () => {
         cell.isEditing = false;
@@ -544,8 +551,24 @@ export function useEditable(props: any, ctx: any, tableRef: any): { editable: Ed
 
   let addIndex = 0;
 
+  function setDefaultForm(formColumnConfigs: Record<string, FormItemProps>, row: any) {
+    //设置默认值
+    eachTree(formColumnConfigs, (item: FormItemProps) => {
+      setDefaultValue(item, row);
+    });
+  }
+
+  function setDefaultValue(formItem: FormItemProps, row: any) {
+    const value = _.get(row, formItem.key);
+    const defValue = unref(formItem.value);
+    if (defValue != null && value == null) {
+      _.set(row, formItem.key, defValue);
+    }
+  }
+
   async function addRow(opts: { row: any; active: boolean } = { row: undefined, active: true }) {
     const row = opts.row || { [options.value.rowKey]: --addIndex };
+    setDefaultForm(options.value.addForm, row);
     if (props.editable.addRow) {
       await props.editable.addRow(tableData.getData(), row);
     } else {

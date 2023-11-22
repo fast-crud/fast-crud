@@ -1,7 +1,7 @@
 import { computed, ComputedRef, defineComponent, defineExpose, PropType, ref } from "vue";
 import { uiContext } from "../../../ui";
 import { useCompute } from "../../../use/use-compute";
-import { EditableCell,EditableProps, EditableUpdateCellRequest } from "../../../d";
+import { EditableCell, EditableProps, EditableUpdateCellRequest } from "../../../d";
 /**
  * 可编辑单元格组件
  */
@@ -22,7 +22,9 @@ export default defineComponent({
     },
     editableOpts: {
       type: Object as PropType<EditableProps>
-    }
+    },
+    disabled: {},
+    readonly: {}
   },
   setup(props: any, ctx: any) {
     const ui = uiContext.get();
@@ -103,7 +105,7 @@ export default defineComponent({
     };
 
     return () => {
-      if (!computedIsEditable.value) {
+      if (!computedIsEditable.value || props.disabled || props.readonly) {
         return <fs-cell ref={"targetRef"} item={props.item} scope={props.scope} {...ctx.attrs} />;
       }
       const editableCell: EditableCell = props.editableCell;

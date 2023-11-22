@@ -479,8 +479,15 @@ export type RemoveProps = {
 };
 
 export type EditableProps = {
-  rowKey?: string;
+  /**
+   * 是否启用编辑
+   */
   enabled?: boolean;
+  rowKey?: string;
+  /**
+   * 是否readonly
+   */
+  readonly?: boolean;
   addForm?: FormProps;
   editForm?: FormProps;
   //模式，free，row

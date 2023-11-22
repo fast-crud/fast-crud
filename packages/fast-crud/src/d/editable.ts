@@ -6,6 +6,7 @@ import { ValidateFieldsError } from "async-validator/dist-types/interface";
 export type EditableValidateResult = boolean | ValidateFieldsError;
 export type EditableTable = {
   options: Ref<EditableProps>;
+  disabled?: boolean;
   setupEditable: (data?: any[]) => void;
   inactive: () => void;
   active: () => void;

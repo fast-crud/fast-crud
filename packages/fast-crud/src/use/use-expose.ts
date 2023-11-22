@@ -1,4 +1,4 @@
-import { Ref, toRaw } from "vue";
+import { onMounted, Ref, toRaw, watch } from "vue";
 import { CrudExpose, OpenDialogProps, OpenEditContext, SetFormDataOptions } from "../d/expose";
 import _, { isArray } from "lodash-es";
 import logger from "../utils/util.log";
@@ -49,23 +49,33 @@ function useEditable(props: UseEditableProps) {
   const { ui } = useUi();
   const { t } = useI18n();
   const { merge } = useMerge();
-  const editable: Editable = {
-    /**
-     * 启用编辑
-     * @param opts
-     * @param onEnabled 默认根据mode切换rowHandle.active,[editRow,editable]
-     */
-    async enable(opts: any, onEnabled: (opts: EditableOnEnabledProps) => void) {
-      const editableOpts = crudBinding.value.table.editable;
-      merge(editableOpts, { enabled: true }, opts);
-      if (onEnabled) {
-        onEnabled({ editable: editableOpts });
-      } else {
-        if (editableOpts.mode === "row") {
+
+  watch(
+    () => {
+      return crudBinding.value?.table?.editable?.enabled;
+    },
+    (val) => {
+      if (val) {
+        if (crudBinding.value.table.editable.mode === "row") {
           crudBinding.value.rowHandle.active = "editRow";
         } else {
           crudBinding.value.rowHandle.active = "editable";
         }
+      } else {
+        crudBinding.value.rowHandle.active = "default";
+      }
+    }
+  );
+  const editable: Editable = {
+    /**
+     * 启用编辑
+     * @param opts
+     */
+    async enable(opts?: any, onEnabled?: (opts: EditableOnEnabledProps) => void) {
+      const editableOpts = crudBinding.value.table.editable;
+      merge(editableOpts, { enabled: true }, opts);
+      if (onEnabled) {
+        onEnabled({ editable: editableOpts });
       }
     },
     /**

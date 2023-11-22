@@ -399,6 +399,8 @@ export default defineComponent({
             editableOpts={editableWrap.editable?.options?.value}
             scope={newScope}
             slots={cellSlots}
+            disabled={editableWrap.editable?.options?.value?.disabled}
+            readonly={editableWrap.editable?.options?.value?.readonly}
             {...vModel}
           />
         );

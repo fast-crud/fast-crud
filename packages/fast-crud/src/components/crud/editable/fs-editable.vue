@@ -1,11 +1,11 @@
 <template>
   <div class="fs-editable">
-    <div v-if="!editing" class="fs-editable-inner fs-editable-pointer" v-bind="activeTrigger">
+    <div v-if="!editing || disabled" class="fs-editable-inner fs-editable-pointer" v-bind="activeTrigger">
       <div class="fs-editable-input">
         <div v-if="dirty" class="fs-editable-dirty" />
         <slot></slot>
       </div>
-      <div v-if="trigger" class="fs-editable-action fs-editable-icon">
+      <div v-if="trigger && !disabled" class="fs-editable-action fs-editable-icon">
         <fs-icon :icon="ui.icons.edit" />
       </div>
     </div>
@@ -39,6 +39,7 @@ import { useUi } from "@fast-crud/ui-interface";
 import { computed } from "vue";
 
 type FsEditableProps = {
+  disabled?: boolean;
   editing: boolean;
   dirty?: boolean;
   trigger?: "onClick" | "onDbClick" | false;
@@ -47,6 +48,7 @@ type FsEditableProps = {
   validateErrors?: any[];
 };
 const props = withDefaults(defineProps<FsEditableProps>(), {
+  disabled: false,
   editing: false,
   dirty: false,
   loading: false,
