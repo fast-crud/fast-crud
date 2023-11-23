@@ -485,7 +485,6 @@ export default defineComponent({
       }
     }
     async function submit() {
-      debugger;
       try {
         errorsRef.value = {};
         await ui.form.validateWrap(formRef.value);
