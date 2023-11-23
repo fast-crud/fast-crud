@@ -251,7 +251,7 @@ const crudOptions = {
              * 本地自定义插入方法
              * 如果你不喜欢新增的记录在第一条的话，你可以自己实现插入方法
              */
-            addRow?: (data: any[], row: any)=>{
+            addRow: (data: any[], row: any)=>{
                 // (data: any[], row: any) => void
                 //在最后一行插入数据
                 data.push(roow)
