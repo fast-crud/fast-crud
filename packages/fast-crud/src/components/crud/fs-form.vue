@@ -638,8 +638,8 @@ export default defineComponent({
     .el-date-editor,
     .el-input-number,
     .el-input,
-    .el-select,
-    .n-select,
+    > .el-select,
+    > .n-select,
     .n-date-picker,
     .n-input-number {
       width: 100%;
