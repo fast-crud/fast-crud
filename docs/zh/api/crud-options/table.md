@@ -246,7 +246,16 @@ const crudOptions = {
                 // 如果id(table.rowKey)为负数，则是添加，后台需要返回新的id值，用于更新到表格内
                 // res 应该至少包含id(rowKey) 例如： {id:99,...}
                 return res
-            } 
+            },
+            /**
+             * 本地自定义插入方法
+             * 如果你不喜欢新增的记录在第一条的话，你可以自己实现插入方法
+             */
+            addRow?: (data: any[], row: any)=>{
+                // (data: any[], row: any) => void
+                //在最后一行插入数据
+                data.push(roow)
+            }
         }
     },
     

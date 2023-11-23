@@ -506,9 +506,17 @@ export type EditableProps = {
   activeDefault?: boolean;
   //设置哪个cell可以激活编辑
   isEditable?: (opts: { editableId: any; key: string; row: any }) => boolean;
-
+  /**
+   * 更新单元格方法
+   * @param opts
+   */
   updateCell?: (opts: { editableId: any; row: any; key: string; value: any }) => Promise<any>;
-  [key: string]: any;
+
+  /**
+   * 本地自定义插入方法
+   * 如果你不喜欢新增的记录在第一条的话，你可以自己实现插入方法
+   */
+  addRow?: (data: any[], row: any) => boolean;
 };
 
 export type TableColumnEditableDisabledFunc = (opts: { column: ColumnProps; editableId: any; row: any }) => boolean;
