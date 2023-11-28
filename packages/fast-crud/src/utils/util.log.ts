@@ -22,13 +22,13 @@ function logError(...args: any) {
   console.error.apply(this, arguments);
 }
 const error = (...args: any) => {
-  logError("[error]", ...args);
+  logError("%c [error]", "font-weight: 600;", ...args);
 };
 const warn = (...args: any) => {
-  logWarn("[warn]", ...args);
+  logWarn("%c [warn]", "font-weight: 600;", ...args);
 };
 const info = (...args: any) => {
-  logInfo("[info]", ...args);
+  logInfo("%c [info]", "font-weight: 600;", ...args);
 };
 const debug = (...args: any) => {
   if (!console.log) {
@@ -36,10 +36,12 @@ const debug = (...args: any) => {
   }
   const callerInfo = getCallerInfo();
   if (DEBUG_WITH_CALLER) {
-    const log = ["[debug]", ...args, "\n", callerInfo];
+    const log = ["%c [debug]", "font-weight: 600;", ...args];
     logInfo(...log);
+    const caller = ["%c " + callerInfo, "color:#999"];
+    logInfo(...caller);
   } else {
-    const log = ["[debug]", ...args];
+    const log = ["%c [debug]", "font-weight: 600;", ...args];
     logInfo(...log);
   }
 };
@@ -47,7 +49,8 @@ const logger = {
   debug: blank,
   info: blank,
   warn: blank,
-  error: blank
+  error: blank,
+  log: blank
 };
 
 export default logger;
@@ -57,11 +60,13 @@ export function setLogger(opts: any = {}) {
   logger.info = blank;
   logger.warn = blank;
   logger.error = blank;
+  logger.log = blank;
   switch (level) {
     case "debug":
       logger.debug = debug;
     case "info":
       logger.info = info;
+      logger.log = info;
     case "warn":
       logger.warn = warn;
     case "error":
