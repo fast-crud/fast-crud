@@ -280,6 +280,19 @@ const crudOptions = {
 ```
 
 ### crudExpose.editable 
-crudExpose.editable暴露了很多editable相关的方法
+crudExpose.editable暴露了很多editable相关的方法，你可以直接调用
 
 <<<@/../../packages/fast-crud/src/d/expose-editable.ts
+
+::: warning
+
+行编辑模式下，你的AddRequest必须返回 `{[rowKey]:xxx,...}`格式（示例中为 `{id:xxx}`）, 否则保存之后用户再次编辑又会新增一条
+
+```js
+const addRequest = async ({ form }: AddReq) => {
+const res = await api.AddObj(form);
+//res 必须为 `{[rowKey]:xxx,...}`格式
+return res;
+};
+```
+:::
