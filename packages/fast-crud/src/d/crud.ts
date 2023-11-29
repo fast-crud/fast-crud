@@ -517,6 +517,8 @@ export type EditableProps = {
    * 如果你不喜欢新增的记录在第一条的话，你可以自己实现插入方法
    */
   addRow?: (data: any[], row: any) => boolean;
+
+  [key: string]: any;
 };
 
 export type TableColumnEditableDisabledFunc = (opts: { column: ColumnProps; editableId: any; row: any }) => boolean;
