@@ -633,6 +633,12 @@ export default defineComponent({
         width: 100%;
       }
 
+      .ant-btn-loading-icon {
+        display: flex;
+        margin-left: 2px;
+        margin-right: 2px;
+      }
+
       &.el-form--label-top {
         .el-form-item {
           display: block;

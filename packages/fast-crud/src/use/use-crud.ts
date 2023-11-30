@@ -137,6 +137,13 @@ export function useCrud(ctx: UseCrudProps): UseCrudRet {
   function useSearch() {
     return {
       search: {
+        buttons: {
+          search: {
+            loading: computed(() => {
+              return crudBinding.value?.table?.loading;
+            })
+          }
+        },
         on_reset() {
           crudBinding.value.table.sort = {};
           forEachTableColumns(crudBinding.value.table.columns, (column: ColumnCompositionProps) => {
