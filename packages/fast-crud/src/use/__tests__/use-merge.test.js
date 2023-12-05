@@ -11,7 +11,6 @@ describe("useMerge", function () {
     }
     const target = new TestDict();
     target.cloneable = false;
-    console.log(target);
     const cloned = cloneDeep(target);
     expect(target).not.toBe(cloned);
 
@@ -37,7 +36,6 @@ describe("useMerge", function () {
       }
     }
     const target = new TestDict();
-    console.log(target);
     const cloned = merge({}, target, undefined);
     expect(target).toBe(cloned);
 

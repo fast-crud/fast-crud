@@ -118,9 +118,6 @@ export function export_table_to_excel(id) {
     FileSaver.saveAs(new Blob([s2ab(wbout)], {type: "application/octet-stream"}), "test.xlsx")
 }
 
-function formatJson(jsonData) {
-    console.log(jsonData)
-}
 export function export_json_to_excel(th, jsonData, defaultTitle, options = { merges: [], header: null,cols:null }) {
 
     /* original data */

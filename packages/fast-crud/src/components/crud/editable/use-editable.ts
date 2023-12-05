@@ -423,7 +423,6 @@ export function useEditable(props: any, ctx: any, tableRef: any): { editable: Ed
       return JSON.stringify(thinData);
     },
     (thinData, oldThinData) => {
-      console.log("data changed", thinData);
       if (options.value.enabled) {
         setupEditable(props.data);
       }

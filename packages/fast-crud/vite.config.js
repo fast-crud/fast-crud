@@ -14,7 +14,8 @@ export default defineConfig(({ command, mode, ssrBuild }) => {
     esbuild: {
       jsxFactory: "h",
       jsxFragment: "Fragment",
-      drop: command === "build" ? ["debugger"] : []
+      drop: command === "build" ? ["debugger"] : [],
+      pure: ["console.log", "debugger"]
     },
     build: {
       lib: {
@@ -41,9 +42,9 @@ export default defineConfig(({ command, mode, ssrBuild }) => {
           }),
           strip({
             //不移除console
-            functions: ["console.log1", "assert.*"],
+            functions: ["console.log", "assert.*"],
             debugger: true,
-            sourceMap: true
+            sourceMap: false
           })
         ],
         // make sure to externalize deps that shouldn't be bundled

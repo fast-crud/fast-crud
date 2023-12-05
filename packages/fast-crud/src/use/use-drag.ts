@@ -93,7 +93,6 @@ async function dragModalForNaive(opts: DragModalOptions) {
       // 通过事件委托，计算移动的距离
       const l = e.clientX - X;
       const t = e.clientY - Y;
-      // console.log(e.clientX, e.clientY, l, t, styL, styT);
       // 移动当前元素
       dragDom.style.left = `${l + styL}px`;
       dragDom.style.top = `${t + styT}px`;

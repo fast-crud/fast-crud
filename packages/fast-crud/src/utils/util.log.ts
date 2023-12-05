@@ -9,7 +9,7 @@ const blank = (...args: any) => {};
 function logInfo(...args: any) {
   // @ts-ignore
   // eslint-disable-next-line prefer-rest-params
-  console.log.apply(this, arguments);
+  console["log"].apply(this, arguments);
 }
 function logWarn(...args: any) {
   // @ts-ignore
