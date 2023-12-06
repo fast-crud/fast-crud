@@ -237,9 +237,14 @@ export default defineComponent({
      */
     helper: {
       type: Object
+    },
+
+    watch: {
+      type: Function,
+      default: null
     }
   },
-  emits: ["reset", "submit", "success", "validationError", "value-change"],
+  emits: ["reset", "submit", "success", "validationError", "value-change", "init"],
   setup(props, ctx) {
     const { merge } = useMerge();
     const { ui } = useUi();
@@ -583,6 +588,25 @@ export default defineComponent({
       }
       return false;
     }
+
+    if (props.watch) {
+      watch(
+        () => {
+          return form;
+        },
+        (newVal, oldVal) => {
+          if (props.watch) {
+            props.watch(scope.value);
+          }
+        },
+        {
+          deep: true,
+          immediate: true
+        }
+      );
+    }
+
+    ctx.emit("init", scope.value);
 
     return {
       get: (form: any, key: string) => {
