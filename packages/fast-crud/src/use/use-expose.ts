@@ -437,6 +437,13 @@ export function useExpose(props: UseExposeProps): UseExposeRet {
 
       const page = crudExpose.getPage();
       const pageRes = await crudExpose.search({ page }, { silence: props?.silence });
+      if (pageRes == null) {
+        logger.error(
+          "pageRequest返回结构不正确，请配置正确的request.transformRes，期望：{currentPage>0, pageSize>0, total, records:[]},实际返回：",
+          pageRes
+        );
+        return;
+      }
       const { currentPage = page.currentPage || 1, pageSize = page.pageSize, total } = pageRes;
       const { records } = pageRes;
       if (
