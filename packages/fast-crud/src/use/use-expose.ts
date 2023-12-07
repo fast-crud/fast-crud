@@ -461,6 +461,9 @@ export function useExpose(props: UseExposeProps): UseExposeRet {
           "pageRequest返回结构不正确，请配置正确的request.transformRes，期望：{currentPage>0, pageSize>0, total, records:[]},实际返回：",
           pageRes
         );
+        logger.info(
+          "如果你的不需要分页，也需要按照上面的格式返回，可以让pageSize=99999，然后配置crudOptions.pagination.show=false来隐藏分页组件"
+        );
         return;
       }
       crudBinding.value.data = records;
