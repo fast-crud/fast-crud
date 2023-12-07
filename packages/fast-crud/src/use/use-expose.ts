@@ -448,6 +448,7 @@ export function useExpose(props: UseExposeProps): UseExposeRet {
       const { records } = pageRes;
       if (
         records == null ||
+        !(records instanceof Array) ||
         total == null ||
         currentPage == null ||
         currentPage <= 0 ||
