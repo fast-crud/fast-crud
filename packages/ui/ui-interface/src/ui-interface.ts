@@ -581,6 +581,7 @@ export interface Icons {
 export interface UiInterface {
   modelValue: string;
   type: string;
+  version?: string;
   inputGroup: InputGroupCI;
   input: InputCI;
   number: InputNumberCI;

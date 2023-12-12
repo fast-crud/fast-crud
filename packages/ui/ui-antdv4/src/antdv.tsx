@@ -88,6 +88,7 @@ export class Antdv implements UiInterface {
   }
 
   type = "antdv";
+  version = "4";
   modelValue = "value";
 
   formWrapper = creator<FormWrapperCI>({

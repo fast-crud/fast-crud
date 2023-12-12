@@ -2,11 +2,29 @@ import { daterangeFormatter, datetimerangeFormatter } from "../functions";
 import { uiContext } from "../../ui";
 import dayjs from "dayjs";
 import weekOfYear from "dayjs/plugin/weekOfYear";
-import { ColumnCompositionProps } from "../../d";
+import { ColumnCompositionProps, ValueBuilderContext } from "../../d";
+import weekday from "dayjs/plugin/weekday";
+import localeData from "dayjs/plugin/localeData";
+
+dayjs.extend(weekday);
+dayjs.extend(localeData);
 dayjs.extend(weekOfYear);
 
 export default function () {
   const ui = uiContext.get();
+
+  function buildDateValue(scope: ValueBuilderContext) {
+    const { row, key, value } = scope;
+    if (value != null) {
+      if (ui.type === "naive") {
+        row[key] = dayjs(value).valueOf();
+      } else if (ui.type === "antdv" && ui.version === "4") {
+      } else {
+        row[key] = dayjs(value);
+      }
+    }
+  }
+
   const types: Record<string, ColumnCompositionProps> = {
     datetime: {
       form: {
@@ -20,14 +38,8 @@ export default function () {
         width: "170px",
         component: { name: "fs-date-format" }
       },
-      valueBuilder({ row, key, value }) {
-        if (value != null) {
-          if (ui.type === "naive") {
-            row[key] = dayjs(value).valueOf();
-          } else {
-            row[key] = dayjs(value);
-          }
-        }
+      valueBuilder(scope) {
+        buildDateValue(scope, ui);
       }
     },
     date: {
@@ -43,14 +55,8 @@ export default function () {
         width: 120,
         component: { name: "fs-date-format", format: "YYYY-MM-DD" }
       },
-      valueBuilder({ row, key, value }) {
-        if (value != null) {
-          if (ui.type === "naive") {
-            row[key] = dayjs(value).valueOf();
-          } else {
-            row[key] = dayjs(value);
-          }
-        }
+      valueBuilder(scope) {
+        buildDateValue(scope);
       }
     },
     daterange: {
@@ -108,12 +114,8 @@ export default function () {
         align: "center",
         component: { name: "fs-date-format", format: "HH:mm:ss" }
       },
-      valueBuilder({ row, key, value }) {
-        if (ui.type === "naive") {
-          row[key] = dayjs(value).valueOf();
-        } else {
-          row[key] = dayjs(value);
-        }
+      valueBuilder(scope) {
+        buildDateValue(scope);
       }
     },
     month: {
@@ -129,12 +131,8 @@ export default function () {
         width: 120,
         component: { name: "fs-date-format", format: "YYYY-MM" }
       },
-      valueBuilder({ row, key, value }) {
-        if (ui.type === "naive") {
-          row[key] = dayjs(value).valueOf();
-        } else {
-          row[key] = dayjs(value);
-        }
+      valueBuilder(scope) {
+        buildDateValue(scope);
       }
     },
     week: {
@@ -150,12 +148,8 @@ export default function () {
         width: 120,
         component: { name: "fs-date-format", format: "YYYY-ww[周]" }
       },
-      valueBuilder({ row, key, value }) {
-        if (ui.type === "naive") {
-          row[key] = dayjs(value).valueOf();
-        } else {
-          row[key] = dayjs(value);
-        }
+      valueBuilder(scope) {
+        buildDateValue(scope);
       }
     },
     quarter: {
@@ -171,12 +165,8 @@ export default function () {
         width: 120,
         component: { name: "fs-date-format", format: "YYYY-[Q]Q" }
       },
-      valueBuilder({ row, key, value }) {
-        if (ui.type === "naive") {
-          row[key] = dayjs(value).valueOf();
-        } else {
-          row[key] = dayjs(value);
-        }
+      valueBuilder(scope) {
+        buildDateValue(scope);
       }
     },
     year: {
@@ -184,8 +174,7 @@ export default function () {
         component: {
           //el-date-picker,a-date-picker
           ...ui.datePicker.buildDateType("year"),
-          vModel: ui.datePicker.modelValue,
-          format: "yyyy"
+          vModel: ui.datePicker.modelValue
         }
       },
       column: {
@@ -193,12 +182,8 @@ export default function () {
         width: 120,
         component: { name: "fs-date-format", format: "YYYY" }
       },
-      valueBuilder({ row, key, value }) {
-        if (ui.type === "naive") {
-          row[key] = dayjs(value).valueOf();
-        } else {
-          row[key] = dayjs(value);
-        }
+      valueBuilder(scope) {
+        buildDateValue(scope);
       }
     }
   };
