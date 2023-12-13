@@ -196,6 +196,10 @@ const crudOptions = {
 }
 ```
 
+## beforeValidate
+* 说明: 保存按钮后，表单校验之前触发，返回false或抛异常即可中止提交
+* 类型：`async (context)=>void`
+
 ## beforeSubmit
 * 说明: 表单提交前触发，，返回false或抛异常即可中止提交
 * 类型：`async (context)=>void`

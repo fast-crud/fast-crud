@@ -165,6 +165,11 @@ export type FormScopeContext = {
    * 提交成功后的response
    */
   res?: any;
+
+  /**
+   * 表单数据
+   */
+  form: any;
 } & ScopeContext;
 
 export type ComponentEventContext = {
@@ -781,7 +786,10 @@ export type FormProps = {
    * 表单对话框/抽屉配置
    */
   wrapper?: FormWrapperProps;
-
+  /**
+   * 点击保存按钮，表单校验之前做一些操作,返回false或抛异常，阻止后续操作
+   */
+  beforeValidate?: (context: FormScopeContext) => Promise<boolean>;
   /**
    * 提交前做一些操作,返回false或抛异常，阻止后续操作
    */
