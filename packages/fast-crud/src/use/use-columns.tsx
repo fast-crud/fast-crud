@@ -286,7 +286,7 @@ function buildSearchForm(baseOptions: CrudOptions, formType = "search", columnsM
     const def = {};
     copyFromCompositionColumn(def, key, "valueResolve");
     copyFromCompositionColumn(def, key, "valueBuilder");
-    formColumnsForSearch[key] = _.merge(def, _.pick(item, copyProps));
+    formColumnsForSearch[key] = merge(def, _.pick(item, copyProps));
   });
   return merge({ columns: formColumnsForSearch }, { columns: searchColumns }, baseOptions.search);
 }

@@ -443,7 +443,7 @@ export default defineComponent({
       //default columns排序
       _.forEach(computedColumns.value, (value, key) => {
         const item = _.cloneDeep(props.formItem || {});
-        value = _.merge(item, value);
+        value = merge(item, value);
         value.key = key;
         if (value.order == null) {
           value.order = Constants.orderDefault;

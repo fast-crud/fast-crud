@@ -5,7 +5,7 @@ import * as components from "./components";
 import { FsFormWrapper } from "./components";
 import { i18n, useI18n } from "./locale/";
 import { uiContext } from "./ui";
-import { GlobalConfig, LoggerConfig, useDictDefine } from "./use";
+import { GlobalConfig, LoggerConfig, useDictDefine, useMerge } from "./use";
 import { App } from "vue";
 import { FsSetupOptions } from "./d";
 import _ from "lodash-es";
@@ -22,6 +22,7 @@ export const FastCrud = {
     if (options.ui) {
       uiContext.set(options.ui);
     }
+    const { merge } = useMerge();
     if (options.commonOptions) {
       defaultCrudOptions.commonOptions = options.commonOptions;
     }
@@ -44,7 +45,7 @@ export const FastCrud = {
 
     app.config.globalProperties.$fsui = uiContext.get();
 
-    _.merge(GlobalConfig.logger, options.logger);
+    merge(GlobalConfig.logger, options.logger);
     printWarningLogger(options.logger);
   }
 };

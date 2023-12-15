@@ -2,6 +2,7 @@ import _ from "lodash-es";
 import { ColumnCompositionProps, ColumnProps, CrudExpose, PageQuery, UserPageQuery } from "../../d";
 import { CsvParams, ExcelParams, ExportColumn, ExportUtil, ImportUtil } from "./lib/d";
 import { unref } from "vue";
+import { useMerge } from "../../use";
 
 export async function loadFsExportUtil(): Promise<ExportUtil> {
   const module = await import.meta.glob("./lib/index.ts");
@@ -152,12 +153,13 @@ export async function exportTable(crudExpose: CrudExpose, opts: ExportProps = {}
     }
   }
 
+  const { merge } = useMerge();
   //加载异步组件，不影响首页加载速度
   const exportUtil: ExportUtil = await loadFsExportUtil();
   const data = [];
   let originalData = crudBinding.value.data;
   if (opts.dataFrom === "search") {
-    const searchParams = _.merge(
+    const searchParams = merge(
       {
         page: {
           currentPage: 1,

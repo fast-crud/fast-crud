@@ -8,15 +8,11 @@ import {
   Ref,
   ref,
   resolveComponent,
-  shallowRef,
-  unref,
-  watch
+  unref
 } from "vue";
 import _ from "lodash-es";
-import { useUi } from "../../use";
+import { useMerge, useUi } from "../../use";
 import { ComponentEventContext, VModelProps } from "../../d";
-import { useI18n } from "../../locale";
-import { useRouter } from "vue-router";
 
 function mergeEventHandles(target: any, eventName: string) {
   if (target[eventName] instanceof Array) {
@@ -100,6 +96,7 @@ export default defineComponent({
   emits: ["update:dict", "update:modelValue", "mounted"],
   setup(props: any, ctx) {
     const { ui } = useUi();
+    const { merge } = useMerge();
     provide("get:scope", () => {
       return props.scope;
     });
@@ -121,7 +118,7 @@ export default defineComponent({
         if (typeof props.vModel === "string") {
           vModel.name = props.vModel;
         } else {
-          _.merge(vModel, props.vModel);
+          merge(vModel, props.vModel);
         }
       }
 

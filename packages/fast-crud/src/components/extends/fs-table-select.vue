@@ -187,7 +187,7 @@ const computedDialogBinding = computed(() => {
     title: "选择",
     width: "80%"
   });
-  return _.merge(base, props.dialog);
+  return merge(base, props.dialog);
 });
 
 watch(

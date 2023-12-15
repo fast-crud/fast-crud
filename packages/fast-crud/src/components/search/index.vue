@@ -211,7 +211,7 @@ export default defineComponent({
         }
       });
 
-      return _.cloneDeep(_.merge({}, props.initialForm, form));
+      return _.cloneDeep(merge({}, props.initialForm, form));
     }
 
     const formData = reactive(createInitialForm());
@@ -226,7 +226,7 @@ export default defineComponent({
       null,
       (value: any) => {
         const formItem = _.cloneDeep(props.formItem || {});
-        value = _.merge(formItem, value);
+        value = merge(formItem, value);
         if (!props.validate) {
           //如果关闭validate则去掉rules
           _.forEach(value, (item) => {
