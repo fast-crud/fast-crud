@@ -24,7 +24,7 @@ export default {
     if (options.setupIcons !== false) {
       setupIcons(app);
     }
-    app.component("AButtonGroup", Button.Group);
+    // app.component("AButtonGroup", Button.Group);
     return antdvUi;
   },
   set
