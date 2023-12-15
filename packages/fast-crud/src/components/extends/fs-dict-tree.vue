@@ -25,7 +25,14 @@ export default defineComponent({
     /**
      * placeholder
      */
-    placeholder: { type: String }
+    placeholder: { type: String },
+    /**
+     * 转换DictData
+     */
+    transformDictData: {
+      type: Function,
+      default: undefined
+    }
   },
   emits: ["dict-change"],
   // render () {

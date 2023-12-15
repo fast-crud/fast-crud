@@ -130,7 +130,8 @@ export default defineComponent({
   },
   methods: {
     getTargetRef() {
-      return this.$refs.targetInputRef || this.$refs.targetRef;
+      //@ts-ignore
+      return this.$refs.targetInputRef?.getTargetRef() || this.$refs.targetRef;
     }
   }
 });

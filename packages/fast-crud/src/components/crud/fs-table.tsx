@@ -25,7 +25,7 @@ import {
 } from "../../d";
 import { UiInterface } from "@fast-crud/ui-interface";
 import { useMerge } from "../../use";
-import { useComponentRefProvider } from "/src/components/crud/use/provider";
+import { useComponentRefProvider } from "./use/provider";
 
 type BuildTableColumnsOption = {
   props: any;

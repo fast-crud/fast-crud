@@ -46,6 +46,13 @@ export default defineComponent({
       default() {
         return {};
       }
+    },
+    /**
+     * 转换DictData
+     */
+    transformDictData: {
+      type: Function,
+      default: undefined
     }
   },
   emits: ["dict-change"],

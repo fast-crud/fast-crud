@@ -19,7 +19,14 @@ export default defineComponent({
     /**
      * 选项，比dict.data优先级高
      */
-    options: { type: Array }
+    options: { type: Array },
+    /**
+     * 转换DictData
+     */
+    transformDictData: {
+      type: Function,
+      default: undefined
+    }
   } as any,
   emits: ["dict-change"],
   setup(props, ctx) {

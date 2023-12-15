@@ -21,7 +21,14 @@ export default defineComponent({
     dict: {
       type: Object as PropType<DictOptions<any>>
     },
-    options: {}
+    options: {},
+    /**
+     * 转换DictData
+     */
+    transformDictData: {
+      type: Function,
+      default: undefined
+    }
   } as any,
   emits: ["dict-change"],
   setup(props, ctx) {

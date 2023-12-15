@@ -1,4 +1,4 @@
-import { provide } from "vue/dist/vue";
+import { provide } from "vue";
 import { inject, Ref } from "vue";
 import _ from "lodash-es";
 export function useComponentRefProvider(componentsRef: Ref) {

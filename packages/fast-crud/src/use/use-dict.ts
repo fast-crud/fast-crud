@@ -24,6 +24,9 @@ export function useDict(props: any, ctx: any, vModel = "modelValue") {
           utils.logger.warn("dict.data类型错误，期望为数组，实际：" + dict.data);
         }
         options = dict.data;
+        if (props.transformDictData) {
+          options = props.transformDictData(_.cloneDeep(dict.data));
+        }
       }
 
       if (ui.type === "naive") {

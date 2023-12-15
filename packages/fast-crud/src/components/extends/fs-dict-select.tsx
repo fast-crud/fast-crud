@@ -32,12 +32,15 @@ export default defineComponent({
      */
     renderLabel: {
       type: Function
+    },
+    /**
+     * 转换DictData
+     */
+    transformDictData: {
+      type: Function,
+      default: undefined
     }
   },
-  emits: ["dict-change"],
-  // render () {
-  //   return this.renderFunc({ data: this.data, dataMap: this.dataMap, scope: this.scope, attrs: this.$attrs })
-  // },
   setup(props, ctx) {
     const { t } = useI18n();
     const computedPlaceholder = computed(() => {
