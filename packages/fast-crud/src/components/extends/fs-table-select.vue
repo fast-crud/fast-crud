@@ -121,6 +121,17 @@ const props = withDefaults(defineProps<FsTableSelectProps>(), {
 });
 
 const slots = defineSlots<{
+  /**`
+   * 默认插槽
+   * ```js
+   * scope:{
+   *  //是否已打开
+   *  opened:boolean,
+   *  //打开方法
+   *  open:()=>void
+   * }
+   * ```
+   */
   default: any;
 }>();
 
@@ -136,6 +147,8 @@ const getScopeContext = () => {
     open: openTableSelect
   };
 };
+
+defineExpose(getScopeContext());
 
 function initSelectedKeys(modelValue: any) {
   if (modelValue == null || (Array.isArray(modelValue) && modelValue.length == 0)) {
