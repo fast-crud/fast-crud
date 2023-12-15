@@ -172,7 +172,7 @@ export default defineComponent({
 <style lang="less">
 .fs-form-item {
   .ant-form-item-label {
-    line-height: 1;
+    //line-height: 1;
     .fs-form-item-label-text {
       width: 100%;
       text-overflow: ellipsis;

@@ -187,7 +187,8 @@ export default defineComponent({
   ],
   setup(props: any, ctx: any) {
     const { ui } = useUi();
-
+    const { merge } = useMerge();
+    const doMerge = merge;
     const { doComputed, AsyncComputeValue, ComputeValue } = useCompute();
     // eslint-disable-next-line vue/no-setup-props-destructure
     _.each(props.columns, (item) => {
@@ -284,15 +285,14 @@ export default defineComponent({
         for (const key in formData) {
           delete formData[key];
         }
-        _.merge(formData, value || {});
+        merge(formData, value || {});
       },
       {
         deep: true
       }
     );
 
-    const { merge } = useMerge();
-    const doMerge = merge;
+
 
     const get = (form: any, key: any) => {
       return _.get(form, key);
