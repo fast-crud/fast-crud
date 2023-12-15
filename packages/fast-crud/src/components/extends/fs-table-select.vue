@@ -1,14 +1,17 @@
 <template>
   <div class="fs-table-select">
-    <fs-dict-select
-      ref="dictSelectRef"
-      :dict="dict"
-      :disabled="disabled"
-      :readonly="readonly"
-      v-bind="computedSelect"
-      :open="false"
-      @click="openTableSelect"
-    />
+    <template v-if="!slots.default">
+      <fs-dict-select
+        ref="dictSelectRef"
+        :dict="dict"
+        :disabled="disabled"
+        :readonly="readonly"
+        v-bind="computedSelect"
+        :open="false"
+        @click="openTableSelect"
+      />
+    </template>
+    <slot v-bind="getScopeContext()"></slot>
     <component :is="ui.formItem.skipValidationWrapper">
       <component :is="ui.dialog.name" v-model:[ui.dialog.visible]="dialogOpen" v-bind="computedDialogBinding">
         <div :style="{ width: '100%', height: height || '60vh' }">
@@ -116,11 +119,23 @@ const props = withDefaults(defineProps<FsTableSelectProps>(), {
   crudOptionsOverride: undefined,
   valueType: "value"
 });
+
+const slots = defineSlots<{
+  default: any;
+}>();
+
 const emits = defineEmits(["change", "update:modelValue"]);
 const { ui } = useUi();
 const dictSelectRef = ref();
 const valuesFormatRef = ref();
 const dialogOpen = ref(false);
+
+const getScopeContext = () => {
+  return {
+    opened: dialogOpen,
+    open: openTableSelect
+  };
+};
 
 function initSelectedKeys(modelValue: any) {
   if (modelValue == null || (Array.isArray(modelValue) && modelValue.length == 0)) {
