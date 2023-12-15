@@ -39,7 +39,7 @@ export default function () {
         component: { name: "fs-date-format" }
       },
       valueBuilder(scope) {
-        buildDateValue(scope, ui);
+        buildDateValue(scope);
       }
     },
     date: {
