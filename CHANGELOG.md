@@ -3,6 +3,25 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.19.3](https://github.com/fast-crud/fast-crud/compare/v1.19.2...v1.19.3) (2023-12-15)
+
+### Bug Fixes
+
+* 修复abuttonGroup重复注册得bug ([2ea5d5c](https://github.com/fast-crud/fast-crud/commit/2ea5d5c51e637bcb2dfb7d4f1719df0be547ad8b))
+* antdv4 日期组件bug修复 ([a55b3e2](https://github.com/fast-crud/fast-crud/commit/a55b3e293a94396bbdfbd7d6dabb19d886cb8e16))
+
+### Performance Improvements
+
+* 检查records返回值是否是数组 ([6c3e496](https://github.com/fast-crud/fast-crud/commit/6c3e4968ca670d11fa9d1d360786f1123eb1de92))
+* 优化merge ([dd0ca41](https://github.com/fast-crud/fast-crud/commit/dd0ca41d753fa90f6a3f550d395ca22ea17ef82d))
+* 增加表单label=0px示例 ([500d793](https://github.com/fast-crud/fast-crud/commit/500d793d72d727e8945cf7bca47aee684856bd80))
+* 增加formWatch示例 ([ca5910b](https://github.com/fast-crud/fast-crud/commit/ca5910b4839feb2891d2c23c157cbad77dd33722))
+* 增加pageRequest返回提示 ([bee140a](https://github.com/fast-crud/fast-crud/commit/bee140a95c9efa04ced3da44b26f413d762b76b1))
+* dict组件增加transformDictData配置 ([5efea35](https://github.com/fast-crud/fast-crud/commit/5efea35bf295d05caa4d394e669bf3f69c9bcdc0))
+* **form:** 增加beforeValidate事件参数 ([e0bc312](https://github.com/fast-crud/fast-crud/commit/e0bc312643a403cb77aa579a14ad8456811806b6))
+* fs-table-select支持插槽按钮 ([5f46ceb](https://github.com/fast-crud/fast-crud/commit/5f46ceb3a92c2b4598ac817f7d122799cc40ff17))
+* search 增加loading ([dd14e3f](https://github.com/fast-crud/fast-crud/commit/dd14e3fcd972769aa82401c91567e8b4a0d28b16))
+
 ## [1.19.2](https://github.com/fast-crud/fast-crud/compare/v1.19.1...v1.19.2) (2023-11-22)
 
 ### Bug Fixes
