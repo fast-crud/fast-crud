@@ -25,6 +25,7 @@ import {
 } from "../../d";
 import { UiInterface } from "@fast-crud/ui-interface";
 import { useMerge } from "../../use";
+import { useComponentRefProvider } from "/src/components/crud/use/provider";
 
 type BuildTableColumnsOption = {
   props: any;
@@ -271,6 +272,7 @@ export default defineComponent({
   setup(props: any, ctx) {
     const tableRef = ref();
     const componentRefs = ref([]);
+    useComponentRefProvider(componentRefs);
     const getComponentRef = (index?: number, key?: string) => {
       if (!key || index == null || index > componentRefs.value.length) {
         return;

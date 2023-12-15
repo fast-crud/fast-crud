@@ -112,6 +112,7 @@ export default defineComponent({
       const trigger = props.editableOpts.mode === "cell" ? props.editableOpts?.activeTrigger : false;
       return (
         <fs-editable
+          ref={"editableRef"}
           class={"fs-editable-cell"}
           editing={editableCell?.isEditing}
           showAction={showAction.value}
@@ -129,7 +130,7 @@ export default defineComponent({
   },
   methods: {
     getTargetRef() {
-      return this.$refs.targetRef;
+      return this.$refs.targetInputRef || this.$refs.targetRef;
     }
   }
 });
