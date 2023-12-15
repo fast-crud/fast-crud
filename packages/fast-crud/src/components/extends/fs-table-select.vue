@@ -71,6 +71,10 @@ type FsTableSelectProps = {
   select?: any;
 
   /**
+   * 是否显示选择框
+   */
+  showSelect?: boolean;
+  /**
    * 对话框配置
    */
   dialog?: any;
@@ -117,7 +121,8 @@ const props = withDefaults(defineProps<FsTableSelectProps>(), {
   dialog: undefined,
   select: undefined,
   crudOptionsOverride: undefined,
-  valueType: "value"
+  valueType: "value",
+  showSelect: true
 });
 
 const slots = defineSlots<{
