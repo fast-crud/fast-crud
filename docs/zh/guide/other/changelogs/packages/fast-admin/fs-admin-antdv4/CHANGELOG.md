@@ -3,6 +3,16 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.19.3](https://github.com/fast-crud/fast-crud/compare/v1.19.2...v1.19.3) (2023-12-15)
+
+### Bug Fixes
+
+* antdv4 日期组件bug修复 ([a55b3e2](https://github.com/fast-crud/fast-crud/commit/a55b3e293a94396bbdfbd7d6dabb19d886cb8e16))
+
+### Performance Improvements
+
+* 增加表单label=0px示例 ([500d793](https://github.com/fast-crud/fast-crud/commit/500d793d72d727e8945cf7bca47aee684856bd80))
+
 ## [1.19.2](https://github.com/fast-crud/fast-crud/compare/v1.19.1...v1.19.2) (2023-11-22)
 
 ### Bug Fixes
