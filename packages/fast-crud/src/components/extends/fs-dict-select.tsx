@@ -41,6 +41,7 @@ export default defineComponent({
       default: undefined
     }
   },
+  emits: ["dict-change"],
   setup(props, ctx) {
     const { t } = useI18n();
     const computedPlaceholder = computed(() => {
