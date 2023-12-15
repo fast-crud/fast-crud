@@ -1,6 +1,6 @@
 <template>
   <div class="fs-table-select">
-    <template v-if="!slots.default">
+    <template v-if="!slots?.default">
       <fs-dict-select
         ref="dictSelectRef"
         :dict="dict"
@@ -11,7 +11,7 @@
         @click="openTableSelect"
       />
     </template>
-    <slot v-bind="getScopeContext()"></slot>
+    <slot v-bind="scopeRef"></slot>
     <component :is="ui.formItem.skipValidationWrapper">
       <component :is="ui.dialog.name" v-model:[ui.dialog.visible]="dialogOpen" v-bind="computedDialogBinding">
         <div :style="{ width: '100%', height: height || '60vh' }">
@@ -124,7 +124,7 @@ const slots = defineSlots<{
   /**`
    * 默认插槽
    * ```js
-   * scope:{
+   * scope = {
    *  //是否已打开
    *  opened:boolean,
    *  //打开方法
@@ -140,15 +140,6 @@ const { ui } = useUi();
 const dictSelectRef = ref();
 const valuesFormatRef = ref();
 const dialogOpen = ref(false);
-
-const getScopeContext = () => {
-  return {
-    opened: dialogOpen,
-    open: openTableSelect
-  };
-};
-
-defineExpose(getScopeContext());
 
 function initSelectedKeys(modelValue: any) {
   if (modelValue == null || (Array.isArray(modelValue) && modelValue.length == 0)) {
@@ -325,6 +316,16 @@ function onOk() {
   emits("change", value);
   dialogOpen.value = false;
 }
+
+const getScopeContext = () => {
+  return {
+    opened: dialogOpen,
+    open: openTableSelect
+  };
+};
+
+const scopeRef = ref(getScopeContext());
+defineExpose(scopeRef.value);
 </script>
 
 <style lang="less">
