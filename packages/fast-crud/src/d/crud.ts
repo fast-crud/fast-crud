@@ -538,6 +538,7 @@ export type TableColumnEditableProps = {
   disabled?: boolean | TableColumnEditableDisabledFunc;
   updateCell?: EditableUpdateCellRequest;
   updateColumn?: EditableUpdateColumnRequest;
+  showAction?: boolean;
 };
 
 export type ConditionalRenderProps = {

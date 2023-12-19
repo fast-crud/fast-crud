@@ -130,6 +130,9 @@ export function useEditable(props: any, ctx: any, tableRef: any): { editable: Ed
     const updateCell: any = computed(() => {
       return col.editable?.updateCell || options.value.updateCell;
     });
+    const showAction: any = computed(() => {
+      return col.editable?.showAction || options.value.showAction;
+    });
     const cell: EditableCell = reactive({
       mode: editableId < 0 ? "add" : "edit",
       oldValue: undefined,
@@ -139,7 +142,7 @@ export function useEditable(props: any, ctx: any, tableRef: any): { editable: Ed
       activeTrigger: options.value.activeTrigger,
       column: col,
       updateCell,
-      showAction: true,
+      showAction,
       isEditable: () => {
         let disabled = col?.editable?.disabled;
         if (disabled instanceof Function) {
@@ -172,11 +175,11 @@ export function useEditable(props: any, ctx: any, tableRef: any): { editable: Ed
             cancelAll();
           }
         }
-        if (opts.showAction != null) {
-          cell.showAction = opts.showAction;
-        } else {
-          cell.showAction = null;
-        }
+        // if (opts.showAction != null) {
+        //   cell.showAction = opts.showAction;
+        // } else {
+        //   cell.showAction = null;
+        // }
         cell.isEditing = true;
 
         cell.oldValue = getValue(key);
