@@ -117,7 +117,7 @@ async function  start(){
     await sleep(60*1000)
     await sync()
     console.log("同步镜像完成，等待60秒")
-    await sleep(60*1000)
+    await sleep(160*1000)
     await trigger()
 }
 
