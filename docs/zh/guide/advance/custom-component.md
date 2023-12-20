@@ -42,6 +42,7 @@ export default defineComponent({
         {immediate: true} // 立即触发一次，给data赋值初始值
     )
     //获取表单校验上下文
+    const {ui} = useUi()
     const formValidator = ui.formItem.injectFormItemContext();
     // 当data需要变化时，上报给父组件
     // 父组件监听到update:modelValue事件后，会更新props.modelValue的值
