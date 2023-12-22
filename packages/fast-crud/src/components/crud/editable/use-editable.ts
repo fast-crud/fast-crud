@@ -15,6 +15,7 @@ import {
   FormItemProps
 } from "../../../d";
 import { createValidator } from "./validator";
+import logger from "../../../utils/util.log";
 
 function eachTree(tree: any, callback: any) {
   _.forEach(tree, (item) => {
@@ -213,6 +214,9 @@ export function useEditable(props: any, ctx: any, tableRef: any): { editable: Ed
       save: async () => {
         const updateCell = unref(cell.updateCell);
         if (!updateCell) {
+          logger.warn(
+            "没有配置table.editable.updateCell方法,无法保存，相关文档：http://fast-crud.docmirror.cn/api/crud-options/table.html#editable"
+          );
           return;
         }
         cell.loading = true;
