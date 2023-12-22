@@ -79,6 +79,9 @@ export function useCrud(ctx: UseCrudProps): UseCrudRet {
             if (options.mode?.name === "local") {
               expose.updateTableRow(context.index, context.form, options.mode.isMergeWhenUpdate);
             } else {
+              if (!crudBinding.value.request?.editRequest) {
+                logger.warn("request.editRequest 未定义，无法保存");
+              }
               return await crudBinding.value.request.editRequest(context);
             }
           } else if (context.mode === "add") {
@@ -87,6 +90,9 @@ export function useCrud(ctx: UseCrudProps): UseCrudRet {
               const index = options.mode.isAppendWhenAdd ? expose.getTableData().length : 0;
               expose.insertTableRow(index, context.form);
             } else {
+              if (!crudBinding.value.request?.addRequest) {
+                logger.warn("request.addRequest 未定义，无法保存");
+              }
               return await crudBinding.value.request.addRequest(context);
             }
           }
