@@ -172,6 +172,7 @@ const openTableSelect = async () => {
   }
   dialogOpen.value = true;
   initSelectedKeys(props.modelValue);
+  await nextTick();
   await crudExpose.doRefresh();
 };
 
