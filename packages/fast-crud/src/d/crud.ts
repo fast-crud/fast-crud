@@ -837,7 +837,7 @@ export type FormProps = {
 export type FormItemTitleRender = (context: ScopeContext) => any;
 
 export type RuleRecord = {
-  trigger?: string;
+  trigger?: string | string[];
 } & RuleItem;
 /**
  * 表单字段配置
