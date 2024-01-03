@@ -104,6 +104,7 @@ const crudOptions= {
 * [django-vue3-admin](https://gitee.com/huge-dream/django-vue3-admin) ：基于python ，django的后台管理系统
 * 极兔速递，内部使用
 * 海豹信息，内部使用
+* [IoTSharp](https://github.com/IoTSharp/IoTSharp)： IOT管理平台，采用fast-crud做前端
 
 好评如潮，你还不试试？     
 ![](images/good.png)
