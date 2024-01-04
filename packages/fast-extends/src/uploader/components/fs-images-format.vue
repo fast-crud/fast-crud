@@ -155,7 +155,7 @@ export default defineComponent({
         }
         let previewUrls = urls;
         if (props.buildPreviewUrls) {
-          previewUrls = await props.previewUrls(list);
+          previewUrls = await props.buildPreviewUrls(list);
         }
         for (let i = 0; i < list.length; i++) {
           list[i].previewUrl = previewUrls[i];
