@@ -358,7 +358,7 @@ export function useExpose(props: UseExposeProps): UseExposeRet {
 
       let searchFormData = pageQuery.form;
       if (searchFormData == null) {
-        searchFormData = _.cloneDeep(crudExpose.getSearchValidatedFormData());
+        searchFormData = _.cloneDeep(crudExpose.getSearchValidatedFormData()) || {};
         //配置searchValueResolve
         if (crudBinding.value?.search?.columns) {
           crudExpose.doValueResolve({ form: searchFormData }, toRaw(crudBinding.value.search.columns));
