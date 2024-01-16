@@ -351,7 +351,7 @@ export default defineComponent({
       return { key: item.key, ...scope.value };
     }
 
-    doValueBuilder(form);
+    // doValueBuilder(form);
 
     // watch(
     //   () => props.initialForm,
