@@ -4,7 +4,82 @@ export default {
   commonOptions(ctx?: UseCrudProps): any {
     return {};
   },
-  defaultOptions(opts: { t: any }): CrudOptions {
+  defaultOptions(opts: { t: any }): {
+    mode: {};
+    toolbar: { compact: boolean };
+    search: {
+      container: { col: { span: number }; is: string; collapse: boolean };
+      buttons: { search: { icon: string }; reset: { icon: string } };
+      options: {
+        isPrototypeOf(v: Object): boolean;
+        hasOwnProperty(v: PropertyKey): boolean;
+        propertyIsEnumerable(v: PropertyKey): boolean;
+        valueOf(): Object;
+        constructor: Function;
+        toString(): string;
+        toLocaleString(): string;
+        showFeedback: boolean;
+      };
+      show: boolean;
+      onValidateError({ trigger }: any): void;
+      collapse: boolean;
+    };
+    pagination: {
+      [p: string]: number;
+      layout: string;
+      pageSizes: number[];
+      background: boolean;
+      showTotal: (total: number) => any;
+      pageSize: number;
+      showQuickJumper: boolean;
+      showSizePicker: boolean;
+      showSizeChanger: boolean;
+    };
+    form: {
+      col: { span: number };
+      labelPosition: string;
+      labelAlign: string;
+      wrapperCol: { span: number };
+      labelWidth: string;
+      style: { "grid-template-columns": string };
+      wrapper: {
+        [p: string]: any;
+        buttons: {
+          cancel: { text: any; click: ({ close }: { close: any }) => void };
+          reset: { text: any; click: ({ reset }: { reset: any }) => void };
+          ok: { text: any; type: string; loading: any; click: ({ submit }: { submit: any }) => Promise<void> };
+        };
+        draggable: boolean;
+        is: string;
+        destroyOnClose: boolean;
+      };
+      row: { gutter: number };
+      labelCol: { span: number };
+      labelPlacement: string;
+    };
+    addForm: { wrapper: { title: any } };
+    editForm: { wrapper: { title: any } };
+    viewForm: { wrapper: { title: any } };
+    rowHandle: {
+      width: string;
+      title: any;
+      dropdown: { more: { icon: string; text: null; type: string } };
+      order: number;
+    };
+    actionbar: { buttons: { add: { text: any; type: string } } };
+    table: {
+      border: boolean;
+      pagination: boolean;
+      editable: { enabled: boolean; rowKey: string };
+      show: boolean;
+      stripe: boolean;
+      bordered: boolean;
+      singleLine: boolean;
+      rowKey: string | ((rowData: any) => any);
+      height: string;
+    };
+    status: {};
+  } {
     const { t } = opts;
     const ui = uiContext.get();
     return {
@@ -59,7 +134,31 @@ export default {
           ...ui.formWrapper.buildInitBind(ui.dialog.name),
           draggable: true,
           destroyOnClose: true, // antdv
-          ...ui.dialog.footer() // antdv
+          ...ui.dialog.footer(), // antdv
+          buttons: {
+            cancel: {
+              text: t("fs.form.cancel"),
+              order: 1,
+              click: ({ close }) => {
+                close();
+              }
+            },
+            reset: {
+              text: t("fs.form.reset"),
+              order: 1,
+              click: ({ reset }) => {
+                reset();
+              }
+            },
+            ok: {
+              text: t("fs.form.ok"),
+              order: 1,
+              type: "primary",
+              click: async ({ submit }) => {
+                await submit();
+              }
+            }
+          }
         }
       },
       addForm: {

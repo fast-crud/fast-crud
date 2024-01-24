@@ -91,6 +91,8 @@ export default defineComponent({
         formOptionsRef: formOptions,
         setFormData,
         getFormData,
+        reset,
+        loading,
         close,
         toggleFullscreen,
         submit
@@ -213,24 +215,9 @@ export default defineComponent({
 
     const computedButtons = computed(() => {
       const defBtns = {
-        cancel: {
-          text: t("fs.form.cancel"),
-          onClick: () => {
-            close();
-          }
-        },
-        reset: {
-          text: t("fs.form.reset"),
-          onClick: () => {
-            reset();
-          }
-        },
+        cancel: {},
+        reset: {},
         ok: {
-          text: t("fs.form.ok"),
-          type: "primary",
-          onClick: async () => {
-            await submit();
-          },
           loading: loading.value
         }
       };
@@ -296,6 +283,7 @@ export default defineComponent({
       formWrapperBind,
       formRef,
       submit,
+      reset,
       computedButtons,
       loading,
       getFormData,

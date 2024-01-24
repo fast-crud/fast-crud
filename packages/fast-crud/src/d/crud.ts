@@ -1097,6 +1097,8 @@ export type FormWrapperContext = {
   formOptionsRef: Ref;
   setFormData: (form: any) => void;
   getFormData: () => any;
+  reset: () => void;
+  loading: Ref;
   close: () => void;
   toggleFullscreen: () => void;
   submit: () => void;
