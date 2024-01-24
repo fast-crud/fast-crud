@@ -626,7 +626,6 @@ export function useExpose(props: UseExposeProps): UseExposeRet {
     async doRemove(context: DoRemoveContext, opts?: RemoveProps) {
       const removeBinding: any = crudBinding.value.table.remove ?? opts ?? {};
       try {
-        debugger;
         if (removeBinding.confirmFn) {
           await removeBinding.confirmFn(context);
         } else {

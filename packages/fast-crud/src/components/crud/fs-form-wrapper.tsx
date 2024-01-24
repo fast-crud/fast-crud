@@ -7,6 +7,8 @@ import {
   Ref,
   ref,
   resolveDynamicComponent,
+  toRaw,
+  unref,
   useSlots
 } from "vue";
 import _ from "lodash-es";
@@ -105,7 +107,7 @@ export default defineComponent({
       if (wrapper.onOpen) {
         wrapper.onOpen(opts);
       }
-      title.value = wrapper.title;
+      title.value = unref(wrapper.title);
       formWrapperIs.value = opts.wrapper.is;
       formWrapperOpts.value = wrapper;
       const customClassKey = ui.formWrapper.customClass(formWrapperIs.value as string);
