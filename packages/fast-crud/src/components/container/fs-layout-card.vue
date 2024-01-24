@@ -128,9 +128,13 @@ export default defineComponent({
 
     .fs-crud-actionbar {
       margin: 10px;
+      display: flex;
+      align-items: center;
     }
     .fs-crud-toolbar {
       margin: 10px;
+      display: flex;
+      align-items: center;
     }
 
     .ant-card-body {
