@@ -273,8 +273,8 @@ export default defineComponent({
     );
 
     function onFormValidated() {
-      const validateForm = _.cloneDeep(formData);
-      ctx.emit("update:validatedForm", validateForm);
+      const validatedForm = _.cloneDeep(formData);
+      ctx.emit("update:validatedForm", validatedForm);
     }
 
     watch(
@@ -291,8 +291,6 @@ export default defineComponent({
         deep: true
       }
     );
-
-
 
     const get = (form: any, key: any) => {
       return _.get(form, key);
@@ -390,7 +388,7 @@ export default defineComponent({
     }
 
     function getContextFn(): SearchEventContext {
-      return { form: formData, validatedForm: props.validatedForm, getComponentRef };
+      return { form: formData, validatedForm: props.validatedForm, getComponentRef, doSearch, doReset, doValidate };
     }
 
     function buildFieldContext(key: string) {
@@ -553,9 +551,9 @@ export default defineComponent({
       _.set(formData, key, value);
 
       const silent = props.validateOnChangeSilent;
-      if (props.validateOnChange && (await doValidate(silent, "change"))) {
-        onFormValidated();
-      }
+      // if (props.validateOnChange && (await doValidate(silent, "change"))) {
+      //   onFormValidated();
+      // }
 
       if (item.valueChange) {
         const key = item.key;
@@ -564,7 +562,10 @@ export default defineComponent({
         const valueChange = item.valueChange instanceof Function ? item.valueChange : item.valueChange.handle;
         valueChange({ key, value, componentRef, ...getContextFn() });
       }
-
+      // TODO 由于validatedForm 发射出去后，会更新formData的数据，所以要放在valueChange后面
+      if (props.validateOnChange && (await doValidate(silent, "change"))) {
+        onFormValidated();
+      }
       if (item.autoSearchTrigger == null || item.autoSearchTrigger === true || item.autoSearchTrigger === "change") {
         doAutoSearch();
       }

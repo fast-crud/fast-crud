@@ -1164,7 +1164,14 @@ export type ActionbarProps = {
   [key: string]: any;
 };
 
-export type SearchEventContext = { form: any; validatedForm: any; getComponentRef?: (key: string) => any };
+export type SearchEventContext = {
+  form: any;
+  validatedForm: any;
+  getComponentRef?: (key: string) => any;
+  doSearch?: () => void;
+  doReset?: () => void;
+  doValidate: (silent: boolean, trigger: string) => Promise<boolean>;
+};
 /**
  * 查询框配置
  */

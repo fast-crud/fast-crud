@@ -339,6 +339,10 @@ export function useExpose(props: UseExposeProps): UseExposeRet {
      * {form,mergeForm}
      */
     setSearchFormData(context) {
+      crudRef.value.setSearchFormData({
+        form: context.form,
+        mergeForm: context.mergeForm
+      });
       if (context.mergeForm === false) {
         for (const key in crudBinding.value.search.validatedForm) {
           delete crudBinding.value.search.validatedForm[key];
@@ -531,8 +535,12 @@ export function useExpose(props: UseExposeProps): UseExposeRet {
         crudExpose.doPageTurn(1);
       }
       if (opts.form && crudRef.value) {
-        crudRef.value.setSearchFormData(opts);
-        crudExpose.setSearchFormData({ form: opts.form, mergeForm: opts.mergeForm, refWarning: false });
+        crudExpose.setSearchFormData({
+          form: opts.form,
+          mergeForm: opts.mergeForm,
+          refWarning: false,
+          triggerSearch: false
+        });
       }
 
       await crudExpose.doRefresh();
