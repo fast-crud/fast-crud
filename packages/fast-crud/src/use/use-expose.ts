@@ -167,6 +167,10 @@ function useEditable(props: UseEditableProps) {
       }
 
       const editableRow = editable.getEditableRow(editableId);
+      if (editableRow.isAdd) {
+        editable.removeRow(editableId);
+        return;
+      }
       editableRow.cancel();
     },
     async doRemoveRow(opts: { editableId: any; row: any }) {
@@ -182,6 +186,7 @@ function useEditable(props: UseEditableProps) {
         async handle() {
           if (editableRow.isAdd) {
             editable.removeRow(editableId);
+            return false;
           } else {
             if (crudBinding.value.mode.name === "local") {
               editable.removeRow(editableId);
@@ -621,6 +626,7 @@ export function useExpose(props: UseExposeProps): UseExposeRet {
     async doRemove(context: DoRemoveContext, opts?: RemoveProps) {
       const removeBinding: any = crudBinding.value.table.remove ?? opts ?? {};
       try {
+        debugger;
         if (removeBinding.confirmFn) {
           await removeBinding.confirmFn(context);
         } else {
@@ -639,7 +645,10 @@ export function useExpose(props: UseExposeProps): UseExposeRet {
       let res = null;
       const isLocal = crudBinding.value.mode?.name === "local";
       if (opts?.handle) {
-        await opts.handle(context);
+        const ctn = await opts.handle(context);
+        if (ctn === false) {
+          return;
+        }
       } else {
         if (isLocal) {
           crudExpose.removeTableRow(context?.index);

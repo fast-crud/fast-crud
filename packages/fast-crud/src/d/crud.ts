@@ -475,7 +475,7 @@ export type RemoveProps = {
   onRemoved?: (context: any) => Promise<any>;
 
   /**
-   * 实际删除操作
+   * 实际删除操作，返回false则不继续后续的刷新表格等操作
    * @param context
    */
   handle?: (context: any) => Promise<any>;
