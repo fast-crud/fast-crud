@@ -110,4 +110,9 @@ export type Editable = {
   getCleanTableData(data?: any[]): any[];
 
   getInstance(): any;
+
+  /**
+   * 获取当前以激活的行
+   */
+  getActiveRows: () => EditableRow[];
 };

@@ -131,6 +131,9 @@ function useEditable(props: UseEditableProps) {
     getEditableRow(editableId: any) {
       return crudExpose.getTableRef()?.editable?.getEditableRow(editableId);
     },
+    getActiveRows() {
+      return crudExpose.getTableRef()?.editable?.getActiveRows();
+    },
     async doSaveRow(opts: { editableId: any; row: any }) {
       let editableId = opts.editableId;
       if (!editableId) {

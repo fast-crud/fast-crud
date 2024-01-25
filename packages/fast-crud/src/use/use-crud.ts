@@ -15,6 +15,7 @@ import {
   CrudOptionsPlugins,
   CrudSettings,
   DynamicallyCrudOptions,
+  EditableRow,
   ScopeContext,
   TableColumnsProps,
   UseCrudProps,
@@ -362,9 +363,20 @@ export function useCrud(ctx: UseCrudProps): UseCrudRet {
                 const editableRow = expose.editable.getEditableRow(editableId);
                 return !!editableRow?.loading;
               }),
-              click: (context: ScopeContext) => {
+              click: async (context: ScopeContext) => {
                 const { index, row } = context;
                 const editableId = row[crudBinding.value.table.editable.rowKey];
+                if (crudBinding.value.table.editable.exclusive) {
+                  //排他式激活
+                  const activeRows: EditableRow[] = expose.editable.getActiveRows();
+                  _.forEach(activeRows, (item: EditableRow) => {
+                    if (crudBinding.value.table.editable.exclusiveEffect === "save") {
+                      expose.editable.doSaveRow({ row: item.rowData });
+                    } else {
+                      expose.editable.doCancelRow({ row: item.rowData });
+                    }
+                  });
+                }
                 expose.editable.getEditableRow(editableId)?.active();
               },
               show: compute((context: ComputeContext) => {

@@ -24,6 +24,7 @@ export type EditableTable = {
   eachCells: (callback: (opts: EditableEachCellsOpts) => void) => void;
   validate: () => Promise<EditableValidateResult>;
   getCleanTableData: (data?: any[]) => any[];
+  getActiveRows: () => EditableRow[];
 };
 export type EditableCellActiveProps = {
   showAction?: boolean;
