@@ -33,9 +33,15 @@ export default {
         show: true,
         buttons: {
           search: {
+            className: {
+              "fs-search-btn-search": true
+            },
             icon: ui.icons.search
           },
           reset: {
+            className: {
+              "fs-search-btn-reset": true
+            },
             icon: ui.icons.refresh
           }
         }
@@ -139,11 +145,41 @@ export default {
         pagination: false //antdv 关闭默认分页
       },
       toolbar: {
-        compact: true
+        compact: true,
+        buttons: {
+          search: {
+            className: {
+              "fs-toolbar-btn-search": true
+            }
+          },
+          compact: {
+            className: {
+              "fs-toolbar-btn-compact": true
+            }
+          },
+          refresh: {
+            className: {
+              "fs-toolbar-btn-refresh": true
+            }
+          },
+          export: {
+            className: {
+              "fs-toolbar-btn-export": true
+            }
+          },
+          columns: {
+            className: {
+              "fs-toolbar-btn-columns": true
+            }
+          }
+        }
       },
       actionbar: {
         buttons: {
           add: {
+            className: {
+              "fs-actionbar-btn-add": true
+            },
             type: "primary",
             text: ct("fs.actionbar.add")
           }

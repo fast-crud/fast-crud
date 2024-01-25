@@ -44,7 +44,8 @@ export default defineComponent({
     buttonProps: {
       type: Object,
       default: undefined
-    }
+    },
+    className: {}
   },
   setup(props, ctx) {
     const { ui } = useUi();
@@ -115,8 +116,9 @@ export default defineComponent({
             "is-thin": !props.text && !ctx.slots.default
           }
         },
-        { ...ctx.attrs, ...props.buttonProps }
+        { ...ctx.attrs, ...props.buttonProps, class: props.className }
       );
+      debugger;
       if (iconProp) {
         // @ts-ignore
         btnProps.icon = iconProp;

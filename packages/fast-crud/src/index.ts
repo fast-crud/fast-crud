@@ -8,7 +8,7 @@ import { uiContext } from "./ui";
 import { GlobalConfig, LoggerConfig, useDictDefine, useMerge } from "./use";
 import { App } from "vue";
 import { FsSetupOptions } from "./d";
-import _ from "lodash-es";
+
 export * from "./utils/index";
 export * from "./use";
 export * from "./components";
