@@ -41,7 +41,20 @@ export default defineComponent({
       default: undefined
     }
   },
-  emits: ["dict-change"],
+  emits: [
+    /**
+     * 字典项变化
+     */
+    "dict-change",
+    /**
+     * 选中值变化事件，可以获取到当前选中的option对象
+     */
+    "selected-change",
+    /**
+     * 值变化事件
+     */
+    "change"
+  ],
   setup(props, ctx) {
     const { t } = useI18n();
     const computedPlaceholder = computed(() => {
@@ -51,10 +64,20 @@ export default defineComponent({
     const { ui } = useUi();
     const usedDict = useDict(props, ctx, ui.select.modelValue);
     const computedOptions = usedDict.createComputedOptions();
+
+    const onSelectedChange = (value: any) => {
+      ctx.emit("change", value);
+      const dict = usedDict.getDict();
+      if (dict.dataMap && dict.dataMap[value]) {
+        const opt = dict.dataMap[value];
+        ctx.emit("selected-change", opt);
+      }
+    };
     return {
       computedPlaceholder,
       ...usedDict,
-      computedOptions
+      computedOptions,
+      onSelectedChange
     };
   },
   render() {
@@ -64,7 +87,14 @@ export default defineComponent({
       //naive ui
       //以options参数作为options
       const options = this.computedOptions || [];
-      return <selectComp placeholder={this.computedPlaceholder} options={options} renderLabel={this.renderLabel} />;
+      return (
+        <selectComp
+          placeholder={this.computedPlaceholder}
+          options={options}
+          renderLabel={this.renderLabel}
+          onChange={this.onSelectedChange}
+        />
+      );
     }
     // options 为子组件
     const options = [];
@@ -79,7 +109,7 @@ export default defineComponent({
       options.push(option);
     }
     return (
-      <selectComp placeholder={this.computedPlaceholder} v-slots={this.slots}>
+      <selectComp placeholder={this.computedPlaceholder} v-slots={this.slots} onChange={this.onSelectedChange}>
         {options}
       </selectComp>
     );
