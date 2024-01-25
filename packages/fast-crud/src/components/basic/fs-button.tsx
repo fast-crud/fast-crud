@@ -118,7 +118,6 @@ export default defineComponent({
         },
         { ...ctx.attrs, ...props.buttonProps, class: props.className }
       );
-      debugger;
       if (iconProp) {
         // @ts-ignore
         btnProps.icon = iconProp;

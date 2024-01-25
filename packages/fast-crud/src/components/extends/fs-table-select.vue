@@ -17,7 +17,7 @@
         <div :style="{ width: '100%', height: height || '60vh' }">
           <fs-crud ref="crudRef" v-bind="crudBinding">
             <template #header-top>
-              <div class="fs-table-select-current">
+              <div v-if="valuesFormat !== false" class="fs-table-select-current">
                 当前选中：
                 <fs-values-format
                   ref="valuesFormatRef"
@@ -81,6 +81,7 @@ type FsTableSelectProps = {
 
   /**
    * 当前选中值 fs-values-format组件 配置
+   * 传false则不显示
    */
   valuesFormat?: any;
 
