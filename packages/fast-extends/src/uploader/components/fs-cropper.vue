@@ -100,6 +100,10 @@ export default defineComponent({
     output: {
       type: String,
       default: "blob" // blob
+    },
+    compressQuality: {
+      type: Number,
+      default: 0.8
     }
   },
   emits: ["cancel", "done", "ready"],
@@ -233,11 +237,11 @@ export default defineComponent({
       }
     }
 
-    function getCropImageDataUrl() {
+    function getCropImageDataUrl(fileType: string, quality?: any = this.compressQuality) {
       // get image data for post processing, e.g. upload or setting image src
-      return cropperRef.value.getCroppedCanvas().toDataURL();
+      return cropperRef.value.getCroppedCanvas().toDataURL(fileType, quality);
     }
-    function getCropImageBlob(callback: any, type?: any, quality?: any) {
+    function getCropImageBlob(callback: any, type: string, quality?: any = this.compressQuality) {
       return cropperRef.value.getCroppedCanvas().toBlob(callback, type, quality);
     }
     function emit(result: any) {
@@ -247,11 +251,11 @@ export default defineComponent({
       const ret: any = { file };
       if (props.output === "all") {
         getCropImageBlob((blob: any) => {
-          const dataUrl = getCropImageDataUrl();
+          const dataUrl = getCropImageDataUrl(file.type);
           ret.blob = blob;
           ret.dataUrl = dataUrl;
           emit(ret);
-        });
+        }, file.type);
         return;
       }
 
@@ -259,11 +263,11 @@ export default defineComponent({
         getCropImageBlob((blob: any) => {
           ret.blob = blob;
           emit(ret);
-        });
+        }, file.type);
         return;
       }
       if (props.output === "dataUrl") {
-        ret.dataUrl = getCropImageDataUrl();
+        ret.dataUrl = getCropImageDataUrl(file.type);
         emit(ret);
       }
     }

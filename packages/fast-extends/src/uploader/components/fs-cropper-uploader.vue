@@ -35,6 +35,7 @@
       :upload-tip="uploadTip"
       :max-size="maxSize"
       :cropper="cropper"
+      :compress-quality="compressQuality"
       output="all"
       @done="cropComplete"
       @ready="doReady"
@@ -110,6 +111,13 @@ export default defineComponent({
     // 上传参数，会临时覆盖全局上传配置参数[d2p-uploader](/guide/extends/uploader.html)
     uploader: {
       type: Object
+    },
+    /**
+     * 压缩质量
+     */
+    compressQuality: {
+      type: Number,
+      default: 0.8
     },
     // 构建下载url方法,不影响提交的value
     buildUrl: {
