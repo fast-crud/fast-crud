@@ -502,7 +502,12 @@ export class Antdv implements UiInterface {
     options: "tree-data",
     value: "value",
     label: "label",
-    children: "children"
+    children: "children",
+    buildOptionKeysNameBinding(param: { children: any; label: any; value: any }): any {
+      return {
+        fieldNames: { label: param.label, key: param.value, value: param.value, children: param.children }
+      };
+    }
   });
   table: TableCI = creator<TableCI>({
     name: "a-table",

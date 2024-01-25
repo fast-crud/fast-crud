@@ -79,6 +79,7 @@ export interface TreeSelectCI extends CI<TreeSelectBuilderOption> {
   value: string;
   label: string;
   children: string;
+  buildOptionKeysNameBinding(param: { children: any; label: any; value: any }): any;
 }
 
 export type RadioBuilderOption = {

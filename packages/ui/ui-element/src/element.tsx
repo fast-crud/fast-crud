@@ -297,7 +297,16 @@ export class Element implements UiInterface {
     options: "data",
     value: "tree.value",
     label: "tree.label",
-    children: "tree.children"
+    children: "tree.children",
+    buildOptionKeysNameBinding(param: { children: any; label: any; value: any }): any {
+      return {
+        props: {
+          label: param.label,
+          value: param.value,
+          children: param.children
+        }
+      };
+    }
   });
 
   radio: RadioCI = creator<RadioCI>({

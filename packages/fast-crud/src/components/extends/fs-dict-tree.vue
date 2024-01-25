@@ -1,5 +1,10 @@
 <template>
-  <component :is="ui.treeSelect.name" :[ui.treeSelect.options]="computedOptions" :placeholder="computedPlaceholder" />
+  <component
+    :is="ui.treeSelect.name"
+    :[ui.treeSelect.options]="computedOptions"
+    :placeholder="computedPlaceholder"
+    v-bind="computedBinding"
+  />
 </template>
 <script lang="ts">
 import { computed, defineComponent } from "vue";
@@ -46,9 +51,20 @@ export default defineComponent({
     });
 
     let usedDict = useDict(props, ctx);
+
     const computedOptions = usedDict.createComputedOptions();
+
+    const computedBinding = computed(() => {
+      const dict = usedDict.getDict();
+      return ui.treeSelect.buildOptionKeysNameBinding({
+        label: dict.label,
+        value: dict.value,
+        children: dict.children
+      });
+    });
     return {
       ui,
+      computedBinding,
       computedPlaceholder,
       ...usedDict,
       computedOptions

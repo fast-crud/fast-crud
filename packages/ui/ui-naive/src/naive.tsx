@@ -542,7 +542,14 @@ export class Naive implements UiInterface {
     value: "keyField",
     label: "labelField",
     children: "childrenField",
-    options: "options"
+    options: "options",
+    buildOptionKeysNameBinding(param: { children: any; label: any; value: any }): any {
+      return {
+        keyField: param.value,
+        labelField: param.label,
+        childrenField: param.children
+      };
+    }
   });
   table: TableCI = creator<TableCI>({
     name: "n-data-table",
