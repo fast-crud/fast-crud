@@ -625,7 +625,7 @@ export function useEditable(props: any, ctx: any, tableRef: any): { editable: Ed
       const row = editableRows[key];
       const res = await row.validate();
       if (res != true) {
-        errors[row.editableId] = errors;
+        errors[row.editableId] = res;
         hasError = true;
       }
     }
