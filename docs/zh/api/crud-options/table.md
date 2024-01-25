@@ -187,6 +187,26 @@
 * 说明：取消后的操作
 * 类型：`(context)=>Promise<any>`
 
+## remove.afterRemove
+* 说明：删除请求提交后的操作，返回false，不执行后面的逻辑
+* 类型：`(context:{index,row,res})=>Promise<any>`
+
+```ts
+{
+  table:{
+    remove:{
+         afterRemove:async (context)=>{
+            //context参数中带请求返回值（res），你可以在此处处理一些业务逻辑，比如校验是否失败;如果此方法返回false，不执行后面的逻辑，比如弹出删除成功消息
+            if(context.res.code !== 200){
+                return false
+            }
+        }
+    }
+  }    
+}
+```
+
+```
 
 ## remove.showSuccessNotification
 * 说明：是否显示成功删除提示

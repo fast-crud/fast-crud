@@ -190,8 +190,9 @@ function useEditable(props: UseEditableProps) {
           } else {
             if (crudBinding.value.mode.name === "local") {
               editable.removeRow(editableId);
+              return { isLocal: true };
             } else {
-              await crudBinding.value.request.delRequest({ row: rowData });
+              return res;
             }
           }
         }
@@ -652,15 +653,22 @@ export function useExpose(props: UseExposeProps): UseExposeRet {
       let res = null;
       const isLocal = crudBinding.value.mode?.name === "local";
       if (opts?.handle) {
-        const ctn = await opts.handle(context);
-        if (ctn === false) {
-          return;
-        }
+        res = await opts.handle(context);
       } else {
         if (isLocal) {
           crudExpose.removeTableRow(context?.index);
         } else {
           res = await crudBinding.value.request.delRequest(context);
+        }
+      }
+      if (res === false) {
+        return;
+      }
+      const removeScope = { ...context, res };
+      if (removeBinding.afterRemove) {
+        const success = await removeBinding.afterRemove(removeScope);
+        if (success === false) {
+          return false;
         }
       }
 

@@ -1,6 +1,6 @@
 import { Component, Ref, ShallowRef } from "vue";
 import { ComputeContext } from "./compute";
-import { CrudExpose, DoRemoveContext } from "../d/expose";
+import { CrudExpose, DoRemoveContext, OnAfterRemoveContext } from "../d/expose";
 
 import { RuleItem } from "async-validator";
 import { UiSlot, UiSlotRet } from "@fast-crud/ui-interface";
@@ -456,6 +456,12 @@ export type RemoveProps = {
    * 删除后刷新列表
    */
   refreshTable?: boolean;
+
+  /**
+   * 删除请求之后的操作，如果返回false,终止后续的执行，比如显示删除成功通知等
+   * @param context
+   */
+  afterRemove?: (context: OnAfterRemoveContext) => Promise<any>;
 
   /**
    * 显示成功提示
