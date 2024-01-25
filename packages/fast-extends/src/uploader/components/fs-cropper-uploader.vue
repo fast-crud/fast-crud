@@ -138,6 +138,7 @@ export default defineComponent({
     const formValidator = ui.formItem.injectFormItemContext();
     // eslint-disable-next-line vue/no-setup-props-destructure
     let emitValue: any = props.modelValue;
+    // eslint-disable-next-line vue/no-setup-props-destructure
     initValue(props.modelValue);
 
     async function initValue(value: any) {
@@ -182,6 +183,9 @@ export default defineComponent({
       const blob = ret.blob;
       const dataUrl = ret.dataUrl;
       const file = ret.file;
+      const filename = file.name;
+      const blobFile = new File([blob], filename, { type: blob.type });
+
       // 开始上传
       const item: any = reactive({
         url: undefined,
@@ -197,9 +201,9 @@ export default defineComponent({
         item.message = "文件上传出错:" + e.message;
         console.error(e);
       };
+      debugger;
       const option = {
-        file: blob,
-        fileName: file.name,
+        file: blobFile,
         onProgress,
         onError
       };
