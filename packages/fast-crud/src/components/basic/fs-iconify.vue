@@ -1,15 +1,18 @@
 <template>
-  <span ref="iconifyRef" class="fs-iconify" :class="{ 'fs-iconify-spin': spin }"></span>
+  <span class="fs-iconify" :class="{ 'fs-iconify-spin': spin }">
+    <Icon ref="iconifyRef" :icon="icon" />
+  </span>
 </template>
 <script lang="ts">
 import { defineComponent, nextTick, onMounted, ref, unref, watch } from "vue";
-
+import { Icon } from "@iconify/vue";
 /**
  * iconify 按需加载图标组件
  * https://iconify.design/icon-sets/ion/
  */
 export default defineComponent({
   name: "FsIconify",
+  components: { Icon },
   props: {
     /**
      * 图标名称
@@ -27,31 +30,14 @@ export default defineComponent({
   },
   setup(props, ctx) {
     const iconifyRef = ref(null);
-    const update = async () => {
-      if (!props.icon) return;
-
-      const el: any = unref(iconifyRef);
-      if (!el) return;
-
-      await nextTick();
-      const span: any = document.createElement("span");
-      span.className = "iconify";
-      span.dataset.icon = props.icon;
-      el.textContent = "";
-      el.appendChild(span);
-    };
-
-    watch(() => props.icon, update, { flush: "post" });
-
-    onMounted(update);
-
     return { iconifyRef };
   }
 });
 </script>
 <style lang="less">
-span.fs-iconify {
+.fs-iconify {
   //display: inline-flex !important;
+  display: inline-flex;
   align-items: center;
   &-spin {
     svg {
@@ -78,11 +64,11 @@ span.fs-iconify {
   }
 }
 
-span.iconify {
-  display: block;
-  min-width: 1em;
-  min-height: 1em;
-  // background-color: @iconify-bg-color;
-  border-radius: 100%;
-}
+//span.iconify {
+//  display: block;
+//  min-width: 1em;
+//  min-height: 1em;
+//  // background-color: @iconify-bg-color;
+//  border-radius: 100%;
+//}
 </style>

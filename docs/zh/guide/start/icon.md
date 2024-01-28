@@ -23,9 +23,18 @@ app.component("CheckOutlined",CheckOutlined)
 
 ## 二、使用`iconify`图标
 
-示例项目中使用了`iconify`图标，如果你想集成到你的项目中，请按如下步骤配置
+示例项目中使用了`iconify`图标 
 
-### 1. 安装依赖
+::: tip
+`1.20.0`版本之后，`iconify`图标已经内置到`fast-crud`中，无需额外配置，直接按照步骤4使用即可
+::: 
+
+
+<details> 
+    <summary>过时的内容，已折叠</summary>
+
+~~如果你想集成到你的项目中，请按如下步骤配置~~
+###  ~~1. 安装依赖~~
 
 ```json
  {
@@ -39,7 +48,7 @@ app.component("CheckOutlined",CheckOutlined)
 
 ```
 
-### 2. 配置vite插件
+### ~~2. 配置vite插件~~
 ```js
 // vite.config.js
 return {
@@ -50,10 +59,16 @@ return {
 }
 ```
 
-### 3. `main.ts` 中导入`generated`
+### ~~3. `main.ts` 中导入`generated`~~
 ```js
 import "@purge-icons/generated";
 ```
+
+
+</details>
+
+
+
 
 ### 4. fs中配置使用`iconify`图标
 
