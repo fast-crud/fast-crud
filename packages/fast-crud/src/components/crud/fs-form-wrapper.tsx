@@ -97,7 +97,8 @@ export default defineComponent({
         loading,
         close,
         toggleFullscreen,
-        submit
+        submit,
+        mode: formOptions.value.mode
       };
     }
 
