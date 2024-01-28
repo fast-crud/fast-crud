@@ -246,7 +246,7 @@ export function useExpose<R = any>(props: UseExposeProps<R>): UseExposeRet<R> {
     }
   }
 
-  const crudExpose: CrudExpose<R = any> = {
+  const crudExpose: CrudExpose<R> = {
     crudRef,
     crudBinding,
 
@@ -388,8 +388,8 @@ export function useExpose<R = any>(props: UseExposeProps<R>): UseExposeRet<R> {
         sort = crudBinding.value.table.sort || {};
       }
 
-      const query: PageQuery<R = any> = { page, form: searchFormData, sort };
-      let userPageQuery: UserPageQuery<R = any> = query;
+      const query: PageQuery<R> = { page, form: searchFormData, sort };
+      let userPageQuery: UserPageQuery<R> = query;
       if (crudBinding.value.request.transformQuery) {
         userPageQuery = crudBinding.value.request.transformQuery(query);
       }
@@ -415,7 +415,7 @@ export function useExpose<R = any>(props: UseExposeProps<R>): UseExposeRet<R> {
         logger.warn("pageRequest返回结果不能为空");
         return;
       }
-      let pageRes: PageRes<R = any> = userPageRes as PageRes<R>;
+      let pageRes: PageRes<R> = userPageRes as PageRes<R>;
       if (crudBinding.value.request.transformRes) {
         pageRes = crudBinding.value.request.transformRes({
           res: userPageRes,
