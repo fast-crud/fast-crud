@@ -1281,6 +1281,11 @@ export type SearchItemProps<R = any> = {
    * 此字段是否开启触发自动查询, 传入string则表示，[input,change,enter]事件时触发
    */
   autoSearchTrigger?: boolean | string;
+
+  /**
+   * 值变化事件
+   */
+  valueChange?: ValueChangeHandle<R> | ValueChangeProps<R>;
   /**
    * 其他[a|el|n]-form-item的配置
    */

@@ -560,7 +560,7 @@ export default defineComponent({
         const value = formData[key];
         const componentRef = getComponentRef(key);
         const valueChange = item.valueChange instanceof Function ? item.valueChange : item.valueChange.handle;
-        valueChange({ key, value, componentRef, ...getContextFn() });
+        valueChange({ key, value, componentRef, ...getContextFn(), immediate: false });
       }
       // TODO 由于validatedForm 发射出去后，会更新formData的数据，所以要放在valueChange后面
       if (props.validateOnChange && (await doValidate(silent, "change"))) {
