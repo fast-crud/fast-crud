@@ -26,7 +26,8 @@ app.component("CheckOutlined",CheckOutlined)
 示例项目中使用了`iconify`图标 
 
 ::: tip
-`1.20.0`版本之后，`iconify`图标已经内置到`fast-crud`中，无需额外配置，直接按照步骤4使用即可
+`1.20.0`版本之后，`iconify`图标已经内置到`fast-crud`中，无需额外配置，直接按照步骤4使用即可     
+不支持离线打包进安装包，如果你要在无网络环境下使用（主要是用户浏览器无网络，服务器没有网络没关系），请参考[本地部署Iconify接口](https://blog.csdn.net/honor_zhang/article/details/135192448)
 ::: 
 
 
