@@ -300,7 +300,9 @@ export function useExpose<R = any>(props: UseExposeProps<R>): UseExposeRet<R> {
         });
 
         //children
+        //@ts-ignore
         if (row.children && isArray(row.children)) {
+          //@ts-ignore
           crudExpose.doValueBuilder(row.children, columns);
         }
       });

@@ -1109,7 +1109,7 @@ type NullableString = string | null;
 
 export type FormWrapperContext<R = any> = {
   wrapper: any;
-  options: FormProps<R>;
+  options: any;
   formRef: Ref;
   form: R;
   wrapperBindRef: any;

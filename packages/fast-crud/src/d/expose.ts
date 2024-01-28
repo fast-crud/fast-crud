@@ -266,7 +266,12 @@ export type OpenDialogProps<R = any> = {
 /**
  * crudExpose.setSearchFormData参数
  */
-export type SetSearchFormDataProps<R = any> = { form: R; mergeForm?: boolean; triggerSearch?: boolean; refWarning?: boolean };
+export type SetSearchFormDataProps<R = any> = {
+  form: R;
+  mergeForm?: boolean;
+  triggerSearch?: boolean;
+  refWarning?: boolean;
+};
 /**
  * crudExpose.doRemove参数
  */
