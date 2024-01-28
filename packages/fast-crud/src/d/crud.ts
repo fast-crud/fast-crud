@@ -1,6 +1,6 @@
 import { Component, Ref, ShallowRef } from "vue";
 import { ComputeContext } from "./compute";
-import { CrudExpose, DoRemoveContext, OnAfterRemoveContext } from "../d/expose";
+import { CrudExpose, DoRemoveContext, OnAfterRemoveContext, OpenDialogProps } from "../d/expose";
 
 import { RuleItem } from "async-validator";
 import { UiSlot, UiSlotRet } from "@fast-crud/ui-interface";
@@ -164,7 +164,7 @@ export type FormScopeContext<R = any> = {
   /**
    * 属性
    */
-  attrs: any;
+  attrs?: any;
   /**
    * 提交成功后的response
    */
@@ -667,17 +667,17 @@ export type FormWrapperProps<R = any> = {
    * 对话框打开前事件处理
    * @param opts
    */
-  onOpen?: (opts: FormScopeContext<R>) => void;
+  onOpen?: (opts: OpenDialogProps<R>) => void;
   /**
    * 对话框打开后事件处理
    * @param opts
    */
-  onOpened?: (opts: FormScopeContext<R>) => void;
+  onOpened?: (opts: FormWrapperContext<R>) => void;
   /**
    * 对话框关闭后事件处理
    * @param opts
    */
-  onClosed?: (opts: FormScopeContext<R>) => void;
+  onClosed?: (opts: FormWrapperContext<R>) => void;
 
   buttons?: {
     [key: string]: ButtonProps<FormWrapperContext<R>>;
