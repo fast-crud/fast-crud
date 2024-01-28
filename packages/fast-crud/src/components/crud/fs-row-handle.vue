@@ -253,6 +253,7 @@ export default defineComponent({
 .fs-row-handle {
   // display: flex ; // 这里不能用flex，否则会破坏align:center配置
   flex-wrap: wrap;
+  display: inline-flex;
   .el-button + .el-button {
     margin-left: 2px;
   }
