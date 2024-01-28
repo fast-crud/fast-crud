@@ -560,7 +560,7 @@ export type TableColumnEditableProps<R = any> = {
   showAction?: boolean;
 };
 
-export type ConditionalRenderProps<R> = {
+export type ConditionalRenderProps<R = any> = {
   match: (scope: ScopeContext<R>) => boolean;
   render: (scope: ScopeContext<R>) => UiSlotRet;
 };
@@ -653,7 +653,7 @@ export type ColProps = {
 /**
  * 表单对话框配置
  */
-export type FormWrapperProps<R> = {
+export type FormWrapperProps<R = any> = {
   /**
    * 对话框使用什么组件，[el-dialog,a-modal,n-modal,el-drawer,a-drawer,n-drawer]
    */
@@ -767,7 +767,7 @@ export type FormItemHelperProps<R = any> = {
 /**
  * 表单配置
  */
-export type FormProps<R> = {
+export type FormProps<R = any> = {
   /**
    * 表单初始值
    */
@@ -1509,7 +1509,7 @@ export type RowHandleProps<R = any> = {
 /**
  * 复合columns配置
  */
-export type CompositionColumns<R> = {
+export type CompositionColumns<R = any> = {
   /**
    * 字段复合配置, 里面的{search,column,form,viewForm,editForm,addForm}设置将分发到各个部件的columns中
    */

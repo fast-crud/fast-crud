@@ -266,17 +266,17 @@ export type OpenDialogProps<R = any> = {
 /**
  * crudExpose.setSearchFormData参数
  */
-export type SetSearchFormDataProps<R> = { form: R; mergeForm?: boolean; triggerSearch?: boolean; refWarning?: boolean };
+export type SetSearchFormDataProps<R = any> = { form: R; mergeForm?: boolean; triggerSearch?: boolean; refWarning?: boolean };
 /**
  * crudExpose.doRemove参数
  */
-export type DoRemoveContext<R> = { index?: number; row?: R };
-export type OnAfterRemoveContext<R> = DoRemoveContext<R> & { res: any };
+export type DoRemoveContext<R = any> = { index?: number; row?: R };
+export type OnAfterRemoveContext<R = any> = DoRemoveContext<R> & { res: any };
 /**
  * crudExpose.doSearch参数
  */
-export type DoSearchProps<R> = { form: R; goFirstPage?: boolean; mergeForm?: boolean };
+export type DoSearchProps<R = any> = { form: R; goFirstPage?: boolean; mergeForm?: boolean };
 /**
  * crudExpose.doSelectCurrentRow参数
  */
-export type SelectCurrentRowProps<R> = { row: R };
+export type SelectCurrentRowProps<R = any> = { row: R };

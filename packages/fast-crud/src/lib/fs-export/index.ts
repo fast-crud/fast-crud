@@ -116,7 +116,7 @@ export type ExportProps<R = any> = {
   quoted?: boolean; //每项数据是否加引号
 } & CsvParams &
   ExcelParams;
-export async function exportTable<R = any>(crudExpose: CrudExpose<R>, opts: ExportProps<R> = {}): Promise<any> {
+export async function exportTable<R = any>(crudExpose: CrudExpose<R>, opts: ExportProps<R = any> = {}): Promise<any> {
   if (opts.server) {
     const page = crudExpose.getPage();
     const pageQuery = crudExpose.buildPageQuery({ page });
@@ -139,7 +139,7 @@ export async function exportTable<R = any>(crudExpose: CrudExpose<R>, opts: Expo
         return;
       }
       if (col.exportable !== false && col.key !== "_index") {
-        const exportCol: ExportColumn<R> = {
+        const exportCol: ExportColumn<R = any> = {
           key: col.key,
           title: col.title
         };

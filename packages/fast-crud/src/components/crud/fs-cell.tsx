@@ -26,7 +26,7 @@ export default defineComponent({
      * 条件渲染，符合条件的情况下优先渲染
      */
     conditionalRender: {
-      type: Object as PropType<ConditionalRenderProps>
+      type: Object as PropType<ConditionalRenderProps<any>>
     }
   },
   setup(props: any, ctx) {

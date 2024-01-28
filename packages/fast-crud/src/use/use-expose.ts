@@ -27,17 +27,17 @@ import { Editable, EditableActiveColsOptions, EditableAddRowOptions } from "../d
 
 const { merge } = useMerge();
 const doMerge = merge;
-export type UseExposeProps<R> = {
+export type UseExposeProps<R = any> = {
   crudRef: Ref;
   crudBinding: Ref<CrudBinding<R>>;
 };
 
-export type UseExposeRet<R> = {
+export type UseExposeRet<R = any> = {
   expose: CrudExpose<R>;
   crudExpose: CrudExpose<R>;
 };
 
-export type UseEditableProps<R> = {
+export type UseEditableProps<R = any> = {
   crudExpose: CrudExpose<R>;
 };
 
@@ -68,7 +68,7 @@ function useEditable<R = any>(props: UseEditableProps<R>) {
       }
     }
   );
-  const editable: Editable<R> = {
+  const editable: Editable<R = any> = {
     /**
      * 启用编辑
      * @param opts
@@ -246,7 +246,7 @@ export function useExpose<R = any>(props: UseExposeProps<R>): UseExposeRet<R> {
     }
   }
 
-  const crudExpose: CrudExpose<R> = {
+  const crudExpose: CrudExpose<R = any> = {
     crudRef,
     crudBinding,
 
@@ -388,8 +388,8 @@ export function useExpose<R = any>(props: UseExposeProps<R>): UseExposeRet<R> {
         sort = crudBinding.value.table.sort || {};
       }
 
-      const query: PageQuery<R> = { page, form: searchFormData, sort };
-      let userPageQuery: UserPageQuery<R> = query;
+      const query: PageQuery<R = any> = { page, form: searchFormData, sort };
+      let userPageQuery: UserPageQuery<R = any> = query;
       if (crudBinding.value.request.transformQuery) {
         userPageQuery = crudBinding.value.request.transformQuery(query);
       }
@@ -415,7 +415,7 @@ export function useExpose<R = any>(props: UseExposeProps<R>): UseExposeRet<R> {
         logger.warn("pageRequest返回结果不能为空");
         return;
       }
-      let pageRes: PageRes<R> = userPageRes as PageRes<R>;
+      let pageRes: PageRes<R = any> = userPageRes as PageRes<R>;
       if (crudBinding.value.request.transformRes) {
         pageRes = crudBinding.value.request.transformRes({
           res: userPageRes,
