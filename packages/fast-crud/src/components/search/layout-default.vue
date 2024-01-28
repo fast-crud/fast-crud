@@ -233,7 +233,9 @@ export default defineComponent({
 
     .ant-form-item {
       display: flex;
-
+      .ant-form-row {
+        width: 100%;
+      }
       .ant-form-item-control {
         flex: 1;
         overflow: hidden;

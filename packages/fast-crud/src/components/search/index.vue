@@ -628,6 +628,7 @@ export default defineComponent({
       flex-wrap: wrap;
 
       .ant-picker,
+      .ant-select,
       .n-date-picker,
       .el-select,
       .el-date-editor {
