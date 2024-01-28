@@ -209,11 +209,11 @@ export default defineComponent({
         item.message = "文件上传出错:" + e.message;
         console.error(e);
       };
-      debugger;
       const option = {
         file: blobFile,
         onProgress,
-        onError
+        onError,
+        fileName: filename
       };
       listRef.value.push(item);
       try {

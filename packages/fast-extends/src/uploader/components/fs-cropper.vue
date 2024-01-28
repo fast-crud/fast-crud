@@ -237,11 +237,11 @@ export default defineComponent({
       }
     }
 
-    function getCropImageDataUrl(fileType: string, quality?: any = this.compressQuality) {
+    function getCropImageDataUrl(fileType: string, quality?: any = props.compressQuality) {
       // get image data for post processing, e.g. upload or setting image src
       return cropperRef.value.getCroppedCanvas().toDataURL(fileType, quality);
     }
-    function getCropImageBlob(callback: any, type: string, quality?: any = this.compressQuality) {
+    function getCropImageBlob(callback: any, type: string, quality?: any = props.compressQuality) {
       return cropperRef.value.getCroppedCanvas().toBlob(callback, type, quality);
     }
     function emit(result: any) {

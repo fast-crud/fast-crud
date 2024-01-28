@@ -43,7 +43,7 @@ export function useCrud<T = any, R = any>(ctx: UseCrudProps<T, R>): UseCrudRet<R
   }
   const ui = uiContext.get();
   const { t } = useI18n();
-  const computedT = (name: string) => {
+  const ct = (name: string) => {
     return computed(() => {
       return t(name);
     });
@@ -212,7 +212,7 @@ export function useCrud<T = any, R = any>(ctx: UseCrudProps<T, R>): UseCrudRet<R
           refresh: {
             type: "primary",
             icon: ui.icons.refresh,
-            title: computedT("fs.toolbar.refresh.title"), // '刷新',
+            title: ct("fs.toolbar.refresh.title"), // '刷新',
             order: 1,
             circle: true,
             click: async () => {
@@ -224,7 +224,7 @@ export function useCrud<T = any, R = any>(ctx: UseCrudProps<T, R>): UseCrudRet<R
               return crudBinding.value.search.show !== false ? "primary" : "default";
             }),
             icon: ui.icons.search,
-            title: computedT("fs.toolbar.search.title"), // '查询显示',
+            title: ct("fs.toolbar.search.title"), // '查询显示',
             order: 2,
             circle: true,
             click: () => {
@@ -236,7 +236,7 @@ export function useCrud<T = any, R = any>(ctx: UseCrudProps<T, R>): UseCrudRet<R
               return crudBinding.value.toolbar.compact ? "primary" : "default";
             }),
             icon: ui.icons.compact,
-            title: computedT("fs.toolbar.compact.title"), // '紧凑模式',
+            title: ct("fs.toolbar.compact.title"), // '紧凑模式',
             order: 3,
             circle: true,
             click: () => {
@@ -249,7 +249,7 @@ export function useCrud<T = any, R = any>(ctx: UseCrudProps<T, R>): UseCrudRet<R
             icon: ui.icons.export,
             order: 4,
             loading: exporting,
-            title: computedT("fs.toolbar.export.title"), // '导出',
+            title: ct("fs.toolbar.export.title"), // '导出',
             circle: true,
             click: async () => {
               exporting.value = true;
@@ -263,7 +263,7 @@ export function useCrud<T = any, R = any>(ctx: UseCrudProps<T, R>): UseCrudRet<R
           columns: {
             type: "primary",
             icon: ui.icons.columnsFilter,
-            title: computedT("fs.toolbar.columns.title"), // '列设置',
+            title: ct("fs.toolbar.columns.title"), // '列设置',
             circle: true,
             order: 5
           }
@@ -336,7 +336,7 @@ export function useCrud<T = any, R = any>(ctx: UseCrudProps<T, R>): UseCrudRet<R
         buttons: {
           addRow: {
             show: false, //默认不启用
-            text: computedT("fs.actionbar.add"),
+            text: ct("fs.actionbar.add"),
             type: "primary",
             click: () => {
               expose.editable.addRow();
@@ -458,7 +458,7 @@ export function useCrud<T = any, R = any>(ctx: UseCrudProps<T, R>): UseCrudRet<R
     }
 
     const userOptions = merge(
-      defaultCrudOptions.defaultOptions({ t, ct: computedT }),
+      defaultCrudOptions.defaultOptions({ t }),
       usePagination(),
       useFormSubmit(),
       useRowHandle(),

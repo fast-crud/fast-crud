@@ -1,12 +1,18 @@
 import { uiContext } from "../ui";
 import { CrudOptions, UseCrudProps } from "../d";
+import { computed } from "vue";
+
 const defaultCrudOptions = {
   commonOptions(ctx?: UseCrudProps<any, any>): any {
     return {};
   },
-  defaultOptions(opts: { t: any; ct: any }): CrudOptions {
-    const { t, ct } = opts;
-
+  defaultOptions(opts: { t: any }): CrudOptions {
+    const { t } = opts;
+    const ct = (name: string) => {
+      return computed(() => {
+        return t(name);
+      });
+    };
     const ui = uiContext.get();
     return {
       mode: {},
