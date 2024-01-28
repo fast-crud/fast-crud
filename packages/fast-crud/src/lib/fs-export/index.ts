@@ -1,8 +1,8 @@
 import _ from "lodash-es";
-import {ColumnProps, CrudExpose, PageQuery, UserPageQuery} from "../../d";
-import {CsvParams, ExcelParams, ExportColumn, ExportUtil, ImportUtil} from "./lib/d";
-import {unref} from "vue";
-import {useMerge} from "../../use";
+import { ColumnProps, CrudExpose, PageQuery, UserPageQuery } from "../../d";
+import { CsvParams, ExcelParams, ExportColumn, ExportUtil, ImportUtil } from "./lib/d";
+import { unref } from "vue";
+import { useMerge } from "../../use";
 
 export async function loadFsExportUtil(): Promise<ExportUtil> {
   const module = await import.meta.glob("./lib/index.ts");
@@ -139,7 +139,7 @@ export async function exportTable<R = any>(crudExpose: CrudExpose<R>, opts: Expo
         return;
       }
       if (col.exportable !== false && col.key !== "_index") {
-        const exportCol: ExportColumn<R = any> = {
+        const exportCol: ExportColumn<R> = {
           key: col.key,
           title: col.title
         };
