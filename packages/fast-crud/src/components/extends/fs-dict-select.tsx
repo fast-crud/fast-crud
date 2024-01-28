@@ -68,7 +68,7 @@ export default defineComponent({
     const onSelectedChange = (value: any) => {
       ctx.emit("change", value);
       const dict = usedDict.getDict();
-      if (dict.dataMap && dict.dataMap[value]) {
+      if (dict && dict.dataMap && dict.dataMap[value]) {
         const opt = dict.dataMap[value];
         ctx.emit("selected-change", opt);
       }

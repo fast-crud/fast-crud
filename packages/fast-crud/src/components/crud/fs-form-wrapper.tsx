@@ -239,9 +239,9 @@ export default defineComponent({
       });
     });
 
-    onMounted(() => {
+    onMounted(async () => {
       if (props.options != null) {
-        open(props.options);
+        await open(props.options);
       }
       ctx.emit("mounted", getCurrentInstance().exposed);
     });
