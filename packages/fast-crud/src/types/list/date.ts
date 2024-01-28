@@ -19,8 +19,8 @@ export default function () {
       if (ui.type === "naive") {
         row[key] = dayjs(value).valueOf();
       } else if (ui.type === "antdv" && ui.version === "4") {
-      } else {
-        row[key] = dayjs(value);
+      } else if (ui.type === "element") {
+        // row[key] = dayjs(value).valueOf();
       }
     }
   }

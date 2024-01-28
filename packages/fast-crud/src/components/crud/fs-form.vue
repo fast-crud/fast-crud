@@ -691,6 +691,10 @@ export default defineComponent({
     .el-date-editor .el-range__close-icon {
       margin-right: 10px;
     }
+
+    .el-range-editor.el-input__wrapper {
+      padding: 0;
+    }
   }
 
   //.el-date-editor.el-input__wrapper {

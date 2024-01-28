@@ -634,6 +634,10 @@ export default defineComponent({
         width: 100%;
       }
 
+      .el-range-editor.el-input__wrapper {
+        padding: 0;
+      }
+
       .ant-btn-loading-icon {
         display: flex;
         margin-left: 2px;
