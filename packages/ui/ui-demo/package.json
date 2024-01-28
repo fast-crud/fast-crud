@@ -1,6 +1,6 @@
 {
   "name": "ui-demo",
-  "version": "1.19.3",
+  "version": "1.20.0",
   "private": true,
   "scripts": {
     "dev": "vite",
@@ -14,11 +14,11 @@
   },
   "dependencies": {
     "@ant-design/icons-vue": "^6.1.0",
-    "@fast-crud/ui-antdv": "^1.19.3",
-    "@fast-crud/ui-antdv4": "^1.19.3",
-    "@fast-crud/ui-element": "^1.19.3",
-    "@fast-crud/ui-interface": "^1.19.3",
-    "@fast-crud/ui-naive": "^1.19.3",
+    "@fast-crud/ui-antdv": "^1.20.0",
+    "@fast-crud/ui-antdv4": "^1.20.0",
+    "@fast-crud/ui-element": "^1.20.0",
+    "@fast-crud/ui-interface": "^1.20.0",
+    "@fast-crud/ui-naive": "^1.20.0",
     "ant-design-vue": "^4.0.0",
     "dayjs": "^1.11.10",
     "element-plus": "^2.3.9",

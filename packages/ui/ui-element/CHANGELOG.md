@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [1.20.0](https://github.com/fast-crud/fast-crud/compare/v1.19.3...v1.20.0) (2024-01-28)
+
+### Performance Improvements
+
+* dict-tree组件无需手动配置labelName keyName ([c8b0ee1](https://github.com/fast-crud/fast-crud/commit/c8b0ee1ee5fa22e73b3a8ef77e1ad3335351dc70))
+
 ## [1.19.3](https://github.com/fast-crud/fast-crud/compare/v1.19.2...v1.19.3) (2023-12-15)
 
 **Note:** Version bump only for package @fast-crud/ui-element
