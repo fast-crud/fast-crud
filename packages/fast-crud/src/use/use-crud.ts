@@ -16,10 +16,12 @@ import {
   CrudSettings,
   DynamicallyCrudOptions,
   EditableRow,
+  RowRecord,
   ScopeContext,
   TableColumnsProps,
   UseCrudProps,
   UseCrudRet,
+  UseFsContext,
   UseFsProps,
   UseFsRet
 } from "../d";
@@ -34,8 +36,9 @@ import { getCrudOptionsPlugin } from "../use/use-plugins";
 const { merge } = useMerge();
 
 // 导出useCrud
-export function useCrud(ctx: UseCrudProps): UseCrudRet {
+export function useCrud<T = any, R = any>(ctx: UseCrudProps<T, R>): UseCrudRet<R> {
   if (ctx.context == null) {
+    //@ts-ignore
     ctx.context = {};
   }
   const ui = uiContext.get();
@@ -558,7 +561,7 @@ function useFsImpl(props: UseFsProps): UseFsRet | Promise<UseCrudRet> {
   }
 }
 
-export function useFs(props: UseFsProps): UseFsRet {
+export function useFs<R = any, C = any>(props: UseFsProps<R, C>): UseFsRet<R, C> {
   return useFsImpl(props) as UseFsRet;
 }
 

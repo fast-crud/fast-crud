@@ -6,9 +6,10 @@ import {
   EditableValidateResult
 } from "./editable";
 import { EditableOnEnabledProps } from "../use";
+import { RowRecord } from "/src/d/crud";
 
-export type EditableAddRowOptions = {
-  row?: any;
+export type EditableAddRowOptions<R = any> = {
+  row?: R;
   active?: boolean;
 };
 
@@ -20,7 +21,7 @@ export type EditableActiveColsOptions = {
  * crudExpose.editable
  * editable暴露的方法
  */
-export type Editable = {
+export type Editable<R = any> = {
   enable(opts?: any, onEnabled?: (opts: EditableOnEnabledProps) => void): Promise<void>;
   /**
    * 禁用编辑
@@ -47,7 +48,7 @@ export type Editable = {
   /**
    * 添加行
    */
-  addRow(opts?: EditableAddRowOptions): void;
+  addRow(opts?: EditableAddRowOptions<R>): void;
   /**
    * 编辑cols
    * @param opts
@@ -66,32 +67,32 @@ export type Editable = {
    * 获取可编辑行对象
    * @param editableId
    */
-  getEditableRow(editableId: any): EditableRow;
+  getEditableRow(editableId: any): EditableRow<R>;
   /**
    * 执行保存行
    * @param opts
    */
-  doSaveRow(opts: { editableId?: any; row?: any }): Promise<void>;
+  doSaveRow(opts: { editableId?: any; row?: R }): Promise<void>;
   /**
    * 取消行编辑状态
    * @param opts
    */
-  doCancelRow(opts: { editableId?: any; row?: any }): Promise<void>;
+  doCancelRow(opts: { editableId?: any; row?: R }): Promise<void>;
   /**
    * 删除行
    * @param opts
    */
-  doRemoveRow(opts: { editableId?: any; row?: any }): Promise<void>;
+  doRemoveRow(opts: { editableId?: any; row?: R }): Promise<void>;
   /**
    * 遍历可编辑单元格对象
    * @param callback
    */
-  eachCells(callback: (opts: EditableEachCellsOpts) => void): void;
+  eachCells(callback: (opts: EditableEachCellsOpts<R>) => void): void;
   /**
    * 遍历可编辑行对象
    * @param callback
    */
-  eachRows(callback: (opts: EditableEachRowsOpts) => void): void;
+  eachRows(callback: (opts: EditableEachRowsOpts<R>) => void): void;
   /**
    * 校验表单，返回true，表示校验通过
    */
@@ -101,18 +102,18 @@ export type Editable = {
    * 获取可提交的表格数据（移除$editable_id字段）
    * 如果传data则移除传入data的editable_id，否则从表格中获取
    */
-  getTableData(data?: any[]): any[];
+  getTableData(data?: R[]): R[];
 
   /**
    * 同上
    * @param data
    */
-  getCleanTableData(data?: any[]): any[];
+  getCleanTableData(data?: R[]): R[];
 
   getInstance(): any;
 
   /**
    * 获取当前以激活的行
    */
-  getActiveRows: () => EditableRow[];
+  getActiveRows: () => EditableRow<R>[];
 };

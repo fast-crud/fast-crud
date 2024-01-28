@@ -1,10 +1,10 @@
 import { UiInterface } from "@fast-crud/ui-interface";
-import { CrudOptions, UseCrudProps } from "../d/crud";
+import { CrudOptions, RowRecord, UseCrudProps } from "../d/crud";
 import { DictRequest, LoggerConfig } from "../use";
 
-export type FsSetupOptions = {
+export type FsSetupOptions<R = any, C = any> = {
   ui?: UiInterface;
-  commonOptions?: (props?: UseCrudProps) => CrudOptions;
+  commonOptions?: (props?: UseCrudProps<R, C>) => CrudOptions<R>;
   dictRequest?: DictRequest;
   i18n?: any;
   logger?: LoggerConfig;

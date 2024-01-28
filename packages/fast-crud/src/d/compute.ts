@@ -1,15 +1,17 @@
+import { RowRecord } from "/src/d/crud";
+
 /**
  * compute参数方法的参数
  */
-export type ComputeContext = {
+export type ComputeContext<R = any> = {
   /**
    * 行数据
    */
-  row?: any;
+  row?: R;
   /**
    * 表单数据
    */
-  form?: any;
+  form?: R;
   /**
    * 当前行号
    */

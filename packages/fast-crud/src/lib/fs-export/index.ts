@@ -1,5 +1,5 @@
 import _ from "lodash-es";
-import { ColumnCompositionProps, ColumnProps, CrudExpose, PageQuery, UserPageQuery } from "../../d";
+import { ColumnCompositionProps, ColumnProps, CrudExpose, PageQuery, RowRecord, UserPageQuery } from "../../d";
 import { CsvParams, ExcelParams, ExportColumn, ExportUtil, ImportUtil } from "./lib/d";
 import { unref } from "vue";
 import { useMerge } from "../../use";
@@ -24,15 +24,19 @@ export async function loadFsImportUtil(): Promise<ImportUtil> {
   return lib.importUtil;
 }
 
-export type DataFormatterContext = {
+export type DataFormatterContext<R = any> = {
   row: any;
-  originalRow: any;
+  /**
+   * 原始行数据
+   */
+  originalRow: R;
   key: string;
-  col: ColumnProps;
-  exportCol: ExportColumn;
+  col: ColumnProps<R>;
+  exportCol: ExportColumn<R>;
 };
-function defaultDataFormatter({ originalRow, row, key, col }: DataFormatterContext) {
-  const value = originalRow[key];
+function defaultDataFormatter<R = any>({ originalRow, row, key, col }: DataFormatterContext<R>) {
+  //@ts-ignore
+  const value: any = originalRow[key];
   const dict = col.component?.dict;
   if (dict && value != null) {
     //处理dict
@@ -49,17 +53,17 @@ function defaultDataFormatter({ originalRow, row, key, col }: DataFormatterConte
   return row;
 }
 
-export type ColumnBuilderContext = {
-  col: ExportColumn;
+export type ColumnBuilderContext<R = any> = {
+  col: ExportColumn<R>;
 };
 /**
  * 导出配置
  */
-export type ExportProps = {
+export type ExportProps<R = any> = {
   /**
    * 服务端导出，自己实现
    */
-  server?: (pageQuery: UserPageQuery) => Promise<void>;
+  server?: (pageQuery: UserPageQuery<R>) => Promise<void>;
 
   /**
    * 仅导出显示的列
@@ -69,15 +73,15 @@ export type ExportProps = {
    * 列过滤器
    * @param col
    */
-  columnFilter?: (col: ColumnCompositionProps) => boolean;
+  columnFilter?: (col: ColumnProps<R>) => boolean;
   /**
    * 列配置构建器
    */
-  columnBuilder?: (context: ColumnBuilderContext) => void;
+  columnBuilder?: (context: ColumnBuilderContext<R>) => void;
   /**
    * 数据mapping
    */
-  dataFormatter?: (context: DataFormatterContext) => void;
+  dataFormatter?: (context: DataFormatterContext<R>) => void;
 
   /**
    * 导出文件类型
@@ -94,7 +98,7 @@ export type ExportProps = {
   /**
    * 查询参数
    */
-  searchParams?: PageQuery;
+  searchParams?: PageQuery<R>;
 
   /**
    * 配置了dict的字段是否自动根据value获取label
@@ -112,7 +116,7 @@ export type ExportProps = {
   quoted?: boolean; //每项数据是否加引号
 } & CsvParams &
   ExcelParams;
-export async function exportTable(crudExpose: CrudExpose, opts: ExportProps = {}): Promise<any> {
+export async function exportTable<R = any>(crudExpose: CrudExpose<R>, opts: ExportProps<R> = {}): Promise<any> {
   if (opts.server) {
     const page = crudExpose.getPage();
     const pageQuery = crudExpose.buildPageQuery({ page });
@@ -120,10 +124,10 @@ export async function exportTable(crudExpose: CrudExpose, opts: ExportProps = {}
     return;
   }
   const crudBinding = crudExpose.crudBinding;
-  let columns: ExportColumn[] = opts.columns;
+  let columns: ExportColumn<R>[] = opts.columns;
   if (columns == null) {
     columns = [];
-    _.each(crudBinding.value.table.columnsMap, (col: ColumnProps) => {
+    _.each(crudBinding.value.table.columnsMap, (col: ColumnProps<R>) => {
       if (opts.columnFilter) {
         //列过滤器
         if (opts.columnFilter(col) === false) {
@@ -135,7 +139,7 @@ export async function exportTable(crudExpose: CrudExpose, opts: ExportProps = {}
         return;
       }
       if (col.exportable !== false && col.key !== "_index") {
-        const exportCol: ExportColumn = {
+        const exportCol: ExportColumn<R> = {
           key: col.key,
           title: col.title
         };
@@ -173,7 +177,7 @@ export async function exportTable(crudExpose: CrudExpose, opts: ExportProps = {}
   }
   for (const row of originalData) {
     const clone = _.cloneDeep(row);
-    _.each(columns, (exportCol: ExportColumn) => {
+    _.each(columns, (exportCol: ExportColumn<R>) => {
       const col = exportCol.columnProps;
       const mapping = {
         row: clone,
@@ -217,7 +221,7 @@ export type ImportProps = {
   file: File;
   append?: boolean;
 };
-export async function importTable(crudExpose: CrudExpose, opts: ImportProps) {
+export async function importTable<R = any>(crudExpose: CrudExpose<R>, opts: ImportProps) {
   const importUtil = await loadFsImportUtil();
   const importData = await importUtil.csv(opts.file);
   const crudBinding = crudExpose.crudBinding;

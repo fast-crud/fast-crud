@@ -1,7 +1,7 @@
 import { uiContext } from "../ui";
 import { CrudOptions, UseCrudProps } from "../d";
-export default {
-  commonOptions(ctx?: UseCrudProps): any {
+const defaultCrudOptions = {
+  commonOptions(ctx?: UseCrudProps<any, any>): any {
     return {};
   },
   defaultOptions(opts: { t: any; ct: any }): CrudOptions {
@@ -188,3 +188,5 @@ export default {
     };
   }
 };
+
+export default defaultCrudOptions;

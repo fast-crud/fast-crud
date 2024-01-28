@@ -6,6 +6,7 @@ import {
   PageQuery,
   PageRes,
   RemoveProps,
+  RowRecord,
   UserPageQuery
 } from "./crud";
 import { Ref } from "vue";
@@ -15,8 +16,8 @@ export type SearchOptions = {
   silence?: boolean;
 };
 
-export type DoValueResolveProps = {
-  form: any;
+export type DoValueResolveProps<R = any> = {
+  form: R;
 };
 
 export class SetFormDataOptions {
@@ -36,9 +37,9 @@ export type DoRefreshProps = {
 /**
  * crudExpose
  */
-export type CrudExpose = {
+export type CrudExpose<R = any> = {
   crudRef: Ref;
-  crudBinding: Ref<CrudBinding>;
+  crudBinding: Ref<CrudBinding<R>>;
   /**
    * 获取FsFormWrapper的实例
    */
@@ -50,13 +51,13 @@ export type CrudExpose = {
   /**
    * 获取表单数据，仅表单打开时有效
    */
-  getFormData: () => any;
+  getFormData: () => R;
 
   /**
    * 设置当前表单数据，仅表单打开时有效
    *  data: 表单数据
    */
-  setFormData: (data: any, options?: SetFormDataOptions) => any;
+  setFormData: (data: R, options?: SetFormDataOptions) => any;
 
   /**
    * 获取表单组件实例，仅表单打开时有效
@@ -68,12 +69,12 @@ export type CrudExpose = {
    * 执行valueBuilder
    * @param rows 表格数据列表
    */
-  doValueBuilder: (rows: any[], columns?: CompositionColumns) => void;
+  doValueBuilder: (rows: R[], columns?: CompositionColumns<R>) => void;
   /**
    * 执行valueResolve
    * @param props { form }
    */
-  doValueResolve: (props: DoValueResolveProps, columns?: CompositionColumns) => void;
+  doValueResolve: (props: DoValueResolveProps<R>, columns?: CompositionColumns<R>) => void;
   /**
    * 刷新列表数据
    */
@@ -86,13 +87,13 @@ export type CrudExpose = {
    * 查询按钮点击，执行查询
    * @param opts {form, goFirstPage =true,mergeForm=false}
    */
-  doSearch: (props: DoSearchProps) => Promise<void>;
+  doSearch: (props: DoSearchProps<R>) => Promise<void>;
 
   /**
    * 构建page查询参数
    * @param pageQuery
    */
-  buildPageQuery(pageQuery: PageQuery): UserPageQuery;
+  buildPageQuery(pageQuery: PageQuery<R>): UserPageQuery<R>;
 
   /**
    * 获取当前分页参数
@@ -102,22 +103,22 @@ export type CrudExpose = {
    * 执行搜索，返回页面数据
    * @param pageQuery
    */
-  search: (pageQuery: PageQuery, options?: SearchOptions) => Promise<PageRes>;
+  search: (pageQuery: PageQuery<R>, options?: SearchOptions) => Promise<PageRes<R>>;
   /**
    * 删除行按钮点击
    * @param context = {index / row}
    */
-  doRemove: (context: DoRemoveContext, opts?: RemoveProps) => Promise<void>;
+  doRemove: (context: DoRemoveContext<R>, opts?: RemoveProps<R>) => Promise<any>;
   /**
    * 打开编辑对话框
    * @param props = {index / row}
    */
-  openEdit: (context: OpenEditContext, formOpts?: OpenDialogProps) => Promise<any>;
+  openEdit: (context: OpenEditContext, formOpts?: OpenDialogProps<R>) => Promise<any>;
   /**
    * 打开添加对话框
    *  @param props = {index?,row?}
    */
-  openAdd: (context: OpenEditContext, formOpts?: OpenDialogProps) => Promise<any>;
+  openAdd: (context: OpenEditContext, formOpts?: OpenDialogProps<R>) => Promise<any>;
   /**
    * 打开查看对话框
    *  @param props = {index,row}
@@ -151,7 +152,7 @@ export type CrudExpose = {
   /**
    * 重新设置查询表单数据
    */
-  setSearchFormData: (props: SetSearchFormDataProps) => void;
+  setSearchFormData: (props: SetSearchFormDataProps<R>) => void;
 
   /**
    * 获取toolbar组件Ref
@@ -187,23 +188,23 @@ export type CrudExpose = {
   /**
    * 获取表格数据
    */
-  getTableData: () => any[];
+  getTableData: () => R[];
   /**
    * 重新设置表格数据
    */
-  setTableData: (data: any[]) => void;
+  setTableData: (data: R[]) => void;
   /**
    * 插入行
    * @param index
    * @param row
    */
-  insertTableRow: (index: number, row: Object) => void;
+  insertTableRow: (index: number, row: R) => void;
   /**
    * 更新行
    * @param index
    * @param row
    */
-  updateTableRow: (index: number, row: Object, merge?: boolean) => void;
+  updateTableRow: (index: number, row: R, merge?: boolean) => void;
   /**
    * 删除行
    * @param index
@@ -219,12 +220,12 @@ export type CrudExpose = {
    * 根据rowKey删除某一行
    * @param rowKey
    */
-  removeTableRowByRowKey: (rowKey: any, data?: any[]) => boolean;
+  removeTableRowByRowKey: (rowKey: any, data?: R[]) => boolean;
   /**
    * 选中某一行
    * @param context = {row}
    */
-  doSelectCurrentRow: (context: SelectCurrentRowProps) => void;
+  doSelectCurrentRow: (context: SelectCurrentRowProps<R>) => void;
   /**
    * 行编辑
    */
@@ -234,7 +235,7 @@ export type CrudExpose = {
 /**
  * index or row 必须传一个
  */
-export type OpenEditContext = {
+export type OpenEditContext<R = any> = {
   /**
    * 行索引, 行索引或row，必传一个
    */
@@ -242,13 +243,13 @@ export type OpenEditContext = {
   /**
    * 行数据，默认会赋值给initialForm作为初始值
    */
-  row?: any;
+  row?: R;
 };
 
 /**
  * crudExpose.openDialog 打开对话框参数
  */
-export type OpenDialogProps = {
+export type OpenDialogProps<R = any> = {
   /**
    * 是否新创建一个实例打开
    * 当使用新建实例打开时，无法通过getFormWrapperRef获取到表单ref，你可以从openDialog的返回值中拿到ref
@@ -260,22 +261,22 @@ export type OpenDialogProps = {
    * 对话框id，不传则随机生成，新实例在关闭时不会被销毁，使用相同id的form重复打开会被覆盖
    */
   id?: string;
-} & FormProps;
+} & FormProps<R>;
 
 /**
  * crudExpose.setSearchFormData参数
  */
-export type SetSearchFormDataProps = { form: any; mergeForm?: boolean; triggerSearch?: boolean; refWarning?: boolean };
+export type SetSearchFormDataProps<R> = { form: R; mergeForm?: boolean; triggerSearch?: boolean; refWarning?: boolean };
 /**
  * crudExpose.doRemove参数
  */
-export type DoRemoveContext = { index?: number; row?: any };
-export type OnAfterRemoveContext = DoRemoveContext & { res: any };
+export type DoRemoveContext<R> = { index?: number; row?: R };
+export type OnAfterRemoveContext<R> = DoRemoveContext<R> & { res: any };
 /**
  * crudExpose.doSearch参数
  */
-export type DoSearchProps = { form: any; goFirstPage?: boolean; mergeForm?: boolean };
+export type DoSearchProps<R> = { form: R; goFirstPage?: boolean; mergeForm?: boolean };
 /**
  * crudExpose.doSelectCurrentRow参数
  */
-export type SelectCurrentRowProps = { row: any };
+export type SelectCurrentRowProps<R> = { row: R };

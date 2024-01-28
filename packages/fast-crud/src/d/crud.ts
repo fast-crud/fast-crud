@@ -10,31 +10,33 @@ import { Dict, GetContextFn } from "../use";
 // export type FsRefValue<T> = T | Ref<T> | ComputedRef<T>;
 // export type FsComputeValue<T> = FsRefValue<T> | ComputeValue<T> | AsyncComputeValue<T>;
 
-export type UseFsRet = {
-  crudRef: Ref;
-  crudBinding: Ref<CrudBinding>;
-  crudExpose: CrudExpose;
-  context: UseFsContext;
-} & UseCrudRet &
-  CreateCrudOptionsRet;
-
-export type UseFsContext = {
+export type RowRecord = {
   [key: string]: any;
+  children?: any[];
+};
+export type UseFsRet<R = any, C = any> = {
+  crudRef: Ref;
+  crudBinding: Ref<CrudBinding<R>>;
+  crudExpose: CrudExpose<R>;
+  context: C;
+} & UseCrudRet<R> &
+  CreateCrudOptionsRet<R>;
+
+export type UseFsContext = any;
+
+export type CreateCrudOptionsProps<R = any, C = any> = {
+  crudExpose: CrudExpose<R>;
+
+  expose?: CrudExpose<R>;
+
+  context: C;
 };
 
-export type CreateCrudOptionsProps<T = UseFsContext> = {
-  crudExpose: CrudExpose;
-
-  expose?: CrudExpose;
-
-  context: T;
-};
-
-export type CreateCrudOptionsRet = {
+export type CreateCrudOptionsRet<R = any> = {
   /**
    * crudOptions
    */
-  crudOptions: DynamicallyCrudOptions;
+  crudOptions: DynamicallyCrudOptions<R>;
 
   /**
    * 自定义返回变量
@@ -42,36 +44,38 @@ export type CreateCrudOptionsRet = {
   [key: string]: any;
 };
 
-export type UseFsProps<T = UseFsContext> = {
+export type UseFsProps<R = any, C = any> = {
   crudRef?: Ref;
-  crudBinding?: Ref<CrudBinding>;
+  crudBinding?: Ref<CrudBinding<R>>;
 
-  crudExposeRef?: Ref<CrudExpose>;
-  createCrudOptions: CreateCrudOptions | CreateCrudOptionsAsync;
-  crudOptionsOverride?: DynamicallyCrudOptions;
-  onExpose?: (context: OnExposeContext<T>) => any;
+  crudExposeRef?: Ref<CrudExpose<R>>;
+  createCrudOptions: CreateCrudOptions<R, C> | CreateCrudOptionsAsync<R, C>;
+  crudOptionsOverride?: DynamicallyCrudOptions<R>;
+  onExpose?: (context: OnExposeContext<R, C>) => any;
 
-  context?: T;
+  context?: C;
 };
-export type CreateCrudOptions = (props: CreateCrudOptionsProps) => CreateCrudOptionsRet;
-export type OnExposeContext<T = UseFsContext> = {
+export type CreateCrudOptions<R = any, C = any> = (props: CreateCrudOptionsProps<R, C>) => CreateCrudOptionsRet<R>;
+export type OnExposeContext<R = any, C = any> = {
   crudRef: Ref;
-  crudBinding: Ref<CrudBinding>;
-  crudExpose: CrudExpose;
-  context: T;
+  crudBinding: Ref<CrudBinding<R>>;
+  crudExpose: CrudExpose<R>;
+  context: C;
 };
 
-export type CreateCrudOptionsAsync = (props: CreateCrudOptionsProps) => Promise<CreateCrudOptionsRet>;
+export type CreateCrudOptionsAsync<R = any, C = any> = (
+  props: CreateCrudOptionsProps<R, C>
+) => Promise<CreateCrudOptionsRet<R>>;
 
-export type UseCrudProps<T = UseFsContext> = {
-  crudOptions: DynamicallyCrudOptions;
+export type UseCrudProps<R = any, C = any> = {
+  crudOptions: DynamicallyCrudOptions<R>;
   /**
    * 即将废弃，请使用crudExpose
    */
-  expose?: CrudExpose;
-  crudExpose: CrudExpose;
+  expose?: CrudExpose<R>;
+  crudExpose: CrudExpose<R>;
 
-  context: T;
+  context?: C;
   /**
    * 自定义参数
    * common里面可以使用
@@ -79,25 +83,25 @@ export type UseCrudProps<T = UseFsContext> = {
   [key: string]: any;
 };
 
-export type UseCrudRet = {
+export type UseCrudRet<R = any> = {
   /**
    * 重新设置crudOptions
    * @param overOptions
    */
-  resetCrudOptions: (options: DynamicType<CrudOptions>) => void;
+  resetCrudOptions: (options: DynamicType<CrudOptions<R>>) => void;
   /**
    * 覆盖crudOptions配置
    * @param overOptions
    */
-  appendCrudOptions: (options: DynamicType<CrudOptions>) => DynamicType<CrudOptions>;
+  appendCrudOptions: (options: DynamicType<CrudOptions<R>>) => DynamicType<CrudOptions<R>>;
   /**
    * 追加配置,注意是覆盖crudBinding的结构，而不是crudOptions的结构
    * @param overBinding
    */
-  appendCrudBinding: (overBinding: CrudBinding) => void;
+  appendCrudBinding: (overBinding: CrudBinding<R>) => void;
 };
 
-export type RowContext = {
+export type RowContext<R = any> = {
   /**
    * 字段key
    */
@@ -109,23 +113,23 @@ export type RowContext = {
   /**
    * 表单数据
    */
-  form: any;
+  form: R;
 
   /**
    * 行数据
    */
-  row: any;
+  row: R;
 
   /**
    * naive ui 有record
    */
-  record?: any;
+  record?: R;
   /**
    * 第几行
    */
   index: number;
 };
-export type ScopeContext = {
+export type ScopeContext<R = any> = {
   /**
    * 表单模式,add,view,edit
    */
@@ -143,20 +147,20 @@ export type ScopeContext = {
    * ui特有的context属性
    */
   [key: string]: any;
-} & RowContext;
+} & RowContext<R>;
 
-export type ComponentRenderContext = {
+export type ComponentRenderContext<R = any> = {
   /**
    * 继承component的attrs
    */
   attrs: any;
-} & ScopeContext;
+} & ScopeContext<R>;
 
-export type FormScopeContext = {
+export type FormScopeContext<R = any> = {
   /**
    * 初始form数据
    */
-  initialForm: any;
+  initialForm: R;
   /**
    * 属性
    */
@@ -169,27 +173,27 @@ export type FormScopeContext = {
   /**
    * 表单数据
    */
-  form: any;
-} & ScopeContext;
+  form: R;
+} & ScopeContext<R>;
 
-export type ComponentEventContext = {
+export type ComponentEventContext<R = any> = {
   /**
    * 原始事件
    */
   $event: any;
-} & ScopeContext;
+} & ScopeContext<R>;
 
-export type ValueChangeContext = {
+export type ValueChangeContext<R = any> = {
   /**
    * 当前是否是第一次触发的
    */
   immediate: boolean;
-} & ScopeContext;
+} & ScopeContext<R>;
 
 /**
  * valueChange复合配置
  */
-export type ValueChangeProps = {
+export type ValueChangeProps<R = any> = {
   /**
    * 是否立即触发一次
    */
@@ -197,12 +201,12 @@ export type ValueChangeProps = {
   /**
    * valueChange处理器
    */
-  handle: ValueChangeHandle;
+  handle: ValueChangeHandle<R>;
 };
 /**
  * valueChange 处理器
  */
-export type ValueChangeHandle = (context: ValueChangeContext) => Promise<void>;
+export type ValueChangeHandle<R = any> = (context: ValueChangeContext<R>) => Promise<void>;
 
 export type Page = {
   /**
@@ -221,7 +225,7 @@ export type PageSort = { prop?: string; order?: string; asc?: boolean };
 /**
  * 查询
  */
-export type PageQuery = {
+export type PageQuery<R = any> = {
   /**
    * 翻页参数
    */
@@ -229,7 +233,7 @@ export type PageQuery = {
   /**
    * 查询表单
    */
-  form?: any;
+  form?: R;
   /**
    * 远程排序配置
    */
@@ -241,7 +245,7 @@ export type PageQuery = {
  * 如果你的后台与此格式不一致，你需要转化成此格式，
  * 请参考transformRes
  */
-export type PageRes = {
+export type PageRes<R = any> = {
   /**
    * 当前页
    */
@@ -257,78 +261,78 @@ export type PageRes = {
   /**
    * 列表数据
    */
-  records: Array<object>;
+  records: R[];
 };
 
-export type EditReq = {
-  form?: any;
-  row?: any;
+export type EditReq<R = any> = {
+  form?: R;
+  row?: R;
   [key: string]: any;
 };
 
-export type AddReq = {
-  form?: any;
+export type AddReq<R = any> = {
+  form?: R;
   [key: string]: any;
 };
 
-export type DelReq = {
-  row?: any;
+export type DelReq<R = any> = {
+  row?: R;
   [key: string]: any;
 };
 
-export type InfoReq = {
+export type InfoReq<R = any> = {
   mode?: string;
-  row?: any;
+  row?: R;
   [key: string]: any;
 };
 
 /**
  * 用户后台page请求原始返回
  */
-export type UserPageRes = {
-  [key: string]: any;
-};
-
-/**
- * 用户自定义的后台翻页参数
- */
-export type UserPageQuery = {
+export type UserPageRes<R = any> = {
   [key: string]: any;
 };
 
 /**
  * 页面数据转换参数
  */
-export type TransformResProps = {
+export type TransformResProps<R = any> = {
   /**
    * 用户页面请求实际返回
    */
-  res: UserPageRes;
+  res: UserPageRes<R>;
   /**
    * 本次请求参数
    */
-  query: UserPageQuery;
+  query: UserPageQuery<R>;
 };
 
-export type TransformQuery = (query: PageQuery) => UserPageQuery;
-export type TransformRes = (props: TransformResProps) => PageRes;
-export type PageRequest = (query: UserPageQuery) => Promise<UserPageRes>;
-export type EditRequest = (req: EditReq) => Promise<any>;
-export type AddRequest = (req: AddReq) => Promise<any>;
-export type DelRequest = (req: DelReq) => Promise<any>;
-export type InfoRequest = (req: InfoReq) => Promise<any>;
+/**
+ * 用户自定义的后台翻页参数
+ */
+export type UserPageQuery<R = any> = {
+  [key: string]: any;
+};
+
+export type TransformQuery<R = any> = (query: PageQuery<R>) => UserPageQuery<R>;
+export type TransformRes<R = any> = (props: TransformResProps<R>) => PageRes<R>;
+export type PageRequest<R = any> = (query: UserPageQuery<R>) => Promise<UserPageRes<R>>;
+export type EditRequest<R = any> = (req: EditReq<R>) => Promise<any>;
+export type AddRequest<R = any> = (req: AddReq<R>) => Promise<any>;
+export type DelRequest<R = any> = (req: DelReq<R>) => Promise<any>;
+export type InfoRequest<R = any> = (req: InfoReq<R>) => Promise<any>;
 
 /**
  * 请求配置
  */
-export type RequestProp = {
-  transformQuery?: TransformQuery;
-  transformRes?: TransformRes;
-  pageRequest?: PageRequest;
-  addRequest?: AddRequest;
-  editRequest?: EditRequest;
-  delRequest?: DelRequest;
-  infoRequest?: InfoRequest;
+export type RequestProp<R = any> = {
+  transformQuery?: TransformQuery<R>;
+  transformRes?: TransformRes<R>;
+  pageRequest?: PageRequest<R>;
+  addRequest?: AddRequest<R>;
+  editRequest?: EditRequest<R>;
+  delRequest?: DelRequest<R>;
+  infoRequest?: InfoRequest<R>;
 
   [key: string]: any;
 };
@@ -365,7 +369,7 @@ export type VModelProps = {
 /**
  * 组件配置
  */
-export type ComponentProps = {
+export type ComponentProps<R = any> = {
   /**
    * 是否显示组件
    */
@@ -399,14 +403,14 @@ export type ComponentProps = {
    * 组件事件监听,带上下文
    */
   on?: {
-    [key: string]: (context?: ComponentEventContext) => void;
+    [key: string]: (context?: ComponentEventContext<R>) => void;
   };
 
   /**
    * 同on，即将废弃
    */
   events?: {
-    [key: string]: (context?: ComponentEventContext) => void;
+    [key: string]: (context?: ComponentEventContext<R>) => void;
   };
 
   /**
@@ -423,7 +427,7 @@ export type ComponentProps = {
    * 直接渲染
    * @param scope
    */
-  render?: (scope: ComponentRenderContext) => any;
+  render?: (scope: ComponentRenderContext<R>) => any;
 
   /**
    * 组件其他参数，如style、class、onXxx事件等
@@ -431,16 +435,16 @@ export type ComponentProps = {
   [key: string]: any;
 };
 
-export type RemoveConfirmFn = (context: DoRemoveContext) => Promise<void>;
+export type RemoveConfirmFn<R = any> = (context: DoRemoveContext<R>) => Promise<void>;
 /**
  * 删除操作配置
  */
-export type RemoveProps = {
+export type RemoveProps<R = any> = {
   /**
    * 自定义确认删除，抛出异常则取消
    * @param context
    */
-  confirmFn?: RemoveConfirmFn;
+  confirmFn?: RemoveConfirmFn<R>;
   /**
    * 自定义删除确认标题
    * confirm未配置时生效
@@ -461,7 +465,7 @@ export type RemoveProps = {
    * 删除请求之后的操作，如果返回false,终止后续的执行，比如显示删除成功通知等
    * @param context
    */
-  afterRemove?: (context: OnAfterRemoveContext) => Promise<any>;
+  afterRemove?: (context: OnAfterRemoveContext<R>) => Promise<any>;
 
   /**
    * 显示成功提示
@@ -472,24 +476,24 @@ export type RemoveProps = {
    * 当取消删除时
    * @param context
    */
-  onCanceled?: (context: any) => Promise<any>;
+  onCanceled?: (context: ScopeContext<R>) => Promise<any>;
 
   /**
    * 删除成功后的操作
    * @param context
    */
-  onRemoved?: (context: any) => Promise<any>;
+  onRemoved?: (context: ScopeContext<R>) => Promise<any>;
 
   /**
    * 实际删除操作，返回false则不继续后续的刷新表格等操作
    * @param context
    */
-  handle?: (context: any) => Promise<any>;
+  handle?: (context: DoRemoveContext<R>) => Promise<any>;
 
   [key: string]: any;
 };
 
-export type EditableProps = {
+export type EditableProps<R = any> = {
   /**
    * 是否启用编辑
    */
@@ -499,8 +503,8 @@ export type EditableProps = {
    * 是否readonly
    */
   readonly?: boolean;
-  addForm?: FormProps;
-  editForm?: FormProps;
+  addForm?: FormProps<R>;
+  editForm?: FormProps<R>;
   //模式，free，row
   mode?: "free" | "row" | "cell";
   /**
@@ -516,45 +520,54 @@ export type EditableProps = {
   activeTrigger?: "onClick" | "onDbClick" | false;
   activeDefault?: boolean;
   //设置哪个cell可以激活编辑
-  isEditable?: (opts: { editableId: any; key: string; row: any }) => boolean;
+  isEditable?: (opts: { editableId: any; key: string; row: R }) => boolean;
   /**
    * 更新单元格方法
    * @param opts
    */
-  updateCell?: (opts: { editableId: any; row: any; key: string; value: any }) => Promise<any>;
+  updateCell?: (opts: { editableId: any; row: R; key: string; value: any }) => Promise<any>;
 
   /**
    * 本地自定义插入方法
    * 如果你不喜欢新增的记录在第一条的话，你可以自己实现插入方法
    */
-  addRow?: (data: any[], row: any) => boolean;
+  addRow?: (data: R[], row: R) => boolean;
 
   [key: string]: any;
 };
 
-export type TableColumnEditableDisabledFunc = (opts: { column: ColumnProps; editableId: any; row: any }) => boolean;
-export type EditableUpdateCellRequest = (opts: { editableId: any; row: any; key: string; value: any }) => Promise<any>;
-export type EditableUpdateColumnRequest = (opts: {
+export type TableColumnEditableDisabledFunc<R = any> = (opts: {
+  column: ColumnProps;
   editableId: any;
-  row: any;
+  row: R;
+}) => boolean;
+export type EditableUpdateCellRequest<R = any> = (opts: {
+  editableId: any;
+  row: R;
   key: string;
-  data: any[];
+  value: any;
 }) => Promise<any>;
-export type TableColumnEditableProps = {
+export type EditableUpdateColumnRequest<R = any> = (opts: {
+  editableId: any;
+  row: R;
+  key: string;
+  data: R[];
+}) => Promise<any>;
+export type TableColumnEditableProps<R = any> = {
   disabled?: boolean | TableColumnEditableDisabledFunc;
-  updateCell?: EditableUpdateCellRequest;
-  updateColumn?: EditableUpdateColumnRequest;
+  updateCell?: EditableUpdateCellRequest<R>;
+  updateColumn?: EditableUpdateColumnRequest<R>;
   showAction?: boolean;
 };
 
-export type ConditionalRenderProps = {
-  match: (scope: ScopeContext) => boolean;
-  render: (scope: ScopeContext) => UiSlotRet;
+export type ConditionalRenderProps<R> = {
+  match: (scope: ScopeContext<R>) => boolean;
+  render: (scope: ScopeContext<R>) => UiSlotRet;
 };
 
-export type CellConditionalRender = ConditionalRenderProps;
+// export type CellConditionalRender<R = any> = ConditionalRenderProps<R>;
 
-export type RowSelectionProps = {
+export type RowSelectionProps<R = any> = {
   /**
    * 是否多选
    */
@@ -568,7 +581,7 @@ export type RowSelectionProps = {
    * 选中值变化事件
    * @param selectedRowKeys
    */
-  onSelectedChanged?: (selectedRowKeys: any[]) => void;
+  onSelectedChanged?: (selectedRowKeys: R[]) => void;
 
   /**
    * 选中的id列表
@@ -578,11 +591,11 @@ export type RowSelectionProps = {
 /**
  * 表格配置
  */
-export type TableProps = {
+export type TableProps<R = any> = {
   /**
    * 调用doRefresh完成之后触发
    */
-  onRefreshed?: (context: { data: any[] }) => void;
+  onRefreshed?: (context: { data: R[] }) => void;
 
   /**
    * 删除配置
@@ -597,22 +610,22 @@ export type TableProps = {
   /**
    * 表格数据
    */
-  data?: any[];
+  data?: R[];
 
   /**
    * 单元格列配置
    */
-  columns?: TableColumnsProps;
+  columns?: TableColumnsProps<R>;
 
   /**
    * 列配置 map
    */
-  columnsMap?: TableColumnsProps;
+  columnsMap?: TableColumnsProps<R>;
 
   /**
    * 条件渲染
    */
-  conditionalRender?: ConditionalRenderProps;
+  conditionalRender?: ConditionalRenderProps<R>;
 
   /**
    * 表格最大高度调整
@@ -622,7 +635,7 @@ export type TableProps = {
   /**
    * 可编辑配置
    */
-  editable?: EditableProps;
+  editable?: EditableProps<R>;
 
   /**
    * [x]-table组件的配置
@@ -640,7 +653,7 @@ export type ColProps = {
 /**
  * 表单对话框配置
  */
-export type FormWrapperProps = {
+export type FormWrapperProps<R> = {
   /**
    * 对话框使用什么组件，[el-dialog,a-modal,n-modal,el-drawer,a-drawer,n-drawer]
    */
@@ -654,20 +667,20 @@ export type FormWrapperProps = {
    * 对话框打开前事件处理
    * @param opts
    */
-  onOpen?: (opts: any) => void;
+  onOpen?: (opts: FormScopeContext<R>) => void;
   /**
    * 对话框打开后事件处理
    * @param opts
    */
-  onOpened?: (opts: any) => void;
+  onOpened?: (opts: FormScopeContext<R>) => void;
   /**
    * 对话框关闭后事件处理
    * @param opts
    */
-  onClosed?: (opts: any) => void;
+  onClosed?: (opts: FormScopeContext<R>) => void;
 
   buttons?: {
-    [key: string]: ButtonProps<FormWrapperContext>;
+    [key: string]: ButtonProps<FormWrapperContext<R>>;
   };
   /**
    * 打开对话框时是否全屏
@@ -681,7 +694,7 @@ export type FormWrapperProps = {
 /**
  * 表单分组-组配置
  */
-export type FormGroupItemProps = {
+export type FormGroupItemProps<R = any> = {
   /**
    * 分组标题（根据你使用的分组组件和组件库来确定标题）
    */
@@ -716,22 +729,22 @@ export type FormGroupItemProps = {
 /**
  * 表单分组配置
  */
-export type FormGroupProps = {
+export type FormGroupProps<R = any> = {
   type?: string;
   groups?: {
-    [key: string]: FormGroupItemProps;
+    [key: string]: FormGroupItemProps<R>;
   };
   [key: string]: any;
 };
 /**
  * 表单字段帮助说明配置
  */
-export type FormItemHelperProps = {
+export type FormItemHelperProps<R = any> = {
   /**
    * 自定义渲染帮助说明
    * @param scope
    */
-  render?: (scope: any) => any;
+  render?: (scope: ScopeContext<R>) => any;
   /**
    * 帮助文本
    */
@@ -754,11 +767,11 @@ export type FormItemHelperProps = {
 /**
  * 表单配置
  */
-export type FormProps = {
+export type FormProps<R> = {
   /**
    * 表单初始值
    */
-  initialForm?: any;
+  initialForm?: R;
 
   /**
    * 表单模式 [add/edit/view]
@@ -783,40 +796,40 @@ export type FormProps = {
    * 字段组件之前render
    * @param scope
    */
-  prefixRender?: (scope: any) => any;
+  prefixRender?: (scope: ScopeContext<R>) => any;
   /**
    * 字段组件之后render
    * @param scope
    */
-  suffixRender?: (scope: any) => any;
+  suffixRender?: (scope: ScopeContext<R>) => any;
   /**
    * 表单对话框/抽屉配置
    */
-  wrapper?: FormWrapperProps;
+  wrapper?: FormWrapperProps<R>;
   /**
    * 点击保存按钮，表单校验之前做一些操作,返回false或抛异常，阻止后续操作
    */
-  beforeValidate?: (context: FormScopeContext) => Promise<boolean>;
+  beforeValidate?: (context: FormScopeContext<R>) => Promise<boolean>;
   /**
    * 提交前做一些操作,返回false或抛异常，阻止后续操作
    */
-  beforeSubmit?: (context: FormScopeContext) => Promise<boolean>;
+  beforeSubmit?: (context: FormScopeContext<R>) => Promise<boolean>;
 
   /**
    * 提交表单的方法（默认已经配置好，将会调用addRequest或者updateRequest）
    */
-  doSubmit?: (context: FormScopeContext) => Promise<any>;
+  doSubmit?: (context: FormScopeContext<R>) => Promise<any>;
   /**
    * 提交后做一些操作，可以抛异常来阻止后续操作，其中context.res = doSubmit的返回值
    * @param context
    */
-  afterSubmit?: (context: FormScopeContext) => Promise<any>;
+  afterSubmit?: (context: FormScopeContext<R>) => Promise<any>;
 
   /**
    * 成功后的操作，afterSubmit未抛异常时执行，默认为刷新表格
    * @param context
    */
-  onSuccess?: (context: FormScopeContext) => Promise<any>;
+  onSuccess?: (context: FormScopeContext<R>) => Promise<any>;
 
   /**
    * 表单重置时的操作
@@ -826,7 +839,7 @@ export type FormProps = {
   /**
    * 表单分组配置
    */
-  group?: FormGroupProps;
+  group?: FormGroupProps<R>;
 
   /**
    * 插槽render
@@ -840,7 +853,7 @@ export type FormProps = {
   [key: string]: any;
 };
 
-export type FormItemTitleRender = (context: ScopeContext) => any;
+export type FormItemTitleRender<R = any> = (context: ScopeContext<R>) => any;
 
 export type RuleRecord = {
   trigger?: string | string[];
@@ -848,15 +861,15 @@ export type RuleRecord = {
 /**
  * 表单字段配置
  */
-export type FormItemProps = {
+export type FormItemProps<R = any> = {
   /**
    * 字段label
    */
-  title?: string | FormItemTitleRender;
+  title?: string | FormItemTitleRender<R>;
   /**
    * 表单字段组件配置
    */
-  component?: ComponentProps;
+  component?: ComponentProps<R>;
   /**
    * 表单字段 x-col的配置
    * 一般用来配置跨列：{span:24} 占满一行
@@ -869,7 +882,7 @@ export type FormItemProps = {
   /**
    * 帮助提示配置
    */
-  helper?: string | FormItemHelperProps;
+  helper?: string | FormItemHelperProps<R>;
   /**
    * 排序号
    */
@@ -891,7 +904,7 @@ export type FormItemProps = {
   /**
    * 表单valueChange
    */
-  valueChange?: ValueChangeHandle | ValueChangeProps;
+  valueChange?: ValueChangeHandle<R> | ValueChangeProps<R>;
 
   /**
    * 值构建器，打开对话框时执行
@@ -899,50 +912,50 @@ export type FormItemProps = {
    * 即row[key]=字段组件能够识别的值
    * @param context
    */
-  valueBuilder?: (context: ValueBuilderContext) => void;
+  valueBuilder?: (context: ValueBuilderContext<R>) => void;
   /**
    * 值解析器，表单提交前执行
    * 表单输出的值可能不是后台所需要的值，所以需要在提交前做一层转化
    * 即：row[key]=后台能所需要的值
    * @param context
    */
-  valueResolve?: (context: ValueResolveContext) => void;
+  valueResolve?: (context: ValueResolveContext<R>) => void;
 
   /**
    * 条件渲染
    * @param scope
    */
-  conditionalRender?: ConditionalRenderProps;
+  conditionalRender?: ConditionalRenderProps<R>;
 
   /**
    * 直接渲染组件
    * @param scope
    */
-  render?: (scope: ScopeContext) => any;
+  render?: (scope: ScopeContext<R>) => any;
 
   /**
    * 组件左边渲染
    * @param scope
    */
-  prefixRender?: (scope: ScopeContext) => any;
+  prefixRender?: (scope: ScopeContext<R>) => any;
 
   /**
    * 组件右边渲染
    * @param scope
    */
-  suffixRender?: (scope: ScopeContext) => any;
+  suffixRender?: (scope: ScopeContext<R>) => any;
 
   /**
    * 组件上方渲染
    * @param scope
    */
-  topRender?: (scope: ScopeContext) => any;
+  topRender?: (scope: ScopeContext<R>) => any;
 
   /**
    * 组件下方渲染
    * @param scope
    */
-  bottomRender?: (scope: ScopeContext) => any;
+  bottomRender?: (scope: ScopeContext<R>) => any;
   /**
    * 校验规则
    */
@@ -969,7 +982,7 @@ export type ColumnsFilterContainerProps = {
   drawer?: any;
 };
 
-export type ColumnsFilterComponentProps = {
+export type ColumnsFilterComponentProps<R = any> = {
   /**
    * 布局容器组件配置
    */
@@ -990,12 +1003,12 @@ export type ColumnsFilterComponentProps = {
   /**
    * 列数据
    */
-  columns?: TableColumnsProps;
+  columns?: TableColumnsProps<R>;
 
   /**
    * 原始列数据，还原成此列表
    */
-  originalColumns?: TableColumnsProps;
+  originalColumns?: TableColumnsProps<R>;
   /**
    * 是否保存设置
    */
@@ -1031,7 +1044,7 @@ export type ColumnsFilterComponentProps = {
   };
 };
 
-export type ToolbarComponentProps = {
+export type ToolbarComponentProps<R = any> = {
   /**
    * 按钮配置
    * {
@@ -1054,7 +1067,7 @@ export type ToolbarComponentProps = {
    */
   search?: boolean;
 
-  columnsFilter?: ColumnsFilterComponentProps;
+  columnsFilter?: ColumnsFilterComponentProps<R>;
 
   /**
    * 当前是否紧凑模式
@@ -1064,12 +1077,12 @@ export type ToolbarComponentProps = {
   /**
    * 导出配置
    */
-  export?: ExportProps;
+  export?: ExportProps<R>;
 
   /**
    * 列配置
    */
-  columns?: TableColumnsProps;
+  columns?: TableColumnsProps<R>;
 
   /**
    * 是否保存用户列设置
@@ -1087,22 +1100,22 @@ export type ToolbarComponentProps = {
 /**
  * 工具条配置
  */
-export type ToolbarProps = {
+export type ToolbarProps<R = any> = {
   [key: string]: any;
-} & ToolbarComponentProps;
+} & ToolbarComponentProps<R>;
 
 type ButtonIconProps = string | { icon: string; [key: string]: any } | UiSlot;
 type NullableString = string | null;
 
-export type FormWrapperContext = {
+export type FormWrapperContext<R = any> = {
   wrapper: any;
-  options: any;
+  options: FormProps<R>;
   formRef: Ref;
-  form: any;
+  form: R;
   wrapperBindRef: any;
   formOptionsRef: Ref;
-  setFormData: (form: any) => void;
-  getFormData: () => any;
+  setFormData: (form: R) => void;
+  getFormData: () => R;
   reset: () => void;
   loading: Ref;
   close: () => void;
@@ -1170,9 +1183,9 @@ export type ActionbarProps = {
   [key: string]: any;
 };
 
-export type SearchEventContext = {
-  form: any;
-  validatedForm: any;
+export type SearchEventContext<R = any> = {
+  form: R;
+  validatedForm: R;
   getComponentRef?: (key: string) => any;
   doSearch?: () => void;
   doReset?: () => void;
@@ -1181,7 +1194,7 @@ export type SearchEventContext = {
 /**
  * 查询框配置
  */
-export type SearchProps = {
+export type SearchProps<R = any> = {
   /**
    * 是否显示查询框
    */
@@ -1190,12 +1203,12 @@ export type SearchProps = {
   /**
    * 初始化查询表单数据，reset会还原成此对象
    */
-  initialForm?: Record<string, any>;
+  initialForm?: Record<string, R>;
 
   /**
    * 校验成功后的表单数据，无需手动配置
    */
-  validatedForm?: Record<string, any>;
+  validatedForm?: Record<string, R>;
   /**
    * 查询框的按钮配置（查询和重置按钮，你还可以添加自定义按钮）
    */
@@ -1240,7 +1253,7 @@ export type SearchProps = {
 /**
  * 搜索框字段配置
  */
-export type SearchItemProps = {
+export type SearchItemProps<R = any> = {
   /**
    * 搜索框是否显示此字段组件
    */
@@ -1253,7 +1266,7 @@ export type SearchItemProps = {
    * 值解析器
    * @param context
    */
-  valueResolve?: (context: any) => void;
+  valueResolve?: (context: ValueResolveContext<R>) => void;
   /**
    * 字段排序号
    */
@@ -1273,19 +1286,19 @@ export type SearchItemProps = {
   [key: string]: any;
 };
 
-export type TableColumnsProps = {
-  [key: string]: ColumnProps;
+export type TableColumnsProps<R = any> = {
+  [key: string]: ColumnProps<R>;
 };
 
 /**
  * 表格列配置(单元格)
  */
-export type ColumnProps = {
+export type ColumnProps<R = any> = {
   key?: string;
   /**
    * 单元格组件配置
    */
-  component?: ComponentProps;
+  component?: ComponentProps<R>;
   /**
    * 在列设置中是否禁用勾选
    */
@@ -1306,22 +1319,22 @@ export type ColumnProps = {
    * 格式化方法，比如格式化一下时间
    * @param scope
    */
-  formatter?: (scope: ScopeContext) => string;
+  formatter?: (scope: ScopeContext<R>) => string;
   /**
    * 自定义render方法
    * @param scope
    */
-  cellRender?: (scope: ScopeContext) => any;
+  cellRender?: (scope: ScopeContext<R>) => any;
 
   /**
    * 多级表头
    */
-  children?: TableColumnsProps;
+  children?: TableColumnsProps<R>;
 
   /**
    * 单元格值变化事件处理
    */
-  valueChange?: ValueChangeHandle | ValueChangeProps;
+  valueChange?: ValueChangeHandle<R> | ValueChangeProps<R>;
 
   /**
    * 是否支持导出
@@ -1331,7 +1344,7 @@ export type ColumnProps = {
   /**
    * 单元格可编辑配置
    */
-  editable?: TableColumnEditableProps;
+  editable?: TableColumnEditableProps<R>;
   /**
    * 其他x-table-column配置
    */
@@ -1341,21 +1354,21 @@ export type ColumnProps = {
 /**
  * valueBuild参数
  */
-export type ValueBuilderContext = {
+export type ValueBuilderContext<R = any> = {
   value: any;
-  key: string;
-  row?: any;
-  form?: any;
+  key: keyof R;
+  row?: R;
+  form?: R;
   index?: number;
   mode?: string;
-  column?: ColumnCompositionProps;
+  column?: ColumnCompositionProps<R>;
 };
-export type ValueResolveContext = ValueBuilderContext;
+export type ValueResolveContext<R = any> = ValueBuilderContext<R>;
 
 /**
  * 列综合配置
  */
-export type ColumnCompositionProps = {
+export type ColumnCompositionProps<R = any> = {
   /**
    * 列标题
    */
@@ -1364,7 +1377,7 @@ export type ColumnCompositionProps = {
   /**
    * key
    */
-  key?: string;
+  key?: keyof R;
 
   /**
    * 字段类型,【默认可以用：text】
@@ -1377,37 +1390,37 @@ export type ColumnCompositionProps = {
   /**
    * 表单字段配置
    */
-  form?: FormItemProps;
+  form?: FormItemProps<R>;
   /**
    * 添加表单字段配置（与form合并）
    */
-  addForm?: FormItemProps;
+  addForm?: FormItemProps<R>;
   /**
    * 编辑表单字段配置（与form合并）
    */
-  editForm?: FormItemProps;
+  editForm?: FormItemProps<R>;
   /**
    * 查看表单字段配置（与form合并）
    */
-  viewForm?: FormItemProps;
+  viewForm?: FormItemProps<R>;
   /**
    * 查询框字段配置
    */
-  search?: SearchItemProps;
+  search?: SearchItemProps<R>;
   /**
    * 值构建器，pageRequest之后执行
    * 从pageRequest获取到的字段数据值可能并不是组件能够识别的值，所以需要将其做一层转化
    * 即row[key]=字段组件能够识别的值
    * @param context
    */
-  valueBuilder?: (context: ValueBuilderContext) => void;
+  valueBuilder?: (context: ValueBuilderContext<R>) => void;
   /**
    * 值解析器，表单提交前执行
    * 表单输出的值可能不是后台所需要的值，所以需要在提交前做一层转化
    * 即：row[key]=后台能所需要的值
    * @param context
    */
-  valueResolve?: (context: ValueResolveContext) => void;
+  valueResolve?: (context: ValueResolveContext<R>) => void;
 
   /**
    * dict，会复制到各个component中去
@@ -1417,7 +1430,7 @@ export type ColumnCompositionProps = {
   /**
    * 多级表头
    */
-  children?: CompositionColumns;
+  children?: CompositionColumns<R>;
   /**
    * 其他配置
    */
@@ -1438,7 +1451,7 @@ export type PaginationProps = {
   [key: string]: any;
 };
 
-type RowHandleDropdownProps = {
+type RowHandleDropdownProps<R = any> = {
   /**
    * 更多按钮配置
    */
@@ -1446,7 +1459,7 @@ type RowHandleDropdownProps = {
 
   [key: string]: any;
 };
-type RowHandleGroupProps = {
+type RowHandleGroupProps<R = any> = {
   /**
    * 按钮组组key
    */
@@ -1460,7 +1473,7 @@ type RowHandleGroupProps = {
 /**
  * 操作列配置
  */
-export type RowHandleProps = {
+export type RowHandleProps<R = any> = {
   /**
    * 是否显示操作列
    */
@@ -1468,19 +1481,19 @@ export type RowHandleProps = {
   /**
    * 操作列按钮配置
    */
-  buttons?: ButtonsProps<ScopeContext>;
+  buttons?: ButtonsProps<ScopeContext<R>>;
 
   /**
    * 按钮折叠
    */
-  dropdown?: RowHandleDropdownProps;
+  dropdown?: RowHandleDropdownProps<R>;
 
   /**
    * 额外的按钮组
    * 激活时就显示，没激活的不显示
    * 同一时间只能激活一组
    */
-  group?: RowHandleGroupProps;
+  group?: RowHandleGroupProps<R>;
 
   /**
    * 当前激活是哪个分组
@@ -1496,15 +1509,15 @@ export type RowHandleProps = {
 /**
  * 复合columns配置
  */
-export type CompositionColumns = {
+export type CompositionColumns<R> = {
   /**
    * 字段复合配置, 里面的{search,column,form,viewForm,editForm,addForm}设置将分发到各个部件的columns中
    */
-  [prop: string]: ColumnCompositionProps;
+  [K in keyof R]: ColumnCompositionProps<R>;
 };
 
-export type CrudOptionsPluginHandle<T = any> = (props: T, ctx: UseCrudProps) => CrudOptions;
-export type CrudOptionsPlugin<T> = {
+export type CrudOptionsPluginHandle<T = any, R = any> = (props: T, ctx: UseCrudProps) => CrudOptions<R>;
+export type CrudOptionsPlugin<T, R = any> = {
   /**
    * 是否启用,默认启用
    */
@@ -1524,35 +1537,35 @@ export type CrudOptionsPlugin<T> = {
   /**
    * 插件处理器
    */
-  handle?: CrudOptionsPluginHandle<T>;
+  handle?: CrudOptionsPluginHandle<T, R>;
 };
 
-export type CrudOptionsPlugins = {
+export type CrudOptionsPlugins<R = any> = {
   /**
    * 行选择插件
    */
-  rowSelection?: CrudOptionsPlugin<RowSelectionProps>;
-  [key: string]: CrudOptionsPlugin<any>;
+  rowSelection?: CrudOptionsPlugin<RowSelectionProps, R>;
+  [key: string]: CrudOptionsPlugin<any, R>;
 };
 
 /**
  * crud配置
  */
-export type CrudOptions = {
+export type CrudOptions<R = any> = {
   /**
    * 列配置
    */
-  columns?: CompositionColumns;
-} & CrudBinding;
+  columns?: CompositionColumns<R>;
+} & CrudBinding<R>;
 
-export type CrudSettings = {
+export type CrudSettings<R = any> = {
   viewFormUseCellComponent?: boolean;
   searchCopyFormProps?: string[];
-  onUseCrud?: (bindings: CrudBinding) => void;
+  onUseCrud?: (bindings: CrudBinding<R>) => void;
   /**
    * crudOptions插件，插件能够生成一些crudOptions配置，并与用户的crudOptions进行合并
    */
-  plugins?: CrudOptionsPlugins;
+  plugins?: CrudOptionsPlugins<R>;
 };
 export type CrudMode = {
   /**
@@ -1572,7 +1585,7 @@ export type CrudMode = {
 
 export type TabsFilterDefaultOption = { show?: boolean; value?: any; label?: string };
 export type TabsFilterOption = { value: any; label: string; [key: string]: any };
-export interface TabsFilterProps {
+export interface TabsFilterProps<R = any> {
   /**
    * 目标字段的key，查询时作为search的key
    */
@@ -1618,7 +1631,7 @@ export interface TabsFilterProps {
 /**
  * crudBinding
  */
-export type CrudBinding = {
+export type CrudBinding<R = any> = {
   settings?: CrudSettings;
   /**
    * 模式
@@ -1628,19 +1641,19 @@ export type CrudBinding = {
   /**
    * 表格配置
    */
-  table?: TableProps;
+  table?: TableProps<R>;
   /**
    * 列表数据，一般会从pageRequest之后更新
    */
-  data?: any[];
+  data?: R[];
   /**
    * 操作列配置
    */
-  rowHandle?: RowHandleProps;
+  rowHandle?: RowHandleProps<R>;
   /**
    * 查询框配置
    */
-  search?: SearchProps;
+  search?: SearchProps<R>;
   /**
    * 右上角工具条配置
    */
@@ -1653,23 +1666,23 @@ export type CrudBinding = {
   /**
    * Tabs快捷查询组件
    */
-  tabs?: TabsFilterProps;
+  tabs?: TabsFilterProps<R>;
   /**
    * 表单配置
    */
-  form?: FormProps;
+  form?: FormProps<R>;
   /**
    * 添加表单的独立配置（与form配置合并）
    */
-  addForm?: FormProps;
+  addForm?: FormProps<R>;
   /**
    * 编辑表单的独立配置（与form配置合并）
    */
-  editForm?: FormProps;
+  editForm?: FormProps<R>;
   /**
    * 查看表单的独立配置（与form配置合并）
    */
-  viewForm?: FormProps;
+  viewForm?: FormProps<R>;
   /**
    * 底部翻页组件配置
    */
@@ -1677,7 +1690,7 @@ export type CrudBinding = {
   /**
    * http请求配置
    */
-  request?: RequestProp;
+  request?: RequestProp<R>;
 
   /**
    * crud外部容器配置
@@ -1689,14 +1702,14 @@ export type CrudBinding = {
   [key: string]: any;
 };
 
-export type ComputeRef<T = any> = {
-  computeFn: (context: ComputeContext) => T;
+export type ComputeRef<T = any, R = any> = {
+  computeFn: (context: ComputeContext<R>) => T;
 };
 
-export type ComputeFn<T> = (context: ComputeContext) => T;
+export type ComputeFn<T = any, R = any> = (context: ComputeContext<R>) => T;
 
-export type AsyncComputeRef<T> = {
-  watch?: (context: ScopeContext) => any;
+export type AsyncComputeRef<T = any, R = any> = {
+  watch?: (context: ScopeContext<R>) => any;
   asyncFn: (value: any, getContextFn: GetContextFn) => Promise<T>;
   defaultValue?: any;
 };
@@ -1710,4 +1723,4 @@ export type DynamicType<T> = {
 /**
  * crudOptions支持动态化配置
  */
-export type DynamicallyCrudOptions = DynamicType<CrudOptions>;
+export type DynamicallyCrudOptions<R = any> = DynamicType<CrudOptions<R>>;

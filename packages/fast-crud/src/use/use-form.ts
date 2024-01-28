@@ -1,4 +1,4 @@
-import { FormProps, OpenDialogProps } from "../d";
+import { FormProps, OpenDialogProps, RowRecord } from "../d";
 import { ComponentInternalInstance, createVNode, inject, render, VNode } from "vue";
 import { FsFormWrapper } from "../components";
 import logger from "../utils/util.log";
@@ -15,7 +15,7 @@ const FsFormWrapperList: {
 } = {};
 
 // 不建议使用，不含上下文，会丢失主题
-async function createFormWrapper(opts: FormProps) {
+async function createFormWrapper<R = any>(opts: FormProps<R>) {
   const id = opts.id || `${seed++}`;
 
   const container = document.createElement("div");

@@ -1,4 +1,4 @@
-import { ColumnCompositionProps, ColumnProps } from "../../../d";
+import { ColumnCompositionProps, ColumnProps, RowRecord } from "../../../d";
 
 export type ExportUtil = {
   csv: (params: CsvParams) => Promise<void>;
@@ -26,8 +26,8 @@ export type CsvParams = {
 /**
  * 导出列配置
  */
-export type ExportColumn = {
-  columnProps?: ColumnProps;
+export type ExportColumn<R = any> = {
+  columnProps?: ColumnProps<R>;
   key: string;
   title: string;
   width?: number;
