@@ -301,7 +301,7 @@ export default defineComponent({
     }
 
     function getContextFn(): SearchEventContext {
-      return { form, validatedForm: form, getComponentRef };
+      return { form, validatedForm: form, getComponentRef, doValidate: null };
     }
 
     const searchEventContextRef: Ref<SearchEventContext> = ref(getContextFn());
