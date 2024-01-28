@@ -17,7 +17,7 @@
         <div :style="{ width: '100%', height: height || '60vh' }">
           <fs-crud ref="crudRef" v-bind="crudBinding">
             <template #header-top>
-              <div v-if="valuesFormat !== false" class="fs-table-select-current">
+              <div v-if="showCurrent !== false" class="fs-table-select-current">
                 当前选中：
                 <fs-values-format
                   ref="valuesFormatRef"
@@ -72,6 +72,7 @@ type FsTableSelectProps = {
 
   /**
    * 是否显示选择框
+   * 有时候你只是想要那个选择的Dialog，那么你可以隐藏select，然后自定义激活方式
    */
   showSelect?: boolean;
   /**
@@ -80,8 +81,11 @@ type FsTableSelectProps = {
   dialog?: any;
 
   /**
+   * 对话框中是否显示当前选中值
+   */
+  showCurrent?: boolean;
+  /**
    * 当前选中值 fs-values-format组件 配置
-   * 传false则不显示
    */
   valuesFormat?: any;
 

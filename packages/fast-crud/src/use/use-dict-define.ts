@@ -218,7 +218,7 @@ export class Dict<T = any> extends UnMergeable implements DictOptions<T> {
           const value = Array.isArray(context.value) ? context.value : [context.value];
           data = await this.getNodesByValues(value, context);
           if (data != null && !(data instanceof Array)) {
-            logger.error("getNodesByValues需要返回数组，请检查");
+            logger.error("getNodesByValues需要返回数组，当前返回值：", data);
             return;
           }
           if (cacheKey) {
