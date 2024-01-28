@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [1.20.0](https://github.com/fast-crud/fast-crud/compare/v1.19.3...v1.20.0) (2024-01-28)
+
+### Bug Fixes
+
+* 修复裁剪图片没有名称的bug ([05d0180](https://github.com/fast-crud/fast-crud/commit/05d01802f6b6ca0e07329bfa9c1d4260ebf861b6))
+* 修复wangedit5 富文本编辑器被遮挡的问题 ([990c52f](https://github.com/fast-crud/fast-crud/commit/990c52fcf8ab7f99faeb09dbc4fc8cac5b8aae5c))
+
+### Performance Improvements
+
+* 优化jpg格式裁剪上传后体积膨胀的bug ([44d127f](https://github.com/fast-crud/fast-crud/commit/44d127fe44ea298bff13a8dca2b25241e3596095))
+
 ## [1.19.3](https://github.com/fast-crud/fast-crud/compare/v1.19.2...v1.19.3) (2023-12-15)
 
 **Note:** Version bump only for package @fast-crud/fast-extends

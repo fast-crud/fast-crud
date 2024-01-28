@@ -3,6 +3,19 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [1.20.0](https://github.com/fast-crud/fast-crud/compare/v1.19.3...v1.20.0) (2024-01-28)
+
+### Bug Fixes
+
+* 修复查询valueChange 修改form无效的bug ([054f8b4](https://github.com/fast-crud/fast-crud/commit/054f8b4b808a52f6d8daf2d19ee3adf43f693c0a))
+
+### Performance Improvements
+
+* 优化element 日期示例，格式化问题，输入数据格式告警问题，range样式问题 ([66fd07b](https://github.com/fast-crud/fast-crud/commit/66fd07b96143b77ed73b5e3b88182070ebdb4c80))
+* 优化form.wrapper.buttons的默认配置 ([61f2ae5](https://github.com/fast-crud/fast-crud/commit/61f2ae5600814a59e2eaad8933892c1ec9f57c69))
+* 优化free模式，支持默认不激活 ([aeaf0a6](https://github.com/fast-crud/fast-crud/commit/aeaf0a683ecc24dcb86036daea363f3019347299))
+* dict-tree组件无需手动配置labelName keyName ([c8b0ee1](https://github.com/fast-crud/fast-crud/commit/c8b0ee1ee5fa22e73b3a8ef77e1ad3335351dc70))
+
 ## [1.19.3](https://github.com/fast-crud/fast-crud/compare/v1.19.2...v1.19.3) (2023-12-15)
 
 ### Bug Fixes

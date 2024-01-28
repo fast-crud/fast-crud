@@ -3,6 +3,22 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [1.20.0](https://github.com/fast-crud/fast-crud/compare/v1.19.3...v1.20.0) (2024-01-28)
+
+### Bug Fixes
+
+* 修复裁剪图片没有名称的bug ([05d0180](https://github.com/fast-crud/fast-crud/commit/05d01802f6b6ca0e07329bfa9c1d4260ebf861b6))
+* 修复查询valueChange 修改form无效的bug ([054f8b4](https://github.com/fast-crud/fast-crud/commit/054f8b4b808a52f6d8daf2d19ee3adf43f693c0a))
+
+### Features
+
+* iconify已经内置，无需额外配置，直接使用即可 ([4991fd9](https://github.com/fast-crud/fast-crud/commit/4991fd946e4928f7d058472814d5a28f089cb4a2))
+
+### Performance Improvements
+
+* 优化free模式，支持默认不激活 ([aeaf0a6](https://github.com/fast-crud/fast-crud/commit/aeaf0a683ecc24dcb86036daea363f3019347299))
+* table-select支持隐藏选中label ([04791d5](https://github.com/fast-crud/fast-crud/commit/04791d54eb5cae852f345207b90f75f85fad4eda))
+
 ## [1.19.3](https://github.com/fast-crud/fast-crud/compare/v1.19.2...v1.19.3) (2023-12-15)
 
 ### Bug Fixes

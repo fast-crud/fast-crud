@@ -3,6 +3,13 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [1.20.0](https://github.com/jekip/naive-ui-admin/compare/v1.19.3...v1.20.0) (2024-01-28)
+
+### Performance Improvements
+
+* 优化free模式，支持默认不激活 ([aeaf0a6](https://github.com/jekip/naive-ui-admin/commit/aeaf0a683ecc24dcb86036daea363f3019347299))
+* table-select支持隐藏选中label ([04791d5](https://github.com/jekip/naive-ui-admin/commit/04791d54eb5cae852f345207b90f75f85fad4eda))
+
 ## [1.19.3](https://github.com/jekip/naive-ui-admin/compare/v1.19.2...v1.19.3) (2023-12-15)
 
 **Note:** Version bump only for package naive-ui-admin
