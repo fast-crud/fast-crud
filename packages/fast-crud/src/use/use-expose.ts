@@ -68,7 +68,7 @@ function useEditable<R = any>(props: UseEditableProps<R>) {
       }
     }
   );
-  const editable: Editable<R = any> = {
+  const editable: Editable<R> = {
     /**
      * 启用编辑
      * @param opts
