@@ -345,10 +345,13 @@ export function useExpose<R = any>(props: UseExposeProps<R>): UseExposeRet<R> {
      * {form,mergeForm}
      */
     setSearchFormData(context) {
-      crudRef.value.setSearchFormData({
-        form: context.form,
-        mergeForm: context.mergeForm
-      });
+      if (crudRef.value) {
+        crudRef.value.setSearchFormData({
+          form: context.form,
+          mergeForm: context.mergeForm
+        });
+      }
+
       if (context.mergeForm === false) {
         for (const key in crudBinding.value.search.validatedForm) {
           delete crudBinding.value.search.validatedForm[key];
