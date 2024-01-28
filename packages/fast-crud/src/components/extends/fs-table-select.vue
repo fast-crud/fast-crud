@@ -127,7 +127,8 @@ const props = withDefaults(defineProps<FsTableSelectProps>(), {
   select: undefined,
   crudOptionsOverride: undefined,
   valueType: "value",
-  showSelect: true
+  showSelect: true,
+  showCurrent: true
 });
 
 const slots = defineSlots<{
