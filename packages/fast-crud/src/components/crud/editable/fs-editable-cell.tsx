@@ -104,7 +104,12 @@ export default defineComponent({
             inputComponent = <fs-render render-func={computedForm.value.render} scope={scopeFunc()} {...ctx.attrs} />;
           } else {
             inputComponent = (
-              <fs-component-render ref={"targetInputRef"} {...computedForm.value.component} {...ctx.attrs} />
+              <fs-component-render
+                ref={"targetInputRef"}
+                {...computedForm.value.component}
+                {...ctx.attrs}
+                scope={props.scope}
+              />
             );
           }
         }

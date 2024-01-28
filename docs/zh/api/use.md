@@ -4,25 +4,38 @@
 
 ### useFs
 * 说明: 初始化crud
-* 类型： `(props:UseFsProps):UseFsRet`
+* 类型： `(props:UseFsProps<R,C>):UseFsRet<R>`
 * 参数说明：
     * props.crudExposeRef :  crudExpose创建好之后，会填充进此ref，可以让你在useFs之前创建使用crudExpose的方法(要在useFs之后才能调用)
     * props.context: 上下文容器，可以放入任何东西
     * ret.context: props传入的上下文容器，如果没传则会自动创建一个
+    * R: 行数据模型，默认为any
+    * C: 上下文模型，默认为any
 * 示例：
 
-```js
+```ts
 //index.vue
+
+type ContextModel = {
+    props:any;
+    ctx:any;
+}
+type RowModel = {
+    id?:number;
+    name?:string;
+    //...
+}; //行数据模型
 export default {
     setup(props:any,ctx:any){
-        const context: any = {
+        const context: ContextModel = {
             props,ctx
         }; //自定义变量，传给createCrudOptions的额外参数（可以任意命名，传任意参数）
         const crudExposeRef:Ref<CrudExpose> = ref() //crudExpose创建好之后，会填充进此ref，可以在useFs之前创建使用crudExpose的方法
         const customAdd = ()=>{
             crudExposeRef.value.openAdd({row:{}})
         }
-        const { crudBinding, crudRef, crudExpose, resetCrudOptions } = useFs({ createCrudOptions, context, crudExposeRef});
+       
+        const { crudBinding, crudRef, crudExpose, resetCrudOptions } = useFs<RowModel,ContextModel>({ createCrudOptions, context, crudExposeRef});
         return {
             crudBinding,
             crudRef,

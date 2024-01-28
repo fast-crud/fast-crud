@@ -28,23 +28,37 @@ crud配置，每个crud最大的不同就在于此文件。
 import { CreateCrudOptionsProps, CreateCrudOptionsRet, dict } from "@fast-crud/fast-crud";
 import { addRequest, delRequest, editRequest, pageRequest } from "./api";
 
-export default function ({ crudExpose, context }: CreateCrudOptionsProps): CreateCrudOptionsRet {
+
+/**
+ * 定义行数据模型
+ * 如果你嫌定义数据模型麻烦，可以删掉此处，把下面出现的FirstRow用any代替即可
+ */
+export type FirstRow = {
+    id?: number;
+    name?: string;
+    type?: number;
+};
+
+/**
+ * 定义一个CrudOptions生成器方法
+ */
+export default function ({ crudExpose, context }: CreateCrudOptionsProps<FirstRow>): CreateCrudOptionsRet<FirstRow> {
   return {
     crudOptions: {
-      // 自定义crudOptions配置
+      // 在这里自定义你的crudOptions配置
       request: {
         pageRequest,
         addRequest,
         editRequest,
         delRequest
       },
-      //两个字段
+      //这里定义两个字段
       columns: {
         name: {
           title: "姓名",
-          type: "text",
+          type: "text", //字段类型，fs会根据字段类型，生成出一些默认配置
           search: { show: true },
-          column: {
+          column: { //表格列的一些配置
             resizable: true,
             width: 200
           }
@@ -87,6 +101,7 @@ export default function ({ crudExpose, context }: CreateCrudOptionsProps): Creat
     import { defineComponent, onMounted } from "vue";
     import { useFs ,OnExposeContext } from "@fast-crud/fast-crud";
     import createCrudOptions from "./crud";
+    import {FirstRow} from "./crud";
 
     //此处为组件定义
     export default defineComponent({
@@ -107,7 +122,7 @@ export default function ({ crudExpose, context }: CreateCrudOptionsProps): Creat
             //  =======你可以简写为下面这一行========
             const context: any = {props,ctx}; // 自定义变量, 将会传递给createCrudOptions, 比如直接把props,和ctx直接传过去使用
             function onExpose(e:OnExposeContext){} //将在createOptions之前触发，可以获取到crudExpose,和context
-            const { crudRef, crudBinding, crudExpose } = useFs({ createCrudOptions, onExpose, context});
+            const { crudRef, crudBinding, crudExpose } = useFs<FirstRow>({ createCrudOptions, onExpose, context});
             
             // 页面打开后获取列表数据
             onMounted(() => {
