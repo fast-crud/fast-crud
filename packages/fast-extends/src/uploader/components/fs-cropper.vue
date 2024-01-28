@@ -50,10 +50,11 @@
 </template>
 
 <script lang="ts">
-import { computed, defineComponent, getCurrentInstance, ref, Ref } from "vue";
+import { computed, defineComponent, ref, Ref } from "vue";
 import VueCropper from "./utils/vue-cropperjs.js";
 import "cropperjs/dist/cropper.css";
 import { useI18n, useUi } from "@fast-crud/fast-crud";
+
 /**
  * 图片裁剪对话框
  * 内部封装了[cropperjs](https://github.com/fengyuanchen/cropperjs)
@@ -237,11 +238,17 @@ export default defineComponent({
       }
     }
 
-    function getCropImageDataUrl(fileType: string, quality?: any = props.compressQuality) {
+    function getCropImageDataUrl(fileType: string, quality?: any) {
       // get image data for post processing, e.g. upload or setting image src
+      if (quality == null) {
+        quality = props.compressQuality;
+      }
       return cropperRef.value.getCroppedCanvas().toDataURL(fileType, quality);
     }
-    function getCropImageBlob(callback: any, type: string, quality?: any = props.compressQuality) {
+    function getCropImageBlob(callback: any, type: string, quality?: any) {
+      if (quality == null) {
+        quality = props.compressQuality;
+      }
       return cropperRef.value.getCroppedCanvas().toBlob(callback, type, quality);
     }
     function emit(result: any) {
