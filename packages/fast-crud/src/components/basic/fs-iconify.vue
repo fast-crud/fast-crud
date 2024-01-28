@@ -51,7 +51,7 @@ export default defineComponent({
 </script>
 <style lang="less">
 span.fs-iconify {
-  display: inline-flex !important;
+  //display: inline-flex !important;
   align-items: center;
   &-spin {
     svg {
