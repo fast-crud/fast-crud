@@ -116,7 +116,7 @@ export default defineComponent({
             "is-thin": !props.text && !ctx.slots.default
           }
         },
-        { ...ctx.attrs, ...props.buttonProps, class: props.className }
+        { class: props.className, ...ctx.attrs, ...props.buttonProps }
       );
       if (iconProp) {
         // @ts-ignore
