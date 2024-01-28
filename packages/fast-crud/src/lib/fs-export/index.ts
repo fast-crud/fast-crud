@@ -1,8 +1,8 @@
 import _ from "lodash-es";
-import { ColumnCompositionProps, ColumnProps, CrudExpose, PageQuery, RowRecord, UserPageQuery } from "../../d";
-import { CsvParams, ExcelParams, ExportColumn, ExportUtil, ImportUtil } from "./lib/d";
-import { unref } from "vue";
-import { useMerge } from "../../use";
+import {ColumnProps, CrudExpose, PageQuery, UserPageQuery} from "../../d";
+import {CsvParams, ExcelParams, ExportColumn, ExportUtil, ImportUtil} from "./lib/d";
+import {unref} from "vue";
+import {useMerge} from "../../use";
 
 export async function loadFsExportUtil(): Promise<ExportUtil> {
   const module = await import.meta.glob("./lib/index.ts");
@@ -116,7 +116,7 @@ export type ExportProps<R = any> = {
   quoted?: boolean; //每项数据是否加引号
 } & CsvParams &
   ExcelParams;
-export async function exportTable<R = any>(crudExpose: CrudExpose<R>, opts: ExportProps<R = any> = {}): Promise<any> {
+export async function exportTable<R = any>(crudExpose: CrudExpose<R>, opts: ExportProps<R> = {}): Promise<any> {
   if (opts.server) {
     const page = crudExpose.getPage();
     const pageQuery = crudExpose.buildPageQuery({ page });
