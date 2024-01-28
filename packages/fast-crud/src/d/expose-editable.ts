@@ -6,7 +6,6 @@ import {
   EditableValidateResult
 } from "./editable";
 import { EditableOnEnabledProps } from "../use";
-import { RowRecord } from "/src/d/crud";
 
 export type EditableAddRowOptions<R = any> = {
   row?: R;

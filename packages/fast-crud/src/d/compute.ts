@@ -1,5 +1,3 @@
-import { RowRecord } from "/src/d/crud";
-
 /**
  * compute参数方法的参数
  */
