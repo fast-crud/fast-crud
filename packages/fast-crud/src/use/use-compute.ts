@@ -125,17 +125,17 @@ export class ComputeValue<T> implements ComputeRef<T> {
   }
 }
 
-export function compute<T>(computeFn: (context: ComputeContext) => T): ComputeValue<T> {
+export function compute<T = any, R = any>(computeFn: (context: ComputeContext<R>) => T): ComputeValue<T> {
   return new ComputeValue<T>(computeFn);
 }
 
 export type GetContextFn = () => any;
 
-export class AsyncComputeValue<T, P = any> implements AsyncComputeRef<T> {
-  watch?: (context: ScopeContext) => P;
-  asyncFn: (value: P, getContextFn: GetContextFn) => Promise<T>;
+export class AsyncComputeValue<RV, WV = any, R = any> implements AsyncComputeRef<RV, R> {
+  watch?: (context: ScopeContext<R>) => WV;
+  asyncFn: (value: WV, getContextFn: GetContextFn) => Promise<RV>;
   defaultValue?: any;
-  constructor(options: AsyncComputeRef<T>) {
+  constructor(options: AsyncComputeRef<RV>) {
     const { asyncFn, defaultValue } = options;
     this.watch = options.watch;
     this.asyncFn = asyncFn;
@@ -144,8 +144,8 @@ export class AsyncComputeValue<T, P = any> implements AsyncComputeRef<T> {
 
   buildAsyncRef(getContextFn: GetContextFn) {
     getContextFn = getContextFn || function () {};
-    const asyncRef: Ref<T> = ref(this.defaultValue);
-    const computedValue = computed<P>(() => {
+    const asyncRef: Ref<RV> = ref(this.defaultValue);
+    const computedValue = computed<WV>(() => {
       if (this.watch) {
         return this.watch(getContextFn());
       }
@@ -154,7 +154,7 @@ export class AsyncComputeValue<T, P = any> implements AsyncComputeRef<T> {
 
     watch(
       () => computedValue.value,
-      async (value: P) => {
+      async (value: WV) => {
         //执行异步方法
         asyncRef.value = await this.asyncFn(value, getContextFn());
       },
@@ -164,7 +164,7 @@ export class AsyncComputeValue<T, P = any> implements AsyncComputeRef<T> {
     return asyncRef;
   }
 }
-export function asyncCompute<T>(options: AsyncComputeRef<T>): AsyncComputeValue<T> {
+export function asyncCompute<T = any, R = any>(options: AsyncComputeRef<T, R>): AsyncComputeValue<T> {
   return new AsyncComputeValue<T>(options);
 }
 export function useCompute() {

@@ -1708,25 +1708,25 @@ export type CrudBinding<R = any> = {
   [key: string]: any;
 };
 
-export type ComputeRef<T = any, R = any> = {
-  computeFn: (context: ComputeContext<R>) => T;
+export type ComputeRef<RV = any, R = any> = {
+  computeFn: (context: ComputeContext<R>) => RV;
 };
 
-export type ComputeFn<T = any, R = any> = (context: ComputeContext<R>) => T;
+export type ComputeFn<RV = any, R = any> = (context: ComputeContext<R>) => RV;
 
-export type AsyncComputeRef<T = any, R = any> = {
+export type AsyncComputeRef<RV = any, R = any> = {
   watch?: (context: ScopeContext<R>) => any;
-  asyncFn: (value: any, getContextFn: GetContextFn) => Promise<T>;
+  asyncFn: (value: any, getContextFn: GetContextFn) => Promise<RV>;
   defaultValue?: any;
 };
 
-export type RefableType<T> = Ref<T> | ComputeRef<T> | AsyncComputeRef<T> | DynamicType<T>;
+export type RefableType<T = any, R = any> = Ref<T> | ComputeRef<T, R> | AsyncComputeRef<T, R> | DynamicType<T, R>;
 
-export type DynamicType<T> = {
-  [P in keyof T]: T[P] | RefableType<T[P]>;
+export type DynamicType<T = any, R = any> = {
+  [P in keyof T]: T[P] | RefableType<T[P], R>;
 };
 
 /**
  * crudOptions支持动态化配置
  */
-export type DynamicallyCrudOptions<R = any> = DynamicType<CrudOptions<R>>;
+export type DynamicallyCrudOptions<R = any> = DynamicType<CrudOptions<R>, R>;
