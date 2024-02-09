@@ -6,6 +6,7 @@
       :editor="editorRef"
       :default-config="toolbarConfigRef"
       :mode="mode"
+      v-bind="toolbarAttrs"
     />
     <Editor
       style="height: 500px; overflow-y: hidden"
@@ -27,8 +28,9 @@ import { Editor, Toolbar } from "@wangeditor/editor-for-vue";
 import { defaultConfig } from "../../type/config.js";
 import _ from "lodash-es";
 import { FsUploaderDoUploadOptions } from "../../../uploader/d/type";
-import { useUi } from "@fast-crud/fast-crud";
+import { useUi, utils } from "@fast-crud/fast-crud";
 import { useUploader } from "../../../uploader";
+import { DomEditor } from "@wangeditor/editor";
 type InsertFnType = (url: string, alt?: string, href?: string) => void;
 /**
  * wangEditor5组件封装
@@ -59,6 +61,12 @@ export default defineComponent({
       type: Object
     },
     /**
+     * 工具条style等配置
+     */
+    toolbarAttrs: {
+      type: Object
+    },
+    /**
      * 编辑器默认配置
      */
     editorConfig: {
@@ -84,7 +92,8 @@ export default defineComponent({
       type: Boolean
     }
   },
-  setup(props: any) {
+  emits: ["ready"],
+  setup(props: any, ctx: any) {
     // 编辑器实例，必须用 shallowRef
     const editorRef = shallowRef();
     const toolbarRef: Ref = ref();
@@ -210,6 +219,7 @@ export default defineComponent({
 
     const handleCreated = (editor: any) => {
       editorRef.value = editor; // 记录 editor 实例，重要！
+      ctx.emit("ready");
     };
 
     function getEditorRef() {
@@ -223,6 +233,8 @@ export default defineComponent({
     function onChange() {
       formItemContext.onChange();
     }
+
+    onMounted(() => {});
 
     return {
       uploaderImplRef,
@@ -243,7 +255,7 @@ export default defineComponent({
 .fs-editor-wang5 {
   border: 1px solid #eee;
   &.w-e-full-screen-container {
-    z-index: 10000;
+    //z-index: 800;
   }
 }
 </style>
