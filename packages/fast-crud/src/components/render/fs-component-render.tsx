@@ -123,34 +123,35 @@ export default defineComponent({
       }
 
       const modelValue = props.modelValue ?? (ui.type === "antdv" ? undefined : null);
+      const onUpdateModelValueName = "onUpdate:" + vModel.name;
       const attrs = {
         ref: targetRef,
         // scope: props.scope,
         // fix element display false bug
         [vModel.name]: modelValue,
-        ...props.props
-      };
-      attrs["onUpdate:" + vModel.name] = (value: any) => {
-        if (value) {
-          if (vModel.trim) {
-            value = value.trim();
-          }
-          if (vModel.number) {
-            const tmp = Number(value);
-            //判断tmp是否NaN
-            if (isNaN(tmp)) {
-            } else {
-              value = tmp;
+        [onUpdateModelValueName]: (value: any) => {
+          if (value) {
+            if (vModel.trim) {
+              value = value.trim();
+            }
+            if (vModel.number) {
+              const tmp = Number(value);
+              //判断tmp是否NaN
+              if (isNaN(tmp)) {
+              } else {
+                value = tmp;
+              }
             }
           }
-        }
-        if (vModel.transform) {
-          value = vModel.transform(value);
-        }
-        if (value === undefined && props.undefineToNull) {
-          value = null;
-        }
-        ctx.emit("update:modelValue", value);
+          if (vModel.transform) {
+            value = vModel.transform(value);
+          }
+          if (value === undefined && props.undefineToNull) {
+            value = null;
+          }
+          ctx.emit("update:modelValue", value);
+        },
+        ...props.props
       };
 
       const events: {

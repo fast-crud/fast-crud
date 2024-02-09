@@ -39,7 +39,7 @@
   </div>
 </template>
 <script lang="tsx" setup>
-import { Dict, useFs, useMerge, useUi } from "../../use";
+import { Dict, useCompute, useFs, useMerge, useUi } from "../../use";
 import { computed, nextTick, ref, Ref, watch } from "vue";
 import { CreateCrudOptions, DynamicallyCrudOptions } from "../../d";
 import _ from "lodash-es";
@@ -249,6 +249,7 @@ const override: DynamicallyCrudOptions = computed(() => {
     getPageData() {
       return crudBinding.value.data;
     },
+    useCompute: useCompute,
     multiple: props.multiple,
     selectedRowKeys,
     onSelectedKeysChanged: async (changed) => {

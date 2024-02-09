@@ -60,7 +60,7 @@ import {
 // @ts-ignore
 import _, { isFunction } from "lodash-es";
 import { ElDialog, useFormItem } from "element-plus";
-import { ref } from "vue";
+import { computed, ref } from "vue";
 
 export type ElementUiProvider = {
   Notification: any;
@@ -469,6 +469,7 @@ export class Element implements UiInterface {
       }
     },
     buildSelectionCrudOptions(req) {
+      const { compute } = req.useCompute();
       function getCrossPageSelected(curSelectedIds: any[]) {
         const rowKey: any = req.getRowKey();
         const data = req.getPageData();
@@ -522,10 +523,45 @@ export class Element implements UiInterface {
           const selectedKeys = [changed[rowKey]];
           req.onSelectedKeysChanged(selectedKeys);
         };
+        const modelValue = computed(() => {
+          const value = req.selectedRowKeys.value.length > 0 ? req.selectedRowKeys.value[0] : null;
+          return value;
+        });
         return {
           table: {
             highlightCurrentRow: true,
             onCurrentChange: onCurrentChange
+          },
+          columns: {
+            $selected: {
+              form: { show: false },
+              column: {
+                align: "center",
+                width: "55px",
+                order: -9999,
+                component: {
+                  name: "el-radio",
+                  label: compute((ctx) => {
+                    if (ctx.form) {
+                      return ctx.form[req.getRowKey()];
+                    }
+                  }),
+                  props: {
+                    modelValue: modelValue
+                  },
+                  slots: {
+                    default() {
+                      return "";
+                    }
+                  }
+                },
+                conditionalRender: {
+                  match() {
+                    return false;
+                  }
+                }
+              }
+            }
           }
         };
       }
