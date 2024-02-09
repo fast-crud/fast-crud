@@ -1392,7 +1392,7 @@ export type ColumnCompositionProps<R = any> = {
   /**
    * 表格列配置（单元格）
    */
-  column?: ColumnProps;
+  column?: ColumnProps<R>;
   /**
    * 表单字段配置
    */
@@ -1714,10 +1714,10 @@ export type ComputeRef<RV = any, R = any> = {
 
 export type ComputeFn<RV = any, R = any> = (context: ComputeContext<R>) => RV;
 
-export type AsyncComputeRef<RV = any, R = any> = {
-  watch?: (context: ScopeContext<R>) => any;
-  asyncFn: (value: any, getContextFn: GetContextFn) => Promise<RV>;
-  defaultValue?: any;
+export type AsyncComputeRef<RV = any, R = any, WV = any> = {
+  watch?: (context: ScopeContext<R>) => WV;
+  asyncFn: (value: WV, getContextFn: GetContextFn) => Promise<RV>;
+  defaultValue?: RV;
 };
 
 export type RefableType<T = any, R = any> = Ref<T> | ComputeRef<T, R> | AsyncComputeRef<T, R> | DynamicType<T, R>;

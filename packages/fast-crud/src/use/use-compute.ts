@@ -118,24 +118,24 @@ function doComputed(
   });
 }
 
-export class ComputeValue<T> implements ComputeRef<T> {
-  computeFn: ComputeFn<T>;
-  constructor(computeFn: ComputeFn<T>) {
+export class ComputeValue<T = any, R = any> implements ComputeRef<T, R> {
+  computeFn: ComputeFn<T, R>;
+  constructor(computeFn: ComputeFn<T, R>) {
     this.computeFn = computeFn;
   }
 }
 
-export function compute<T = any, R = any>(computeFn: (context: ComputeContext<R>) => T): ComputeValue<T> {
-  return new ComputeValue<T>(computeFn);
+export function compute<T = any, R = any>(computeFn: ComputeFn<T, R>): ComputeRef<T, R> {
+  return new ComputeValue<T, R>(computeFn);
 }
 
 export type GetContextFn = () => any;
 
-export class AsyncComputeValue<RV, WV = any, R = any> implements AsyncComputeRef<RV, R> {
+export class AsyncComputeValue<RV, R = any, WV = any> implements AsyncComputeRef<RV, R> {
   watch?: (context: ScopeContext<R>) => WV;
   asyncFn: (value: WV, getContextFn: GetContextFn) => Promise<RV>;
   defaultValue?: any;
-  constructor(options: AsyncComputeRef<RV>) {
+  constructor(options: AsyncComputeRef<RV, R>) {
     const { asyncFn, defaultValue } = options;
     this.watch = options.watch;
     this.asyncFn = asyncFn;
@@ -164,8 +164,10 @@ export class AsyncComputeValue<RV, WV = any, R = any> implements AsyncComputeRef
     return asyncRef;
   }
 }
-export function asyncCompute<T = any, R = any>(options: AsyncComputeRef<T, R>): AsyncComputeValue<T> {
-  return new AsyncComputeValue<T>(options);
+export function asyncCompute<RV = any, R = any, WV = any>(
+  options: AsyncComputeRef<RV, R, WV>
+): AsyncComputeRef<RV, R, WV> {
+  return new AsyncComputeValue<RV, R, WV>(options);
 }
 export function useCompute() {
   return {
