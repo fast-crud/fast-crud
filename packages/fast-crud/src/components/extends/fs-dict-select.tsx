@@ -89,6 +89,7 @@ export default defineComponent({
       const options = this.computedOptions || [];
       return (
         <selectComp
+          ref={"selectRef"}
           placeholder={this.computedPlaceholder}
           options={options}
           renderLabel={this.renderLabel}
@@ -109,7 +110,12 @@ export default defineComponent({
       options.push(option);
     }
     return (
-      <selectComp placeholder={this.computedPlaceholder} v-slots={this.slots} onChange={this.onSelectedChange}>
+      <selectComp
+        ref={"selectRef"}
+        placeholder={this.computedPlaceholder}
+        v-slots={this.slots}
+        onChange={this.onSelectedChange}
+      >
         {options}
       </selectComp>
     );

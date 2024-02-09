@@ -1,5 +1,5 @@
 <template>
-  <component :is="ui.switch.name" v-bind="binding" />
+  <component :is="ui.switch.name" ref="switchRef" v-bind="binding" />
 </template>
 <script lang="ts">
 import { useDict } from "../../use/use-dict";

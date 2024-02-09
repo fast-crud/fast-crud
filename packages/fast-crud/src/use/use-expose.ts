@@ -293,6 +293,7 @@ export function useExpose<R = any>(props: UseExposeProps<R>): UseExposeRet<R> {
           col.valueBuilder({
             value: row[col.key],
             row,
+            form: row,
             index,
             key: col.key,
             column: col

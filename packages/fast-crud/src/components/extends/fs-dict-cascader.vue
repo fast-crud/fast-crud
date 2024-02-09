@@ -1,5 +1,5 @@
 <template>
-  <component :is="ui.cascader.name" :options="computedOptions" v-bind="fieldNamesBinder" />
+  <component :is="ui.cascader.name" ref="cascaderRef" :options="computedOptions" v-bind="fieldNamesBinder" />
 </template>
 <script lang="ts">
 import { useDict } from "../../use/use-dict";

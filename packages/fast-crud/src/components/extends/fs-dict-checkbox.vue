@@ -3,6 +3,7 @@
     <component
       :is="optionName || ui.checkbox.name"
       v-for="item of computedOptions"
+      ref="checkboxRef"
       :key="getValue(item)"
       :[ui.checkbox.value]="getValue(item)"
       v-bind="optionProps"

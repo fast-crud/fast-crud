@@ -1,13 +1,14 @@
 <template>
   <component
     :is="ui.treeSelect.name"
+    ref="treeRef"
     :[ui.treeSelect.options]="computedOptions"
     :placeholder="computedPlaceholder"
     v-bind="computedBinding"
   />
 </template>
 <script lang="ts">
-import { computed, defineComponent } from "vue";
+import { computed, defineComponent, ref } from "vue";
 import { useDict } from "../../use/use-dict";
 import { useI18n } from "../../locale";
 import { useUi } from "../../use";

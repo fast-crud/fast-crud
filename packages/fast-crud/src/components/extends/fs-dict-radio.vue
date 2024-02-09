@@ -3,6 +3,7 @@
     <component
       :is="computedRadioName"
       v-for="item of computedOptions"
+      ref="radioRef"
       :key="getValue(item)"
       :[ui.radio.value]="getValue(item)"
       v-bind="optionProps"
