@@ -255,7 +255,7 @@ export default defineComponent({
 .fs-editor-wang5 {
   border: 1px solid #eee;
   &.w-e-full-screen-container {
-    //z-index: 800;
+    z-index: 10000;
   }
 }
 </style>
