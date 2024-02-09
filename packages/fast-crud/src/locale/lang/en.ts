@@ -17,6 +17,9 @@ export default {
         confirmMessage: "Are you sure you want to delete this record?",
         success: "delete success!"
       },
+      copy: {
+        text: "copy"
+      },
       edit: {
         text: "edit"
       },

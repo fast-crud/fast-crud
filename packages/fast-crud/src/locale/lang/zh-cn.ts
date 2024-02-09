@@ -17,6 +17,9 @@ export default {
         confirmMessage: "您确定要删除该记录吗?",
         success: "删除成功!"
       },
+      copy: {
+        text: "复制"
+      },
       edit: {
         text: "编辑"
       },

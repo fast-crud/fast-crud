@@ -125,6 +125,17 @@ export function useCrud<T = any, R = any>(ctx: UseCrudProps<T, R>): UseCrudRet<R
               await expose.doRemove(context);
             }
           },
+          copy: {
+            show: false,
+            click: async (context: ScopeContext) => {
+              // @ts-ignore
+              context.row = context[ui.tableColumn.row];
+              await expose.openCopy({
+                row: context.row,
+                index: context.index
+              });
+            }
+          },
           edit: {
             click: async (context: ScopeContext) => {
               // @ts-ignore

@@ -138,6 +138,11 @@ export default defineComponent({
             text: t("fs.rowHandle.view.text"),
             title: t("fs.rowHandle.view.text")
           },
+          copy: {
+            key: "copy",
+            text: t("fs.rowHandle.copy.text"),
+            title: t("fs.rowHandle.copy.text")
+          },
           edit: {
             key: "edit",
             type: "primary",

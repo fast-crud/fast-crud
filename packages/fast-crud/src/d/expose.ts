@@ -109,24 +109,25 @@ export type CrudExpose<R = any> = {
    * @param context = {index / row}
    */
   doRemove: (context: DoRemoveContext<R>, opts?: RemoveProps<R>) => Promise<any>;
+
+  /**
+   * 复制行，以当前行数据打开新增对话框
+   */
+  openCopy: (context: OpenEditContext<R>, formOpts?: OpenDialogProps<R>) => Promise<any>;
   /**
    * 打开编辑对话框
-   * @param props = {index / row}
    */
   openEdit: (context: OpenEditContext, formOpts?: OpenDialogProps<R>) => Promise<any>;
   /**
    * 打开添加对话框
-   *  @param props = {index?,row?}
    */
   openAdd: (context: OpenEditContext, formOpts?: OpenDialogProps<R>) => Promise<any>;
   /**
    * 打开查看对话框
-   *  @param props = {index,row}
    */
   openView: (context: OpenEditContext, formOpts?: OpenDialogProps) => Promise<any>;
   /**
    * 打开对话框
-   * @param formOpts = {...formWrapper.open的自定义参数}
    */
   openDialog: (formOpts: OpenDialogProps) => Promise<any>;
 

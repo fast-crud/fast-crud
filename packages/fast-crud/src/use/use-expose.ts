@@ -738,6 +738,9 @@ export function useExpose<R = any>(props: UseExposeProps<R>): UseExposeRet<R> {
     async openView(context: OpenEditContext, formOpts: OpenDialogProps = {}) {
       return this._openDialog("view", context, formOpts);
     },
+    async openCopy(context: OpenEditContext, formOpts: OpenDialogProps = {}) {
+      return this._openDialog("add", context, formOpts);
+    },
 
     editable: undefined
   };
