@@ -47,12 +47,8 @@ export default defineConfig(({ command, mode, ssrBuild }) => {
             sourceMap: false
           })
         ],
-        // make sure to externalize deps that shouldn't be bundled
-        // into your library
         external: ["vue", "lodash-es", "dayjs", "vue-i18n", "vue-router", "@iconify/vue", "@fast-crud/ui-interface"],
         output: {
-          // Provide global variables to use in the UMD build
-          // for externalized deps
           globals: {
             vue: "Vue",
             "lodash-es": "_",
