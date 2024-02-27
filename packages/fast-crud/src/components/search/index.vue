@@ -47,7 +47,14 @@ import { useI18n } from "../../locale";
 import logger from "../../utils/util.log";
 import FsSearchButtons from "./buttons.vue";
 import { Constants } from "../../utils/util.constants";
-import { ButtonsProps, SearchEventContext, SearchItemProps, TypeMap } from "../../d";
+import {
+  ButtonsProps,
+  SearchEventContext,
+  SearchItemProps,
+  TypeMap,
+  ValueChangeContext,
+  ValueChangeHandle
+} from "../../d";
 import { useUi } from "../../use/use-ui";
 import { useMerge } from "../../use/use-merge";
 
@@ -560,10 +567,24 @@ export default defineComponent({
         const key = item.key;
         const value = formData[key];
         const componentRef = getComponentRef(key);
-        const valueChange = item.valueChange instanceof Function ? item.valueChange : item.valueChange.handle;
-        valueChange({ key, value, componentRef, ...getContextFn(), immediate: false });
+        const valueChange: ValueChangeHandle =
+          item.valueChange instanceof Function ? item.valueChange : item.valueChange.handle;
+        const scope = getContextFn();
+        const valueChangeContext: ValueChangeContext = {
+          index: 0,
+          row: scope.form,
+          form: scope.form,
+          ...scope,
+          key,
+          value,
+          componentRef,
+          immediate: false,
+          getComponentRef,
+          mode: "search"
+        };
+        valueChange(valueChangeContext);
       }
-      // TODO 由于validatedForm 发射出去后，会更新formData的数据，所以要放在valueChange后面
+      // TODO 由于validatedForm 发射出去后，会更新formData的数据，所以要放在valueChange后面,不然会死循环
       if (props.validateOnChange && (await doValidate(silent, "change"))) {
         onFormValidated();
       }
