@@ -22,13 +22,13 @@
   "author": "Greper",
   "license": "MIT",
   "dependencies": {
-    "@iconify/vue": "^4.1.1",
     "file-saver": "^2.0.5",
     "lru-cache": "^10.0.0",
     "vuedraggable-es": "^4.1.1",
     "xlsx": "^0.18.5"
   },
   "devDependencies": {
+    "@iconify/vue": "^4.1.1",
     "@fast-crud/ui-interface": "^1.20.0",
     "@iconify/json": "^2.2.98",
     "@ls-lint/ls-lint": "^2.0.1",

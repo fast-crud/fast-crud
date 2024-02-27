@@ -197,8 +197,9 @@ function useEditable<R = any>(props: UseEditableProps<R>) {
             if (crudBinding.value.mode.name === "local") {
               editable.removeRow(editableId);
               return { isLocal: true };
+            } else {
+              return await crudBinding.value.request.delRequest(opts);
             }
-            return {};
           }
         }
       });
