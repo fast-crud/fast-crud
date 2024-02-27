@@ -8,4 +8,5 @@ export type FsSetupOptions<R = any, C = any> = {
   dictRequest?: DictRequest;
   i18n?: any;
   logger?: LoggerConfig;
+  customComponents?: { [key: string]: any };
 };
