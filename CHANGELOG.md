@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.20.1](https://github.com/fast-crud/fast-crud/compare/v1.20.0...v1.20.1) (2024-02-27)
+
+### Bug Fixes
+
+* 修复1.20.0版本子表行編輯情況下，删除无效的bug ([257942b](https://github.com/fast-crud/fast-crud/commit/257942b3167b07885ae5621993db9f241f9816ae))
+
+### Performance Improvements
+
+* @iconify/vue不再打包进lib中，需要外部引入 ([d8166be](https://github.com/fast-crud/fast-crud/commit/d8166be37d78d50e27e43143829a73a2253f6aad))
+* 点击查询按钮将触发on_search和onSearch事件。其中on_search为默认的查询操作 ([0f452a4](https://github.com/fast-crud/fast-crud/commit/0f452a40b845e84744229e065ec5c1dcfb4ea6b9))
+
 # [1.20.0](https://github.com/fast-crud/fast-crud/compare/v1.19.3...v1.20.0) (2024-01-28)
 
 ### Bug Fixes
