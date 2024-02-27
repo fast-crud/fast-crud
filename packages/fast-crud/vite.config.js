@@ -55,7 +55,8 @@ export default defineConfig(({ command, mode, ssrBuild }) => {
             dayjs: "dayjs",
             "vue-i18n": "VueI18n",
             "vue-router": "VueRouter",
-            "@fast-crud/ui-interface": "FsUiInterface"
+            "@fast-crud/ui-interface": "FsUiInterface",
+            "@iconify/vue": "IconifyVue"
           }
         }
       }
