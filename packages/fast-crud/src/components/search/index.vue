@@ -419,6 +419,7 @@ export default defineComponent({
       if (await doValidate()) {
         onFormValidated();
         await nextTick();
+        ctx.emit("_search", getContextFn());
         ctx.emit("search", getContextFn());
       }
     }

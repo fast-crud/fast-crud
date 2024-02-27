@@ -172,7 +172,7 @@ export function useCrud<T = any, R = any>(ctx: UseCrudProps<T, R>): UseCrudRet<R
             baseTableRef.clearSort();
           }
         },
-        onSearch() {
+        on_search() {
           crudExpose.doRefresh({ goFirstPage: true });
         },
         ["onUpdate:form"]: (value: any) => {

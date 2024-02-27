@@ -109,6 +109,34 @@ const crudOptions = {
 }
 ```
 
+## on_search
+* 说明：点击查询按钮实际触发的search，覆盖它将不执行默认查询操作，你需要自定义查询
+* 类型：`async Function(context)`
+
+```js
+const crudOptions = {
+    search:{
+        on_search(context:any){
+            console.log('default search is off')
+        }
+    }
+}
+```
+
+## onSearch
+* 说明：监听查询点击事件
+* 类型：`async Function(context)`
+
+```js
+const crudOptions = {
+    search:{
+        onSearch(context:any){
+            console.log('search clicked',context)
+        }
+    }
+}
+```
+
 ## onReset
 * 说明：监听重置事件
 * 类型：`async Function(context)`
