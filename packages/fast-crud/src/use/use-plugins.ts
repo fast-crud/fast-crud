@@ -2,6 +2,7 @@ import { CrudOptions, CrudOptionsPluginHandle, RowSelectionProps, UseCrudProps }
 import { nextTick } from "vue";
 import { useUi } from "@fast-crud/ui-interface";
 import logger from "../utils/util.log";
+import { useCompute } from "./use-compute";
 
 export const crudOptionsPlugins: Record<string, CrudOptionsPluginHandle> = {};
 export function registerCrudOptionsPlugin(name: string, plugin: CrudOptionsPluginHandle) {
@@ -33,6 +34,9 @@ registerCrudOptionsPlugin("rowSelection", (selection: RowSelectionProps, ctx: Us
     getRowKey,
     getPageData() {
       return crudBinding.value.data;
+    },
+    useCompute: () => {
+      return useCompute();
     },
     multiple: selection.multiple,
     selectedRowKeys: selection.selectedRowKeys,
