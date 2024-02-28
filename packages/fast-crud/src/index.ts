@@ -33,9 +33,11 @@ export const FastCrud = {
     if (options.i18n) {
       i18n.setVueI18n(options.i18n);
     }
+
+    const customComponents = options.customComponents || {};
     for (const key in components) {
       // @ts-ignore
-      const com = components[key];
+      const com = customComponents[key] || components[key];
       app.component(key, com);
     }
 

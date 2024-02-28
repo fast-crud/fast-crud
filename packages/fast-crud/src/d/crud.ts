@@ -187,7 +187,8 @@ export type ValueChangeContext<R = any> = {
   /**
    * 当前是否是第一次触发的
    */
-  immediate: boolean;
+  immediate?: boolean;
+  [key: string]: any;
 } & ScopeContext<R>;
 
 /**

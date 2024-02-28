@@ -183,7 +183,7 @@ export function useCrud<T = any, R = any>(ctx: UseCrudProps<T, R>): UseCrudRet<R
             baseTableRef.clearSort();
           }
         },
-        onSearch() {
+        on_search() {
           crudExpose.doRefresh({ goFirstPage: true });
         },
         ["onUpdate:form"]: (value: any) => {
@@ -429,7 +429,8 @@ export function useCrud<T = any, R = any>(ctx: UseCrudProps<T, R>): UseCrudRet<R
               ...ui.button.colors("danger"),
               click: async (context: ScopeContext) => {
                 const { index, row } = context;
-                await expose.editable?.doRemoveRow({ row });
+                const editableId = row[crudBinding.value.table.editable.rowKey];
+                await expose.editable?.doRemoveRow({ row, editableId });
               }
             }
           }
