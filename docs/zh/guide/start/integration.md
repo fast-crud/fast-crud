@@ -28,13 +28,13 @@ pnpm create vite my-vue-app -- --template vue
 ### 2.安装依赖
 
 ```shell script
-#安装fast-crud
+#------------安装fast-crud----------------
 cd my-vue-app
 pnpm i  @fast-crud/fast-crud
 pnpm i  @fast-crud/fast-extends
 pnpm i  @fast-crud/ui-interface
 
-#安装ui，根据你选择的基础组件 四选一
+#-----------安装ui，根据你选择的基础组件 四选一  --------
 # element-plus
 pnpm i  element-plus
 pnpm i  @fast-crud/ui-element
@@ -48,6 +48,12 @@ pnpm i  @fast-crud/ui-antdv4  # <<<-----------------antdv4注意这里
 pnpm i  naive-ui
 pnpm i  @fast-crud/ui-naive
 
+# -----------安装第三方依赖------------
+pnpm add dayjs
+pnpm add @iconify/vue
+pnpm add lodash-es
+pnpm add vue-i18n
+pnpm add vue-router
 
 ```
 ### 3.安装基础组件
