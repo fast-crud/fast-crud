@@ -80,7 +80,7 @@ export type CrudExpose<R = any> = {
    */
   doRefresh: (props?: DoRefreshProps) => Promise<void>;
   /**
-   * 翻页
+   * 翻页, 注意，需要另外手动调用doRefresh才会刷新数据
    */
   doPageTurn: (no: number) => void;
   /**
