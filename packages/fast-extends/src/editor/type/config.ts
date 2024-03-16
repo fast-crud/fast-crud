@@ -8,11 +8,7 @@ export type FsEditorWang5Config = { editorConfig: IEditorConfig; toolbarConfig: 
 export const defaultConfig = {
   wangEditor: {},
   wangEditor5: {
-    editorConfig: {
-      style: {
-        zIndex: 700
-      }
-    },
-    toolbarConfig: { zIndex: 700 }
+    editorConfig: {},
+    toolbarConfig: {}
   }
 } as FsEditorConfig;
