@@ -1,7 +1,7 @@
 import FsExtendsType from "./type";
 import { utils } from "@fast-crud/fast-crud";
 // @ts-ignore
-const modules = import.meta.globEager("./components/*.vue");
+const modules = import.meta.glob("./components/*.vue", { eager: true });
 import { VueClipboard } from "@soerenmartius/vue3-clipboard";
 const FsExtendsComponents = {
   install(app: any) {
