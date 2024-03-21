@@ -361,11 +361,11 @@ export default defineComponent({
       // const getScopeFn = () => {
       //   return getContextFn(item, scope);
       // };
-      const newScope = getContextFn(item, scope);
       const vModel = {
         modelValue: _.get(scope[tableColumnCI.row], item.key),
         "onUpdate:modelValue": (value: any) => {
           _.set(scope[tableColumnCI.row], item.key, value);
+          const newScope = getContextFn(item, scope);
           ctx.emit("value-change", newScope);
           if (item.valueChange) {
             item.valueChange(newScope);
@@ -386,6 +386,8 @@ export default defineComponent({
       const editableId = row[props.editable?.rowKey];
 
       const cellSlots = props.cellSlots && props.cellSlots[cellSlotName];
+
+      const newScope = getContextFn(item, scope);
       if (editableWrap.editable?.options?.value?.enabled === true) {
         // if (props.editableCell && props.editableCell?.options?.value?.enabled === true) {
         const editableCell = editableWrap.editable.getEditableCell(editableId, item.key);
