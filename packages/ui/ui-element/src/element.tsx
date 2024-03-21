@@ -541,7 +541,7 @@ export class Element implements UiInterface {
                 order: -9999,
                 component: {
                   name: "el-radio",
-                  label: compute((ctx) => {
+                  label: compute((ctx: any) => {
                     if (ctx.form) {
                       return ctx.form[req.getRowKey()];
                     }
