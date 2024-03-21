@@ -3,6 +3,16 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.20.2](https://github.com/jekip/naive-ui-admin/compare/v1.20.1...v1.20.2) (2024-03-21)
+
+### Bug Fixes
+
+* 修复搜索栏只有一个输入框时点回车 会刷新浏览器的bug ([677114d](https://github.com/jekip/naive-ui-admin/commit/677114d6847be8559b33c9b36ca19b8d160ecc3d))
+
+### Performance Improvements
+
+* fs-admin-antdv4 支持主题设置 ([bab0b30](https://github.com/jekip/naive-ui-admin/commit/bab0b30180025613f842f87db8264f7094560ed3))
+
 ## [1.20.1](https://github.com/jekip/naive-ui-admin/compare/v1.20.0...v1.20.1) (2024-02-27)
 
 **Note:** Version bump only for package naive-ui-admin
