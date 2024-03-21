@@ -542,6 +542,7 @@ export default defineComponent({
 
       //移除不允许提交的字段
       _.each(props.columns, (item, key) => {
+        debugger;
         if (item.submit === false) {
           _.unset(formData, key);
         } else if (item.submit === true) {
