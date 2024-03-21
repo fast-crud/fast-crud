@@ -3,6 +3,20 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.20.2](https://github.com/fast-crud/fast-crud/compare/v1.20.1...v1.20.2) (2024-03-21)
+
+### Bug Fixes
+
+* 修复单元格valueChange 的value 改变滞后的问题 ([768c233](https://github.com/fast-crud/fast-crud/commit/768c233c915dc4277f3fb49106bf99f0bd1fb31c))
+* 修复搜索栏只有一个输入框时点回车 会刷新浏览器的bug ([677114d](https://github.com/fast-crud/fast-crud/commit/677114d6847be8559b33c9b36ca19b8d160ecc3d))
+* getFileName方法支持await ([c90f1b7](https://github.com/fast-crud/fast-crud/commit/c90f1b76eb0d1d55c7e4b8530d06c8c4c9af9970))
+
+### Performance Improvements
+
+* 升级依赖版本 ([42ae562](https://github.com/fast-crud/fast-crud/commit/42ae56289cc9d80ee1b3c1f9b7b2dd4656e9ba84))
+* rowHandle增加复制按钮，以当前行数据打开一个添加对话框，默认隐藏，配置rowHandle.buttons.copy.show=true开启此按钮 ([95da11f](https://github.com/fast-crud/fast-crud/commit/95da11f09f1c5bd8cc3b6a1548efefedca8843ba))
+* table-select element增加radio列 ([b56b5df](https://github.com/fast-crud/fast-crud/commit/b56b5df79c6ce634bdac0545e83629f6f5587d42))
+
 ## [1.20.1](https://github.com/fast-crud/fast-crud/compare/v1.20.0...v1.20.1) (2024-02-27)
 
 ### Bug Fixes
