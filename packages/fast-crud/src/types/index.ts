@@ -1,7 +1,7 @@
 import _ from "lodash-es";
 import logger from "../utils/util.log";
 // @ts-ignore
-const typeList = import.meta.globEager("./list/*.ts");
+const typeList = import.meta.glob("./list/*.ts", { eager: true });
 const defaultTypeCreators: Array<any> = [];
 _.forEach(typeList, (value: any) => {
   defaultTypeCreators.push(value.default);

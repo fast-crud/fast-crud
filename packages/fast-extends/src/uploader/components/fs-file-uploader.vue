@@ -3,8 +3,12 @@
     <component :is="ui.upload.name" ref="fileUploaderRef" v-model:fileList="fileList" v-bind="computedBinding">
       <component :is="computedFileSelectBtn.is" v-bind="computedFileSelectBtn" />
     </component>
-    <component :is="ui.dialog.name" v-if="isPicture()" v-model:[ui.dialog.visible]="previewVisible"
-      v-bind="computedPreview">
+    <component
+      :is="ui.dialog.name"
+      v-if="isPicture()"
+      v-model:[ui.dialog.visible]="previewVisible"
+      v-bind="computedPreview"
+    >
       <img style="max-width: 100%; max-height: 100%" :src="previewImage" />
     </component>
   </div>
@@ -16,11 +20,11 @@ import { useI18n, useUi } from "@fast-crud/fast-crud";
 import _ from "lodash-es";
 import { FileItem, FsUploaderDoUploadOptions } from "../d/type";
 import { useUploader } from "./utils";
-import type { PropType } from 'vue'
+import type { PropType } from "vue";
 /**
  * 限制上传图片的像素尺寸
  */
-type PixelLimit = { width?: number, height?: number, tip?: string } | [number, number?, string?]
+type PixelLimit = { width?: number; height?: number; tip?: string } | [number, number?, string?];
 /**
  * 文件上传组件
  * 支持对应ui库的[x]-file-uploader组件的配置
@@ -136,7 +140,7 @@ export default defineComponent({
     const pickFileName = computed(() => {
       return (
         props.getFileName ||
-        ((url: string) => {
+        (async (url: string) => {
           if (typeof url !== "string") {
             console.warn("获取文件名失败，请配置getFileName");
             return url;
@@ -197,7 +201,7 @@ export default defineComponent({
       for (const item of arr) {
         if (!item.name) {
           const url = item.url || item.value;
-          item.name = pickFileName.value(url);
+          item.name = await pickFileName.value(url);
         }
       }
       return arr;
@@ -377,24 +381,24 @@ export default defineComponent({
     }
     /**
      * 图片上传前判断图片像素尺寸是否符合
-     * @param file 
+     * @param file
      */
     const checkPixelLimit = (file: File): Promise<boolean> => {
-      let imageMaxWidth = 0
-      let imageMaxHeight = 0
-      let tip = ''
+      let imageMaxWidth = 0;
+      let imageMaxHeight = 0;
+      let tip = "";
       if (!props.pixelLimit) {
-        return Promise.resolve(true)
+        return Promise.resolve(true);
       } else if (Array.isArray(props.pixelLimit)) {
-        imageMaxWidth = props.pixelLimit[0]
-        imageMaxHeight = props.pixelLimit[1] || props.pixelLimit[0] || 0
-        tip = props.pixelLimit[2] || ''
-      } else if (typeof props.pixelLimit == 'object') {
-        imageMaxWidth = props.pixelLimit.width || 0
-        imageMaxHeight = props.pixelLimit.height || 0
-        tip = props.pixelLimit.tip || ''
+        imageMaxWidth = props.pixelLimit[0];
+        imageMaxHeight = props.pixelLimit[1] || props.pixelLimit[0] || 0;
+        tip = props.pixelLimit[2] || "";
+      } else if (typeof props.pixelLimit == "object") {
+        imageMaxWidth = props.pixelLimit.width || 0;
+        imageMaxHeight = props.pixelLimit.height || 0;
+        tip = props.pixelLimit.tip || "";
       }
-      let errMsg = tip || t("fs.extends.fileUploader.pixelLimitTip", [imageMaxWidth, imageMaxHeight])
+      let errMsg = tip || t("fs.extends.fileUploader.pixelLimitTip", [imageMaxWidth, imageMaxHeight]);
       return new Promise((resolve, reject) => {
         let reader = new FileReader();
         reader.onload = (e) => {
@@ -403,24 +407,24 @@ export default defineComponent({
           image.onload = function () {
             if (imageMaxWidth && image.width > imageMaxWidth) {
               ui.message.warn(errMsg);
-              reject(errMsg)
+              reject(errMsg);
             } else if (imageMaxHeight && image.height > imageMaxHeight) {
               ui.message.warn(errMsg);
-              reject(errMsg)
+              reject(errMsg);
             } else {
               resolve(true);
             }
           };
           image.onerror = function (e) {
             ui.message.warn(t("fs.extends.fileUploader.loadError"));
-            reject(t("fs.extends.fileUploader.loadError"))
-          }
+            reject(t("fs.extends.fileUploader.loadError"));
+          };
           if (src) {
             image.src = src as string;
           }
         };
         reader.readAsDataURL(file);
-      })
+      });
     };
     const beforeUpload = async (file: any, list = fileList.value) => {
       if (props.beforeUpload) {
@@ -433,7 +437,7 @@ export default defineComponent({
         checkLimit();
         checkSizeLimit(file);
         if (isPicture()) {
-          await checkPixelLimit(file)
+          await checkPixelLimit(file);
         }
       } catch (e) {
         return false;
@@ -684,7 +688,6 @@ export default defineComponent({
 </script>
 <style lang="less">
 .fs-file-uploader {
-
   // antdv
   &.fs-file-uploader-limit {
     .ant-upload-select-picture-card {
@@ -697,7 +700,7 @@ export default defineComponent({
     justify-content: center;
     align-items: center;
 
-    >a {
+    > a {
       display: flex;
       align-items: center;
       justify-content: center;

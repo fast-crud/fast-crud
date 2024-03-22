@@ -5,7 +5,7 @@ import { FsUploaderOptions } from "./d/type";
 export * from "./components/libs/";
 export * from "./components/utils";
 // @ts-ignore
-const modules = import.meta.globEager("./components/*.vue");
+const modules = import.meta.glob("./components/*.vue", { eager: true });
 const FsUploaderComponents = {
   install(app: any) {
     utils.vite.installSyncComponents(app, modules, null, null, null);

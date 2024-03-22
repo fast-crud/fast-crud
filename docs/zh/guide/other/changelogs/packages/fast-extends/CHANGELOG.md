@@ -3,6 +3,16 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.20.2](https://github.com/fast-crud/fast-crud/compare/v1.20.1...v1.20.2) (2024-03-21)
+
+### Bug Fixes
+
+* getFileName方法支持await ([c90f1b7](https://github.com/fast-crud/fast-crud/commit/c90f1b76eb0d1d55c7e4b8530d06c8c4c9af9970))
+
+### Performance Improvements
+
+* 升级依赖版本 ([42ae562](https://github.com/fast-crud/fast-crud/commit/42ae56289cc9d80ee1b3c1f9b7b2dd4656e9ba84))
+
 ## [1.20.1](https://github.com/fast-crud/fast-crud/compare/v1.20.0...v1.20.1) (2024-02-27)
 
 **Note:** Version bump only for package @fast-crud/fast-extends

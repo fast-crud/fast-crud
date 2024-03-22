@@ -7,7 +7,7 @@ import { ColumnCompositionProps, CrudOptions, utils } from "@fast-crud/fast-crud
 // @ts-ignore
 const asyncModules = import.meta.glob("./components/*.vue");
 // @ts-ignore
-const syncModules = import.meta.globEager("./components/fs-images-format.vue");
+const syncModules = import.meta.glob("./components/fs-images-format.vue", { eager: true });
 
 import { useColumns } from "@fast-crud/fast-crud";
 

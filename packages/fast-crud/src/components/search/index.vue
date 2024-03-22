@@ -5,6 +5,7 @@
         :is="ui.form.name"
         ref="searchFormRef"
         :model="formData"
+        onsubmit="event.preventDefault();"
         v-bind="options"
         :rules="computedRules"
         class="fs-search-form"

@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.20.2](https://github.com/fast-crud/fast-crud/compare/v1.20.1...v1.20.2) (2024-03-21)
+
+### Bug Fixes
+
+* 修复单元格valueChange 的value 改变滞后的问题 ([768c233](https://github.com/fast-crud/fast-crud/commit/768c233c915dc4277f3fb49106bf99f0bd1fb31c))
+
+### Performance Improvements
+
+* 升级依赖版本 ([42ae562](https://github.com/fast-crud/fast-crud/commit/42ae56289cc9d80ee1b3c1f9b7b2dd4656e9ba84))
+* table-select element增加radio列 ([b56b5df](https://github.com/fast-crud/fast-crud/commit/b56b5df79c6ce634bdac0545e83629f6f5587d42))
+
 ## [1.20.1](https://github.com/fast-crud/fast-crud/compare/v1.20.0...v1.20.1) (2024-02-27)
 
 **Note:** Version bump only for package @fast-crud/fs-admin-antdv4
