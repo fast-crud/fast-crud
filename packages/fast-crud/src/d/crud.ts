@@ -1,4 +1,4 @@
-import { Component, Ref, ShallowRef } from "vue";
+import { Component, Ref, ShallowRef, ComputedRef } from "vue";
 import { ComputeContext } from "./compute";
 import { CrudExpose, DoRemoveContext, OnAfterRemoveContext, OpenDialogProps } from "../d/expose";
 
@@ -1721,7 +1721,12 @@ export type AsyncComputeRef<RV = any, R = any, WV = any> = {
   defaultValue?: RV;
 };
 
-export type RefableType<T = any, R = any> = Ref<T> | ComputeRef<T, R> | AsyncComputeRef<T, R> | DynamicType<T, R>;
+export type RefableType<T = any, R = any> =
+  | Ref<T>
+  | ComputedRef<T>
+  | ComputeRef<T, R>
+  | AsyncComputeRef<T, R>
+  | DynamicType<T, R>;
 
 export type DynamicType<T = any, R = any> = {
   [P in keyof T]: T[P] | RefableType<T[P], R>;
