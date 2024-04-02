@@ -15,7 +15,7 @@
     "publish": "npm run prepublishOnly  && lerna publish --conventional-commits && npm run afterpublishOnly",
     "publish:canary": "lerna publish --canary --conventional-commits && npm run afterpublishOnly",
     "afterpublishOnly": "npm run copylogs && npm run afterPubPush && lerna run afterPubPush && node deploy.js",
-    "afterPubPush": "git add . && git commit -m \"build: publish success\" && git push",
+    "afterPubPush": "npm run docgen:all & git add . && git commit -m \"build: publish success\" && git push",
     "copylogs": "copyfiles \"packages/**/CHANGELOG.md\"  ./docs/zh/guide/other/changelogs/ -e **/node_modules/** && copyfiles \"CHANGELOG.md\"  ./docs/zh/guide/other/changelogs/",
     "init": "git submodule update --init --recursive",
     "rechangelog": "conventional-changelog -p angular -i CHANGELOG.md -s -r 0",
