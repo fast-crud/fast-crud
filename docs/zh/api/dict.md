@@ -55,8 +55,25 @@
 
 ### getNodesByValues
 * 说明：根据value数组，返回节点数据，用于表格单元格组件的label显示，当dict的data过多或懒加载时需要配置   
-* 类型：`async Function(Array<value>):Array<Options>`
+* 类型：`async Function(Array<value>,options?: LoadDictOpts):Array<Options>`
 * 默认：undefined
+```
+const crudOptions = {
+  columns:{
+    key:{
+      type: 'dict-select',
+      dict: dict({
+        async getNodesByValues(values:any[]){
+          const res:any[] = await api.getByIds(values)
+          //注意：这里res必须是数组
+          return res;
+        }
+      })
+    }
+  }
+}
+
+```
 
 ### onReady
 * 说明：远程数据字典加载完成事件,可以在组件使用前修改字典数据

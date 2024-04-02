@@ -105,6 +105,7 @@ const crudOptions= {
 * 极兔速递，内部使用
 * 海豹信息，内部使用
 * [IoTSharp](https://github.com/IoTSharp/IoTSharp)： IOT管理平台，采用fast-crud做前端
+* [SuperApi](https://gitee.com/tmm-top/SuperApi) 无代码CRUD开发平台，后台基于NetCore，前端使用soybean集成fast-crud    
 
 好评如潮，你还不试试？     
 ![](images/good.png)
