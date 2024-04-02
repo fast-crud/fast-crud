@@ -10,7 +10,7 @@
 | modelValue          | value                                                                                                                                                                | -              | -      |                                                                                |
 | limit               | 限制文件数量<br/>当限制数量&gt;1 时，返回值为数组                                                                                                                    | number         | -      |                                                                                |
 | sizeLimit           | 文件大小限制，单位：字节<br/>可以直接传一个数字，也可以传 `{limit:number,tip:'自定义提示文本'}`                                                                      | number\|object | -      |                                                                                |
-| pixelLimit           | 图片像素尺寸限制，单位：px<br/>可以传数组 `[number, number?, string?]`分别表示【宽，高，提示语】，或者    `{ width?: number, height?: number, tip?: string }`      | array\|object | -      |                                                                                |
+| pixelLimit          | 限制上传图片的像素尺寸<br/>可以传数组会对象{ width?: number, height?: number, tip?: string } \| [number, number?, string?]                                           | PixelLimit     | -      |                                                                                |
 | buildUrl            | 构建 url 的方法<br/>后台返回 key 之后，将其 build 成一个可访问的 url，用于反显                                                                                       | -              | -      | function() {<br/> return (value: any) =&gt; {<br/> return value;<br/> };<br/>} |
 | buildUrls           | 多个 value 值构建多个 url                                                                                                                                            | -              | -      |                                                                                |
 | button              | 上传按钮配置，参考 FsButton 参数                                                                                                                                     | object         | -      |                                                                                |
@@ -21,7 +21,6 @@
 | preview             | 预览配置                                                                                                                                                             | object         | -      |                                                                                |
 | valueType           | 上传成功后从结果中取值类型<br/>支持：`[object,url,key,其他（successHandle返回的object内要有该字段，不要用'id'）]`<br/>如果配置了非 url，则需要配置 buildUrl 用于反显 | string         | -      | "url"                                                                          |
 | getFileName         | 根据 value 获取文件名，用于显示在 fileList 里面                                                                                                                      | -              | -      |                                                                                |
-
 
 ## Events
 

@@ -5,11 +5,12 @@
 
 ## Props
 
-| Prop name   | Description                   | Type   | Values | Default |
-| ----------- | ----------------------------- | ------ | ------ | ------- |
-| dict        | 数据字典                      | -      | -      |         |
-| options     | 可选项，比 dict.data 优先级高 | array  | -      |         |
-| placeholder | placeholder                   | string | -      |         |
+| Prop name         | Description                   | Type   | Values | Default   |
+| ----------------- | ----------------------------- | ------ | ------ | --------- |
+| dict              | 数据字典                      | -      | -      |           |
+| options           | 可选项，比 dict.data 优先级高 | array  | -      |           |
+| placeholder       | placeholder                   | string | -      |           |
+| transformDictData | 转换 DictData                 | func   | -      | undefined |
 
 ## Events
 

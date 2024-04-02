@@ -9,7 +9,9 @@
 | crudOptionsOverride | crudOptions 覆盖配置                                                                                                                | DynamicallyCrudOptions | -      | undefined |
 | dict                | 数据字典<br/>必須配置`getNodesByValues`参数,你需要实现：根据 id 列表向后台请求多行数据并返回<br/>`dict.value必须与table.rowKey一致` | Dict                   | -      |           |
 | select              | 选择框 fs-dict-select 配置                                                                                                          | any                    | -      | undefined |
+| showSelect          | 是否显示选择框<br/>有时候你只是想要那个选择的 Dialog，那么你可以隐藏 select，然后自定义激活方式                                     | boolean                | -      | true      |
 | dialog              | 对话框配置                                                                                                                          | any                    | -      | undefined |
+| showCurrent         | 对话框中是否显示当前选中值                                                                                                          | boolean                | -      | true      |
 | valuesFormat        | 当前选中值 fs-values-format 组件 配置                                                                                               | any                    | -      | undefined |
 | height              | crud 高度                                                                                                                           | string                 | -      | undefined |
 | multiple            | 是否多选                                                                                                                            | boolean                | -      |           |
@@ -25,5 +27,11 @@
 | ----------------- | ---------- | ----------- |
 | change            |            |
 | update:modelValue |            |
+
+## Slots
+
+| Name    | Description | Bindings |
+| ------- | ----------- | -------- |
+| default |             |          |
 
 ---

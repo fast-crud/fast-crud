@@ -4,6 +4,7 @@
 
 | Prop name      | Description | Type    | Values | Default                          |
 | -------------- | ----------- | ------- | ------ | -------------------------------- |
+| disabled       |             | boolean | -      | false                            |
 | editing        |             | boolean | -      | false                            |
 | dirty          |             | boolean | -      | false                            |
 | trigger        |             | union   | -      | "onClick"                        |

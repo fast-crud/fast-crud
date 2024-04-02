@@ -1,5 +1,7 @@
 # FsEditorWang
 
+> 已废弃
+
 ## Props
 
 | Prop name  | Description                               | Type    | Values | Default |
