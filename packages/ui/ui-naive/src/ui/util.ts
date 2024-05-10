@@ -4,7 +4,7 @@ import { useDialog, useMessage, useNotification } from "naive-ui";
 
 export default {
   init() {
-    if (uiContext.ref.value == null) {
+    if (uiContext?.ref?.value == null) {
       throw new Error("请先安装ui：app.use(UiNaive);");
     }
     const message = useMessage();

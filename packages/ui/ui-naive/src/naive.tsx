@@ -1,4 +1,4 @@
-import {
+import type {
   BadgeCI,
   ButtonCI,
   ButtonGroupCI,
@@ -54,9 +54,9 @@ import {
   TooltipCI,
   TreeSelectCI,
   UiInterface,
-  UploadCI,
-  useUiRender
+  UploadCI
 } from "@fast-crud/ui-interface";
+import { useUiRender } from "@fast-crud/ui-interface";
 import _ from "lodash-es";
 import { formItemInjectionKey } from "naive-ui/es/_mixins/use-form-item";
 import { inject } from "vue";

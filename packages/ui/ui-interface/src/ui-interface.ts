@@ -1,4 +1,4 @@
-import { Ref, ShallowRef, VNode } from "vue";
+import type { Ref, ShallowRef, VNode } from "vue";
 
 export type VModelGetSet = {
   get: () => any;
@@ -24,7 +24,7 @@ export type BindBuilderOptions = {
 export type UiSlotRet = string | VNode | VNode[] | JSX.Element | JSX.Element[] | UiSlotRet[];
 export type UiSlot = (scope?: any) => UiSlotRet;
 export type WritableSlots = {
-  [name: string]: UiSlot;
+  [name: string]: UiSlot | undefined;
 };
 export type ComponentRenderBinding = {
   is: string | ShallowRef;
@@ -329,7 +329,7 @@ export interface SwitchCI extends CI<SwitchBuilderOptions> {
 export type MessageContext = string | { type?: string; message?: string; content?: string };
 
 export interface MessageCI extends CI {
-  open: (type: string, context: MessageContext) => void;
+  open: (type: string, context: MessageContext | string) => void;
   success: (context: MessageContext) => void;
   error: (context: MessageContext) => void;
   warn: (context: MessageContext) => void;
@@ -356,7 +356,7 @@ export interface MessageBoxCI extends CI {
 export type NotificationContext = string | { type?: string; message?: string; text?: string; title?: string };
 
 export interface NotificationCI extends CI {
-  open: (type: string, context: NotificationContext) => void;
+  open: (type: string, context: NotificationContext | string) => void;
   success: (message: NotificationContext) => void;
   error: (message: NotificationContext) => void;
   warn: (message: NotificationContext) => void;

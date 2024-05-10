@@ -1,5 +1,5 @@
-import { BaseCI, CI, ComponentRenderBinding, UiSlotRet } from "../ui-interface";
-import { computed, Ref, resolveComponent } from "vue";
+import type { BaseCI, CI, ComponentRenderBinding, UiSlotRet } from "../ui-interface";
+import { computed, resolveComponent } from "vue";
 import _ from "lodash-es";
 
 export type UiSpecialBindingBuilder = () => Partial<ComponentRenderBinding>;

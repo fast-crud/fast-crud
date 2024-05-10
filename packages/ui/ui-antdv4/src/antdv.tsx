@@ -1,4 +1,4 @@
-import {
+import type {
   BadgeCI,
   ButtonBuilderOptions,
   ButtonCI,
@@ -11,7 +11,6 @@ import {
   CollapseCI,
   CollapseItemCI,
   CollapseTransitionCI,
-  creator,
   DatePickerCI,
   DialogCI,
   DividerCI,
@@ -58,9 +57,9 @@ import {
   TooltipCI,
   TreeSelectCI,
   UiInterface,
-  UploadCI,
-  useUiRender
+  UploadCI
 } from "@fast-crud/ui-interface";
+import { creator, useUiRender } from "@fast-crud/ui-interface";
 
 import _ from "lodash-es";
 import { Form, Modal } from "ant-design-vue";
@@ -159,9 +158,11 @@ export class Antdv implements UiInterface {
     instance: undefined,
     name: "a-message",
     open: (type, context) => {
-      let content = context;
+      let content = "";
       if (typeof context !== "string") {
         content = context.message || context.content;
+      } else {
+        content = context;
       }
       this.message.instance[type](content);
     },
@@ -182,11 +183,14 @@ export class Antdv implements UiInterface {
   notification: NotificationCI = creator<NotificationCI>({
     instance: undefined,
     name: "a-notification",
-    open: (type: string, context: NotificationContext) => {
-      if (typeof context === "string") {
+    open: (type: string, notificationContext) => {
+      let context = undefined;
+      if (typeof notificationContext === "string") {
         context = {
-          message: context
+          message: notificationContext
         };
+      } else {
+        context = notificationContext;
       }
       type = type || context.type;
       if (type) {

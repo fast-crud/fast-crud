@@ -1,4 +1,4 @@
-import {
+import type {
   BadgeCI,
   ButtonBuilderOptions,
   ButtonCI,
@@ -11,7 +11,6 @@ import {
   CollapseCI,
   CollapseItemCI,
   CollapseTransitionCI,
-  creator,
   DatePickerCI,
   DialogCI,
   DividerCI,
@@ -58,10 +57,9 @@ import {
   TooltipCI,
   TreeSelectCI,
   UiInterface,
-  UploadCI,
-  useUiRender
+  UploadCI
 } from "@fast-crud/ui-interface";
-
+import { creator, useUiRender } from "@fast-crud/ui-interface";
 import _ from "lodash-es";
 import { Form, Modal } from "ant-design-vue";
 

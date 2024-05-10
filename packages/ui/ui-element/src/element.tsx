@@ -1,4 +1,4 @@
-import {
+import type {
   TextAreaCI,
   CI,
   UiInterface,
@@ -46,7 +46,6 @@ import {
   FormCI,
   PopoverCI,
   TooltipCI,
-  useUiRender,
   InputNumberCI,
   BadgeCI,
   CollapseTransitionCI,
@@ -57,6 +56,7 @@ import {
   TableScrollReq,
   RadioButtonCI
 } from "@fast-crud/ui-interface";
+import { useUiRender } from "@fast-crud/ui-interface";
 // @ts-ignore
 import _, { isFunction } from "lodash-es";
 import { ElDialog, useFormItem } from "element-plus";

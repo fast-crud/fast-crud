@@ -1,5 +1,6 @@
-import { Ref, ref } from "vue";
-import { UiInterface } from "./ui-interface";
+import type { Ref } from "vue";
+import { ref } from "vue";
+import type { UiInterface } from "./ui-interface";
 
 export class UiContext {
   ref?: Ref<UiInterface> = ref(null);
