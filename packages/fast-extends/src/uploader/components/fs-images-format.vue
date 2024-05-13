@@ -27,7 +27,10 @@ export default defineComponent({
   inheritAttrs: false,
   props: {
     //包裹image的组件配置，antdv是preview-group，element是div
-    wrapper: {},
+    wrapper: {
+      type: Object,
+      default: null
+    },
     // 图片的url
     // 'value' 或 ['value','value']
     modelValue: {
@@ -58,7 +61,10 @@ export default defineComponent({
         return value;
       }
     },
-    buildUrls: {},
+    buildUrls: {
+      type: Function,
+      default: null
+    },
     /**
      * 从value或url构建预览大图的方法
      * 支持异步
@@ -70,7 +76,10 @@ export default defineComponent({
       }
     },
 
-    buildPreviewUrls: {}
+    buildPreviewUrls: {
+      type: Function,
+      default: null
+    }
   },
   setup(props: any, ctx) {
     const { ui } = useUi();

@@ -1,5 +1,5 @@
 import type { Ref, ShallowRef, VNode } from "vue";
-
+import "vue/jsx";
 export type VModelGetSet = {
   get: () => any;
   set: (value: any) => void;

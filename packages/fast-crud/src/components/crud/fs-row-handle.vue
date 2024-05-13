@@ -92,7 +92,12 @@ export default defineComponent({
     /**
      * scope
      */
-    scope: {}
+    scope: {
+      type: Object,
+      default: () => {
+        return {};
+      }
+    }
   },
   emits: ["handle"],
   setup(props: any, ctx) {
