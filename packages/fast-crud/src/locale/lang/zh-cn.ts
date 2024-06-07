@@ -76,8 +76,8 @@ export default {
       },
       cropper: {
         reChoose: "重新选择",
-        flipX: "上下翻转",
-        flipY: "左右翻转",
+        flipX: "左右翻转",
+        flipY: "上下翻转",
         reset: "重置"
       },
       fileUploader: {
