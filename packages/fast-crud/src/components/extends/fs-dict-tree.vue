@@ -5,6 +5,7 @@
     :[ui.treeSelect.options]="computedOptions"
     :placeholder="computedPlaceholder"
     v-bind="computedBinding"
+    @change="onSelectedChange"
   />
 </template>
 <script lang="ts">
@@ -40,7 +41,21 @@ export default defineComponent({
       default: undefined
     }
   },
-  emits: ["dict-change"],
+  emits: [
+    /**
+     * 字典数据变化事件
+     */
+    "dict-change",
+
+    /**
+     * 选中值变化事件，可以获取到当前选中的option对象
+     */
+    "selected-change",
+    /**
+     * 值变化事件
+     */
+    "change"
+  ],
   // render () {
   //   return this.renderFunc({ data: this.data, dataMap: this.dataMap, scope: this.scope, attrs: this.$attrs })
   // },
@@ -63,12 +78,37 @@ export default defineComponent({
         children: dict.children
       });
     });
+
+    const onSelectedChange = (value: any) => {
+      ctx.emit("change", value);
+      if (value) {
+        const dict = usedDict.getDict();
+        if (dict && dict.dataMap) {
+          if (value instanceof Array) {
+            let selectedOptions = [];
+            for (let item of value) {
+              const opt = dict.dataMap[item];
+              if (opt) {
+                selectedOptions.push(opt);
+              }
+            }
+            ctx.emit("selected-change", selectedOptions);
+          } else {
+            ctx.emit("selected-change", dict.dataMap[value]);
+          }
+        }
+      } else {
+        ctx.emit("selected-change", null);
+      }
+    };
+
     return {
       ui,
       computedBinding,
       computedPlaceholder,
       ...usedDict,
-      computedOptions
+      computedOptions,
+      onSelectedChange
     };
   }
 });

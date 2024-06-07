@@ -1,5 +1,5 @@
 <template>
-  <component :is="ui.checkboxGroup.name">
+  <component :is="ui.checkboxGroup.name" @change="onSelectedChange">
     <component
       :is="optionName || ui.checkbox.name"
       v-for="item of computedOptions"
@@ -56,15 +56,49 @@ export default defineComponent({
       default: undefined
     }
   },
-  emits: ["dict-change"],
+  emits: [
+    /**
+     * 字典数据变化事件
+     */
+    "dict-change",
+
+    /**
+     * 选中值变化事件，可以获取到当前选中的option对象
+     */
+    "selected-change",
+    /**
+     * 值变化事件
+     */
+    "change"
+  ],
   setup(props, ctx) {
     const { ui } = useUi();
     let usedDict = useDict(props, ctx, ui.checkboxGroup.modelValue);
     const computedOptions = usedDict.createComputedOptions();
+    const onSelectedChange = (value: any) => {
+      ctx.emit("change", value);
+      if (value) {
+        let selectedOptions = [];
+        const dict = usedDict.getDict();
+        if (dict && dict.dataMap) {
+          for (let item of value) {
+            const opt = dict.dataMap[item];
+            if (opt) {
+              selectedOptions.push(opt);
+            }
+          }
+          ctx.emit("selected-change", selectedOptions);
+        }
+      } else {
+        ctx.emit("selected-change", null);
+      }
+    };
+
     return {
       ui,
       ...usedDict,
-      computedOptions
+      computedOptions,
+      onSelectedChange
     };
   }
 });

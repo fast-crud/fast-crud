@@ -1,5 +1,5 @@
 <template>
-  <component :is="ui.radioGroup.name">
+  <component :is="ui.radioGroup.name" @change="onSelectedChange">
     <component
       :is="computedRadioName"
       v-for="item of computedOptions"
@@ -65,7 +65,21 @@ export default defineComponent({
       default: undefined
     }
   },
-  emits: ["dict-change"],
+  emits: [
+    /**
+     * 字典数据变化事件
+     */
+    "dict-change",
+
+    /**
+     * 选中值变化事件，可以获取到当前选中的option对象
+     */
+    "selected-change",
+    /**
+     * 值变化事件
+     */
+    "change"
+  ],
   setup(props: any, ctx: any) {
     const { ui } = useUi();
 
@@ -78,11 +92,25 @@ export default defineComponent({
 
     let usedDict = useDict(props, ctx, ui.radioGroup.modelValue);
     const computedOptions = usedDict.createComputedOptions();
+
+    const onSelectedChange = (value: any) => {
+      value = value.target.value;
+      ctx.emit("change", value);
+      const dict = usedDict.getDict();
+      if (dict && dict.dataMap && dict.dataMap[value]) {
+        const opt = dict.dataMap[value];
+        ctx.emit("selected-change", opt);
+      } else {
+        ctx.emit("selected-change", null);
+      }
+    };
+
     return {
       ui,
       computedRadioName,
       ...usedDict,
-      computedOptions
+      computedOptions,
+      onSelectedChange
     };
   }
 });

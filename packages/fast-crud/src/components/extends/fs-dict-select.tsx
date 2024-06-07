@@ -71,6 +71,8 @@ export default defineComponent({
       if (dict && dict.dataMap && dict.dataMap[value]) {
         const opt = dict.dataMap[value];
         ctx.emit("selected-change", opt);
+      } else {
+        ctx.emit("selected-change", null);
       }
     };
     return {

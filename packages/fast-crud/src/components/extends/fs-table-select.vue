@@ -153,7 +153,12 @@ const slots = defineSlots<{
   default: any;
 }>();
 
-const emits = defineEmits(["change", "update:modelValue"]);
+const emits = defineEmits([
+  "change",
+  "update:modelValue",
+  /* 选中行变化事件 */
+  "selected-change"
+]);
 const { ui } = useUi();
 const { t } = useI18n();
 const dictSelectRef = ref();
@@ -325,22 +330,26 @@ function onOk() {
     return;
   }
   let value = null;
+  let rows = null;
   if (selectedRowKeys.value?.length > 0) {
     value = [...selectedRowKeys.value];
 
+    rows = value.map((item) => {
+      return props.dict.getDictMap()[item];
+    });
     if (props.valueType === "object") {
-      value = value.map((item) => {
-        return props.dict.getDictMap()[item];
-      });
+      value = rows;
     }
 
-    if (props.multiple !== true) {
+    if (props.multiple !== true && value.length > 0) {
       value = value[0];
     }
   }
 
   emits("update:modelValue", value);
   emits("change", value);
+  emits("selected-change", rows);
+
   dialogOpen.value = false;
 }
 
