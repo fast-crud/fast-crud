@@ -219,6 +219,7 @@ export default defineComponent({
 
     const handleCreated = (editor: any) => {
       editorRef.value = editor; // 记录 editor 实例，重要！
+      toggleEnabled(!props.readonly && !props.disabled);
       ctx.emit("ready");
     };
 
