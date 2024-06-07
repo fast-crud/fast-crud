@@ -70,6 +70,10 @@ export default {
       formatter: { to: "至" }
     },
     extends: {
+      tableSelect: {
+        view: "查看",
+        select: "选择"
+      },
       cropper: {
         reChoose: "重新选择",
         flipX: "上下翻转",

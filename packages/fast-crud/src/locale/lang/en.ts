@@ -68,11 +68,23 @@ export default {
     },
     date: { formatter: { to: "to" } },
     extends: {
+      tableSelect: {
+        view: "view",
+        select: "select"
+      },
       cropper: {
         reChoose: "reChoose",
         flipX: "flipX",
         flipY: "flipY",
         reset: "reset"
+      },
+      fileUploader: {
+        text: "fileUpload",
+        limitTip: "file count limit: {0}",
+        sizeLimitTip: "file size limit:  {0}, current size: {1}",
+        loadError: "image load error",
+        pixelLimitTip: "pixel limit : width:{0},height:{1}",
+        hasUploading: "The file is being uploaded, please wait for the upload to complete or delete"
       }
     }
   }

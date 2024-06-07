@@ -373,9 +373,10 @@ export default defineComponent({
           showMessage = props.sizeLimit.tip;
         }
         if (file.size > limit) {
-          console.log("文件大小超过限制：", file.size);
+          let message = "文件大小超过限制，当前文件大小：" + file.size / 1024 + "k";
+          console.log(message);
           showMessage(file.size, limit);
-          throw new Error("文件大小超过限制：" + file.size);
+          throw new Error(message);
         }
       }
     }

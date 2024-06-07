@@ -1,6 +1,6 @@
 <template>
   <div class="fs-table-select">
-    <template v-if="!slots?.default">
+    <template v-if="!slots?.default && !viewMode">
       <fs-dict-select
         ref="dictSelectRef"
         :dict="dict"
@@ -17,7 +17,7 @@
         <div :style="{ width: '100%', height: height || '60vh' }">
           <fs-crud ref="crudRef" v-bind="crudBinding">
             <template #header-top>
-              <div v-if="showCurrent !== false" class="fs-table-select-current">
+              <div v-if="showCurrent !== false && !viewMode" class="fs-table-select-current">
                 当前选中：
                 <fs-values-format
                   ref="valuesFormatRef"
@@ -31,7 +31,7 @@
           </fs-crud>
         </div>
         <template #[ui.dialog.footerSlotName]>
-          <component :is="ui.button.name" @click="dialogOpen = false">取消</component>
+          <component :is="ui.button.name" v-if="!viewMode" @click="dialogOpen = false">取消</component>
           <component :is="ui.button.name" type="primary" @click="onOk">确认</component>
         </template>
       </component>
@@ -43,6 +43,7 @@ import { Dict, useCompute, useFs, useMerge, useUi } from "../../use";
 import { computed, nextTick, ref, Ref, watch } from "vue";
 import { CreateCrudOptions, DynamicallyCrudOptions } from "../../d";
 import _ from "lodash-es";
+import { useI18n } from "../../locale";
 // defineOptions({
 //   name: "FsTableSelect"
 // });
@@ -115,6 +116,11 @@ type FsTableSelectProps = {
    * 值类型
    */
   valueType?: "value" | "object";
+
+  /**
+   * 是否查看模式
+   */
+  viewMode?: boolean;
 };
 const props = withDefaults(defineProps<FsTableSelectProps>(), {
   crossPage: true,
@@ -128,7 +134,8 @@ const props = withDefaults(defineProps<FsTableSelectProps>(), {
   crudOptionsOverride: undefined,
   valueType: "value",
   showSelect: true,
-  showCurrent: true
+  showCurrent: true,
+  viewMode: false
 });
 
 const slots = defineSlots<{
@@ -148,6 +155,7 @@ const slots = defineSlots<{
 
 const emits = defineEmits(["change", "update:modelValue"]);
 const { ui } = useUi();
+const { t } = useI18n();
 const dictSelectRef = ref();
 const valuesFormatRef = ref();
 const dialogOpen = ref(false);
@@ -168,8 +176,9 @@ function initSelectedKeys(modelValue: any) {
     }
   }
 }
-
-const openTableSelect = async () => {
+const crudBinding = ref();
+const crudRef = ref();
+const openTableSelect = async (openOptions) => {
   if (props.disabled || props.readonly || props.select?.disabled || props.select?.readonly) {
     return;
   }
@@ -178,8 +187,17 @@ const openTableSelect = async () => {
   }
   dialogOpen.value = true;
   initSelectedKeys(props.modelValue);
+  const crudOptionsOverride = merge({}, override.value, openOptions.crudOptions);
+  const ret = useFs({
+    crudRef,
+    crudBinding,
+    createCrudOptions: props.createCrudOptions,
+    crudOptionsOverride: crudOptionsOverride
+  });
+  const { crudExpose, context, appendCrudOptions, crudOptions } = ret;
   await nextTick();
   await crudExpose.doRefresh();
+  return ret;
 };
 
 const computedValuesFormat = computed(() => {
@@ -215,7 +233,7 @@ const computedSelect = computed(() => {
 
 const computedDialogBinding = computed(() => {
   const base = ui.dialog.buildProps({
-    title: "选择",
+    title: props.viewMode ? t("fs.extends.tableSelect.view") : t("fs.extends.tableSelect.select"),
     width: "80%"
   });
   return merge(base, props.dialog);
@@ -284,10 +302,6 @@ const override: DynamicallyCrudOptions = computed(() => {
 
 const { merge } = useMerge();
 // eslint-disable-next-line vue/no-setup-props-destructure
-const { crudBinding, crudRef, crudExpose, context, appendCrudOptions, crudOptions } = useFs({
-  createCrudOptions: props.createCrudOptions,
-  crudOptionsOverride: override.value
-});
 
 watch(
   () => {
