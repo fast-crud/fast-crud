@@ -156,6 +156,7 @@ export type FsUploaderAliossSTS = {
   expiration?: string;
   securityToken: string;
   expiresTime?: number;
+  key?: string;
 };
 
 export type FsUploaderCos = {

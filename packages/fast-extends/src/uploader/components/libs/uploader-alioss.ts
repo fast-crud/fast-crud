@@ -24,7 +24,16 @@ export async function getSts(config: FsUploaderGetAuthContext): Promise<FsUpload
   return sts as FsUploaderAliossSTS;
 }
 
-export async function getOssClient(options: FsUploaderAliossOptions, key: string, file: File): Promise<OSS> {
+export type AliOSSClientWrap = {
+  client: OSS;
+  key: string;
+};
+
+export async function getOssClient(
+  options: FsUploaderAliossOptions,
+  key: string,
+  file: File
+): Promise<AliOSSClientWrap> {
   let sts = null;
   if (!options.accessKeyId && !options.accessKeySecret && options.getAuthorization !== null) {
     sts = await getSts({
@@ -45,6 +54,7 @@ export async function getOssClient(options: FsUploaderAliossOptions, key: string
       bucket: options.bucket,
       ...options.sdkOpts
     });
+    key = sts.key || key;
   } else {
     client = new OSS({
       region: options.region,
@@ -54,7 +64,7 @@ export async function getOssClient(options: FsUploaderAliossOptions, key: string
       ...options.sdkOpts
     });
   }
-  return client;
+  return { client, key };
 }
 /**
  *
@@ -74,8 +84,8 @@ export async function getOssClient(options: FsUploaderAliossOptions, key: string
 async function doUpload(opts: FsUploaderDoUploadOptions): Promise<FsUploaderResult> {
   const { file, fileName, onProgress } = opts;
   const options: FsUploaderAliossOptions = opts.options as FsUploaderAliossOptions;
-  const key = await buildKey(file, fileName, options);
-  const client = await getOssClient(options, key, file);
+  const build_key = await buildKey(file, fileName, options);
+  const { client, key } = await getOssClient(options, build_key, file);
   await client.put(key, file);
   let result: any = { url: options.domain + "/" + key, key: key };
   if (options.successHandle) {
