@@ -1,4 +1,4 @@
-import { FsUploaderOptions, FsUploaderGetAuthContext } from "../d/type";
+import { FsUploaderOptions, FsUploaderGetAuthContext, FsUploaderAliossSTS } from "../d/type";
 import _ from "lodash-es";
 
 export const defaultConfig: FsUploaderOptions = {
@@ -21,7 +21,7 @@ export const defaultConfig: FsUploaderOptions = {
     region: "oss-cn-shenzhen",
     accessKeyId: "", // "",
     accessKeySecret: "",
-    getAuthorization(context: FsUploaderGetAuthContext) {
+    getAuthorization(context: FsUploaderGetAuthContext): Promise<FsUploaderAliossSTS> {
       // 不传secretKey代表使用临时签名模式时（安全）
       return new Promise((resolve, reject) => {
         reject(new Error("请实现config.alioss.getAuthorization，返回Promise获取临时授权token"));
