@@ -75,10 +75,18 @@ export default {
         select: "选择"
       },
       cropper: {
+        title: "图片裁剪",
+        preview: "预览",
         reChoose: "重新选择",
         flipX: "左右翻转",
         flipY: "上下翻转",
-        reset: "重置"
+        reset: "重置",
+        cancel: "取消",
+        confirm: "确定",
+        chooseImage: "+ 选择图片",
+        onlySupport: "仅支持",
+        sizeLimit: "大小不能超过",
+        sizeNoLimit: "大小不限制"
       },
       fileUploader: {
         text: "文件上传",

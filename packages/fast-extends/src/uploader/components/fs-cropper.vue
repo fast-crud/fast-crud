@@ -13,8 +13,8 @@
       <input v-show="false" ref="fileInputRef" type="file" :accept="accept" @change="handleChange" />
       <!-- step1 -->
       <div v-show="!isLoaded" class="fs-cropper-dialog__choose fs-cropper-dialog_left">
-        <fs-button round text="+选择图片" @click="showFileChooser" />
-        <p>{{ _uploadTip }}</p>
+        <fs-button round :text="computedTexts.chooseImage" @click="showFileChooser" />
+        <p>{{ computedUploadTip }}</p>
       </div>
       <!-- step2 -->
       <div v-show="isLoaded" class="fs-cropper-dialog__edit fs-cropper-dialog_left">
@@ -34,7 +34,7 @@
         </div>
       </div>
       <div class="fs-cropper-dialog__preview">
-        <span class="fs-cropper-dialog__preview-title">预览</span>
+        <span class="fs-cropper-dialog__preview-title">{{ computedTexts.preview }}</span>
         <div class="fs-cropper-dialog__preview-120 preview"></div>
         <div class="fs-cropper-dialog__preview-65 preview" :class="{ round: _cropper.aspectRatio === 1 }"></div>
       </div>
@@ -42,8 +42,8 @@
 
     <template #footer>
       <div class="dialog-footer">
-        <fs-button size="small" text="取消" @click="handleClose" />
-        <fs-button type="primary" size="small" text="确定" @click="doCropper()" />
+        <fs-button size="small" :text="computedTexts.cancel" @click="handleClose" />
+        <fs-button type="primary" size="small" :text="computedTexts.confirm" @click="doCropper()" />
       </div>
     </template>
   </component>
@@ -67,8 +67,7 @@ export default defineComponent({
   props: {
     // 对话框标题
     title: {
-      type: String,
-      default: "图片裁剪"
+      type: String
     },
     // cropper的高度，默认为浏览器可视窗口高度的40%，最小270
     cropperHeight: {
@@ -133,11 +132,14 @@ export default defineComponent({
     }
     const vClosed = ui.dialog.buildOnClosedBind(handleClosed);
     const customClass = ui.dialog.customClass;
-    const dialogBinding: Ref = ref({
-      ...vClosed,
-      [customClass]: "fs-cropper-dialog",
-      ...ui.formWrapper.buildWidthBind(ui.dialog.name, "960px"),
-      ...ui.formWrapper.buildInitBind(ui.dialog.name)
+    const dialogBinding: Ref = computed(() => {
+      return {
+        ...vClosed,
+        [customClass]: "fs-cropper-dialog",
+        ...ui.formWrapper.buildWidthBind(ui.dialog.name, "960px"),
+        ...ui.formWrapper.buildInitBind(ui.dialog.name),
+        title: props.title || t("fs.extends.cropper.title")
+      };
     });
 
     function open(url: string) {
@@ -398,6 +400,27 @@ export default defineComponent({
       return buttons;
     });
 
+    const computedTexts = computed(() => {
+      return {
+        title: t("fs.extends.cropper.title"),
+        preview: t("fs.extends.cropper.preview"),
+        cancel: t("fs.extends.cropper.cancel"),
+        confirm: t("fs.extends.cropper.confirm"),
+        chooseImage: t("fs.extends.cropper.chooseImage")
+      };
+    });
+
+    const computedUploadTip = computed(() => {
+      if (props.uploadTip != null && props.uploadTip !== "") {
+        return props.uploadTip;
+      }
+      if (props.maxSize > 0) {
+        return `${t("fs.extends.cropper.onlySupport")} ${props.accept.replace(/,/g, "、")},
+        ${t("fs.extends.cropper.sizeLimit")} ${props.maxSize}M`;
+      } else {
+        return `${t("fs.extends.cropper.onlySupport")}${props.accept},${t("fs.extends.cropper.sizeNoLimit")}`;
+      }
+    });
     return {
       ui,
       cropperRef,
@@ -436,23 +459,15 @@ export default defineComponent({
       open,
       clear,
       getCropperRef,
-      ready
+      ready,
+      computedTexts,
+      computedUploadTip
     };
   },
   data() {
     return {};
   },
   computed: {
-    _uploadTip() {
-      if (this.uploadTip != null && this.uploadTip !== "") {
-        return this.uploadTip;
-      }
-      if (this.maxSize > 0) {
-        return `只支持${this.accept.replace(/,/g, "、")},大小不超过${this.maxSize}M`;
-      } else {
-        return `只支持${this.accept},大小无限制`;
-      }
-    },
     _cropper() {
       const def: any = {
         aspectRatio: 1,

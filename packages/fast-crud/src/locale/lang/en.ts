@@ -73,10 +73,18 @@ export default {
         select: "select"
       },
       cropper: {
+        title: "image crop",
+        preview: "preview",
         reChoose: "reChoose",
         flipX: "flipX",
         flipY: "flipY",
-        reset: "reset"
+        reset: "reset",
+        cancel: "cancel",
+        confirm: "confirm",
+        chooseImage: "+ choose image",
+        onlySupport: "only",
+        sizeLimit: "size limit",
+        sizeNoLimit: " no limit"
       },
       fileUploader: {
         text: "fileUpload",
