@@ -6,7 +6,11 @@
     :placeholder="computedPlaceholder"
     v-bind="computedBinding"
     @change="onSelectedChange"
-  />
+  >
+    <template v-for="(value, key) of slots" :key="key" #[key]="scope">
+      <fs-slot-render :slots="value" :scope="scope"></fs-slot-render>
+    </template>
+  </component>
 </template>
 <script lang="ts">
 import { computed, defineComponent, ref } from "vue";
@@ -20,6 +24,7 @@ import { useUi } from "../../use";
  */
 export default defineComponent({
   name: "FsDictTree",
+  components: {},
   props: {
     /**
      * 数据字典
@@ -68,6 +73,8 @@ export default defineComponent({
 
     let usedDict = useDict(props, ctx);
 
+    const slots = ctx.slots;
+
     const computedOptions = usedDict.createComputedOptions();
 
     const computedBinding = computed(() => {
@@ -108,7 +115,8 @@ export default defineComponent({
       computedPlaceholder,
       ...usedDict,
       computedOptions,
-      onSelectedChange
+      onSelectedChange,
+      slots
     };
   }
 });
