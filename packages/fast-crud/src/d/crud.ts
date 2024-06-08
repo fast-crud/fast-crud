@@ -1095,7 +1095,7 @@ export type ToolbarComponentProps<R = any> = {
   };
 
   /**
-   * 当前是否显示查询。
+   * 注意：不要配置此项
    * 注意：如果要隐藏search，请配置crudOptions.search.show=false
    */
   search?: boolean;
