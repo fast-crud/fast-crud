@@ -247,17 +247,16 @@ export default defineComponent({
       }
       return cropperRef.value.getCroppedCanvas().toDataURL(fileType, quality);
     }
-    async function getCropImageBlob(callback: any, type: string, quality?: any) {
+    async function getCropImageBlob(type: string, quality?: any) {
       if (quality == null) {
         quality = props.compressQuality;
       }
 
       return new Promise((resolve, reject) => {
-        function promiseCallback(...args) {
-          callback(...args);
-          resolve();
+        function callback(blob: any) {
+          resolve(blob);
         }
-        cropperRef.value.getCroppedCanvas().toBlob(promiseCallback, type, quality);
+        cropperRef.value.getCroppedCanvas().toBlob(callback, type, quality);
       });
     }
     function emit(result: any) {
@@ -266,20 +265,17 @@ export default defineComponent({
     async function doOutput(file: File) {
       const ret: any = { file };
       if (props.output === "all") {
-        await getCropImageBlob((blob: any) => {
-          const dataUrl = getCropImageDataUrl(file.type);
-          ret.blob = blob;
-          ret.dataUrl = dataUrl;
-          emit(ret);
-        }, file.type);
+        const blob = await getCropImageBlob(file.type);
+        const dataUrl = getCropImageDataUrl(file.type);
+        ret.blob = blob;
+        ret.dataUrl = dataUrl;
+        emit(ret);
         return;
       }
 
       if (props.output === "blob") {
-        await getCropImageBlob((blob: any) => {
-          ret.blob = blob;
-          emit(ret);
-        }, file.type);
+        ret.blob = await getCropImageBlob(file.type);
+        emit(ret);
         return;
       }
       if (props.output === "dataUrl") {
