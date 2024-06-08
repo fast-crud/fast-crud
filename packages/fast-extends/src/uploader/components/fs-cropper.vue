@@ -517,6 +517,12 @@ export default defineComponent({
 //@width: 10px;
 //@height: @width + 10px;
 .fs-cropper-dialog {
+  n-button-group {
+    display: flex;
+    button {
+      margin: 0 2px;
+    }
+  }
   &-wrap {
     display: flex;
     justify-content: space-between;
