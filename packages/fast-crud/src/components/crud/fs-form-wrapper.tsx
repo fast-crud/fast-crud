@@ -196,10 +196,13 @@ export default defineComponent({
     }
 
     async function beforeClose() {
-      await doSaveRemind();
       if (beforeCloseCustom.value) {
-        return beforeCloseCustom.value(buildEvent());
+        const ret = beforeCloseCustom.value(buildEvent());
+        if (ret == false) {
+          return false;
+        }
       }
+      await doSaveRemind();
       return true;
     }
 
