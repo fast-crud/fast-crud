@@ -109,6 +109,7 @@ export default defineComponent({
       }
     };
 
+    const treeRef = ref();
     return {
       ui,
       computedBinding,
@@ -116,7 +117,8 @@ export default defineComponent({
       ...usedDict,
       computedOptions,
       onSelectedChange,
-      slots
+      slots,
+      treeRef
     };
   }
 });
