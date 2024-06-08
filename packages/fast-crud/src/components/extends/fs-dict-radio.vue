@@ -94,8 +94,10 @@ export default defineComponent({
     const computedOptions = usedDict.createComputedOptions();
 
     const onSelectedChange = (value: any) => {
-      value = value.target.value;
       ctx.emit("change", value);
+      if (value && value.target) {
+        value = value.target.value;
+      }
       const dict = usedDict.getDict();
       if (dict && dict.dataMap && dict.dataMap[value]) {
         const opt = dict.dataMap[value];
