@@ -62,7 +62,7 @@ export default defineComponent({
     }
     const computedOptions = dictUseRet.createComputedOptions();
 
-    function onSelectChange(value) {
+    function onSelectChange(value: any) {
       ctx.emit("change", value);
       if (value) {
         let selectedOptions = [];

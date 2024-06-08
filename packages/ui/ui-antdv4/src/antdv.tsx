@@ -147,6 +147,8 @@ export class Antdv implements UiInterface {
         const newContext = {
           ...context,
           content: context.message,
+          okText: context.confirmButtonText,
+          cancelText: context.cancelButtonText,
           onOk,
           onCancel
         };

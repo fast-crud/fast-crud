@@ -180,8 +180,8 @@ export default defineComponent({
             await ui.messageBox.confirm({
               title: t("fs.form.saveRemind.title"),
               message: t("fs.form.saveRemind.content"),
-              okText: t("fs.form.saveRemind.ok"),
-              cancelText: t("fs.form.saveRemind.cancel")
+              confirmButtonText: t("fs.form.saveRemind.ok"),
+              cancelButtonText: t("fs.form.saveRemind.cancel")
             });
             needSave = true;
           } catch (e) {
@@ -210,7 +210,7 @@ export default defineComponent({
     const elementBeforeCloseFix = computed(() => {
       if (ui.type == "element") {
         return {
-          beforeClose: (done) => {
+          beforeClose: (done: any) => {
             beforeClose().then((ret) => {
               if (ret) {
                 done();
@@ -357,7 +357,7 @@ export default defineComponent({
               container.classList.add("fs-form-inner-wrapper");
               return container;
             } else {
-              log.error(`找不到选择器为${wrapper.innerContainerSelector}的元素`);
+              console.error(`找不到选择器为${formWrapperOpts.value.innerContainerSelector}的元素`);
             }
           }
           return props.innerWrapper;

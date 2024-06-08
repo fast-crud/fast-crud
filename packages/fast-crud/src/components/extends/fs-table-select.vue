@@ -181,7 +181,7 @@ function initSelectedKeys(modelValue: any) {
     }
   }
 }
-const openTableSelect = async (openOptions) => {
+const openTableSelect = async (openOptions: { crudOptions: CreateCrudOptions }) => {
   if (props.disabled || props.readonly || props.select?.disabled || props.select?.readonly) {
     return;
   }

@@ -650,7 +650,7 @@ export type ColProps = {
   span?: number;
   [props: string]: any;
 };
-export type FormWrapperSaveRemindProps = boolean | (() => Proimse<boolean>);
+export type FormWrapperSaveRemindProps = boolean | (() => Promise<boolean>);
 /**
  * 表单对话框配置
  */
@@ -1152,7 +1152,8 @@ export type FormWrapperContext<R = any> = {
   getFormData: () => R;
   reset: () => void;
   loading: Ref;
-  close: () => void;
+  doClose: () => Promise<boolean>;
+  close: () => Promise<void>;
   toggleFullscreen: () => void;
   submit: () => void;
 };

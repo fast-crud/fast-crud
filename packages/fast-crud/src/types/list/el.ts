@@ -13,7 +13,7 @@ export default function () {
       align: "center"
     },
     slider: {
-      form: { component: { name: ui.slider, props: {} } },
+      form: { component: { name: "el-slider", props: {} } },
       align: "center"
     },
     rate: {
