@@ -3,6 +3,31 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [1.21.0](https://github.com/fast-crud/fast-crud/compare/v1.20.2...v1.21.0) (2024-06-08)
+
+### Bug Fixes
+
+* 修复提交表单只有一个输入框时点回车会刷新浏览器的问题 ([3d756ea](https://github.com/fast-crud/fast-crud/commit/3d756eaab6894355053e078424835d3edbd80025))
+* 修复图片裁剪按钮上下和左右相反的bug ([c62b8d4](https://github.com/fast-crud/fast-crud/commit/c62b8d42371364b4e50d7289055ba2adfdff05aa))
+* 修复新版本jsx编译报错的问题 ([13c0e07](https://github.com/fast-crud/fast-crud/commit/13c0e07d31a1d37ae62d268f83ecabd23da65dca))
+* 修复新版本jsx编译报错的问题 ([5a83708](https://github.com/fast-crud/fast-crud/commit/5a83708123e7601b04da0268482f4f78569338ae))
+* 修复因vue升级导致Cannot find namespace 'JSX'问题 ([7d0c54c](https://github.com/fast-crud/fast-crud/commit/7d0c54ce94d736054f6f099724c6412077a47998))
+* 修复fs-table.less中的颜色污染 ([a0b1de4](https://github.com/fast-crud/fast-crud/commit/a0b1de45668f882e13669c5aee484d3d2532ce25))
+* fs-form独立使用支持插槽 ([ada8b49](https://github.com/fast-crud/fast-crud/commit/ada8b4944b2e6995391f0213dedd99218bf16d82))
+* getFileName支持item参数 ([9b9d68c](https://github.com/fast-crud/fast-crud/commit/9b9d68cde2e5bf377ea647f8f3f9fb3deed7498b))
+
+### Features
+
+* 表单支持变更关闭前提醒保存，form.wrapper支持beforeClose事件 ([6094d75](https://github.com/fast-crud/fast-crud/commit/6094d7585038e0c411282f13ddbedb1a73930167))
+* table-select 支持查看模式 ([60c2cba](https://github.com/fast-crud/fast-crud/commit/60c2cbadab5d52864aef350241be4f6e7f14600d))
+
+### Performance Improvements
+
+* 单选、多选、select、tree-select、table-select 都提供selected-change事件，可以获取选中的dict选项 ([312489d](https://github.com/fast-crud/fast-crud/commit/312489d4055bfc7c5f00aa07add8c98bcd62ae1b))
+* 图片裁剪组件中英文支持 ([8b5b3f6](https://github.com/fast-crud/fast-crud/commit/8b5b3f61bc67e17ed13ded4a5519434249d5c4df))
+* form.wrapper.buttons支持compute动态计算 ([6797ff1](https://github.com/fast-crud/fast-crud/commit/6797ff1384b3cf096d8aa4df68d6115a6bf5343d))
+* fs-dict-tree支持插槽 ([fca02f9](https://github.com/fast-crud/fast-crud/commit/fca02f9f6bb3b027ef39b7366c205ffbf3620dd8))
+
 ## [1.20.2](https://github.com/fast-crud/fast-crud/compare/v1.20.1...v1.20.2) (2024-03-21)
 
 ### Bug Fixes

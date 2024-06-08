@@ -3,6 +3,21 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [1.21.0](https://github.com/fast-crud/fast-crud/compare/v1.20.2...v1.21.0) (2024-06-08)
+
+### Bug Fixes
+
+* 修复三级以上路由页面无法缓存的问题 ([9ce8c7a](https://github.com/fast-crud/fast-crud/commit/9ce8c7a6a5fc12f347351ca74213ff9c542820d3))
+* 修复提交表单只有一个输入框时点回车会刷新浏览器的问题 ([3d756ea](https://github.com/fast-crud/fast-crud/commit/3d756eaab6894355053e078424835d3edbd80025))
+* 修复fs-table.less中的颜色污染 ([a0b1de4](https://github.com/fast-crud/fast-crud/commit/a0b1de45668f882e13669c5aee484d3d2532ce25))
+* edit-wang 改成edit-wang5 ([7b994c1](https://github.com/fast-crud/fast-crud/commit/7b994c19637aa4b6399acbf362d4dc6a73c07ca4))
+
+### Performance Improvements
+
+* 富文本编辑器增加为空校验示例 ([3e51ac1](https://github.com/fast-crud/fast-crud/commit/3e51ac1c2c22f2dc5200134732fc0146a4a0fd2d))
+* 图片裁剪组件中英文支持 ([8b5b3f6](https://github.com/fast-crud/fast-crud/commit/8b5b3f61bc67e17ed13ded4a5519434249d5c4df))
+* alioss getAuthorization接口支持后台返回key ([75e5b14](https://github.com/fast-crud/fast-crud/commit/75e5b1449238fbae86f002c290771a6b9fd1f824))
+
 ## [1.20.2](https://github.com/fast-crud/fast-crud/compare/v1.20.1...v1.20.2) (2024-03-21)
 
 ### Bug Fixes

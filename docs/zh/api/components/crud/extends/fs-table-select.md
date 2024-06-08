@@ -20,6 +20,7 @@
 | disabled            |                                                                                                                                     | boolean                | -      | false     |
 | readonly            |                                                                                                                                     | boolean                | -      | false     |
 | valueType           | 值类型                                                                                                                              | union                  | -      | "value"   |
+| viewMode            | 是否查看模式                                                                                                                        | boolean                | -      | false     |
 
 ## Events
 
@@ -27,6 +28,7 @@
 | ----------------- | ---------- | ----------- |
 | change            |            |
 | update:modelValue |            |
+| selected-change   |            |
 
 ## Slots
 

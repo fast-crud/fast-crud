@@ -7,7 +7,7 @@
 
 | Prop name       | Description | Type           | Values | Default                          |
 | --------------- | ----------- | -------------- | ------ | -------------------------------- |
-| title           |             | string         | -      | "图片裁剪"                       |
+| title           |             | string         | -      |                                  |
 | cropperHeight   |             | string\|number | -      |                                  |
 | dialogWidth     |             | string\|number | -      | "50%"                            |
 | maxSize         |             | number         | -      | 5                                |

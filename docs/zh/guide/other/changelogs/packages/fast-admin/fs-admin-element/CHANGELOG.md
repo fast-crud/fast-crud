@@ -3,6 +3,18 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [1.21.0](https://github.com/fast-crud/fast-crud/compare/v1.20.2...v1.21.0) (2024-06-08)
+
+### Bug Fixes
+
+* 修复裁剪组件，图片上传较大的时候报错的问题 ([bf17607](https://github.com/fast-crud/fast-crud/commit/bf176071651dfe29104a401770c1b5ea6b90cac3))
+
+### Performance Improvements
+
+* 单选、多选、select、tree-select、table-select 都提供selected-change事件，可以获取选中的dict选项 ([312489d](https://github.com/fast-crud/fast-crud/commit/312489d4055bfc7c5f00aa07add8c98bcd62ae1b))
+* alioss getAuthorization接口支持后台返回key ([93f4493](https://github.com/fast-crud/fast-crud/commit/93f4493910f1cbe46b034d8388fce7106b667cc2))
+* form.wrapper.buttons支持compute动态计算 ([6797ff1](https://github.com/fast-crud/fast-crud/commit/6797ff1384b3cf096d8aa4df68d6115a6bf5343d))
+
 ## [1.20.2](https://github.com/fast-crud/fast-crud/compare/v1.20.1...v1.20.2) (2024-03-21)
 
 ### Bug Fixes

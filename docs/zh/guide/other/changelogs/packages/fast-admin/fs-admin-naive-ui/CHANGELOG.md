@@ -3,6 +3,14 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [1.21.0](https://github.com/jekip/naive-ui-admin/compare/v1.20.2...v1.21.0) (2024-06-08)
+
+### Performance Improvements
+
+* 单选、多选、select、tree-select、table-select 都提供selected-change事件，可以获取选中的dict选项 ([312489d](https://github.com/jekip/naive-ui-admin/commit/312489d4055bfc7c5f00aa07add8c98bcd62ae1b))
+* 富文本编辑器增加为空校验示例 ([3e51ac1](https://github.com/jekip/naive-ui-admin/commit/3e51ac1c2c22f2dc5200134732fc0146a4a0fd2d))
+* form.wrapper.buttons支持compute动态计算 ([6797ff1](https://github.com/jekip/naive-ui-admin/commit/6797ff1384b3cf096d8aa4df68d6115a6bf5343d))
+
 ## [1.20.2](https://github.com/jekip/naive-ui-admin/compare/v1.20.1...v1.20.2) (2024-03-21)
 
 ### Bug Fixes

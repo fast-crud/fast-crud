@@ -3,6 +3,28 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [1.21.0](https://github.com/fast-crud/fast-crud/compare/v1.20.2...v1.21.0) (2024-06-08)
+
+### Bug Fixes
+
+* 修复裁剪组件，图片上传较大的时候报错的问题 ([bf17607](https://github.com/fast-crud/fast-crud/commit/bf176071651dfe29104a401770c1b5ea6b90cac3))
+* 修复富文本编辑器查看时没有被禁用的bug ([c88e1e9](https://github.com/fast-crud/fast-crud/commit/c88e1e9cc1ef2f0ab881c65845b7093af452817e))
+* 修复图片裁剪组件在naiveui下按钮错乱的问题 ([1df42d1](https://github.com/fast-crud/fast-crud/commit/1df42d16ececf64b1d5de9bfdb4cf00241569a5e))
+* 修复新版本jsx编译报错的问题 ([13c0e07](https://github.com/fast-crud/fast-crud/commit/13c0e07d31a1d37ae62d268f83ecabd23da65dca))
+* 修复新版本jsx编译报错的问题 ([5a83708](https://github.com/fast-crud/fast-crud/commit/5a83708123e7601b04da0268482f4f78569338ae))
+* 修复因vue升级导致Cannot find namespace 'JSX'问题 ([7d0c54c](https://github.com/fast-crud/fast-crud/commit/7d0c54ce94d736054f6f099724c6412077a47998))
+* getFileName支持item参数 ([9b9d68c](https://github.com/fast-crud/fast-crud/commit/9b9d68cde2e5bf377ea647f8f3f9fb3deed7498b))
+
+### Features
+
+* table-select 支持查看模式 ([60c2cba](https://github.com/fast-crud/fast-crud/commit/60c2cbadab5d52864aef350241be4f6e7f14600d))
+
+### Performance Improvements
+
+* 图片裁剪组件中英文支持 ([8b5b3f6](https://github.com/fast-crud/fast-crud/commit/8b5b3f61bc67e17ed13ded4a5519434249d5c4df))
+* alioss getAuthorization接口支持后台返回key ([93f4493](https://github.com/fast-crud/fast-crud/commit/93f4493910f1cbe46b034d8388fce7106b667cc2))
+* alioss getAuthorization接口支持后台返回key ([75e5b14](https://github.com/fast-crud/fast-crud/commit/75e5b1449238fbae86f002c290771a6b9fd1f824))
+
 ## [1.20.2](https://github.com/fast-crud/fast-crud/compare/v1.20.1...v1.20.2) (2024-03-21)
 
 ### Bug Fixes
