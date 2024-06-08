@@ -103,14 +103,13 @@ type = dict-cascader
 
 ### 富文本
 * 类型
-  *  file-uploader（文件上传） | image-uploader（图片上传） | avatar-uploader（头像上传，单图片）
-  *  cropper-uploader (头像裁剪上传)
+  *  editor-wang5
 
 <<< @/../../packages/fast-extends/src/editor/type/types.ts
 * 示例：[antdv](http://fast-crud.docmirror.cn/antdv/#/crud/component/editor) | [element](http://fast-crud.docmirror.cn/element/#/crud/component/editor)
 
 * 相关组件文档：
-  * [fs-editor-wang](/api/components/extends/editor/components/fs-editor-wang/index.md)
+  * [fs-editor-wang](/api/components/extends/editor/components/fs-editor-wang5/index.md)
 
 
 ### json
