@@ -16,9 +16,10 @@ import { useI18n } from "../../locale";
 import { uiContext } from "../../ui";
 import { Constants } from "../../utils/util.constants";
 import "./fs-form-wrapper.less";
-import { useDrag, useMerge } from "../../use";
+import { useCompute, useDrag, useMerge } from "../../use";
 import {
   FormProps,
+  FormScopeContext,
   FormWrapperContext,
   FormWrapperProps,
   OpenDialogProps,
@@ -284,6 +285,24 @@ export default defineComponent({
       formRef.value?.setFormData(form, options);
     }
 
+    const { doComputed } = useCompute();
+
+    function getComputeContext() {
+      return {
+        row: formOptions.value?.initialForm,
+        form: getFormData(),
+        index: formOptions.value?.index,
+        mode: formOptions.value?.mode,
+        attrs: formOptions.value,
+        getComponentRef(...args) {
+          formRef.value?.getComponentRef(...args);
+        }
+      } as FormScopeContext;
+    }
+    const computedCustomButtons = doComputed(() => {
+      return formWrapperBind.value?.buttons;
+    }, getComputeContext);
+
     const computedButtons = computed(() => {
       const defBtns = {
         cancel: {},
@@ -292,7 +311,7 @@ export default defineComponent({
           loading: loading.value
         }
       };
-      const buttons = merge(defBtns, formWrapperBind.value?.buttons);
+      const buttons = merge(defBtns, computedCustomButtons.value);
       const buttonsArr: any = [];
       _.forEach(buttons, (value, key) => {
         value.key = key;
