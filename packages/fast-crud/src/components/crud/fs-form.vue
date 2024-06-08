@@ -8,6 +8,7 @@
       'fs-form-flex': display === 'flex',
       'fs-form-invalid': validRef === false
     }"
+    onsubmit="event.preventDefault();"
     :model="form"
   >
     <!-- row -->
