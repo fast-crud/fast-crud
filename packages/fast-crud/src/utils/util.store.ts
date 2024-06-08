@@ -15,7 +15,7 @@ export default class TableStore {
     return prefix;
   }
 
-  getTable() {
+  async getTable() {
     const saved = localStorage.getItem(this.tableId);
     if (saved == null) {
       return;
@@ -23,21 +23,21 @@ export default class TableStore {
     return JSON.parse(saved);
   }
 
-  saveTable(table: any) {
+  async saveTable(table: any) {
     localStorage.setItem(this.tableId, JSON.stringify(table));
   }
 
-  clearTable() {
+  async clearTable() {
     localStorage.removeItem(this.tableId);
   }
 
-  updateTableValue(value: any, key = this.key) {
-    let table = this.getTable();
+  async updateTableValue(value: any, key = this.key) {
+    let table = await this.getTable();
     if (table == null) {
       table = {};
     }
     table[key] = value;
-    this.saveTable(table);
+    await this.saveTable(table);
   }
 
   getItemKey($route: any, keyType: any) {
@@ -51,8 +51,8 @@ export default class TableStore {
     return key + "." + keyType;
   }
 
-  getTableValue(key?: string) {
-    const table = this.getTable();
+  async getTableValue(key?: string) {
+    const table = await this.getTable();
     if (table == null) {
       return null;
     }
@@ -62,8 +62,8 @@ export default class TableStore {
     return table[key];
   }
 
-  clearTableValue(key?: string) {
-    const table = this.getTable();
+  async clearTableValue(key?: string) {
+    const table = await this.getTable();
     if (table == null) {
       return;
     }
@@ -71,6 +71,6 @@ export default class TableStore {
       key = this.key;
     }
     delete table[key];
-    this.saveTable(table);
+    await this.saveTable(table);
   }
 }

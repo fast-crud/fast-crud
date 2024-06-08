@@ -1064,6 +1064,17 @@ export type ColumnsFilterComponentProps<R = any> = {
      */
     unnamed?: string;
   };
+
+  /**
+   * 重置事件
+   */
+  onReset?: () => Promise<void>;
+
+  /**
+   * 保存事件
+   * @param props
+   */
+  onSubmit?: (props: { columns: any }) => Promise<void>;
 };
 
 export type ToolbarComponentProps<R = any> = {

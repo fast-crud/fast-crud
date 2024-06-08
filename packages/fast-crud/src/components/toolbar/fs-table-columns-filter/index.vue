@@ -75,7 +75,7 @@ const props = withDefaults(defineProps<ColumnsFilterComponentProps>(), {
     return { is: "fs-columns-filter-layout-default" };
   }
 });
-const emit = defineEmits(["update:columns", "update:show"]);
+const emit = defineEmits(["update:columns", "update:show", "reset", "submit"]);
 
 const { t } = useI18n();
 const ui = uiContext.get();
@@ -159,15 +159,16 @@ function setCurrentValue(value: any) {
 }
 
 // 还原
-function reset() {
+async function reset() {
   currentColumns.value = transformColumns(props.originalColumns);
-  submit(true);
-  clearThisStorage();
+  await do_save(true);
+  await clearThisStorage();
+  emit("reset");
 }
 // 确认
-function submit(noSave = false) {
+async function do_save(noSave = false) {
   if (!noSave) {
-    saveOptionsToStorage(currentColumns.value);
+    await saveOptionsToStorage(currentColumns.value);
   }
   const result = _.cloneDeep(currentColumns.value);
 
@@ -181,16 +182,22 @@ function submit(noSave = false) {
 
   doEmit(result);
   active.value = false;
+  return result;
+}
+
+async function submit(noSave = false) {
+  const columns = await do_save(noSave);
+  emit("submit", { columns });
 }
 
 provide(ColumnsFilterProvideKey, { originalColumns: original, currentColumns, text: _text, active, submit, reset });
 
-function simpleSubmit() {
-  submit(false);
+async function simpleSubmit() {
+  await submit(false);
   emit("update:show", false);
 }
-function simpleReset() {
-  reset();
+async function simpleReset() {
+  await reset();
   emit("update:show", false);
 }
 
@@ -211,7 +218,7 @@ function getStorageTable() {
   return storageTableStore.value;
 }
 
-function saveOptionsToStorage(value: any) {
+async function saveOptionsToStorage(value: any) {
   if (props.storage === false) {
     return;
   }
@@ -221,17 +228,17 @@ function saveOptionsToStorage(value: any) {
     const item = value[i];
     storedOptions.push(item);
   }
-  getStorageTable().updateTableValue(storedOptions);
+  await getStorageTable().updateTableValue(storedOptions);
 }
 
-function getOptionsFromStorage() {
+async function getOptionsFromStorage() {
   if (props.storage === false) {
     return;
   }
-  return getStorageTable().getTableValue();
+  return await getStorageTable().getTableValue();
 }
-function clearThisStorage() {
-  getStorageTable().clearTableValue();
+async function clearThisStorage() {
+  await getStorageTable().clearTableValue();
 }
 
 function getColumnsHash(columns: any) {
@@ -256,9 +263,9 @@ watch(
   }
 );
 
-const init = () => {
+const init = async () => {
   setCurrentValue(props.columns);
-  const storedOptions = getOptionsFromStorage();
+  const storedOptions = await getOptionsFromStorage();
   if (storedOptions) {
     const storeHash = getColumnsHash(storedOptions);
     const optionHash = getColumnsHash(original.value);
@@ -276,9 +283,8 @@ const init = () => {
       }
     }
     currentColumns.value = curValue;
-    nextTick(() => {
-      submit(true);
-    });
+    await nextTick();
+    await submit(true);
   }
 };
 
