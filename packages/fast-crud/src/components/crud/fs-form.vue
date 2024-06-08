@@ -27,7 +27,7 @@
             :item="item"
             :helper="helper"
             :model-value="get(form, item.key)"
-            :form-slot="slots['form_' + item.key]"
+            :form-slot="mergedSlots['form_' + item.key]"
             :get-context-fn="getContextFn"
             @update:modelValue="set(form, item.key, $event)"
           />
@@ -73,7 +73,7 @@
                   "
                   :item="computedColumns[key]"
                   :model-value="get(form, key)"
-                  :form-slot="slots['form_' + key]"
+                  :form-slot="mergedSlots['form_' + key]"
                   :get-context-fn="getContextFn"
                   @update:modelValue="set(form, key, $event)"
                 />
@@ -631,6 +631,10 @@ export default defineComponent({
       return before !== after;
     }
 
+    const mergedSlots = computed(() => {
+      return _.merge({}, props.slots, ctx.slots);
+    });
+
     ctx.emit("init", scope.value);
 
     return {
@@ -663,7 +667,8 @@ export default defineComponent({
       getContextFn,
       formItemShow,
       groupItemShow,
-      isDirty
+      isDirty,
+      mergedSlots
     };
   }
 });
