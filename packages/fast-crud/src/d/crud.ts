@@ -650,7 +650,7 @@ export type ColProps = {
   span?: number;
   [props: string]: any;
 };
-
+export type FormWrapperSaveRemindProps = boolean | (() => Proimse<boolean>);
 /**
  * 表单对话框配置
  */
@@ -674,6 +674,11 @@ export type FormWrapperProps<R = any> = {
    * @param opts
    */
   onOpened?: (opts: FormWrapperContext<R>) => void;
+
+  /**
+   * 对话框关闭前事件处理，返回false则阻止关闭
+   */
+  beforeClose?: (opts: FormWrapperContext<R>) => Promise<boolean>;
   /**
    * 对话框关闭后事件处理
    * @param opts
@@ -687,6 +692,11 @@ export type FormWrapperProps<R = any> = {
    * 打开对话框时是否全屏
    */
   fullscreen?: boolean;
+
+  /**
+   * 变更保存提醒
+   */
+  saveRemind?: FormWrapperSaveRemindProps;
   /**
    * 对应对话框组件的配置
    */

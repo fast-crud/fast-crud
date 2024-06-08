@@ -625,6 +625,12 @@ export default defineComponent({
       );
     }
 
+    function isDirty() {
+      const before = JSON.stringify(initialForm);
+      const after = JSON.stringify(form);
+      return before !== after;
+    }
+
     ctx.emit("init", scope.value);
 
     return {
@@ -656,7 +662,8 @@ export default defineComponent({
       computedGroup,
       getContextFn,
       formItemShow,
-      groupItemShow
+      groupItemShow,
+      isDirty
     };
   }
 });

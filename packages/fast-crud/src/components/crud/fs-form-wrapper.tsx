@@ -77,6 +77,7 @@ export default defineComponent({
 
     const emitOnClosed: Ref = ref();
     const emitOnOpened: Ref = ref();
+    const beforeCloseCustom: Ref = ref();
     const title: Ref<string> = ref();
     const formWrapperId = props.id || Math.floor(Math.random() * 1000000) + "";
     const formWrapperIdClass = "fs-form-wrapper_" + formWrapperId;
@@ -96,6 +97,7 @@ export default defineComponent({
         reset,
         loading,
         close,
+        doClose,
         toggleFullscreen,
         submit,
         mode: formOptions.value.mode
@@ -115,7 +117,7 @@ export default defineComponent({
       const customClass = `fs-form-wrapper ${formWrapperIdClass} ${wrapper[customClassKey] || ""} `;
 
       formWrapperBind.value = {
-        ..._.omit(wrapper, "title", "onOpen", "onClosed", "onOpened", "is", "inner"),
+        ..._.omit(wrapper, "title", "onOpen", "onClosed", "onOpened", "is", "inner", "beforeClose"),
         [customClassKey]: customClass
       };
 
@@ -145,6 +147,8 @@ export default defineComponent({
         }
       };
 
+      beforeCloseCustom.value = wrapper.beforeClose;
+
       if (wrapper.fullscreen != null) {
         fullscreen.value = wrapper.fullscreen;
       }
@@ -162,9 +166,70 @@ export default defineComponent({
         onOpened();
       });
     };
-    const close = () => {
+
+    async function doSaveRemind() {
+      const saveRemind = formWrapperOpts.value.saveRemind;
+      const isDirty = formRef.value?.isDirty();
+      if (isDirty && saveRemind) {
+        let needSave = false;
+        if (saveRemind instanceof Function) {
+          needSave = await saveRemind();
+        } else {
+          try {
+            await ui.messageBox.confirm({
+              title: t("fs.form.saveRemind.title"),
+              message: t("fs.form.saveRemind.content"),
+              okText: t("fs.form.saveRemind.ok"),
+              cancelText: t("fs.form.saveRemind.cancel")
+            });
+            needSave = true;
+          } catch (e) {
+            //用户取消
+            needSave = false;
+          }
+        }
+        //要保存
+        if (needSave) {
+          await submit();
+        }
+      }
+    }
+
+    async function beforeClose() {
+      await doSaveRemind();
+      if (beforeCloseCustom.value) {
+        return beforeCloseCustom.value(buildEvent());
+      }
+      return true;
+    }
+
+    const elementBeforeCloseFix = computed(() => {
+      if (ui.type == "element") {
+        return {
+          beforeClose: (done) => {
+            beforeClose().then((ret) => {
+              if (ret) {
+                done();
+              }
+            });
+          }
+        };
+      }
+      return {};
+    });
+
+    const close = async () => {
       formWrapperOpen.value = false;
     };
+    const doClose = async () => {
+      const ret = await beforeClose();
+      if (ret == false) {
+        return false;
+      }
+      close();
+      return true;
+    };
+
     const onClosed = () => {
       formOptions.value = null;
       if (emitOnClosed.value) {
@@ -273,6 +338,7 @@ export default defineComponent({
       formWrapperId,
       formWrapperIdClass,
       close,
+      doClose,
       onClosed,
       onOpened,
       open,
@@ -384,7 +450,10 @@ export default defineComponent({
       const visible = ui.formWrapper.visible;
       const vModel = {
         [visible]: formWrapperOpen.value,
-        ["onUpdate:" + visible]: (value: any) => {
+        ["onUpdate:" + visible]: async (value: any) => {
+          if (value === false && formWrapperOpen.value) {
+            return await doClose();
+          }
           formWrapperOpen.value = value;
         }
       };
@@ -406,6 +475,7 @@ export default defineComponent({
       };
 
       const formWrapperComp = resolveDynamicComponent(is);
+
       return (
         <formWrapperComp
           {...formWrapperBind.value}
@@ -415,6 +485,7 @@ export default defineComponent({
           {...vFullScreen}
           {...innerBind.value}
           {...vStyle}
+          {...elementBeforeCloseFix.value}
           v-slots={children}
         />
       );

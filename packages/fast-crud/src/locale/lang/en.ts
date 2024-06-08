@@ -30,7 +30,13 @@ export default {
     form: {
       cancel: "cancel",
       ok: "ok",
-      reset: "reset"
+      reset: "reset",
+      saveRemind: {
+        title: "save remind",
+        content: "The form data has changed, whether to save",
+        cancel: "don't save",
+        ok: "save"
+      }
     },
     actionbar: { add: "add" },
     toolbar: {

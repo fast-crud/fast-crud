@@ -77,8 +77,8 @@ const defaultCrudOptions = {
             cancel: {
               text: ct("fs.form.cancel"),
               order: 1,
-              click: ({ close }) => {
-                close();
+              click: ({ doClose }) => {
+                doClose();
               }
             },
             reset: {

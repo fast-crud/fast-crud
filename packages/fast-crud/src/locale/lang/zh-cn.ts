@@ -30,7 +30,13 @@ export default {
     form: {
       cancel: "取消",
       ok: "确定",
-      reset: "重置"
+      reset: "重置",
+      saveRemind: {
+        title: "提示",
+        content: "表单数据有变更，是否保存",
+        cancel: "不保存",
+        ok: "保存"
+      }
     },
     actionbar: { add: "添加" },
     toolbar: {
