@@ -351,6 +351,15 @@ export default defineComponent({
       }
       return ui.formWrapper.buildInnerBind({
         getInnerWrapper() {
+          if (formWrapperOpts.value.innerContainerSelector) {
+            const container = document.querySelector(formWrapperOpts.value.innerContainerSelector);
+            if (container) {
+              container.classList.add("fs-form-inner-wrapper");
+              return container;
+            } else {
+              log.error(`找不到选择器为${wrapper.innerContainerSelector}的元素`);
+            }
+          }
           return props.innerWrapper;
         }
       });

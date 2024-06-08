@@ -697,6 +697,17 @@ export type FormWrapperProps<R = any> = {
    * 变更保存提醒
    */
   saveRemind?: FormWrapperSaveRemindProps;
+
+  /**
+   * 是否内部打开对话框
+   */
+  inner?: boolean;
+
+  /**
+   * 内部打开对话框时容器的选择器，一般是admin框架主页面的容器的元素选择器
+   * 比如fs-admin 为 main.fs-framework-content
+   */
+  innerContainerSelector?: string;
   /**
    * 对应对话框组件的配置
    */

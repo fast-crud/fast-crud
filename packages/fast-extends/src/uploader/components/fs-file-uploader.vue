@@ -201,7 +201,7 @@ export default defineComponent({
       for (const item of arr) {
         if (!item.name) {
           const url = item.url || item.value;
-          item.name = await pickFileName.value(url);
+          item.name = await pickFileName.value(url, item);
         }
       }
       return arr;
