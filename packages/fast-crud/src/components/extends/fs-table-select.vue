@@ -181,8 +181,6 @@ function initSelectedKeys(modelValue: any) {
     }
   }
 }
-const crudBinding = ref();
-const crudRef = ref();
 const openTableSelect = async (openOptions) => {
   if (props.disabled || props.readonly || props.select?.disabled || props.select?.readonly) {
     return;
@@ -192,14 +190,7 @@ const openTableSelect = async (openOptions) => {
   }
   dialogOpen.value = true;
   initSelectedKeys(props.modelValue);
-  const crudOptionsOverride = merge({}, override.value, openOptions.crudOptions);
-  const ret = useFs({
-    crudRef,
-    crudBinding,
-    createCrudOptions: props.createCrudOptions,
-    crudOptionsOverride: crudOptionsOverride
-  });
-  const { crudExpose, context, appendCrudOptions, crudOptions } = ret;
+  ret.appendCrudOptions(openOptions.crudOptions);
   await nextTick();
   await crudExpose.doRefresh();
   return ret;
@@ -307,6 +298,11 @@ const override: DynamicallyCrudOptions = computed(() => {
 
 const { merge } = useMerge();
 // eslint-disable-next-line vue/no-setup-props-destructure
+const ret = useFs({
+  createCrudOptions: props.createCrudOptions,
+  crudOptionsOverride: override.value
+});
+const { crudExpose, context, appendCrudOptions, crudOptions, crudBinding, crudRef } = ret;
 
 watch(
   () => {
