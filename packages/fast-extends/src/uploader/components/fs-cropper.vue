@@ -247,19 +247,26 @@ export default defineComponent({
       }
       return cropperRef.value.getCroppedCanvas().toDataURL(fileType, quality);
     }
-    function getCropImageBlob(callback: any, type: string, quality?: any) {
+    async function getCropImageBlob(callback: any, type: string, quality?: any) {
       if (quality == null) {
         quality = props.compressQuality;
       }
-      return cropperRef.value.getCroppedCanvas().toBlob(callback, type, quality);
+
+      return new Promise((resolve, reject) => {
+        function promiseCallback(...args) {
+          callback(...args);
+          resolve();
+        }
+        cropperRef.value.getCroppedCanvas().toBlob(promiseCallback, type, quality);
+      });
     }
     function emit(result: any) {
       ctx.emit("done", result);
     }
-    function doOutput(file: File) {
+    async function doOutput(file: File) {
       const ret: any = { file };
       if (props.output === "all") {
-        getCropImageBlob((blob: any) => {
+        await getCropImageBlob((blob: any) => {
           const dataUrl = getCropImageDataUrl(file.type);
           ret.blob = blob;
           ret.dataUrl = dataUrl;
@@ -269,7 +276,7 @@ export default defineComponent({
       }
 
       if (props.output === "blob") {
-        getCropImageBlob((blob: any) => {
+        await getCropImageBlob((blob: any) => {
           ret.blob = blob;
           emit(ret);
         }, file.type);
@@ -281,13 +288,13 @@ export default defineComponent({
       }
     }
 
-    function doCropper() {
+    async function doCropper() {
       if (!isLoaded.value) {
         ui.message.warn("请先选择图片");
         return;
       }
+      await doOutput(file.value);
       dialogVisible.value = false;
-      doOutput(file.value);
     }
 
     function flipX() {
