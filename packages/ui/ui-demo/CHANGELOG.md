@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [1.21.0](https://github.com/fast-crud/fast-crud/compare/v1.20.2...v1.21.0) (2024-06-08)
+
+### Bug Fixes
+
+* 修复新版本jsx编译报错的问题 ([13c0e07](https://github.com/fast-crud/fast-crud/commit/13c0e07d31a1d37ae62d268f83ecabd23da65dca))
+
 ## [1.20.2](https://github.com/fast-crud/fast-crud/compare/v1.20.1...v1.20.2) (2024-03-21)
 
 **Note:** Version bump only for package ui-demo

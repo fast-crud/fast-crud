@@ -3,6 +3,14 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [1.21.0](https://github.com/fast-crud/fast-crud/compare/v1.20.2...v1.21.0) (2024-06-08)
+
+### Bug Fixes
+
+* 修复新版本jsx编译报错的问题 ([13c0e07](https://github.com/fast-crud/fast-crud/commit/13c0e07d31a1d37ae62d268f83ecabd23da65dca))
+* 修复新版本jsx编译报错的问题 ([5a83708](https://github.com/fast-crud/fast-crud/commit/5a83708123e7601b04da0268482f4f78569338ae))
+* 修复因vue升级导致Cannot find namespace 'JSX'问题 ([7d0c54c](https://github.com/fast-crud/fast-crud/commit/7d0c54ce94d736054f6f099724c6412077a47998))
+
 ## [1.20.2](https://github.com/fast-crud/fast-crud/compare/v1.20.1...v1.20.2) (2024-03-21)
 
 **Note:** Version bump only for package @fast-crud/ui-antdv4
