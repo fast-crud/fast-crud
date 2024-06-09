@@ -21,7 +21,7 @@ cd fast-crud
 # 同步fast-admin子模块
 git submodule update --init --recursive
 # 通过pnpm命令一次性全部install
-npm install -g pnpm # 如果没有安装pnpm，则需要先安装
+npm install -g pnpm@8.15.7 # 如果没有安装pnpm，则需要先安装, 注意9.x版本的pnpm有bug，安装依赖会卡住
 pnpm install
 
 ```
