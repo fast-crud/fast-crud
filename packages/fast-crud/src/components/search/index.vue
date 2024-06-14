@@ -177,6 +177,10 @@ export default defineComponent({
      **/
     "search",
     /**
+     * 查询事件，此事件供系统调用
+     */
+    "_search",
+    /**
      * 重置事件，供用户使用
      **/
     "reset",
@@ -366,8 +370,6 @@ export default defineComponent({
       const splitedKey = splitKey(key);
 
       return ui.formItem.render({
-        prop: key,
-        label: item.title,
         props: {
           ...item,
           label: item.title,
@@ -517,6 +519,7 @@ export default defineComponent({
     function getForm() {
       return formData;
     }
+
     function getValidatedForm() {
       return props.validatedForm;
     }
@@ -707,9 +710,11 @@ export default defineComponent({
         left: auto;
         visibility: hidden;
       }
+
       .el-form-item__error {
         bottom: 10px;
       }
+
       &:hover {
         .ant-form-item-explain,
         .el-form-item__error {

@@ -380,7 +380,9 @@ export interface FormCI extends CI<FormBuilderOption> {
   validateWrap: (formRef: any) => Promise<any>;
   transformValidateErrors: (e: Error) => ComponentBinding;
 }
-export interface FormItemCI extends CI {
+
+export type FormItemBuilderOption = {} & BindBuilderOptions;
+export interface FormItemCI extends CI<FormItemBuilderOption> {
   prop: string;
   label: string;
   rules: string;
