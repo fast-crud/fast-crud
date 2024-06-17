@@ -74,7 +74,6 @@
           <slot name="pagination-left"></slot>
         </div>
         <div class="fs-pagination">
-          {{ pagination }}
           <component :is="ui.pagination.name" v-if="pagination.show !== false" v-bind="pagination" />
         </div>
         <div class="fs-pagination-right">
