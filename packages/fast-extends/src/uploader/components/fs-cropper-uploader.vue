@@ -67,7 +67,7 @@ export default defineComponent({
     disabled: {},
     // 初始图片url,或者是数组
     modelValue: {
-      type: [String, Array]
+      type: [String, Object, Array]
     },
     img: {},
     // 上传后端类型，[form, cos, qiniu , alioss]
