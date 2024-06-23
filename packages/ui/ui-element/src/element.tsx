@@ -385,13 +385,16 @@ export class Element implements UiInterface {
           await formItem?.validate("blur");
         }
       };
+    },
+    builder(opts) {
+      return buildBinding(this, opts, {});
     }
   });
 
   button: ButtonCI = creator<ButtonCI>({
     name: "el-button",
-    textType: { type: "text" },
-    linkType: { type: "text" },
+    textType: { text: true },
+    linkType: { link: true },
     circle: { circle: true },
     colors: (type) => {
       return { type };

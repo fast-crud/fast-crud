@@ -59,13 +59,15 @@ export const buildBinding: UiBuildBinding = (ci, opts, special: UiSpecialBinding
   };
 
   const specialBinding = special instanceof Function ? special() : special;
-  return _.merge(
+  const merged = _.merge(
     {
       props: vModel
     },
     specialBinding,
     userBinding
   );
+  console.log("buildBinding", merged);
+  return merged;
 };
 
 //export type UIBaseCI<T> = Partial<T>;

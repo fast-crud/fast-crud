@@ -67,7 +67,7 @@ export default defineComponent({
     disabled: {},
     // 初始图片url,或者是数组
     modelValue: {
-      type: [String, Array]
+      type: [String, Object, Array]
     },
     img: {},
     // 上传后端类型，[form, cos, qiniu , alioss]
@@ -157,6 +157,8 @@ export default defineComponent({
       }
       if (typeof value === "string") {
         list.push({ url: await props.buildUrl(value), value: value, status: "done" });
+      } else if (typeof value === "object") {
+        list.push({ url: await props.buildUrl(value), value, status: "done" });
       } else {
         for (const item of value) {
           list.push({ url: await props.buildUrl(item), value: item, status: "done" });
