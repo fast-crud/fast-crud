@@ -103,7 +103,7 @@ const _text = computed(() => {
   return def;
 });
 
-function buildColumnFilterItem(item: ColumnProps) {
+function buildColumnFilterItem(item: ColumnProps): ColumnsFilterItem {
   return {
     key: item.key,
     title: item.title,
