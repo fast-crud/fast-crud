@@ -1,0 +1,169 @@
+.fs-dialog {
+  display: flex;
+  flex-direction: column;
+  .fs-form-footer-btns {
+    display: flex;
+    margin-top: 20px;
+    justify-content: flex-end;
+    & > * {
+      margin-left: 10px;
+    }
+  }
+
+  .fs-form-helper{
+    pre{
+      margin-top:0
+    }
+  }
+
+  .fs-form-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding-right: 40px;
+    .fs-form-header-left {
+      justify-items: flex-start;
+    }
+    .fs-form-header-right {
+      justify-items: flex-end;
+      color: #777;
+      & > * {
+        cursor: pointer;
+      }
+    }
+    .fs-form-header-action{
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+    .fs-fullscreen-icon {
+      cursor: pointer;
+    }
+  }
+  &.fs-fullscreen {
+    display: flex;
+    flex-direction: column;
+    .fs-form-wrapper-body {
+      height: 100%;
+      width: 100%;
+      position: absolute;
+      top: 0;
+      left: 0;
+      display: flex;
+      flex-direction: column;
+      >*{
+        margin:24px;
+      }
+      .fs-form-body {
+        flex: 1;
+        overflow: auto;
+      }
+    }
+  }
+}
+
+//for antdv
+
+.fs-dialog {
+  &.fs-fullscreen {
+    &.ant-modal {
+      width: 100% !important;
+      height: 100% !important;
+      top: 0 !important;
+      padding: 0px;
+      .ant-modal-content {
+        height: 100%;
+        display: flex;
+        flex-direction: column;
+        .ant-modal-body {
+          flex: 1;
+          position: relative;
+        }
+      }
+    }
+  }
+}
+
+// for element
+.fs-form-inner-wrapper {
+  .el-overlay {
+    position: absolute;
+    .el-overlay-dialog {
+      position: absolute;
+    }
+  }
+}
+.fs-form-wrapper {
+  .el-dialog__header {
+    padding: 20px 20px;
+    border-bottom: 1px #eee solid;
+  }
+  .el-dialog__body {
+    padding: 20px 20px;
+  }
+
+  .el-drawer__body {
+    padding: 20px 20px;
+  }
+
+  .el-drawer__header {
+    margin-bottom: 0px;
+    padding: 20px 20px;
+    border-bottom: 1px #eee solid;
+  }
+
+  &.fs-fullscreen {
+    .el-dialog__body {
+      position: relative;
+      flex: 1;
+    }
+  }
+}
+
+// for naive
+.n-modal-scroll-content {
+  display: flex;
+  flex-direction: column;
+  .fs-form-wrapper.fs-fullscreen.n-modal {
+    height: 100%;
+    width: 100% !important;
+    flex: 1;
+    border-radius: 0;
+  }
+
+  .fs-form-wrapper {
+    .n-card__content {
+      position: relative;
+    }
+  }
+}
+
+// inner
+// element 不需要
+
+// naive-ui
+.fs-form-inner-wrapper {
+  .n-modal-container {
+    position: unset;
+    left: unset;
+    top: unset;
+    height: unset;
+    width: unset;
+  }
+  .n-modal-mask {
+    position: absolute;
+  }
+  .n-modal-body-wrapper {
+    position: absolute;
+  }
+}
+
+// antdv
+.fs-form-inner-wrapper {
+  .ant-modal-mask {
+    position: absolute;
+  }
+  .ant-modal-wrap {
+    position: absolute;
+  }
+}
