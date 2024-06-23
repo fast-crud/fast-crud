@@ -136,10 +136,9 @@ const crudOptions = {
 * 局部注册使用:
 ```js
 import CustomLayout from 'xxxxxx/xxxx/custom-layout.vue'
-import {shallowRef} from 'vue'
 const crudOptions = {
     container:{
-        is: shallowRef(CustomLayout)
+        is: CustomLayout
     }
 }
 ```
