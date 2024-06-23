@@ -235,14 +235,17 @@ textType.search.autoSearchTrigger='change'  //修改官方的字段类型，设�
 ## 字段merge插件
 
 当你想自定义columns额外处理方法时可以使用 `registerMergeColumnPlugin` 来注册字段merge插件。   
-可以帮助你实现类似`dict`、`type`等公共属性的功能
+可以帮助你实现类似`dict`、`type`等公共属性的功能    
+可以让你自定义字段配置简化逻辑，提高复用性，减少重复代码。
+
 
 ```js
-import { useColumns,MergeColumnPlugin } from '@fast-crud/fast-crud'
+import { useColumns,MergeColumnPlugin,useMerge } from '@fast-crud/fast-crud'
 
 // 跟上面一样，不要写在页面里，这个也是全局的，要写在vue.use(FastCrud)之后
 
 const { registerMergeColumnPlugin } = useColumns();
+const {merge} = useMerge()
 registerMergeColumnPlugin({
     name: 'readonly-plugin',
     order: 1,
@@ -251,7 +254,9 @@ registerMergeColumnPlugin({
         // 比如你可以定义一个readonly的公共属性，处理该字段只读，不能编辑
         if (columnProps.readonly) {
             // 合并column配置
-            _.merge(columnProps, {
+            // 意思是，当用户给这个字段配置了columns[key].readonly = true
+            // 就相当于配置了 {form: {show: false},viewForm: {show: true}}
+            merge(columnProps, {
                 form: {show: false},
                 viewForm: {show: true},
             });

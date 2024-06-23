@@ -58,8 +58,24 @@ const crudOptions = {
 
 更多帮助，请参考[字段类型](/guide/advance/column-type.md)
 
+:::tip
 
+* `type`功能通过 `字段merge插件` 来实现的    
+* `字段merge插件` 可以用来简化字段配置，提高复用性，减少重复代码。    
+* [去学习字段merge插件](/guide/advance/column-type.html#字段merge插件)
+:::
 
+## [key].dict
+* 说明：字段字典分发，运行时字典实例将分别传递给column/form/search的组件的dict参数中
+* 类型：Dict对象
+
+:::tip
+
+* `dict分发`功能也是通过 `字段merge插件` 来实现的    
+* `字段merge插件` 可以用来简化字段配置，提高复用性，减少重复代码。   
+* [去学习字段merge插件](/guide/advance/column-type.html#字段merge插件)
+
+::: 
 
 ## [key].valueBuilder与valueResolve
 * 说明： 后台值与前端值不一致时解决方案
