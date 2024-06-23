@@ -8,6 +8,8 @@ export type ColumnsFilterItem = {
   show: boolean;
   __show: boolean;
   __disabled: boolean;
+
+  children: ColumnsFilterItem[];
 };
 
 export type ColumnsFilterContext = {

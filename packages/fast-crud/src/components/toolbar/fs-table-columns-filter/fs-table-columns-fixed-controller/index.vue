@@ -12,7 +12,7 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, ref } from "vue";
+import { computed, defineComponent, ref } from "vue";
 import { useUi } from "../../../../use";
 
 export default defineComponent({
@@ -25,20 +25,22 @@ export default defineComponent({
   emits: ["update:modelValue", "change"],
   setup(props, ctx) {
     const { ui } = useUi();
-    const options = ref([
-      {
-        value: "left",
-        icon: ui.icons.left // 'el-icon-arrow-left'
-      },
-      {
-        value: false,
-        icon: ui.icons.close // 'el-icon-close'
-      },
-      {
-        value: "right",
-        icon: ui.icons.right // 'el-icon-arrow-right'
-      }
-    ]);
+    const options = computed(() => {
+      return [
+        {
+          value: "left",
+          icon: ui.icons.left // 'el-icon-arrow-left'
+        },
+        {
+          value: false,
+          icon: ui.icons.close // 'el-icon-close'
+        },
+        {
+          value: "right",
+          icon: ui.icons.right // 'el-icon-arrow-right'
+        }
+      ];
+    });
 
     function submit(value: any) {
       ctx.emit("update:modelValue", value);

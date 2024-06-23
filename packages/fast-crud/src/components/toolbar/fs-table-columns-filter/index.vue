@@ -142,13 +142,10 @@ function transformColumns(value: TableColumnsProps): ColumnsFilterItem[] {
   const columns: ColumnsFilterItem[] = [];
   _.forEach(value, (item) => {
     const column = buildColumnFilterItem(item);
+    columns.push(column);
     if (item.children) {
       const list: ColumnsFilterItem[] = transformColumns(item.children);
-      for (let item of list) {
-        columns.push(item);
-      }
-    } else {
-      columns.push(column);
+      column.children = [] = list;
     }
   });
   return columns;

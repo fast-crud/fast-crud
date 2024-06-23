@@ -23,39 +23,12 @@
             <span class="title">{{ text.fixed }} / {{ text.order }}</span>
           </div>
 
-          <draggable v-model="currentColumns" item-key="key" :move="onDraggableMove">
-            <template #item="{ element, index }">
-              <div
-                v-show="originalColumns[element.key]?.__show !== false"
-                :title="buildText(element)"
-                class="component--list-item"
-                flex="main:justify cross:center"
-                :i="index"
-              >
-                <component
-                  :is="ui.checkbox.name"
-                  v-model:[ui.checkbox.modelValue]="element.show"
-                  :disabled="originalColumns[element.key]?.__disabled === true"
-                  class="item-label"
-                  :title="buildText(element)"
-                  @change="allCheckedUpdate"
-                >
-                  {{ buildText(element) }}
-                </component>
-                <div class="item-right">
-                  <fs-table-columns-fixed-controller
-                    v-model="element.fixed"
-                    flex-box="0"
-                    class="d2-mr-10"
-                    @change="fixedChange(index, $event)"
-                  />
-                  <div flex-box="0" class="component--list-item-handle handle">
-                    <fs-icon :icon="ui.icons.sort" />
-                  </div>
-                </div>
-              </div>
-            </template>
-          </draggable>
+          <fs-columns-filter-nest-list
+            :columns="currentColumns"
+            :is-root="true"
+            @check-changed="allCheckedUpdate"
+            @fixed-changed="fixedChange"
+          ></fs-columns-filter-nest-list>
         </div>
       </component>
       <slot name="buttons"></slot>
@@ -68,15 +41,10 @@ import _ from "lodash-es";
 //不要删
 //@ts-ignore
 import draggable from "vuedraggable-es";
-import FsTableColumnsFixedController from "./fs-table-columns-fixed-controller/index.vue";
 import { useUi } from "../../../use";
 import { computed, inject, ref, watch } from "vue";
-import {
-  ColumnsFilterItem,
-  ColumnsFilterProvideKey,
-  ColumnsFilterContext,
-  ColumnsFilterContainerProps
-} from "../../../d/";
+import { ColumnsFilterProvideKey, ColumnsFilterContext, ColumnsFilterContainerProps } from "../../../d/";
+import FsColumnsFilterNestList from "./fs-columns-filter-nest-list.vue";
 
 const { ui } = useUi();
 
@@ -89,7 +57,7 @@ const drawerBind = computed(() => {
       ["onUpdate:" + ui.drawer.visible]: (e: any) => {
         active.value = e;
       },
-      [ui.drawer.width]: props.width || "300px"
+      [ui.drawer.width]: props.width || "400px"
     },
     props.drawer
   );
@@ -137,44 +105,9 @@ watch(
   { immediate: true }
 );
 
-function onDraggableMove(e: any) {
-  const draged = e.draggedContext.element;
-  const target = e.relatedContext.element;
-  const sorted: ColumnsFilterItem[] = [];
-  for (const item of currentColumns.value) {
-    if (item.key === draged.key) {
-      sorted.push(target);
-    } else if (item.key === target.key) {
-      sorted.push(draged);
-    } else {
-      sorted.push(item);
-    }
-  }
-  //看key的排列是否正常
-  let leftIndex = 0;
-  let rightIndex = sorted.length - 1;
-  let minNotIndex = sorted.length - 1;
-  let maxNotIndex = 0;
-  for (let i = 0; i < sorted.length; i++) {
-    const item = sorted[i];
-    if (item.fixed === "left") {
-      leftIndex = i;
-    } else if (item.fixed === "right") {
-      rightIndex = rightIndex > i ? i : rightIndex;
-    } else {
-      minNotIndex = minNotIndex > i ? i : minNotIndex;
-      maxNotIndex = maxNotIndex < i ? i : maxNotIndex;
-    }
-  }
-
-  if (minNotIndex < leftIndex || maxNotIndex > rightIndex) {
-    //ui.message.error("非fixed字段不得越过fixed字段的顺序");
-    return false;
-  }
-}
-
 // fixed 变化时触发
 function fixedChange(index: number, value: any) {
+  debugger;
   if (value) {
     currentColumns.value[index].show = true;
   }
@@ -188,10 +121,6 @@ function fixedChange(index: number, value: any) {
 }
 function allCheckedUpdate() {
   checkAll.value = showLength.value === allLength.value;
-}
-
-function buildText(element: any) {
-  return element.label || element.title || element.key || text.value.unnamed;
 }
 </script>
 
