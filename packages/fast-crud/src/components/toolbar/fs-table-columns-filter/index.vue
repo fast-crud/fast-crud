@@ -117,7 +117,7 @@ function buildColumnFilterItem(item: ColumnProps) {
 function transformToTableColumns(result: ColumnsFilterItem[]) {
   const columns: TableColumnsProps = {};
   _.forEach(result, (item) => {
-    const column = _.omit(item, "children", "__show", "__disabled");
+    const column: ColumnProps = _.omit(item, "children", "__show", "__disabled");
     if (item.children && item.children.length > 0) {
       column.children = transformToTableColumns(item.children);
     }
