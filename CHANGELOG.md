@@ -3,6 +3,19 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.21.1](https://github.com/fast-crud/fast-crud/compare/v1.21.0...v1.21.1) (2024-06-23)
+
+### Bug Fixes
+
+* 修复独立使用对话框 openDialog方法await无返回值的bug ([0cc22fd](https://github.com/fast-crud/fast-crud/commit/0cc22fd2ad57b8e3e85174ced1546bb6a90ed838))
+* 修复多级表头时列设置的问题 ([9f6d981](https://github.com/fast-crud/fast-crud/commit/9f6d9811aec55b98a5c6e61389548e22466a7273))
+* 修复FsSelectTable查看模式下会修改vModel值的bug ([2424fcc](https://github.com/fast-crud/fast-crud/commit/2424fcca74d823bb5990622c11ee84b28e7db868))
+* 修复viewFormUseCellComponent 在 type 为数组时，不生效的bug ([197357a](https://github.com/fast-crud/fast-crud/commit/197357a4c576627f7e49f5a61a01ee93d1d459f3))
+
+### Performance Improvements
+
+* 优化字段复合配置的文档 ([6627da3](https://github.com/fast-crud/fast-crud/commit/6627da3902484628132349eb0f3cfebb3b127171))
+
 # [1.21.0](https://github.com/fast-crud/fast-crud/compare/v1.20.2...v1.21.0) (2024-06-08)
 
 ### Bug Fixes
