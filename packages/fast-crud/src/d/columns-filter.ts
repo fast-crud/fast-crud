@@ -9,7 +9,7 @@ export type ColumnsFilterItem = {
   __show: boolean;
   __disabled: boolean;
 
-  children: ColumnsFilterItem[];
+  children?: ColumnsFilterItem[];
 };
 
 export type ColumnsFilterContext = {
