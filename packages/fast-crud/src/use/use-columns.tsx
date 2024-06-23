@@ -92,7 +92,7 @@ const viewFormUseCellComponentPlugin = {
     const viewFormColumn: FormItemProps = {
       component: columnComponent
     };
-    if (columnProps.type === "text") {
+    if (columnProps.type === "text" || (columnProps.type instanceof Array && columnProps.type.includes("text"))) {
       viewFormColumn.render = (context: ScopeContext) => {
         const { value } = context;
         return <span>{value}</span>;
