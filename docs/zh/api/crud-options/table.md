@@ -176,6 +176,15 @@
 * 类型：string
 
 
+## remove.confirmProps
+* 说明：删除确认框原生属性，在打开confirm对话框时解析传入
+* 类型：any
+```js
+messageBox.confirm('确定删除此数据吗', '提示', {
+    ...crudBinding.value.table.remove.confirmProps
+})
+```
+
 
 ## remove.refreshTable
 * 说明：删除后是否刷新表格
@@ -204,8 +213,6 @@
     }
   }    
 }
-```
-
 ```
 
 ## remove.showSuccessNotification
@@ -252,8 +259,9 @@ const crudOptions = {
                 return true
             },  
             updateCell: async (opts)=>{
-                // (opts: { editableId: any; row: any; key: string; value: any }) => Promise<any>;
+                // (opts: {  row: any; key: string; value: any }) => Promise<any>;
                 //cell模式下，点击确认√，将编辑数据提交给后台的请求
+                const {row,key,value} = opts
                 const res = await request({
                     url:"/xxx/cellUpdate",
                     method:"post",
@@ -263,7 +271,8 @@ const crudOptions = {
                         value
                     }
                 })
-                // 如果id(table.rowKey)为负数，则是添加，后台需要返回新的id值，用于更新到表格内
+                // 如果你需要同步修改其他字段值， row.xxx = xxx 可以直接修改
+                // 如果row.id(table.rowKey)为负数，则是添加，后台需要返回新的id值，用于更新到表格内
                 // res 应该至少包含id(rowKey) 例如： {id:99,...}
                 return res
             },
@@ -288,7 +297,7 @@ const crudOptions = {
                     //比table.editable.isEditable优先级更高
                     disabled: false,
                     // 单元格提交的请求，示例同上
-                    updateCell: undefine //EditableUpdateCellRequest;
+                    updateCell: undefine
                 }
             }
         }
