@@ -1,4 +1,4 @@
-import { SearchPlugin } from "vitepress-plugin-search";
+import {SearchPlugin} from "vitepress-plugin-search";
 //default options
 
 module.exports = {
@@ -28,12 +28,12 @@ module.exports = {
 
     themeConfig: {
         logo: '/images/logo.svg',
-        search:{
+        search: {
             provider: 'local',
-            options:{
+            options: {
                 detailedView: true,
-                translations:{
-                    button:{
+                translations: {
+                    button: {
                         buttonText: '搜索文档',
                         buttonAriaLabel: '搜索文档'
                     },
@@ -132,7 +132,15 @@ module.exports = {
                             items: [
                                 {text: '概览', link: '/api/crud-options/index'},
                                 {text: 'request', link: '/api/crud-options/request'},
-                                {text: 'columns', link: '/api/crud-options/columns'},
+                                {
+                                    text: 'columns',
+                                    items: [
+                                        {text: "字段复合配置", link: '/api/crud-options/columns/self'},
+                                        {text: "column", link: '/api/crud-options/columns/column'},
+                                        {text: "form", link: '/api/crud-options/columns/form'},
+                                        {text: "search", link: '/api/crud-options/columns/search'},
+                                    ]
+                                },
                                 {text: 'form', link: '/api/crud-options/form'},
                                 {text: 'search', link: '/api/crud-options/search'},
                                 {text: 'actionbar', link: '/api/crud-options/actionbar'},
@@ -195,7 +203,10 @@ module.exports = {
                                 {text: 'fs-search', link: "/api/components/crud/search/index"},
                                 {text: 'fs-search-layout-default', link: "/api/components/crud/search/layout-default"},
                                 {text: 'fs-toolbar', link: "/api/components/crud/toolbar/index"},
-                                {text: 'fs-table-columns-filter', link: "/api/components/crud/toolbar/fs-table-columns-filter/index"},
+                                {
+                                    text: 'fs-table-columns-filter',
+                                    link: "/api/components/crud/toolbar/fs-table-columns-filter/index"
+                                },
                                 {text: 'fs-toolbar', link: "/api/components/crud/toolbar/index"},
                                 {text: 'fs-table', link: "/api/components/crud/crud/fs-table"},
                                 {text: 'fs-row-handle', link: "/api/components/crud/crud/fs-row-handle"},
@@ -256,7 +267,7 @@ module.exports = {
                                         {
                                             text: "fs-editor-wang",
                                             link: '/api/components/extends/editor/components/fs-editor-wang/index'
-                                        },{
+                                        }, {
                                             text: "fs-editor-wang5",
                                             link: '/api/components/extends/editor/components/fs-editor-wang5/index'
                                         }
@@ -305,7 +316,7 @@ module.exports = {
             {text: '首页', link: '/'},
             {text: '指南', link: '/guide/'},
             {text: 'API', link: '/api/'},
-            {text:"d.ts",link:"http://fast-crud.docmirror.cn/d.ts/modules.html"},
+            {text: "d.ts", link: "http://fast-crud.docmirror.cn/d.ts/modules.html"},
             {text: 'FsAdmin', link: '/admin/'},
             {text: '示例', link: '/demo/'},
             {text: 'github', link: 'https://github.com/fast-crud/fast-crud'},
