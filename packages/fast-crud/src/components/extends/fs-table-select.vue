@@ -325,27 +325,29 @@ function onOk() {
   if (props.dict.loading) {
     return;
   }
-  let value = null;
-  let rows = null;
-  if (selectedRowKeys.value?.length > 0) {
-    value = [...selectedRowKeys.value];
+  if (!props.viewMode) {
+    //非view模式下，需要更新value
+    let value = null;
+    let rows = null;
+    if (selectedRowKeys.value?.length > 0) {
+      value = [...selectedRowKeys.value];
 
-    rows = value.map((item) => {
-      return props.dict.getDictMap()[item];
-    });
-    if (props.valueType === "object") {
-      value = rows;
+      rows = value.map((item) => {
+        return props.dict.getDictMap()[item];
+      });
+      if (props.valueType === "object") {
+        value = rows;
+      }
+
+      if (props.multiple !== true && value.length > 0) {
+        value = value[0];
+      }
     }
 
-    if (props.multiple !== true && value.length > 0) {
-      value = value[0];
-    }
+    emits("update:modelValue", value);
+    emits("change", value);
+    emits("selected-change", rows);
   }
-
-  emits("update:modelValue", value);
-  emits("change", value);
-  emits("selected-change", rows);
-
   dialogOpen.value = false;
 }
 
