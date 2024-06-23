@@ -222,9 +222,19 @@ export function useEditable(props: any, ctx: any, tableRef: any): { editable: Ed
         cell.loading = true;
         try {
           const res = await updateCell({ editableId, row: tableRow, key, value: getValue(key) });
-          if (res != null && tableRow[options.value.rowKey] < 0) {
-            //更新id值
-            tableRow[options.value.rowKey] = res[options.value.rowKey];
+          const rowKeyValue = tableRow[options.value.rowKey];
+          if (rowKeyValue == null || rowKeyValue <= 0) {
+            //是添加
+            //需要返回res.id
+            const returnId = res && res[options.value.rowKey];
+            if (returnId == null) {
+              logger.error(
+                `对于添加的行，updateCell方法需要返回{'id':value}，如果你配置了别的rowKey，需要返回{[rowKey]:id}。
+当前返回值:${JSON.stringify(res)}`
+              );
+            } else {
+              tableRow[options.value.rowKey] = res[options.value.rowKey];
+            }
           }
           cell.persist();
         } finally {

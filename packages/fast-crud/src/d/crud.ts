@@ -547,7 +547,7 @@ export type EditableUpdateCellRequest<R = any> = (opts: {
   row: R;
   key: string;
   value: any;
-}) => Promise<any>;
+}) => Promise<R>;
 export type EditableUpdateColumnRequest<R = any> = (opts: {
   editableId: any;
   row: R;
