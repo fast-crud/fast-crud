@@ -160,12 +160,13 @@ export default defineComponent({
       ctx.emit("inner-change", !!formWrapperOpts.value.inner);
 
       // 打开表单对话框
-      return new Promise(async (resolve, reject) => {
-        await nextTick();
-        formWrapperOpen.value = true;
-        await nextTick();
-        onOpened();
-      });
+      await nextTick();
+      formWrapperOpen.value = true;
+      await nextTick();
+      // opened事件
+      onOpened();
+      // 修复open执行完之后无返回的bug
+      return buildEvent();
     };
 
     async function doSaveRemind() {
