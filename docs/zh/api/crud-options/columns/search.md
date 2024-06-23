@@ -26,7 +26,7 @@ const crudOptions = {
 ## [key].search.component
 * 说明：查询框字段组件配置
 * 类型：`ComponentProps`
-参考组件配置[component](../common-options.md)
+参考组件配置[component](../../common-options.md)
 
 
 ## [key].search.valueResolve

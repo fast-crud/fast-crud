@@ -60,7 +60,7 @@ crudOptions = { //
 ## [key].column.component
 * 说明：单元格组件配置
 * 类型：Object
-参考组件配置[component](../common-options.md)
+参考组件配置[component](../../common-options.md)
 
 ## [key].column.columnSetDisabled
 * 说明：在列设置中禁用该字段的勾选

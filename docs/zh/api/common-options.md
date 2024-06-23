@@ -16,8 +16,8 @@ const curdOptions = {
                 component:{
                     //全局注册的组件直接写组件名称即可
                     name: 'a-select',
-                    //局部注册的组件需要shallowRef方法包裹
-                    name: shallowRef(TestComponent)
+                    //局部注册组件
+                    name: TestComponent
                 }
             }
         }
