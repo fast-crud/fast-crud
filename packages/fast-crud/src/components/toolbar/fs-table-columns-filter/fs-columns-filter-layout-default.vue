@@ -107,7 +107,6 @@ watch(
 
 // fixed 变化时触发
 function fixedChange(index: number, value: any) {
-  debugger;
   if (value) {
     currentColumns.value[index].show = true;
   }

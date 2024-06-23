@@ -117,7 +117,11 @@ function buildColumnFilterItem(item: ColumnProps) {
 function transformToTableColumns(result: ColumnsFilterItem[]) {
   const columns: TableColumnsProps = {};
   _.forEach(result, (item) => {
-    columns[item.key] = item;
+    const column = _.omit(item, "children");
+    if (item.children && item.children.length > 0) {
+      column.children = transformToTableColumns(item.children);
+    }
+    columns[item.key] = column;
   });
   return columns;
 }
