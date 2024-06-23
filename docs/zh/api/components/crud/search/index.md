@@ -27,6 +27,7 @@
 | Event name           | Properties | Description                |
 | -------------------- | ---------- | -------------------------- |
 | search               |            | 查询事件                   |
+| \_search             |            | 查询事件，此事件供系统调用 |
 | reset                |            | 重置事件，供用户使用       |
 | \_reset              |            | 重置事件，此事件供系统调用 |
 | validate-error       |            | 校验失败事件               |
