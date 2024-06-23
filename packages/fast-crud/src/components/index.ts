@@ -30,6 +30,8 @@ import FsEditable from "./crud/editable/fs-editable.vue";
 import FsActionbar from "./actionbar/index.vue";
 import FsToolbar from "./toolbar/index.vue";
 import FsColumnsFilterLayoutDefault from "./toolbar/fs-table-columns-filter/fs-columns-filter-layout-default.vue";
+import fsColumnsFilterNestList from "./toolbar/fs-table-columns-filter/fs-columns-filter-nest-list.vue";
+import FsTableColumnsFixedController from "./toolbar/fs-table-columns-filter/fs-table-columns-fixed-controller/index.vue";
 
 import FsSearch from "./search/index.vue";
 import FsSearchV1 from "./search/search_v1.vue";
@@ -79,6 +81,8 @@ export {
   FsActionbar,
   FsToolbar,
   FsColumnsFilterLayoutDefault,
+  fsColumnsFilterNestList,
+  FsTableColumnsFixedController,
   FsDictRadio,
   FsDictSelect,
   FsValuesFormat,

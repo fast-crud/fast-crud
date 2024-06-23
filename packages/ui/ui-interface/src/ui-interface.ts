@@ -344,6 +344,7 @@ export type MessageBoxContextType = {
   confirmButtonText?: string;
   cancelButtonText?: string;
   type?: string;
+  [key: string]: any;
 };
 export type MessageBoxOpenType = (context: MessageBoxContextType) => Promise<void>;
 export interface MessageBoxCI extends CI {

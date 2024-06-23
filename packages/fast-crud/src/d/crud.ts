@@ -491,6 +491,13 @@ export type RemoveProps<R = any> = {
    */
   handle?: (context: DoRemoveContext<R>) => Promise<any>;
 
+  /**
+   * confirm对话框的属性
+   */
+  confirmProps?: any;
+  /**
+   * 其他属性
+   */
   [key: string]: any;
 };
 
