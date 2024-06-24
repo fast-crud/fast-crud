@@ -374,7 +374,6 @@ export default defineComponent({
         }
         if (file.size > limit) {
           let message = "文件大小超过限制，当前文件大小：" + file.size / 1024 + "k";
-          console.log(message);
           showMessage(file.size, limit);
           throw new Error(message);
         }

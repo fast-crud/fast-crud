@@ -68,7 +68,7 @@ export default defineComponent({
     }
 
     const showAction: ComputedRef<boolean> = computed(() => {
-      console.log(props.editableOpts?.mode, props.editableOpts.showAction, props.editableCell.showAction);
+      // console.log(props.editableOpts?.mode, props.editableOpts.showAction, props.editableCell.showAction);
       return (
         (props.editableOpts?.mode === "cell" || props.editableOpts?.mode === "free") &&
         props.editableCell.showAction !== false
