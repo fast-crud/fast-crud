@@ -66,7 +66,7 @@ export const buildBinding: UiBuildBinding = (ci, opts, special: UiSpecialBinding
     specialBinding,
     userBinding
   );
-  console.log("buildBinding", merged);
+  // console.log("buildBinding", merged);
   return merged;
 };
 

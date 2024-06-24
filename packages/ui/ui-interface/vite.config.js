@@ -13,7 +13,8 @@ export default ({ command, mode }) => {
     esbuild: {
       drop: command === "build" ? ["debugger"] : [],
       jsxFactory: "h",
-      jsxFragment: "Fragment"
+      jsxFragment: "Fragment",
+      pure: ["console.log", "debugger"]
     },
     build: {
       lib: {
