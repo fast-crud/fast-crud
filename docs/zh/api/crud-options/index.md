@@ -25,7 +25,8 @@ const crudOptions ={
         // 对应 el-table / a-table的配置
         slots:{}    // 对应el-table ,a-table的插槽
     },
-    data:{},        //列表数据，无需配置，自动从pageRequest中获取 
+    data:{},        //列表数据，无需配置，自动从pageRequest中获取
+    // 如果你要手动改变表格数据，可以通过crudBinding.value.data直接赋值修改表格数据
     rowHandle:{},   //操作列配置，对应fs-row-handle
     form:{          //表单的公共配置,对应el-form，a-form配置
         wrapper:{}  //表单外部容器（对话框）的配置，对应el-dialog,el-drawer,a-model,a-drawer的配置
