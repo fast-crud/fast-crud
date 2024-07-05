@@ -9,7 +9,8 @@
 const crudOptions = { 
     tabs:{
         show: true,
-        name:'city' //对应查询字段key
+        name:'city', //对应查询字段key
+        onXxxx: ()=>{}, //监听x-tabs组件的原始事件
     },
     columns: {
         city: {

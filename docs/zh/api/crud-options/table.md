@@ -11,17 +11,20 @@
 ## 对应ui库的table组件的参数
 * 说明：支持fs-table/el-table/a-table/n-table的参数
 * 配置： 具体配置请根据你使用的ui库，前往对应ui库的文档查找相应组件的配置
+
 ```json
-{// crudOptions
-    table:{
-          border: true,
-          bordered: true,
-          height: "100%",
-          rowKey: "id",
-          size: "small",
-          stripe: true,
-          //...更多配置，请阅读对应组件的文档
-    }
+{
+  // crudOptions
+  table: {
+    border: true,
+    bordered: true,
+    height: "100%",
+    rowKey: "id",
+    size: "small",
+    stripe: true,
+    onXxxx:()=>{}, //表格事件监听
+    //...更多配置，请阅读对应组件的文档
+  }
 }
 ```
 

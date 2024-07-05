@@ -8,7 +8,7 @@ const crudOptions:{
     editForm:{
         //...form配置
         wrapper:{
-            title:"编辑用户"
+            title:"编辑用户",
         }
     }
 }

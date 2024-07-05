@@ -10,10 +10,11 @@
 * 支持： el-table-column / a-table-column / n-table-column的配置
 * 配置： 具体配置请根据你使用的ui库，前往对应ui库的文档查找相应组件的配置
 * 示例：
-```json
-{ //crudOptions
+```js
+const crudOptions = { 
   rowHandle: {
-      align: 'center' //文本居中
+      align: 'center', //文本居中
+      onXxxx: ()=>{}, //监听x-table-column组件的原始事件
       //...更多配置请阅读对应组件的文档
   }
 }

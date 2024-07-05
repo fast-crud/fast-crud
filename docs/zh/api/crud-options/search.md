@@ -42,6 +42,17 @@ const crudOptions = {
 * 默认：`default`
 
 
+## initialForm
+* 说明：初始化查询表单数据
+* 类型：Object
+* 默认：null
+
+## validatedForm
+* 说明：校验通过后的查询表单数据，你可以在`computed`中调用`crudBinding.value.search.validatedForm.xxx`来根据查询条件进行动态计算
+* 类型：Object
+* 默认：{}
+
+
 ## columns
 * 说明：查询字段配置
 * 类型：Object
@@ -95,22 +106,9 @@ const crudOptions = {
 }
 
 ```
-## onSearch
-* 说明：监听查询点击事件
-* 类型：`async Function(context)`
-
-```js
-const crudOptions = {
-    search:{
-        onSearch(context:any){
-            console.log('search click',context)
-        }
-    }
-}
-```
 
 ## on_search
-* 说明：点击查询按钮实际触发的search，覆盖它将不执行默认查询操作，你需要自定义查询
+* 说明：点击查询按钮实际触发的search（框架使用），覆盖它将不执行默认查询操作，你需要自定义查询
 * 类型：`async Function(context)`
 
 ```js
@@ -124,7 +122,7 @@ const crudOptions = {
 ```
 
 ## onSearch
-* 说明：监听查询点击事件
+* 说明：监听查询点击事件（用户使用）
 * 类型：`async Function(context)`
 
 ```js
@@ -137,8 +135,13 @@ const crudOptions = {
 }
 ```
 
+## on_reset
+* 说明：监听重置事件(框架使用)
+* 类型：`async Function(context)`
+
+
 ## onReset
-* 说明：监听重置事件
+* 说明：监听重置事件（用户使用）
 * 类型：`async Function(context)`
 
 ```js

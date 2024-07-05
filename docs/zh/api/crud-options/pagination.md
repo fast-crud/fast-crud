@@ -17,6 +17,7 @@
   //crudOptions
   "pagination": {
     "pageSize": 10 //默认pageSize
+    onXxxx: ()=>{}, //监听pagination组件的原始事件
     //.... 更多配置，请阅读对应组件的文档
   }
 }
