@@ -725,6 +725,10 @@ export type FormWrapperProps<R = any> = {
  */
 export type FormGroupItemProps<R = any> = {
   /**
+   * 是否显示该分组
+   */
+  show?: boolean;
+  /**
    * 分组标题（根据你使用的分组组件和组件库来确定标题）
    */
   title?: string;

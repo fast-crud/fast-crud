@@ -30,7 +30,7 @@
             :model-value="get(form, item.key)"
             :form-slot="mergedSlots['form_' + item.key]"
             :get-context-fn="getContextFn"
-            @update:modelValue="set(form, item.key, $event)"
+            @update:model-value="set(form, item.key, $event)"
           />
         </component>
       </template>
@@ -76,7 +76,7 @@
                   :model-value="get(form, key)"
                   :form-slot="mergedSlots['form_' + key]"
                   :get-context-fn="getContextFn"
-                  @update:modelValue="set(form, key, $event)"
+                  @update:model-value="set(form, key, $event)"
                 />
               </component>
             </template>
@@ -594,6 +594,9 @@ export default defineComponent({
     }
     function groupItemShow(groupItem: any) {
       if (!groupItem.columns) {
+        return false;
+      }
+      if (groupItem.show === false) {
         return false;
       }
 
