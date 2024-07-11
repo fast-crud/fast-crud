@@ -19,9 +19,12 @@ const crudOptions = {
   }
 }
 ```
+## title
+* 说明：操作列标题
+* 类型：string
 
 ## show
-* 说明：显示或隐藏查询框
+* 说明：显示或隐藏操作列
 * 类型：Boolean
 * 默认：`true`
 * 示例： [antdv版](http://fast-crud.docmirror.cn/antdv/#/crud/feature/hide)

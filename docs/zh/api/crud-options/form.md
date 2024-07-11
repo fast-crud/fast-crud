@@ -115,67 +115,6 @@ const crudOptions = {
 }
 ```
 
-## group
-* 说明: 表单分组配置
-* 类型：Object
-* 示例： [antdv-collapse](http://fast-crud.docmirror.cn/antdv/#/crud/form/group) | 
-[antdv-tabs](http://fast-crud.docmirror.cn/antdv/#/crud/form/group-tabs) | 
-[element-collapse](http://fast-crud.docmirror.cn/element/#/crud/form/group) | 
-[element-tabs](http://fast-crud.docmirror.cn/element/#/crud/form/group-tabs)
-```json
-{ // crudOptions.form
-    group: {
-      type: "collapse", //or tabs
-      // 此处支持：el-collapse / a-collapse / el-tabs / a-tabs 参数
-      accordion: true, //手风琴模式
-      groups: {
-        base: { //分组key，可随意命名
-          columns: [ 'columnKey1', 'columnKey2'] //该分组包含的字段keys
-        }
-      }
-    }
-}
-```
-## group.type
-* 说明: 表单分组组件类型
-* 类型：String
-* 默认：collapse
-* 可选值： collapse，tabs
-
-## group.groups
-* 说明: 分组配置
-* 类型：`Object:{[groupKey]:Object}`
-
-```json
-{
-  //crudOptions.form.group.groups
-  groupKey: {
-    //分组key，可随意命名
-    // 此处支持el-collapse-item，el-tab-pane，a-collapse-panel，a-tab-pane
-    title: "标题",
-    //el-collapse-item参数
-    label: "标题",
-    //el-tab-pane参数
-    header: "标题",
-    // a-collapse-panel 参数
-    tab: "标题",
-    // a-tab-pane 参数
-    slots: {
-      //插槽，可以自定义标题
-    },
-    //当前分组下的所有字段的col配置
-    "col": {
-      "span": 12 
-    },
-    columns: [
-      'columnKey1',
-      'columnKey2'
-    ]
-    //该分组包含的字段keys
-  }
-}
-```
-
 ## initialForm
 * 说明: 表单的初始数据， 
 * 注意：仅在独立使用表单组件时有效，fs-crud中会被行数据代替，你可以在字段中配置columns.key.form.value=默认值
@@ -239,6 +178,81 @@ const crudOptions = {
             crudExpose.doRefresh()
         }
     }
+}
+```
+
+
+
+
+## group
+* 说明: 表单字段分组配置
+* 类型：Object
+* 示例： [antdv-collapse](http://fast-crud.docmirror.cn/antdv/#/crud/form/group) |
+  [antdv-tabs](http://fast-crud.docmirror.cn/antdv/#/crud/form/group-tabs) |
+  [element-collapse](http://fast-crud.docmirror.cn/element/#/crud/form/group) |
+  [element-tabs](http://fast-crud.docmirror.cn/element/#/crud/form/group-tabs)
+
+```js
+crudOptions.form = {
+  // crudOptions.form
+  group: {
+    type: "collapse",
+    //or tabs
+    // 此处支持：el-collapse / a-collapse / el-tabs / a-tabs 参数
+    accordion: true,
+    //手风琴模式
+    groups: {
+      base: { //分组key，可随意命名
+        show: true, //是否显示该分组
+        // 该分组包含的字段keys
+        columns: [
+          'columnKey1',
+          'columnKey2'
+        ]
+       
+      }
+    }
+  }
+}
+```
+## group.type
+* 说明: 表单分组组件类型
+* 类型：String
+* 默认：collapse
+* 可选值： collapse，tabs
+
+## group.groups
+* 说明: 分组配置
+* 类型：`Object:{[groupKey]:Object}`
+
+```js
+crudOptions.form.group.groups = {
+  //crudOptions.form.group.groups
+  groupKey: {
+    show: true, //是否显示该分组
+    //分组key，可随意命名
+    // 此处支持el-collapse-item，el-tab-pane，a-collapse-panel，a-tab-pane
+    title: "标题",
+    //el-collapse-item参数
+    label: "标题",
+    //el-tab-pane参数
+    header: "标题",
+    // a-collapse-panel 参数
+    tab: "标题",
+    // a-tab-pane 参数
+    slots: {
+      //插槽，可以自定义标题
+    },
+    //当前分组下的所有字段的col配置
+    "col": {
+      "span": 12
+    },
+    columns: [
+      'columnKey1',
+      'columnKey2'
+    ]
+    //该分组包含的字段keys
+  }
 }
 ```
 
