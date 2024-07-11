@@ -62,6 +62,7 @@ export default defineComponent({
     /**
      * 构建url的方法
      * 后台返回key之后，将其build成一个可访问的url，用于反显
+     * 如果successHandle返回的object中已包含url，此配置将不会执行
      */
     buildUrl: {
       default() {
@@ -72,6 +73,7 @@ export default defineComponent({
     },
     /**
      * 多个value值构建多个url
+     * 如果successHandle 返回的object中已包含url，此方法将不会执行
      */
     buildUrls: {},
     /**
