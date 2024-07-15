@@ -47,8 +47,8 @@ export const defaultConfig: FsUploaderOptions = {
       forcePathStyle: true,
       endpoint: "https://play.min.io",
       credentials: {
-        accessKeyId: "Q3AM3UQ867SPQQA43P2F", //访问登录名
-        secretAccessKey: "zuf+tfteSlswRu7BJ86wekitnifILbZam1KYY3TG" //访问密码
+        accessKeyId: "", //访问登录名
+        secretAccessKey: "" //访问密码
       }
     }
   },
