@@ -3,6 +3,14 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.21.2](https://github.com/fast-crud/fast-crud/compare/v1.21.1...v1.21.2) (2024-07-15)
+
+### Performance Improvements
+
+* 去除s3上传配置中的明文secret ([621e96d](https://github.com/fast-crud/fast-crud/commit/621e96d1a52728fac4bf5ad6ed7910a60b7fb6a0))
+* 增加示例，FsInDrawer ([777830f](https://github.com/fast-crud/fast-crud/commit/777830f860b6a9752ba24df5a99af5e7c62bdfb2))
+* form group支持整个分组显隐，form.group.gorups.key.show ([5a49cf0](https://github.com/fast-crud/fast-crud/commit/5a49cf0d758a0bbb44742c344644b80c87f0f10c))
+
 ## [1.21.1](https://github.com/fast-crud/fast-crud/compare/v1.21.0...v1.21.1) (2024-06-23)
 
 ### Bug Fixes
