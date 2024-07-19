@@ -79,6 +79,11 @@ const crudOptions = {
 * 支持：el-form,a-form,n-form的参数
 
 
+## formItem
+* 说明：每个条件的form-item公共配置，比如可以配置label的宽度、靠左还是靠右等
+* 类型：Object
+* 支持：el-form-item,a-form-item,n-form-item的参数
+
 ## container
 * 说明：布局容器，支持search自定义布局
 * 类型：Object
