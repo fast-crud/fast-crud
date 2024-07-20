@@ -31,7 +31,7 @@ export type MergeColumnPlugin = {
 const mergeColumnPlugins: MergeColumnPlugin[] = [];
 
 export function registerMergeColumnPlugin(plugin: MergeColumnPlugin) {
-  _.remove(mergeColumnPlugins, (item) => {
+  _.remove(mergeColumnPlugins, (item: any) => {
     return item.name === plugin.name;
   });
   mergeColumnPlugins.push(plugin);
@@ -115,7 +115,7 @@ registerMergeColumnPlugin(viewFormUseCellComponentPlugin);
  */
 function setupOptionsColumns(columns: { [key: string]: ColumnCompositionProps }, userOptions: CrudOptions) {
   const initedColumns: any = {};
-  _.forEach(columns, (item, key) => {
+  _.forEach(columns, (item: any, key: any) => {
     item.key = key;
     if (item.children) {
       item.children = setupOptionsColumns(item.children, userOptions);
@@ -137,7 +137,7 @@ function setupOptionsColumns(columns: { [key: string]: ColumnCompositionProps },
  * @param columns
  */
 function buildOptionsColumnsFlatMap(map: CompositionColumns = {}, columns: CompositionColumns) {
-  _.forEach(columns, (item, key) => {
+  _.forEach(columns, (item: any, key: any) => {
     if (item.children) {
       buildOptionsColumnsFlatMap(map, item.children);
     } else {
@@ -148,7 +148,7 @@ function buildOptionsColumnsFlatMap(map: CompositionColumns = {}, columns: Compo
 }
 
 export function buildTableColumnsFlatMap(map: TableColumnsProps = {}, columns: TableColumnsProps) {
-  _.forEach(columns, (item, key) => {
+  _.forEach(columns, (item: any, key: any) => {
     if (item.children) {
       buildTableColumnsFlatMap(map, item.children);
     } else {
@@ -182,7 +182,7 @@ function buildTableColumn(colTemplate: any) {
 function buildTableColumns(columns: CompositionColumns): TableColumnsProps {
   let tableColumns: TableColumnsProps = {};
   //合并为tableColumns
-  _.forEach(columns, (item, key) => {
+  _.forEach(columns, (item: any, key: any) => {
     tableColumns[key] = buildTableColumn(item);
   });
   //排序
@@ -191,7 +191,7 @@ function buildTableColumns(columns: CompositionColumns): TableColumnsProps {
 }
 
 function doArraySort(arr: any) {
-  return _.sortBy(arr, (item) => {
+  return _.sortBy(arr, (item: any) => {
     return item.order ?? Constants.orderDefault;
   });
 }
@@ -222,7 +222,7 @@ function doColumnsSort(columns: TableColumnsProps): TableColumnsProps {
 function buildFormColumns(columnsFlatMap: CompositionColumns, formType: string) {
   // 合并form
   const formColumns: any = {};
-  _.forEach(columnsFlatMap, (item) => {
+  _.forEach(columnsFlatMap, (item: any) => {
     const formColumn = cloneDeep(item[formType]) || {};
     if (formType === "form" && formColumn.title == null) {
       formColumn.title = item.title;
@@ -282,7 +282,7 @@ function buildSearchForm(baseOptions: CrudOptions, formType = "search", columnsM
     }
   }
 
-  _.forEach(cloneDeep(baseOptions.form.columns), (item, key) => {
+  _.forEach(cloneDeep(baseOptions.form.columns), (item: any, key: any) => {
     const def = {};
     copyFromCompositionColumn(def, key, "valueResolve");
     copyFromCompositionColumn(def, key, "valueBuilder");
@@ -306,7 +306,7 @@ function buildFormOptions(crudOptions: DynamicallyCrudOptions, context?: UseFsCo
 }
 
 function buildColumns(userOptions: CrudOptions) {
-  _.forEach(userOptions.columns, (value, key) => {
+  _.forEach(userOptions.columns, (value: any, key: any) => {
     value.key = key;
   });
   const columns = setupOptionsColumns(cloneDeep(userOptions.columns), userOptions);
@@ -325,7 +325,7 @@ function buildColumns(userOptions: CrudOptions) {
   userOptions.editForm = buildForm(userOptions, "editForm", columnsFlatMap);
   userOptions.viewForm = buildForm(userOptions, "viewForm", columnsFlatMap, (form) => {
     // 单独处理viewForm的component
-    _.forEach(form.columns, (value) => {
+    _.forEach(form.columns, (value: any) => {
       if (!value.component) {
         value.component = {};
       }
@@ -344,7 +344,7 @@ function buildColumns(userOptions: CrudOptions) {
 }
 
 export function forEachTableColumns(columns: TableColumnsProps, callback: (col: ColumnProps, key: string) => void) {
-  _.forEach(columns, (item, key) => {
+  _.forEach(columns, (item: any, key: any) => {
     if (!item.key) {
       item.key = key;
     }
@@ -360,7 +360,7 @@ export function forEachColumns(
   columns: CompositionColumns,
   callback: (col: ColumnCompositionProps, key: string) => void
 ) {
-  _.forEach(columns, (item, key) => {
+  _.forEach(columns, (item: any, key: any) => {
     if (!item.key) {
       item.key = key;
     }

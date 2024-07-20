@@ -324,3 +324,11 @@ crudOptions.form.group.groups = {
 ## wrapper.onClosed
 * 说明: 对话框关闭事件处理方法
 * 类型：Function
+
+## wrapper.saveRemind
+* 说明: 表单有修改时是否提示保存，如果配置为一个方法，那么你可以自定义提示框，返回true表示需要保存，将自动保存后关闭对话框，返回false则表示不需要保存
+* 类型：boolean | ()=>Promise<boolean>
+* 默认：true
+* 
+
+
