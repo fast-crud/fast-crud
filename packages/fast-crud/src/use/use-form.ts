@@ -1,7 +1,8 @@
-import { FormProps, OpenDialogProps, RowRecord } from "../d";
+import { DynamicallyCrudOptions, FormProps, OpenDialogProps, RowRecord } from "../d";
 import { ComponentInternalInstance, createVNode, inject, render, VNode } from "vue";
 import { FsFormWrapper } from "../components";
 import logger from "../utils/util.log";
+import { useColumns } from "/src/use/use-columns";
 
 export type FormWrapperInstance = {
   id: string;
@@ -9,6 +10,12 @@ export type FormWrapperInstance = {
   vm: ComponentInternalInstance;
   props: any;
 };
+
+export type OpenFormDialogProps<R = any> = {
+  options: DynamicallyCrudOptions<R>;
+  context?: any;
+};
+
 let seed = 0;
 const FsFormWrapperList: {
   [key: string]: FormWrapperInstance;
@@ -64,7 +71,7 @@ export function useFormWrapper() {
     logger.warn("cant inject use:form:wrapper，建议在App.vue中使用<fs-form-provider>组件包裹<router-view/>", e);
   }
 
-  let openDialog = null;
+  let openDialog: (opts: OpenDialogProps) => Promise<any> = null;
   if (pd == null) {
     //通过在body里面插入组件，无上下文，会丢失主题，不建议使用
     // logger.warn("当前无法通过useFormWrapper打开对话框，请先使用fs-form-provider包裹上层组件");
@@ -78,7 +85,14 @@ export function useFormWrapper() {
     };
   }
 
+  async function openCrudFormDialog<R = any>(opts: OpenFormDialogProps<R>) {
+    const { buildFormOptions } = useColumns();
+    const formOptions = buildFormOptions(opts.options, opts.context);
+    return await openDialog(formOptions);
+  }
+
   return {
-    openDialog
+    openDialog,
+    openCrudFormDialog
   };
 }
