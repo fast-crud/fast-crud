@@ -12,7 +12,7 @@ export type FormWrapperInstance = {
 };
 
 export type OpenFormDialogProps<R = any> = {
-  options: DynamicallyCrudOptions<R>;
+  crudOptions: DynamicallyCrudOptions<R>;
   context?: any;
 };
 
@@ -87,7 +87,7 @@ export function useFormWrapper() {
 
   async function openCrudFormDialog<R = any>(opts: OpenFormDialogProps<R>) {
     const { buildFormOptions } = useColumns();
-    const formOptions = buildFormOptions(opts.options, opts.context);
+    const formOptions = buildFormOptions(opts.crudOptions, opts.context);
     return await openDialog(formOptions);
   }
 
