@@ -105,8 +105,8 @@ const crudOptions = {
 * 类型：Object
 * 示例：
 
-```json
-{ //crudOptions.form.columns
+```js
+const crudOptions = { //crudOptions.form.columns
   columnKey: {
     title: '字段名',
     component: {},
@@ -271,9 +271,9 @@ crudOptions.form.group.groups = {
 * 支持： 支持fs-form-wrapper，el-dialog，el-drawer，a-modal，a-drawer的配置，取决于[wrapper.is](#wrapper-is)配置
 * 示例：
 
-```json
+```js
 
-{ //crudOptions
+const crudOptions = { //crudOptions
   form: {
     wrapper: {
       width: '800px', //antdv对话框的宽度
@@ -300,8 +300,8 @@ crudOptions.form.group.groups = {
 * 说明: 对话框按钮配置
 * 类型：object
 * 更多：[按钮组配置](../common-options.md#buttons)
-```json5
-{
+```js
+const crudOptions = {
   form:{
     wrapper: {
       buttons: {
