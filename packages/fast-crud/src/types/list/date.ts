@@ -35,7 +35,7 @@ export default function () {
         }
       },
       column: {
-        width: "170px",
+        width: 170,
         component: { name: "fs-date-format" }
       },
       valueBuilder(scope) {

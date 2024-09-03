@@ -263,7 +263,7 @@ export default defineComponent({
     const { proxy } = getCurrentInstance();
 
     // eslint-disable-next-line vue/no-setup-props-destructure
-    _.each(props.columns, (item) => {
+    _.each(props.columns, (item: any) => {
       if (item.value != null && (item.value instanceof AsyncComputeValue || item.value instanceof ComputeValue)) {
         logger.warn("form.value配置不支持Compute/AsyncCompute类型的动态计算");
       }
@@ -271,7 +271,7 @@ export default defineComponent({
     function createInitialForm() {
       const form = {};
       // 初始数据赋值
-      _.each(props.columns, (item, key) => {
+      _.each(props.columns, (item: any, key: any) => {
         const defValue = unref(item.value);
         if (defValue !== undefined) {
           _.set(form, key, defValue);
@@ -308,7 +308,7 @@ export default defineComponent({
       if (form == null) {
         return;
       }
-      _.each(props.columns, (item, key) => {
+      _.each(props.columns, (item: any, key: any) => {
         let value = _.get(form, key);
         if (item.valueBuilder) {
           item.valueBuilder({
@@ -337,7 +337,7 @@ export default defineComponent({
       merge(form, formData);
       const { valueChange } = options;
       if (valueChange) {
-        _.forEach(props.columns, (column, key) => {
+        _.forEach(props.columns, (column: any, key: any) => {
           const value = form[key];
           doValueChange(key, value);
         });
@@ -387,7 +387,7 @@ export default defineComponent({
     const groupActiveKey = ref([]);
 
     // eslint-disable-next-line vue/no-setup-props-destructure
-    _.forEach(props.group?.groups, (groupItem, key) => {
+    _.forEach(props.group?.groups, (groupItem: any, key: any) => {
       if (groupItem.collapsed !== true) {
         groupActiveKey.value.push(key);
       }
@@ -410,8 +410,8 @@ export default defineComponent({
         }
         //找出没有添加进分组的字段
         const groupedKeys: any = {};
-        _.forEach(group?.groups, (groupItem, key) => {
-          _.forEach(groupItem.columns, (item) => {
+        _.forEach(group?.groups, (groupItem: any, key: string) => {
+          _.forEach(groupItem.columns, (item: any) => {
             if (computedColumns.value[item] == null) {
               utils.logger.warn("无效的分组字段：" + item);
               return;
@@ -442,7 +442,7 @@ export default defineComponent({
     const computedDefaultColumns = computed(() => {
       const columns: any = [];
       //default columns排序
-      _.forEach(computedColumns.value, (value, key) => {
+      _.forEach(computedColumns.value, (value: any, key: string) => {
         const item = _.cloneDeep(props.formItem || {});
         value = merge(item, value);
         value.key = key;
@@ -523,7 +523,7 @@ export default defineComponent({
       const formData = _.cloneDeep(toRaw(form));
       const submitScope = { ...scope.value, form: formData };
       logger.debug("form submit", JSON.stringify(form));
-      _.each(props.columns, (item, key) => {
+      _.each(props.columns, (item: any, key: string) => {
         let value = _.get(formData, key);
         if (item.valueResolve) {
           item.valueResolve({
@@ -542,7 +542,7 @@ export default defineComponent({
       }
 
       //移除不允许提交的字段
-      _.each(props.columns, (item, key) => {
+      _.each(props.columns, (item: any, key: string) => {
         if (item.submit === false) {
           _.unset(formData, key);
         } else if (item.submit === true) {
@@ -572,7 +572,7 @@ export default defineComponent({
 
     onMounted(() => {
       // immediate valueChange触发
-      _.forEach(computedColumns.value, (item, key) => {
+      _.forEach(computedColumns.value, (item: any, key: string) => {
         if (item.valueChange == null) {
           return;
         }

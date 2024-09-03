@@ -1,6 +1,6 @@
 <template>
   <div class="fs-copyable" :class="{ 'show-on-hover': copyButton.showOnHover, inline: inline }">
-    <span v-clipboard="modelValue" v-clipboard:success="onSuccess" v-clipboard:error="onError" class="pointer">
+    <span v-clipboard="modelValue" v-clipboard:success="onSuccess" v-clipboard:error="onError" class="pointer text">
       <template v-if="$slots.default">
         <slot></slot>
       </template>
@@ -15,7 +15,7 @@
         v-clipboard="modelValue"
         v-clipboard:success="onSuccess"
         v-clipboard:error="onError"
-        class="pointer"
+        class="pointer text"
         v-bind="copyButton"
       >
         {{ copyButton.text ?? "复制" }}
@@ -141,6 +141,11 @@ export default defineComponent({
   }
   .pointer {
     cursor: pointer;
+  }
+  .text {
+    white-space: nowrap; /* 确保文本在一行内显示 */
+    overflow: hidden; /* 隐藏溢出的内容 */
+    text-overflow: ellipsis; /* 使用省略号表示文本溢出 */
   }
   .copy-button {
     position: absolute;
