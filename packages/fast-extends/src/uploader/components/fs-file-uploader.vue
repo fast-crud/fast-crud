@@ -549,6 +549,9 @@ export default defineComponent({
         onChange: (change: any) => {
           const { file, fileList } = change;
           handleChange(file, fileList);
+          if (file.status === "done") {
+            handleSuccess(file.response, file, fileList);
+          }
         },
         onPreview: handlePreview
       };
