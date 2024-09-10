@@ -404,14 +404,14 @@ export type ComponentProps<R = any> = {
    * 组件事件监听,带上下文
    */
   on?: {
-    [key: string]: (context?: ComponentEventContext<R>) => void;
+    [key: string]: (context: ComponentEventContext<R>) => void;
   };
 
   /**
    * 同on，即将废弃
    */
   events?: {
-    [key: string]: (context?: ComponentEventContext<R>) => void;
+    [key: string]: (context: ComponentEventContext<R>) => void;
   };
 
   /**
