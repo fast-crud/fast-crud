@@ -20,9 +20,11 @@
           :get-context-fn="getContextFn"
         >
           <template #search-buttons>
-            <template v-for="(item, index) in computedButtons" :key="index">
-              <fs-button v-if="item.show !== false" v-bind="item" @click="item._click()" />
-            </template>
+            <div class="fs-search-buttons">
+              <template v-for="(item, index) in computedButtons" :key="index">
+                <fs-button v-if="item.show !== false" v-bind="item" @click="item._click()" />
+              </template>
+            </div>
           </template>
 
           <template v-if="slots['search-left']" #search-left>
@@ -637,6 +639,9 @@ export default defineComponent({
   &.fs-search-v2 {
     //display: flex;
     //flex-wrap: nowrap;
+    .fs-search-buttons {
+      display: flex;
+    }
     .search-left {
     }
 
