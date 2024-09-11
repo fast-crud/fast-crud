@@ -28,9 +28,11 @@
             <component :is="ui.formItem.name" :[ui.formItem.label]="action?.label">
               <!-- 查询按钮插槽-->
               <slot name="search-buttons" v-bind="getContextFn()"></slot>
-              <slot name="search-right" v-bind="getContextFn()"></slot>
             </component>
           </component>
+          <span class="fs-search-col fs-search-slot">
+            <slot name="search-right" v-bind="getContextFn()"></slot>
+          </span>
         </component>
       </div>
       <div v-if="computedIsMultiLine" class="fs-search-buttons-group fs-search-multi-line-buttons">
@@ -47,7 +49,6 @@
           v-bind="collapseButton"
           @click="toggleCollapse"
         />
-        <slot name="search-right"></slot>
       </div>
     </div>
   </div>
