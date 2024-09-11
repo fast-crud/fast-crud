@@ -373,7 +373,6 @@ function buildText(element: any) {
 
     .component--list-item {
       padding: 10px;
-      background-color: #fff;
       margin-bottom: 1px;
 
       &.ghost {
