@@ -343,11 +343,21 @@ export class Dict<T = any> extends UnMergeable implements DictOptions<T> {
     if (this.getData != null) {
       getFromRemote = async () => {
         // @ts-ignore
-        return await this.getData({ url, dict: this, ...context });
+        const maybeArr = await this.getData({ url, dict: this, ...context });
+        if (Array.isArray(maybeArr)) {
+          return maybeArr;
+        } else {
+          return [];
+        }
       };
     } else if (url) {
       getFromRemote = async () => {
-        return await dictRequest({ url, dict: this });
+        const maybeArr = await dictRequest({ url, dict: this });
+        if (Array.isArray(maybeArr)) {
+          return maybeArr;
+        } else {
+          return [];
+        }
       };
     } else {
       return [];
