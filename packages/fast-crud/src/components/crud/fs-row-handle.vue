@@ -22,11 +22,12 @@
           >
             <template v-for="(item, index) in computedHandleBtns" :key="index">
               <component
+                v-bind="item"
                 :is="ui.dropdownItem.name"
                 v-if="item.show !== false && isDropdownBtn(item, index)"
                 :[ui.dropdownItem.command]="item.key"
               >
-                <div class="fs-row-handle-dropdown-item" v-bind="item">
+                <div class="fs-row-handle-dropdown-item">
                   <fs-icon v-if="item.icon" :icon="item.icon" /> {{ item.text || item.title }}
                 </div>
               </component>
