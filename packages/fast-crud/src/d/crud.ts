@@ -1201,6 +1201,11 @@ export type ButtonProps<E = any> = {
   dropdown?: boolean;
 
   /**
+   * 当按钮作为折叠时，折叠按钮的额外配置
+   */
+  dropdownItem?: any;
+
+  /**
    * 点击事件
    */
   click?: (context: E) => void;
