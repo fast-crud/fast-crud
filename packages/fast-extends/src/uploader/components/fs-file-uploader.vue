@@ -96,8 +96,8 @@ export default defineComponent({
     },
 
     /**
-     * 上传请求前的操作，可以压缩图片等
-     * type: `async (context)=>{}`
+     * 上传请求前的操作，可以压缩图片等，替换掉context中的file
+     * type: `async (context)=>void`
      */
     beforeUploadRequest: {
       type: Function
@@ -549,6 +549,9 @@ export default defineComponent({
         onChange: (change: any) => {
           const { file, fileList } = change;
           handleChange(file, fileList);
+          if (file.status === "done") {
+            handleSuccess(file.response, file, fileList);
+          }
         },
         onPreview: handlePreview
       };

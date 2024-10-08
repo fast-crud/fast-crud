@@ -137,8 +137,11 @@ module.exports = {
                                     items: [
                                         {text: "字段复合配置", link: '/api/crud-options/columns/self'},
                                         {text: "column", link: '/api/crud-options/columns/column'},
-                                        {text: "form", link: '/api/crud-options/columns/form'},
                                         {text: "search", link: '/api/crud-options/columns/search'},
+                                        {text: "form", link: '/api/crud-options/columns/form'},
+                                        {text: "viewForm", link: '/api/crud-options/columns/viewForm'},
+                                        {text: "addForm", link: '/api/crud-options/columns/addForm'},
+                                        {text: "editForm", link: '/api/crud-options/columns/editForm'},
                                     ]
                                 },
                                 {text: 'form', link: '/api/crud-options/form'},

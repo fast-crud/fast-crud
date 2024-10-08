@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.21.3](https://github.com/fast-crud/fast-crud/compare/v1.21.2...v1.21.3) (2024-09-20)
+
+### Bug Fixes
+
+* 修复antdv 文件上传 success事件无效的bug ([89d9799](https://github.com/fast-crud/fast-crud/commit/89d9799451ecaebc97b85d5ebd2806c79680c35a))
+
 ## [1.21.2](https://github.com/fast-crud/fast-crud/compare/v1.21.1...v1.21.2) (2024-07-15)
 
 ### Performance Improvements

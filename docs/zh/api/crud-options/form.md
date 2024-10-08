@@ -4,7 +4,7 @@
 * 支持： [el-form],[a-form]的配置
 * 位置： 
 ```js
-const crudOptions:{
+const crudOptions={
     form:{
         ...表单配置
     }
@@ -105,8 +105,8 @@ const crudOptions = {
 * 类型：Object
 * 示例：
 
-```json
-{ //crudOptions.form.columns
+```js
+const crudOptions = { //crudOptions.form.columns
   columnKey: {
     title: '字段名',
     component: {},
@@ -226,32 +226,39 @@ crudOptions.form = {
 * 类型：`Object:{[groupKey]:Object}`
 
 ```js
-crudOptions.form.group.groups = {
-  //crudOptions.form.group.groups
-  groupKey: {
-    show: true, //是否显示该分组
-    //分组key，可随意命名
-    // 此处支持el-collapse-item，el-tab-pane，a-collapse-panel，a-tab-pane
-    title: "标题",
-    //el-collapse-item参数
-    label: "标题",
-    //el-tab-pane参数
-    header: "标题",
-    // a-collapse-panel 参数
-    tab: "标题",
-    // a-tab-pane 参数
-    slots: {
-      //插槽，可以自定义标题
-    },
-    //当前分组下的所有字段的col配置
-    "col": {
-      "span": 12
-    },
-    columns: [
-      'columnKey1',
-      'columnKey2'
-    ]
-    //该分组包含的字段keys
+crudOptions ={
+  form:{
+    group:{
+      groups:{
+        groupKey: {
+          show: true, //是否显示该分组
+          //分组key，可随意命名
+          // 此处支持el-collapse-item，el-tab-pane，a-collapse-panel，a-tab-pane
+          title: "标题",
+          //el-collapse-item参数
+          label: "标题",
+          //el-tab-pane参数
+          header: "标题",
+          // a-collapse-panel 参数
+          tab: "标题",
+          // a-tab-pane 参数
+          slots: {
+            //插槽，可以自定义标题
+          },
+          //当前分组下的所有字段的col配置
+          "col": {
+            "span": 12
+          },
+          columns: [
+            'columnKey1',
+            'columnKey2'
+          ]
+          //该分组包含的字段keys
+        }
+      }
+        
+    }
+      
   }
 }
 ```
@@ -271,9 +278,9 @@ crudOptions.form.group.groups = {
 * 支持： 支持fs-form-wrapper，el-dialog，el-drawer，a-modal，a-drawer的配置，取决于[wrapper.is](#wrapper-is)配置
 * 示例：
 
-```json
+```js
 
-{ //crudOptions
+const crudOptions = { //crudOptions
   form: {
     wrapper: {
       width: '800px', //antdv对话框的宽度
@@ -300,8 +307,8 @@ crudOptions.form.group.groups = {
 * 说明: 对话框按钮配置
 * 类型：object
 * 更多：[按钮组配置](../common-options.md#buttons)
-```json5
-{
+```js
+const crudOptions = {
   form:{
     wrapper: {
       buttons: {
@@ -327,7 +334,7 @@ crudOptions.form.group.groups = {
 
 ## wrapper.saveRemind
 * 说明: 表单有修改时是否提示保存，如果配置为一个方法，那么你可以自定义提示框，返回true表示需要保存，将自动保存后关闭对话框，返回false则表示不需要保存
-* 类型：boolean | ()=>Promise<boolean>
+* 类型：`boolean` | `()=>Promise<boolean>`
 * 默认：true
 * 
 

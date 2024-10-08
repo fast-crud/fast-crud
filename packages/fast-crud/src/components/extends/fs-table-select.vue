@@ -60,6 +60,18 @@ type FsTableSelectProps = {
    * crudOptions 覆盖配置
    */
   crudOptionsOverride?: DynamicallyCrudOptions;
+
+  /**
+   * 打开对话框前，可以修改配置
+   * @param options
+   */
+  beforeOpen?: (options: {
+    crudOptions: DynamicallyCrudOptions;
+    selectedRowKeys: any;
+    open: any;
+    opened: any;
+    [key: string]: any;
+  }) => Promise<void>;
   /**
    * 数据字典
    * 必須配置`getNodesByValues`参数,你需要实现：根据id列表向后台请求多行数据并返回
@@ -181,7 +193,7 @@ function initSelectedKeys(modelValue: any) {
     }
   }
 }
-const openTableSelect = async (openOptions: { crudOptions: CreateCrudOptions }) => {
+const openTableSelect = async (openOptions: { crudOptions: DynamicallyCrudOptions }) => {
   if (props.disabled || props.readonly || props.select?.disabled || props.select?.readonly) {
     return;
   }
@@ -190,6 +202,12 @@ const openTableSelect = async (openOptions: { crudOptions: CreateCrudOptions }) 
   }
   dialogOpen.value = true;
   initSelectedKeys(props.modelValue);
+  if (props.beforeOpen) {
+    await props.beforeOpen({
+      crudOptions: openOptions.crudOptions,
+      ...getScopeContext()
+    });
+  }
   ret.appendCrudOptions(openOptions.crudOptions);
   await nextTick();
   await crudExpose.doRefresh();
@@ -354,7 +372,11 @@ function onOk() {
 const getScopeContext = () => {
   return {
     opened: dialogOpen,
-    open: openTableSelect
+    open: openTableSelect,
+    selectedRowKeys,
+    dictSelectRef,
+    valuesFormatRef,
+    ...ret
   };
 };
 

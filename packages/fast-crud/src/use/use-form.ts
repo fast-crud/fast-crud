@@ -1,8 +1,8 @@
-import { DynamicallyCrudOptions, FormProps, OpenDialogProps, RowRecord } from "../d";
+import { DynamicallyCrudOptions, FormProps, OpenDialogProps } from "../d";
 import { ComponentInternalInstance, createVNode, inject, render, VNode } from "vue";
 import { FsFormWrapper } from "../components";
 import logger from "../utils/util.log";
-import { useColumns } from "/src/use/use-columns";
+import { useColumns } from "./use-columns";
 
 export type FormWrapperInstance = {
   id: string;

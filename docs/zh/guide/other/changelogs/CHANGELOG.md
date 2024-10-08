@@ -3,6 +3,21 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.21.3](https://github.com/fast-crud/fast-crud/compare/v1.21.2...v1.21.3) (2024-09-20)
+
+### Bug Fixes
+
+* 修复antdv 文件上传 success事件无效的bug ([89d9799](https://github.com/fast-crud/fast-crud/commit/89d9799451ecaebc97b85d5ebd2806c79680c35a))
+* 修复rowHandle dropdown按钮无法禁用的bug ([47c34d9](https://github.com/fast-crud/fast-crud/commit/47c34d9703cac052d13f2998f012b8b3fac6d7b5))
+* 修复search-slot错位的问题 ([0791958](https://github.com/fast-crud/fast-crud/commit/0791958c9fc0ce708efa3f5b063de96ae5c6e8d7))
+* datetime字段宽度170px 改为 170 ([9466b34](https://github.com/fast-crud/fast-crud/commit/9466b34ad133847d45f71e8b4cb4c660f474d69a))
+
+### Performance Improvements
+
+* 优化antdv search按钮组错位问题 ([0948650](https://github.com/fast-crud/fast-crud/commit/0948650747d725ffe84e4f357d81a3a9a331109e))
+* table-select支持beforeOpen参数 ([d5de091](https://github.com/fast-crud/fast-crud/commit/d5de0919db6d140edf7ee7fe068c1f70724933d4))
+* useFormWrapper 新增openCrudFormDialog方法 ([2afec44](https://github.com/fast-crud/fast-crud/commit/2afec44d7c197d341cb8a7047de860d3a514697d))
+
 ## [1.21.2](https://github.com/fast-crud/fast-crud/compare/v1.21.1...v1.21.2) (2024-07-15)
 
 ### Performance Improvements

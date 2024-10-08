@@ -404,14 +404,14 @@ export type ComponentProps<R = any> = {
    * 组件事件监听,带上下文
    */
   on?: {
-    [key: string]: (context?: ComponentEventContext<R>) => void;
+    [key: string]: (context: ComponentEventContext<R>) => void;
   };
 
   /**
    * 同on，即将废弃
    */
   events?: {
-    [key: string]: (context?: ComponentEventContext<R>) => void;
+    [key: string]: (context: ComponentEventContext<R>) => void;
   };
 
   /**
@@ -1199,6 +1199,11 @@ export type ButtonProps<E = any> = {
    * 当配置为true，将会收起到dropdown中
    */
   dropdown?: boolean;
+
+  /**
+   * 当按钮作为折叠时，折叠按钮的额外配置
+   */
+  dropdownItem?: any;
 
   /**
    * 点击事件
