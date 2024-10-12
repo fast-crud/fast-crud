@@ -48,7 +48,7 @@
 ```
 
 
-### [key].form.component
+## [key].form.component
 * 说明：表单输入组件配置
 * 类型：Object
 参考组件配置[component](../../common-options.md)
