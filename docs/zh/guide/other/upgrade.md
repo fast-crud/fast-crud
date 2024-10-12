@@ -37,6 +37,8 @@ yarn upgrade-interactive --latest //手动选择升级依赖
 
 pnpm outdated // 检查依赖版本是否有升级
 pnpm up --latest //升级依赖版本,不加lastest则仅在小版本范围内升级
+
+pnpm update --interactive --latest //选择性的更新依赖
 ```
 
 
