@@ -18,7 +18,7 @@ import { createValidator } from "./validator";
 import logger from "../../../utils/util.log";
 
 function eachTree(tree: any, callback: any) {
-  _.forEach(tree, (item) => {
+  _.forEach(tree, (item: any) => {
     if (item.children) {
       eachTree(item.children, callback);
     } else {
@@ -86,7 +86,7 @@ export function useEditable(props: any, ctx: any, tableRef: any): { editable: Ed
 
   function editableEachCells(call: (opts: EditableEachCellsOpts) => any) {
     editableEachRows(({ rowData, row, cells }) => {
-      _.forEach(cells, (cell, key) => {
+      _.forEach(cells, (cell: any, key: string) => {
         call({ rowData, row, cells, cell, key });
       });
     });

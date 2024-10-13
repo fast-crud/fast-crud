@@ -48,7 +48,7 @@ export default defineComponent({
           _key: key
         });
       }
-      sortArr = _.sortBy(sortArr, (item) => {
+      sortArr = _.sortBy(sortArr, (item: any) => {
         return item.order ?? Constants.orderDefault;
       });
 

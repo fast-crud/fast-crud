@@ -8,7 +8,7 @@ export type ColumnsFilterItem = {
   show: boolean;
 
   //treeKey  parentKey.itemKey
-  __key: string;
+  __key?: string;
   __show: boolean;
   __disabled: boolean;
 
