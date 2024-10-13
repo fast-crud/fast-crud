@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.21.4](https://github.com/fast-crud/fast-crud/compare/v1.21.3...v1.21.4) (2024-10-13)
+
+### Performance Improvements
+
+* antdv table-select 支持点击行触发选中 ([c84aec5](https://github.com/fast-crud/fast-crud/commit/c84aec5b45e5cb97fc7f0fe08eb17c7b1679a024))
+
 ## [1.21.3](https://github.com/fast-crud/fast-crud/compare/v1.21.2...v1.21.3) (2024-09-20)
 
 **Note:** Version bump only for package @fast-crud/ui-antdv4
