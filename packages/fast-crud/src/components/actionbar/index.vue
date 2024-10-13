@@ -54,7 +54,7 @@ export default defineComponent({
 
       const sortedButtons: ButtonsProps<ActionbarClickEvent> = {};
 
-      sortArr.forEach((item) => {
+      sortArr.forEach((item: any) => {
         let _key = item._key;
         delete item._key;
         sortedButtons[_key] = item;
