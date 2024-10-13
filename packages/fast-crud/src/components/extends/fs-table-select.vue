@@ -14,7 +14,7 @@
     <slot v-bind="scopeRef"></slot>
     <component :is="ui.formItem.skipValidationWrapper">
       <component :is="ui.dialog.name" v-model:[ui.dialog.visible]="dialogOpen" v-bind="computedDialogBinding">
-        <div :style="{ width: '100%', height: height || '60vh' }">
+        <div v-if="dialogOpen" :style="{ width: '100%', height: height || '60vh' }">
           <fs-crud ref="crudRef" v-bind="crudBinding">
             <template #header-top>
               <div v-if="showCurrent !== false && !viewMode" class="fs-table-select-current">
@@ -133,6 +133,11 @@ type FsTableSelectProps = {
    * 是否查看模式
    */
   viewMode?: boolean;
+
+  /**
+   * table是否跟随窗口关闭而销毁
+   */
+  destroyOnClose?: boolean;
 };
 const props = withDefaults(defineProps<FsTableSelectProps>(), {
   crossPage: true,
@@ -147,7 +152,8 @@ const props = withDefaults(defineProps<FsTableSelectProps>(), {
   valueType: "value",
   showSelect: true,
   showCurrent: true,
-  viewMode: false
+  viewMode: false,
+  destroyOnClose: true
 });
 
 const slots = defineSlots<{
