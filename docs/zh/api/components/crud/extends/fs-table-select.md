@@ -22,6 +22,7 @@
 | readonly            |                                                                                                                                     | boolean                | -      | false     |
 | valueType           | 值类型                                                                                                                              | union                  | -      | "value"   |
 | viewMode            | 是否查看模式                                                                                                                        | boolean                | -      | false     |
+| destroyOnClose      | table 是否跟随窗口关闭而销毁                                                                                                        | boolean                | -      | true      |
 
 ## Events
 

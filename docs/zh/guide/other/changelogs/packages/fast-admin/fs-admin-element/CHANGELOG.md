@@ -3,6 +3,10 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.21.4](https://github.com/fast-crud/fast-crud/compare/v1.21.3...v1.21.4) (2024-10-13)
+
+**Note:** Version bump only for package @fast-crud/fs-admin-element
+
 ## [1.21.3](https://github.com/fast-crud/fast-crud/compare/v1.21.2...v1.21.3) (2024-09-20)
 
 **Note:** Version bump only for package @fast-crud/fs-admin-element
