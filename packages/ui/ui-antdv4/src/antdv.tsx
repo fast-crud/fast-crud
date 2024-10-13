@@ -550,6 +550,25 @@ export class Antdv implements UiInterface {
             selectedRowKeys,
             onChange,
             preserveSelectedRowKeys: req.crossPage
+          },
+          customRow: (record: any) => {
+            return {
+              onClick: () => {
+                if (req.multiple !== true) {
+                  // req.selectedRowKeys = [record.id];
+                  onChange([record.id]);
+                } else {
+                  const selected = [...selectedRowKeys.value];
+                  const index = selected.indexOf(record.id);
+                  if (index > -1) {
+                    selected.splice(index, 1);
+                  } else {
+                    selected.push(record.id);
+                  }
+                  onChange(selected);
+                }
+              } // 点击行
+            };
           }
         }
       };
