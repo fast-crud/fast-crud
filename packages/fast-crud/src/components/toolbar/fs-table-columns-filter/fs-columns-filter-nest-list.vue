@@ -3,7 +3,7 @@
     <template #item="{ element, index }">
       <div>
         <div
-          v-show="originalColumns[element.key]?.__show !== false"
+          v-show="originalColumnsMap[element.__key]?.__show !== false"
           :title="buildText(element)"
           class="component--list-item"
           flex="main:justify cross:center"
@@ -11,10 +11,11 @@
         >
           <component
             :is="ui.checkbox.name"
-            v-model:[ui.checkbox.modelValue]="element.show"
-            :disabled="originalColumns[element.key]?.__disabled === true"
+            :[ui.checkbox.modelValue]="element.show"
+            :disabled="originalColumnsMap[element.__key]?.__disabled === true"
             class="item-label"
             :title="buildText(element)"
+            @[buildUpdateKey(ui.checkbox.modelValue)]="updateChecked(element)"
             @change="onCheckChanged"
           >
             {{ buildText(element) }}
@@ -51,6 +52,7 @@ import FsTableColumnsFixedController from "./fs-table-columns-fixed-controller/i
 import { ColumnsFilterContext, ColumnsFilterItem, ColumnsFilterProvideKey } from "../../../d";
 import { inject } from "vue";
 import { useUi } from "@fast-crud/ui-interface";
+
 const { ui } = useUi();
 const emits = defineEmits(["check-changed", "fixed-changed"]);
 type NestListProps = {
@@ -60,7 +62,8 @@ type NestListProps = {
 const props = withDefaults(defineProps<NestListProps>(), {
   isRoot: false
 });
-const { originalColumns, currentColumns, text, active } = inject<ColumnsFilterContext>(ColumnsFilterProvideKey);
+const { originalColumns, currentColumns, originalColumnsMap, text, active } =
+  inject<ColumnsFilterContext>(ColumnsFilterProvideKey);
 function buildText(element: any) {
   return element.label || element.title || element.key || text.value.unnamed;
 }
@@ -99,6 +102,52 @@ function onDraggableMove(e: any) {
     //ui.message.error("非fixed字段不得越过fixed字段的顺序");
     return false;
   }
+}
+function buildUpdateKey(key) {
+  return "update:" + key;
+}
+
+function findFromTree(tree: any[], key: string) {
+  for (const item of tree) {
+    if (item.key === key) {
+      return item;
+    }
+    if (item.children) {
+      const result = findFromTree(item.children, key);
+      if (result) {
+        return result;
+      }
+    }
+  }
+  return null;
+}
+function updateChecked(element: any) {
+  element.show = !element.show;
+  //级联选中和取消
+
+  function updateChildren(element: any) {
+    if (element.children) {
+      element.children.forEach((e: any) => {
+        if (!e.__show || e.__disabled) {
+          return;
+        }
+        e.show = element.show;
+        updateChildren(e);
+      });
+    }
+  }
+  updateChildren(element);
+
+  function updateParent(element) {
+    if (element.__parent) {
+      const parent = element.__parent;
+      if (parent) {
+        parent.show = parent.children.filter((e: any) => e.__show && e.show === true).length > 0;
+        updateParent(parent);
+      }
+    }
+  }
+  updateParent(element);
 }
 function onCheckChanged() {
   emits("check-changed");

@@ -70,6 +70,10 @@ crudOptions = { //
 * 说明：在列设置中显示该字段的勾选
 * 类型：Boolean
 
+## [key].column.showTitle
+* 说明：是否显示title,鼠标放上去显示文本
+* 类型：boolean | string
+
 
 ## [key].column.show
 * 说明：是否显示该列,列设置中也是通过修改此字段来进行列的显示。

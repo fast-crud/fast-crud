@@ -52,7 +52,7 @@
 /**
  * FsTableColumnsFilter，列设置组件
  */
-import _ from "lodash-es";
+import _, { cloneDeep } from "lodash-es";
 import TableStore from "../../../utils/util.store";
 import { useI18n } from "../../../locale";
 import { computed, nextTick, provide, Ref, ref, watch } from "vue";
@@ -61,11 +61,10 @@ import { useMerge } from "../../../use/use-merge";
 import { useRoute } from "vue-router";
 import {
   ColumnProps,
+  ColumnsFilterComponentProps,
   ColumnsFilterItem,
   ColumnsFilterProvideKey,
-  TableColumnsProps,
-  TypeMap,
-  ColumnsFilterComponentProps
+  TableColumnsProps
 } from "../../../d";
 
 const props = withDefaults(defineProps<ColumnsFilterComponentProps>(), {
@@ -84,10 +83,20 @@ const start = () => {
   active.value = true;
 };
 
-const original: Ref<TypeMap<ColumnsFilterItem>> = computed(() => {
-  return transformColumnsMap(props.originalColumns);
+// 数组形式的原始tree
+const original: Ref<ColumnsFilterItem[]> = computed(() => {
+  return transformColumnsTree(props.originalColumns);
 });
+//数组形式的tree
 const currentColumns: Ref<ColumnsFilterItem[]> = ref([]);
+
+const originalColumnsMap: Ref<Record<string, ColumnsFilterItem>> = computed(() => {
+  const map: Record<string, ColumnsFilterItem> = {};
+  eachTree(original.value, (item: ColumnsFilterItem) => {
+    map[item.__key] = item;
+  });
+  return map;
+});
 const { merge } = useMerge();
 
 const _text = computed(() => {
@@ -103,6 +112,28 @@ const _text = computed(() => {
   return def;
 });
 
+function eachTree(tree: any, callback: Function) {
+  if (!tree) {
+    return;
+  }
+  if (Array.isArray(tree)) {
+    for (const item of tree) {
+      callback(item);
+      if (item.children) {
+        eachTree(item.children, callback);
+      }
+    }
+  } else {
+    for (const key in tree) {
+      const item = tree[key];
+      callback(item);
+      if (item.children) {
+        eachTree(item.children, callback);
+      }
+    }
+  }
+}
+
 function buildColumnFilterItem(item: ColumnProps): ColumnsFilterItem {
   return {
     key: item.key,
@@ -117,7 +148,7 @@ function buildColumnFilterItem(item: ColumnProps): ColumnsFilterItem {
 function transformToTableColumns(result: ColumnsFilterItem[]) {
   const columns: TableColumnsProps = {};
   _.forEach(result, (item) => {
-    const column: ColumnProps = _.omit(item, "children", "__show", "__disabled");
+    const column: ColumnProps = _.omit(item, "children", "__show", "__disabled", "__parent", "__key");
     if (item.children && item.children.length > 0) {
       column.children = transformToTableColumns(item.children);
     }
@@ -126,46 +157,32 @@ function transformToTableColumns(result: ColumnsFilterItem[]) {
   return columns;
 }
 
-function transformColumnsMap(value: TableColumnsProps): TypeMap<ColumnsFilterItem> {
-  const columns: TypeMap<ColumnsFilterItem> = {};
-  _.forEach(value, (item) => {
-    const column = buildColumnFilterItem(item);
-    if (item.children) {
-      const map = transformColumnsMap(item.children);
-      for (let key in map) {
-        columns[key] = map[key];
-      }
-    } else {
-      columns[column.key] = column;
-    }
-  });
-  return columns;
-}
-
-function transformColumns(value: TableColumnsProps): ColumnsFilterItem[] {
+function transformColumnsTree(value: TableColumnsProps, parent?: ColumnsFilterItem): ColumnsFilterItem[] {
   const columns: ColumnsFilterItem[] = [];
   _.forEach(value, (item) => {
     const column = buildColumnFilterItem(item);
+    column.__parent = parent;
+    column.__key = `${parent?.key || ""}.${item.key}`;
     columns.push(column);
     if (item.children) {
-      const list: ColumnsFilterItem[] = transformColumns(item.children);
-      column.children = [] = list;
+      column.children = transformColumnsTree(item.children, column);
     }
   });
   return columns;
 }
 
 function setCurrentValue(value: any) {
-  currentColumns.value = transformColumns(value);
+  currentColumns.value = transformColumnsTree(value);
 }
 
 // 还原
 async function reset() {
-  currentColumns.value = transformColumns(props.originalColumns);
+  currentColumns.value = transformColumnsTree(props.originalColumns);
   await do_save(true);
   await clearThisStorage();
   emit("reset");
 }
+
 // 确认
 async function do_save(noSave = false) {
   if (!noSave) {
@@ -174,10 +191,12 @@ async function do_save(noSave = false) {
   const result = _.cloneDeep(currentColumns.value);
 
   //解决naive ui与列设置冲突的问题
-  result.forEach((column) => {
-    if (column) {
-      delete column.__disabled;
-      delete column.__show;
+  eachTree(result, (item: any) => {
+    if (item) {
+      delete item.__disabled;
+      delete item.__show;
+      delete item.__parent;
+      delete item.__key;
     }
   });
 
@@ -190,8 +209,18 @@ async function submit(noSave = false) {
   const columns = await do_save(noSave);
   emit("submit", { columns });
 }
-
-provide(ColumnsFilterProvideKey, { originalColumns: original, currentColumns, text: _text, active, submit, reset });
+const computedOriginalColumns = computed(() => {
+  return props.originalColumns;
+});
+provide(ColumnsFilterProvideKey, {
+  originalColumns: computedOriginalColumns,
+  originalColumnsMap: originalColumnsMap,
+  currentColumns,
+  text: _text,
+  active,
+  submit,
+  reset
+});
 
 async function simpleSubmit() {
   await submit(false);
@@ -223,12 +252,12 @@ async function saveOptionsToStorage(value: any) {
   if (props.storage === false) {
     return;
   }
+  const storedOptions: any = cloneDeep(value);
+  //删除parent引用
+  eachTree(storedOptions, (item: any) => {
+    delete item.__parent;
+  });
 
-  const storedOptions: any = [];
-  for (let i = 0; i < value.length; i++) {
-    const item = value[i];
-    storedOptions.push(item);
-  }
   await getStorageTable().updateTableValue(storedOptions);
 }
 
@@ -244,7 +273,7 @@ async function clearThisStorage() {
 
 function getColumnsHash(columns: any) {
   const keys: any = [];
-  _.forEach(columns, (item) => {
+  eachTree(columns, (item: any) => {
     const target = _.pick(item, "key", "__show", "__disabled");
     keys.push(JSON.stringify(target));
   });
@@ -271,19 +300,12 @@ const init = async () => {
     const storeHash = getColumnsHash(storedOptions);
     const optionHash = getColumnsHash(original.value);
     if (optionHash !== storeHash) {
+      debugger;
+      console.log("columns changed, ignore local storage");
       // 如果字段列有过修改，则不使用本地设置
       return;
     }
-    const curValue: any = [];
-    for (const storedOption of storedOptions) {
-      const found = currentColumns.value.find((item) => item.key === storedOption.key);
-      if (found) {
-        found.fixed = storedOption.fixed;
-        found.show = storedOption.show;
-        curValue.push(found);
-      }
-    }
-    currentColumns.value = curValue;
+    currentColumns.value = storedOptions;
     await nextTick();
     await submit(true);
   }

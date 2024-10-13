@@ -44,6 +44,10 @@ export default defineComponent({
       animation: fsLoadingCircle 1s infinite linear;
     }
   }
+
+  &.fs-icon {
+    display: inline-flex;
+  }
 }
 
 @keyframes fsLoadingCircle {
