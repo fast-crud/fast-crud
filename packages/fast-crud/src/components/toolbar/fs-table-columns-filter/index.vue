@@ -314,9 +314,16 @@ const init = async () => {
   }
 };
 
+async function update(change: (currentColumns: Ref<ColumnsFilterItem[]>) => Promise<void>) {
+  await change(currentColumns);
+  await do_save();
+}
+
 init();
 defineExpose({
   start,
+  save: do_save,
+  update,
   original,
   columns: currentColumns
 });
