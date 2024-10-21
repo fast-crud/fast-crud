@@ -1,4 +1,4 @@
-import { FsRemoteStorage } from "/src/d";
+import { FsRemoteStorage } from "../d";
 
 export default class TableStore {
   key: string;
