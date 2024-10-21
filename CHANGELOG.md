@@ -3,6 +3,16 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [1.22.0](https://github.com/fast-crud/fast-crud/compare/v1.21.5...v1.22.0) (2024-10-21)
+
+### Features
+
+* 升级element-plus到2.8.3 ([2d6be70](https://github.com/fast-crud/fast-crud/commit/2d6be70eefe223002a9a444cce853dd873213aab))
+
+### Performance Improvements
+
+* 列设置支持手动设置列显隐并持久化 ([cfe0a00](https://github.com/fast-crud/fast-crud/commit/cfe0a0073d9907ac7eff2f4c97ccd31f7ddeef09))
+
 ## [1.21.5](https://github.com/fast-crud/fast-crud/compare/v1.21.4...v1.21.5) (2024-10-21)
 
 ### Performance Improvements
