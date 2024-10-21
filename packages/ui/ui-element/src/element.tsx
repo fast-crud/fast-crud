@@ -312,7 +312,7 @@ export class Element implements UiInterface {
 
   radio: RadioCI = creator<RadioCI>({
     name: "el-radio",
-    value: "label",
+    value: "value",
     builder(opts) {
       return buildBinding(this, opts, {
         props: {
@@ -324,7 +324,7 @@ export class Element implements UiInterface {
 
   radioButton: RadioButtonCI = creator<RadioButtonCI>({
     name: "el-radio-button",
-    value: "label",
+    value: "value",
     builder(opts) {
       return buildBinding(this, opts, {
         props: {
@@ -394,7 +394,7 @@ export class Element implements UiInterface {
   button: ButtonCI = creator<ButtonCI>({
     name: "el-button",
     textType: { text: true },
-    linkType: { link: true },
+    linkType: { link: true, type: "primary" },
     circle: { circle: true },
     colors: (type) => {
       return { type };

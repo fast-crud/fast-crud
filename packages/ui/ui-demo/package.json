@@ -22,7 +22,7 @@
     "@fast-crud/ui-naive": "workspace:^1.21.5",
     "ant-design-vue": "^4.0.0",
     "dayjs": "^1.11.10",
-    "element-plus": "^2.3.9",
+    "element-plus": "^2.8.3",
     "less": "^4.1.3",
     "naive-ui": "^2.35.0",
     "pinia": "^2.1.7",
