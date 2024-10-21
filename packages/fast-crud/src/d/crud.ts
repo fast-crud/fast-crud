@@ -1014,6 +1014,11 @@ export type ColumnsFilterContainerProps = {
   width?: string;
   drawer?: any;
 };
+export interface FsRemoteStorage {
+  get(key: string): Promise<any>;
+  set(key: string, value: any): Promise<void>;
+  remove(key: string): Promise<void>;
+}
 
 export type ColumnsFilterComponentProps<R = any> = {
   /**
@@ -1045,7 +1050,7 @@ export type ColumnsFilterComponentProps<R = any> = {
   /**
    * 是否保存设置
    */
-  storage?: boolean | string;
+  storage?: boolean | string | FsRemoteStorage;
   /**
    * 文本设置
    */

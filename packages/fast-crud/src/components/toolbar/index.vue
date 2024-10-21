@@ -35,9 +35,9 @@
       :is="columnsFilter.is || 'fs-table-columns-filter'"
       v-if="columns && columnsFilter?.mode !== 'simple'"
       ref="columnsFilterRef"
+      :storage="storage"
       v-bind="columnsFilter"
       :columns="columns"
-      :storage="storage"
       @update:columns="$emit('update:columns', $event)"
     />
   </div>

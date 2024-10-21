@@ -1,10 +1,14 @@
+import { FsRemoteStorage } from "/src/d";
+
 export default class TableStore {
   key: string;
   tableId: string;
-  constructor(opts: { $router: any; tableName: string; keyType: string | boolean }) {
+  remoteStorage?: FsRemoteStorage;
+  constructor(opts: { $router: any; tableName: string; keyType: string | boolean; remoteStorage: FsRemoteStorage }) {
     const { $router, tableName, keyType } = opts;
     this.key = this.getItemKey($router, keyType);
     this.tableId = this.getTableId(tableName);
+    this.remoteStorage = opts.remoteStorage;
   }
 
   getTableId(name: string) {
@@ -32,6 +36,11 @@ export default class TableStore {
   }
 
   async updateTableValue(value: any, key = this.key) {
+    if (this.remoteStorage) {
+      await this.remoteStorage.set(key, value);
+      return;
+    }
+
     let table = await this.getTable();
     if (table == null) {
       table = {};
@@ -45,30 +54,31 @@ export default class TableStore {
     if ($route) {
       key = $route.path;
     }
-    if (keyType == null || typeof keyType !== "string") {
+    if (keyType == null || typeof keyType !== "string" || !keyType) {
       return key;
     }
     return key + "." + keyType;
   }
 
-  async getTableValue(key?: string) {
+  async getTableValue(key: string = this.key) {
+    if (this.remoteStorage) {
+      return await this.remoteStorage.get(key);
+    }
     const table = await this.getTable();
     if (table == null) {
       return null;
     }
-    if (key == null) {
-      key = this.key;
-    }
     return table[key];
   }
 
-  async clearTableValue(key?: string) {
+  async clearTableValue(key: string = this.key) {
+    if (this.remoteStorage) {
+      await this.remoteStorage.remove(key);
+      return;
+    }
     const table = await this.getTable();
     if (table == null) {
       return;
-    }
-    if (key == null) {
-      key = this.key;
     }
     delete table[key];
     await this.saveTable(table);

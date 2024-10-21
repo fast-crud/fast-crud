@@ -237,12 +237,16 @@ function doEmit(result: ColumnsFilterItem[]) {
 
 const storageTableStore = ref();
 function getStorageTable() {
+  //props.storage是否实现了ColumnFilterStorage 接口
+  const remoteStorage = typeof props.storage === "object" ? props.storage : null;
+  const keyType = typeof props.storage === "string" ? props.storage : "";
   if (storageTableStore.value == null) {
     const route = useRoute();
     storageTableStore.value = new TableStore({
       $router: route,
       tableName: "columnsFilter",
-      keyType: props.storage
+      keyType: keyType,
+      remoteStorage
     });
   }
   return storageTableStore.value;
@@ -300,7 +304,6 @@ const init = async () => {
     const storeHash = getColumnsHash(storedOptions);
     const optionHash = getColumnsHash(original.value);
     if (optionHash !== storeHash) {
-      debugger;
       console.log("columns changed, ignore local storage");
       // 如果字段列有过修改，则不使用本地设置
       return;
