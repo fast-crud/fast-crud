@@ -127,13 +127,15 @@ export default defineComponent({
         ..._.omit(opts, "wrapper", "slots"),
         slots: {
           ...props.slots,
-          ...opts.slots
+          ...opts.slots,
+          ...ctx.slots
         }
       };
 
       formWrapperSlots.value = {
         ...props.slots,
-        ...opts.wrapper?.slots
+        ...opts.wrapper?.slots,
+        ...ctx.slots
       };
 
       // 发射打开事件
