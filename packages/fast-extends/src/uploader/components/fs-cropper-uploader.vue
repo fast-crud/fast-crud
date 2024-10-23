@@ -1,9 +1,9 @@
 <template>
-  <div class="fs-cropper-uploader" :class="{ 'is-disabled': disabled }">
+  <div class="fs-cropper-uploader" :class="{ 'is-disabled': computedProps.disabled }">
     <div class="image-list">
       <component :is="ui.imageGroup.name">
         <div v-for="(item, index) in listRef" :key="index" class="image-item">
-          <component :is="ui.image.name" class="image" :src="getImageSrc(item)" v-bind="img">
+          <component :is="ui.image.name" class="image" :src="getImageSrc(item)" v-bind="computedProps.img">
             <template #placeholder>
               <div class="image-slot">
                 <fs-loading :loading="true" />
@@ -11,7 +11,7 @@
             </template>
           </component>
           <div class="delete">
-            <fs-icon v-if="!disabled" :icon="ui.icons.remove" @click="removeImage(index as number)" />
+            <fs-icon v-if="!computedProps.disabled" :icon="ui.icons.remove" @click="removeImage(index as number)" />
             <fs-icon :icon="ui.icons.search" @click="preview(item)" />
           </div>
           <div v-if="item.status === 'uploading'" class="status-uploading">
@@ -21,21 +21,21 @@
             <fs-icon :icon="ui.icons.check" class="status-down-icon" />
           </div>
         </div>
-        <div v-if="limit <= 0 || limit > listRef.length" class="image-item image-plus" @click="addNewImage">
+        <div v-if="computedProps.limit <= 0 || computedProps.limit > listRef.length" class="image-item image-plus" @click="addNewImage">
           <fs-icon :icon="ui.icons.plus" class="cropper-uploader-icon" />
         </div>
       </component>
     </div>
     <fs-cropper
       ref="cropperRef"
-      :title="title"
-      :cropper-height="cropperHeight"
-      :dialog-width="dialogWidth"
-      :accept="accept"
-      :upload-tip="uploadTip"
-      :max-size="maxSize"
-      :cropper="cropper"
-      :compress-quality="compressQuality"
+      :title="computedProps.title"
+      :cropper-height="computedProps.cropperHeight"
+      :dialog-width="computedProps.dialogWidth"
+      :accept="computedProps.accept"
+      :upload-tip="computedProps.uploadTip"
+      :max-size="computedProps.maxSize"
+      :cropper="computedProps.cropper"
+      :compress-quality="computedProps.compressQuality"
       output="all"
       @done="cropComplete"
       @ready="doReady"
@@ -145,8 +145,10 @@ export default defineComponent({
     const listRef: Ref = ref([]);
     const formValidator = ui.formItem.injectFormItemContext();
     // eslint-disable-next-line vue/no-setup-props-destructure
+    // @ts-ignore
     let emitValue: any = props.modelValue;
     // eslint-disable-next-line vue/no-setup-props-destructure
+    // @ts-ignore
     initValue(props.modelValue);
 
     async function initValue(value: any) {
@@ -156,17 +158,21 @@ export default defineComponent({
         return;
       }
       if (typeof value === "string") {
+        // @ts-ignore
         list.push({ url: await props.buildUrl(value), value: value, status: "done" });
       } else if (typeof value === "object") {
+        // @ts-ignore
         list.push({ url: await props.buildUrl(value), value, status: "done" });
       } else {
         for (const item of value) {
+          // @ts-ignore
           list.push({ url: await props.buildUrl(item), value: item, status: "done" });
         }
       }
       listRef.value = list;
     }
     function addNewImage() {
+      // @ts-ignore
       if (props.disabled) {
         return;
       }
@@ -221,9 +227,12 @@ export default defineComponent({
       try {
         const uploaded = await doUpload(option);
         let value = uploaded;
+        // @ts-ignore
         if (props.valueType !== "object") {
+          // @ts-ignore
           value = uploaded[props.valueType];
         }
+        // @ts-ignore
         item.url = await props.buildUrl(value);
         item.value = value;
         item.status = "done";
@@ -234,6 +243,7 @@ export default defineComponent({
     }
 
     async function doUpload(option: FsUploaderDoUploadOptions) {
+      // @ts-ignore
       option.options = props.uploader || {};
       const { getUploaderImpl } = useUploader();
       let uploaderRef = await getUploaderImpl(option.options.type);
@@ -253,6 +263,7 @@ export default defineComponent({
         }
       }
       let ret = list;
+      // @ts-ignore
       if (props.limit === 1) {
         ret = list && list.length > 0 ? list[0] : undefined;
       }
@@ -278,6 +289,7 @@ export default defineComponent({
     }
     watch(
       () => {
+        // @ts-ignore
         return props.modelValue;
       },
       async (val: any) => {
@@ -295,6 +307,12 @@ export default defineComponent({
         ...context
       });
     }
+
+    const computedProps = computed(() => {
+      return {
+        ...props
+      };
+    });
     return {
       ui,
       cropperRef,
@@ -311,7 +329,8 @@ export default defineComponent({
       previewVisible,
       preview,
       closePreview,
-      doReady
+      doReady,
+      computedProps
     };
   }
 });

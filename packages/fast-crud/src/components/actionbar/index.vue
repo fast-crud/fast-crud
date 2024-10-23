@@ -42,8 +42,10 @@ export default defineComponent({
     }
     const computedButtons: Ref = computed(() => {
       let sortArr = [];
+      // @ts-ignore
       for (let key in props.buttons) {
         sortArr.push({
+          // @ts-ignore
           ...props.buttons[key],
           _key: key
         });

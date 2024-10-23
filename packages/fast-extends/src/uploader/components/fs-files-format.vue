@@ -1,8 +1,8 @@
 <template>
   <div class="fs-files-format">
-    <template v-if="type === 'text'">
+    <template v-if="computedProps.type === 'text'">
       <span v-for="item in itemsRef" :key="item.url" class="fs-files-item">
-        <a :href="item.url" target="_blank" v-bind="a">
+        <a :href="item.url" target="_blank" v-bind="computedProps.a">
           {{ item.name }}
         </a>
       </span>
@@ -14,9 +14,9 @@
         :key="item.url"
         class="fs-tag-item"
         :color="item.color"
-        v-bind="tag"
+        v-bind="computedProps.tag"
       >
-        <a :href="item.url" target="_blank" v-bind="a">{{ item.name }}</a>
+        <a :href="item.url" target="_blank" v-bind="computedProps.a">{{ item.name }}</a>
       </component>
     </template>
   </div>
@@ -59,6 +59,7 @@ export default defineComponent({
     const { ui } = useUi();
     const getFileName = computed(() => {
       return (
+        // @ts-ignore
         props.getFileName ||
         function (url: any) {
           if (typeof url !== "string") {
@@ -77,19 +78,24 @@ export default defineComponent({
         url: undefined,
         value: value,
         name: getFileName.value(value),
+        // @ts-ignore
         color: props.color
       };
     }
 
     async function buildFileListUrls(list: any[]) {
+      // @ts-ignore
       if (props.buildUrls) {
         const values = list.map((item) => item.value);
+        // @ts-ignore
         const urls = await props.buildUrls(values);
         for (let i = 0; i < list.length; i++) {
           list[i].url = urls[i];
         }
+        // @ts-ignore
       } else if (props.buildUrl) {
         for (let item of list) {
+          // @ts-ignore
           item.url = await props.buildUrl(item.value);
         }
       } else {
@@ -100,15 +106,20 @@ export default defineComponent({
     }
 
     async function buildItems() {
+      // @ts-ignore
       if (props.modelValue == null || props.modelValue === "") {
         return [];
       }
       let valueArr = [];
+      // @ts-ignore
       if (typeof props.modelValue === "string") {
+        // @ts-ignore
         valueArr = [getItem(props.modelValue)];
+        // @ts-ignore
       } else if (props.modelValue instanceof Array) {
         // 本来就是数组的
         valueArr = [];
+        // @ts-ignore
         for (const val of props.modelValue) {
           valueArr.push(getItem(val));
         }
@@ -119,6 +130,7 @@ export default defineComponent({
     const itemsRef: Ref = ref([]);
     watch(
       () => {
+        // @ts-ignore
         return props.modelValue;
       },
       async () => {
@@ -128,10 +140,15 @@ export default defineComponent({
         immediate: true
       }
     );
-
+    const computedProps = computed(() => {
+      return {
+        ...props
+      };
+    });
     return {
       ui,
-      itemsRef
+      itemsRef,
+      computedProps
     };
   }
 });

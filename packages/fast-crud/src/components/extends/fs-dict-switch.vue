@@ -57,11 +57,17 @@ export default defineComponent({
     binding() {
       const ui = uiContext.get();
       return {
+        // @ts-ignore
         [ui.switch.activeText]: this._active[this.dict?.label || "label"],
+        // @ts-ignore
         [ui.switch.inactiveText]: this._inActive[this.dict?.label || "label"],
+        // @ts-ignore
         [ui.switch.activeColor]: this._active[this.dict?.color || "color"],
+        // @ts-ignore
         [ui.switch.inactiveColor]: this._inActive[this.dict?.color || "color"],
+        // @ts-ignore
         [ui.switch.activeValue]: this._active[this.dict?.value || "value"],
+        // @ts-ignore
         [ui.switch.inactiveValue]: this._inActive[this.dict?.value || "value"]
       };
     }

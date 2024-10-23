@@ -33,7 +33,7 @@ export default defineComponent({
       type: Function,
       default: undefined
     }
-  } as any,
+  },
   emits: [
     /**
      * 字典数据变化事件
@@ -53,10 +53,14 @@ export default defineComponent({
     const dictUseRet = useDict(props, ctx);
     const { ui } = useUi();
     const fieldNamesBinder = ref();
+    // @ts-ignore
     if (props.dict) {
       fieldNamesBinder.value = ui.cascader.fieldNames({
+        // @ts-ignore
         value: props.dict.value,
+        // @ts-ignore
         label: props.dict.label,
+        // @ts-ignore
         children: props.dict.children
       });
     }

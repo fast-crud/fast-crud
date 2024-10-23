@@ -43,7 +43,7 @@
                           :model-value="get(form, key)"
                           v-bind="item.component"
                           :scope="searchEventContextRef"
-                          @update:modelValue="onValueChanged($event, item)"
+                          @update:model-value="onValueChanged($event, item)"
                           @input="onInput(item)"
                         />
                       </template>
@@ -194,7 +194,7 @@ export default defineComponent({
       type: Boolean,
       default: false
     }
-  } as any,
+  },
   emits: [
     /**
      * 查询事件
@@ -224,10 +224,12 @@ export default defineComponent({
 
     let autoSearch: any = null;
     function createInitialForm() {
+      //@ts-ignore
       return _.cloneDeep(props.initialForm || {});
     }
     const form = reactive(createInitialForm());
     const { doComputed, AsyncComputeValue } = useCompute();
+    //@ts-ignore
     _.each(props.columns, (item) => {
       if (item.value != null && item.value instanceof AsyncComputeValue) {
         logger.warn("search.value配置不支持AsyncCompute类型的动态计算");
@@ -237,11 +239,13 @@ export default defineComponent({
     const doMerge = merge;
     const computedColumns = doComputed(
       () => {
+        //@ts-ignore
         return props.columns;
       },
       getContextFn,
       null,
       (value) => {
+        //@ts-ignore
         if (!props.validate) {
           //如果关闭validate则去掉rules
           _.forEach(value, (item) => {
@@ -249,8 +253,10 @@ export default defineComponent({
           });
         }
         // 合并col
+        //@ts-ignore
         if (props.col) {
           _.forEach(value, (v) => {
+            //@ts-ignore
             v.col = merge({}, props.col, v.col);
           });
         }
@@ -336,12 +342,14 @@ export default defineComponent({
           _.set(form, entry[0], initialValue);
         }
       }
-
+      //@ts-ignore
       if (props.reset) {
+        //@ts-ignore
         props.reset(searchEventContextRef.value);
       }
       // 表单重置事件
       ctx.emit("reset", getContextFn());
+      //@ts-ignore
       if (props.searchAfterReset) {
         nextTick(() => {
           doSearch();
@@ -371,6 +379,7 @@ export default defineComponent({
           order: 2
         }
       };
+      //@ts-ignore
       merge(defBtnOptions, props.buttons);
       for (let key in defBtnOptions) {
         const btn = defBtnOptions[key];
@@ -387,12 +396,16 @@ export default defineComponent({
     });
 
     function initAutoSearch() {
+      //@ts-ignore
       if (props.autoSearch === false) {
         return;
       }
       // 构建防抖查询函数
+      //@ts-ignore
       if (props.debounce !== false) {
+        //@ts-ignore
         let wait = props.debounce?.wait || 500;
+        //@ts-ignore
         autoSearch = _.debounce(doSearch, wait, props.debounce);
       }
     }
@@ -453,9 +466,11 @@ export default defineComponent({
     }
 
     const computedRules = computed(() => {
+      //@ts-ignore
       if (!props.validate) {
         return [];
       }
+      //@ts-ignore
       return props.options.rules;
     });
 
@@ -466,17 +481,21 @@ export default defineComponent({
     const columnsLineHeightRef = ref(0);
 
     const toggleCollapse = () => {
+      //@ts-ignore
       ctx.emit("update:collapse", !props.collapse);
+      //@ts-ignore
       ctx.emit("collapse", !props.collapse);
     };
 
     const computedColName = computed(() => {
+      //@ts-ignore
       if (props.layout === "multi-line") {
         return ui.col.name;
       }
       return "div";
     });
     const computedIsMultiLine = computed(() => {
+      //@ts-ignore
       return props.layout === "multi-line";
       //不要这个，会死循环， && columnsBoxHeightRef.value > columnsLineHeightRef.value;
     });
@@ -485,6 +504,7 @@ export default defineComponent({
       if (!computedIsMultiLine.value) {
         return "auto";
       }
+      //@ts-ignore
       if (props.collapse) {
         return columnsLineHeightRef.value ? columnsLineHeightRef.value + "px" : "";
       } else {
