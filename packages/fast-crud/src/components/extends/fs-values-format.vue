@@ -20,7 +20,7 @@
           @click="doClick(item)"
         >
           <template v-if="item.icon">
-            <fs-icon :icon="item.icon" class="fs-tag-icon" />
+            <fs-icon :icon="item.icon" :spin="item.iconSpin" class="fs-tag-icon" />
           </template>
           {{ getLabel(item) }}
         </component>
