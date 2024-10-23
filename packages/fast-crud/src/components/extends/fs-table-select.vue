@@ -382,7 +382,6 @@ const getScopeContext = () => {
     ...ret
   };
 };
-
 const scopeRef = ref(getScopeContext());
 defineExpose(scopeRef.value);
 </script>

@@ -695,7 +695,7 @@ export function useExpose<R = any>(props: UseExposeProps<R>): UseExposeRet<R> {
 
       if (!isLocal) {
         if (removeBinding.refreshTable !== false) {
-          await crudExpose.doRefresh();
+          await crudExpose.doRefresh({ scrollTop: false });
         }
       }
 
