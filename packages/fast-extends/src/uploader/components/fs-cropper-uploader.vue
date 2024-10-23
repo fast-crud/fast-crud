@@ -21,7 +21,11 @@
             <fs-icon :icon="ui.icons.check" class="status-down-icon" />
           </div>
         </div>
-        <div v-if="computedProps.limit <= 0 || computedProps.limit > listRef.length" class="image-item image-plus" @click="addNewImage">
+        <div
+          v-if="computedProps.limit <= 0 || computedProps.limit > listRef.length"
+          class="image-item image-plus"
+          @click="addNewImage"
+        >
           <fs-icon :icon="ui.icons.plus" class="cropper-uploader-icon" />
         </div>
       </component>
@@ -49,7 +53,7 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, getCurrentInstance, reactive, ref, Ref, watch } from "vue";
+import { computed, defineComponent, getCurrentInstance, reactive, ref, Ref, watch } from "vue";
 import { useUi } from "@fast-crud/fast-crud";
 import { FsUploaderDoUploadOptions } from "../d/type";
 import { useUploader } from "./utils";
