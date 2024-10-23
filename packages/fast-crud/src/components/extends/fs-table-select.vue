@@ -211,7 +211,10 @@ const openTableSelect = async (openOptions: { crudOptions: DynamicallyCrudOption
       ...getScopeContext()
     });
   }
-  ret.appendCrudOptions(openOptions.crudOptions);
+  if (openOptions) {
+    ret.appendCrudOptions(openOptions.crudOptions);
+  }
+
   await nextTick();
   await crudExpose.doRefresh();
   return ret;

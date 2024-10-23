@@ -146,13 +146,15 @@ export default defineComponent({
     white-space: nowrap; /* 确保文本在一行内显示 */
     overflow: hidden; /* 隐藏溢出的内容 */
     text-overflow: ellipsis; /* 使用省略号表示文本溢出 */
+    flex: 1;
   }
   .copy-button {
-    position: absolute;
-    right: 0;
+    //position: absolute;
+    //right: 0;
     display: flex;
     justify-content: center;
     align-items: center;
+    margin-left: 10px;
   }
   &.show-on-hover {
     .copy-button {

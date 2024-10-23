@@ -13,7 +13,7 @@
         v-for="item in itemsRef"
         :key="item.url"
         class="fs-tag-item"
-        :type="item.color"
+        :color="item.color"
         v-bind="tag"
       >
         <a :href="item.url" target="_blank" v-bind="a">{{ item.name }}</a>

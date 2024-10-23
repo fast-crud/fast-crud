@@ -256,7 +256,7 @@ export class Element implements UiInterface {
       return e;
     },
     modelValue: "modelValue",
-    value: "label",
+    value: "value",
     onChange(callback: (e: any) => void) {
       return {
         "onUpdate:modelValue": callback
