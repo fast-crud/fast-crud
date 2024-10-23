@@ -111,7 +111,15 @@ const defaultCrudOptions = {
       },
       viewForm: {
         wrapper: {
-          title: ct("fs.viewForm.title")
+          title: ct("fs.viewForm.title"),
+          buttons: {
+            reset: {
+              show: false
+            },
+            cancel: {
+              show: false
+            }
+          }
         }
       },
       rowHandle: {
