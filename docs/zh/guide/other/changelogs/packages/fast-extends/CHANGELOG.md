@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.22.1](https://github.com/fast-crud/fast-crud/compare/v1.22.0...v1.22.1) (2024-10-23)
+
+### Bug Fixes
+
+* 修复table-select示例，自定义插槽按钮打开后不刷新表格的bug ([0f0564d](https://github.com/fast-crud/fast-crud/commit/0f0564d358a26e8cd1676d9895863c1d95405db7))
+
 # [1.22.0](https://github.com/fast-crud/fast-crud/compare/v1.21.5...v1.22.0) (2024-10-21)
 
 **Note:** Version bump only for package @fast-crud/fast-extends

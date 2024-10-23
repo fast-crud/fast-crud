@@ -13,6 +13,7 @@
 | columnKey    |             | -             | -      |         |
 | editableCell |             | EditableCell  | -      |         |
 | editableOpts |             | EditableProps | -      |         |
+| slots        |             | -             | -      |         |
 | disabled     |             | -             | -      |         |
 | readonly     |             | -             | -      |         |
 

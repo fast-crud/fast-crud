@@ -3,6 +3,26 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.22.1](https://github.com/fast-crud/fast-crud/compare/v1.22.0...v1.22.1) (2024-10-23)
+
+### Bug Fixes
+
+* 修复多级表头子级表头，列设置无效的bug ([a61b21e](https://github.com/fast-crud/fast-crud/commit/a61b21edc3a129e2bd27e38709aca1b6af1eb751))
+* 修复element form关闭按钮没对齐的bug ([926c1cd](https://github.com/fast-crud/fast-crud/commit/926c1cda15e4d79d94bc14def544f8a073a91dcf))
+* 修复onClosed报错的bug ([264f682](https://github.com/fast-crud/fast-crud/commit/264f682314ae31f5c169370c0e5f98dc19c8c28c))
+* 修复table-select示例，自定义插槽按钮打开后不刷新表格的bug ([0f0564d](https://github.com/fast-crud/fast-crud/commit/0f0564d358a26e8cd1676d9895863c1d95405db7))
+* column支持valueChange.handle配置 ([54a76b7](https://github.com/fast-crud/fast-crud/commit/54a76b76a0e7fd5ca956ab9085d660ce8f857405))
+
+### Performance Improvements
+
+* 表单支持左右插槽 ([e3a9e8b](https://github.com/fast-crud/fast-crud/commit/e3a9e8b985558f7cbff0acd580af242df56da8c4))
+* 查看模式仅显示确定按钮 ([f0df8ad](https://github.com/fast-crud/fast-crud/commit/f0df8ad667e96820303407e0efec5c2227957ab5))
+* 独立使用表单支持插槽 ([095da7a](https://github.com/fast-crud/fast-crud/commit/095da7ac92996779f3b3c3885a8abd4de6c2fc0c))
+* 修改保存时保持滚动条原来位置，不滚到顶部 ([dc9d580](https://github.com/fast-crud/fast-crud/commit/dc9d5804b414d0e78636cae7ee11434e93cff266))
+* 优化删除后，刷新不滚动到顶部 ([18d8863](https://github.com/fast-crud/fast-crud/commit/18d886311eb018417e7495cfe78d1ea21df95ad9))
+* editable支持单元格插槽 ([ae029de](https://github.com/fast-crud/fast-crud/commit/ae029de0f554f4cc4c4750e0af3b6f7bd1edaee5))
+* values-format option支持iconSpin ([cdaa4f5](https://github.com/fast-crud/fast-crud/commit/cdaa4f55a9384b95764443b4a7f4223ec787cce3))
+
 # [1.22.0](https://github.com/fast-crud/fast-crud/compare/v1.21.5...v1.22.0) (2024-10-21)
 
 ### Features
