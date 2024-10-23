@@ -290,14 +290,17 @@ export default defineComponent({
         return props.data;
       },
       (value) => {
-        ui.table.scrollTo({
-          top: 0,
-          tableRef,
-          fsTableRef: currentRef
-        });
         ctx.emit("data-change", { data: value });
       }
     );
+
+    function scrollTo(top: number = 0) {
+      ui.table.scrollTo({
+        top,
+        tableRef,
+        fsTableRef: currentRef
+      });
+    }
 
     const tableComp = resolveDynamicComponent(ui.table.name);
     const tableColumnCI = ui.tableColumn;
@@ -429,7 +432,8 @@ export default defineComponent({
       tableRef,
       componentRefs,
       getComponentRef,
-      ...editableWrap
+      ...editableWrap,
+      scrollTo
     });
 
     const renderMode = ui.table.renderMode;

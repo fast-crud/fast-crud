@@ -30,8 +30,12 @@ export class SetFormDataOptions {
 }
 
 export type DoRefreshProps = {
+  //刷新后是否跳转到首页
   goFirstPage?: boolean;
+  //是否静默刷新，不显示loading，没有任何外在表现
   silence?: boolean;
+  //是否滚动到顶部
+  scrollTop?: boolean;
 };
 
 /**

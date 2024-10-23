@@ -147,6 +147,7 @@ const defaultCrudOptions = {
         border: true,
         bordered: true,
         singleLine: false, //naive
+        scrollTopOnRefreshed: true,
         editable: { enabled: false, rowKey: "$editable_id" },
         pagination: false //antdv 关闭默认分页
       },

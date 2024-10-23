@@ -494,6 +494,10 @@ export function useExpose<R = any>(props: UseExposeProps<R>): UseExposeRet<R> {
         crudBinding.value.pagination.pageSize = pageSize;
         crudBinding.value.pagination[ui.pagination.total] = total || records.length;
       }
+      if (props?.scrollTop ?? crudBinding.value.table.scrollTopOnRefreshed) {
+        const fsTableRef = crudExpose.getTableRef();
+        fsTableRef.scrollTo(0);
+      }
       if (crudBinding.value?.table?.onRefreshed) {
         crudBinding.value.table.onRefreshed({
           data: records

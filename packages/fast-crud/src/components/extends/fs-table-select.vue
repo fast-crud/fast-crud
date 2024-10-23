@@ -42,11 +42,8 @@
 import { Dict, useCompute, useFs, useMerge, useUi } from "../../use";
 import { computed, nextTick, ref, Ref, watch } from "vue";
 import { CreateCrudOptions, DynamicallyCrudOptions } from "../../d";
-import _ from "lodash-es";
 import { useI18n } from "../../locale";
-// defineOptions({
-//   name: "FsTableSelect"
-// });
+
 type FsTableSelectProps = {
   /**
    * modelValue
