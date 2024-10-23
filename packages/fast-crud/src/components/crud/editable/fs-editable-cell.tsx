@@ -23,6 +23,7 @@ export default defineComponent({
     editableOpts: {
       type: Object as PropType<EditableProps>
     },
+    slots: {},
     disabled: {},
     readonly: {}
   },
@@ -85,7 +86,7 @@ export default defineComponent({
     //拦截v-model
     const slots = {
       default: () => {
-        return <fs-cell ref={"targetRef"} item={props.item} scope={props.scope} {...ctx.attrs} />;
+        return <fs-cell ref={"targetRef"} item={props.item} scope={props.scope} slots={props.slots} {...ctx.attrs} />;
       },
       edit: () => {
         let inputComponent: any = null;
