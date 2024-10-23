@@ -111,6 +111,9 @@ export function useCrud<T = any, R = any>(ctx: UseCrudProps<T, R>): UseCrudRet<R
           if (mode === "edit") {
             //修改的话 不需要滚动到顶部
             await doRefresh({ scrollTop: false });
+          }
+          if (mode === "add") {
+            await doRefresh({ scrollTop: true, goFirstPage: true });
           } else {
             await doRefresh();
           }

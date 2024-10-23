@@ -4,10 +4,10 @@
       <fs-dict-select
         ref="dictSelectRef"
         v-bind="computedSelect"
-        :dict="dict"
         :disabled="disabled"
         :readonly="readonly"
         :open="false"
+        :dict="dict"
         @click="openTableSelect"
       />
     </template>
