@@ -371,7 +371,11 @@ export default defineComponent({
           const newScope = getContextFn(item, scope);
           ctx.emit("value-change", newScope);
           if (item.valueChange) {
-            item.valueChange(newScope);
+            if (item.valueChange instanceof Function) {
+              item.valueChange(newScope);
+            } else {
+              item.valueChange?.handle(newScope);
+            }
           }
         }
       };
