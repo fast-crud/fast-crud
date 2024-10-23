@@ -101,7 +101,7 @@ export default defineComponent({
         doClose,
         toggleFullscreen,
         submit,
-        mode: formOptions.value.mode
+        mode: formOptions.value?.mode
       };
     }
 
@@ -236,11 +236,11 @@ export default defineComponent({
     };
 
     const onClosed = () => {
-      formOptions.value = null;
       if (emitOnClosed.value) {
         emitOnClosed.value();
       }
       ctx.emit("closed");
+      formOptions.value = null;
     };
 
     const onOpened = () => {
