@@ -452,7 +452,12 @@ export default defineComponent({
               <div class={"fs-form-wrapper-body"}>
                 <div class={"fs-form-body"}>
                   {slotsRender("form-body-top", scope)}
-                  <fs-form ref={formRef} {...formOptions.value} onValueChange={onValueChange} />
+                  <div class={"fs-form-content"}>
+                    {slotsRender("form-body-left", scope)}
+                    <fs-form ref={formRef} {...formOptions.value} onValueChange={onValueChange} />
+                    {slotsRender("form-body-right", scope)}
+                  </div>
+
                   {slotsRender("form-body-bottom", scope)}
                 </div>
                 <div class={"fs-form-footer-btns"}>
