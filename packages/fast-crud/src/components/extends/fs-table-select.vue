@@ -3,11 +3,11 @@
     <template v-if="!slots?.default && !viewMode">
       <fs-dict-select
         ref="dictSelectRef"
-        v-bind="computedSelect"
         :disabled="disabled"
         :readonly="readonly"
         :open="false"
         :dict="dict"
+        v-bind="computedSelect"
         @click="openTableSelect"
       />
     </template>
@@ -382,10 +382,10 @@ const getScopeContext = () => {
     ...ret
   };
 };
+
 const scopeRef = ref(getScopeContext());
 defineExpose(scopeRef.value);
 </script>
-
 <style lang="less">
 .fs-table-select {
   width: 100%;

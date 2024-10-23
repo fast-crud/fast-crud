@@ -6,7 +6,7 @@
 以下为各ui的官方示例，里面包含丰富的crud特性配置示例
 
 ### 1. antdv
-[antdv示例地址](http://fast-crud.docmirror.cn/antdv/)  /  [antdv4示例地址](http://fast-crud.docmirror.cn/antdv4/)
+[antdv4示例地址](http://fast-crud.docmirror.cn/antdv4/)
 
 ### 2. element-plus
 [element示例地址](http://fast-crud.docmirror.cn/element/)

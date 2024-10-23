@@ -16,12 +16,10 @@ import {
   CrudSettings,
   DynamicallyCrudOptions,
   EditableRow,
-  RowRecord,
   ScopeContext,
   TableColumnsProps,
   UseCrudProps,
   UseCrudRet,
-  UseFsContext,
   UseFsProps,
   UseFsRet
 } from "../d";
@@ -289,21 +287,27 @@ export function useCrud<T = any, R = any>(ctx: UseCrudProps<T, R>): UseCrudRet<R
         },
         "onUpdate:columns"(value: TableColumnsProps) {
           const original = crudBinding.value.table.columns;
-          const columns: TableColumnsProps = {};
-          _.forEach(value, (item) => {
-            for (const key in original) {
-              const column = original[key];
-              if (column.key === item.key) {
-                delete column.order;
-                merge(column, item);
-                columns[key] = column;
-                return;
-              }
-            }
-          });
 
-          crudBinding.value.table.columns = columns;
-          crudBinding.value.table.columnsMap = buildTableColumnsFlatMap({}, columns);
+          function updateColumns(old: TableColumnsProps, value: TableColumnsProps) {
+            const columns: TableColumnsProps = {};
+            _.forEach(value, (item) => {
+              const oldColumn = old[item.key];
+              if (oldColumn) {
+                delete oldColumn.order;
+                const newColumn = merge({ ...oldColumn }, item);
+                columns[item.key] = newColumn;
+                if (oldColumn.children) {
+                  newColumn.children = updateColumns(oldColumn.children, item.children);
+                }
+              }
+            });
+            return columns;
+          }
+
+          const newColumns = updateColumns(original, value);
+          debugger;
+          crudBinding.value.table.columns = newColumns;
+          crudBinding.value.table.columnsMap = buildTableColumnsFlatMap({}, newColumns);
         }
       }
     };
