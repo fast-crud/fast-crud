@@ -55,7 +55,7 @@ const defaultCrudOptions = {
       form: {
         labelPlacement: "left", // naive
         labelPosition: "right", //element
-        labelWidth: "80px", //element
+        labelWidth: "120px", //element
         style: {
           "grid-template-columns": "50% 50%" // grid布局，默认两列
         },
