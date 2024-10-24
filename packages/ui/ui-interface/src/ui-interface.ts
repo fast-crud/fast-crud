@@ -223,6 +223,7 @@ export type TableSelectionReq = {
   multiple: boolean;
   useCompute: () => { compute: any; asyncCompute: any };
   selectedRowKeys: Ref<any[]>;
+  selectOnClickRow?: boolean;
   onSelectedKeysChanged: (selectedRowKeys: any[]) => void;
 };
 export interface TableCI extends CI<TableBuilderOption> {

@@ -232,7 +232,7 @@ export function useCrud<T = any, R = any>(ctx: UseCrudProps<T, R>): UseCrudRet<R
             order: 1,
             circle: true,
             click: async () => {
-              await crudExpose.doRefresh();
+              await crudExpose.doRefresh({ scrollTop: false });
             }
           },
           search: {
