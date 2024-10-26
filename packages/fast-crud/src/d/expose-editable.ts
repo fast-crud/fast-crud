@@ -10,6 +10,7 @@ import { EditableOnEnabledProps } from "../use";
 export type EditableAddRowOptions<R = any> = {
   row?: R;
   active?: boolean;
+  addRowFunc?: ({ row: R }) => void;
 };
 
 export type EditableActiveColsOptions = {
