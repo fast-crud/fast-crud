@@ -1171,7 +1171,7 @@ export type FormWrapperContext<R = any> = {
   doClose: () => Promise<boolean>;
   close: () => Promise<void>;
   toggleFullscreen: () => void;
-  submit: () => void;
+  submit: () => Promise<void>;
 };
 /**
  * 按钮配置

@@ -283,6 +283,7 @@ const refreshing = ref(false);
 const override: DynamicallyCrudOptions = computed(() => {
   let selectionOptions = ui.table.buildSelectionCrudOptions({
     crossPage: props.crossPage,
+    selectOnClickRow: true,
     getRowKey,
     getPageData() {
       return crudBinding.value.data;

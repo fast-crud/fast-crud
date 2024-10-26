@@ -552,6 +552,12 @@ export class Antdv implements UiInterface {
             preserveSelectedRowKeys: req.crossPage
           },
           customRow: (record: any) => {
+            const isRadio = req.multiple !== true;
+            const selectOnClickRow = req.selectOnClickRow ?? isRadio;
+            //默认只有单选，可以点击行选择
+            if (!selectOnClickRow) {
+              return {};
+            }
             return {
               onClick: () => {
                 if (req.multiple !== true) {
