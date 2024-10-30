@@ -1,5 +1,5 @@
 import _ from "lodash-es";
-import { computed, ComputedRef, reactive, unref, watch } from "vue";
+import { computed, ComputedRef, nextTick, reactive, unref, watch } from "vue";
 import { uiContext } from "../../../ui";
 import { useMerge } from "../../../use";
 import {
@@ -582,13 +582,30 @@ export function useEditable(props: any, ctx: any, tableRef: any): { editable: Ed
     }
   }
 
-  async function addRow(opts: { row: any; active: boolean } = { row: undefined, active: true }) {
-    const row = opts.row || { [options.value.rowKey]: --addIndex };
+  async function addRow(opts: { row: any; active: boolean; addRowFunc: Function } = { row: undefined, active: true }) {
+    let row = opts.row || { [options.value.rowKey]: --addIndex };
     setDefaultForm(options.value.addForm, row);
-    if (props.editable.addRow) {
-      await props.editable.addRow(tableData.getData(), row);
+    if (opts.addRowFunc) {
+      const newRow = await opts.addRowFunc({ row: opts.row });
+      if (newRow) {
+        row = newRow;
+      }
+    } else if (props.editable.addRow) {
+      const newRow = await props.editable.addRow(tableData.getData(), row);
+      if (newRow) {
+        row = newRow;
+      }
     } else {
       tableData.unshift(row);
+    }
+
+    if (opts.active ?? props.editable.activeDefault) {
+      await nextTick();
+      const editableId = getEditableIdFromRow(row);
+      const editableRow = getEditableRow(editableId);
+      if (editableRow) {
+        editableRow.active();
+      }
     }
   }
 
