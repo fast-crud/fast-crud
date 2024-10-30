@@ -239,25 +239,28 @@ export default defineComponent({
       },
       getContextFn,
       null,
-      (value: any) => {
+      (columns: any) => {
         const formItem = _.cloneDeep(props.formItem || {});
-        value = merge(formItem, value);
+        _.forEach(columns, (item) => {
+          merge(item, formItem, item);
+        });
+        // columns = merge(formItem, columns);
         if (!props.validate) {
           //如果关闭validate则去掉rules
-          _.forEach(value, (item) => {
+          _.forEach(columns, (item) => {
             delete item.rules;
             delete item.rule;
           });
         }
         // 合并col
         if (props.col) {
-          _.forEach(value, (v) => {
+          _.forEach(columns, (v) => {
             v.col = merge({}, props.col, v.col);
           });
         }
 
         //cellRender
-        _.forEach(value, (item) => {
+        _.forEach(columns, (item) => {
           item._cellRender = () => {
             return cellRender(item);
           };
@@ -265,7 +268,7 @@ export default defineComponent({
 
         //字段排序
         let sortArr: SearchItemProps[] = [];
-        _.forEach(value, (v, key) => {
+        _.forEach(columns, (v, key) => {
           v._key = key;
           sortArr.push(v);
         });
