@@ -582,7 +582,7 @@ export function useEditable(props: any, ctx: any, tableRef: any): { editable: Ed
     }
   }
 
-  async function addRow(opts: { row: any; active: boolean; addRowFunc: Function } = { row: undefined, active: true }) {
+  async function addRow(opts: { row: any; active: boolean; addRowFunc?: Function } = { row: undefined, active: true }) {
     let row = opts.row || { [options.value.rowKey]: --addIndex };
     setDefaultForm(options.value.addForm, row);
     if (opts.addRowFunc) {
