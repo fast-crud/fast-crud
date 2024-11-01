@@ -52,6 +52,7 @@ export interface DictOptions<T = any> {
    * 字典项label字段名称
    */
   label?: string;
+  labelBuilder?: (item: any) => string;
   /**
    * 字典项children字段名称
    */
@@ -129,6 +130,7 @@ export class Dict<T = any> extends UnMergeable implements DictOptions<T> {
   getData?: DictGetData<T> = undefined;
   value = "value";
   label = "label";
+  labelBuilder?: (item: any) => string = undefined;
   children = "children";
   color = "color";
   isTree = false;
@@ -437,6 +439,9 @@ export class Dict<T = any> extends UnMergeable implements DictOptions<T> {
     return item[this.value];
   }
   getLabel(item: any) {
+    if (this.labelBuilder) {
+      return this.labelBuilder(item);
+    }
     return item[this.label];
   }
   getChildren(item: any) {
