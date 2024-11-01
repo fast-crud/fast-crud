@@ -43,6 +43,12 @@
 * 类型：String
 * 默认：label
 
+### labelBuilder
+* 说明：字典项的label属性名构建方法，用于构建复杂的label
+* 类型：`(option)=>string`
+* 默认：undefined
+
+
 ### children
 * 说明：字典项的children属性名
 * 类型：String
