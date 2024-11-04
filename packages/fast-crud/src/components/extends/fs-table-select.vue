@@ -2,12 +2,12 @@
   <div class="fs-table-select">
     <template v-if="!slots?.default && !viewMode">
       <fs-dict-select
+        v-bind="computedSelect"
         ref="dictSelectRef"
         :disabled="disabled"
         :readonly="readonly"
         :open="false"
         :dict="dict"
-        v-bind="computedSelect"
         @click="openTableSelect"
       />
     </template>

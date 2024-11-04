@@ -214,7 +214,7 @@ export function useCrud<T = any, R = any>(ctx: UseCrudProps<T, R>): UseCrudRet<R
     return {
       tabs: {},
       onTabChange(formData: any) {
-        crudExpose.setSearchFormData({ form: formData });
+        crudExpose.setSearchFormData({ form: formData, mergeForm: true });
         doRefresh();
       }
     };
