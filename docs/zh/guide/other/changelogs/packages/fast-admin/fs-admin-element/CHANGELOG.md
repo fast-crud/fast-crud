@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.22.4](https://github.com/fast-crud/fast-crud/compare/v1.22.3...v1.22.4) (2024-11-04)
+
+### Bug Fixes
+
+* 修复tab change后清空查询表单的bug ([8d7525a](https://github.com/fast-crud/fast-crud/commit/8d7525a747c41fe3fb1f14b92d0e353440ebc8ad))
+
 ## [1.22.3](https://github.com/fast-crud/fast-crud/compare/v1.22.2...v1.22.3) (2024-11-01)
 
 **Note:** Version bump only for package @fast-crud/fs-admin-element
