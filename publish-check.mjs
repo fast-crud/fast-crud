@@ -8,6 +8,14 @@ function check(){
         console.error("git-add 没有修改过")
         throw new Error("git-add 还没修改过")
     }
+
+    //GH_TOKEN
+    console.log("检查 GH_TOKEN")
+    if(!process.env.GH_TOKEN){
+        // setx  /M GH_TOKEN xxxxx
+        console.error("GH_TOKEN 未设置")
+        throw new Error("GH_TOKEN 未设置")
+    }
 }
 
 check()

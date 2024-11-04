@@ -12,7 +12,7 @@
     "docgen:extends": "vue-docgen -c docgen/extends.config.js",
     "docgen:all": "npm run docgen:crud && npm run docgen:extends",
     "prepublishOnly": "npm run before-build && lerna run build --scope @fast-crud/fast-crud --scope @fast-crud/fs-admin-antdv  --scope @fast-crud/fast-extends --scope */ui-* ",
-    "publish": "npm run prepublishOnly  && lerna publish --conventional-commits && npm run afterpublishOnly",
+    "publish": "npm run prepublishOnly  && lerna publish --conventional-commits --create-release github && npm run afterpublishOnly",
     "publish:canary": "lerna publish --canary --conventional-commits && npm run afterpublishOnly",
     "afterpublishOnly": "npm run copylogs && npm run afterPubPush && lerna run afterPubPush && node deploy.js",
     "afterPubPush": "npm run docgen:all & git add . && git commit -m \"build: publish success\" && git push",
