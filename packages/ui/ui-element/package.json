@@ -1,6 +1,6 @@
 {
   "name": "@fast-crud/ui-element",
-  "version": "1.22.4",
+  "version": "1.22.5",
   "description": "",
   "main": "./dist/ui-element.umd.js",
   "module": "./dist/ui-element.mjs",
@@ -16,7 +16,7 @@
   "license": "MIT",
   "devDependencies": {
     "@element-plus/icons-vue": "^2.1.0",
-    "@fast-crud/ui-interface": "^1.22.4",
+    "@fast-crud/ui-interface": "^1.22.5",
     "@rollup/plugin-strip": "^3.0.2",
     "@rollup/plugin-typescript": "^11.1.2",
     "@types/lodash-es": "^4.17.8",
