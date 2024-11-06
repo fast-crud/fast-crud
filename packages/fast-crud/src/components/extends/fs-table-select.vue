@@ -39,7 +39,7 @@
   </div>
 </template>
 <script lang="tsx" setup>
-import { Dict, useCompute, useFs, useMerge, useUi } from "../../use";
+import { Dict, useCompute, useExpose, useFs, useFsAsync, useFsRef, useMerge, useUi } from "../../use";
 import { computed, nextTick, ref, Ref, watch } from "vue";
 import { CreateCrudOptions, DynamicallyCrudOptions } from "../../d";
 import { useI18n } from "../../locale";
@@ -180,6 +180,8 @@ const dictSelectRef = ref();
 const valuesFormatRef = ref();
 const dialogOpen = ref(false);
 
+const { crudRef, crudBinding, context } = useFsRef();
+
 function initSelectedKeys(modelValue: any) {
   if (modelValue == null || (Array.isArray(modelValue) && modelValue.length == 0)) {
     selectedRowKeys.value = [];
@@ -196,6 +198,8 @@ function initSelectedKeys(modelValue: any) {
     }
   }
 }
+
+const { crudExpose } = useExpose({ crudRef, crudBinding });
 const openTableSelect = async (openOptions: { crudOptions: DynamicallyCrudOptions }) => {
   if (props.disabled || props.readonly || props.select?.disabled || props.select?.readonly) {
     return;
@@ -203,6 +207,15 @@ const openTableSelect = async (openOptions: { crudOptions: DynamicallyCrudOption
   if (props.dict == null) {
     throw new Error("必须配置dict，且必须配置dict.getNodesByValues");
   }
+
+  const ret = await useFsAsync({
+    crudBinding,
+    crudRef,
+    createCrudOptions: props.createCrudOptions,
+    crudOptionsOverride: buildMergedCrudOptions(),
+    context,
+    crudExpose
+  });
   dialogOpen.value = true;
   initSelectedKeys(props.modelValue);
   if (props.beforeOpen) {
@@ -280,7 +293,7 @@ function getRowKey() {
 }
 const refreshing = ref(false);
 
-const override: DynamicallyCrudOptions = computed(() => {
+function buildMergedCrudOptions() {
   let selectionOptions = ui.table.buildSelectionCrudOptions({
     crossPage: props.crossPage,
     selectOnClickRow: true,
@@ -307,10 +320,11 @@ const override: DynamicallyCrudOptions = computed(() => {
           refreshing.value = true;
           await nextTick();
           await nextTick();
+          const baseTableRef = crudExpose.getBaseTableRef();
           ui.table.setSelectedRows({
             getRowKey,
             multiple: props.multiple,
-            tableRef: crudExpose.getBaseTableRef(),
+            tableRef: baseTableRef,
             selectedRowKeys
           });
           refreshing.value = false;
@@ -319,32 +333,26 @@ const override: DynamicallyCrudOptions = computed(() => {
     }
   };
   return merge(crudOptions, selectionOptions, props.crudOptionsOverride);
-});
+}
 
 const { merge } = useMerge();
-// eslint-disable-next-line vue/no-setup-props-destructure
-const ret = useFs({
-  createCrudOptions: props.createCrudOptions,
-  crudOptionsOverride: override.value
-});
-const { crudExpose, context, appendCrudOptions, crudOptions, crudBinding, crudRef } = ret;
 
-watch(
-  () => {
-    return props.crudOptionsOverride;
-  },
-  async (value, oldValue) => {
-    if (JSON.stringify(value) === JSON.stringify(oldValue)) {
-      return;
-    }
-    const cur = crudBinding.value?.pagination[ui.pagination.currentPage];
-    appendCrudOptions(value);
-    if (crudRef.value) {
-      crudBinding.value.pagination[ui.pagination.currentPage] = cur;
-      await crudExpose.doRefresh({ goFirstPage: false });
-    }
-  }
-);
+// watch(
+//   () => {
+//     return props.crudOptionsOverride;
+//   },
+//   async (value, oldValue) => {
+//     if (JSON.stringify(value) === JSON.stringify(oldValue)) {
+//       return;
+//     }
+//     const cur = crudBinding.value?.pagination[ui.pagination.currentPage];
+//     appendCrudOptions(value);
+//     if (crudRef.value) {
+//       crudBinding.value.pagination[ui.pagination.currentPage] = cur;
+//       await crudExpose.doRefresh({ goFirstPage: false });
+//     }
+//   }
+// );
 
 function onOk() {
   if (props.dict.loading) {
@@ -383,7 +391,9 @@ const getScopeContext = () => {
     selectedRowKeys,
     dictSelectRef,
     valuesFormatRef,
-    ...ret
+    crudRef,
+    crudBinding,
+    crudExpose
   };
 };
 

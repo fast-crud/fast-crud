@@ -26,10 +26,11 @@ import {
 import { useCompute } from "./use-compute";
 import { buildTableColumnsFlatMap, forEachTableColumns, useColumns } from "./use-columns";
 import { CrudOptions } from "../d/crud";
-import { computed, Ref, ref, unref } from "vue";
+import { computed, reactive, Ref, ref, shallowReactive, shallowRef, unref } from "vue";
 import { useExpose } from "./use-expose";
 import { exportTable } from "../lib/fs-export";
 import { getCrudOptionsPlugin } from "../use/use-plugins";
+import { UnwrapNestedRefs } from "vue";
 
 const { merge } = useMerge();
 
@@ -351,7 +352,6 @@ export function useCrud<T = any, R = any>(ctx: UseCrudProps<T, R>): UseCrudRet<R
 
   function useEditable() {
     const { compute } = useCompute();
-
     return {
       actionbar: {
         buttons: {
@@ -536,7 +536,11 @@ function useFsImpl(props: UseFsProps): UseFsRet | Promise<UseCrudRet> {
   // crud 配置的ref
   const crudBinding: Ref<CrudBinding> = props.crudBinding || ref({});
   // 暴露的方法
-  const { crudExpose } = useExpose({ crudRef, crudBinding });
+  let crudExpose = props.crudExpose;
+  if (!crudExpose) {
+    const res = useExpose({ crudRef, crudBinding });
+    crudExpose = res.crudExpose;
+  }
 
   if (crudExposeRef && !crudExposeRef.value) {
     crudExposeRef.value = crudExpose;
@@ -589,4 +593,25 @@ export function useFs<R = any, C = any>(props: UseFsProps<R, C>): UseFsRet<R, C>
 
 export function useFsAsync<R = any, C = any>(props: UseFsProps<R, C>): Promise<UseFsRet<R, C>> {
   return useFsImpl(props) as Promise<UseFsRet>;
+}
+export type UseFsRefOptions = {
+  deep?: boolean;
+};
+export function useFsRef(opts: UseFsRefOptions = { deep: true }) {
+  // crud组件的ref
+  const crudRef: Ref = ref();
+  // crud 配置的ref
+  const crudBinding: Ref<CrudBinding> = ref();
+
+  let context: UnwrapNestedRefs<any> = reactive({});
+  if (opts?.deep === false) {
+    context = shallowReactive({});
+  }
+  const { crudExpose } = useExpose({ crudBinding, crudRef });
+  return {
+    crudRef,
+    crudBinding,
+    context,
+    crudExpose
+  };
 }

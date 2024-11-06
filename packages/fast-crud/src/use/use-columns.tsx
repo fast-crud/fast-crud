@@ -2,7 +2,7 @@ import { useMerge } from "./use-merge";
 import types from "../types";
 import defaultCrudOptions from "./default-crud-options";
 import _ from "lodash-es";
-import { reactive } from "vue";
+import { isRef, reactive, shallowRef } from "vue";
 import { useI18n } from "../locale";
 import logger from "../utils/util.log";
 import {
@@ -172,9 +172,21 @@ function buildTableColumn(colTemplate: any) {
   if (item.children) {
     tableColumn.children = buildTableColumns(item.children);
   }
+  wrapperCustomComponent(tableColumn);
   return reactive(tableColumn);
 }
 
+function wrapperCustomComponent(column: any) {
+  if (!column) {
+    return;
+  }
+  if (column.component?.name && typeof column.component.name !== "string") {
+    //自定义组件;
+    if (!isRef(column.component.name)) {
+      column.component.name = shallowRef(column.component.name);
+    }
+  }
+}
 /**
  * 构建列表表头配置
  * @param columns
@@ -229,6 +241,8 @@ function buildFormColumns(columnsFlatMap: CompositionColumns, formType: string) 
     }
     formColumn.key = item.key;
     formColumns[item.key] = formColumn;
+
+    wrapperCustomComponent(formColumn);
   });
   return formColumns;
 }

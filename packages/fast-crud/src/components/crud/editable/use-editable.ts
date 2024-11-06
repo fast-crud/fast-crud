@@ -35,7 +35,7 @@ function useTableData(props: any, tableRef: any) {
       return props.data;
     }
     if (tableRef.value) {
-      return tableRef.value[ui.table.data];
+      return tableRef.value[ui.table.data] || [];
     }
     return [];
   }
@@ -60,7 +60,6 @@ function useTableData(props: any, tableRef: any) {
 export function useEditable(props: any, ctx: any, tableRef: any): { editable: EditableTable } {
   const tableData = useTableData(props, tableRef);
   const editableRows: Record<number, EditableRow> = reactive([]);
-
   function getIdFromRow(row: any) {
     if (typeof props.rowKey === "string") {
       return row[props.rowKey];
@@ -401,6 +400,9 @@ export function useEditable(props: any, ctx: any, tableRef: any): { editable: Ed
     if (data == null) {
       data = tableData.getData();
     }
+
+    const tmpRows = Object.assign({}, editableRows);
+
     //清空editableRows
     _.forOwn(editableRows, (_, key: any) => {
       delete editableRows[key];
@@ -411,7 +413,11 @@ export function useEditable(props: any, ctx: any, tableRef: any): { editable: Ed
         rowData[props.editable.rowKey] = nextEditableId();
       }
       const editableId = rowData[props.editable.rowKey];
-      editableRows[editableId] = createEditableRow(editableId, rowData);
+      if (tmpRows[editableId]) {
+        editableRows[editableId] = tmpRows[editableId];
+      } else {
+        editableRows[editableId] = createEditableRow(editableId, rowData);
+      }
     });
     if (options.value.onSetup) {
       options.value.onSetup();
@@ -583,7 +589,7 @@ export function useEditable(props: any, ctx: any, tableRef: any): { editable: Ed
   }
 
   async function addRow(opts: { row: any; active: boolean; addRowFunc?: Function } = { row: undefined, active: true }) {
-    let row = opts.row || { [options.value.rowKey]: --addIndex };
+    let row = opts.row || { [options.value.rowKey]: --addIndex, [props.rowKey]: addIndex };
     setDefaultForm(options.value.addForm, row);
     if (opts.addRowFunc) {
       const newRow = await opts.addRowFunc({ row: opts.row });

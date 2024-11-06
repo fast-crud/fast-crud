@@ -91,7 +91,9 @@ function doComputed(
     return findComputeValues(target, excludes, true);
   });
   //TODO computed
-  const asyncValuesMap = doAsyncCompute(dependAsyncValues.value, getContextFn);
+  const asyncValuesMap = computed(() => {
+    return doAsyncCompute(dependAsyncValues.value, getContextFn);
+  });
 
   return computed(() => {
     let target = getTargetFunc();
@@ -107,7 +109,7 @@ function doComputed(
         });
       }
       if (asyncCount > 0) {
-        setAsyncComputeValue(target, asyncValuesMap);
+        setAsyncComputeValue(target, asyncValuesMap.value);
       }
     }
 

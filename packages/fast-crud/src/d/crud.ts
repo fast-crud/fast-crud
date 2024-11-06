@@ -47,7 +47,7 @@ export type CreateCrudOptionsRet<R = any> = {
 export type UseFsProps<R = any, C = any> = {
   crudRef?: Ref;
   crudBinding?: Ref<CrudBinding<R>>;
-
+  crudExpose?: CrudExpose<R>;
   crudExposeRef?: Ref<CrudExpose<R>>;
   createCrudOptions: CreateCrudOptions<R, C> | CreateCrudOptionsAsync<R, C>;
   crudOptionsOverride?: DynamicallyCrudOptions<R>;
