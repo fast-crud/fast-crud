@@ -28,21 +28,10 @@ crud配置，每个crud最大的不同就在于此文件。
 import { CreateCrudOptionsProps, CreateCrudOptionsRet, dict } from "@fast-crud/fast-crud";
 import { addRequest, delRequest, editRequest, pageRequest } from "./api";
 
-
-/**
- * 定义行数据模型
- * 如果你嫌定义数据模型麻烦，可以删掉此处，把下面出现的FirstRow用any代替即可
- */
-export type FirstRow = {
-    id?: number;
-    name?: string;
-    type?: number;
-};
-
 /**
  * 定义一个CrudOptions生成器方法
  */
-export default function ({ crudExpose, context }: CreateCrudOptionsProps<FirstRow>): CreateCrudOptionsRet<FirstRow> {
+export default async function  ({ crudExpose, context }: CreateCrudOptionsProps): Promise<CreateCrudOptionsRet> {
   return {
     crudOptions: {
       // 在这里自定义你的crudOptions配置
@@ -97,42 +86,22 @@ export default function ({ crudExpose, context }: CreateCrudOptionsProps<FirstRo
     </fs-page>
 </template>
 
-<script lang="ts">
-    import { defineComponent, onMounted } from "vue";
-    import { useFs ,OnExposeContext } from "@fast-crud/fast-crud";
+<script lang="ts" setup>
+    import { onMounted } from "vue";
+    import { useFsAsync ,CrudBinding } from "@fast-crud/fast-crud";
     import createCrudOptions from "./crud";
-    import {FirstRow} from "./crud";
-
-    //此处为组件定义
-    export default defineComponent({
-        name: "FsCrudFirst",
-        setup(props:any,ctx:any) {
-            // // crud组件的ref
-            // const crudRef = ref();
-            // // crud 配置的ref
-            // const crudBinding = ref();
-            // // 暴露的方法
-            // const {crudExpose} = useExpose({crudRef, crudBinding});
-            // // 你的crud配置
-            // const {crudOptions} = createCrudOptions({crudExpose});
-            // // 初始化crud配置
-            // const {resetCrudOptions , appendCrudBinding} = useCrud({crudExpose, crudOptions});
-
-            //  =======以上为fs的初始化代码=========
-            //  =======你可以简写为下面这一行========
-            const context: any = {props,ctx}; // 自定义变量, 将会传递给createCrudOptions, 比如直接把props,和ctx直接传过去使用
-            function onExpose(e:OnExposeContext){} //将在createOptions之前触发，可以获取到crudExpose,和context
-            const { crudRef, crudBinding, crudExpose } = useFs<FirstRow>({ createCrudOptions, onExpose, context});
-            
-            // 页面打开后获取列表数据
-            onMounted(() => {
-                crudExpose.doRefresh();
-            });
-            return {
-                crudBinding,
-                crudRef
-            };
-        }
+  
+    // crud组件的ref
+    const crudRef: Ref = ref();
+    // crud 配置的ref
+    const crudBinding: Ref<CrudBinding> = ref();
+    
+    const context: any = {props,ctx}; // 自定义变量, 将会传递给createCrudOptions, 比如直接把props,和ctx直接传过去使用
+    
+    // 页面打开后获取列表数据
+    onMounted(async () => {
+        const { crudExpose } = await useFsAsync({  crudRef, crudBinding, createCrudOptions, context});
+        crudExpose.doRefresh();
     });
 </script>
 ``` 

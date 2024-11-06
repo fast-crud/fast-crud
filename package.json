@@ -26,7 +26,7 @@
     "checkout:main": "git checkout main && cd ./packages/fast-admin/fs-admin-element && git checkout main && cd ../fs-admin-antdv && git checkout main  && cd ../fs-admin-naive-ui && git checkout main && cd ../../  ",
     "checkout:dev": "git checkout dev && cd ./packages/fast-admin/fs-admin-element && git checkout dev && cd ../fs-admin-antdv && git checkout dev  && cd ../fs-admin-naive-ui && git checkout dev && cd ../../  "
   },
-  "author": "Greper",
+  "author": "greper",
   "license": "MIT",
   "devDependencies": {
     "@algolia/client-search": "^4.22.1",

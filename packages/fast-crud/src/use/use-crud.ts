@@ -587,6 +587,6 @@ export function useFs<R = any, C = any>(props: UseFsProps<R, C>): UseFsRet<R, C>
   return useFsImpl(props) as UseFsRet;
 }
 
-export function useFsAsync(props: UseFsProps): Promise<UseFsRet> {
+export function useFsAsync<R = any, C = any>(props: UseFsProps<R, C>): Promise<UseFsRet<R, C>> {
   return useFsImpl(props) as Promise<UseFsRet>;
 }
