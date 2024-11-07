@@ -597,16 +597,13 @@ export function useFsAsync<R = any, C = any>(props: UseFsProps<R, C>): Promise<U
 export type UseFsRefOptions = {
   deep?: boolean;
 };
-export function useFsRef(opts: UseFsRefOptions = { deep: true }) {
+export function useFsRef() {
   // crud组件的ref
   const crudRef: Ref = ref();
   // crud 配置的ref
   const crudBinding: Ref<CrudBinding> = ref();
 
-  let context: UnwrapNestedRefs<any> = reactive({});
-  if (opts?.deep === false) {
-    context = shallowReactive({});
-  }
+  const context: any = {};
   const { crudExpose } = useExpose({ crudBinding, crudRef });
   return {
     crudRef,
