@@ -74,7 +74,12 @@
           <slot name="pagination-left"></slot>
         </div>
         <div class="fs-pagination">
-          <component :is="ui.pagination.name" v-if="pagination.show !== false" v-bind="pagination" />
+          <!-- pagination.currentPage 如果为空， element会出警告 -->
+          <component
+            :is="ui.pagination.name"
+            v-if="pagination.currentPage && pagination.show !== false"
+            v-bind="pagination"
+          />
         </div>
         <div class="fs-pagination-right">
           <slot name="pagination-right"></slot>
