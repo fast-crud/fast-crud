@@ -3,6 +3,16 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [1.23.0](https://github.com/fast-crud/fast-crud/compare/v1.22.5...v1.23.0) (2024-11-11)
+
+### Features
+
+* 示例全面改成useFsAsync ([aa848a9](https://github.com/fast-crud/fast-crud/commit/aa848a9530af831247077620fa3ee0f605c19009))
+
+### Performance Improvements
+
+* 示例改成useFsAsync ([f7fac52](https://github.com/fast-crud/fast-crud/commit/f7fac52fcfaa4703bfebd8259007b235401b8357))
+
 ## [1.22.5](https://github.com/fast-crud/fast-crud/compare/v1.22.4...v1.22.5) (2024-11-04)
 
 **Note:** Version bump only for package @fast-crud/fs-admin-antdv4

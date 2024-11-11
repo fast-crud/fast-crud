@@ -3,6 +3,16 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [1.23.0](https://github.com/fast-crud/fast-crud/compare/v1.22.5...v1.23.0) (2024-11-11)
+
+### Bug Fixes
+
+* 修复useFsAsync情况下element pagination 无法显示的bug ([737a0ed](https://github.com/fast-crud/fast-crud/commit/737a0ed96179bdc19d9bf9b87d2b70885fcba4fc))
+
+### Performance Improvements
+
+* 示例改成useFsAsync ([f7fac52](https://github.com/fast-crud/fast-crud/commit/f7fac52fcfaa4703bfebd8259007b235401b8357))
+
 ## [1.22.5](https://github.com/fast-crud/fast-crud/compare/v1.22.4...v1.22.5) (2024-11-04)
 
 **Note:** Version bump only for package @fast-crud/fs-admin-element
