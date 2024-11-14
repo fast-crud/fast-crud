@@ -496,7 +496,7 @@ export function useExpose<R = any>(props: UseExposeProps<R>): UseExposeRet<R> {
       }
       if (props?.scrollTop ?? crudBinding.value.table.scrollTopOnRefreshed) {
         const fsTableRef = crudExpose.getTableRef();
-        fsTableRef.scrollTo(0);
+        fsTableRef?.scrollTo(0);
       }
       if (crudBinding.value?.table?.onRefreshed) {
         crudBinding.value.table.onRefreshed({
