@@ -68,6 +68,18 @@ export default defineComponent({
     const onSelectedChange = (value: any) => {
       ctx.emit("change", value);
       const dict = usedDict.getDict();
+      //如果是数组
+      if (value && Array.isArray(value) && value.length > 0) {
+        const opts = [];
+        for (const v of value) {
+          if (dict && dict.dataMap && dict.dataMap[v]) {
+            opts.push(dict.dataMap[v]);
+          }
+        }
+        ctx.emit("selected-change", opts);
+        return;
+      }
+
       if (dict && dict.dataMap && dict.dataMap[value]) {
         const opt = dict.dataMap[value];
         ctx.emit("selected-change", opt);
