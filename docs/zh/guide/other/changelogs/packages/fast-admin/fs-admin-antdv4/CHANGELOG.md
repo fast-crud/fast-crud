@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.23.2](https://github.com/fast-crud/fast-crud/compare/v1.23.1...v1.23.2) (2024-11-18)
+
+### Bug Fixes
+
+* 修复dict-select多选情况下selected-change返回为空的bug ([181b167](https://github.com/fast-crud/fast-crud/commit/181b167d29536ffd8cd476e4744e322c5542b991))
+
 ## [1.23.1](https://github.com/fast-crud/fast-crud/compare/v1.23.0...v1.23.1) (2024-11-13)
 
 ### Bug Fixes
