@@ -94,7 +94,7 @@ component:{
 component:{
     name:"a-input"
     slots:{
-        suffix:{
+        suffix:(scope)=>{
             return <fs-icon icon={"ion:eye-outline"}/>
         }
     }
