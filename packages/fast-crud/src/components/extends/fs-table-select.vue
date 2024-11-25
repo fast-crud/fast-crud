@@ -172,7 +172,11 @@ const emits = defineEmits([
   "change",
   "update:modelValue",
   /* 选中行变化事件 */
-  "selected-change"
+  "selected-change",
+  /*对话框即将关闭*/
+  "dialog-close",
+  /*对话框已关闭*/
+  "dialog-closed"
 ]);
 const { ui } = useUi();
 const { t } = useI18n();
@@ -354,34 +358,43 @@ const { merge } = useMerge();
 //   }
 // );
 
-function onOk() {
+async function onOk() {
   if (props.dict.loading) {
     return;
   }
-  if (!props.viewMode) {
-    //非view模式下，需要更新value
-    let value = null;
-    let rows = null;
-    if (selectedRowKeys.value?.length > 0) {
-      value = [...selectedRowKeys.value];
+  let value = null;
+  let rows = null;
+  if (selectedRowKeys.value?.length > 0) {
+    value = [...selectedRowKeys.value];
 
-      rows = value.map((item) => {
-        return props.dict.getDictMap()[item];
-      });
-      if (props.valueType === "object") {
-        value = rows;
-      }
-
-      if (props.multiple !== true && value.length > 0) {
-        value = value[0];
-      }
+    rows = value.map((item) => {
+      return props.dict.getDictMap()[item];
+    });
+    if (props.valueType === "object") {
+      value = rows;
     }
 
+    if (props.multiple !== true && value.length > 0) {
+      value = value[0];
+    }
+  }
+
+  if (!props.viewMode) {
+    //非view模式下，需要更新value
     emits("update:modelValue", value);
     emits("change", value);
     emits("selected-change", rows);
   }
   dialogOpen.value = false;
+
+  let scope = {
+    value,
+    rows,
+    selectedRowKeys: selectedRowKeys.value
+  };
+  emits("dialog-close", scope);
+  await nextTick();
+  emits("dialog-closed", scope);
 }
 
 const getScopeContext = () => {
