@@ -1,7 +1,7 @@
 import vue from "@vitejs/plugin-vue";
 import vueJsx from "@vitejs/plugin-vue-jsx";
 import path from "path";
-import visualizer from "rollup-plugin-visualizer";
+import {visualizer} from "rollup-plugin-visualizer";
 import strip from "@rollup/plugin-strip";
 import typescript from "@rollup/plugin-typescript";
 import { defineConfig } from "vite";

@@ -1,12 +1,12 @@
 import vue from "@vitejs/plugin-vue";
 import vueJsx from "@vitejs/plugin-vue-jsx";
 import path from "path";
-import _ from "lodash";
-import visualizer from "rollup-plugin-visualizer";
+import {visualizer} from "rollup-plugin-visualizer";
 import strip from "@rollup/plugin-strip";
-const { resolve } = path;
 import DefineOptions from "unplugin-vue-define-options/vite";
 import typescript from "@rollup/plugin-typescript";
+
+const { resolve } = path;
 // https://vitejs.dev/config/
 export default ({ command, mode }) => {
   let build = {};
