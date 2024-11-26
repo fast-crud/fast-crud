@@ -5,7 +5,7 @@ import { visualizer } from "rollup-plugin-visualizer";
 import strip from "@rollup/plugin-strip";
 import DefineOptions from "unplugin-vue-define-options/vite";
 import typescript from "@rollup/plugin-typescript";
-import _ from "lodash-es";
+import _ from "lodash";
 const { resolve } = path;
 // https://vitejs.dev/config/
 export default ({ command, mode }) => {
