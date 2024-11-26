@@ -103,7 +103,8 @@ export default defineComponent({
       //以options参数作为options
       const options = this.computedOptions || [];
       const binding: any = {
-        [`onUpdate:${vModel}`]: (value) => {
+        [`onUpdate:${vModel}`]: (value:any) => {
+          //@ts-ignore
           this.$emit(`onUpdate:${vModel}`, value);
           this.onSelectedChange(value);
         }
