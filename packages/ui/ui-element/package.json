@@ -2,6 +2,7 @@
   "name": "@fast-crud/ui-element",
   "version": "1.23.2",
   "description": "",
+  "type": "module",
   "main": "./src/index.ts",
   "module": "./src/index.ts",
   "types": "./src/index.ts",

@@ -2,6 +2,7 @@
   "name": "@fast-crud/ui-antdv4",
   "version": "1.23.2",
   "description": "antdv",
+  "type": "module",
   "main": "./src/index.ts",
   "module": "./src/index.ts",
   "types": "./src/index.ts",
