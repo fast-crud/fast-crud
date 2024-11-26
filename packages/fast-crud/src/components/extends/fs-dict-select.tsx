@@ -97,17 +97,24 @@ export default defineComponent({
   render() {
     const { ui } = useUi();
     const selectComp = resolveDynamicComponent(ui.select.name);
+    const vModel = ui.select.modelValue;
     if (ui.option.name == null) {
       //naive ui
       //以options参数作为options
       const options = this.computedOptions || [];
+      const binding: any = {
+        [`onUpdate:${vModel}`]: (value) => {
+          this.$emit(`onUpdate:${vModel}`, value);
+          this.onSelectedChange(value);
+        }
+      };
       return (
         <selectComp
           ref={"selectRef"}
           placeholder={this.computedPlaceholder}
           options={options}
           renderLabel={this.renderLabel}
-          onChange={this.onSelectedChange}
+          {...binding}
         />
       );
     }
