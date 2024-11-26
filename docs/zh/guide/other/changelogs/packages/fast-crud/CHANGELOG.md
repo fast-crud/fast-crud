@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.23.3](https://github.com/fast-crud/fast-crud/compare/v1.23.2...v1.23.3) (2024-11-26)
+
+### Bug Fixes
+
+* 修复naive 数据不足时最后一行bottom没有线 ([6db5338](https://github.com/fast-crud/fast-crud/commit/6db53383db2e2578d909a74fbd3793c991ae9d1a))
+* 修复naive select的onChange警告 ([64ff8e1](https://github.com/fast-crud/fast-crud/commit/64ff8e14d9a1909b97d5cd290def4c378449cc2f))
+
+### Performance Improvements
+
+* table-select 增加 dialog-close事件 ([610aca2](https://github.com/fast-crud/fast-crud/commit/610aca27a11041bac92ddc74a373a99039a787e5))
+
 ## [1.23.2](https://github.com/fast-crud/fast-crud/compare/v1.23.1...v1.23.2) (2024-11-18)
 
 ### Bug Fixes

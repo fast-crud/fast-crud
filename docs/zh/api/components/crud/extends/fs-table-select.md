@@ -31,6 +31,8 @@
 | change            |            |
 | update:modelValue |            |
 | selected-change   |            |
+| dialog-close      |            |
+| dialog-closed     |            |
 
 ## Slots
 

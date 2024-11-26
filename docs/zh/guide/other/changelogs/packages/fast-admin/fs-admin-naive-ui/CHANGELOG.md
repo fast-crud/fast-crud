@@ -3,6 +3,16 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.23.3](https://github.com/jekip/naive-ui-admin/compare/v1.23.2...v1.23.3) (2024-11-26)
+
+### Bug Fixes
+
+* 修复naive select的onChange警告 ([64ff8e1](https://github.com/jekip/naive-ui-admin/commit/64ff8e14d9a1909b97d5cd290def4c378449cc2f))
+
+### Performance Improvements
+
+* 增加card列表示例 ([94cf47a](https://github.com/jekip/naive-ui-admin/commit/94cf47a45c2cc5b0b9eb861097a9dca38548cda3))
+
 ## [1.23.2](https://github.com/jekip/naive-ui-admin/compare/v1.23.1...v1.23.2) (2024-11-18)
 
 **Note:** Version bump only for package naive-ui-admin
