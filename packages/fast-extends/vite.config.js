@@ -1,11 +1,11 @@
 import vue from "@vitejs/plugin-vue";
 import vueJsx from "@vitejs/plugin-vue-jsx";
 import path from "path";
-import {visualizer} from "rollup-plugin-visualizer";
+import { visualizer } from "rollup-plugin-visualizer";
 import strip from "@rollup/plugin-strip";
 import DefineOptions from "unplugin-vue-define-options/vite";
 import typescript from "@rollup/plugin-typescript";
-import {merge} from 'lodash-es'
+import _ from "lodash-es";
 const { resolve } = path;
 // https://vitejs.dev/config/
 export default ({ command, mode }) => {
@@ -101,6 +101,6 @@ export default ({ command, mode }) => {
     }
   };
 
-  merge(options, build);
+  _.merge(options, build);
   return options;
 };
