@@ -14,7 +14,7 @@
     <slot v-bind="scopeRef"></slot>
     <component :is="ui.formItem.skipValidationWrapper">
       <component :is="ui.dialog.name" v-model:[ui.dialog.visible]="dialogOpen" v-bind="computedDialogBinding">
-        <div v-if="dialogOpen" :style="{ width: '100%', height: height || '60vh' }">
+        <div v-if="dialogOpen || destroyOnClose === false" :style="{ width: '100%', height: height || '60vh' }">
           <fs-crud ref="crudRef" v-bind="crudBinding">
             <template #header-top>
               <div v-if="showCurrent !== false && !viewMode" class="fs-table-select-current">
@@ -184,7 +184,7 @@ const dictSelectRef = ref();
 const valuesFormatRef = ref();
 const dialogOpen = ref(false);
 
-const { crudRef, crudBinding, context } = useFsRef();
+const { crudRef, crudBinding, crudExpose } = useFsRef();
 
 function initSelectedKeys(modelValue: any) {
   if (modelValue == null || (Array.isArray(modelValue) && modelValue.length == 0)) {
@@ -203,8 +203,7 @@ function initSelectedKeys(modelValue: any) {
   }
 }
 
-const { crudExpose } = useExpose({ crudRef, crudBinding });
-const openTableSelect = async (openOptions: { crudOptions: DynamicallyCrudOptions }) => {
+const openTableSelect = async (openOptions: { crudOptions: DynamicallyCrudOptions; context: any }) => {
   if (props.disabled || props.readonly || props.select?.disabled || props.select?.readonly) {
     return;
   }
@@ -217,10 +216,10 @@ const openTableSelect = async (openOptions: { crudOptions: DynamicallyCrudOption
     crudRef,
     createCrudOptions: props.createCrudOptions,
     crudOptionsOverride: buildMergedCrudOptions(),
-    context,
+    context: openOptions.context,
     crudExpose
   });
-  dialogOpen.value = true;
+
   initSelectedKeys(props.modelValue);
   if (props.beforeOpen) {
     await props.beforeOpen({
@@ -231,8 +230,7 @@ const openTableSelect = async (openOptions: { crudOptions: DynamicallyCrudOption
   if (openOptions) {
     ret.appendCrudOptions(openOptions.crudOptions);
   }
-
-  await nextTick();
+  dialogOpen.value = true;
   await crudExpose.doRefresh();
   return ret;
 };
