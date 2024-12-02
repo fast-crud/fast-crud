@@ -1,13 +1,11 @@
 <template>
   <div class="fs-row-handle">
-    <slot name="cell-rowHandle-left" v-bind="scope"></slot>
+    <slot name="cell-rowHandle-left" v-bind="scopeRef"></slot>
     <template v-for="(item, index) in computedHandleBtns" :key="index">
-      <fs-button
-        v-if="item.show !== false && !isDropdownBtn(item, index)"
-        class="row-handle-btn"
-        v-bind="item"
-        @click.stop="doClick(item)"
-      />
+      <template v-if="item.show !== false && !isDropdownBtn(item, index)">
+        <fs-render v-if="item.render" :render-func="item.render" :scope="scopeRef" />
+        <fs-button v-else class="row-handle-btn" v-bind="item" @click.stop="doClick(item)" />
+      </template>
     </template>
     <slot name="cell-rowHandle-middle" v-bind="scope"></slot>
     <!-- 下拉按钮菜单 -->
@@ -106,6 +104,14 @@ export default defineComponent({
     const { ui } = useUi();
     const { merge } = useMerge();
     const { t } = useI18n();
+
+    const scopeRef = computed(() => {
+      return {
+        ...props.scope,
+        row: props.scope[ui.tableColumn.row],
+        index: props.scope[ui.tableColumn.index]
+      };
+    });
     const doClick = (item: any) => {
       const index = props.scope[ui.tableColumn.index];
       const row = props.scope[ui.tableColumn.row];
@@ -255,6 +261,7 @@ export default defineComponent({
       computedDropdownAtLeast,
       doClick,
       isDropdownBtn,
+      scopeRef,
       computedDropdownBinding
     };
   }

@@ -650,23 +650,26 @@ export function useExpose<R = any>(props: UseExposeProps<R>): UseExposeRet<R> {
      */
     async doRemove(context: DoRemoveContext<R>, opts?: RemoveProps<R>) {
       const removeBinding: any = crudBinding.value.table.remove ?? opts ?? {};
-      try {
-        if (removeBinding.confirmFn) {
-          await removeBinding.confirmFn(context);
-        } else {
-          await ui.messageBox.confirm({
-            title: removeBinding.confirmTitle || t("fs.rowHandle.remove.confirmTitle"), // '提示',
-            message: removeBinding.confirmMessage || t("fs.rowHandle.remove.confirmMessage"), // '确定要删除此记录吗?',
-            type: "warn",
-            ...removeBinding.confirmProps
-          });
+      if (opts?.noConfirm !== true) {
+        try {
+          if (removeBinding.confirmFn) {
+            await removeBinding.confirmFn(context);
+          } else {
+            await ui.messageBox.confirm({
+              title: removeBinding.confirmTitle || t("fs.rowHandle.remove.confirmTitle"), // '提示',
+              message: removeBinding.confirmMessage || t("fs.rowHandle.remove.confirmMessage"), // '确定要删除此记录吗?',
+              type: "warn",
+              ...removeBinding.confirmProps
+            });
+          }
+        } catch (e) {
+          if (removeBinding.onCanceled) {
+            await removeBinding.onCanceled(context);
+          }
+          return;
         }
-      } catch (e) {
-        if (removeBinding.onCanceled) {
-          await removeBinding.onCanceled(context);
-        }
-        return;
       }
+
       let res = null;
       const isLocal = crudBinding.value.mode?.name === "local";
       if (opts?.handle) {

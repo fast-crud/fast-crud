@@ -441,6 +441,8 @@ export type RemoveConfirmFn<R = any> = (context: DoRemoveContext<R>) => Promise<
  * 删除操作配置
  */
 export type RemoveProps<R = any> = {
+  //无需确认
+  noConfirm?: boolean;
   /**
    * 自定义确认删除，抛出异常则取消
    * @param context

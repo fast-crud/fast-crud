@@ -61,6 +61,40 @@ const crudOptions = {
 }
 ```
 
+## buttons[key].render
+* 说明：自定义按钮渲染
+* 类型：Function
+* 参数：`context:{row, column,index,  text}`
+
+```js
+//演示删除按钮popcomfirm方式弹出确认框
+const crudOptions = {
+  rowHandle: {
+    buttons: {
+      custom: {
+        render(scope: any) {
+          function confirm() {
+            const { row, index } = scope;
+            crudExpose.doRemove({ row, index }, { noConfirm: true });
+          }
+          return (
+            <a-popconfirm title={"确定要删除这条记录吗"} ok-text="确认删除" cancel-text="取消" onConfirm={confirm}>
+              <a-button>删除</a-button>
+            </a-popconfirm>
+          );
+        }
+      }
+    }
+  }
+}
+
+```
+
+## buttons[key].dropdown
+* 说明：按钮折叠配置，为true时，此按钮将会被折叠
+* 类型：boolean
+
+
 ## dropdown
 * 说明：按钮折叠配置，当按钮配置了dropdown=true时，将会被折叠
 * 类型：Object
