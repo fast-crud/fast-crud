@@ -6,8 +6,8 @@
         ref="dictSelectRef"
         :disabled="disabled"
         :readonly="readonly"
-        :open="false"
         :dict="dict"
+        :open="false"
         @click="openTableSelect"
       />
     </template>

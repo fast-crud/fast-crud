@@ -90,16 +90,15 @@ function doComputed(
     const target = getTargetFunc();
     return findComputeValues(target, excludes, true);
   });
-  //TODO computed
-  const asyncValuesMap = computed(() => {
-    return doAsyncCompute(dependAsyncValues.value, getContextFn);
-  });
+  //TODO computed之后，运行会死循环， 里面会不断创建watch
+  const asyncValuesMap = doAsyncCompute(dependAsyncValues.value, getContextFn);
 
   return computed(() => {
     let target = getTargetFunc();
     const asyncCount = Object.keys(dependAsyncValues.value).length;
     const syncCount = Object.keys(dependValues.value).length;
 
+    debugger;
     if (asyncCount > 0 || syncCount > 0) {
       target = cloneDeep(target);
       if (syncCount > 0) {
@@ -109,7 +108,7 @@ function doComputed(
         });
       }
       if (asyncCount > 0) {
-        setAsyncComputeValue(target, asyncValuesMap.value);
+        setAsyncComputeValue(target, asyncValuesMap);
       }
     }
 
