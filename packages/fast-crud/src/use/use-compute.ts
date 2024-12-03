@@ -98,7 +98,6 @@ function doComputed(
     const asyncCount = Object.keys(dependAsyncValues.value).length;
     const syncCount = Object.keys(dependValues.value).length;
 
-    debugger;
     if (asyncCount > 0 || syncCount > 0) {
       target = cloneDeep(target);
       if (syncCount > 0) {

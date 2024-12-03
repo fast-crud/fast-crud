@@ -440,7 +440,6 @@ export default defineComponent({
     }
 
     async function doReset() {
-      // debugger;
       // ui.form.resetWrap(searchFormRef.value, { form, initialForm: createInitialForm() });
       const initialForm = createInitialForm();
       const entries = _.entries(formData);
