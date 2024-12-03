@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.23.4](https://github.com/fast-crud/fast-crud/compare/v1.23.3...v1.23.4) (2024-12-03)
+
+### Performance Improvements
+
+* table-select open支持context参数 ([492ee98](https://github.com/fast-crud/fast-crud/commit/492ee9862eee80ffcef81f42178a33484102213a))
+
 ## [1.23.3](https://github.com/fast-crud/fast-crud/compare/v1.23.2...v1.23.3) (2024-11-26)
 
 ### Performance Improvements

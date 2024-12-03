@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.23.4](https://github.com/fast-crud/fast-crud/compare/v1.23.3...v1.23.4) (2024-12-03)
+
+### Bug Fixes
+
+* 修复表单全屏的bug ([a25cff7](https://github.com/fast-crud/fast-crud/commit/a25cff725bef9d0dac063f7bd653844231c57b8d))
+
+### Performance Improvements
+
+* rowHandle按钮支持render，删除按钮提供popcomfirm风格示例 ([b834db9](https://github.com/fast-crud/fast-crud/commit/b834db96e46e6b281d5c3a178a57c71aadf9bfd0))
+* table-select open支持context参数 ([492ee98](https://github.com/fast-crud/fast-crud/commit/492ee9862eee80ffcef81f42178a33484102213a))
+
 ## [1.23.3](https://github.com/fast-crud/fast-crud/compare/v1.23.2...v1.23.3) (2024-11-26)
 
 ### Bug Fixes
