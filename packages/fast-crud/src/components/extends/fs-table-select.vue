@@ -39,7 +39,7 @@
   </div>
 </template>
 <script lang="tsx" setup>
-import { Dict, useCompute, useExpose, useFs, useFsAsync, useFsRef, useMerge, useUi } from "../../use";
+import { Dict, useCompute, useFsAsync, useFsRef, useMerge, useUi } from "../../use";
 import { computed, nextTick, ref, Ref, watch } from "vue";
 import { CreateCrudOptions, DynamicallyCrudOptions } from "../../d";
 import { useI18n } from "../../locale";
