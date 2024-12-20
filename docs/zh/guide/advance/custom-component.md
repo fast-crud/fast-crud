@@ -94,6 +94,55 @@ const crudOptions= {
 }
 ```
 
+## 自定义组件获取上下文方法1
+
+* 说明: 通过inject的方式，自定义组件获取crud的上下文,如表单数据
+* 示例：
+
+```js
+//custom-component.vue
+export default {
+    setup(){
+        const getScope = inject('get:scope')
+        const { index, row, form, mode} = getScope()
+        console.log('当前上下文',index, row, form, mode)
+    }
+}
+```
+
+## 自定义组件获取上下文方法2
+
+* 说明: 通过compute传入
+* 示例：
+
+```ts
+//custom-component.vue
+const props = defineProps<{
+    formData: any //子组件定义prop来接收form表单数据
+}>()
+console.log('当前表单数据',props.formData)
+```
+
+```ts
+//parent curd.tsx
+const crudOptions= {
+    columns:{
+        key:{
+            form: {
+                component: {
+                    name: YourCustomComponent,
+                    vModel: "modelValue",
+                    //这里动态计算 表单数据 作为参数传给子组件
+                    formData: compute(({form}) => {
+                        return form
+                    })
+                }
+            }
+        }
+    }
+}
+```
+
 
 ## 相关示例
 
