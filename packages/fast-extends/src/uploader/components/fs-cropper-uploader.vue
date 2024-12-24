@@ -164,6 +164,11 @@ export default defineComponent({
       if (typeof value === "string") {
         // @ts-ignore
         list.push({ url: await props.buildUrl(value), value: value, status: "done" });
+      } else if (Array.isArray(value)) {
+        for (const item of value) {
+          // @ts-ignore
+          list.push({ url: await props.buildUrl(item), value: item, status: "done" });
+        }
       } else if (typeof value === "object") {
         // @ts-ignore
         list.push({ url: await props.buildUrl(value), value, status: "done" });

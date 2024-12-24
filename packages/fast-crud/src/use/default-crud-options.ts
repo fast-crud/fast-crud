@@ -25,6 +25,13 @@ const defaultCrudOptions = {
             span: 4
           }
         },
+        formItem: {
+          wrapperCol: {
+            style: {
+              width: "50%"
+            }
+          }
+        },
         options: {
           ...ui.form.inlineLayout,
           // n-form 是否显示校验反馈

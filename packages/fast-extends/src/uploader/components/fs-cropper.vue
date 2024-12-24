@@ -592,8 +592,8 @@ export default defineComponent({
 
     img {
       background: #fff;
-      margin-top: 5px;
-      border-radius: 500px;
+      margin: auto !important;
+      border-radius: 0 !important;
     }
 
     &-120 {
