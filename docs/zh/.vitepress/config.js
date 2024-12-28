@@ -87,6 +87,7 @@ module.exports = {
                         {text: '扩展', link: '/guide/advance/extends'},
                         {text: '权限控制', link: '/guide/advance/permission'},
                         {text: '入门常见问题', link: '/guide/advance/improve'},
+                        {text: 'Element虚拟表格', link: '/guide/advance/el-table-v2'},
                     ],
                 },
                 {
