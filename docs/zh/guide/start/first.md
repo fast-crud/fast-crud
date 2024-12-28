@@ -88,14 +88,16 @@ export default async function  ({ crudExpose, context }: CreateCrudOptionsProps)
 
 <script lang="ts" setup>
     import { onMounted } from "vue";
-    import { useFsAsync ,useFsRef} from "@fast-crud/fast-crud";
+    import { useFs ,useFsRef} from "@fast-crud/fast-crud";
     import createCrudOptions from "./crud";
   
-    const { crudRef, crudBinding, context } = useFsRef();
-    // context.xxx = xxx //可以传递自定义变量到crud.tsx
+    const { crudRef, crudBinding, context ,crudExpose } = useFsRef();
+    //同步初始化crud
+    await useFs({  crudRef, crudBinding, crudExpose,  context, createCrudOptions});
     // 页面打开后获取列表数据
     onMounted(async () => {
-        const { crudExpose } = await useFsAsync({  crudRef, crudBinding,  context, createCrudOptions});
+        // 也可以异步初始化crud， 任选一种方式
+        // await useFsAsync({  crudRef, crudBinding, crudExpose,  context, createCrudOptions});
         crudExpose.doRefresh();
     });
     
