@@ -60,8 +60,8 @@ import type {
 import { useUiRender } from "@fast-crud/ui-interface";
 // @ts-ignore
 import _, { isFunction } from "lodash-es";
-import { ElDialog, useFormItem } from "element-plus";
-import { computed, ref } from "vue";
+import { CheckboxValueType, ElDialog, TableV2Placeholder, useFormItem } from "element-plus";
+import { computed, ref, unref } from "vue";
 
 export type ElementUiProvider = {
   Notification: any;
@@ -575,6 +575,327 @@ export class Element implements UiInterface {
     },
     scrollTo(req: TableScrollReq) {
       req.tableRef?.value?.setScrollTop(req.top);
+    },
+    onChange({ onSortChange, onFilterChange, bubbleUp }) {
+      return {
+        onSortChange: (ctx: any) => {
+          const { column, prop, order } = ctx;
+          if (onSortChange) {
+            onSortChange({
+              isServerSort: prop && column.sortable === "custom",
+              prop,
+              order,
+              asc: order === "ascending"
+            });
+          }
+
+          bubbleUp((events: any) => {
+            if (events.onSortChange) {
+              events.onSortChange(ctx);
+            }
+          });
+        },
+        onFilterChange: (filters: any) => {
+          onFilterChange(filters);
+          bubbleUp((events: any) => {
+            if (events.onFilterChange) {
+              events.onFilterChange(filters);
+            }
+          });
+        }
+      };
+    }
+  });
+
+  tableColumnV2: TableColumnCI = creator<TableColumnCI>({
+    name: "el-table-column",
+    label: "label",
+    prop: "prop",
+    row: "row",
+    index: "$index"
+  });
+
+  tableColumnGroupV2: TableColumnCI = creator<TableColumnCI>({
+    name: "el-table-column",
+    label: "label",
+    prop: "prop",
+    row: "row",
+    index: "$index"
+  });
+
+  tableV2: TableCI = creator<TableCI>({
+    name: "el-table-v2",
+    data: "data",
+    renderMode: "jsx",
+    defaultRowKey: "id",
+    fixedHeaderNeedComputeBodyHeight: false,
+    renderMethod: "cellRenderer",
+    columnsIsFlat: true,
+    //构建自定义表头插槽方法，element-table-v2需要自己写多级表头
+    buildMultiHeadersBind(opts) {
+      const flatColumns = opts.flatColumns;
+      const treeColumns = opts.treeColumns;
+
+      function deepOfColumns(columns: any, deep = 1) {
+        let maxDeep = 0;
+        for (const column of columns) {
+          if (column._parent == null) {
+            maxDeep = Math.max(maxDeep, deep);
+          } else {
+            const res = deepOfColumns([column._parent], deep + 1);
+            maxDeep = Math.max(maxDeep, res);
+          }
+        }
+        return maxDeep;
+      }
+
+      let lineHeight = 50;
+      const maxDeep = deepOfColumns(flatColumns);
+      if (maxDeep > 1) {
+        lineHeight = lineHeight - (maxDeep - 1) * 10;
+      }
+      const maxHeight = maxDeep * lineHeight;
+
+      function getSubColumns(parents: any[]) {
+        const subs = [];
+        for (const col of parents) {
+          if (col.children && col.children.length > 0) {
+            subs.push(...col.children);
+          } else {
+            subs.push(col);
+          }
+        }
+        return subs;
+      }
+      function findLeaf(parents: any[]) {
+        const leafs: any[] = [];
+        for (const col of parents) {
+          if (col.children && col.children.length > 0) {
+            leafs.push(...findLeaf(col.children));
+          } else {
+            leafs.push(col);
+          }
+        }
+        return leafs;
+      }
+
+      function countLeafWidth(parents: any[]) {
+        const leafs = findLeaf(parents);
+        let width = 0;
+        for (const leaf of leafs) {
+          width += leaf.width;
+        }
+        return width;
+      }
+
+      return {
+        bind: {
+          headerHeight: maxHeight
+        },
+        slots: {
+          header: ({ cells, columns, headerIndex }: any) => {
+            console.log("headerIndex", headerIndex, cells, columns, treeColumns);
+            //
+            const elColumnsMap: any = {};
+            columns.forEach((column: any, index: number) => {
+              elColumnsMap[column.key] = {
+                column,
+                index
+              };
+            });
+
+            const groupCells: any = [];
+            const usedLeafKeys: any = [];
+            function buildHeadTree(treeColumns: any[], deep: number) {
+              const groupCells = [];
+              for (const col of treeColumns) {
+                //子节点
+                if (!col.children || col.children.length == 0) {
+                  groupCells.push(
+                    <div
+                      class="custom-header-cell fs-multi-head-text "
+                      style={{ width: col.width + "px", height: lineHeight * deep + "px" }}
+                    >
+                      {col.title}
+                    </div>
+                  );
+                  usedLeafKeys.push(col.key);
+                } else {
+                  //有子节点
+                  const width = countLeafWidth(col.children);
+                  groupCells.push(
+                    <div class="fs-multi-head-group ">
+                      <div
+                        class="custom-header-cell fs-multi-head-text"
+                        style={{ width: width + "px", height: lineHeight + "px" }}
+                      >
+                        {col.title}
+                      </div>
+                      <div class={"fs-multi-head-sub "}>{buildHeadTree(col.children, deep - 1)}</div>
+                    </div>
+                  );
+                }
+              }
+              return groupCells;
+            }
+
+            function findTopParent(column: any, deep = 1) {
+              if (column._parent) {
+                deep = deep + 1;
+                return findTopParent(column._parent, deep);
+              }
+              return {
+                parent: column,
+                deep
+              };
+            }
+            columns.forEach((column: any, index: number) => {
+              if (column?.placeholderSign === TableV2Placeholder) {
+                groupCells.push(cells[index]);
+                return;
+              }
+
+              if (usedLeafKeys.includes(column.key)) {
+                return;
+              }
+
+              if (column._parent) {
+                const { parent, deep } = findTopParent(column);
+                //构建子节点
+                const headerCell = buildHeadTree([parent], maxDeep);
+                groupCells.push(...headerCell);
+              } else {
+                // groupCells.push(
+                //   <div class="fs-multi-head-group ">
+                //     <div
+                //       class="  custom-header-cell fs-multi-head-text"
+                //       style={{ width: column.width + "px", height: lineHeight * maxDeep + "px" }}
+                //     >
+                //       {column.title}
+                //     </div>
+                //   </div>
+                // );
+                groupCells.push(cells[index]);
+              }
+            });
+
+            return groupCells;
+          }
+        }
+      };
+    },
+    rebuildRenderScope: (scope: {
+      cellData: any;
+      column: any;
+      columns: any[];
+      columnIndex: number;
+      rowData: any;
+      rowIndex: number;
+    }) => {
+      /*
+      
+       */
+      return { ...scope, index: scope.rowIndex, row: scope.rowData };
+    },
+    buildMaxHeight: (maxHeight) => {
+      return { maxHeight };
+    },
+    hasMaxHeight: (options) => {
+      return false;
+    },
+    headerDomSelector: "",
+    vLoading: "loading",
+    // 没太大用
+    setSelectedRows({ multiple, selectedRowKeys, tableRef, getRowKey }) {
+      const rowKey: any = getRowKey();
+      const curSelectedRows = [];
+      for (const key of selectedRowKeys.value) {
+        for (const row of tableRef.data) {
+          if (row[rowKey] === key) {
+            curSelectedRows.push(row);
+          }
+        }
+      }
+      if (multiple) {
+        for (const row of curSelectedRows) {
+          tableRef.toggleRowSelection(row, true);
+        }
+      } else {
+        if (selectedRowKeys.value.length > 0) {
+          tableRef.setCurrentRow(curSelectedRows[0]);
+        }
+      }
+    },
+    buildSelectionCrudOptions(req) {
+      const onSelectionChange = (changed: any = []) => {
+        req.onSelectedKeysChanged(changed);
+      };
+
+      return {
+        table: {
+          // checkedRowKeys: req.selectedRowKeys,
+          // "onUpdate:checkedRowKeys": onSelectionChange
+        },
+        columns: {
+          $checked: {
+            form: { show: false },
+            column: {
+              multiple: !!req.multiple,
+              align: "center",
+              width: 80,
+              order: -9999,
+              fixed: req.selectionFixed,
+              columnSetDisabled: true, //禁止在列设置中选择
+              cellRenderer: ({ rowData }: any) => {
+                const onChange = (value: CheckboxValueType) => {
+                  if (value) {
+                    //选中
+                    req.selectedRowKeys.value.push(rowData[req.getRowKey()]);
+                  } else {
+                    //取消选中
+                    req.selectedRowKeys.value = req.selectedRowKeys.value.filter(
+                      (key) => key !== rowData[req.getRowKey()]
+                    );
+                  }
+                };
+
+                const checked = req.selectedRowKeys.value.includes(rowData[req.getRowKey()]);
+
+                //@ts-ignore
+                return <ElCheckbox onChange={onChange} modelValue={checked} />;
+              },
+
+              headerCellRenderer: (ctx: any) => {
+                const _data = req.getPageData() || [];
+                const onChange = (value: CheckboxValueType) => {
+                  if (value) {
+                    //选中
+                    req.selectedRowKeys.value = _data.map((row) => row[req.getRowKey()]);
+                  } else {
+                    //取消选中
+                    req.selectedRowKeys.value = [];
+                  }
+                };
+
+                const allSelected =
+                  _data.length > 0 && _data.every((row) => req.selectedRowKeys.value.includes(row[req.getRowKey()]));
+                const containsChecked = _data.some((row) => req.selectedRowKeys.value.includes(row[req.getRowKey()]));
+
+                return (
+                  <el-checkbox
+                    onChange={onChange}
+                    modelValue={allSelected}
+                    indeterminate={containsChecked && !allSelected}
+                  />
+                );
+              }
+            }
+          }
+        }
+      };
+    },
+    scrollTo(req: TableScrollReq) {
+      req.tableRef?.value?.scrollToTop(req.top);
     },
     onChange({ onSortChange, onFilterChange, bubbleUp }) {
       return {

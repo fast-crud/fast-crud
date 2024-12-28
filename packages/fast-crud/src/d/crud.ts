@@ -597,6 +597,11 @@ export type RowSelectionProps<R = any> = {
    * 选中的id列表
    */
   selectedRowKeys?: Ref<any[]>;
+
+  /**
+   * 选择列是否固定
+   */
+  selectionFixed?: string;
 };
 /**
  * 表格配置
@@ -1579,7 +1584,11 @@ export type CompositionColumns<R = any> = {
   [K in keyof R]: ColumnCompositionProps<R>;
 };
 
-export type CrudOptionsPluginHandle<T = any, R = any> = (props: T, ctx: UseCrudProps) => CrudOptions<R>;
+export type CrudOptionsPluginHandle<T = any, R = any> = (
+  props: T,
+  ctx: UseCrudProps,
+  crudOptions: any
+) => CrudOptions<R>;
 export type CrudOptionsPlugin<T, R = any> = {
   /**
    * 是否启用,默认启用

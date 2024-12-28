@@ -225,6 +225,7 @@ export type TableSelectionReq = {
   selectedRowKeys: Ref<any[]>;
   selectOnClickRow?: boolean;
   onSelectedKeysChanged: (selectedRowKeys: any[]) => void;
+  selectionFixed: string;
 };
 export interface TableCI extends CI<TableBuilderOption> {
   defaultRowKey?: string | ((rowData: any) => any);
@@ -234,6 +235,11 @@ export interface TableCI extends CI<TableBuilderOption> {
   buildMaxHeight: (maxHeight: number) => ComponentBinding;
   hasMaxHeight: (tableOptions: any) => boolean;
   vLoading: boolean | string;
+  columnsIsFlat?: boolean;
+  buildMultiHeadersBind?: (opts: { treeColumns: any[]; flatColumns: any[] }) => {
+    bind: ComponentBinding;
+    slots: any;
+  };
   onChange: TableOnChangeBindingBuilder;
   /**
    * 列render的模式，antdv和naive为config模式，element为slot模式
@@ -596,6 +602,9 @@ export interface UiInterface {
   tag: TagCI;
   table: TableCI;
   tableColumn: TableColumnCI;
+  tableV2?: TableCI;
+  tableColumnV2?: TableColumnCI;
+  tableColumnGroupV2?: TableColumnCI;
   tableColumnGroup: TableColumnCI;
   pagination: PaginationCI;
   button: ButtonCI;

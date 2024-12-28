@@ -296,7 +296,11 @@ function getRowKey() {
 const refreshing = ref(false);
 
 function buildMergedCrudOptions() {
-  let selectionOptions = ui.table.buildSelectionCrudOptions({
+  let tableCI = ui.table;
+  if (req.tableVersion === "v2") {
+    tableCI = ui.tableV2;
+  }
+  let selectionOptions = tableCI.buildSelectionCrudOptions({
     crossPage: props.crossPage,
     selectOnClickRow: true,
     getRowKey,
@@ -318,12 +322,12 @@ function buildMergedCrudOptions() {
   const crudOptions = {
     table: {
       async onRefreshed() {
-        if (ui.table.setSelectedRows) {
+        if (tableCI.setSelectedRows) {
           refreshing.value = true;
           await nextTick();
           await nextTick();
           const baseTableRef = crudExpose.getBaseTableRef();
-          ui.table.setSelectedRows({
+          tableCI.setSelectedRows({
             getRowKey,
             multiple: props.multiple,
             tableRef: baseTableRef,

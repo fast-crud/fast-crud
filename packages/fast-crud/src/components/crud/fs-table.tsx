@@ -40,52 +40,55 @@ function buildTableSlots({ props, ui, sortedColumns, renderRowHandle, renderCell
   const tableColumnGroupComp = resolveDynamicComponent(ui.tableColumnGroup.name);
   const tableColumnCI = ui.tableColumn;
   const tableSlots: WriteableSlots = {};
+
+  const buildColumn = (item: ColumnProps): any => {
+    const cellSlots: WriteableSlots = {};
+    const cellSlotName = "cell_" + item.key;
+    let currentTableColumnComp = tableColumnComp;
+    if (item.children) {
+      //subColumns
+      cellSlots.default = () => {
+        const subColumns: any[] = [];
+        _.forEach(item.children, (subColumn) => {
+          if (subColumn.show === false) {
+            return;
+          }
+          subColumns.push(buildColumn(subColumn));
+        });
+        return subColumns;
+      };
+      currentTableColumnComp = tableColumnGroupComp;
+    } else if (item.type != null) {
+      //cell render by type
+      logger.debug("cell render column.type:", item.type);
+      const slots = props.cellSlots && props.cellSlots[cellSlotName];
+      if (slots) {
+        cellSlots.default = slots;
+      }
+    } else {
+      // cell render custom component
+      cellSlots.default = (scope: any) => {
+        return renderCellComponent(item, scope) as any;
+      };
+    }
+    const newItem = { ...item };
+    delete newItem.children;
+
+    return (
+      <currentTableColumnComp
+        ref={"tableColumnRef"}
+        {...newItem}
+        label={item.title}
+        prop={item.key}
+        dataIndex={item.key}
+        v-slots={cellSlots}
+      />
+    );
+  };
+
   tableSlots.default = () => {
     const children = [];
-    const buildColumn = (item: ColumnProps): any => {
-      const cellSlots: WriteableSlots = {};
-      const cellSlotName = "cell_" + item.key;
-      let currentTableColumnComp = tableColumnComp;
-      if (item.children) {
-        //subColumns
-        cellSlots.default = () => {
-          const subColumns: any[] = [];
-          _.forEach(item.children, (subColumn) => {
-            if (subColumn.show === false) {
-              return;
-            }
-            subColumns.push(buildColumn(subColumn));
-          });
-          return subColumns;
-        };
-        currentTableColumnComp = tableColumnGroupComp;
-      } else if (item.type != null) {
-        //cell render by type
-        logger.debug("cell render column.type:", item.type);
-        const slots = props.cellSlots && props.cellSlots[cellSlotName];
-        if (slots) {
-          cellSlots.default = slots;
-        }
-      } else {
-        // cell render custom component
-        cellSlots.default = (scope: any) => {
-          return renderCellComponent(item, scope) as any;
-        };
-      }
-      const newItem = { ...item };
-      delete newItem.children;
 
-      return (
-        <currentTableColumnComp
-          ref={"tableColumnRef"}
-          {...newItem}
-          label={item.title}
-          prop={item.key}
-          dataIndex={item.key}
-          v-slots={cellSlots}
-        />
-      );
-    };
     _.forEach(sortedColumns, (item) => {
       if (item.show === false) {
         return;
@@ -127,42 +130,49 @@ function buildTableSlots({ props, ui, sortedColumns, renderRowHandle, renderCell
  * @param renderRowHandle
  * @returns {*[]}
  */
-function buildTableColumns(options: any): any[] {
+function buildTableColumns(options: any, parent?: any): any[] {
   const { props, renderRowHandle, renderCellComponent, sortedColumns } = options;
   const { ui } = useUi();
   const originalColumns = sortedColumns ?? {};
   const columns: ColumnProps[] = [];
 
+  let tableCI = ui.table;
+  if (props.tableVersion === "v2") {
+    tableCI = ui.tableV2;
+  }
   for (const key in originalColumns) {
     const column = originalColumns[key];
     if (column.show === false) {
       continue;
     }
     const item = { ...column };
+    item._parent = parent;
     item.dataIndex = column.key;
     columns.push(item);
-    if (column.children != null) {
+
+    const hasChildren = column.children != null;
+    if (hasChildren) {
       // 表头分组
       const childOptions = { ...options, sortedColumns: column.children };
       delete childOptions.renderRowHandle;
-      item.children = buildTableColumns(childOptions);
+      item.children = buildTableColumns(childOptions, item);
     } else if (column.type != null) {
       // 特定列 selection 和 expand
     } else {
       //渲染组件
-      const customRender = item[ui.table.renderMethod];
+      const customRender = item[tableCI.renderMethod];
       const newCol = { ...item };
-      delete newCol[ui.table.renderMethod];
+      delete newCol[tableCI.renderMethod];
       if (!customRender) {
         //如果没有配置customRender 默认使用render cell component
-        item[ui.table.renderMethod] = (a: any, b: any, c: any) => {
-          const scope = ui.table.rebuildRenderScope(a, b, c);
+        item[tableCI.renderMethod] = (a: any, b: any, c: any) => {
+          const scope = tableCI.rebuildRenderScope(a, b, c);
           return renderCellComponent(newCol, scope);
         };
       } else {
         //配置了customRender,先走customRender，在内部让用户根据情况调用cellRender
-        item[ui.table.renderMethod] = (a: any, b: any, c: any) => {
-          const scope = ui.table.rebuildRenderScope(a, b, c);
+        item[tableCI.renderMethod] = (a: any, b: any, c: any) => {
+          const scope = tableCI.rebuildRenderScope(a, b, c);
           const cellRender = () => {
             return renderCellComponent(newCol, scope);
           };
@@ -178,14 +188,15 @@ function buildTableColumns(options: any): any[] {
       key: "_rowHandle",
       ...props.rowHandle
     };
-    rowHandle[ui.table.renderMethod] = (a: any, b: any, c: any) => {
-      const scope = ui.table.rebuildRenderScope(a, b, c);
+    rowHandle[tableCI.renderMethod] = (a: any, b: any, c: any) => {
+      const scope = tableCI.rebuildRenderScope(a, b, c);
       return renderRowHandle(scope);
     };
     columns.push(rowHandle);
   }
 
   utilLog.debug("table columns:", columns);
+
   return columns;
 }
 
@@ -197,6 +208,9 @@ export default defineComponent({
   name: "FsTable",
   inheritAttrs: false,
   props: {
+    tableVersion: {
+      type: String as PropType<string>
+    },
     /**
      * table插槽
      */
@@ -233,7 +247,10 @@ export default defineComponent({
      * 表格数据
      */
     data: {
-      type: Array
+      type: Array,
+      default: () => {
+        return [];
+      }
     },
 
     conditionalRender: {
@@ -294,23 +311,29 @@ export default defineComponent({
       }
     );
 
+    let tableCI = ui.table;
+    let tableColumnCI = ui.tableColumn;
+    if (props.tableVersion === "v2") {
+      tableCI = ui.tableV2;
+      tableColumnCI = ui.tableColumnV2;
+    }
+
     function scrollTo(top: number = 0) {
-      ui.table.scrollTo({
+      tableCI.scrollTo({
         top,
         tableRef,
         fsTableRef: currentRef
       });
     }
 
-    const tableComp = resolveDynamicComponent(ui.table.name);
-    const tableColumnCI = ui.tableColumn;
+    const tableComp = resolveDynamicComponent(tableCI.name);
 
     const editableWrap = useEditable(props, ctx, tableRef);
 
     const getContextFn = (item: any, scope: any): ScopeContext => {
       const row = scope[tableColumnCI.row];
       const form = row;
-      const index = scope[ui.tableColumn.index];
+      const index = scope[tableColumnCI.index];
       scope.index = index;
       return {
         ...scope,
@@ -328,7 +351,7 @@ export default defineComponent({
       ctx.emit("row-handle", context);
     }
 
-    const events = ui.table.onChange({
+    const events = tableCI.onChange({
       onSortChange: (sorter) => {
         ctx.emit("sort-change", sorter);
       },
@@ -345,7 +368,7 @@ export default defineComponent({
 
     const renderRowHandle = (scope: any) => {
       // @ts-ignore
-      scope.index = scope[ui.tableColumn.index];
+      scope.index = scope[tableColumnCI.index];
       const rowHandleSlotsName = "cell-rowHandle";
       const rowHandleSlots: any = {};
       if (props.cellSlots) {
@@ -380,7 +403,7 @@ export default defineComponent({
         }
       };
       const setRef = (el: any) => {
-        const index = scope[ui.tableColumn.index];
+        const index = scope[tableColumnCI.index];
         const key = item.key;
         let rowRefs = componentRefs.value[index];
         if (rowRefs == null) {
@@ -389,7 +412,7 @@ export default defineComponent({
         rowRefs[key] = el;
       };
 
-      const index = scope[ui.tableColumn.index];
+      const index = scope[tableColumnCI.index];
       const editableId = row[props.editable?.rowKey];
 
       const cellSlots = props.cellSlots && props.cellSlots[cellSlotName];
@@ -440,10 +463,10 @@ export default defineComponent({
       scrollTo
     });
 
-    const renderMode = ui.table.renderMode;
+    const renderMode = tableCI.renderMode;
     const dataSource = computed(() => {
       return {
-        [ui.table.data]: props.data
+        [tableCI.data]: props.data
       };
     });
 
@@ -482,8 +505,8 @@ export default defineComponent({
             v-slots={computedTableSlots.value}
           />
         );
-        if (typeof ui.table.vLoading === "string") {
-          const loading = resolveDirective(ui.table.vLoading);
+        if (typeof tableCI.vLoading === "string") {
+          const loading = resolveDirective(tableCI.vLoading);
           return withDirectives(tableRender, [[loading, props.loading]]);
         }
         return tableRender;
@@ -504,21 +527,74 @@ export default defineComponent({
         });
       });
 
+      const computedFlatColumns = computed(() => {
+        const flatColumns = [];
+        function flatColumnsFn(columns: any[]) {
+          columns.forEach((column) => {
+            if (column.children) {
+              flatColumnsFn(column.children);
+            } else {
+              flatColumns.push(column);
+            }
+          });
+        }
+        flatColumnsFn(computedColumns.value);
+        console.log("flatColumns", flatColumns);
+        return flatColumns;
+      });
+
+      const computedMultiHeaders = computed(() => {
+        if (tableCI.buildMultiHeadersBind) {
+          return tableCI.buildMultiHeadersBind({
+            treeColumns: computedColumns.value,
+            flatColumns: computedFlatColumns.value
+          });
+        }
+        return {
+          bind: {},
+          slots: {}
+        };
+      });
+
       return () => {
         if (props.show === false) {
           return;
         }
-        return (
-          <tableComp
-            ref={tableRef}
-            loading={props.loading}
-            rowKey={props.rowKey}
-            {...computedBinding.value}
-            columns={computedColumns.value}
-            {...dataSource.value}
-            v-slots={props.slots}
-          />
-        );
+        const slots = {
+          ...props.slots,
+          ...computedMultiHeaders.value?.slots
+        };
+
+        const isFlat = tableCI.columnsIsFlat;
+
+        const createTableInstance = (bind: any = {}) => {
+          return (
+            <tableComp
+              ref={tableRef}
+              loading={props.loading}
+              rowKey={props.rowKey}
+              {...computedBinding.value}
+              columns={isFlat ? computedFlatColumns.value : computedColumns.value}
+              {...dataSource.value}
+              {...computedMultiHeaders.value?.bind}
+              {...bind}
+              v-slots={slots}
+            />
+          );
+        };
+        if (props.tableVersion === "v2" && ui.type === "element") {
+          //element 需要wrapper
+          const slots = {
+            default({ width, height }: any) {
+              return createTableInstance({
+                width,
+                height
+              });
+            }
+          };
+          return <el-auto-resizer v-slots={slots}></el-auto-resizer>;
+        }
+        return createTableInstance();
       };
     }
   }

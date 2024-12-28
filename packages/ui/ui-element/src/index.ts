@@ -6,7 +6,7 @@ import { Element } from "./element";
 import setupIcons from "./icons";
 
 export * from "./element";
-
+import "./element.less";
 export type UiSetupOptions = {
   setupIcons?: boolean;
 };

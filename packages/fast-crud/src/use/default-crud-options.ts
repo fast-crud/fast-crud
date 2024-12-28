@@ -130,7 +130,7 @@ const defaultCrudOptions = {
         }
       },
       rowHandle: {
-        width: "250px",
+        width: 250,
         title: ct("fs.rowHandle.title"),
         order: 1000,
         dropdown: {

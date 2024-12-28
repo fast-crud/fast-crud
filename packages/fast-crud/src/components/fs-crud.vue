@@ -211,10 +211,14 @@ function slotFilter(ctxSlots: any, keyPrefix: string) {
 
 function useFixedHeight(props: any, ctx: SetupContext, { tableRef, containerRef }: any) {
   const ui = uiContext.get();
-  if (ui.table.hasMaxHeight(props.table)) {
+  let tableCI = ui.table;
+  if (props.table?.tableVersion === "v2") {
+    tableCI = ui.tableV2;
+  }
+  if (tableCI.hasMaxHeight(props.table)) {
     return {};
   }
-  if (!ui.table.fixedHeaderNeedComputeBodyHeight) {
+  if (!tableCI.fixedHeaderNeedComputeBodyHeight) {
     return {};
   }
   const maxHeightRef = ref(null);
@@ -224,7 +228,7 @@ function useFixedHeight(props: any, ctx: SetupContext, { tableRef, containerRef 
     if (tableDom == null || tableDom.querySelector == null) {
       return;
     }
-    const headDom = tableDom.querySelector(ui.table.headerDomSelector);
+    const headDom = tableDom.querySelector(tableCI.headerDomSelector);
     if (headDom == null) {
       return;
     }
@@ -278,7 +282,11 @@ function useTable(props: any, ctx: SetupContext) {
     // antdv naive 高度自适应， 如果用户有配置scroll，则优先使用用户配置的
     let fixedHeight = {};
     if (maxHeightRef?.value != null) {
-      fixedHeight = ui.table.buildMaxHeight(maxHeightRef.value);
+      let tableCI = ui.table;
+      if (props.table?.tableVersion === "v2") {
+        tableCI = ui.tableV2;
+      }
+      fixedHeight = tableCI.buildMaxHeight(maxHeightRef.value);
     }
     const pAttrs = utils.dash.omit(tablePropRef, "loading", "columns", "columnsMap");
 

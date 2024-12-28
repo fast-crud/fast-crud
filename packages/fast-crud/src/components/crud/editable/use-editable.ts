@@ -35,7 +35,11 @@ function useTableData(props: any, tableRef: any) {
       return props.data;
     }
     if (tableRef.value) {
-      return tableRef.value[ui.table.data] || [];
+      let tableCI = ui.table;
+      if (props.tableVersion === "v2") {
+        tableCI = ui.tableV2;
+      }
+      return tableRef.value[tableCI.data] || [];
     }
     return [];
   }

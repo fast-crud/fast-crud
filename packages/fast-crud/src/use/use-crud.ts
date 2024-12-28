@@ -470,7 +470,7 @@ export function useCrud<T = any, R = any>(ctx: UseCrudProps<T, R>): UseCrudRet<R
           return;
         }
         const before = plugin.before;
-        const pluginOptions = handle(plugin.props, ctx);
+        const pluginOptions = handle(plugin.props, ctx, options);
         if (before !== false) {
           options = merge(pluginOptions, options);
         } else {
