@@ -3,6 +3,13 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.24.1](https://github.com/fast-crud/fast-crud/compare/v1.24.0...v1.24.1) (2024-12-28)
+
+### Performance Improvements
+
+* element多级表头常驻示例 ([15a6449](https://github.com/fast-crud/fast-crud/commit/15a64494faa0d7d258c1b1cdc0bdba11004ca9ba))
+* element支持虚拟表格，性能大幅提升 ([5c6a608](https://github.com/fast-crud/fast-crud/commit/5c6a6088ee4b50954c1be863a0dbe96acf546404))
+
 # [1.24.0](https://github.com/fast-crud/fast-crud/compare/v1.23.4...v1.24.0) (2024-12-28)
 
 ### Bug Fixes
