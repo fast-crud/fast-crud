@@ -225,7 +225,7 @@ export type TableSelectionReq = {
   selectedRowKeys: Ref<any[]>;
   selectOnClickRow?: boolean;
   onSelectedKeysChanged: (selectedRowKeys: any[]) => void;
-  selectionFixed: string;
+  selectionFixed?: string;
 };
 export interface TableCI extends CI<TableBuilderOption> {
   defaultRowKey?: string | ((rowData: any) => any);

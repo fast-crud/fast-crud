@@ -297,7 +297,7 @@ const refreshing = ref(false);
 
 function buildMergedCrudOptions() {
   let tableCI = ui.table;
-  if (req.tableVersion === "v2") {
+  if (crudBinding.value?.table?.tableVersion === "v2") {
     tableCI = ui.tableV2;
   }
   let selectionOptions = tableCI.buildSelectionCrudOptions({
