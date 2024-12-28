@@ -653,6 +653,7 @@ export class Element implements UiInterface {
       const maxDeep = deepOfColumns(flatColumns);
       if (maxDeep > 1) {
         lineHeight = lineHeight - (maxDeep - 1) * 10;
+        lineHeight = Math.max(30, lineHeight);
       }
       const maxHeight = maxDeep * lineHeight;
 
@@ -694,7 +695,6 @@ export class Element implements UiInterface {
         },
         slots: {
           header: ({ cells, columns, headerIndex }: any) => {
-            console.log("headerIndex", headerIndex, cells, columns, treeColumns);
             //
             const elColumnsMap: any = {};
             columns.forEach((column: any, index: number) => {
@@ -713,8 +713,8 @@ export class Element implements UiInterface {
                 if (!col.children || col.children.length == 0) {
                   groupCells.push(
                     <div
-                      class="custom-header-cell fs-multi-head-text "
-                      style={{ width: col.width + "px", height: lineHeight * deep + "px" }}
+                      class="custom-header-cell fs-multi-head-text el-table-v2__header-cell-text"
+                      style={{ width: col.width + "px", height: lineHeight * deep + "px", justifyContent: col.align }}
                     >
                       {col.title}
                     </div>
@@ -726,8 +726,8 @@ export class Element implements UiInterface {
                   groupCells.push(
                     <div class="fs-multi-head-group ">
                       <div
-                        class="custom-header-cell fs-multi-head-text"
-                        style={{ width: width + "px", height: lineHeight + "px" }}
+                        class="custom-header-cell fs-multi-head-text el-table-v2__header-cell-text"
+                        style={{ width: width + "px", height: lineHeight + "px", justifyContent: col.align }}
                       >
                         {col.title}
                       </div>
