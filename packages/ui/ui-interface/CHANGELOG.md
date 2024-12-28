@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [1.24.0](https://github.com/fast-crud/fast-crud/compare/v1.23.4...v1.24.0) (2024-12-28)
+
+### Features
+
+* element版本支持虚拟表格，table-v2，性能巨大提升 ([eb5fa25](https://github.com/fast-crud/fast-crud/commit/eb5fa256fb8288edc453ce930271a82512c30602))
+
 ## [1.23.4](https://github.com/fast-crud/fast-crud/compare/v1.23.3...v1.23.4) (2024-12-03)
 
 **Note:** Version bump only for package @fast-crud/ui-interface

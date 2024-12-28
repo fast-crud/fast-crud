@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [1.24.0](https://github.com/fast-crud/fast-crud/compare/v1.23.4...v1.24.0) (2024-12-28)
+
+### Bug Fixes
+
+* 修复图片裁剪上传，多个时数组判断成object的bug ([349b8c1](https://github.com/fast-crud/fast-crud/commit/349b8c120b78b09f5125af9812c668dde15a4942))
+
 ## [1.23.4](https://github.com/fast-crud/fast-crud/compare/v1.23.3...v1.23.4) (2024-12-03)
 
 **Note:** Version bump only for package @fast-crud/fast-extends
