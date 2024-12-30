@@ -1,0 +1,42 @@
+.fs-multi-head-group {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  height: 100%;
+
+  .fs-multi-head-sub {
+    display: flex;
+    align-items: center;
+  }
+
+  .fs-multi-head-text {
+    align-items: center;
+    color: var(--el-table-header-text-color);
+    display: flex;
+    font-weight: bold;
+    overflow: hidden;
+    padding: 0 8px;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    user-select: none;
+  }
+}
+
+.fs-crud-table.el-table-v2{
+  .el-table-v2__header{
+    background: #fafafa;
+  }
+  .el-table-v2__header-cell{
+    border-right:1px solid #eee;
+    background: #fafafa;
+  }
+
+  .custom-header-cell{
+    border-top:1px solid #eee;
+    border-right: 1px solid #eee;
+  }
+
+  .el-table-v2__row-cell{
+    border-right:1px solid #eee;
+  }
+}
