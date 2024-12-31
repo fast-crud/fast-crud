@@ -851,7 +851,13 @@ export class Element implements UiInterface {
               cellRenderer: ({ rowData }: any) => {
                 const selectedRowKeys =
                   req.selectedRowKeys instanceof Function ? req.selectedRowKeys() : req.selectedRowKeys;
+                if (!selectedRowKeys.value) {
+                  selectedRowKeys.value = [];
+                }
                 const onChange = (value: CheckboxValueType) => {
+                  if (!selectedRowKeys.value) {
+                    selectedRowKeys.value = [];
+                  }
                   if (value) {
                     //选中
                     selectedRowKeys.value.push(rowData[req.getRowKey()]);
