@@ -1,6 +1,6 @@
 {
   "name": "ui-demo",
-  "version": "1.24.1",
+  "version": "1.24.2",
   "private": true,
   "scripts": {
     "dev": "vite",
@@ -15,11 +15,11 @@
   },
   "dependencies": {
     "@ant-design/icons-vue": "^6.1.0",
-    "@fast-crud/ui-antdv": "workspace:^1.24.1",
-    "@fast-crud/ui-antdv4": "workspace:^1.24.1",
-    "@fast-crud/ui-element": "workspace:^1.24.1",
-    "@fast-crud/ui-interface": "workspace:^1.24.1",
-    "@fast-crud/ui-naive": "workspace:^1.24.1",
+    "@fast-crud/ui-antdv": "workspace:^1.24.2",
+    "@fast-crud/ui-antdv4": "workspace:^1.24.2",
+    "@fast-crud/ui-element": "workspace:^1.24.2",
+    "@fast-crud/ui-interface": "workspace:^1.24.2",
+    "@fast-crud/ui-naive": "workspace:^1.24.2",
     "ant-design-vue": "^4.0.0",
     "dayjs": "^1.11.10",
     "element-plus": "^2.8.3",
