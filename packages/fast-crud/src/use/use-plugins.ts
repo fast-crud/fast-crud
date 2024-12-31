@@ -1,5 +1,5 @@
 import { CrudOptions, CrudOptionsPluginHandle, RowSelectionProps, UseCrudProps } from "../d";
-import { nextTick } from "vue";
+import { nextTick, unref } from "vue";
 import { useUi } from "@fast-crud/ui-interface";
 import logger from "../utils/util.log";
 import { useCompute } from "./use-compute";
@@ -48,10 +48,12 @@ registerCrudOptionsPlugin(
       multiple: selection.multiple,
       selectedRowKeys: selection.selectedRowKeys,
       onSelectedKeysChanged: async (changed) => {
-        selection.selectedRowKeys.value = [...changed];
+        const selectedRowKeys =
+          selection.selectedRowKeys instanceof Function ? selection.selectedRowKeys() : selection.selectedRowKeys;
+        selectedRowKeys.value = [...changed];
         await nextTick();
         if (selection.onSelectedChanged) {
-          selection.onSelectedChanged(selection.selectedRowKeys.value);
+          selection.onSelectedChanged(selectedRowKeys.value);
         }
       }
     });

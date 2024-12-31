@@ -485,7 +485,8 @@ export class Element implements UiInterface {
         }
         const currentIds = data.map(mapId);
         //已选中数据中，排除掉本页数据
-        const otherPageSelected = req.selectedRowKeys.value.filter((item: any) => !currentIds.includes(item));
+        const selectedRowKeys = req.selectedRowKeys instanceof Function ? req.selectedRowKeys() : req.selectedRowKeys;
+        const otherPageSelected = selectedRowKeys.value.filter((item: any) => !currentIds.includes(item));
         return _.union(otherPageSelected, curSelectedIds);
       }
 
@@ -527,9 +528,9 @@ export class Element implements UiInterface {
           const selectedKeys = [changed[rowKey]];
           req.onSelectedKeysChanged(selectedKeys);
         };
+        const selectedRowKeys = req.selectedRowKeys instanceof Function ? req.selectedRowKeys() : req.selectedRowKeys;
         const modelValue = computed(() => {
-          const value = req.selectedRowKeys.value.length > 0 ? req.selectedRowKeys.value[0] : null;
-          return value;
+          return selectedRowKeys.value.length > 0 ? selectedRowKeys.value[0] : null;
         });
         return {
           table: {
@@ -831,6 +832,7 @@ export class Element implements UiInterface {
         req.onSelectedKeysChanged(changed);
       };
 
+      const { selectedRowKeys } = unref(req);
       return {
         table: {
           // checkedRowKeys: req.selectedRowKeys,
@@ -847,19 +849,23 @@ export class Element implements UiInterface {
               fixed: req.selectionFixed,
               columnSetDisabled: true, //禁止在列设置中选择
               cellRenderer: ({ rowData }: any) => {
+                const selectedRowKeys =
+                  req.selectedRowKeys instanceof Function ? req.selectedRowKeys() : req.selectedRowKeys;
                 const onChange = (value: CheckboxValueType) => {
                   if (value) {
                     //选中
-                    req.selectedRowKeys.value.push(rowData[req.getRowKey()]);
+                    selectedRowKeys.value.push(rowData[req.getRowKey()]);
                   } else {
                     //取消选中
-                    req.selectedRowKeys.value = req.selectedRowKeys.value.filter(
-                      (key) => key !== rowData[req.getRowKey()]
+                    selectedRowKeys.value = selectedRowKeys.value.filter(
+                      (key: any) => key !== rowData[req.getRowKey()]
                     );
                   }
+
+                  onSelectionChange(selectedRowKeys.value);
                 };
 
-                const checked = req.selectedRowKeys.value.includes(rowData[req.getRowKey()]);
+                const checked = selectedRowKeys.value.includes(rowData[req.getRowKey()]);
 
                 //@ts-ignore
                 return <ElCheckbox onChange={onChange} modelValue={checked} />;
@@ -867,19 +873,21 @@ export class Element implements UiInterface {
 
               headerCellRenderer: (ctx: any) => {
                 const _data = req.getPageData() || [];
+                const selectedRowKeys =
+                  req.selectedRowKeys instanceof Function ? req.selectedRowKeys() : req.selectedRowKeys;
                 const onChange = (value: CheckboxValueType) => {
                   if (value) {
                     //选中
-                    req.selectedRowKeys.value = _data.map((row) => row[req.getRowKey()]);
+                    selectedRowKeys.value = _data.map((row) => row[req.getRowKey()]);
                   } else {
                     //取消选中
-                    req.selectedRowKeys.value = [];
+                    selectedRowKeys.value = [];
                   }
                 };
 
                 const allSelected =
-                  _data.length > 0 && _data.every((row) => req.selectedRowKeys.value.includes(row[req.getRowKey()]));
-                const containsChecked = _data.some((row) => req.selectedRowKeys.value.includes(row[req.getRowKey()]));
+                  _data.length > 0 && _data.every((row) => selectedRowKeys.value.includes(row[req.getRowKey()]));
+                const containsChecked = _data.some((row) => selectedRowKeys.value.includes(row[req.getRowKey()]));
 
                 return (
                   <el-checkbox
