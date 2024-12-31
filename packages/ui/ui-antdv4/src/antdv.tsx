@@ -535,7 +535,7 @@ export class Antdv implements UiInterface {
     headerDomSelector: ".ant-table-thead",
     vLoading: false,
     buildSelectionCrudOptions(req) {
-      const selectedRowKeys = req.selectedRowKeys;
+      const selectedRowKeys = req.selectedRowKeys instanceof Function ? req.selectedRowKeys() : req.selectedRowKeys;
       const onChange = (changed: any[] = []) => {
         req.onSelectedKeysChanged(changed);
       };
