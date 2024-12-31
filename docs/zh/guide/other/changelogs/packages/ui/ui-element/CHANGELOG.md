@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.24.2](https://github.com/fast-crud/fast-crud/compare/v1.24.1...v1.24.2) (2024-12-31)
+
+### Performance Improvements
+
+* 解决数据量过大时，选中很慢的问题 ([03693fa](https://github.com/fast-crud/fast-crud/commit/03693fa6e266e6188cfda65b0bb1e9c867fb4fce))
+
 ## [1.24.1](https://github.com/fast-crud/fast-crud/compare/v1.24.0...v1.24.1) (2024-12-28)
 
 ### Performance Improvements
