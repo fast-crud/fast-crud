@@ -486,6 +486,9 @@ export class Element implements UiInterface {
         const currentIds = data.map(mapId);
         //已选中数据中，排除掉本页数据
         const selectedRowKeys = req.selectedRowKeys instanceof Function ? req.selectedRowKeys() : req.selectedRowKeys;
+        if (!selectedRowKeys.value) {
+          selectedRowKeys.value = [];
+        }
         const otherPageSelected = selectedRowKeys.value.filter((item: any) => !currentIds.includes(item));
         return _.union(otherPageSelected, curSelectedIds);
       }
@@ -855,9 +858,6 @@ export class Element implements UiInterface {
                   selectedRowKeys.value = [];
                 }
                 const onChange = (value: CheckboxValueType) => {
-                  if (!selectedRowKeys.value) {
-                    selectedRowKeys.value = [];
-                  }
                   if (value) {
                     //选中
                     selectedRowKeys.value.push(rowData[req.getRowKey()]);
