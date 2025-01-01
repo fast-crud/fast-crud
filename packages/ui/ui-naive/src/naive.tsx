@@ -582,9 +582,10 @@ export class Naive implements UiInterface {
         req.onSelectedKeysChanged(changed);
       };
 
+      const selectedRowKeys = req.selectedRowKeys instanceof Function ? req.selectedRowKeys() : req.selectedRowKeys;
       return {
         table: {
-          checkedRowKeys: req.selectedRowKeys,
+          checkedRowKeys: selectedRowKeys,
           "onUpdate:checkedRowKeys": onSelectionChange
         },
         columns: {

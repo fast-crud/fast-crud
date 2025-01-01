@@ -222,7 +222,7 @@ export type TableSelectionReq = {
   getPageData?: () => any[];
   multiple: boolean;
   useCompute: () => { compute: any; asyncCompute: any };
-  selectedRowKeys: Ref<any[]>;
+  selectedRowKeys: Ref<any[]> | Function;
   selectOnClickRow?: boolean;
   onSelectedKeysChanged: (selectedRowKeys: any[]) => void;
   selectionFixed?: string;

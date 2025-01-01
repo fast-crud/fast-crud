@@ -596,7 +596,7 @@ export type RowSelectionProps<R = any> = {
   /**
    * 选中的id列表
    */
-  selectedRowKeys?: Ref<any[]>;
+  selectedRowKeys?: Ref<any[]> | Function;
 
   /**
    * 选择列是否固定
