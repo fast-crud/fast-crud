@@ -61,6 +61,13 @@ export default defineComponent({
       required: false
     },
     /**
+     * 是否显示限制提示
+     */
+    showLimitTip: {
+      type: Boolean,
+      default: true
+    },
+    /**
      * 构建url的方法
      * 后台返回key之后，将其build成一个可访问的url，用于反显
      * 如果successHandle返回的object中已包含url，此配置将不会执行
@@ -361,12 +368,15 @@ export default defineComponent({
     };
 
     function showLimitTip() {
-      ui.message.warn(t("fs.extends.fileUploader.limitTip", [props.limit]));
+      if (props.showLimitTip) {
+        ui.message.warn(t("fs.extends.fileUploader.limitTip", [props.limit]));
+      }
     }
 
     function checkLimit() {
       if (computedOnLimit(true)) {
         showLimitTip();
+        ctx.emit("exceed", { fileList: fileList.value, limit: props.limit });
         throw new Error("文件数量超限");
       }
     }
