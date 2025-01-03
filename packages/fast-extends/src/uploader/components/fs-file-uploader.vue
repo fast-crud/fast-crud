@@ -130,7 +130,7 @@ export default defineComponent({
      */
     getFileName: {}
   },
-  emits: ["change", "update:modelValue", "success", "exceed"],
+  emits: ["change", "update:modelValue", "success", "exceed", "remove"],
   setup(props: any, ctx: any) {
     const { ui } = useUi();
     const { t } = useI18n();
@@ -568,12 +568,12 @@ export default defineComponent({
         listType: props.listType,
         beforeUpload: beforeUpload,
         httpRequest: customRequest,
-        onExceed: () => {
-          checkLimit();
-          ctx.emit("exceed", { fileList: fileList.value });
+        onExceed: (event) => {
+          ctx.emit("exceed", event);
         },
         onRemove: (file: any, fileList: any) => {
           handleChange(file, fileList);
+          ctx.emit("remove", file, fileList);
         },
         onChange: (file: any, fileList: any) => {
           handleChange(file, fileList);
@@ -632,13 +632,13 @@ export default defineComponent({
             }
           });
         },
-        onExceed: () => {
-          checkLimit();
-          ctx.emit("exceed", { fileList: fileList.value });
+        onExceed: (event) => {
+          ctx.emit("exceed", event);
         },
         onRemove: (opts: any) => {
           const { file, fileList } = opts;
           // handleChange(file, [...fileList]);
+          ctx.emit("remove", opts);
         },
         onChange: (opts: any) => {
           const { event, file, fileList } = opts;
