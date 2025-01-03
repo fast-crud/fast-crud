@@ -566,6 +566,7 @@ export default defineComponent({
       return {
         action: "",
         listType: props.listType,
+        limit: props.limit,
         beforeUpload: beforeUpload,
         httpRequest: customRequest,
         onExceed: (event) => {
@@ -607,6 +608,7 @@ export default defineComponent({
       }
       return {
         action: "",
+        limit: props.limit,
         listType: props.listType,
         onBeforeUpload: async ({ file, fileList }: any) => {
           return beforeUpload(file, fileList);
