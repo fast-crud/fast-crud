@@ -9,7 +9,7 @@ import FsIconify from "./basic/fs-iconify.vue";
 import FsIconSvg from "./basic/fs-icon-svg.vue";
 import FsLabel from "./basic/fs-label.vue";
 
-import FsLoading from "./basic/fs-loading.js";
+import FsLoading from "./basic/fs-loading.vue";
 import FsBox from "./basic/fs-box.vue";
 import FsComponentRender from "./render/fs-component-render.js";
 import FsSlotRender from "./render/fs-slot-render.js";
@@ -39,6 +39,7 @@ import FsSearchLayoutDefault from "./search/layout-default.vue";
 
 import FsTabsFilter from "./search/tabs-filter.vue";
 
+import FsIconSelector from "./extends/fs-icon-selector/index.vue";
 import FsDictRadio from "./extends/fs-dict-radio.vue";
 import FsDictSelect from "./extends/fs-dict-select.js";
 import FsValuesFormat from "./extends/fs-values-format.vue";
@@ -62,6 +63,7 @@ export {
   FsIcon,
   FsIconify,
   FsIconSvg,
+  FsIconSelector,
   FsLabel,
   FsForm,
   FsFormItem,

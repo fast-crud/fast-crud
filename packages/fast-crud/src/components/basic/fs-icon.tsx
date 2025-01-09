@@ -1,6 +1,5 @@
 import { resolveDynamicComponent, defineComponent, computed } from "vue";
 import { useUi } from "../../use/use-ui";
-import "./fs-loading.less";
 /**
  * icon组件
  * antdv的icon需要手动引入才能生效
