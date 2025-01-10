@@ -21,6 +21,7 @@ import _ from "lodash-es";
 import { FileItem, FsUploaderDoUploadOptions } from "../d/type";
 import { useUploader } from "./utils";
 import type { PropType } from "vue";
+
 /**
  * 限制上传图片的像素尺寸
  */
@@ -58,6 +59,13 @@ export default defineComponent({
     pixelLimit: {
       type: Object as PropType<PixelLimit>,
       required: false
+    },
+    /**
+     * 是否显示限制提示
+     */
+    showLimitTip: {
+      type: Boolean,
+      default: true
     },
     /**
      * 构建url的方法
@@ -130,7 +138,7 @@ export default defineComponent({
      */
     getFileName: {}
   },
-  emits: ["change", "update:modelValue", "success", "exceed"],
+  emits: ["change", "update:modelValue", "success", "exceed", "remove"],
   setup(props: any, ctx: any) {
     const { ui } = useUi();
     const { t } = useI18n();
@@ -163,6 +171,7 @@ export default defineComponent({
       }
       return item[props.valueType];
     }
+
     function getValueByValueTypeFromList(list: any[]) {
       const values = [];
       for (let item of list) {
@@ -170,6 +179,7 @@ export default defineComponent({
       }
       return values;
     }
+
     async function buildListToFile(list: any[]) {
       const arr = [];
       for (let value of list) {
@@ -208,6 +218,7 @@ export default defineComponent({
       }
       return arr;
     }
+
     async function buildListToValue(list: any[]) {
       const arr: any = [];
       for (let file of list) {
@@ -223,6 +234,7 @@ export default defineComponent({
       await buildFileItemUrls(arr);
       return getValueByValueTypeFromList(arr);
     }
+
     async function initFileList(value: any) {
       const array: any = [];
       if (value == null || value.length === 0) {
@@ -240,10 +252,12 @@ export default defineComponent({
       const list = await buildListToFile(array);
       updateFileList(list);
     }
+
     async function onFormValueChanged() {
       await formValidator.onChange();
       await formValidator.onBlur();
     }
+
     async function emitValue(list: FileItem[]) {
       let value = await buildEmitValue(list);
       onInput(value);
@@ -296,10 +310,12 @@ export default defineComponent({
     function onChange(value: any) {
       ctx.emit("change", value);
     }
+
     function onInput(value: any) {
       currentValue.value = value;
       ctx.emit("update:modelValue", value);
     }
+
     const formValidator = ui.formItem.injectFormItemContext();
     watch(
       () => {
@@ -316,6 +332,7 @@ export default defineComponent({
     //@ts-ignore
     // eslint-disable-next-line vue/no-setup-props-destructure
     initFileList(props.modelValue);
+
     function hasUploading() {
       const uploading = fileList.value.filter((item: any) => {
         return item.status === ui.upload.status.uploading;
@@ -351,11 +368,15 @@ export default defineComponent({
     };
 
     function showLimitTip() {
-      ui.message.warn(t("fs.extends.fileUploader.limitTip", [props.limit]));
+      if (props.showLimitTip) {
+        ui.message.warn(t("fs.extends.fileUploader.limitTip", [props.limit]));
+      }
     }
+
     function checkLimit() {
       if (computedOnLimit(true)) {
         showLimitTip();
+        ctx.emit("exceed", { fileList: fileList.value, limit: props.limit });
         throw new Error("文件数量超限");
       }
     }
@@ -381,6 +402,7 @@ export default defineComponent({
         }
       }
     }
+
     /**
      * 图片上传前判断图片像素尺寸是否符合
      * @param file
@@ -460,6 +482,7 @@ export default defineComponent({
       }
       return await uploaderRef?.upload(option);
     }
+
     async function customRequest(context: any) {
       if (props.beforeUploadRequest) {
         await props.beforeUploadRequest(context);
@@ -504,6 +527,7 @@ export default defineComponent({
         ...props.preview
       };
     });
+
     function getBase64(file: File) {
       return new Promise((resolve, reject) => {
         const reader = new FileReader();
@@ -512,12 +536,15 @@ export default defineComponent({
         reader.onerror = (error) => reject(error);
       });
     }
+
     function isPicture() {
       return props.listType === ui.upload.typeImageCard || props.listType === ui.upload.typeImage;
     }
+
     function isPictureCard() {
       return props.listType === ui.upload.typeImageCard;
     }
+
     const handlePreview = async (file: any) => {
       if (!isPicture()) {
         let url;
@@ -545,6 +572,7 @@ export default defineComponent({
       const res: any = {
         customRequest,
         beforeUpload,
+        limit: props.limit,
         listType: props.listType,
         onChange: (change: any) => {
           const { file, fileList } = change;
@@ -566,14 +594,15 @@ export default defineComponent({
       return {
         action: "",
         listType: props.listType,
+        limit: props.limit,
         beforeUpload: beforeUpload,
         httpRequest: customRequest,
-        onExceed: () => {
-          checkLimit();
-          ctx.emit("exceed", { fileList: fileList.value });
+        onExceed: (event) => {
+          ctx.emit("exceed", event);
         },
         onRemove: (file: any, fileList: any) => {
           handleChange(file, fileList);
+          ctx.emit("remove", file, fileList);
         },
         onChange: (file: any, fileList: any) => {
           handleChange(file, fileList);
@@ -593,6 +622,7 @@ export default defineComponent({
     }
 
     const naiveExtraCache: any = {};
+
     function buildNaiveBinding() {
       function appendExtra(fileList: any) {
         let list = fileList.value || fileList;
@@ -605,8 +635,10 @@ export default defineComponent({
         }
         return list;
       }
+
       return {
         action: "",
+        limit: props.limit,
         listType: props.listType,
         onBeforeUpload: async ({ file, fileList }: any) => {
           return beforeUpload(file, fileList);
@@ -632,13 +664,13 @@ export default defineComponent({
             }
           });
         },
-        onExceed: () => {
-          checkLimit();
-          ctx.emit("exceed", { fileList: fileList.value });
+        onExceed: (event) => {
+          ctx.emit("exceed", event);
         },
         onRemove: (opts: any) => {
           const { file, fileList } = opts;
           // handleChange(file, [...fileList]);
+          ctx.emit("remove", opts);
         },
         onChange: (opts: any) => {
           const { event, file, fileList } = opts;
