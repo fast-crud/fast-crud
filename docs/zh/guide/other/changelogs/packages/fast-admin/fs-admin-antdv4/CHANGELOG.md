@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [1.25.0](https://github.com/fast-crud/fast-crud/compare/v1.24.2...v1.25.0) (2025-01-12)
+
+### Performance Improvements
+
+* 支持图标选择器 ([7dd8745](https://github.com/fast-crud/fast-crud/commit/7dd874534caa926ba63d6b8100116c032d794d51))
+
 ## [1.24.2](https://github.com/fast-crud/fast-crud/compare/v1.24.1...v1.24.2) (2024-12-31)
 
 **Note:** Version bump only for package @fast-crud/fs-admin-antdv4

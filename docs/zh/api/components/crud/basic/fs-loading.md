@@ -1,12 +1,11 @@
-# FsLoading
-
-> loading 包装
+# fs-loading
 
 ## Props
 
-| Prop name | Description     | Type | Values | Default |
-| --------- | --------------- | ---- | ------ | ------- |
-| loading   | 是否 loading 中 | -    | -      |         |
-| icon      |                 | -    | -      |         |
+| Prop name | Description | Type    | Values | Default |
+| --------- | ----------- | ------- | ------ | ------- |
+| loading   |             | boolean | -      |         |
+| icon      |             | string  | -      |         |
+| text      |             | string  | -      |         |
 
 ---

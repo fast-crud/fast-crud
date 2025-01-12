@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [1.25.0](https://github.com/fast-crud/fast-crud/compare/v1.24.2...v1.25.0) (2025-01-12)
+
+### Features
+
+* 升级naive-ui版本，draggable改成dragenabled，修复naive拖动问题 ([0914c16](https://github.com/fast-crud/fast-crud/commit/0914c16ef7f6b3f99b4ad12a1935d54e820e458f))
+
+### Performance Improvements
+
+* 支持图标选择器 ([7dd8745](https://github.com/fast-crud/fast-crud/commit/7dd874534caa926ba63d6b8100116c032d794d51))
+* pagination支持slots配置 ([55f3772](https://github.com/fast-crud/fast-crud/commit/55f3772a99489b12cf1c49fafb861e0bf5455333))
+
 ## [1.24.2](https://github.com/fast-crud/fast-crud/compare/v1.24.1...v1.24.2) (2024-12-31)
 
 ### Performance Improvements

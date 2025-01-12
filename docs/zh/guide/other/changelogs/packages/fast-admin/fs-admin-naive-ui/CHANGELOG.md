@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [1.25.0](https://github.com/jekip/naive-ui-admin/compare/v1.24.2...v1.25.0) (2025-01-12)
+
+### Features
+
+* 升级naive-ui版本，draggable改成dragenabled，修复naive拖动问题 ([0914c16](https://github.com/jekip/naive-ui-admin/commit/0914c16ef7f6b3f99b4ad12a1935d54e820e458f))
+
 ## [1.24.2](https://github.com/jekip/naive-ui-admin/compare/v1.24.1...v1.24.2) (2024-12-31)
 
 **Note:** Version bump only for package naive-ui-admin
@@ -452,6 +458,47 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 **Note:** Version bump only for package naive-ui-admin
 
 # CHANGELOG
+
+## 2.0.0
+
+- 新增 `alova` 请求库
+- 新增 `@faker-js/faker` 可配合 `mock` 数据模拟
+- 新增 `VITE_USE_MOCK` 环境变量-开启 `mock` 
+- 新增 `demo` 实例，新增/编辑角色
+- 移除 `axios` 请求封装，使用 `alova` 代替
+- 移除 `vite-plugin-mock` 使用 `@alova/mock` 代替
+- 移除 `VITE_GLOB_PROD_MOCK` 环境变量
+- 变更 `VITE_GLOB_IMG_URL` 环境变量变更成 `VITE_GLOB_FILE_URL` 
+- 优化 `BasicTable` 组件相关样式
+- 优化 `TS` 类型定义
+- 依赖升级
+
+## 1.9.2
+
+- 升级 `vite` 到 `5.x` 版本
+- 优化 `BasicTable` 组件，编辑样式
+- 新增 `BasicTable` 组件，支持 `striped` 入参
+- 依赖升级
+
+## 1.9.1
+
+- 优化 `typeSctipt` 类型定义
+- 优化 `setup` 语法
+- 依赖升级
+
+## 1.9.0
+
+- 新增 `BasicForm` 组件，支持 `setLoading`, `setSchema` 方法
+- 新增 `countField` 总数字段名配置
+- 优化 `yarn` 切换至 `pnpm`
+- 优化 `BasicForm` 组件，验证返回值
+- 优化 `BasicTable` 组件
+- 修复 `TableAction组件，左右间隔不生效` 关闭[253](https://github.com/jekip/naive-ui-admin/issues/253)
+- 修复 `BasicTable组件没有数据会一直请求接口` 关闭[#251](https://github.com/jekip/naive-ui-admin/issues/251)
+- 修复 `useModal+useForm组件的bug` 关闭[#250](https://github.com/jekip/naive-ui-admin/issues/250)
+- 修复 `手机端侧边导航风格不一致bug` 关闭[#247](https://github.com/jekip/naive-ui-admin/issues/247
+- 移除 `yarn.lock` 文件
+- 依赖升级
 
 ## 1.8.2
 
