@@ -23,6 +23,13 @@ export async function getParsePhoneNumberFromString({ phoneNumber, countryCode }
   };
 }
 
+async function getCountryByValue(value: any) {
+  const asyncModules = import.meta.glob("./utils.ts");
+  // @ts-ignore
+  const { getCountryByValue } = await asyncModules["./utils.ts"]();
+  return getCountryByValue(value);
+}
+
 /**
  * 校验输入是否正确的电话号码
  * @param rule
@@ -35,10 +42,8 @@ export async function phoneNumberValidator(rule: any, value: any) {
     return true;
   }
 
-  const { getCountryByValue } = await import("./utils");
-
   if (!value.countryCode && value.callingCode) {
-    const country = getCountryByValue(value);
+    const country = await getCountryByValue(value);
     if (country) {
       value.countryCode = country.countryCode;
     }
@@ -71,10 +76,9 @@ export async function mobileValidator(rule: any, value: any, callback: any) {
   ) {
     return true;
   }
-  const { getCountryByValue } = await import("./utils");
 
   if (!value.countryCode && value.callingCode) {
-    const country = getCountryByValue(value);
+    const country = await getCountryByValue(value);
     if (country) {
       value.countryCode = country.countryCode;
     }

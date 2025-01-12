@@ -24,12 +24,12 @@
   </div>
 </template>
 <script lang="ts" setup>
-import { countries } from "./phoneCodeCountries.js";
 import { computed, Ref, ref, watch } from "vue";
 import { dict, useUi } from "@fast-crud/fast-crud";
 import _ from "lodash-es";
+import { getCountries } from "./utils";
 const { ui } = useUi();
-
+import { getCountryByValue as getCountryByValueFromUtil } from "./utils";
 type PhoneInputValue = {
   callingCode?: string;
   countryCode?: string;
@@ -99,7 +99,15 @@ const countryDict = dict({
   label: "label"
 });
 
+const countriesRef = ref([]);
+
+async function loadCountries() {
+  countriesRef.value = await getCountries();
+}
+loadCountries();
+
 const countryOptions = computed(() => {
+  const countries = countriesRef.value;
   let options = [];
   if (props.onlyCountries != null && props.onlyCountries.length > 0) {
     for (let country of countries) {
@@ -169,9 +177,9 @@ function isChanged(value: any) {
   // }
 }
 
-function setValue(value: any) {
+async function setValue(value: any) {
   selectValue.value = { callingCode: undefined, countryCode: undefined, phoneNumber: undefined };
-  const ret = getCountryByValue(value);
+  const ret = await getCountryByValue(value);
   if (ret != null) {
     selectValue.value.callingCode = ret.callingCode;
     selectValue.value.countryCode = ret.countryCode;
@@ -182,7 +190,7 @@ function setValue(value: any) {
     selectValue.value.phoneNumber = undefined;
   }
 }
-function getCountryByValue(value: any): any {
+async function getCountryByValue(value: any): Promise<any> {
   let ret: any = null;
   if (value != null) {
     if (value.countryCode != null) {
@@ -198,26 +206,26 @@ function getCountryByValue(value: any): any {
     };
   }
   if (ret == null) {
-    ret = getCountryByValue({ countryCode: props.defaultCountry });
+    ret = await getCountryByValueFromUtil({ countryCode: props.defaultCountry });
   }
   return ret;
 }
 
-function handleSelectInput(countryCode: any) {
-  changeCountry(countryCode);
+async function handleSelectInput(countryCode: any) {
+  await changeCountry(countryCode);
   let emitValue: any = getEmitValue();
   emits("update:modelValue", emitValue);
   emits("input", emitValue);
   emits("change", emitValue);
-  formValidator.onChange();
-  formValidator.onBlur();
+  await formValidator.onChange();
+  await formValidator.onBlur();
 }
 
-function handleNumberInput(number: any) {
+async function handleNumberInput(number: any) {
   selectValue.value.phoneNumber = number;
   if (selectValue.value.callingCode == null && selectValue.value.countryCode == null) {
     selectValue.value.countryCode = props.defaultCountry;
-    const country = getCountryByValue(selectValue.value);
+    const country = await getCountryByValue(selectValue.value);
     if (country) {
       selectValue.value.callingCode = country.callingCode;
     }
@@ -226,8 +234,8 @@ function handleNumberInput(number: any) {
   emits("update:modelValue", emitValue);
   emits("input", emitValue);
   emits("change", emitValue);
-  formValidator.onChange();
-  formValidator.onBlur();
+  await formValidator.onChange();
+  await formValidator.onBlur();
 }
 
 function getEmitValue(): PhoneInputValue {
@@ -238,12 +246,12 @@ function getEmitValue(): PhoneInputValue {
   };
 }
 
-function changeCountry(countryCode: any) {
+async function changeCountry(countryCode: any) {
   if (!countryCode) {
     selectValue.value.callingCode = undefined;
   }
   selectValue.value.countryCode = countryCode;
-  let ret = getCountryByValue(selectValue.value);
+  let ret = await getCountryByValue(selectValue.value);
   if (ret) {
     selectValue.value.callingCode = ret.callingCode;
   }
@@ -253,8 +261,8 @@ watch(
   () => {
     return props.modelValue;
   },
-  (value, oldValue) => {
-    setValue(value);
+  async (value, oldValue) => {
+    await setValue(value);
     emits("change", selectValue.value);
   },
   {
