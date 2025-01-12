@@ -1,9 +1,8 @@
 import FsPhoneInput from "./fs-phone-input.vue";
-//@ts-ignore
-import { parsePhoneNumberFromString } from "libphonenumber-js/max";
-import { getCountryByValue } from "./utils";
 
-export function getParsePhoneNumberFromString({ phoneNumber, countryCode }: any) {
+export async function getParsePhoneNumberFromString({ phoneNumber, countryCode }: any) {
+  const phoneNumberLib = await import("libphonenumber-js/max");
+  const parsePhoneNumberFromString = phoneNumberLib.parsePhoneNumberFromString;
   const parsing = phoneNumber && countryCode ? parsePhoneNumberFromString(phoneNumber, countryCode) : null;
   return {
     phoneNumber: phoneNumber || null,
@@ -35,13 +34,16 @@ export async function phoneNumberValidator(rule: any, value: any) {
   if (!value || value.phoneNumber == null || value.phoneNumber === "") {
     return true;
   }
+
+  const { getCountryByValue } = await import("./utils");
+
   if (!value.countryCode && value.callingCode) {
     const country = getCountryByValue(value);
     if (country) {
       value.countryCode = country.countryCode;
     }
   }
-  const parse = getParsePhoneNumberFromString({
+  const parse = await getParsePhoneNumberFromString({
     phoneNumber: value.phoneNumber,
     countryCode: value.countryCode
   });
@@ -69,13 +71,15 @@ export async function mobileValidator(rule: any, value: any, callback: any) {
   ) {
     return true;
   }
+  const { getCountryByValue } = await import("./utils");
+
   if (!value.countryCode && value.callingCode) {
     const country = getCountryByValue(value);
     if (country) {
       value.countryCode = country.countryCode;
     }
   }
-  const parse = getParsePhoneNumberFromString({
+  const parse = await getParsePhoneNumberFromString({
     phoneNumber: value.phoneNumber,
     countryCode: value.countryCode
   });
