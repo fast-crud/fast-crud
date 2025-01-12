@@ -86,7 +86,7 @@ async function dragModalForNaive(opts: DragModalOptions) {
     }
     // console.log("start :", styL, styT);
 
-    document.ondrag = async function (e) {
+    document.onmousemove = async function (e) {
       if (e.clientX == 0 && e.clientY == 0) {
         return;
       }
@@ -98,18 +98,8 @@ async function dragModalForNaive(opts: DragModalOptions) {
       dragDom.style.top = `${t + styT}px`;
     };
     // @ts-ignore
-    document.onmousemove = document.ondrag;
-
-    document.ondragend = function (e) {
-      document.ondrag = null;
-      document.onmousemove = null;
-      document.ondragend = null;
-      document.onmouseup = null;
-    };
     document.onmouseup = function (e) {
-      document.ondrag = null;
       document.onmousemove = null;
-      document.ondragend = null;
       document.onmouseup = null;
     };
   };
