@@ -7,49 +7,64 @@
     </component>
 
     <div v-if="dialogOpened" class="fs-icon-selector-dialog">
-      <component :is="ui.dialog.name" :width="1000" v-bind="computedDialog" :footer="null">
+      <component :is="ui.dialog.name" :width="1024" v-bind="computedDialog" :footer="null">
         <template #title>
           <fs-icon icon="icon-select" class="mr-2"></fs-icon>
           选择图标
         </template>
         <div class="fs-icon-selector-dialog-content mb-4">
-          <component
-            :is="ui.input.name"
-            v-model:[ui.input.modelValue]="searchKey"
-            class="ml-2"
-            placeholder="搜索图标"
-            @keydown.enter="handleSearch"
-          >
-            <template #suffix>
-              <fs-button type="primary" icon="ion:search" @click="handleSearch"></fs-button>
-            </template>
-          </component>
-
           <div class="icon-tabs-box mt-10 mb-10">
-            <component :is="ui.tabs.name">
-              <component :is="ui.tabPane.name" v-for="set in iconSets" :key="set" :label="set"> </component>
+            <component
+              :is="ui.tabs.name"
+              v-bind="tabs"
+              v-model:[ui.tabs.modelValue]="tabKey"
+              type="card"
+              @change="onTabChange"
+            >
+              <component :is="ui.tabPane.name" key="all" :[ui.tabPane.tab]="'全部'"> </component>
+              <component :is="ui.tabPane.name" v-for="set of iconSets" :key="set" :[ui.tabPane.tab]="set"> </component>
+            </component>
+
+            <component
+              :is="ui.input.name"
+              v-model:[ui.input.modelValue]="searchKey"
+              class="ml-2"
+              placeholder="搜索图标, 双击选择"
+              size="small"
+              @keydown.enter="handleSearch"
+            >
+              <template #suffix>
+                <fs-button type="primary" icon="ion:search" @click="handleSearch"></fs-button>
+              </template>
             </component>
 
             <div class="icon-container">
-              <div
-                v-for="icon in pager.records"
-                :key="icon"
-                class="icon-item"
-                :class="{ active: icon === current }"
-                :title="icon"
-                @click="handleIconSelect(icon, false)"
-                @dblclick="handleIconSelect(icon, true)"
-              >
-                <fs-icon :icon="icon" class="text-2xl"></fs-icon>
+              <div class="icon-list">
+                <div
+                  v-for="icon in pager.records"
+                  :key="icon"
+                  class="icon-item"
+                  :class="{ active: icon === current }"
+                  :title="icon"
+                  @click="handleIconSelect(icon, false)"
+                  @dblclick="handleIconSelect(icon, true)"
+                >
+                  <fs-icon :icon="icon" class="text-2xl"></fs-icon>
+                </div>
+              </div>
+
+              <div class="load-more">
+                <fs-loading v-if="pager.loading" :loading="pager.loading" text="加载中" />
+                <div v-else-if="pager.total == null || pager.total == 0">
+                  <div>暂无数据</div>
+                </div>
+                <div v-else-if="pager.total > pager.start + pager.limit" @click="loadMore">
+                  <div>加载更多</div>
+                </div>
               </div>
             </div>
             <div class="footer">
-              <div v-if="pager.loading" class="load-more">
-                <fs-loading :loading="pager.loading" text="加载中" />
-              </div>
-              <div v-else-if="pager.total > pager.start + pager.limit" @click="loadMore">
-                <div>加载更多</div>
-              </div>
+              <fs-button type="primary" @click="onConfirm">确定</fs-button>
             </div>
           </div>
         </div>
@@ -67,7 +82,7 @@ defineOptions({
 });
 
 const emit = defineEmits(["update:modelValue"]);
-
+const defaultLimit = 136;
 const props = defineProps({
   modelValue: {
     type: String,
@@ -77,14 +92,18 @@ const props = defineProps({
     type: Object,
     default: () => ({})
   },
+  tabs: {
+    type: Object,
+    default: () => ({})
+  },
   // 限制每页显示数量
   limit: {
     type: Number,
-    default: 20
+    default: 136
   },
   iconSets: {
-    type: Array,
-    default: () => []
+    type: Array<string>,
+    default: () => ["carbon", "ion", "ant-design", "fa-solid", "fa-brands", "fa-regular", "mdi"]
   },
   apiProvider: {
     type: String,
@@ -122,6 +141,9 @@ const emitChange = (val: string) => {
 
 const handleClick = () => {
   dialogOpened.value = true;
+  if (props.iconSets.length > 0 && pager.value.records.length === 0) {
+    onTabChange(props.iconSets[0] as string);
+  }
 };
 
 const attrs = useAttrs();
@@ -149,7 +171,13 @@ const loadIconSet = async (prefix: string) => {
   let sets = iconStore.value[prefix];
   if (!sets) {
     const res = await api.getIcons(prefix);
-    sets = res.uncategorized;
+    const uncategories = res.uncategorized ?? [];
+    const categories = res.categories ?? [];
+    sets = uncategories;
+    for (const key in categories) {
+      sets = sets.concat(categories[key]);
+    }
+    sets = sets.map((item: any) => `${prefix}:${item}`);
     iconStore.value[prefix] = sets;
   }
   return sets;
@@ -157,34 +185,41 @@ const loadIconSet = async (prefix: string) => {
 
 const searchKey = ref("");
 const tabKey = ref("all");
+const onTabChange = (key: string) => {
+  tabKey.value = key;
+  searchKey.value = "";
+  resetPager();
+  handleSearch();
+};
+
+const resetPager = () => {
+  pager.value.start = 0;
+  pager.value.records = [];
+  pager.value.total = 0;
+  pager.value.limit = props.limit ?? defaultLimit;
+};
 
 const pager = ref({
   loading: false,
   start: 0,
-  limit: props.limit ?? 50,
+  limit: props.limit ?? defaultLimit,
   total: null,
   query: "",
   records: []
 });
 
 const handleSearch = async () => {
-  if (!searchKey.value) {
-    ui.notification.warn("请输入搜索关键字");
-    return;
-  }
   if (pager.value.loading) {
     return;
   }
   if (pager.value.query !== searchKey.value) {
     //重置start
-    pager.value.start = 0;
-    pager.value.records = [];
-    pager.value.limit = props.limit ?? 50;
+    resetPager();
   }
 
   pager.value.loading = true;
   try {
-    const res = await api.search(searchKey.value, pager.value);
+    const res = await doSearch();
     pager.value.records = pager.value.records.concat(res.icons);
     pager.value.total = res.total;
     pager.value.limit = res.limit;
@@ -193,6 +228,37 @@ const handleSearch = async () => {
     pager.value.loading = false;
   }
 };
+
+async function doSearch() {
+  if (tabKey.value === "all") {
+    if (!searchKey.value) {
+      ui.notification.warn("请输入搜索关键字");
+      return;
+    }
+    return await api.search(searchKey.value, pager.value);
+  } else {
+    return await getPagerFromIconSet(tabKey.value);
+  }
+}
+
+async function getPagerFromIconSet(prefix: string) {
+  const icons = await loadIconSet(prefix);
+  let filters = icons;
+  if (searchKey.value) {
+    filters = icons.filter((icon: string) => icon.includes(searchKey.value));
+  }
+  let end = pager.value.start + pager.value.limit;
+  if (end > filters.length) {
+    end = filters.length;
+  }
+  const pagerIcons = filters.slice(pager.value.start, end);
+  return {
+    icons: pagerIcons,
+    total: filters.length,
+    limit: pager.value.limit,
+    start: pager.value.start
+  };
+}
 
 const current = ref(props.modelValue);
 const handleIconSelect = (icon: string, confirm = false) => {
@@ -220,42 +286,60 @@ const loadMore = async () => {
   }
 }
 .fs-icon-selector-dialog-content {
-  min-height: 500px;
-  .load-more {
-    cursor: pointer;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    padding: 10px;
-  }
   .icon-tabs-box {
     display: flex;
     flex-direction: column;
+    min-height: 500px;
+    max-height: 60vh;
 
+    .load-more {
+      cursor: pointer;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      padding: 10px;
+      width: 100%;
+    }
+
+    .footer {
+      display: flex;
+      justify-content: end;
+      align-items: center;
+      padding: 10px;
+    }
+    overflow: hidden;
     .icon-container {
+      margin-top: 10px;
       flex: 1;
       display: flex;
-      flex-wrap: wrap;
-      .icon-item {
-        width: 50px;
-        height: 50px;
+      flex-direction: column;
+      overflow-y: auto;
+      overflow-x: hidden;
+      .icon-list {
+        width: 100%;
         display: flex;
-        justify-content: center;
-        align-items: center;
-        cursor: pointer;
-        border: 1px solid transparent;
-        margin: 2px;
-        &.active {
-          border: 1px solid #409eff;
+        flex-wrap: wrap;
+        .icon-item {
+          width: 50px;
+          height: 50px;
+          display: flex;
+          justify-content: center;
+          align-items: center;
+          cursor: pointer;
+          border: 1px solid transparent;
+          margin: 2px;
+          &.active {
+            border: 1px solid #409eff;
+          }
+          &:hover {
+            border: 1px solid #6cb3f8;
+          }
         }
-        &:hover {
-          border: 1px solid #6cb3f8;
+        .fs-icon {
+          font-size: 30px;
+          max-width: 96%;
+          max-height: 96%;
         }
-      }
-      .fs-icon {
-        font-size: 30px;
-        max-width: 96%;
-        max-height: 96%;
       }
     }
   }

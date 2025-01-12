@@ -1,6 +1,6 @@
 <template>
   <span class="fs-iconify" :class="{ 'fs-iconify-spin': spin }">
-    <Icon ref="iconifyRef" :icon="icon" />
+    <Icon ref="iconifyRef" :icon="icon" :inline="true" />
   </span>
 </template>
 <script lang="ts">
