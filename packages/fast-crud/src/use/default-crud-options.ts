@@ -77,7 +77,7 @@ const defaultCrudOptions = {
           is: ui.dialog.name,
           ...ui.formWrapper.buildWidthBind(ui.dialog.name, "960px"),
           ...ui.formWrapper.buildInitBind(ui.dialog.name),
-          draggable: true,
+          dragenabled: true,
           destroyOnClose: true, // antdv
           ...ui.dialog.footer(), // antdv
           buttons: {

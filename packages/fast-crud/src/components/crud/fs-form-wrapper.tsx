@@ -249,7 +249,7 @@ export default defineComponent({
       if (emitOnOpened.value) {
         emitOnOpened.value();
       }
-      if (formWrapperBind.value.draggable) {
+      if (formWrapperBind.value.draggable || formWrapperBind.value.dragenabled) {
         const { dragModal } = useDrag();
         dragModal({
           getModal: () => {

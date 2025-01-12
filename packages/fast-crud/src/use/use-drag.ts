@@ -97,10 +97,20 @@ async function dragModalForNaive(opts: DragModalOptions) {
       dragDom.style.left = `${l + styL}px`;
       dragDom.style.top = `${t + styT}px`;
     };
+    // @ts-ignore
+    document.onmousemove = document.ondrag;
 
     document.ondragend = function (e) {
       document.ondrag = null;
+      document.onmousemove = null;
       document.ondragend = null;
+      document.onmouseup = null;
+    };
+    document.onmouseup = function (e) {
+      document.ondrag = null;
+      document.onmousemove = null;
+      document.ondragend = null;
+      document.onmouseup = null;
     };
   };
 }
