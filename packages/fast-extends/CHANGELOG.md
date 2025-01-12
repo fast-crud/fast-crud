@@ -3,6 +3,16 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [1.25.0](https://github.com/fast-crud/fast-crud/compare/v1.24.2...v1.25.0) (2025-01-12)
+
+### Bug Fixes
+
+* fs-file-uploader修复exceed没有触发的问题 ([7e23990](https://github.com/fast-crud/fast-crud/commit/7e2399045728b911b6b7e107f3869967f37857aa))
+
+### Performance Improvements
+
+* 优化手机号选择组件打包过大的问题 ([b599617](https://github.com/fast-crud/fast-crud/commit/b599617f25c71b88f78611bc480ccf2d9aa8c8ec))
+
 ## [1.24.2](https://github.com/fast-crud/fast-crud/compare/v1.24.1...v1.24.2) (2024-12-31)
 
 **Note:** Version bump only for package @fast-crud/fast-extends
