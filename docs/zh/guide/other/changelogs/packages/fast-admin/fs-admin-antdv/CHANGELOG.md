@@ -3,6 +3,10 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.25.1](https://github.com/fast-crud/fast-crud/compare/v1.25.0...v1.25.1) (2025-02-12)
+
+**Note:** Version bump only for package @fast-crud/fs-admin-antdv
+
 # [1.25.0](https://github.com/fast-crud/fast-crud/compare/v1.24.2...v1.25.0) (2025-01-12)
 
 **Note:** Version bump only for package @fast-crud/fs-admin-antdv

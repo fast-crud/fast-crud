@@ -3,6 +3,15 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.25.1](https://github.com/fast-crud/fast-crud/compare/v1.25.0...v1.25.1) (2025-02-12)
+
+### Performance Improvements
+
+* 表头常驻，表头搜索高亮 ([7e6ecbd](https://github.com/fast-crud/fast-crud/commit/7e6ecbd8610b97ba0b6d8c9939f6534ed4f8e7c3))
+* element 图标选择组件支持 ([256dc35](https://github.com/fast-crud/fast-crud/commit/256dc3574e4c68fe7ee66a171b7fe6ce41927c54))
+* element 文件上传示例，超出数量限制增加提示 ([67d19dc](https://github.com/fast-crud/fast-crud/commit/67d19dc34558dcb9fbf3d1f3a590ef5963d8355e))
+* naive ui 图标选择组件支持，修复rowHandle button 间隔 ([10471e3](https://github.com/fast-crud/fast-crud/commit/10471e35377ce0293972c24a5966c997f08fa4ed))
+
 # [1.25.0](https://github.com/fast-crud/fast-crud/compare/v1.24.2...v1.25.0) (2025-01-12)
 
 ### Bug Fixes
