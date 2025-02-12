@@ -598,7 +598,7 @@ export default defineComponent({
         beforeUpload: beforeUpload,
         httpRequest: customRequest,
         onExceed: (event) => {
-          ctx.emit("exceed", event);
+          ctx.emit("exceed", event, fileList);
         },
         onRemove: (file: any, fileList: any) => {
           handleChange(file, fileList);
@@ -718,7 +718,8 @@ export default defineComponent({
       previewImage,
       computedPreview,
       computedOnLimit,
-      computedBinding
+      computedBinding,
+      emitValue
     };
   }
 });
