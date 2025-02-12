@@ -8,7 +8,7 @@
 
     <div v-if="dialogOpened" class="fs-icon-selector-dialog">
       <component :is="ui.dialog.name" :width="1024" v-bind="computedDialog" :footer="null">
-        <template #title>
+        <template #[ui.dialog.titleSlotName]>
           <fs-icon icon="icon-select" class="mr-2"></fs-icon>
           选择图标
         </template>
@@ -19,10 +19,17 @@
               v-bind="tabs"
               v-model:[ui.tabs.modelValue]="tabKey"
               type="card"
-              @change="onTabChange"
+              @[ui.tabs.tabChange]="onTabChange"
             >
               <component :is="ui.tabPane.name" key="all" :[ui.tabPane.tab]="'全部'"> </component>
-              <component :is="ui.tabPane.name" v-for="set of iconSets" :key="set" :[ui.tabPane.tab]="set"> </component>
+              <component
+                :is="ui.tabPane.name"
+                v-for="set of iconSets"
+                :key="set"
+                :[ui.tabPane.key]="set"
+                :[ui.tabPane.tab]="set"
+              >
+              </component>
             </component>
 
             <component
@@ -30,11 +37,10 @@
               v-model:[ui.input.modelValue]="searchKey"
               class="ml-2"
               placeholder="搜索图标, 双击选择"
-              size="small"
               @keydown.enter="handleSearch"
             >
               <template #suffix>
-                <fs-button type="primary" icon="ion:search" @click="handleSearch"></fs-button>
+                <fs-button type="primary" size="small" icon="ion:search" @click="handleSearch"></fs-button>
               </template>
             </component>
 
@@ -186,6 +192,7 @@ const loadIconSet = async (prefix: string) => {
 const searchKey = ref("");
 const tabKey = ref("all");
 const onTabChange = (key: string) => {
+  debugger;
   tabKey.value = key;
   searchKey.value = "";
   resetPager();

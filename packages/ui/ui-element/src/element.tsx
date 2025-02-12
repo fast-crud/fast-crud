@@ -1050,7 +1050,8 @@ export class Element implements UiInterface {
   });
   tabs: TabsCI = creator<TabsCI>({
     name: "el-tabs",
-    modelValue: "modelValue"
+    modelValue: "modelValue",
+    tabChange: "tabChange"
   });
   tabPane: TabPaneCI = creator<TabPaneCI>({
     name: "el-tab-pane",

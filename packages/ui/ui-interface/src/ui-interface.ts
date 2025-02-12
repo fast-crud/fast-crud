@@ -282,6 +282,7 @@ export interface CascaderCI extends CI {
 export type TabsBuilderOptions = {} & BindBuilderOptions;
 export type TabsCI = {
   modelValue: string;
+  tabChange: string;
 } & CI<TabsBuilderOptions>;
 
 export type TabPaneBuilderOptions = {} & BindBuilderOptions;

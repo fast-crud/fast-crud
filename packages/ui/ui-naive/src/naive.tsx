@@ -777,7 +777,8 @@ export class Naive implements UiInterface {
   });
   tabs: TabsCI = creator<TabsCI>({
     name: "n-tabs",
-    modelValue: "value"
+    modelValue: "value",
+    tabChange: "change"
   });
   tabPane: TabPaneCI = creator<TabPaneCI>({
     name: "n-tab-pane",

@@ -804,7 +804,8 @@ export class Antdv implements UiInterface {
   });
   tabs = creator<TabsCI>({
     name: "a-tabs",
-    modelValue: "activeKey"
+    modelValue: "activeKey",
+    tabChange: "change"
   });
   tabPane = creator<TabPaneCI>({
     name: "a-tab-pane",
