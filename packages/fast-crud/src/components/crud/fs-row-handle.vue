@@ -288,6 +288,7 @@ export default defineComponent({
 
   .n-button {
     align-items: center;
+    margin: 2px;
   }
 }
 </style>

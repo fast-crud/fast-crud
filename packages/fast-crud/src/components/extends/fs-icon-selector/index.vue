@@ -7,21 +7,16 @@
     </component>
 
     <div v-if="dialogOpened" class="fs-icon-selector-dialog">
-      <component :is="ui.dialog.name" :width="1024" v-bind="computedDialog" :footer="null">
+      <component :is="ui.dialog.name" preset="dialog" v-bind="computedDialog" :footer="null">
         <template #[ui.dialog.titleSlotName]>
           <fs-icon icon="icon-select" class="mr-2"></fs-icon>
           选择图标
         </template>
         <div class="fs-icon-selector-dialog-content mb-4">
           <div class="icon-tabs-box mt-10 mb-10">
-            <component
-              :is="ui.tabs.name"
-              v-bind="tabs"
-              v-model:[ui.tabs.modelValue]="tabKey"
-              type="card"
-              @[ui.tabs.tabChange]="onTabChange"
-            >
-              <component :is="ui.tabPane.name" key="all" :[ui.tabPane.tab]="'全部'"> </component>
+            <component :is="ui.tabs.name" v-bind="computeTabs" type="card">
+              <component :is="ui.tabPane.name" key="all" :[ui.tabPane.key]="'all'" :[ui.tabPane.tab]="'全部'">
+              </component>
               <component
                 :is="ui.tabPane.name"
                 v-for="set of iconSets"
@@ -121,6 +116,10 @@ const { ui } = useUi();
 const dialogOpened = ref(false);
 const computedDialog = computed(() => {
   return {
+    width: 1024,
+    style: {
+      width: "1024px"
+    },
     ...props.dialog,
     [ui.dialog.visible]: dialogOpened.value,
     [`onUpdate:${ui.dialog.visible}`]: (val: boolean) => {
@@ -192,7 +191,6 @@ const loadIconSet = async (prefix: string) => {
 const searchKey = ref("");
 const tabKey = ref("all");
 const onTabChange = (key: string) => {
-  debugger;
   tabKey.value = key;
   searchKey.value = "";
   resetPager();
@@ -284,6 +282,14 @@ const loadMore = async () => {
   pager.value.start += pager.value.limit;
   await handleSearch();
 };
+
+const computeTabs = computed(() => {
+  return {
+    ...props.tabs,
+    [ui.tabs.modelValue]: tabKey.value,
+    [`onUpdate:${ui.tabs.modelValue}`]: onTabChange
+  };
+});
 </script>
 <style lang="less">
 .fs-icon-selector {
