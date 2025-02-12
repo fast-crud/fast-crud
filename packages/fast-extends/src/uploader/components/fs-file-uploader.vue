@@ -1,6 +1,6 @@
 <template>
   <div class="fs-file-uploader" :class="{ 'fs-file-uploader-limit': computedOnLimit() }">
-    <component :is="ui.upload.name" ref="fileUploaderRef" v-model:fileList="fileList" v-bind="computedBinding">
+    <component :is="ui.upload.name" ref="fileUploaderRef" v-model:file-list="fileList" v-bind="computedBinding">
       <component :is="computedFileSelectBtn.is" v-bind="computedFileSelectBtn" />
     </component>
     <component
