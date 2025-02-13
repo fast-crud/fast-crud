@@ -87,6 +87,23 @@ export default defineComponent({
 
     function buildEvent(): FormWrapperContext {
       return {
+        formWrapperId,
+        formWrapperIdClass,
+        close,
+        doClose,
+        onClosed,
+        onOpened,
+        open,
+        title,
+        fullscreenEnabled,
+        fullscreen,
+        formWrapperIs,
+        formWrapperOpen,
+        formWrapperBind,
+        computedButtons,
+        onValueChange,
+        innerBind,
+        formWrapperSlots,
         wrapper: formWrapperBind.value,
         options: formOptions.value,
         formRef: formRef.value,
@@ -368,33 +385,7 @@ export default defineComponent({
       });
     });
 
-    ctx.expose({
-      formWrapperId,
-      formWrapperIdClass,
-      close,
-      doClose,
-      onClosed,
-      onOpened,
-      open,
-      title,
-      fullscreenEnabled,
-      fullscreen,
-      toggleFullscreen,
-      formOptions,
-      formWrapperIs,
-      formWrapperOpen,
-      formWrapperBind,
-      formRef,
-      submit,
-      reset,
-      computedButtons,
-      loading,
-      getFormData,
-      setFormData,
-      onValueChange,
-      innerBind,
-      formWrapperSlots
-    });
+    ctx.expose(buildEvent());
 
     const slots = useSlots();
 
