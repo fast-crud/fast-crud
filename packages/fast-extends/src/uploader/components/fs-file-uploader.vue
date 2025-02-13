@@ -454,7 +454,7 @@ export default defineComponent({
       if (props.beforeUpload) {
         const ret = await props.beforeUpload({ file, fileList: fileList.value });
         if (ret === false) {
-          return;
+          return false;
         }
       }
       try {
