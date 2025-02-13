@@ -498,7 +498,8 @@ export default defineComponent({
         }
       }
     }
-    async function submit() {
+
+    async function validate() {
       const validateScope = { ...scope.value, form };
       if (props.beforeValidate) {
         const ret = await props.beforeValidate(validateScope);
@@ -519,7 +520,9 @@ export default defineComponent({
         ctx.emit("validationError", scope.value);
         throw e;
       }
-
+    }
+    async function submit() {
+      await validate();
       const formData = _.cloneDeep(toRaw(form));
       const submitScope = { ...scope.value, form: formData };
       logger.debug("form submit", JSON.stringify(form));
@@ -667,6 +670,7 @@ export default defineComponent({
       setFormData,
       getComponentRef,
       mergeCol,
+      validate,
       computedGroup,
       getContextFn,
       formItemShow,
