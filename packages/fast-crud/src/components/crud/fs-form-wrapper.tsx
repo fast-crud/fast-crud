@@ -114,8 +114,6 @@ export default defineComponent({
         getFormData,
         reset,
         loading,
-        close,
-        doClose,
         toggleFullscreen,
         submit,
         mode: formOptions.value?.mode

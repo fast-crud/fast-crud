@@ -1164,21 +1164,31 @@ type ButtonIconProps = string | { icon: string; [key: string]: any } | UiSlot;
 type NullableString = string | null;
 
 export type FormWrapperContext<R = any> = {
+  formWrapperId: any;
+  formWrapperIdClass: any;
   wrapper: any;
   options: any;
   formRef: any;
   form: R;
   mode: string;
+  title: any;
+  fullscreen: any;
   wrapperBindRef: any;
   formOptionsRef: any;
   setFormData: (form: R) => void;
   getFormData: () => R;
   reset: () => void;
   loading: Ref;
+  fullscreenEnabled: any;
   doClose: () => Promise<boolean>;
   close: () => Promise<void>;
   toggleFullscreen: () => void;
   submit: () => Promise<void>;
+  onClosed: any;
+  onOpened: any;
+  open: (opts: OpenDialogProps) => Promise<any>;
+
+  [key: string]: any;
 };
 /**
  * 按钮配置
