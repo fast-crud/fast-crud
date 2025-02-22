@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.25.2](https://github.com/fast-crud/fast-crud/compare/v1.25.1...v1.25.2) (2025-02-22)
+
+### Bug Fixes
+
+* 修复element 上传组件，beforeUpload里面返回false 不阻止上传的bug ([d852150](https://github.com/fast-crud/fast-crud/commit/d85215028322fece5fc11e96a6affe7ed8aa04f6))
+
 ## [1.25.1](https://github.com/fast-crud/fast-crud/compare/v1.25.0...v1.25.1) (2025-02-12)
 
 ### Performance Improvements

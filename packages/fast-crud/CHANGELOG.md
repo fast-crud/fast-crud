@@ -3,6 +3,16 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.25.2](https://github.com/fast-crud/fast-crud/compare/v1.25.1...v1.25.2) (2025-02-22)
+
+### Bug Fixes
+
+* 修复4.2.x版本antdv导致modal全屏无效的bug ([9a26363](https://github.com/fast-crud/fast-crud/commit/9a26363d44faf6b0eb0809be4a8dd0fd14f2c309))
+
+### Performance Improvements
+
+* form ScopeContext新增validate ([9b6b38f](https://github.com/fast-crud/fast-crud/commit/9b6b38fdc24891fb698a616d774c17759bfcd8c1))
+
 ## [1.25.1](https://github.com/fast-crud/fast-crud/compare/v1.25.0...v1.25.1) (2025-02-12)
 
 ### Performance Improvements
