@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.25.3](https://github.com/fast-crud/fast-crud/compare/v1.25.2...v1.25.3) (2025-02-23)
+
+### Bug Fixes
+
+* 修复expose.getFormRef 获取不到的bug ([3ddc629](https://github.com/fast-crud/fast-crud/commit/3ddc629888b36d298111d7d063e726ff2d14e24c))
+
 ## [1.25.2](https://github.com/fast-crud/fast-crud/compare/v1.25.1...v1.25.2) (2025-02-22)
 
 ### Bug Fixes
