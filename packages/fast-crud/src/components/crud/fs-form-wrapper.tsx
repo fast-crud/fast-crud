@@ -383,7 +383,37 @@ export default defineComponent({
       });
     });
 
-    ctx.expose(buildEvent());
+    ctx.expose({
+      formWrapperId,
+      formWrapperIdClass,
+      close,
+      doClose,
+      onClosed,
+      onOpened,
+      open,
+      title,
+      fullscreenEnabled,
+      fullscreen,
+      toggleFullscreen,
+      formOptions,
+      formWrapperIs,
+      formWrapperOpen,
+      formWrapperBind,
+      formRef,
+      submit,
+      reset,
+      computedButtons,
+      loading,
+      getFormData,
+      setFormData,
+      onValueChange,
+      innerBind,
+      formWrapperSlots,
+      form: getFormData(),
+      wrapperBindRef: formWrapperBind,
+      formOptionsRef: formOptions,
+      mode: formOptions.value?.mode
+    });
 
     const slots = useSlots();
 

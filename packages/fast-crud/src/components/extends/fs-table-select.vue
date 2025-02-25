@@ -2,8 +2,8 @@
   <div class="fs-table-select">
     <template v-if="!slots?.default && !viewMode">
       <fs-dict-select
-        v-bind="computedSelect"
         ref="dictSelectRef"
+        v-bind="computedSelect"
         :disabled="disabled"
         :readonly="readonly"
         :dict="dict"

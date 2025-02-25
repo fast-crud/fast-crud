@@ -257,6 +257,7 @@ export function useExpose<R = any>(props: UseExposeProps<R>): UseExposeRet<R> {
     getFormRef: () => {
       const formWrapperRef = crudExpose.getFormWrapperRef();
       if (formWrapperRef == null || formWrapperRef?.formRef == null) {
+        debugger;
         logger.error(
           "当前无法获取FormRef，请在编辑对话框已打开的状态下调用此方法，如果是在打开对话框时调用，可以尝试先nextTick"
         );
