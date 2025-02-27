@@ -35,7 +35,7 @@
               @keydown.enter="handleSearch"
             >
               <template #suffix>
-                <fs-button type="primary" size="small" icon="ion:search" @click="handleSearch"></fs-button>
+                <fs-button type="primary" size="small" :icon="ui.icons.search" @click="handleSearch"></fs-button>
               </template>
             </component>
 
