@@ -169,6 +169,10 @@ const crudOptions = {
 * 默认值： false
 * 场景：配置true，则value当做文本显示；配置string，则直接显示配置的文本
 
+## [key].column.columnSlots
+* 说明：自定义table-column列的插槽【仅element-plus有用】
+* 类型：`{key:RenderFunc}`
+* 场景：可以自定义列头
 
 
 ## [key].column.cellRender
