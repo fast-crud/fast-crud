@@ -42,7 +42,9 @@ function buildTableSlots({ props, ui, sortedColumns, renderRowHandle, renderCell
   const tableSlots: WriteableSlots = {};
 
   const buildColumn = (item: ColumnProps): any => {
-    const cellSlots: WriteableSlots = {};
+    const cellSlots: WriteableSlots = {
+      ...item.columnSlots
+    };
     const cellSlotName = "cell_" + item.key;
     let currentTableColumnComp = tableColumnComp;
     if (item.children) {

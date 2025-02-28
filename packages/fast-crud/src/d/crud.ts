@@ -1423,6 +1423,11 @@ export type ColumnProps<R = any> = {
    * 单元格可编辑配置
    */
   editable?: TableColumnEditableProps<R>;
+
+  /**
+   * element-plus 列自定插槽配置，可以自定义header
+   */
+  columnSlots?: Record<string, any>;
   /**
    * 其他x-table-column配置
    */
