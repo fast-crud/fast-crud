@@ -734,4 +734,24 @@ export default defineComponent({
   .n-form-item-blank {
   }
 }
+
+@media (max-width: 575px) {
+  .fs-search {
+    .fs-search-form {
+      .fs-search-col {
+        width: 100%;
+        max-width: 100%;
+        flex: 100%;
+        //antdv
+        .ant-form-item-label {
+          width: 120px;
+          flex: none;
+        }
+        .ant-form-item-control {
+          flex: 1;
+        }
+      }
+    }
+  }
+}
 </style>

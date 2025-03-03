@@ -453,8 +453,9 @@ export function useCrud<T = any, R = any>(ctx: UseCrudProps<T, R>): UseCrudRet<R
     bindings.search.validatedForm = _.cloneDeep(bindings.search.initialForm);
   }
 
-  function rebuildCrudBindings(options: DynamicallyCrudOptions) {
-    options = merge(defaultCrudOptions.commonOptions(ctx), options);
+  function rebuildCrudBindings(userOpts: DynamicallyCrudOptions) {
+    const baseOptions = merge(defaultCrudOptions.defaultOptions({ t }), defaultCrudOptions.commonOptions(ctx));
+    options = merge({}, baseOptions, userOpts);
     const settings: CrudSettings = unref(options.settings) as CrudSettings;
     if (settings) {
       const plugins = unref(settings.plugins) as CrudOptionsPlugins;
@@ -480,7 +481,7 @@ export function useCrud<T = any, R = any>(ctx: UseCrudProps<T, R>): UseCrudRet<R
     }
 
     const userOptions = merge(
-      defaultCrudOptions.defaultOptions({ t }),
+      baseOptions,
       usePagination(),
       useFormSubmit(),
       useRowHandle(),
@@ -490,7 +491,7 @@ export function useCrud<T = any, R = any>(ctx: UseCrudProps<T, R>): UseCrudRet<R
       useTable(),
       useActionbar(),
       useEditable(),
-      options
+      userOpts
     );
 
     const { buildColumns } = useColumns();

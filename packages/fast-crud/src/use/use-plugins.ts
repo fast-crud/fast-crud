@@ -1,5 +1,5 @@
-import { CrudOptions, CrudOptionsPluginHandle, RowSelectionProps, UseCrudProps } from "../d";
-import { nextTick, unref } from "vue";
+import { CrudOptions, CrudOptionsPluginHandle, MobileAdaptorProps, RowSelectionProps, UseCrudProps } from "../d";
+import { computed, nextTick } from "vue";
 import { useUi } from "@fast-crud/ui-interface";
 import logger from "../utils/util.log";
 import { useCompute } from "./use-compute";
@@ -57,5 +57,38 @@ registerCrudOptionsPlugin(
         }
       }
     });
+  }
+);
+
+/**
+ * 手机版
+ */
+registerCrudOptionsPlugin(
+  "mobile",
+  (mobileAdaptor: MobileAdaptorProps, ctx: UseCrudProps, crudOptions: any): CrudOptions => {
+    const rowHandle = crudOptions.rowHandle;
+    const buttons = rowHandle.buttons;
+    const newButtons = {};
+    for (const buttonsKey in buttons) {
+      const button = buttons[buttonsKey];
+      button.dropdown;
+      newButtons[buttonsKey] = {
+        ...button,
+        dropdown: computed(() => {
+          return mobileAdaptor.isMobile.value ? true : button.dropdown;
+        })
+      };
+    }
+    return {
+      rowHandle: {
+        width: computed(() => {
+          if (mobileAdaptor.isMobile.value) {
+            return mobileAdaptor?.rowHandle?.width || 60;
+          }
+          return rowHandle.width || 120;
+        }),
+        buttons: newButtons
+      }
+    };
   }
 );

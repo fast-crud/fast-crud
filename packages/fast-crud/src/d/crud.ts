@@ -575,6 +575,14 @@ export type ConditionalRenderProps<R = any> = {
   render: (scope: ScopeContext<R>) => UiSlotRet;
 };
 
+export type MobileAdaptorProps<R = any> = {
+  isMobile?: Ref<boolean>;
+
+  rowHandle?: {
+    width?: number;
+  };
+};
+
 // export type CellConditionalRender<R = any> = ConditionalRenderProps<R>;
 
 export type RowSelectionProps<R = any> = {

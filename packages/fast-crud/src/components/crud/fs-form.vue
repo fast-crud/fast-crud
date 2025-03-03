@@ -724,6 +724,7 @@ export default defineComponent({
   //  width: 100%;
   //}
 }
+
 .fs-form-grid {
   .fs-row {
     display: grid;
@@ -759,6 +760,34 @@ export default defineComponent({
   flex-wrap: wrap;
   .fs-row {
     width: 100%;
+  }
+}
+
+@media (max-width: 768px) {
+  .fs-form-flex {
+    .fs-row {
+      .fs-col {
+        max-width: 100%;
+        width: 100%;
+        flex: 0 0 100%;
+      }
+    }
+  }
+}
+
+@media (max-width: 575px) {
+  .fs-form-flex {
+    .fs-row {
+      .fs-col {
+        //.ant-form-item-label {
+        //  flex: none;
+        //}
+        //.ant-form-item .ant-form-item-control {
+        //  flex: 1;
+        //  max-width: 100%;
+        //}
+      }
+    }
   }
 }
 </style>
