@@ -98,7 +98,6 @@ registerCrudOptionsPlugin(
         })
       };
     }
-    debugger;
     return {
       rowHandle: {
         width: computed(() => {
