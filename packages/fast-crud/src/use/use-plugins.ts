@@ -3,13 +3,28 @@ import { computed, nextTick } from "vue";
 import { useUi } from "@fast-crud/ui-interface";
 import logger from "../utils/util.log";
 import { useCompute } from "./use-compute";
+export type CrudOptionsPluginOpts = {
+  before?: boolean;
+  order?: number;
+};
+export type CrudOptionsPlugin = {
+  handle: CrudOptionsPluginHandle;
+  opts?: CrudOptionsPluginOpts;
+};
 
-export const crudOptionsPlugins: Record<string, CrudOptionsPluginHandle> = {};
-export function registerCrudOptionsPlugin(name: string, plugin: CrudOptionsPluginHandle) {
-  crudOptionsPlugins[name] = plugin;
+export const crudOptionsPlugins: Record<string, CrudOptionsPlugin> = {};
+export function registerCrudOptionsPlugin(
+  name: string,
+  plugin: CrudOptionsPluginHandle,
+  opts: CrudOptionsPluginOpts = {}
+) {
+  crudOptionsPlugins[name] = {
+    handle: plugin,
+    opts
+  };
 }
 
-export function getCrudOptionsPlugin(name: string): CrudOptionsPluginHandle {
+export function getCrudOptionsPlugin(name: string): CrudOptionsPlugin {
   return crudOptionsPlugins[name];
 }
 
@@ -57,6 +72,10 @@ registerCrudOptionsPlugin(
         }
       }
     });
+  },
+  {
+    before: true,
+    order: -2
   }
 );
 
@@ -79,16 +98,21 @@ registerCrudOptionsPlugin(
         })
       };
     }
+    debugger;
     return {
       rowHandle: {
         width: computed(() => {
           if (mobileAdaptor.isMobile.value) {
             return mobileAdaptor?.rowHandle?.width || 60;
           }
-          return rowHandle.width || 120;
+          return rowHandle.width || 250;
         }),
         buttons: newButtons
       }
     };
+  },
+  {
+    before: false,
+    order: -2
   }
 );

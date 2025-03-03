@@ -163,6 +163,20 @@ async function openCustomDialog(){
 ## 插件
 
 ### registerCrudOptionsPlugin
-
-
+* 说明：注册自定义插件，注意：这是一个全局方法，不是配置，你应该写在app.use(FastCrud)后面
+* 类型：(name:string,plugin:(props:any,ctx:UseCrudProps)=>CrudOptions)
+* 内置插件：[rowSelection](./crud-options/settings.md#plugins-rowSelection),[mobile](./crud-options/settings.md#plugins-mobile)
+* 示例
+```js
+import {registerCrudOptionsPlugin} from '@fast-crud/fast-crud'
+registerCrudOptionsPlugin("rowSelection",(pluginProps:RowSelectionProps,ctx:UseCrudProps)=>{
+    //这里返回crudOptions结构的配置，用以实现插件的功能
+    return {
+        table:{
+            
+        },
+        ... //覆盖crudOptions配置
+    }    
+})
+```
 

@@ -29,7 +29,7 @@ import { CrudOptions } from "../d/crud";
 import { computed, reactive, Ref, ref, shallowReactive, shallowRef, unref } from "vue";
 import { useExpose } from "./use-expose";
 import { exportTable } from "../lib/fs-export";
-import { getCrudOptionsPlugin } from "../use/use-plugins";
+import { CrudOptionsPluginOpts, getCrudOptionsPlugin } from "../use/use-plugins";
 import { UnwrapNestedRefs } from "vue";
 
 const { merge } = useMerge();
@@ -464,18 +464,23 @@ export function useCrud<T = any, R = any>(ctx: UseCrudProps<T, R>): UseCrudRet<R
           return;
         }
         let handle: CrudOptionsPluginHandle = plugin.handle;
+        let opts: CrudOptionsPluginOpts = {};
         if (handle == null) {
-          handle = getCrudOptionsPlugin(key);
+          const plug = getCrudOptionsPlugin(key);
+          if (plug != null) {
+            handle = plug.handle;
+            opts = plug.opts;
+          }
         }
         if (handle == null) {
           return;
         }
-        const before = plugin.before;
+        const before = plugin.before ?? opts.before;
         const pluginOptions = handle(plugin.props, ctx, options);
         if (before !== false) {
-          options = merge(pluginOptions, options);
+          options = merge(pluginOptions, userOpts);
         } else {
-          merge(options, pluginOptions);
+          merge(userOpts, pluginOptions);
         }
       });
     }

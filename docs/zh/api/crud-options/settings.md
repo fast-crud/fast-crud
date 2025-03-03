@@ -20,9 +20,11 @@
 ## plugins
 * 说明：crudOptions插件，插件能够生成一些crudOptions配置，并与用户的crudOptions进行合并
 * 类型：`Record<string,CrudOptionsPlugin<any>>`
-* 默认： null
-* 示例：
+* 文档： [开发自定义插件](../use.md#registerCrudOptionsPlugin)
 
+## plugins.rowSelection
+* 说明：行选择插件
+* 示例：
 ```js
 const crudOptions = {
     settings:{
@@ -31,7 +33,6 @@ const crudOptions = {
             rowSelection:{
                 //是否启用本插件
                 enabled: true,
-                order: -2,
                 //合并在用户配置crudOptions之前还是之后
                 before: true,
                 props: {
@@ -50,22 +51,33 @@ const crudOptions = {
     }
 }
 ```
-::: tip
-### registerCrudOptionsPlugin方法
-* 说明：注册自定义插件，注意：这是一个全局方法，不是配置，你应该写在app.use(FastCrud)后面
-* 类型：(name:string,plugin:(props:any,ctx:UseCrudProps)=>CrudOptions)
-* 示例
+
+## plugins.mobile
+* 说明：手机版适配插件
+* 示例：
 ```js
-import {registerCrudOptionsPlugin} from '@fast-crud/fast-crud'
-registerCrudOptionsPlugin("rowSelection",(selection:RowSelectionProps,ctx:UseCrudProps)=>{
-    //这里返回crudOptions结构的配置，已实现插件的功能，这里是实现行选择功能
-    return {
-        table:{
-            rowSelection:{
-                
+const crudOptions = {
+    settings:{
+        plugins:{
+            //行选择插件，内置插件
+            mobile:{
+                //是否启用本插件
+                enabled: true,
+                props: {
+                    isMobile: computed(()=>{
+                        //浏览器窗口小于768px时，认为是手机端
+                        //你也可以实现自己的判断手机版逻辑
+                        return  window.innerWidth<768
+                    }),
+                    rowHandle:{
+                        width: 60, //自定义手机版操作列的宽度
+                        //同时操作列的所有按钮都作为dropdown
+                    }
+                },
             }
         }
-    }    
-})
+    }
+}
 ```
-::: 
+
+

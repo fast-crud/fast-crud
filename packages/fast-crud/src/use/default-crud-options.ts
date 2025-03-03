@@ -15,6 +15,20 @@ const defaultCrudOptions = {
     };
     const ui = uiContext.get();
     return {
+      settings: {
+        plugins: {
+          mobile: {
+            enabled: true,
+            props: {
+              isMobile: computed(() => {
+                //浏览器窗口小于768px时，认为是手机端
+                //你也可以实现自己的判断手机版逻辑
+                return window.innerWidth < 768;
+              })
+            }
+          }
+        }
+      },
       mode: {},
       status: {},
       search: {
