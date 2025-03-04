@@ -9,7 +9,7 @@
 import WangEditor from "wangeditor";
 import wangConfig from "./utils/config";
 import { defaultConfig } from "../../type/config";
-import { merge } from "lodash-es";
+import { merge, forEach } from "lodash-es";
 import { defineComponent } from "vue";
 import { useUploader } from "../../../uploader";
 
