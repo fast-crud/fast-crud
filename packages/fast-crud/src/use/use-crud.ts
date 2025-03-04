@@ -1,5 +1,5 @@
 import defaultCrudOptions from "./default-crud-options";
-import _, { cloneDeep } from "lodash-es";
+import { forEach } from "lodash-es";
 import { useMerge } from "./use-merge";
 import logger from "../utils/util.log";
 import { uiContext } from "../ui";
@@ -290,7 +290,7 @@ export function useCrud<T = any, R = any>(ctx: UseCrudProps<T, R>): UseCrudRet<R
 
           function updateColumns(old: TableColumnsProps, value: TableColumnsProps) {
             const columns: TableColumnsProps = {};
-            _.forEach(value, (item) => {
+            forEach(value, (item) => {
               const oldColumn = old[item.key];
               if (oldColumn) {
                 delete oldColumn.order;
@@ -393,7 +393,7 @@ export function useCrud<T = any, R = any>(ctx: UseCrudProps<T, R>): UseCrudRet<R
                 if (crudBinding.value.table.editable.exclusive) {
                   //排他式激活
                   const activeRows: EditableRow[] = expose.editable.getActiveRows();
-                  _.forEach(activeRows, (item: EditableRow) => {
+                  forEach(activeRows, (item: EditableRow) => {
                     if (crudBinding.value.table.editable.exclusiveEffect === "save") {
                       expose.editable.doSaveRow({ row: item.rowData });
                     } else {
@@ -460,7 +460,7 @@ export function useCrud<T = any, R = any>(ctx: UseCrudProps<T, R>): UseCrudRet<R
     const settings: CrudSettings = unref(options.settings) as CrudSettings;
     if (settings) {
       const plugins = unref(settings.plugins) as CrudOptionsPlugins;
-      _.forEach(plugins, (plugin, key) => {
+      forEach(plugins, (plugin, key) => {
         if (plugin.enabled === false) {
           return;
         }

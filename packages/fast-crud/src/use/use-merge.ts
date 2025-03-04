@@ -1,4 +1,4 @@
-import _ from "lodash-es";
+import { isArray, cloneDeepWith, mergeWith } from "lodash-es";
 import { isRef } from "vue";
 function isUnMergeable(srcValue: any) {
   return srcValue != null && (srcValue instanceof UnMergeable || isRef(srcValue));
@@ -17,7 +17,7 @@ function merge(target: any, ...sources: any) {
       return;
     }
     // 如果被合并对象为数组，则直接被覆盖对象覆盖，只要覆盖对象不为空
-    if (_.isArray(objValue)) {
+    if (isArray(objValue)) {
       //原对象如果是数组
       return srcValue; //来源对象
     }
@@ -36,7 +36,7 @@ function merge(target: any, ...sources: any) {
   if (found) {
     return found;
   }
-  return _.mergeWith(target, ...sources, customizer);
+  return mergeWith(target, ...sources, customizer);
 }
 
 function cloneDeep(target: any) {
@@ -49,7 +49,7 @@ function cloneDeep(target: any) {
     }
   }
 
-  return _.cloneDeepWith(target, customizer);
+  return cloneDeepWith(target, customizer);
 }
 class UnMergeable {
   cloneable = false;

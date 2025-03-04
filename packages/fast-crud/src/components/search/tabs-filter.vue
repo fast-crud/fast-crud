@@ -19,7 +19,6 @@
 </template>
 <script lang="ts" setup>
 import { computed, useAttrs } from "vue";
-import _ from "lodash-es";
 import { useMerge, useUi } from "../../use";
 defineOptions({
   name: "FsTabsFilter",

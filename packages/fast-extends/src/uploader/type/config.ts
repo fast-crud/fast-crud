@@ -1,5 +1,5 @@
-import { FsUploaderOptions, FsUploaderGetAuthContext, FsUploaderAliossSTS } from "../d/type";
-import _ from "lodash-es";
+import { FsUploaderAliossSTS, FsUploaderGetAuthContext, FsUploaderOptions } from "../d/type";
+import { cloneDeep } from "lodash-es";
 
 export const defaultConfig: FsUploaderOptions = {
   defaultType: "cos", // 默认的上传后端类型
@@ -96,4 +96,4 @@ export const defaultConfig: FsUploaderOptions = {
   }
 };
 
-export const uploaderConfig: FsUploaderOptions = _.cloneDeep(defaultConfig);
+export const uploaderConfig: FsUploaderOptions = cloneDeep(defaultConfig);

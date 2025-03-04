@@ -1,6 +1,6 @@
 import type { BaseCI, CI, ComponentRenderBinding, UiSlotRet } from "../ui-interface";
 import { computed, resolveComponent } from "vue";
-import _ from "lodash-es";
+import { set, merge, get } from "lodash-es";
 
 export type UiSpecialBindingBuilder = () => Partial<ComponentRenderBinding>;
 export type UiSpecialBinding = Partial<ComponentRenderBinding> | UiSpecialBindingBuilder;
@@ -42,9 +42,9 @@ export const buildBinding: UiBuildBinding = (ci, opts, special: UiSpecialBinding
         mvConf.onChange && mvConf.onChange(value);
       };
     } else if (mvConf.ref && mvConf.key) {
-      vModel[modelValueName] = _.get(mvConf.ref, mvConf.key);
+      vModel[modelValueName] = get(mvConf.ref, mvConf.key);
       vModel[`onUpdate:${modelValueName}`] = (value: any) => {
-        _.set(mvConf.ref, mvConf.key, value);
+        set(mvConf.ref, mvConf.key, value);
         mvConf.onChange && mvConf.onChange(value);
       };
     } else {
@@ -59,7 +59,7 @@ export const buildBinding: UiBuildBinding = (ci, opts, special: UiSpecialBinding
   };
 
   const specialBinding = special instanceof Function ? special() : special;
-  const merged = _.merge(
+  const merged = merge(
     {
       props: vModel
     },

@@ -5,7 +5,7 @@
 <script lang="ts">
 import dayjs, { Dayjs } from "dayjs";
 import { computed, defineComponent, PropType } from "vue";
-import _ from "lodash-es";
+import { merge } from "lodash-es";
 import humanizeDuration, { HumanizerOptions } from "humanize-duration";
 
 const defaultOptions = {
@@ -82,7 +82,7 @@ export default defineComponent({
         //间隔时长超过3天，则直接显示格式化时间
         return date.format(props.format);
       }
-      return humanizeDuration(duration, _.merge({}, defaultOptions, props.options)) + suffix;
+      return humanizeDuration(duration, merge({}, defaultOptions, props.options)) + suffix;
     });
 
     return {

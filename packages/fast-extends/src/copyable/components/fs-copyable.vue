@@ -25,9 +25,9 @@
 </template>
 
 <script lang="ts">
-import { computed, ref, PropType, defineComponent, Ref } from "vue";
+import { computed, defineComponent, PropType, ref, Ref } from "vue";
 import { useUi } from "@fast-crud/fast-crud";
-import _ from "lodash-es";
+import { merge } from "lodash-es";
 
 interface CopyButton {
   show: boolean;
@@ -107,7 +107,7 @@ export default defineComponent({
         show: true,
         showOnHover: false
       };
-      return _.merge({}, defaultButton, props.button);
+      return merge({}, defaultButton, props.button);
     });
     function onSuccess() {
       emit("success");

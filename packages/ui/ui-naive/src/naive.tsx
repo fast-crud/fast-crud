@@ -58,7 +58,7 @@ import type {
   UploadCI
 } from "@fast-crud/ui-interface";
 import { useUiRender } from "@fast-crud/ui-interface";
-import _ from "lodash-es";
+import { forEach } from "lodash-es";
 import { formItemInjectionKey } from "naive-ui/es/_mixins/use-form-item";
 import { inject } from "vue";
 
@@ -77,7 +77,7 @@ export class Naive implements UiInterface {
       this.init(target);
     }
 
-    _.forEach(this, (value: any) => {
+    forEach(this, (value: any) => {
       if (value instanceof Object && value.builder) {
         value.render = (opts: any) => {
           return renderComponent(value, opts);
@@ -416,13 +416,13 @@ export class Naive implements UiInterface {
       labelPlacement: "left"
     },
     // resetWrap: (formRef, { form, initialForm }) => {
-    //   const entries = _.entries(form);
+    //   const entries = entries(form);
     //   for (const entry of entries) {
-    //     const initialValue = _.get(initialForm, entry[0]);
+    //     const initialValue = get(initialForm, entry[0]);
     //     if (initialValue == null) {
-    //       _.unset(form, entry[0]);
+    //       unset(form, entry[0]);
     //     } else {
-    //       _.set(form, entry[0], initialValue);
+    //       set(form, entry[0], initialValue);
     //     }
     //   }
     //   // const keys = Object.keys(form);

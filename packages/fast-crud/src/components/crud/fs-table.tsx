@@ -9,7 +9,7 @@ import {
   watch,
   withDirectives
 } from "vue";
-import _ from "lodash-es";
+import { forEach, get, set } from "lodash-es";
 import { useUi } from "../../ui";
 import { useEditable } from "./editable/use-editable";
 import logger from "../../utils/util.log";
@@ -51,7 +51,7 @@ function buildTableSlots({ props, ui, sortedColumns, renderRowHandle, renderCell
       //subColumns
       cellSlots.default = () => {
         const subColumns: any[] = [];
-        _.forEach(item.children, (subColumn) => {
+        forEach(item.children, (subColumn) => {
           if (subColumn.show === false) {
             return;
           }
@@ -91,7 +91,7 @@ function buildTableSlots({ props, ui, sortedColumns, renderRowHandle, renderCell
   tableSlots.default = () => {
     const children = [];
 
-    _.forEach(sortedColumns, (item) => {
+    forEach(sortedColumns, (item) => {
       if (item.show === false) {
         return;
       }
@@ -117,7 +117,7 @@ function buildTableSlots({ props, ui, sortedColumns, renderRowHandle, renderCell
   };
 
   if (props.slots) {
-    _.forEach(props.slots, (item, key) => {
+    forEach(props.slots, (item, key) => {
       tableSlots[key] = item;
     });
   }
@@ -340,7 +340,7 @@ export default defineComponent({
       return {
         ...scope,
         key: item.key,
-        value: _.get(row, item.key),
+        value: get(row, item.key),
         row,
         form,
         getComponentRef: (key: string) => {
@@ -390,9 +390,9 @@ export default defineComponent({
       //   return getContextFn(item, scope);
       // };
       const vModel = {
-        modelValue: _.get(scope[tableColumnCI.row], item.key),
+        modelValue: get(scope[tableColumnCI.row], item.key),
         "onUpdate:modelValue": (value: any) => {
-          _.set(scope[tableColumnCI.row], item.key, value);
+          set(scope[tableColumnCI.row], item.key, value);
           const newScope = getContextFn(item, scope);
           ctx.emit("value-change", newScope);
           if (item.valueChange) {

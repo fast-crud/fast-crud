@@ -13,8 +13,8 @@
       :default-config="editorConfigRef"
       :mode="mode"
       v-bind="$attrs"
-      @onChange="onChange"
-      @onCreated="handleCreated"
+      @on-change="onChange"
+      @on-created="handleCreated"
     />
   </div>
 </template>
@@ -26,7 +26,7 @@ import { onBeforeUnmount, defineComponent, ref, shallowRef, onMounted, watch, co
 import { Editor, Toolbar } from "@wangeditor/editor-for-vue";
 
 import { defaultConfig } from "../../type/config.js";
-import _ from "lodash-es";
+import { merge } from "lodash-es";
 import { FsUploaderDoUploadOptions } from "../../../uploader/d/type";
 import { useUi, utils } from "@fast-crud/fast-crud";
 import { useUploader } from "../../../uploader";
@@ -136,7 +136,7 @@ export default defineComponent({
     );
 
     const toolbarConfigRef = computed(() => {
-      return _.merge({}, defaultConfig.wangEditor5.toolbarConfig, props.toolbarConfig);
+      return merge({}, defaultConfig.wangEditor5.toolbarConfig, props.toolbarConfig);
     });
 
     const MENU_CONF: any = {};
@@ -200,7 +200,7 @@ export default defineComponent({
     }
 
     const editorConfigRef = computed(() => {
-      return _.merge(
+      return merge(
         {
           placeholder: "请输入内容...",
           MENU_CONF

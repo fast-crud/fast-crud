@@ -1,4 +1,4 @@
-import _ from "lodash-es";
+import { each, map, cloneDeep } from "lodash-es";
 import { ColumnProps, CrudExpose, PageQuery, UserPageQuery } from "../../d";
 import { CsvParams, ExcelParams, ExportColumn, ExportUtil, ImportUtil } from "./lib/d";
 import { unref } from "vue";
@@ -7,7 +7,7 @@ import { useMerge } from "../../use";
 export async function loadFsExportUtil(): Promise<ExportUtil> {
   const module = await import.meta.glob("./lib/index.ts");
   let target: any = null;
-  _.each(module, (item) => {
+  each(module, (item) => {
     target = item;
   });
   const lib = await target();
@@ -17,7 +17,7 @@ export async function loadFsExportUtil(): Promise<ExportUtil> {
 export async function loadFsImportUtil(): Promise<ImportUtil> {
   const module = await import.meta.glob("./lib/index.ts");
   let target: any = null;
-  _.each(module, (item) => {
+  each(module, (item) => {
     target = item;
   });
   const lib = await target();
@@ -42,7 +42,7 @@ function defaultDataFormatter<R = any>({ originalRow, row, key, col }: DataForma
     //处理dict
     const nodes = dict.getNodesFromDataMap(value);
     if (nodes != null && nodes.length > 0) {
-      const label = _.map(nodes, (node) => {
+      const label = map(nodes, (node) => {
         return dict.getLabel(node) || dict.getValue(node);
       }).join("|");
       if (label != null && label !== "") {
@@ -127,7 +127,7 @@ export async function exportTable<R = any>(crudExpose: CrudExpose<R>, opts: Expo
   let columns: ExportColumn<R>[] = opts.columns;
   if (columns == null) {
     columns = [];
-    _.each(crudBinding.value.table.columnsMap, (col: ColumnProps<R>) => {
+    each(crudBinding.value.table.columnsMap, (col: ColumnProps<R>) => {
       if (opts.columnFilter) {
         //列过滤器
         if (opts.columnFilter(col) === false) {
@@ -176,8 +176,8 @@ export async function exportTable<R = any>(crudExpose: CrudExpose<R>, opts: Expo
     originalData = pageRes.records;
   }
   for (const row of originalData) {
-    const clone = _.cloneDeep(row);
-    _.each(columns, (exportCol: ExportColumn<R>) => {
+    const clone = cloneDeep(row);
+    each(columns, (exportCol: ExportColumn<R>) => {
       const col = exportCol.columnProps;
       const mapping = {
         row: clone,
@@ -197,7 +197,7 @@ export async function exportTable<R = any>(crudExpose: CrudExpose<R>, opts: Expo
 
     data.push(clone);
   }
-  const expOpts = _.merge(
+  const expOpts = merge(
     {
       columns,
       data,

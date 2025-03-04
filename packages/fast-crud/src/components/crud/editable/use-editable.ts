@@ -1,4 +1,4 @@
-import _ from "lodash-es";
+import { forEach, get, set, cloneDeep, remove, forOwn } from "lodash-es";
 import { computed, ComputedRef, nextTick, reactive, unref, watch } from "vue";
 import { uiContext } from "../../../ui";
 import { useMerge } from "../../../use";
@@ -18,7 +18,7 @@ import { createValidator } from "./validator";
 import logger from "../../../utils/util.log";
 
 function eachTree(tree: any, callback: any) {
-  _.forEach(tree, (item: any) => {
+  forEach(tree, (item: any) => {
     if (item.children) {
       eachTree(item.children, callback);
     } else {
@@ -89,7 +89,7 @@ export function useEditable(props: any, ctx: any, tableRef: any): { editable: Ed
 
   function editableEachCells(call: (opts: EditableEachCellsOpts) => any) {
     editableEachRows(({ rowData, row, cells }) => {
-      _.forEach(cells, (cell: any, key: string) => {
+      forEach(cells, (cell: any, key: string) => {
         call({ rowData, row, cells, cell, key });
       });
     });
@@ -124,11 +124,11 @@ export function useEditable(props: any, ctx: any, tableRef: any): { editable: Ed
 
   function createEditableCell(tableRow: any, key: string, editableId: any, col: ColumnProps): EditableCell {
     function getValue(key: string) {
-      return _.get(tableRow, key);
+      return get(tableRow, key);
     }
 
     function setValue(key: string, value: any) {
-      _.set(tableRow, key, value);
+      set(tableRow, key, value);
     }
 
     const updateCell: any = computed(() => {
@@ -268,7 +268,7 @@ export function useEditable(props: any, ctx: any, tableRef: any): { editable: Ed
       validator,
       inactive: () => {
         editableRow.isEditing = false;
-        _.forEach(editableRow.cells, (cell) => {
+        forEach(editableRow.cells, (cell) => {
           if (cell.isEditing) {
             cell.inactive();
           }
@@ -276,7 +276,7 @@ export function useEditable(props: any, ctx: any, tableRef: any): { editable: Ed
       },
       active: () => {
         editableRow.isEditing = true;
-        _.forEach(editableRow.cells, (cell) => {
+        forEach(editableRow.cells, (cell) => {
           cell.active({ exclusive: false });
         });
       },
@@ -284,13 +284,13 @@ export function useEditable(props: any, ctx: any, tableRef: any): { editable: Ed
         editableRow.isEditing = false;
         editableRow.inactive();
         delete editableRow.isAdd;
-        _.forEach(editableRow.cells, (cell) => {
+        forEach(editableRow.cells, (cell) => {
           cell.persist();
         });
       },
       resume: () => {
         editableRow.isEditing = false;
-        _.forEach(editableRow.cells, (cell) => {
+        forEach(editableRow.cells, (cell) => {
           cell.resume();
         });
       },
@@ -299,7 +299,7 @@ export function useEditable(props: any, ctx: any, tableRef: any): { editable: Ed
       },
       validate: async (row?: any) => {
         try {
-          _.forEach(editableRow.cells, (cell, key) => {
+          forEach(editableRow.cells, (cell, key) => {
             cell.validateErrors = [];
           });
           if (row == null) {
@@ -309,7 +309,7 @@ export function useEditable(props: any, ctx: any, tableRef: any): { editable: Ed
           return true;
         } catch (e: any) {
           const { errors, fields } = e;
-          _.forEach(fields, (errors: any, key: string) => {
+          forEach(fields, (errors: any, key: string) => {
             const cell = editableRow.cells[key];
             if (cell) {
               cell.validateErrors = errors;
@@ -320,7 +320,7 @@ export function useEditable(props: any, ctx: any, tableRef: any): { editable: Ed
         }
       },
       getRowData: () => {
-        const row = _.cloneDeep(editableRow.rowData);
+        const row = cloneDeep(editableRow.rowData);
         delete row[props.editable.rowKey];
         delete row.children;
         return row;
@@ -408,11 +408,11 @@ export function useEditable(props: any, ctx: any, tableRef: any): { editable: Ed
     const tmpRows = Object.assign({}, editableRows);
 
     //清空editableRows
-    _.forOwn(editableRows, (_, key: any) => {
+    forOwn(editableRows, (_, key: any) => {
       delete editableRows[key];
     });
 
-    _.forEach(data, (rowData: any) => {
+    forEach(data, (rowData: any) => {
       if (!rowData[props.editable.rowKey]) {
         rowData[props.editable.rowKey] = nextEditableId();
       }
@@ -565,7 +565,7 @@ export function useEditable(props: any, ctx: any, tableRef: any): { editable: Ed
   function hasDirty() {
     let dirty = false;
     editableEachRows(({ cells }) => {
-      _.forEach(cells, (cell) => {
+      forEach(cells, (cell) => {
         if (cell.isChanged()) {
           dirty = true;
           return "break";
@@ -585,10 +585,10 @@ export function useEditable(props: any, ctx: any, tableRef: any): { editable: Ed
   }
 
   function setDefaultValue(formItem: FormItemProps, row: any) {
-    const value = _.get(row, formItem.key);
+    const value = get(row, formItem.key);
     const defValue = unref(formItem.value);
     if (defValue != null && value == null) {
-      _.set(row, formItem.key, defValue);
+      set(row, formItem.key, defValue);
     }
   }
 
@@ -624,7 +624,7 @@ export function useEditable(props: any, ctx: any, tableRef: any): { editable: Ed
       const row = data[i];
       const id = getEditableIdFromRow(row);
       if (id === editableId) {
-        _.remove(data, row);
+        remove(data, row);
         return true;
       }
       if (row.children && row.children.length > 0) {
@@ -645,7 +645,7 @@ export function useEditable(props: any, ctx: any, tableRef: any): { editable: Ed
   function activeCols(opts: EditableActiveColsOptions) {
     const { cols } = opts;
     editableEachRows(({ cells }) => {
-      _.forEach(cols, (key) => {
+      forEach(cols, (key) => {
         cells[key].active({ ...opts, exclusive: false });
       });
     });
@@ -693,7 +693,7 @@ export function useEditable(props: any, ctx: any, tableRef: any): { editable: Ed
   }
   function getCleanTableData(data?: any[]): any[] {
     if (data == null) {
-      data = _.cloneDeep(tableData.getData());
+      data = cloneDeep(tableData.getData());
     }
     if (data == null) {
       return [];

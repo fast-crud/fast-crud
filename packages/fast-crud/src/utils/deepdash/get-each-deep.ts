@@ -1,11 +1,11 @@
 import getIterate from "./private/getIterate.js";
-import _ from "lodash-es";
+import { merge, identity, isString, toPath } from "lodash-es";
 export function getEachDeep(_: any): ForEachDeep {
   const iterate = getIterate(_);
 
   function eachDeep(obj: any, callback: any, options?: any) {
-    if (callback === undefined) callback = _.identity;
-    options = _.merge(
+    if (callback === undefined) callback = identity;
+    options = merge(
       {
         includeRoot: !Array.isArray(obj),
         pathFormat: "string",
@@ -19,16 +19,16 @@ export function getEachDeep(_: any): ForEachDeep {
       if (!options.includeRoot && options.rootIsChildren === undefined) {
         options.rootIsChildren = Array.isArray(obj);
       }
-      if (!_.isString(options.childrenPath) && !Array.isArray(options.childrenPath)) {
+      if (!isString(options.childrenPath) && !Array.isArray(options.childrenPath)) {
         throw Error("childrenPath can be string or array");
       } else {
-        if (_.isString(options.childrenPath)) {
+        if (isString(options.childrenPath)) {
           options.childrenPath = [options.childrenPath];
         }
         options.strChildrenPath = options.childrenPath;
         options.childrenPath = [];
         for (let i = options.strChildrenPath.length - 1; i >= 0; i--) {
-          options.childrenPath[i] = _.toPath(options.strChildrenPath[i]);
+          options.childrenPath[i] = toPath(options.strChildrenPath[i]);
         }
       }
     }
@@ -44,4 +44,4 @@ export function getEachDeep(_: any): ForEachDeep {
 }
 
 export type ForEachDeep = (obj: any, callback: any, options?: any) => any;
-export const forEachDeep: ForEachDeep = getEachDeep(_);
+export const forEachDeep: ForEachDeep = getEachDeep({ isString });

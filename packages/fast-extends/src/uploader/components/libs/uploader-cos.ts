@@ -1,4 +1,4 @@
-import _ from "lodash-es";
+import { cloneDeep, merge } from "lodash-es";
 import { buildKey, useUploader } from "../utils";
 import COS from "cos-js-sdk-v5";
 import dayjs from "dayjs";
@@ -78,7 +78,7 @@ export async function upload(context: FsUploaderDoUploadOptions): Promise<FsUplo
   const { getConfig } = useUploader();
   const global = getConfig("cos");
   const options = context.options;
-  const config = _.merge(_.cloneDeep(global), options);
+  const config = merge(cloneDeep(global), options);
   context.options = config;
   return await doUpload(context);
 }

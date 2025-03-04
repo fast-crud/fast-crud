@@ -20,7 +20,7 @@
 <script lang="ts">
 import { computed, defineComponent, Ref, ref, watch } from "vue";
 import { useUi } from "@fast-crud/fast-crud";
-import _ from "lodash-es";
+import { merge } from "lodash-es";
 // 图片行展示组件
 export default defineComponent({
   name: "FsImagesFormat",
@@ -92,7 +92,7 @@ export default defineComponent({
     const imageListRef: Ref<any[]> = ref([]);
 
     const errorBinding = computed(() => {
-      return _.merge({ style: {} }, { style: ctx.attrs.style });
+      return merge({ style: {} }, { style: ctx.attrs.style });
     });
 
     const computedValues = computed(() => {

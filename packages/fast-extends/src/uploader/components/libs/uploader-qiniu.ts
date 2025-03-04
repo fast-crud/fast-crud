@@ -1,4 +1,4 @@
-import _ from "lodash-es";
+import { merge, cloneDeep } from "lodash-es";
 import { buildKey, useUploader } from "../utils/index";
 import * as qiniu from "qiniu-js";
 import { FsUploaderDoUploadOptions, FsUploaderQiniuOptions } from "../../d/type";
@@ -57,7 +57,7 @@ export async function upload(context: FsUploaderDoUploadOptions) {
   const { getConfig } = useUploader();
   const global = getConfig("qiniu");
   const options = context.options;
-  const config = _.merge(_.cloneDeep(global), options);
+  const config = merge(cloneDeep(global), options);
   context.options = config;
   return await doUpload(context);
 }

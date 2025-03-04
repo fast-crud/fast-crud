@@ -101,7 +101,7 @@ import {
   UnwrapNestedRefs,
   watch
 } from "vue";
-import _ from "lodash-es";
+import { each, set, cloneDeep, entries, get, unset, forEach, merge } from "lodash-es";
 import { ComputeValue, useCompute } from "../../use/use-compute";
 import logger from "../../utils/util.log";
 import { useMerge } from "../../use/use-merge";
@@ -263,7 +263,7 @@ export default defineComponent({
     const { proxy } = getCurrentInstance();
 
     // eslint-disable-next-line vue/no-setup-props-destructure
-    _.each(props.columns, (item: any) => {
+    each(props.columns, (item: any) => {
       if (item.value != null && (item.value instanceof AsyncComputeValue || item.value instanceof ComputeValue)) {
         logger.warn("form.value配置不支持Compute/AsyncCompute类型的动态计算");
       }
@@ -271,13 +271,13 @@ export default defineComponent({
     function createInitialForm() {
       const form = {};
       // 初始数据赋值
-      _.each(props.columns, (item: any, key: any) => {
+      each(props.columns, (item: any, key: any) => {
         const defValue = unref(item.value);
         if (defValue !== undefined) {
-          _.set(form, key, defValue);
+          set(form, key, defValue);
         }
       });
-      merge(form, _.cloneDeep(props.initialForm));
+      merge(form, cloneDeep(props.initialForm));
       return form;
     }
 
@@ -308,8 +308,8 @@ export default defineComponent({
       if (form == null) {
         return;
       }
-      _.each(props.columns, (item: any, key: any) => {
-        let value = _.get(form, key);
+      each(props.columns, (item: any, key: any) => {
+        let value = get(form, key);
         if (item.valueBuilder) {
           item.valueBuilder({
             value,
@@ -337,7 +337,7 @@ export default defineComponent({
       merge(form, formData);
       const { valueChange } = options;
       if (valueChange) {
-        _.forEach(props.columns, (column: any, key: any) => {
+        forEach(props.columns, (column: any, key: any) => {
           const value = form[key];
           doValueChange(key, value);
         });
@@ -387,7 +387,7 @@ export default defineComponent({
     const groupActiveKey = ref([]);
 
     // eslint-disable-next-line vue/no-setup-props-destructure
-    _.forEach(props.group?.groups, (groupItem: any, key: any) => {
+    forEach(props.group?.groups, (groupItem: any, key: any) => {
       if (groupItem.collapsed !== true) {
         groupActiveKey.value.push(key);
       }
@@ -410,8 +410,8 @@ export default defineComponent({
         }
         //找出没有添加进分组的字段
         const groupedKeys: any = {};
-        _.forEach(group?.groups, (groupItem: any, key: string) => {
-          _.forEach(groupItem.columns, (item: any) => {
+        forEach(group?.groups, (groupItem: any, key: string) => {
+          forEach(groupItem.columns, (item: any) => {
             if (computedColumns.value[item] == null) {
               utils.logger.warn("无效的分组字段：" + item);
               return;
@@ -442,8 +442,8 @@ export default defineComponent({
     const computedDefaultColumns = computed(() => {
       const columns: any = [];
       //default columns排序
-      _.forEach(computedColumns.value, (value: any, key: string) => {
-        const item = _.cloneDeep(props.formItem || {});
+      forEach(computedColumns.value, (value: any, key: string) => {
+        const item = cloneDeep(props.formItem || {});
         value = merge(item, value);
         value.key = key;
         if (value.order == null) {
@@ -468,13 +468,13 @@ export default defineComponent({
     async function reset() {
       // ui.form.resetWrap(formRef.value, { form, initialForm: createInitialForm() });
       const initialForm = createInitialForm();
-      const entries = _.entries(form);
-      for (const entry of entries) {
-        const initialValue = _.get(initialForm, entry[0]);
+      const entriesRet = entries(form);
+      for (const entry of entriesRet) {
+        const initialValue = get(initialForm, entry[0]);
         if (initialValue == null) {
-          _.unset(form, entry[0]);
+          unset(form, entry[0]);
         } else {
-          _.set(form, entry[0], initialValue);
+          set(form, entry[0], initialValue);
         }
       }
 
@@ -523,11 +523,11 @@ export default defineComponent({
     }
     async function submit() {
       await validate();
-      const formData = _.cloneDeep(toRaw(form));
+      const formData = cloneDeep(toRaw(form));
       const submitScope = { ...scope.value, form: formData };
       logger.debug("form submit", JSON.stringify(form));
-      _.each(props.columns, (item: any, key: string) => {
-        let value = _.get(formData, key);
+      each(props.columns, (item: any, key: string) => {
+        let value = get(formData, key);
         if (item.valueResolve) {
           item.valueResolve({
             value,
@@ -545,12 +545,12 @@ export default defineComponent({
       }
 
       //移除不允许提交的字段
-      _.each(props.columns, (item: any, key: string) => {
+      each(props.columns, (item: any, key: string) => {
         if (item.submit === false) {
-          _.unset(formData, key);
+          unset(formData, key);
         } else if (item.submit === true) {
           //设置强制提交的字段
-          _.set(formData, key, formData[key]);
+          set(formData, key, formData[key]);
         }
       });
 
@@ -575,7 +575,7 @@ export default defineComponent({
 
     onMounted(() => {
       // immediate valueChange触发
-      _.forEach(computedColumns.value, (item: any, key: string) => {
+      forEach(computedColumns.value, (item: any, key: string) => {
         if (item.valueChange == null) {
           return;
         }
@@ -639,17 +639,17 @@ export default defineComponent({
     }
 
     const mergedSlots = computed(() => {
-      return _.merge({}, props.slots, ctx.slots);
+      return merge({}, props.slots, ctx.slots);
     });
 
     ctx.emit("init", scope.value);
 
     return {
       get: (form: any, key: string) => {
-        return _.get(form, key);
+        return get(form, key);
       },
       set: (form: any, key: string, value: any) => {
-        _.set(form, key, value);
+        set(form, key, value);
         doValueChange(key, value);
       },
       ui,

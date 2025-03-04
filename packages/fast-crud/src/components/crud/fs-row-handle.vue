@@ -40,7 +40,7 @@
 </template>
 <script lang="ts">
 import { computed, defineComponent } from "vue";
-import _ from "lodash-es";
+import { forEach, sortBy, omit } from "lodash-es";
 import traceUtil from "../../utils/util.trace";
 import { useI18n } from "../../locale";
 import { useUi } from "../../use/use-ui";
@@ -175,7 +175,7 @@ export default defineComponent({
       }
 
       const btns: ButtonProps[] = [];
-      _.forEach(mergedBtns, (item, key) => {
+      forEach(mergedBtns, (item, key) => {
         item.key = key;
         if (item.show === false) {
           return;
@@ -183,7 +183,7 @@ export default defineComponent({
         btns.push(item);
       });
 
-      return _.sortBy(btns, (item) => {
+      return sortBy(btns, (item) => {
         return item.order ?? Constants.orderDefault;
       });
     });
@@ -235,7 +235,7 @@ export default defineComponent({
         // naive 通过options配置来显示子项
         const btns = computedHandleBtns.value;
         const opts: ButtonProps[] = [];
-        _.forEach(btns, (value, index) => {
+        forEach(btns, (value, index) => {
           if (value.show !== false && isDropdownBtn(value, index)) {
             opts.push({
               [ui.dropdown.value]: value.key,
@@ -247,7 +247,7 @@ export default defineComponent({
         binding.options = opts;
       }
       return {
-        ..._.omit(props.dropdown, "more", "atLeast"),
+        ...omit(props.dropdown, "more", "atLeast"),
         ...ui.dropdown.command(doDropdownItemClick),
         ...binding
       };

@@ -7,7 +7,7 @@
 </template>
 <script lang="ts">
 import { defineComponent, computed, Ref } from "vue";
-import _ from "lodash-es";
+import { sortBy } from "lodash-es";
 import { Constants } from "../../utils/util.constants";
 import { ActionbarClickEvent, ButtonsProps } from "../../d";
 
@@ -50,7 +50,7 @@ export default defineComponent({
           _key: key
         });
       }
-      sortArr = _.sortBy(sortArr, (item: any) => {
+      sortArr = sortBy(sortArr, (item: any) => {
         return item.order ?? Constants.orderDefault;
       });
 

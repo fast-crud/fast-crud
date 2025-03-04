@@ -1,7 +1,7 @@
 import { resolveDynamicComponent, defineComponent, h, computed } from "vue";
 import { useMerge, useUi } from "../../use";
 import "./fs-button.less";
-import _ from "lodash-es";
+import { omit } from "lodash-es";
 /**
  * 按钮，支持el-button/a-button的配置
  */
@@ -133,7 +133,7 @@ export default defineComponent({
     const tooltipComp: any = resolveDynamicComponent(ui.tooltip.name);
 
     const computeTooltipProps = computed(() => {
-      return _.omit(props.tooltip, "slots");
+      return omit(props.tooltip, "slots");
     });
     const triggerSlotName = ui.tooltip.trigger;
     return () => {

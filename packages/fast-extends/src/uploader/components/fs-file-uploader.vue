@@ -17,7 +17,7 @@
 <script lang="ts">
 import { computed, defineComponent, nextTick, Ref, ref, watch } from "vue";
 import { useI18n, useUi } from "@fast-crud/fast-crud";
-import _ from "lodash-es";
+import { merge, cloneDeep } from "lodash-es";
 import { FileItem, FsUploaderDoUploadOptions } from "../d/type";
 import { useUploader } from "./utils";
 import type { PropType } from "vue";
@@ -626,11 +626,11 @@ export default defineComponent({
     function buildNaiveBinding() {
       function appendExtra(fileList: any) {
         let list = fileList.value || fileList;
-        list = _.cloneDeep(list);
+        list = cloneDeep(list);
         for (let item of list) {
           const extra = naiveExtraCache[item.id];
           if (extra) {
-            _.merge(item, extra);
+            merge(item, extra);
           }
         }
         return list;
@@ -652,7 +652,7 @@ export default defineComponent({
               //TODO native upload 会清空多余自定义的属性，比如key、md5
               const value = props.valueType === "object" ? res : res[props.valueType];
               res.url = await props.buildUrl(value);
-              _.merge(fileInfo, res);
+              merge(fileInfo, res);
               naiveExtraCache[fileInfo.id] = {
                 ...res,
                 fsRes: res
@@ -680,7 +680,7 @@ export default defineComponent({
         onFinish: (file: any) => {
           const extra = naiveExtraCache[file.id];
           if (extra) {
-            _.merge(file, extra);
+            merge(file, extra);
           }
           const list = appendExtra(fileList);
           handleSuccess(extra, file, list);

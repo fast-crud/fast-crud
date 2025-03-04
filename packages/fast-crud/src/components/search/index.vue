@@ -44,7 +44,7 @@
 
 <script lang="tsx">
 import { computed, defineComponent, nextTick, reactive, ref, Ref, unref, watch } from "vue";
-import _ from "lodash-es";
+import { forEach, cloneDeep, each, keys, unset, set, sortBy, entries, debounce, get as LodashGet } from "lodash-es";
 import { useCompute } from "../../use/use-compute";
 import { useI18n } from "../../locale";
 import logger from "../../utils/util.log";
@@ -205,7 +205,7 @@ export default defineComponent({
     const doMerge = merge;
     const { doComputed, AsyncComputeValue, ComputeValue } = useCompute();
     // eslint-disable-next-line vue/no-setup-props-destructure
-    _.each(props.columns, (item) => {
+    each(props.columns, (item) => {
       if (item.value != null && (item.value instanceof AsyncComputeValue || item.value instanceof ComputeValue)) {
         logger.warn("search.value配置不支持ComputeValue/AsyncCompute类型的动态计算");
       }
@@ -215,7 +215,7 @@ export default defineComponent({
       //默认值
       const form: any = {};
 
-      _.forEach(props.columns, (column, key) => {
+      forEach(props.columns, (column, key) => {
         if (column.value === undefined) {
           return;
         }
@@ -226,7 +226,7 @@ export default defineComponent({
         }
       });
 
-      return _.cloneDeep(merge({}, props.initialForm, form));
+      return cloneDeep(merge({}, props.initialForm, form));
     }
 
     const formData = reactive(createInitialForm());
@@ -240,27 +240,27 @@ export default defineComponent({
       getContextFn,
       null,
       (columns: any) => {
-        const formItem = _.cloneDeep(props.formItem || {});
-        _.forEach(columns, (item) => {
+        const formItem = cloneDeep(props.formItem || {});
+        forEach(columns, (item) => {
           merge(item, formItem, item);
         });
         // columns = merge(formItem, columns);
         if (!props.validate) {
           //如果关闭validate则去掉rules
-          _.forEach(columns, (item) => {
+          forEach(columns, (item) => {
             delete item.rules;
             delete item.rule;
           });
         }
         // 合并col
         if (props.col) {
-          _.forEach(columns, (v) => {
+          forEach(columns, (v) => {
             v.col = merge({}, props.col, v.col);
           });
         }
 
         //cellRender
-        _.forEach(columns, (item) => {
+        forEach(columns, (item) => {
           item._cellRender = () => {
             return cellRender(item);
           };
@@ -268,11 +268,11 @@ export default defineComponent({
 
         //字段排序
         let sortArr: SearchItemProps[] = [];
-        _.forEach(columns, (v, key) => {
+        forEach(columns, (v, key) => {
           v._key = key;
           sortArr.push(v);
         });
-        sortArr = _.sortBy(sortArr, (item) => {
+        sortArr = sortBy(sortArr, (item) => {
           return item.order ?? Constants.orderDefault;
         });
 
@@ -290,7 +290,7 @@ export default defineComponent({
     );
 
     function onFormValidated() {
-      const validatedForm = _.cloneDeep(formData);
+      const validatedForm = cloneDeep(formData);
       ctx.emit("update:validatedForm", validatedForm);
     }
 
@@ -310,7 +310,7 @@ export default defineComponent({
     );
 
     const get = (form: any, key: any) => {
-      return _.get(form, key);
+      return LodashGet(form, key);
     };
 
     function splitKey(key: string) {
@@ -323,7 +323,7 @@ export default defineComponent({
       return key;
     }
 
-    // const debounceValidate = _.debounce(async () => {
+    // const debounceValidate = debounce(async () => {
     //   if (await doValidate()) {
     //     onFormValidated();
     //   }
@@ -407,7 +407,7 @@ export default defineComponent({
     }
 
     function buildFieldContext(key: string) {
-      return { ...getContextFn(), key, value: _.get(formData, key) };
+      return { ...getContextFn(), key, value: get(formData, key) };
     }
 
     async function doValidate(silent: boolean = false, trigger: string = "search"): Promise<boolean> {
@@ -442,13 +442,13 @@ export default defineComponent({
     async function doReset() {
       // ui.form.resetWrap(searchFormRef.value, { form, initialForm: createInitialForm() });
       const initialForm = createInitialForm();
-      const entries = _.entries(formData);
-      for (const entry of entries) {
-        const initialValue = _.get(initialForm, entry[0]);
+      const entriesRet = entries(formData);
+      for (const entry of entriesRet) {
+        const initialValue = get(initialForm, entry[0]);
         if (initialValue == null) {
-          _.unset(formData, entry[0]);
+          unset(formData, entry[0]);
         } else {
-          _.set(formData, entry[0], initialValue);
+          set(formData, entry[0], initialValue);
         }
       }
 
@@ -514,7 +514,7 @@ export default defineComponent({
       // 构建防抖查询函数
       if (props.debounce !== false) {
         let wait = props.debounce?.wait || 500;
-        autoSearch = _.debounce(doSearch, wait, props.debounce);
+        autoSearch = debounce(doSearch, wait, props.debounce);
       }
     }
 
@@ -533,7 +533,7 @@ export default defineComponent({
      */
     function setForm(newForm: any, merge = true) {
       if (!merge) {
-        _.each(_.keys(formData), (item) => {
+        each(keys(formData), (item) => {
           delete formData[item];
         });
       }
@@ -564,7 +564,7 @@ export default defineComponent({
 
     async function onValueChanged(value: any, item: SearchItemProps) {
       const key = item.key;
-      _.set(formData, key, value);
+      set(formData, key, value);
 
       const silent = props.validateOnChangeSilent;
       // if (props.validateOnChange && (await doValidate(silent, "change"))) {

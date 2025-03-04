@@ -1,4 +1,4 @@
-import _ from "lodash-es";
+import { merge, cloneDeep } from "lodash-es";
 import { doAjax } from "../utils/ajax";
 import { buildKey, useUploader } from "../utils/index";
 import { FsUploaderDoUploadOptions, FsUploaderFormOptions } from "../../d/type";
@@ -40,6 +40,6 @@ async function doUpload(opts: FsUploaderDoUploadOptions) {
 export async function upload(context: FsUploaderDoUploadOptions) {
   const { getConfig } = useUploader();
   const global = getConfig("form");
-  context.options = _.merge({}, _.cloneDeep(global), context.options);
+  context.options = merge({}, cloneDeep(global), context.options);
   return await doUpload(context);
 }

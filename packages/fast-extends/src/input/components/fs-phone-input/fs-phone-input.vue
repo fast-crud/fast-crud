@@ -26,7 +26,7 @@
 <script lang="ts" setup>
 import { computed, Ref, ref, watch } from "vue";
 import { dict, useUi } from "@fast-crud/fast-crud";
-import _ from "lodash-es";
+import { merge, cloneDeep } from "lodash-es";
 import { getCountries } from "./utils";
 const { ui } = useUi();
 import { getCountryByValue as getCountryByValueFromUtil } from "./utils";
@@ -148,7 +148,7 @@ const computedSelect = computed(() => {
     [ui.select.modelValue]: selectValue.value.countryCode,
     ["onUpdate:" + ui.select.modelValue]: handleSelectInput
   };
-  return _.merge(def, props.select);
+  return merge(def, props.select);
 });
 
 const computedInput = computed(() => {
@@ -158,7 +158,7 @@ const computedInput = computed(() => {
     [ui.input.modelValue]: selectValue.value.phoneNumber,
     [`onUpdate:${ui.input.modelValue}`]: handleNumberInput
   };
-  return _.merge(def, props.input);
+  return merge(def, props.input);
 });
 
 function isChanged(value: any) {

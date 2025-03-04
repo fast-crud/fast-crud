@@ -30,7 +30,7 @@
 </template>
 
 <script lang="ts">
-import _ from "lodash-es";
+import { forEach, omit } from "lodash-es";
 import { computed, defineComponent, Ref } from "vue";
 import { useDict } from "../../use/use-dict";
 import { useUi } from "../../use";
@@ -212,14 +212,14 @@ export default defineComponent({
       if (dict) {
         options = dict.getNodesFromDataMap(valueArr);
         //设置默认label
-        _.forEach(options, (item) => {
+        forEach(options, (item) => {
           if (item[labelProp] == null) {
             item[labelProp] = props.defaultLabel || item[valueProp];
           }
         });
       } else {
         options = [];
-        _.forEach(valueArr, (item) => {
+        forEach(valueArr, (item) => {
           if (item instanceof Object) {
             options.push(item);
           } else {
@@ -232,10 +232,10 @@ export default defineComponent({
       }
 
       const colorfulOptions: any = [];
-      _.forEach(options, (item) => {
-        colorfulOptions.push(_.omit(item, "children"));
+      forEach(options, (item) => {
+        colorfulOptions.push(omit(item, "children"));
       });
-      _.forEach(colorfulOptions, (item) => {
+      forEach(colorfulOptions, (item) => {
         setColor(props, item);
       });
       return colorfulOptions;

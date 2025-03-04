@@ -52,7 +52,7 @@
 /**
  * FsTableColumnsFilter，列设置组件
  */
-import _, { cloneDeep } from "lodash-es";
+import { cloneDeep, omit, forEach, pick } from "lodash-es";
 import TableStore from "../../../utils/util.store";
 import { useI18n } from "../../../locale";
 import { computed, nextTick, provide, Ref, ref, watch } from "vue";
@@ -147,8 +147,8 @@ function buildColumnFilterItem(item: ColumnProps): ColumnsFilterItem {
 
 function transformToTableColumns(result: ColumnsFilterItem[]) {
   const columns: TableColumnsProps = {};
-  _.forEach(result, (item) => {
-    const column: ColumnProps = _.omit(item, "children", "__show", "__disabled", "__parent", "__key");
+  forEach(result, (item) => {
+    const column: ColumnProps = omit(item, "children", "__show", "__disabled", "__parent", "__key");
     if (item.children && item.children.length > 0) {
       column.children = transformToTableColumns(item.children);
     }
@@ -159,7 +159,7 @@ function transformToTableColumns(result: ColumnsFilterItem[]) {
 
 function transformColumnsTree(value: TableColumnsProps, parent?: ColumnsFilterItem): ColumnsFilterItem[] {
   const columns: ColumnsFilterItem[] = [];
-  _.forEach(value, (item) => {
+  forEach(value, (item) => {
     const column = buildColumnFilterItem(item);
     column.__parent = parent;
     column.__key = `${parent?.key || ""}.${item.key}`;
@@ -188,7 +188,7 @@ async function do_save(noSave = false) {
   if (!noSave) {
     await saveOptionsToStorage(currentColumns.value);
   }
-  const result = _.cloneDeep(currentColumns.value);
+  const result = cloneDeep(currentColumns.value);
 
   //解决naive ui与列设置冲突的问题
   eachTree(result, (item: any) => {
@@ -278,7 +278,7 @@ async function clearThisStorage() {
 function getColumnsHash(columns: any) {
   const keys: any = [];
   eachTree(columns, (item: any) => {
-    const target = _.pick(item, "key", "__show", "__disabled");
+    const target = pick(item, "key", "__show", "__disabled");
     keys.push(JSON.stringify(target));
   });
   keys.sort();

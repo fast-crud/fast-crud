@@ -59,7 +59,7 @@ import type {
 } from "@fast-crud/ui-interface";
 import { useUiRender } from "@fast-crud/ui-interface";
 // @ts-ignore
-import _, { isFunction } from "lodash-es";
+import { isFunction, forEach } from "lodash-es";
 import { CheckboxValueType, ElDialog, TableV2Placeholder, useFormItem } from "element-plus";
 import { computed, ref, unref } from "vue";
 
@@ -361,7 +361,7 @@ export class Element implements UiInterface {
     },
     transformValidateErrors: (e: any) => {
       const errors: any = {};
-      _.forEach(e, (item, key) => {
+      forEach(e, (item, key) => {
         errors[key] = true;
       });
 
@@ -490,7 +490,7 @@ export class Element implements UiInterface {
           selectedRowKeys.value = [];
         }
         const otherPageSelected = selectedRowKeys.value.filter((item: any) => !currentIds.includes(item));
-        return _.union(otherPageSelected, curSelectedIds);
+        return union(otherPageSelected, curSelectedIds);
       }
 
       if (req.multiple) {

@@ -61,7 +61,7 @@ import type {
   UploadCI
 } from "@fast-crud/ui-interface";
 import { creator, useUiRender } from "@fast-crud/ui-interface";
-import _ from "lodash-es";
+import { forEach } from "lodash-es";
 import { Form, Modal } from "ant-design-vue";
 
 export type AntdvUiProvider = {
@@ -77,7 +77,7 @@ export class Antdv implements UiInterface {
     this.message.instance = target.Message;
     this.messageBox.instance = target.MessageBox;
 
-    _.forEach(this, (value: any) => {
+    forEach(this, (value: any) => {
       if (value instanceof Object && value.builder) {
         value.render = (opts: any) => {
           return renderComponent(value, opts);

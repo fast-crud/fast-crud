@@ -13,7 +13,7 @@ import { useColumns } from "@fast-crud/fast-crud";
 
 const { registerMergeColumnPlugin } = useColumns();
 
-import _ from "lodash-es";
+import { merge } from "lodash-es";
 import { FsUploaderOptions } from "./d/type";
 registerMergeColumnPlugin({
   name: "uploader-merge-plugin",
@@ -22,7 +22,7 @@ registerMergeColumnPlugin({
     if (typeof columnProps.type === "string" && columnProps.type.endsWith("uploader")) {
       const buildUrl = columnProps.buildUrl;
       const buildUrls = columnProps.buildUrls;
-      _.merge(columnProps, {
+      merge(columnProps, {
         form: {
           component: {
             buildUrl,

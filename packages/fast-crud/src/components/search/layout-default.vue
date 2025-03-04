@@ -56,7 +56,7 @@
 <script lang="ts">
 import { useUi } from "../../use";
 import { computed, defineComponent, onMounted, ref } from "vue";
-import _ from "lodash-es";
+import { merge } from "lodash-es";
 import { useI18n } from "../../locale";
 
 export default defineComponent({
@@ -136,7 +136,7 @@ export default defineComponent({
     };
 
     function mergeCol(col: any) {
-      return _.merge({}, props.col, col);
+      return merge({}, props.col, col);
     }
 
     return {

@@ -1,9 +1,9 @@
-import _ from "lodash-es";
+import { forEach, set } from "lodash-es";
 import { computed, isShallow, ref, Ref, watch } from "vue";
 import { useMerge } from "./use-merge";
-import { ComputeContext } from "../d/compute";
 import { AsyncComputeRef, ComputeFn, ComputeRef, ScopeContext } from "../d";
 import { deepdash } from "../utils/deepdash";
+
 const { cloneDeep } = useMerge();
 
 function isAsyncCompute(value: any) {
@@ -63,7 +63,7 @@ function doAsyncCompute(dependAsyncValues: any, getContextFn: () => any) {
     return null;
   }
   const asyncValueMap: any = {};
-  _.forEach(dependAsyncValues, (item, key) => {
+  forEach(dependAsyncValues, (item, key) => {
     asyncValueMap[key] = item.buildAsyncRef(getContextFn);
   });
   return asyncValueMap;
@@ -73,8 +73,8 @@ function setAsyncComputeValue(target: any, asyncValuesMap: any) {
   if (asyncValuesMap == null || Object.keys(asyncValuesMap).length <= 0) {
     return;
   }
-  _.forEach(asyncValuesMap, (valueRef, key) => {
-    _.set(target, key, valueRef.value == null ? null : valueRef.value);
+  forEach(asyncValuesMap, (valueRef, key) => {
+    set(target, key, valueRef.value == null ? null : valueRef.value);
   });
 }
 
@@ -105,8 +105,8 @@ function doComputed(
       target = cloneDeep(target);
       if (syncCount > 0) {
         const context = getContextFn ? getContextFn() : {};
-        _.forEach(dependValues.value, (value, key) => {
-          _.set(target, key, value.computeFn(context));
+        forEach(dependValues.value, (value, key) => {
+          set(target, key, value.computeFn(context));
         });
       }
       if (asyncCount > 0) {

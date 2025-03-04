@@ -45,7 +45,7 @@
 
 <script lang="ts">
 import FsTableColumnsFilter from "./fs-table-columns-filter/index.vue";
-import _ from "lodash-es";
+import { sortBy } from "lodash-es";
 import { computed, defineComponent, PropType, ref, Ref } from "vue";
 import { useI18n } from "../../locale";
 import { Constants } from "../../utils/util.constants";
@@ -135,7 +135,7 @@ export default defineComponent({
           _key: defaultButtonsKey
         });
       }
-      sortArr = _.sortBy(sortArr, (item) => {
+      sortArr = sortBy(sortArr, (item) => {
         return item.order ?? Constants.orderDefault;
       });
 

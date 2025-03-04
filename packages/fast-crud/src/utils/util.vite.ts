@@ -1,6 +1,5 @@
 import { defineAsyncComponent } from "vue";
-import _ from "lodash-es";
-
+import { forEach, camelCase, upperFirst } from "lodash-es";
 function createAsyncComponent(es: any) {
   return defineAsyncComponent({
     loader: es,
@@ -24,7 +23,7 @@ function installAsyncComponent(app: any, name: string, es: any, options: any) {
 
 function installAsyncComponents(app: any, modules: any, excludes: any, pickNameExp: any, transform: any) {
   const imports = transformFromGlob(modules, pickNameExp, transform);
-  _.forEach(imports, (item, key) => {
+  forEach(imports, (item, key) => {
     if (excludes && excludes.indexOf(key) != -1) {
       return;
     }
@@ -34,7 +33,7 @@ function installAsyncComponents(app: any, modules: any, excludes: any, pickNameE
 
 function installSyncComponents(app: any, modules: any, excludes: any, pickNameExp: any, transform: any) {
   const imports: any = transformFromGlob(modules, pickNameExp, transform);
-  _.forEach(imports, (item: any, key) => {
+  forEach(imports, (item: any, key) => {
     if (excludes && excludes.indexOf(key)) {
       return;
     }
@@ -46,7 +45,7 @@ function transformFromGlob(modules: any, pickNameExp?: any, transform?: any) {
   if (pickNameExp == null) {
     pickNameExp = /.*\/(.+).(vue|jsx|tsx)/;
   }
-  _.forEach(modules, (item, key) => {
+  forEach(modules, (item, key) => {
     // 从路径提取组件名称
     const result = key.match(pickNameExp);
     if (result?.length <= 1) {
@@ -56,8 +55,8 @@ function transformFromGlob(modules: any, pickNameExp?: any, transform?: any) {
     let name = result[1];
 
     //将组件名称从 fs-uploader-form 转换为 FsUploaderForm
-    name = _.camelCase(name);
-    name = _.upperFirst(name);
+    name = camelCase(name);
+    name = upperFirst(name);
 
     if (transform) {
       item = transform(item);
@@ -70,7 +69,7 @@ function transformFromGlob(modules: any, pickNameExp?: any, transform?: any) {
 function loadAsyncComponentFromGlob(modules: any) {
   const imports: any = transformFromGlob(modules);
   const map: any = {};
-  _.forEach(imports, (item, key) => {
+  forEach(imports, (item, key) => {
     map[key] = createAsyncComponent(item);
   });
   return map;
@@ -79,7 +78,7 @@ function loadAsyncComponentFromGlob(modules: any) {
 function loadComponentFromGlob(modules: any) {
   const imports = transformFromGlob(modules);
   const map: any = {};
-  _.forEach(imports, (item, key) => {
+  forEach(imports, (item, key) => {
     map[key] = item.default;
   });
   return map;

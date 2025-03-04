@@ -1,7 +1,7 @@
 import { useCompute } from "../../use/use-compute";
 import { computed, defineComponent, isShallow, PropType, ref } from "vue";
 import { ConditionalRenderProps } from "../../d";
-import _ from "lodash-es";
+import { toString } from "lodash-es";
 /**
  * 单元格显示组件
  */
@@ -94,7 +94,7 @@ export default defineComponent({
           <fs-component-render title={computedTitle.value} ref={targetRef} {...computedComponent.value} scope={scope} />
         );
       } else {
-        return cellContentRender(_.toString(value));
+        return cellContentRender(toString(value));
       }
     };
   }

@@ -3,8 +3,8 @@
     <template v-if="!slots?.default && !viewMode">
       <fs-dict-select
         ref="dictSelectRef"
-        :open="false"
         v-bind="computedSelect"
+        :open="false"
         :disabled="disabled"
         :readonly="readonly"
         :dict="dict"

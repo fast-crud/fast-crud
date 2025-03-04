@@ -11,7 +11,7 @@ import {
   unref,
   useSlots
 } from "vue";
-import _ from "lodash-es";
+import { omit, forEach, sortBy } from "lodash-es";
 import { useI18n } from "../../locale";
 import { uiContext } from "../../ui";
 import { Constants } from "../../utils/util.constants";
@@ -133,13 +133,13 @@ export default defineComponent({
       const customClass = `fs-form-wrapper ${formWrapperIdClass} ${wrapper[customClassKey] || ""} `;
 
       formWrapperBind.value = {
-        ..._.omit(wrapper, "title", "onOpen", "onClosed", "onOpened", "is", "inner", "beforeClose"),
+        ...omit(wrapper, "title", "onOpen", "onClosed", "onOpened", "is", "inner", "beforeClose"),
         [customClassKey]: customClass
       };
 
       //form的配置
       formOptions.value = {
-        ..._.omit(opts, "wrapper", "slots"),
+        ...omit(opts, "wrapper", "slots"),
         slots: {
           ...props.slots,
           ...opts.slots,
@@ -331,7 +331,7 @@ export default defineComponent({
       };
       const buttons = merge(defBtns, computedCustomButtons.value);
       const buttonsArr: any = [];
-      _.forEach(buttons, (value, key) => {
+      forEach(buttons, (value, key) => {
         value.key = key;
         buttonsArr.push(value);
         if (value.onClick == null && value.click != null) {
@@ -340,7 +340,7 @@ export default defineComponent({
           };
         }
       });
-      return _.sortBy(buttonsArr, (item) => {
+      return sortBy(buttonsArr, (item) => {
         return item.order ?? Constants.orderDefault;
       });
     });
@@ -463,7 +463,7 @@ export default defineComponent({
           },
           default: () => {
             const buttons: any[] = [];
-            _.forEach(computedButtons.value, (item: any) => {
+            forEach(computedButtons.value, (item: any) => {
               if (item.show === false) {
                 return;
               }

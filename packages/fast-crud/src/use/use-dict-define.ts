@@ -1,9 +1,9 @@
-import _ from "lodash-es";
+import { forEach, isArray } from "lodash-es";
 import { useMerge } from "./use-merge";
 import logger from "../utils/util.log";
 import { isShallow, nextTick, shallowReactive, UnwrapNestedRefs } from "vue";
 import { LRUCache } from "lru-cache";
-
+import { merge } from "lodash-es";
 const DictGlobalCache = new LRUCache<string, any>({
   max: 500,
   maxSize: 5000,
@@ -167,7 +167,7 @@ export class Dict<T = any> extends UnMergeable implements DictOptions<T> {
       enumerable: false
     });
     this.loading = false;
-    _.merge(this, dict);
+    merge(this, dict);
     if (dict.data != null) {
       this.originalData = dict.data;
       this.setData(dict.data);
@@ -248,7 +248,7 @@ export class Dict<T = any> extends UnMergeable implements DictOptions<T> {
 
   _triggerNotify() {
     if (this.notifies && this.notifies.length > 0) {
-      _.forEach(this.notifies, (call) => {
+      forEach(this.notifies, (call) => {
         call(this.data);
       });
       this.notifies.length = 0;
@@ -305,7 +305,7 @@ export class Dict<T = any> extends UnMergeable implements DictOptions<T> {
     await nextTick();
     await nextTick();
     const toFetchValues: any[] = [];
-    _.forEach(this._unfetchValues, (v) => {
+    forEach(this._unfetchValues, (v) => {
       if (!v.loading) {
         v.loading = true;
         toFetchValues.push(v.value);
@@ -422,12 +422,12 @@ export class Dict<T = any> extends UnMergeable implements DictOptions<T> {
       this.buildMap(map, this.data || []);
     }
     // if (this.getNodesByValues) {
-    //   _.merge(this.dataMap, map);
+    //   merge(this.dataMap, map);
     // }
     this.dataMap = map;
   }
   buildMap(map: any, list: any) {
-    _.forEach(list, (item) => {
+    forEach(list, (item) => {
       map[this.getValue(item)] = item;
       if (this.isTree && this.getChildren(item)) {
         this.buildMap(map, this.getChildren(item));
@@ -466,12 +466,12 @@ export class Dict<T = any> extends UnMergeable implements DictOptions<T> {
     if (value == null) {
       return [];
     }
-    if (!_.isArray(value)) {
+    if (!isArray(value)) {
       value = [value];
     }
     //本地获取
     const nodes: Array<any> = [];
-    _.forEach(value, (item) => {
+    forEach(value, (item) => {
       const node = this.dataMap[item];
       if (node) {
         nodes.push(node);

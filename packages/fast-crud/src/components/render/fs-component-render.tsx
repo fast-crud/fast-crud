@@ -10,7 +10,7 @@ import {
   resolveComponent,
   unref
 } from "vue";
-import _ from "lodash-es";
+import { forEach, camelCase } from "lodash-es";
 import { useMerge, useUi } from "../../use";
 import { ComponentEventContext, VModelProps } from "../../d";
 
@@ -158,10 +158,10 @@ export default defineComponent({
         [key: string]: (e: ComponentEventContext) => void;
       } = { ...props.events, ...props.on };
 
-      _.forEach(events, (value, key) => {
+      forEach(events, (value, key) => {
         const handler = value;
         if (!key.startsWith("on")) {
-          key = _.camelCase("on_" + key);
+          key = camelCase("on_" + key);
         }
         attrs[key] = ($event: any) => {
           return handler({ ...props.scope, $event });
@@ -184,8 +184,8 @@ export default defineComponent({
           };
         }
       };
-      _.forEach(props.children, createChildren);
-      _.forEach(props.slots, createChildren);
+      forEach(props.children, createChildren);
+      forEach(props.slots, createChildren);
       return children;
     };
 

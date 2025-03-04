@@ -9,7 +9,7 @@
 import WangEditor from "wangeditor";
 import wangConfig from "./utils/config";
 import { defaultConfig } from "../../type/config";
-import _ from "lodash-es";
+import { merge } from "lodash-es";
 import { defineComponent } from "vue";
 import { useUploader } from "../../../uploader";
 
@@ -99,7 +99,7 @@ export default defineComponent({
         return;
       }
 
-      _.merge(editor.config, wangConfig, defaultConfig.wangEditor, this.config);
+      merge(editor.config, wangConfig, defaultConfig.wangEditor, this.config);
       editor.config.onchange = (newHtml: string) => {
         this.$emit("update:modelValue", newHtml);
         this.$emit("change", newHtml);
@@ -139,7 +139,7 @@ export default defineComponent({
         editor.config.customUploadImg = async (resultFiles: any, insertImgFn: any) => {
           // resultFiles 是 input 中选中的文件列表
           // insertImgFn 是获取图片 url 后，插入到编辑器的方法
-          _.forEach(resultFiles, (file) => {
+          forEach(resultFiles, (file) => {
             addImage(file, insertImgFn);
           });
         };

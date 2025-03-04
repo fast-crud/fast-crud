@@ -37,7 +37,7 @@
 </template>
 
 <script lang="ts" setup>
-import _ from "lodash-es";
+import { merge } from "lodash-es";
 //不要删
 //@ts-ignore
 import draggable from "vuedraggable-es";
@@ -51,7 +51,7 @@ const { ui } = useUi();
 const { originalColumns, currentColumns, text, active } = inject<ColumnsFilterContext>(ColumnsFilterProvideKey);
 const props = defineProps<ColumnsFilterContainerProps>();
 const drawerBind = computed(() => {
-  return _.merge(
+  return merge(
     {
       [ui.drawer.visible]: active.value,
       ["onUpdate:" + ui.drawer.visible]: (e: any) => {

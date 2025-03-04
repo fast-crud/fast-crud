@@ -1,6 +1,6 @@
 import { onMounted, Ref, toRaw, watch } from "vue";
 import { CrudExpose, OpenDialogProps, OpenEditContext, SetFormDataOptions } from "../d/expose";
-import _, { isArray } from "lodash-es";
+import { isArray, forEach, cloneDeep } from "lodash-es";
 import logger from "../utils/util.log";
 import { useMerge } from "../use/use-merge";
 import { useUi } from "../use/use-ui";
@@ -289,8 +289,8 @@ export function useExpose<R = any>(props: UseExposeProps<R>): UseExposeRet<R> {
       if (valueBuilderColumns.length === 0) {
         return;
       }
-      _.forEach(records, (row, index) => {
-        _.forEach(valueBuilderColumns, (col) => {
+      forEach(records, (row, index) => {
+        forEach(valueBuilderColumns, (col) => {
           col.valueBuilder({
             value: row[col.key],
             row,
@@ -324,7 +324,7 @@ export function useExpose<R = any>(props: UseExposeProps<R>): UseExposeRet<R> {
         return;
       }
       logger.debug("doValueResolve ,columns=", columns);
-      _.forEach(valueBuilderColumns, (col) => {
+      forEach(valueBuilderColumns, (col) => {
         const key = col.key;
         col.valueResolve({
           value: form[key],
@@ -380,7 +380,7 @@ export function useExpose<R = any>(props: UseExposeProps<R>): UseExposeRet<R> {
 
       let searchFormData = pageQuery.form;
       if (searchFormData == null) {
-        searchFormData = _.cloneDeep(crudExpose.getSearchValidatedFormData()) || {};
+        searchFormData = cloneDeep(crudExpose.getSearchValidatedFormData()) || {};
         //配置searchValueResolve
         if (crudBinding.value?.search?.columns) {
           crudExpose.doValueResolve({ form: searchFormData }, toRaw(crudBinding.value.search.columns));

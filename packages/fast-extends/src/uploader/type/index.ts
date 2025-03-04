@@ -1,14 +1,15 @@
 import { useTypes } from "@fast-crud/fast-crud";
 import types from "./types";
-import _ from "lodash-es";
-import { defaultConfig, uploaderConfig } from "./config";
+import { merge } from "lodash-es";
+import { uploaderConfig } from "./config";
 import { AllUploadSuccessValidator } from "./validators";
-export * from "./validators";
 import { FsUploaderOptions } from "../d/type";
 
+export * from "./validators";
+
 function setConfig(app: any, config: FsUploaderOptions) {
-  _.merge(uploaderConfig, config);
-  // app.config.globalProperties.$fs_uploader_config = _.merge(defaultConfig, config);
+  merge(uploaderConfig, config);
+  // app.config.globalProperties.$fs_uploader_config = merge(defaultConfig, config);
 }
 //兼容旧版本
 const AllSuccessValidator = AllUploadSuccessValidator;

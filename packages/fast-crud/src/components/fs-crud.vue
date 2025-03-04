@@ -93,14 +93,14 @@
 </template>
 <script lang="ts">
 import { computed, defineComponent, nextTick, onMounted, PropType, provide, ref, SetupContext, toRef } from "vue";
-import _ from "lodash-es";
+import { forEach } from "lodash-es";
 import { uiContext } from "../ui";
 import { useMerge } from "../use/use-merge";
 import utilLog from "../utils/util.log";
+import logger from "../utils/util.log";
 import { RowSelectionProps, SetSearchFormDataProps } from "../d";
 import { useUi } from "../use";
 import { utils } from "../utils";
-import logger from "../utils/util.log";
 
 const { merge } = useMerge();
 
@@ -201,7 +201,7 @@ function slotFilter(ctxSlots: any, keyPrefix: string) {
     return {};
   }
   const slots: any = {};
-  _.forEach(ctxSlots, (value, key) => {
+  forEach(ctxSlots, (value, key) => {
     if (key.startsWith(keyPrefix)) {
       slots[key] = value;
     }
