@@ -12,6 +12,7 @@ import {
   CrudBinding,
   CrudExpose,
   CrudOptionsPluginHandle,
+  CrudOptionsPluginOpts,
   CrudOptionsPlugins,
   CrudSettings,
   DynamicallyCrudOptions,
@@ -29,7 +30,7 @@ import { CrudOptions } from "../d/crud";
 import { computed, Ref, ref, unref } from "vue";
 import { useExpose } from "./use-expose";
 import { exportTable } from "../lib/fs-export";
-import { CrudOptionsPluginOpts, getCrudOptionsPlugin } from "../use/use-plugins";
+import { getCrudOptionsPlugin } from "../use/use-plugins";
 
 const { merge } = useMerge();
 

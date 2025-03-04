@@ -1,6 +1,7 @@
 import {
   CrudOptions,
   CrudOptionsPluginHandle,
+  CrudOptionsPluginOpts,
   CrudOptionsPluginReg,
   MobileAdaptorProps,
   RowSelectionProps,
