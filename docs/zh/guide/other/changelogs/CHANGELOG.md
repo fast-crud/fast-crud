@@ -3,6 +3,15 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.25.4](https://github.com/fast-crud/fast-crud/compare/v1.25.3...v1.25.4) (2025-03-04)
+
+### Performance Improvements
+
+* 精简lodash ([21f59e8](https://github.com/fast-crud/fast-crud/commit/21f59e80db56cf0968b2739b9bc7ff1e8b7be4e4))
+* 手机版支持 ([268cbbe](https://github.com/fast-crud/fast-crud/commit/268cbbe3fcb8d1b5d439ba4c82a687241ff84637))
+* 支持element table-column 插槽，支持自定义header ([2b84dc4](https://github.com/fast-crud/fast-crud/commit/2b84dc4fe406e7cffa1e9269146fc03f39f1a313))
+* antdv 异步加载，加快首页打开速度 ([4eb4283](https://github.com/fast-crud/fast-crud/commit/4eb4283ad66e856814962ca2bde416dddbac0868))
+
 ## [1.25.3](https://github.com/fast-crud/fast-crud/compare/v1.25.2...v1.25.3) (2025-02-23)
 
 ### Bug Fixes
