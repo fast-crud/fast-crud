@@ -1,18 +1,16 @@
-import { CrudOptions, CrudOptionsPluginHandle, MobileAdaptorProps, RowSelectionProps, UseCrudProps } from "../d";
+import {
+  CrudOptions,
+  CrudOptionsPluginHandle,
+  CrudOptionsPluginReg,
+  MobileAdaptorProps,
+  RowSelectionProps,
+  UseCrudProps
+} from "../d";
 import { computed, isRef, nextTick } from "vue";
 import { useUi } from "@fast-crud/ui-interface";
 import logger from "../utils/util.log";
 import { useCompute } from "./use-compute";
-export type CrudOptionsPluginOpts = {
-  before?: boolean;
-  order?: number;
-};
-export type CrudOptionsPlugin = {
-  handle: CrudOptionsPluginHandle;
-  opts?: CrudOptionsPluginOpts;
-};
-
-export const crudOptionsPlugins: Record<string, CrudOptionsPlugin> = {};
+export const crudOptionsPlugins: Record<string, CrudOptionsPluginReg> = {};
 export function registerCrudOptionsPlugin(
   name: string,
   plugin: CrudOptionsPluginHandle,
@@ -24,7 +22,7 @@ export function registerCrudOptionsPlugin(
   };
 }
 
-export function getCrudOptionsPlugin(name: string): CrudOptionsPlugin {
+export function getCrudOptionsPlugin(name: string): CrudOptionsPluginReg {
   return crudOptionsPlugins[name];
 }
 

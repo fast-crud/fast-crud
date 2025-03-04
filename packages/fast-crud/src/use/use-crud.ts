@@ -26,11 +26,10 @@ import {
 import { useCompute } from "./use-compute";
 import { buildTableColumnsFlatMap, forEachTableColumns, useColumns } from "./use-columns";
 import { CrudOptions } from "../d/crud";
-import { computed, reactive, Ref, ref, shallowReactive, shallowRef, unref } from "vue";
+import { computed, Ref, ref, unref } from "vue";
 import { useExpose } from "./use-expose";
 import { exportTable } from "../lib/fs-export";
 import { CrudOptionsPluginOpts, getCrudOptionsPlugin } from "../use/use-plugins";
-import { UnwrapNestedRefs } from "vue";
 
 const { merge } = useMerge();
 

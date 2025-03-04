@@ -1607,6 +1607,15 @@ export type CompositionColumns<R = any> = {
   [K in keyof R]: ColumnCompositionProps<R>;
 };
 
+export type CrudOptionsPluginOpts = {
+  before?: boolean;
+  order?: number;
+};
+export type CrudOptionsPluginReg = {
+  handle: CrudOptionsPluginHandle;
+  opts?: CrudOptionsPluginOpts;
+};
+
 export type CrudOptionsPluginHandle<T = any, R = any> = (
   props: T,
   ctx: UseCrudProps,
