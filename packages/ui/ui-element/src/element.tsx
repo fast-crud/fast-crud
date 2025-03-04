@@ -59,7 +59,7 @@ import type {
 } from "@fast-crud/ui-interface";
 import { useUiRender } from "@fast-crud/ui-interface";
 // @ts-ignore
-import { isFunction, forEach } from "lodash-es";
+import { isFunction, forEach, union } from "lodash-es";
 import { CheckboxValueType, ElDialog, TableV2Placeholder, useFormItem } from "element-plus";
 import { computed, ref, unref } from "vue";
 
