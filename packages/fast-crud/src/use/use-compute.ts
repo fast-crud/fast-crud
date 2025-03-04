@@ -21,6 +21,9 @@ function findComputeValues(target: any, excludes: any[], isAsync: boolean) {
   deepdash.forEachDeep(
     target,
     (value: any, key: any, parent: any, context: any) => {
+      if (value == null) {
+        return false;
+      }
       if (checkFunc(value)) {
         // @ts-ignore
         const path: string = context.path;

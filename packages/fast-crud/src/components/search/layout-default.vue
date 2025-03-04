@@ -188,6 +188,10 @@ export default defineComponent({
             // margin-left: 0;
           }
 
+          .ant-form-item-label {
+            max-width: 50%;
+          }
+
           .ant-input-number,
           .ant-picker,
           .el-input-number,

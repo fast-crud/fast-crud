@@ -616,4 +616,16 @@ export default defineComponent({
     }
   }
 }
+
+@media (max-width: 768px) {
+  .fs-crud-container {
+    .body {
+      overflow-y: unset !important;
+    }
+    .ant-table-body {
+      max-height: none !important;
+      overflow: auto !important;
+    }
+  }
+}
 </style>

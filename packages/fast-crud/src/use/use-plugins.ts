@@ -1,5 +1,5 @@
 import { CrudOptions, CrudOptionsPluginHandle, MobileAdaptorProps, RowSelectionProps, UseCrudProps } from "../d";
-import { computed, nextTick } from "vue";
+import { computed, isRef, nextTick } from "vue";
 import { useUi } from "@fast-crud/ui-interface";
 import logger from "../utils/util.log";
 import { useCompute } from "./use-compute";
@@ -87,25 +87,34 @@ registerCrudOptionsPlugin(
   (mobileAdaptor: MobileAdaptorProps, ctx: UseCrudProps, crudOptions: any): CrudOptions => {
     const rowHandle = crudOptions.rowHandle;
     const buttons = rowHandle.buttons;
-    const newButtons = {};
+    let newButtons = {};
     for (const buttonsKey in buttons) {
       const button = buttons[buttonsKey];
-      button.dropdown;
-      newButtons[buttonsKey] = {
-        ...button,
-        dropdown: computed(() => {
-          return mobileAdaptor.isMobile.value ? true : button.dropdown;
-        })
-      };
+      debugger;
+      if (isRef(button.dropdown)) {
+        newButtons = button;
+      } else {
+        newButtons[buttonsKey] = {
+          ...button,
+          dropdown: computed(() => {
+            return mobileAdaptor.isMobile.value ? true : button.dropdown;
+          })
+        };
+      }
+    }
+
+    let widthRef = rowHandle.width;
+    if (widthRef == null || !isRef(widthRef)) {
+      widthRef = computed(() => {
+        if (mobileAdaptor.isMobile.value) {
+          return mobileAdaptor?.rowHandle?.width || 60;
+        }
+        return rowHandle.width || 250;
+      });
     }
     return {
       rowHandle: {
-        width: computed(() => {
-          if (mobileAdaptor.isMobile.value) {
-            return mobileAdaptor?.rowHandle?.width || 60;
-          }
-          return rowHandle.width || 250;
-        }),
+        width: widthRef,
         buttons: newButtons
       }
     };

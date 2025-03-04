@@ -3,11 +3,11 @@
     <template v-if="!slots?.default && !viewMode">
       <fs-dict-select
         ref="dictSelectRef"
+        :open="false"
         v-bind="computedSelect"
         :disabled="disabled"
         :readonly="readonly"
         :dict="dict"
-        :open="false"
         @click="openTableSelect"
       />
     </template>

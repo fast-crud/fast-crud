@@ -1,5 +1,5 @@
 import defaultCrudOptions from "./default-crud-options";
-import _ from "lodash-es";
+import _, { cloneDeep } from "lodash-es";
 import { useMerge } from "./use-merge";
 import logger from "../utils/util.log";
 import { uiContext } from "../ui";
@@ -448,12 +448,13 @@ export function useCrud<T = any, R = any>(ctx: UseCrudProps<T, R>): UseCrudRet<R
       }
     };
   }
-
+  const { cloneDeep } = useMerge();
   function afterUseCrud(bindings: CrudBinding) {
-    bindings.search.validatedForm = _.cloneDeep(bindings.search.initialForm);
+    bindings.search.validatedForm = cloneDeep(bindings.search.initialForm);
   }
 
-  function rebuildCrudBindings(userOpts: DynamicallyCrudOptions) {
+  function rebuildCrudBindings(inputOpts: DynamicallyCrudOptions) {
+    let userOpts = cloneDeep(inputOpts);
     const baseOptions = merge(defaultCrudOptions.defaultOptions({ t }), defaultCrudOptions.commonOptions(ctx));
     options = merge({}, baseOptions, userOpts);
     const settings: CrudSettings = unref(options.settings) as CrudSettings;
@@ -478,9 +479,9 @@ export function useCrud<T = any, R = any>(ctx: UseCrudProps<T, R>): UseCrudRet<R
         const before = plugin.before ?? opts.before;
         const pluginOptions = handle(plugin.props, ctx, options);
         if (before !== false) {
-          options = merge(pluginOptions, userOpts);
+          userOpts = merge(pluginOptions, userOpts);
         } else {
-          merge(userOpts, pluginOptions);
+          userOpts = merge(userOpts, pluginOptions);
         }
       });
     }
@@ -571,7 +572,6 @@ function useFsImpl(props: UseFsProps): UseFsRet | Promise<UseCrudRet> {
     const useCrudProps: UseCrudProps = { crudExpose, ...createCrudOptionsRet, context };
 
     merge(createCrudOptionsRet.crudOptions, props.crudOptionsOverride);
-
     const useCrudRet = useCrud(useCrudProps);
     return {
       ...createCrudOptionsRet,
