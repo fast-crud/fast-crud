@@ -626,6 +626,17 @@ export default defineComponent({
       max-height: none !important;
       overflow: auto !important;
     }
+
+    .n-data-table-base-table-body {
+      max-height: none !important;
+      overflow: auto !important;
+    }
+
+    .fs-crud-header .fs-crud-actionbar {
+      flex: unset !important;
+      flex-wrap: wrap;
+      margin-bottom: 2px;
+    }
   }
 }
 </style>

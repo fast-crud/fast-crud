@@ -18,7 +18,7 @@ const defaultCrudOptions = {
       settings: {
         plugins: {
           mobile: {
-            enabled: false,
+            enabled: true,
             props: {
               isMobile: computed(() => {
                 //浏览器窗口小于768px时，认为是手机端

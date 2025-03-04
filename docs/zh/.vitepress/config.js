@@ -68,7 +68,8 @@ module.exports = {
                         {text: '国际化', link: '/guide/start/i18n'},
                         {text: '图标', link: '/guide/start/icon'},
                         {text: '新手必看', link: '/guide/start/grow'},
-                        {text: '通用规则', link: '/guide/start/tenet'}
+                        {text: '通用规则', link: '/guide/start/tenet'},
+                        {text: '常见需求', link: '/guide/start/useful'}
                     ],
                 },
                 {

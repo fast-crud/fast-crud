@@ -90,7 +90,6 @@ registerCrudOptionsPlugin(
     let newButtons = {};
     for (const buttonsKey in buttons) {
       const button = buttons[buttonsKey];
-      debugger;
       if (isRef(button.dropdown)) {
         newButtons = button;
       } else {

@@ -2,6 +2,10 @@
   display: flex;
   flex-direction: column;
 
+  &.n-modal{
+    margin-top:100px
+  }
+
   .fs-form-content{
     display: flex;
     flex-direction: row;
@@ -110,6 +114,7 @@
   }
 }
 .fs-form-wrapper {
+  max-width: 90vw;
   .el-dialog__headerbtn{
     height: 57px;
     width:57px;
@@ -194,9 +199,13 @@
 }
 
 
-@media (max-width: 575px) {
-
-  .ant-drawer-content-wrapper{
-    max-width: 90vw;
-  }
-}
+//@media (max-width: 575px) {
+//
+//  .ant-drawer-content-wrapper{
+//    max-width: 90vw;
+//  }
+//
+//  .el-drawer{
+//    max-width: 90vw;
+//  }
+//}
