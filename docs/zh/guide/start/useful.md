@@ -79,9 +79,28 @@ const crudOptions = {
 [行选择插件](../../api/crud-options/settings.md#plugins-rowSelection)
 
 
-## 3. 手机模式适配
+## 4. 手机模式适配
 
 [手机模式适配插件](../../api/crud-options/settings.md#plugins-mobile)
+
+
+## 5. 操作列按钮根据行数据显隐
+[动态计算示例](http://fast-crud.docmirror.cn/antdv4/#/crud/basis/compute)
+```js
+const crudOptions = {
+    rowHandle:{
+        buttons:{
+            edit:{
+                show : compute(({row})=>{
+                    return row.editable === true
+                })
+            }
+        }
+    }
+}
+```
+
+
 
 
 
