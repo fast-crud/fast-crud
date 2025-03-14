@@ -43,6 +43,9 @@ const crudOptions ={
 或者在`component.name`直接引用组件
 :::
 ## 组件配置项
+
+[组件配置项文档](../../api/common-options.md#component-name)    
+
 以`fs-dcit-select`为例 
 ```js
 const crudOptions = {
@@ -63,7 +66,7 @@ const crudOptions = {
                 on:{ //组件事件监听
                     onClick(context){console.log(context)} //监听组件的事件
                 },
-                children:{ //组件的插槽(仅支持jsx)
+                slots:{ //组件的插槽(仅支持jsx)
                     default:(scope)=>{  //默认插槽
                         return (<div>{scope.data}</div>)
                     },
@@ -134,7 +137,13 @@ export default ({expose}) => {
                         component:{
                             disabledDate: time => {  // <----禁用日期的配置
                                 return time.getTime() < Date.now()
-                            }
+                            },
+                            // slots:{
+                            //     //您还可以通过slots配置组件插槽
+                            //     default(){
+                            //         return <div>这是一个插槽</div>
+                            //     }
+                            // }
                         }
                     }
                 }
