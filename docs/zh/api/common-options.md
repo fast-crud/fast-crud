@@ -95,6 +95,7 @@ component:{
     name:"a-input"
     slots:{
         suffix:(scope)=>{
+            // scope 包含当前上下文，比如行数据，表单数据等
             return <fs-icon icon={"ion:eye-outline"}/>
         }
     }

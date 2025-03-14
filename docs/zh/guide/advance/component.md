@@ -140,8 +140,8 @@ export default ({expose}) => {
                             },
                             // slots:{
                             //     //您还可以通过slots配置组件插槽
-                            //     default(){
-                            //         return <div>这是一个插槽</div>
+                            //     default({form,row,value,key,scope}){
+                            //         return <div>这是一个插槽:{value}</div>
                             //     }
                             // }
                         }
