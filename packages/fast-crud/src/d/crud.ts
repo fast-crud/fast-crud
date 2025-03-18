@@ -621,6 +621,11 @@ export type TableProps<R = any> = {
   onRefreshed?: (context: { data: R[] }) => void;
 
   /**
+   * 是否禁用loading状态
+   */
+  disableLoading: boolean;
+
+  /**
    * 删除配置
    */
   remove?: RemoveProps;
