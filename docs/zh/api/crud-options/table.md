@@ -44,6 +44,10 @@
 </fs-crud>
 ```
 
+## silence
+* 说明：沉默，主要是不显示加载状态
+* 类型：Boolean
+
 ## slots
 * 说明：table插槽
 * 类型：{ slotName: Function(scope){ return jsx } }
