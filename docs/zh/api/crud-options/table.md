@@ -44,6 +44,10 @@
 </fs-crud>
 ```
 
+## disableLoading
+* 说明：是否禁用加载状态
+* 类型：Boolean
+
 ## slots
 * 说明：table插槽
 * 类型：{ slotName: Function(scope){ return jsx } }

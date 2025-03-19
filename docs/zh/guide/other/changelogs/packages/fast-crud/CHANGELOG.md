@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.25.5](https://github.com/fast-crud/fast-crud/compare/v1.25.4...v1.25.5) (2025-03-19)
+
+### Bug Fixes
+
+* 修复 antdv懒加载后dropdown按钮无法点击的bug ([30ee067](https://github.com/fast-crud/fast-crud/commit/30ee067580fb663bbe550d50abf63c1fd89504a1))
+
 ## [1.25.4](https://github.com/fast-crud/fast-crud/compare/v1.25.3...v1.25.4) (2025-03-04)
 
 ### Performance Improvements

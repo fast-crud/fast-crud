@@ -1,4 +1,4 @@
-import { onMounted, Ref, toRaw, watch } from "vue";
+import { onMounted, Ref, toRaw, unref, watch } from "vue";
 import { CrudExpose, OpenDialogProps, OpenEditContext, SetFormDataOptions } from "../d/expose";
 import { isArray, forEach, cloneDeep } from "lodash-es";
 import logger from "../utils/util.log";
@@ -403,17 +403,16 @@ export function useExpose<R = any>(props: UseExposeProps<R>): UseExposeRet<R> {
     async search(pageQuery: PageQuery<R>, options: SearchOptions = {}) {
       const userPageQuery = crudExpose.buildPageQuery(pageQuery);
       let userPageRes: UserPageRes<R>;
+      const disableLoading = unref(crudBinding.value.table.disableLoading);
       try {
-        if (options.silence !== true) {
+        if (options.silence !== true && disableLoading !== true) {
           crudBinding.value.table.loading = true;
         }
 
         logger.debug("pageRequest", userPageQuery);
         userPageRes = await crudBinding.value.request.pageRequest(userPageQuery);
       } finally {
-        if (options.silence !== true) {
-          crudBinding.value.table.loading = false;
-        }
+        crudBinding.value.table.loading = false;
       }
       if (userPageRes == null) {
         logger.warn("pageRequest返回结果不能为空");
