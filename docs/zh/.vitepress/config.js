@@ -1,12 +1,12 @@
-import {SearchPlugin} from "vitepress-plugin-search";
-//default options
-
 module.exports = {
     // vite:{
     //     ssr: {
     //         noExternal: ['segmentit']
     //     }
     // },
+    sitemap: {
+        hostname: 'http://fast-crud.docmirror.cn'
+    },
     title: 'FastCrud',
     description: '面向配置的CRUD编程.',
     //Add a wildcard at the end of the search

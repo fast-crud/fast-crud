@@ -50,8 +50,7 @@
     "typedoc-plugin-markdown": "^3.17.1",
     "vite": "^5.0.12",
     "vite-plugin-static-copy": "^1.0.1",
-    "vitepress": "1.0.0-rc.40",
-    "vitepress-plugin-search": "1.0.4-alpha.22",
+    "vitepress": "2.0.0-alpha.4",
     "vue": "^3.4.15",
     "vue-docgen-cli": "^4.67.0",
     "vue-tsc": "^1.8.27"
