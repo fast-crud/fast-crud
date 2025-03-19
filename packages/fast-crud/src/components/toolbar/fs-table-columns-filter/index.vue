@@ -319,7 +319,18 @@ async function update(change: (currentColumns: Ref<ColumnsFilterItem[]>) => Prom
   await do_save();
 }
 
-init();
+watch(
+  () => {
+    return original.value;
+  },
+  async (value) => {
+    await init();
+  },
+  {
+    immediate: true
+  }
+);
+
 defineExpose({
   start,
   save: do_save,
