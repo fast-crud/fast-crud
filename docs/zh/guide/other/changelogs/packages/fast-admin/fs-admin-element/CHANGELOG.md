@@ -3,6 +3,13 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.25.6](https://github.com/fast-crud/fast-crud/compare/v1.25.5...v1.25.6) (2025-03-19)
+
+### Performance Improvements
+
+* 增加列设置原始列数据变化感知 ([9b83b6d](https://github.com/fast-crud/fast-crud/commit/9b83b6d6c57f278b3489d4e10815ce6c68926ca3))
+* crudOptions.id 同一个页面多个table可以根据id来区分 ([0ea1f8c](https://github.com/fast-crud/fast-crud/commit/0ea1f8c18ac03906ceb668276eb54425da4b11bb))
+
 ## [1.25.5](https://github.com/fast-crud/fast-crud/compare/v1.25.4...v1.25.5) (2025-03-19)
 
 **Note:** Version bump only for package @fast-crud/fs-admin-element
