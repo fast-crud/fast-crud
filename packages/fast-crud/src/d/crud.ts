@@ -623,7 +623,7 @@ export type TableProps<R = any> = {
   /**
    * 是否禁用loading状态
    */
-  disableLoading: boolean;
+  disableLoading?: boolean;
 
   /**
    * 删除配置
