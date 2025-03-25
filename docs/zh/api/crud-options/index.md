@@ -5,6 +5,7 @@
 页面crud配置概览
 ```js
 const crudOptions ={
+    id: string,     //表格唯一标识，同一个页面的多个表格的列设置和字段设置会根据id进行区分保存
     request:{},     //http请求
     columns:{       //字段配置
         key:{       //字段key
@@ -38,6 +39,14 @@ const crudOptions ={
     container:{},   //容器配置 ，对应fs-container
 }
 
+```
+
+## crudOptions.id
+表格唯一标识，同一个页面的多个表格的列设置和字段设置会根据id进行区分保存
+```js
+const crudOptions ={
+    id: string,    
+}
 ```
 
 ## 组件与配置对应关系
