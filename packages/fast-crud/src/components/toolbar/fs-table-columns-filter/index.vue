@@ -55,7 +55,7 @@
 import { cloneDeep, omit, forEach, pick } from "lodash-es";
 import TableStore from "../../../utils/util.store";
 import { useI18n } from "../../../locale";
-import { computed, nextTick, provide, Ref, ref, watch } from "vue";
+import { computed, inject, nextTick, provide, Ref, ref, watch } from "vue";
 import { uiContext } from "../../../ui";
 import { useMerge } from "../../../use/use-merge";
 import { useRoute } from "vue-router";
@@ -235,6 +235,10 @@ function doEmit(result: ColumnsFilterItem[]) {
   emit("update:columns", transformToTableColumns(result));
 }
 
+const getCrudBinding = inject("get:crudBinding", () => {
+  return { id: "" };
+});
+
 const storageTableStore = ref();
 function getStorageTable() {
   //props.storage是否实现了ColumnFilterStorage 接口
@@ -249,6 +253,7 @@ function getStorageTable() {
       remoteStorage
     });
   }
+  storageTableStore.value.id = getCrudBinding().id;
   return storageTableStore.value;
 }
 
@@ -319,7 +324,18 @@ async function update(change: (currentColumns: Ref<ColumnsFilterItem[]>) => Prom
   await do_save();
 }
 
-init();
+watch(
+  () => {
+    return original.value;
+  },
+  async (value) => {
+    await init();
+  },
+  {
+    immediate: true
+  }
+);
+
 defineExpose({
   start,
   save: do_save,

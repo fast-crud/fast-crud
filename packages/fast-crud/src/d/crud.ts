@@ -1741,6 +1741,11 @@ export interface TabsFilterProps<R = any> {
  * crudBinding
  */
 export type CrudBinding<R = any> = {
+  /**
+   * 表格id
+   */
+  id?: string;
+
   settings?: CrudSettings;
   /**
    * 模式

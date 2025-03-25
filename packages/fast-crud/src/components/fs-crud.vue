@@ -353,6 +353,13 @@ export default defineComponent({
   inheritAttrs: false,
   props: {
     /**
+     * 表格id
+     */
+    id: {
+      type: String,
+      default: ""
+    },
+    /**
      * 表格配置，见FsTable
      */
     table: {

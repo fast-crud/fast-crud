@@ -1,26 +1,42 @@
 import { FsRemoteStorage } from "../d";
 
 export default class TableStore {
-  key: string;
-  tableId: string;
   remoteStorage?: FsRemoteStorage;
-  constructor(opts: { $router: any; tableName: string; keyType: string | boolean; remoteStorage: FsRemoteStorage }) {
-    const { $router, tableName, keyType } = opts;
-    this.key = this.getItemKey($router, keyType);
-    this.tableId = this.getTableId(tableName);
+  $router: any;
+  tableName: string;
+  keyType: string | boolean;
+  id?: string;
+  constructor(opts: {
+    $router: any;
+    tableName: string;
+    keyType: string | boolean;
+    remoteStorage: FsRemoteStorage;
+    id?: string;
+  }) {
     this.remoteStorage = opts.remoteStorage;
+    this.$router = opts.$router;
+    this.tableName = opts.tableName;
+    this.keyType = opts.keyType;
+    this.id = opts.id;
   }
 
-  getTableId(name: string) {
-    const prefix = "fs-crud";
-    if (name && typeof name === "string") {
-      return prefix + "." + name;
+  getTableId() {
+    const tableName = this.tableName;
+
+    let prefix = "fs-crud";
+    if (this.id) {
+      prefix = prefix + "." + this.id;
+    }
+
+    if (tableName && typeof tableName === "string") {
+      return prefix + "." + tableName;
     }
     return prefix;
   }
 
   async getTable() {
-    const saved = localStorage.getItem(this.tableId);
+    const tableId = this.getTableId();
+    const saved = localStorage.getItem(tableId);
     if (saved == null) {
       return;
     }
@@ -28,14 +44,19 @@ export default class TableStore {
   }
 
   async saveTable(table: any) {
-    localStorage.setItem(this.tableId, JSON.stringify(table));
+    const tableId = this.getTableId();
+    localStorage.setItem(tableId, JSON.stringify(table));
   }
 
   async clearTable() {
-    localStorage.removeItem(this.tableId);
+    const tableId = this.getTableId();
+    localStorage.removeItem(tableId);
   }
 
-  async updateTableValue(value: any, key = this.key) {
+  async updateTableValue(value: any, key?: string) {
+    if (key == null) {
+      key = this.getItemKey();
+    }
     if (this.remoteStorage) {
       await this.remoteStorage.set(key, value);
       return;
@@ -49,10 +70,15 @@ export default class TableStore {
     await this.saveTable(table);
   }
 
-  getItemKey($route: any, keyType: any) {
+  getItemKey() {
+    const $route = this.$router;
+    const keyType = this.keyType;
     let key = location.href;
     if ($route) {
       key = $route.path;
+    }
+    if (this.id) {
+      key = key + "." + this.id;
     }
     if (keyType == null || typeof keyType !== "string" || !keyType) {
       return key;
@@ -60,7 +86,10 @@ export default class TableStore {
     return key + "." + keyType;
   }
 
-  async getTableValue(key: string = this.key) {
+  async getTableValue(key?: string) {
+    if (key == null) {
+      key = this.getItemKey();
+    }
     if (this.remoteStorage) {
       return await this.remoteStorage.get(key);
     }
@@ -71,7 +100,10 @@ export default class TableStore {
     return table[key];
   }
 
-  async clearTableValue(key: string = this.key) {
+  async clearTableValue(key?: string) {
+    if (key == null) {
+      key = this.getItemKey();
+    }
     if (this.remoteStorage) {
       await this.remoteStorage.remove(key);
       return;

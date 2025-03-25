@@ -6,6 +6,7 @@
 
 | Prop name   | Description                                    | Type              | Values | Default                                         |
 | ----------- | ---------------------------------------------- | ----------------- | ------ | ----------------------------------------------- |
+| id          | 表格 id                                        | string            | -      | ""                                              |
 | table       | 表格配置，见 FsTable                           | object            | -      | {}                                              |
 | data        | 表格数据                                       | array             | -      |                                                 |
 | rowHandle   | 操作列配置，见 FsRowHandle                     | object            | -      | {}                                              |
