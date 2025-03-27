@@ -52,7 +52,7 @@
               v-bind="item.component"
               :model-value="modelValue"
               :scope="scopeFunc()"
-              @update:modelValue="updateModelValue"
+              @update:model-value="updateModelValue"
             />
           </template>
         </div>
@@ -70,6 +70,7 @@ import { ref, computed, defineComponent, Ref, PropType } from "vue";
 import FsRender from "../render/fs-render.js";
 import { ScopeContext } from "../../d";
 import { useMerge, useUi } from "../../use";
+import utils from "../../utils";
 /**
  * form-item组件封装
  */
@@ -108,6 +109,8 @@ export default defineComponent({
     const { ui } = useUi();
     const { merge } = useMerge();
     const componentRenderRef = ref();
+
+    utils.trace("fs-form-item");
     // const scopeComputed: Ref<ScopeContext> = computed(() => {});
 
     const scopeFunc = () => {

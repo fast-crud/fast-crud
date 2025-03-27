@@ -9,6 +9,7 @@
 </template>
 <script lang="ts">
 import { defineComponent } from "vue";
+import utils from "../../utils";
 
 /**
  * 表单字段帮助说明组件
@@ -34,7 +35,9 @@ export default defineComponent({
     },
     scope: {}
   },
-  setup(props) {}
+  setup(props) {
+    utils.trace("fs-form-item");
+  }
 });
 </script>
 <style lang="less">

@@ -13,6 +13,7 @@ import {
 import { forEach, camelCase } from "lodash-es";
 import { useMerge, useUi } from "../../use";
 import { ComponentEventContext, VModelProps } from "../../d";
+import utils from "../../utils";
 
 function mergeEventHandles(target: any, eventName: string) {
   if (target[eventName] instanceof Array) {
@@ -95,6 +96,7 @@ export default defineComponent({
   },
   emits: ["update:dict", "update:modelValue", "mounted"],
   setup(props: any, ctx) {
+    utils.trace("fs-component-render", true);
     const { ui } = useUi();
     const { merge } = useMerge();
     provide("get:scope", () => {

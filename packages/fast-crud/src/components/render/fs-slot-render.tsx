@@ -1,4 +1,5 @@
 import { defineComponent } from "vue";
+import utils from "../../utils";
 
 /**
  * 插槽render组件
@@ -21,6 +22,7 @@ export default defineComponent({
     }
   },
   setup(props) {
+    utils.trace("fs-slot-render", true);
     return () => {
       return props.slots(props.scope);
     };

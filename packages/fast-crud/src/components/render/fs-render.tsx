@@ -1,11 +1,11 @@
 import { defineComponent } from "vue";
-
+import utils from "../../utils";
 /**
  * 自定义render组件
  */
 export default defineComponent({
-  functional: true,
   name: "FsRender",
+  functional: true,
   props: {
     renderFunc: {
       type: Function
@@ -14,7 +14,9 @@ export default defineComponent({
       type: Object
     }
   },
-  setup() {},
+  setup() {
+    utils.trace("fs-render", true);
+  },
   render() {
     return this.renderFunc(this.scope);
   }

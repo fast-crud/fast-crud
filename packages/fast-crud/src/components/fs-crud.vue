@@ -102,6 +102,7 @@ import { RowSelectionProps, SetSearchFormDataProps } from "../d";
 import { useUi } from "../use";
 import { utils } from "../utils";
 
+utils.trace("fs-table");
 const { merge } = useMerge();
 
 function useProviders(props: any, ctx: SetupContext) {

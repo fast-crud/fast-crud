@@ -15,6 +15,7 @@ import { useEditable } from "./editable/use-editable";
 import logger from "../../utils/util.log";
 import utilLog from "../../utils/util.log";
 import "./fs-table.less";
+import utils from "../../utils";
 import {
   ColumnProps,
   ConditionalRenderProps,
@@ -289,6 +290,7 @@ export default defineComponent({
   },
   emits: ["row-handle", "value-change", "pagination-change", "filter-change", "sort-change", "data-change"],
   setup(props: any, ctx) {
+    utils.trace("fs-table");
     const tableRef = ref();
     const componentRefs = ref([]);
     useComponentRefProvider(componentRefs);
