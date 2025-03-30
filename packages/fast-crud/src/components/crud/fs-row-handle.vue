@@ -41,7 +41,6 @@
 <script lang="ts">
 import { computed, defineComponent } from "vue";
 import { forEach, sortBy, omit } from "lodash-es";
-import traceUtil from "../../utils/util.trace";
 import { useI18n } from "../../locale";
 import { useUi } from "../../use/use-ui";
 import { useCompute } from "../../use/use-compute";
