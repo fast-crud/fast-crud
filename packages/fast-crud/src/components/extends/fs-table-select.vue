@@ -130,6 +130,10 @@ type FsTableSelectProps = {
    * 是否查看模式
    */
   viewMode?: boolean;
+  /**
+   * 查看模式下是否触发change事件
+   */
+  emitOnViewModel: boolean;
 
   /**
    * table是否跟随窗口关闭而销毁
@@ -150,6 +154,7 @@ const props = withDefaults(defineProps<FsTableSelectProps>(), {
   showSelect: true,
   showCurrent: true,
   viewMode: false,
+  emitOnViewModel: true,
   destroyOnClose: true
 });
 
@@ -381,7 +386,7 @@ async function onOk() {
     }
   }
 
-  if (!props.viewMode) {
+  if (!props.viewMode || props.emitOnViewModel) {
     //非view模式下，需要更新value
     emits("update:modelValue", value);
     emits("change", value);
