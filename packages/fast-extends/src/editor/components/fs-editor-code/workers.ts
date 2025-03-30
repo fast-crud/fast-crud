@@ -1,3 +1,14 @@
+const WorkerBucket = {};
+
+/**
+ * 注册自定义worker
+ * @param name
+ * @param worker
+ */
+export function registerWorker(name: string, worker: any) {
+  WorkerBucket[name] = worker;
+}
+
 export async function initWorkers() {
   if (window.MonacoEnvironment) {
     return;
@@ -20,6 +31,10 @@ export async function initWorkers() {
   window.MonacoEnvironment = {
     //@ts-ignore
     getWorker(_, label) {
+      const custom = WorkerBucket[label];
+      if (custom) {
+        return new custom();
+      }
       if (label === "json") {
         return new jsonWorker.default();
       } else if (label === "css" || label === "scss" || label === "less") {

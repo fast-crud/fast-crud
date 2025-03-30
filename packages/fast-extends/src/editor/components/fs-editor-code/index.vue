@@ -165,7 +165,7 @@ async function initYaml(ctx: EditorCodeCtx) {
     isKubernetes: false,
     enableSchemaRequest: false
   });
-  const uri = monaco.Uri.parse("fs-editor-code-yaml.yaml");
+  const uri = monaco.Uri.parse(props.id || "fs-editor-code-yaml.yaml");
   const oldModel = monaco.editor.getModel(uri);
   if (oldModel) {
     oldModel.dispose();
