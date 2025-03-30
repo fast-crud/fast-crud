@@ -503,6 +503,9 @@ export default defineComponent({
 
     async function validate() {
       const validateScope = { ...scope.value, form };
+      if (validateScope.mode === "view") {
+        return;
+      }
       if (props.beforeValidate) {
         const ret = await props.beforeValidate(validateScope);
         if (ret === false) {
