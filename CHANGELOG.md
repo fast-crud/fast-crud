@@ -3,6 +3,19 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.25.7](https://github.com/fast-crud/fast-crud/compare/v1.25.6...v1.25.7) (2025-03-30)
+
+### Bug Fixes
+
+* 修复查看模式下表单验证问题 ([5145fe3](https://github.com/fast-crud/fast-crud/commit/5145fe37789ecfc544a703b746b75cae7f0a708c))
+* 修复新页面编辑无法正确获取数据的bug ([e0df772](https://github.com/fast-crud/fast-crud/commit/e0df7729d0d8fff7a0bcd81477ec9379f6f23369))
+* 修复antdv4示例没有源码跳转按钮的bug ([a8f6486](https://github.com/fast-crud/fast-crud/commit/a8f6486bccc441bb394ae5fb8bbe515de78f83d3))
+
+### Performance Improvements
+
+* 支持注册自定义monaco editor worker ([ced968e](https://github.com/fast-crud/fast-crud/commit/ced968efcca00e3fcec6c9ca2dadf48bce247ac2))
+* table-select 查看模式下支持开启和关闭emit事件 ([5f8ebbc](https://github.com/fast-crud/fast-crud/commit/5f8ebbc293b211eabb62c6c0fda7cfebdc5cc6e2))
+
 ## [1.25.6](https://github.com/fast-crud/fast-crud/compare/v1.25.5...v1.25.6) (2025-03-19)
 
 ### Performance Improvements
