@@ -7,6 +7,7 @@
     v-bind="item"
     :path="item.key"
     :rule-path="item.key"
+    title=""
   >
     <template #label>
       <span v-if="computedLabelIsRender" class="fs-form-item-label-text">

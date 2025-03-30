@@ -1,10 +1,10 @@
-import FsUploaderType from "./type";
-export * from "./type";
+import FsExtendsModelType from "./type";
+export * from "./exports";
 import { utils } from "@fast-crud/fast-crud";
 import { FsEditorConfig } from "@/editor/type/config";
 // @ts-ignore
 const modules = import.meta.glob("./components/*/*.vue", { eager: true });
-const FsUploaderComponents = {
+const FsExtendsComponents = {
   install(app: any) {
     utils.vite.installSyncComponents(app, modules, null, /^.*\/([^\/]+)\/.*.vue$/, null);
   }
@@ -12,7 +12,7 @@ const FsUploaderComponents = {
 
 export const FsExtendsEditor = {
   install(app: any, options: FsEditorConfig) {
-    app.use(FsUploaderType, options);
-    app.use(FsUploaderComponents);
+    app.use(FsExtendsModelType, options);
+    app.use(FsExtendsComponents);
   }
 };

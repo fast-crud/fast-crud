@@ -15,7 +15,7 @@ export default defineComponent({
     }
   },
   setup() {
-    utils.trace("fs-render", true);
+    utils.trace("fs-render");
   },
   render() {
     return this.renderFunc(this.scope);

@@ -6,6 +6,7 @@ import { defaultConfig, FsEditorConfig } from "./config.js";
 function setConfig(app: any, config: FsEditorConfig) {
   app.config.globalProperties.$fs_editor_config = merge(defaultConfig, config);
 }
+
 export default {
   install(app: any, options: FsEditorConfig) {
     const newTypes = types();

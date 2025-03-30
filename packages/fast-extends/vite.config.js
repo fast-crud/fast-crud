@@ -71,7 +71,10 @@ export default ({ command, mode }) => {
           "axios",
           "qiniu-js",
           "@fast-crud/fast-crud",
-          "@fast-crud/ui-interface"
+          "@fast-crud/ui-interface",
+          "monaco-editor",
+          "monaco-yaml",
+          "js-yaml"
         ],
         output: {
           manualChunks(id) {
@@ -94,7 +97,10 @@ export default ({ command, mode }) => {
             "ali-oss": "OSS",
             "cos-js-sdk-v5": "COS",
             "qiniu-js": "qiniu",
-            "@fast-crud/ui-interface": "FsUiInterface"
+            "@fast-crud/ui-interface": "FsUiInterface",
+            "monaco-editor": "monaco",
+            "monaco-yaml": "monacoYaml",
+            "js-yaml": "jsYaml"
           }
         }
       }
