@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.25.7](https://github.com/fast-crud/fast-crud/compare/v1.25.6...v1.25.7) (2025-03-30)
+
+### Performance Improvements
+
+* 支持注册自定义monaco editor worker ([ced968e](https://github.com/fast-crud/fast-crud/commit/ced968efcca00e3fcec6c9ca2dadf48bce247ac2))
+
 ## [1.25.6](https://github.com/fast-crud/fast-crud/compare/v1.25.5...v1.25.6) (2025-03-19)
 
 **Note:** Version bump only for package @fast-crud/fast-extends

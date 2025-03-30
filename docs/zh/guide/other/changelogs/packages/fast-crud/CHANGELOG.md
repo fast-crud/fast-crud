@@ -3,6 +3,16 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.25.7](https://github.com/fast-crud/fast-crud/compare/v1.25.6...v1.25.7) (2025-03-30)
+
+### Bug Fixes
+
+* 修复查看模式下表单验证问题 ([5145fe3](https://github.com/fast-crud/fast-crud/commit/5145fe37789ecfc544a703b746b75cae7f0a708c))
+
+### Performance Improvements
+
+* table-select 查看模式下支持开启和关闭emit事件 ([5f8ebbc](https://github.com/fast-crud/fast-crud/commit/5f8ebbc293b211eabb62c6c0fda7cfebdc5cc6e2))
+
 ## [1.25.6](https://github.com/fast-crud/fast-crud/compare/v1.25.5...v1.25.6) (2025-03-19)
 
 ### Performance Improvements
