@@ -28,6 +28,7 @@ export default ({ command, mode }) => {
   }
 
   const options = {
+    base: "./",
     plugins: [DefineOptions(), vueJsx(), vue()],
     esbuild: {
       drop: command === "build" ? ["debugger"] : [],
