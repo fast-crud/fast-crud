@@ -75,7 +75,19 @@ export default ({ command, mode }) => {
           "@fast-crud/ui-interface",
           "monaco-editor",
           "monaco-yaml",
-          "js-yaml"
+          "js-yaml",
+          "monaco-editor/esm/vs/basic-languages/yaml/yaml.contribution",
+          "monaco-editor/esm/vs/language/json/monaco.contribution",
+          "monaco-editor/esm/vs/basic-languages/javascript/javascript.contribution",
+          "monaco-editor/esm/vs/editor/editor.worker?worker",
+          "monaco-editor/esm/vs/language/json/json.worker?worker",
+          "monaco-editor/esm/vs/language/css/css.worker?worker",
+          "monaco-editor/esm/vs/language/typescript/ts.worker?worker",
+          "monaco-editor/esm/vs/language/html/html.worker?worker",
+          "monaco-yaml/yaml.worker.js",
+          "monaco-yaml/yaml.worker.js?worker",
+          "monaco-editor/*",
+          "monaco-editor/**"
         ],
         output: {
           manualChunks(id) {

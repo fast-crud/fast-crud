@@ -8,6 +8,12 @@ import * as monaco from "monaco-editor";
 import { onMounted, onUnmounted, ref, watch } from "vue";
 import { cloneDeep, debounce as lodashDebounce } from "lodash-es";
 import { initWorkers } from "./workers";
+import {
+  importJavascriptContribution,
+  importJsonContribution,
+  importMonacoYaml,
+  importYamlContribution
+} from "./async-import";
 
 /**
  * config:
@@ -115,12 +121,12 @@ async function createEditor(ctx: EditorCodeCtx) {
 }
 
 async function initJavascript(ctx: EditorCodeCtx) {
-  await import("monaco-editor/esm/vs/basic-languages/javascript/javascript.contribution");
+  await importJavascriptContribution();
   monaco.languages.register({ id: "javascript" });
 }
 
 async function initJson(ctx: EditorCodeCtx) {
-  await import("monaco-editor/esm/vs/language/json/monaco.contribution");
+  await importJsonContribution();
   monaco.languages.register({ id: "json" });
 
   const schemas = [];
@@ -142,8 +148,8 @@ async function initJson(ctx: EditorCodeCtx) {
 }
 
 async function initYaml(ctx: EditorCodeCtx) {
-  await import("monaco-editor/esm/vs/basic-languages/yaml/yaml.contribution");
-  const { configureMonacoYaml } = await import("monaco-yaml");
+  await importYamlContribution();
+  const { configureMonacoYaml } = await importMonacoYaml();
   monaco.languages.register({ id: "yaml" });
 
   const schemas = [];

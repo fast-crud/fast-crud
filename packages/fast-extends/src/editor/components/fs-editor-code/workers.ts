@@ -1,3 +1,5 @@
+import { importWorks } from "./async-import";
+
 const WorkerBucket = {};
 
 /**
@@ -14,12 +16,8 @@ export async function initWorkers() {
     return;
   }
 
-  const editorWorker = await import("monaco-editor/esm/vs/editor/editor.worker?worker");
-  const jsonWorker = await import("monaco-editor/esm/vs/language/json/json.worker?worker");
-  const cssWorker = await import("monaco-editor/esm/vs/language/css/css.worker?worker");
-  const htmlWorker = await import("monaco-editor/esm/vs/language/html/html.worker?worker");
-  const tsWorker = await import("monaco-editor/esm/vs/language/typescript/ts.worker?worker");
-  const yamlWorker = await import("./yaml.worker?worker");
+  const { editorWorker, jsonWorker, cssWorker, htmlWorker, tsWorker } = await importWorks();
+
   // const editorWorker = new Worker(new URL("monaco-editor/esm/vs/editor/editor.worker.js", import.meta.url));
   // const jsonWorker = new Worker(new URL("monaco-editor/esm/vs/language/json/json.worker.js", import.meta.url));
   // const cssWorker = new Worker(new URL("monaco-editor/esm/vs/language/css/css.worker.js", import.meta.url));
