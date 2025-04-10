@@ -1,6 +1,6 @@
 node_modules
 index.ts
 src
-!src/**/fs-editor-code/**
+!src/**/worker/**
 test
 !dist

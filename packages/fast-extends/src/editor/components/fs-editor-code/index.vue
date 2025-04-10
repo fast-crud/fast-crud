@@ -7,7 +7,6 @@ import * as monaco from "monaco-editor";
 // import * as monaco from "monaco-editor/esm/vs/editor/editor.api";
 import { onMounted, onUnmounted, ref, watch } from "vue";
 import { cloneDeep, debounce as lodashDebounce } from "lodash-es";
-import { initWorkers } from "./workers";
 import {
   importJavascriptContribution,
   importJsonContribution,
@@ -182,7 +181,6 @@ async function initYaml(ctx: EditorCodeCtx) {
 
 async function doInit() {
   disposeEditor();
-  await initWorkers();
   const ctx: EditorCodeCtx = {
     monaco,
     language: props.language || "javascript",
@@ -202,7 +200,6 @@ async function doInit() {
 }
 
 onMounted(async () => {
-  // await initWorkers();
   await doInit();
   watch(
     () => {

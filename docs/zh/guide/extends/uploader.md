@@ -1,8 +1,8 @@
 # fast-extends/uploader
 上传扩展
-#### 1、install
+### 1、install
 ```
-npm install @fast-crud/fast-extends
+pnpm add  @fast-crud/fast-extends
 ```
 
 ### 2、use
