@@ -3,7 +3,7 @@ export type WorkerMatcher = {
   match: (label: string) => boolean;
 };
 
-export type WorkerLoader = () => Promise<Worker>;
+export type WorkerLoader = () => Promise<any>;
 
 export type WorkerItem = {
   worker: any;
