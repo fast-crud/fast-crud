@@ -132,7 +132,7 @@ async function initJson(ctx: EditorCodeCtx) {
   const schemas = [];
   if (ctx.schema) {
     schemas.push({
-      // uri: "http://myserver/foo-schema.json", // id of the first schema
+      uri: "http://myserver/foo-schema.json", // id of the first schema
       fileMatch: ["*"], // associate with our model
       schema: {
         ...ctx.schema
@@ -151,7 +151,7 @@ async function initYaml(ctx: EditorCodeCtx) {
   await importYamlContribution();
   const { configureMonacoYaml } = await importMonacoYaml();
   monaco.languages.register({ id: "yaml" });
-  let id = `fs-editor-code-yaml-${props.id}.yaml`;
+  let id = `fs-editor-code-yaml-${props.id || ""}.yaml`;
   const schemas = [];
   if (ctx.schema) {
     schemas.push({
@@ -159,7 +159,7 @@ async function initYaml(ctx: EditorCodeCtx) {
       schema: {
         ...ctx.schema
       },
-      uri: id
+      uri: "http://myserver/foo-schema.yaml"
     });
   }
   configureMonacoYaml(monaco, {
