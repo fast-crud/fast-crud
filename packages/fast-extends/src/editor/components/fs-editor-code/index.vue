@@ -151,7 +151,7 @@ async function initYaml(ctx: EditorCodeCtx) {
   await importYamlContribution();
   const { configureMonacoYaml } = await importMonacoYaml();
   monaco.languages.register({ id: "yaml" });
-
+  let id = `fs-editor-code-yaml-${props.id}.yaml`;
   const schemas = [];
   if (ctx.schema) {
     schemas.push({
@@ -159,7 +159,7 @@ async function initYaml(ctx: EditorCodeCtx) {
       schema: {
         ...ctx.schema
       },
-      uri: "http://myserver/foo-schema.json"
+      uri: id
     });
   }
   configureMonacoYaml(monaco, {
@@ -171,7 +171,8 @@ async function initYaml(ctx: EditorCodeCtx) {
     isKubernetes: false,
     enableSchemaRequest: false
   });
-  const uri = monaco.Uri.parse(props.id || "fs-editor-code-yaml.yaml");
+
+  const uri = monaco.Uri.parse(id);
   const oldModel = monaco.editor.getModel(uri);
   if (oldModel) {
     oldModel.dispose();
@@ -199,7 +200,7 @@ async function doInit() {
 }
 
 onMounted(async () => {
-  await initWorkers();
+  // await initWorkers();
   await doInit();
   watch(
     () => {

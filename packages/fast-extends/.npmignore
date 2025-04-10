@@ -1,5 +1,6 @@
 node_modules
 index.ts
 src
+!src/**/workers.ts
 test
 !dist

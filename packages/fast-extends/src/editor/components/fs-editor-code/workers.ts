@@ -1,5 +1,3 @@
-import { importWorks } from "./async-import";
-
 const WorkerBucket = {};
 
 /**
@@ -9,6 +7,24 @@ const WorkerBucket = {};
  */
 export function registerWorker(name: string, worker: any) {
   WorkerBucket[name] = worker;
+}
+
+export async function importWorks() {
+  const editorWorker = await import("monaco-editor/esm/vs/editor/editor.worker?worker");
+  const jsonWorker = await import("monaco-editor/esm/vs/language/json/json.worker?worker");
+  const cssWorker = await import("monaco-editor/esm/vs/language/css/css.worker?worker");
+  const htmlWorker = await import("monaco-editor/esm/vs/language/html/html.worker?worker");
+  const tsWorker = await import("monaco-editor/esm/vs/language/typescript/ts.worker?worker");
+  const yamlWorker = await import("./yaml.worker?worker");
+
+  return {
+    editorWorker,
+    jsonWorker,
+    cssWorker,
+    htmlWorker,
+    tsWorker,
+    yamlWorker
+  };
 }
 
 export async function initWorkers() {

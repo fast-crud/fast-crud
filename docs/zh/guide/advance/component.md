@@ -25,6 +25,41 @@ const crudOptions ={
 
 更多帮助请参考[字段配置api文档](/api/crud-options/columns.md)
 
+## 字段类型
+系统内置了一些字段类型，每个字段类型背后代表了一段字段配置    
+[字段类型帮助说明](./column-type.md)
+
+
+## valueChange
+`valueChange` 可以监听数据变化，可以在`search`、`addForm`、`editForm`、`viewForm`、`column`中监听数据变化
+
+```js
+const crudOptions = {
+    columns:{
+        test:{
+            search:{
+                valueChange(context){
+                    // 监听查询框此字段的数据变化
+                    console.log(context)
+                }
+            },
+            form:{
+                valueChange(context){
+                    // 监听添加表单、编辑表单、查看表单此字段的数据变化
+                }
+            },
+            column:{
+                valueChange(context){
+                    // 监听table单元格中的数据变化
+                }
+            }
+        }
+    }
+}
+
+```
+
+
 ## 字段组件配置
 字段组件分为两种：
 * 一种展示组件，出现在表格单元格中。
