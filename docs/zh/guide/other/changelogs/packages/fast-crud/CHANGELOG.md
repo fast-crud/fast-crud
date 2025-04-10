@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.25.8](https://github.com/fast-crud/fast-crud/compare/v1.25.7...v1.25.8) (2025-04-10)
+
+### Bug Fixes
+
+* 修复commonOptions无法覆盖某些参数的bug ([f2ecc03](https://github.com/fast-crud/fast-crud/commit/f2ecc034bf5b38d668ee8366c903a824af34302c))
+
 ## [1.25.7](https://github.com/fast-crud/fast-crud/compare/v1.25.6...v1.25.7) (2025-03-30)
 
 ### Bug Fixes
