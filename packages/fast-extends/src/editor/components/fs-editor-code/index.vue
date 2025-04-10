@@ -72,12 +72,12 @@ export type EditorCodeCtx = {
 
 const monacoRef = ref();
 
-let instanceRef = ref();
+let instanceRef: any = null;
 
 function disposeEditor() {
-  // if (instanceRef.value) {
-  //   instanceRef.value.dispose(); //使用完成销毁实例
-  // }
+  if (instanceRef) {
+    instanceRef.dispose(); //使用完成销毁实例
+  }
 }
 
 onUnmounted(() => {
@@ -114,7 +114,7 @@ async function createEditor(ctx: EditorCodeCtx) {
     }
   });
 
-  instanceRef.value = instance;
+  instanceRef = instance;
   ctx.instance = instance;
   emits("ready", ctx);
   return instance;
@@ -159,7 +159,7 @@ async function initYaml(ctx: EditorCodeCtx) {
       schema: {
         ...ctx.schema
       },
-      uri: "http://myserver/foo-schema.yaml"
+      uri: `http://myserver/${id}`
     });
   }
   configureMonacoYaml(monaco, {
@@ -172,15 +172,17 @@ async function initYaml(ctx: EditorCodeCtx) {
     enableSchemaRequest: false
   });
 
-  const uri = monaco.Uri.parse(id);
-  const oldModel = monaco.editor.getModel(uri);
-  if (oldModel) {
-    oldModel.dispose();
-  }
-  ctx.config.model = monaco.editor.createModel(ctx.initialValue, null, uri);
+  // const uri = monaco.Uri.parse(id);
+  // const oldModel = monaco.editor.getModel(uri);
+  // if (oldModel) {
+  //   oldModel.dispose();
+  // }
+  // ctx.config.model = monaco.editor.createModel(props.modelValue, null, uri);
 }
 
 async function doInit() {
+  disposeEditor();
+  await initWorkers();
   const ctx: EditorCodeCtx = {
     monaco,
     language: props.language || "javascript",
@@ -214,6 +216,17 @@ onMounted(async () => {
     }
   );
 });
+
+watch(
+  () => {
+    return props.modelValue;
+  },
+  (value: any) => {
+    if (instanceRef && instanceRef.getValue() !== value) {
+      instanceRef.setValue(value);
+    }
+  }
+);
 </script>
 
 <style lang="less">

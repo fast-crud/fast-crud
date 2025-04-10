@@ -1,5 +1,3 @@
-const WorkerBucket: WorkerMatcher[] = [];
-
 export type WorkerMatcher = {
   loader: WorkerLoader;
   match: (label: string) => boolean;
@@ -7,11 +5,17 @@ export type WorkerMatcher = {
 
 export type WorkerLoader = () => Promise<Worker>;
 
+export type WorkerItem = {
+  worker: any;
+  match: (label: string) => boolean;
+};
+
+const workerLoaders: WorkerMatcher[] = [];
 /**
  * 注册自定义worker
  */
 export function registerWorker(labels: string | string[], loader: WorkerLoader) {
-  WorkerBucket.push({
+  workerLoaders.push({
     loader: loader,
     match: (label: string) => {
       if (typeof labels === "string") {
@@ -27,7 +31,22 @@ export function registerWorker(labels: string | string[], loader: WorkerLoader) 
   });
 }
 
+async function loadWorkers() {
+  while (workerLoaders.length > 0) {
+    const item = workerLoaders.pop();
+    if (item) {
+      const worker = await item.loader();
+      customWorkers.push({
+        match: item.match,
+        worker: worker
+      });
+    }
+  }
+}
+
+const customWorkers: WorkerItem[] = [];
 export async function initWorkers() {
+  await loadWorkers();
   if (window.MonacoEnvironment) {
     return;
   }
@@ -38,24 +57,13 @@ export async function initWorkers() {
   const htmlWorker = await import("monaco-editor/esm/vs/language/html/html.worker?worker");
   const tsWorker = await import("monaco-editor/esm/vs/language/typescript/ts.worker?worker");
 
-  const customWorkers = [];
-  for (const getter of WorkerBucket) {
-    const worker = await getter.loader();
-    if (worker) {
-      customWorkers.push({
-        worker,
-        match: getter.match
-      });
-    }
-  }
-
   //@ts-ignore
   window.MonacoEnvironment = {
     //@ts-ignore
     getWorker(_, label) {
       for (const customWorker of customWorkers) {
         if (customWorker.match(label)) {
-          return customWorker.worker;
+          return new customWorker.worker();
         }
       }
       if (label === "json") {
