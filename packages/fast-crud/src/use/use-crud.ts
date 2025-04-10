@@ -455,7 +455,8 @@ export function useCrud<T = any, R = any>(ctx: UseCrudProps<T, R>): UseCrudRet<R
 
   function rebuildCrudBindings(inputOpts: DynamicallyCrudOptions) {
     let userOpts = cloneDeep(inputOpts);
-    const baseOptions = merge(defaultCrudOptions.defaultOptions({ t }), defaultCrudOptions.commonOptions(ctx));
+    const commonOptions = defaultCrudOptions.commonOptions(ctx);
+    const baseOptions = merge(defaultCrudOptions.defaultOptions({ t }), commonOptions);
     options = merge({}, baseOptions, userOpts);
     const settings: CrudSettings = unref(options.settings) as CrudSettings;
     if (settings) {
@@ -497,6 +498,7 @@ export function useCrud<T = any, R = any>(ctx: UseCrudProps<T, R>): UseCrudRet<R
       useTable(),
       useActionbar(),
       useEditable(),
+      commonOptions,
       userOpts
     );
 
