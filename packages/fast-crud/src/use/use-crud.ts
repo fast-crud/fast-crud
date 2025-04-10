@@ -456,8 +456,8 @@ export function useCrud<T = any, R = any>(ctx: UseCrudProps<T, R>): UseCrudRet<R
   function rebuildCrudBindings(inputOpts: DynamicallyCrudOptions) {
     let userOpts = cloneDeep(inputOpts);
     const commonOptions = defaultCrudOptions.commonOptions(ctx);
-    const baseOptions = merge(defaultCrudOptions.defaultOptions({ t }), commonOptions);
-    options = merge({}, baseOptions, userOpts);
+    const baseOptions = defaultCrudOptions.defaultOptions({ t });
+    options = merge({}, baseOptions, commonOptions, userOpts);
     const settings: CrudSettings = unref(options.settings) as CrudSettings;
     if (settings) {
       const plugins = unref(settings.plugins) as CrudOptionsPlugins;
