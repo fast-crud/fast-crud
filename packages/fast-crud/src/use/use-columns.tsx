@@ -305,7 +305,11 @@ function buildSearchForm(baseOptions: CrudOptions, formType = "search", columnsM
   return merge({ columns: formColumnsForSearch }, { columns: searchColumns }, baseOptions.search);
 }
 
-function buildFormOptions(crudOptions: DynamicallyCrudOptions, context?: UseFsContext): FormProps {
+function buildFormOptions(
+  crudOptions: DynamicallyCrudOptions,
+  context?: UseFsContext,
+  mode: string = "form"
+): FormProps {
   const { t } = useI18n();
   const { merge } = useMerge();
   context = context || {};
@@ -316,7 +320,8 @@ function buildFormOptions(crudOptions: DynamicallyCrudOptions, context?: UseFsCo
   );
   const initedColumns = setupOptionsColumns(cloneDeep(userOptions.columns), userOptions);
   const columnsMap = buildOptionsColumnsFlatMap({}, initedColumns);
-  return buildForm(userOptions, "form", columnsMap);
+  const formType = mode === "form" ? "form" : `${mode}Form`;
+  return buildForm(userOptions, formType, columnsMap);
 }
 
 function buildColumns(userOptions: CrudOptions) {
