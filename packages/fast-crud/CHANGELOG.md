@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.25.9](https://github.com/fast-crud/fast-crud/compare/v1.25.8...v1.25.9) (2025-04-16)
+
+### Performance Improvements
+
+* buildFormOptions支持mode参数 ([7d66b6c](https://github.com/fast-crud/fast-crud/commit/7d66b6c34ea89f12eb4f6b867562ab36d3eabae4))
+
 ## [1.25.8](https://github.com/fast-crud/fast-crud/compare/v1.25.7...v1.25.8) (2025-04-10)
 
 ### Bug Fixes

@@ -102,7 +102,6 @@ const crudOptions= {
 ## 谁在用fast-crud？
 * [battcn/wemirr-platform](https://gitee.com/battcn/wemirr-platform) ：中台管理系统，java做后台 [预览地址](https://cloud.battcn.com/) , [配套前端ui](https://gitee.com/battcn/wemirr-platform-ui)
 * [django-vue3-admin](https://gitee.com/huge-dream/django-vue3-admin) ：基于python ，django的后台管理系统
-* 极兔速递，内部使用
 * 海豹信息，内部使用
 * [IoTSharp](https://github.com/IoTSharp/IoTSharp)： IOT管理平台，采用fast-crud做前端
 * [SuperApi](https://gitee.com/tmm-top/SuperApi) 无代码CRUD开发平台，后台基于NetCore，前端使用soybean集成fast-crud    
