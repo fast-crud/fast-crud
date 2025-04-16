@@ -54,6 +54,7 @@ export default defineComponent({
     /**
      * 从value构建图片下载url的方法
      * 支持异步
+     * (value)=>Promise<string>
      */
     buildUrl: {
       type: Function,
@@ -61,13 +62,16 @@ export default defineComponent({
         return value;
       }
     },
+    /**
+     * (values)=>Promise<string[]>
+     */
     buildUrls: {
       type: Function,
       default: null
     },
     /**
      * 从value或url构建预览大图的方法
-     * 支持异步
+     * (url,value)=>Promise<string>
      */
     buildPreviewUrl: {
       type: Function,
@@ -75,7 +79,9 @@ export default defineComponent({
         return url;
       }
     },
-
+    /**
+     * (list,values)=>Promise<string[]>
+     */
     buildPreviewUrls: {
       type: Function,
       default: null
@@ -96,6 +102,7 @@ export default defineComponent({
     });
 
     const computedValues = computed(() => {
+      debugger;
       const urls: any = [];
       if (props.modelValue == null || props.modelValue === "") {
         return urls;
@@ -108,7 +115,11 @@ export default defineComponent({
             continue;
           }
           if (item.url != null) {
-            urls.push(item.url);
+            if (item.previewUrl != null) {
+              urls.push(item);
+            } else {
+              urls.push(item.url);
+            }
           } else {
             urls.push(item);
           }
@@ -116,7 +127,11 @@ export default defineComponent({
       } else {
         //object
         if (props.modelValue.url != null) {
-          urls.push(props.modelValue.url);
+          if (props.modelValue.previewUrl != null) {
+            urls.push(props.modelValue);
+          } else {
+            urls.push(props.modelValue.url);
+          }
         } else {
           urls.push(props.modelValue);
         }
@@ -164,7 +179,7 @@ export default defineComponent({
         }
         let previewUrls = urls;
         if (props.buildPreviewUrls) {
-          previewUrls = await props.buildPreviewUrls(list);
+          previewUrls = await props.buildPreviewUrls(list, values);
         }
         for (let i = 0; i < list.length; i++) {
           list[i].previewUrl = previewUrls[i];
@@ -172,11 +187,10 @@ export default defineComponent({
       } else if (props.buildUrl) {
         for (let item of list) {
           item.url = await props.buildUrl(item.value);
-          if (!item.previewUrl) {
-            item.previewUrl = item.url;
-          }
           if (props.buildPreviewUrl) {
-            item.previewUrl = await props.buildPreviewUrl(item);
+            item.previewUrl = await props.buildPreviewUrl(item, item.value);
+          } else {
+            item.previewUrl = item.previewUrl || item.url;
           }
         }
       } else {
