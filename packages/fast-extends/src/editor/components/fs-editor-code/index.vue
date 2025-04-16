@@ -13,7 +13,7 @@ import {
   importMonacoYaml,
   importYamlContribution
 } from "./async-import";
-
+import { initWorkers } from "./workers";
 /**
  * config:
  *   value: '', // 编辑器初始文本
@@ -68,7 +68,7 @@ export type EditorCodeCtx = {
 
   initialValue?: any;
 };
-
+initWorkers();
 const monacoRef = ref();
 
 let instanceRef: any = null;
