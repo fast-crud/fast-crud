@@ -1,6 +1,6 @@
 {
   "name": "@fast-crud/ui-interface",
-  "version": "1.25.8",
+  "version": "1.25.9",
   "description": "interface",
   "main": "./src/index.ts",
   "module": "./src/index.ts",
