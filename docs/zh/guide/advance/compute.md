@@ -50,7 +50,7 @@ showTableRef.value = true
 ```
 
 ::: warning   
-如果你要将`crudOptions`进行`merge`和`cloneDeep`操作，则必须使用 `const {cloneDeep,merge} = useMerge()`    
+你必须使用 `const {cloneDeep,merge} = useMerge()`来对`crudOptions`进行`merge`和`cloneDeep`操作  
 否则会破坏`ref`的响应性   
 :::
 
