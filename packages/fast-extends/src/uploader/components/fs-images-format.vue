@@ -32,7 +32,7 @@ export default defineComponent({
       default: null
     },
     // 图片的url
-    // 'value' 或 ['value','value']
+    // 'url' 或 ['url','url'] 或 [{url:'url'}] 或 {url:'url'}
     modelValue: {
       type: [String, Array, Object],
       require: true
@@ -136,7 +136,7 @@ export default defineComponent({
       for (let i = 0; i < images.length; i++) {
         const image = images[i];
         const url = image.url;
-        const previewUrl = image.url;
+        const previewUrl = image.previewUrl || image.url;
         const preview = ui.image.buildPreviewBind({
           url,
           urls,
@@ -172,7 +172,9 @@ export default defineComponent({
       } else if (props.buildUrl) {
         for (let item of list) {
           item.url = await props.buildUrl(item.value);
-          item.previewUrl = item.url;
+          if (!item.previewUrl) {
+            item.previewUrl = item.url;
+          }
           if (props.buildPreviewUrl) {
             item.previewUrl = await props.buildPreviewUrl(item);
           }
