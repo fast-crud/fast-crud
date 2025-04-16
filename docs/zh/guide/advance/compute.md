@@ -50,7 +50,7 @@ showTableRef.value = true
 ```
 
 ::: warning   
-你必须使用 `const {cloneDeep,merge} = useMerge()`来对`crudOptions`进行`merge`和`cloneDeep`操作  
+您必须使用 `const {cloneDeep,merge} = useMerge()`来对`crudOptions`进行`merge`和`cloneDeep`操作  
 否则会破坏`ref`的响应性   
 :::
 
@@ -200,6 +200,10 @@ const crudOptions = {
 }
 
 ```
+
+::: warning   
+`asyncCompute`本身不支持动态，您不能在useFsAsync中使用它   
+:::   
 
 ## context【上下文】
 在如下三个位置会具有上下文。(对应字段下的几个配置)
