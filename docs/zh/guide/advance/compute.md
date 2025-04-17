@@ -49,6 +49,11 @@ showTableRef.value = true
 
 ```
 
+::: warning   
+您必须使用 `const {cloneDeep,merge} = useMerge()`来对`crudOptions`进行`merge`和`cloneDeep`操作  
+否则会破坏`ref`的响应性   
+:::
+
 ## 3. compute 【同步计算】
 > 注意后面没有`d`，基于`vue`的`computed`，用法类似，不同的是它支持上下文参数      
 > 开发过程中但凡遇到需要根据表单数据或者行数据参与动态计算的，用`compute`或者`asyncCompute`就对了
@@ -195,6 +200,10 @@ const crudOptions = {
 }
 
 ```
+
+::: warning   
+`asyncCompute`本身不支持动态，您不能在useFsAsync中使用它   
+:::   
 
 ## context【上下文】
 在如下三个位置会具有上下文。(对应字段下的几个配置)
