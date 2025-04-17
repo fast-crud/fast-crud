@@ -60,15 +60,11 @@ import { useUploader } from "./utils";
 
 /**
  * 图片裁剪上传组件,封装了fs-cropper
- *
  * fs-cropper内部封装了[cropperjs](https://github.com/fengyuanchen/cropperjs)
- *
  */
-
 export default defineComponent({
   name: "FsCropperUploader",
   props: {
-    disabled: {},
     /**
      * 初始图片url,或者是数组
      */
@@ -161,8 +157,12 @@ export default defineComponent({
     valueType: {
       type: String, // url ,key, object
       default: "url"
-    }
-  } as any,
+    },
+    /**
+     * 是否禁用
+     */
+    disabled: {}
+  },
   emits: ["update:modelValue", "change", "ready"],
   setup(props: any, ctx: any) {
     const { ui } = useUi();
