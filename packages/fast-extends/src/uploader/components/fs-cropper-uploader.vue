@@ -69,50 +69,72 @@ export default defineComponent({
   name: "FsCropperUploader",
   props: {
     disabled: {},
-    // 初始图片url,或者是数组
+    /**
+     * 初始图片url,或者是数组
+     */
     modelValue: {
       type: [String, Object, Array]
     },
     img: {},
-    // 上传后端类型，[form, cos, qiniu , alioss]
+    /**
+     * 上传后端类型，[form, cos, qiniu , alioss]
+     */
     type: {
       type: String
     },
-    // 上传提示
+    /**
+     *  上传提示
+     */
     uploadTip: {
       type: String
     },
-    // 对话框标题
+    /**
+     * 对话框标题
+     */
     title: String,
-    // cropper的高度，默认为浏览器可视窗口高度的40%，最小270
+    /**
+     * cropper的高度，默认为浏览器可视窗口高度的40%，最小270
+     */
     cropperHeight: {
       type: [String, Number]
     },
-    // 对话框宽度，默认50%
+    /**
+     * 对话框宽度，默认50%
+     */
     dialogWidth: {
       type: [String, Number],
       default: "50%"
     },
-    // 图片大小限制，单位MB
+    /**
+     * 图片大小限制，单位MB
+     */
     maxSize: {
       type: Number,
       default: 5
     },
-    // 图片数量限制,0为不限制
+    /**
+     * 图片数量限制,0为不限制
+     */
     limit: {
       type: Number,
       default: 1
     },
-    // 可接收的文件后缀
+    /**
+     * 可接收的文件后缀
+     */
     accept: {
       type: String,
       default: ".jpg, .jpeg, .png, .gif, .webp"
     },
-    // [cropperjs的参数](https://github.com/fengyuanchen/cropperjs)
+    /**
+     * [cropperjs的参数](https://github.com/fengyuanchen/cropperjs)
+     */
     cropper: {
       type: Object
     },
-    // 上传参数，会临时覆盖全局上传配置参数[d2p-uploader](/guide/extends/uploader.html)
+    /**
+     * FsUploaderXXX的配置，会临时覆盖全局上传配置参数
+     */
     uploader: {
       type: Object
     },
@@ -123,7 +145,9 @@ export default defineComponent({
       type: Number,
       default: 0.8
     },
-    // 构建下载url方法,不影响提交的value
+    /**
+     *  构建下载url方法,不影响提交的value
+     */
     buildUrl: {
       type: Function,
       default: async function (value: any) {

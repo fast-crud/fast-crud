@@ -111,7 +111,7 @@ export default defineComponent({
       type: Function
     },
     /**
-     * fs-uploader的配置
+     * FsUploaderXXX的配置
      * 可以覆盖全局配置里各个上传类型对应的配置
      * 例如: `{action:'xxx',bucket:'xxx',...}`
      */

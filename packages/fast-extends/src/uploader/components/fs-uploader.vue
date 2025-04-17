@@ -3,6 +3,9 @@ import { defineComponent } from "vue";
 import { useUploader } from "./utils";
 import { loadUploader } from "./libs";
 
+/**
+ * 请查看对应上传类型文档：FsUploaderForm、FsUploaderCos、FsUploaderAlioss、FsUploaderS3、FsUploaderQiniu
+ */
 export default defineComponent({
   name: "FsUploader",
   props: {

@@ -270,6 +270,26 @@ module.exports = {
                                         {
                                             text: "fs-files-format",
                                             link: '/api/components/extends/uploader/components/fs-files-format'
+                                        },
+                                        {
+                                            text: "FsUploaderForm",
+                                            link: '/api/components/extends/uploader/components/fs-uploader-form'
+                                        },
+                                        {
+                                            text: "FsUploaderCos",
+                                            link: '/api/components/extends/uploader/components/fs-uploader-cos'
+                                        },
+                                        {
+                                            text: "FsUploaderAlioss",
+                                            link: '/api/components/extends/uploader/components/fs-uploader-alioss'
+                                        },
+                                        {
+                                            text: "FsUploaderQiniu",
+                                            link: '/api/components/extends/uploader/components/fs-uploader-qiniu'
+                                        },
+                                        {
+                                            text: "FsUploaderS3",
+                                            link: '/api/components/extends/uploader/components/fs-uploader-s3'
                                         }
                                     ]
                                 },
