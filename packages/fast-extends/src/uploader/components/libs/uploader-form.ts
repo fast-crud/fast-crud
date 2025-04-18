@@ -30,6 +30,9 @@ async function doUpload(opts: FsUploaderDoUploadOptions) {
   if (options.successHandle) {
     res = await options.successHandle(res, ajaxOptions);
   }
+  if (!res) {
+    throw new Error("上传成功，successHandle处理后必须返回数据，格式为 url 或{url} 或 {key}等");
+  }
 
   if (res && typeof res === "object" && res.key == null) {
     res.key = key;
