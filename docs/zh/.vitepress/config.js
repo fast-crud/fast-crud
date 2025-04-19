@@ -244,6 +244,7 @@ module.exports = {
                                 {text: 'fs-dict-tree', link: "/api/components/crud/extends/fs-dict-tree"},
                                 {text: 'fs-values-format', link: "/api/components/crud/extends/fs-values-format"},
                                 {text: 'fs-table-select', link: "/api/components/crud/extends/fs-table-select"},
+                                {text: 'fs-editable-select', link: "/api/components/crud/extends/fs-editable-select"},
                                 {text: 'fs-icon-selector', link: "/api/components/crud/extends/fs-icon-selector/"},
                             ]
                         },
