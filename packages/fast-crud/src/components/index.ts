@@ -50,6 +50,7 @@ import FsDictSwitch from "./extends/fs-dict-switch.vue";
 import FsDateFormat from "./extends/fs-date-format.vue";
 import FsDictTree from "./extends/fs-dict-tree.vue";
 import FsTableSelect from "./extends/fs-table-select.vue";
+import FsEditableSelect from "./extends/fs-editable-select.vue";
 export {
   FsPage,
   FsContainer,
@@ -95,5 +96,6 @@ export {
   FsDateFormat,
   FsBox,
   FsDictTree,
-  FsTableSelect
+  FsTableSelect,
+  FsEditableSelect
 };

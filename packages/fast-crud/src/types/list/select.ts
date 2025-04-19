@@ -30,6 +30,14 @@ export default function () {
         }
       }
     },
+    "editable-select": {
+      column: { component: { name: "fs-values-format", vModel: "modelValue" } },
+      form: {
+        component: {
+          name: "fs-editable-select"
+        }
+      }
+    },
     "dict-radio": {
       search: {
         component: {

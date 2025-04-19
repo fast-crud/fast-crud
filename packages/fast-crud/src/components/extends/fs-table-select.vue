@@ -133,7 +133,7 @@ type FsTableSelectProps = {
   /**
    * 查看模式下是否触发change事件
    */
-  emitOnViewModel: boolean;
+  emitOnViewModel?: boolean;
 
   /**
    * table是否跟随窗口关闭而销毁
