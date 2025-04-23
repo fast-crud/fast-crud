@@ -18,3 +18,18 @@ node ./node_modules/esbuild/install.js
     }
 }
 ```
+##  TypeError: date4.locale is not a functio
+使用 antdv4 日期组件报错
+需要配置 
+```js
+const crudOptions = {
+    columns:{
+        key:{
+            valueBuilder({value}){
+                //日期组件只能接受dayjs或者Date对象
+                return dayjs(value) //或者 new Date()
+            }
+        }
+    }
+}
+```
