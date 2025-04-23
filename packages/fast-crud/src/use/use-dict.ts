@@ -21,7 +21,7 @@ export function useDict(props: any, ctx: any, vModel = "modelValue") {
         options = props.options;
       } else if (dict && dict.data != null) {
         if (!(dict.data instanceof Array)) {
-          utils.logger.warn("dict.data类型错误，期望为数组，实际：" + dict.data);
+          utils.logger.warn("dict.data类型错误，期望为数组，实际：" , dict.data);
         }
         options = dict.data;
         if (props.transformDictData) {
