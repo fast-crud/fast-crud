@@ -102,7 +102,8 @@ function buildTableSlots({ props, ui, sortedColumns, renderRowHandle, renderCell
     // rowHandle
     if (props.rowHandle && props.rowHandle.show !== false) {
       const rowHandleSlots = {
-        default: renderRowHandle
+        default: renderRowHandle,
+        ...props.rowHandle?.slots
       };
       children.push(
         <tableColumnComp
