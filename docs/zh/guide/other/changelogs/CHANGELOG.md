@@ -3,6 +3,19 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.25.10](https://github.com/fast-crud/fast-crud/compare/v1.25.9...v1.25.10) (2025-04-25)
+
+### Bug Fixes
+
+* 修复全屏对话框不占满屏幕的bug ([7f6bfe0](https://github.com/fast-crud/fast-crud/commit/7f6bfe0203f36cddddd085c854e06ed23c714b60))
+
+### Performance Improvements
+
+* 新增editable-select组件 ([8681285](https://github.com/fast-crud/fast-crud/commit/86812851de435cb2406d06898396c368d5eda414))
+* 优化自定义上传未返回数据时的报错提示 ([ea7b033](https://github.com/fast-crud/fast-crud/commit/ea7b03385dec47809ab7dd9941f5926e8e378e91))
+* 优化antdv单元格合并示例，使用customCell方法，以及增加操作列合并演示 ([1068f9a](https://github.com/fast-crud/fast-crud/commit/1068f9aaa9b7732acb7082cc2ce3b1fadf1f8521))
+* 优化dict的返回错误值的提示 ([b9d6b54](https://github.com/fast-crud/fast-crud/commit/b9d6b5443cf7cd18e249b6d5fc3c524797c14119))
+
 ## [1.25.9](https://github.com/fast-crud/fast-crud/compare/v1.25.8...v1.25.9) (2025-04-16)
 
 ### Bug Fixes
