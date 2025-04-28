@@ -169,6 +169,26 @@ const crudOptions = {
 * 默认值： false
 * 场景：配置true，则value当做文本显示；配置string，则直接显示配置的文本
 
+## [key].column.tooltip
+* 说明：鼠标放在单元格组件上的显示文本
+* 类型：boolean | string | RenderFunc | object:{tooltipProps,slots:{}}
+* 默认值： false
+* 场景：配置true，则value当做文本显示；配置string，则直接显示配置的文本
+
+```js
+const crudOptions = {
+    columns: {
+        name: {
+            column: {
+                tooltip: "显示提示" //也可以配置为true， 或者  ()=>{ return 'xxxx'}
+            }
+        },
+    }
+}
+```
+
+
+
 ## [key].column.columnSlots
 * 说明：自定义table-column列的插槽【仅element-plus有用】
 * 类型：`{key:RenderFunc}`

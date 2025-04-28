@@ -1,7 +1,8 @@
 import { useCompute } from "../../use/use-compute";
-import { computed, defineComponent, isShallow, PropType, ref } from "vue";
+import { computed, defineComponent, isShallow, PropType, ref, resolveDynamicComponent } from "vue";
 import { ConditionalRenderProps } from "../../d";
-import { toString } from "lodash-es";
+import { omit, toString } from "lodash-es";
+import { useUi } from "@fast-crud/ui-interface";
 /**
  * 单元格显示组件
  */
@@ -31,6 +32,7 @@ export default defineComponent({
   },
   setup(props: any, ctx) {
     const { doComputed } = useCompute();
+    const { ui } = useUi();
     const computedPropsComponent = () => {
       return props.item.component;
     };
@@ -70,7 +72,7 @@ export default defineComponent({
       return cellContentRender;
     });
 
-    return () => {
+    const lastRender = () => {
       const value = props.scope.value;
       const cellContentRender = computedCellContentRender.value;
       const scope = { ...props.scope, props: props.item };
@@ -97,5 +99,36 @@ export default defineComponent({
         return cellContentRender(toString(value));
       }
     };
+
+    if (props.item.tooltip) {
+      const tooltipComp = resolveDynamicComponent(ui.tooltip.name);
+      return () => {
+        let tooltipProps: any = {};
+        let tooltipSlots: any = {};
+        if (typeof props.item.tooltip === "object") {
+          tooltipProps = omit(props.item.tooltip, "slots");
+          tooltipSlots = {
+            ...props.item.tooltip.slots
+          };
+        } else {
+          tooltipSlots[ui.tooltip.content] = () => {
+            if (props.item.tooltip === true) {
+              return computedTitle.value ?? props.scope.value;
+            } else if (typeof props.item.tooltip === "function") {
+              return props.item.tooltip();
+            } else {
+              return props.item.tooltip;
+            }
+          };
+        }
+        const slots = {
+          ...tooltipSlots,
+          [ui.tooltip.trigger]: () => lastRender()
+        };
+        return <tooltipComp {...tooltipProps} v-slots={slots}></tooltipComp>;
+      };
+    } else {
+      return lastRender;
+    }
   }
 });
