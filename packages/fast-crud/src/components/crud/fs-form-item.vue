@@ -1,13 +1,12 @@
 <template>
   <component
     :is="ui.formItem.name"
-    v-if="item"
+    v-if="computedItem"
     class="fs-form-item"
     :[ui.formItem.prop]="computedKey"
-    v-bind="item"
-    :path="item.key"
-    :rule-path="item.key"
-    title=""
+    v-bind="computedItem"
+    :path="computedItem.key"
+    :rule-path="computedItem.key"
   >
     <template #label>
       <span v-if="computedLabelIsRender" class="fs-form-item-label-text">
@@ -129,6 +128,15 @@ export default defineComponent({
       return componentRenderRef.value?.getTargetRef();
     }
 
+    const computedItem = computed(() => {
+      const res = {
+        ...props.item
+      };
+      delete res.title;
+      delete res.label;
+      return res;
+    });
+
     const computedHelperPosition = computed(() => {
       return props.item?.helper?.position || (props.helper as any)?.position;
     });
@@ -167,7 +175,8 @@ export default defineComponent({
       computedKey,
       computedLabelIsRender,
       computedLabel,
-      computedLabelRender
+      computedLabelRender,
+      computedItem
     };
   }
 });

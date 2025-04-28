@@ -102,7 +102,6 @@ export default defineComponent({
     });
 
     const computedValues = computed(() => {
-      debugger;
       const urls: any = [];
       if (props.modelValue == null || props.modelValue === "") {
         return urls;
