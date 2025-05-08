@@ -102,5 +102,34 @@ const crudOptions = {
 
 
 
-
+## 6. 添加时候启用，编辑时禁用
+```js
+const crudOptions = {
+    cplumns:{
+        fieldKey:{
+            form:{
+               //被viewForm 、addForm 和editForm继承
+            },
+            addForm:{
+                //添加表单里面该字段的配置，会继承form的配置
+                component:{
+                    disabled:false
+                }
+            },
+            editForm:{
+                //编辑表单里面该字段的配置，会继承form的配置
+                component:{
+                    disabled:true
+                }
+            },
+            viewForm:{
+                //查看表单里面该字段的配置，会继承form的配置
+                component:{
+                    disabled:true
+                }
+            }
+        }
+    }
+}
+```
 
