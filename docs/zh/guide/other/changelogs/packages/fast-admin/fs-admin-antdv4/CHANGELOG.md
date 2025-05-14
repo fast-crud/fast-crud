@@ -3,6 +3,23 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.25.11](https://github.com/fast-crud/fast-crud/compare/v1.25.10...v1.25.11) (2025-05-14)
+
+### Bug Fixes
+
+* 修复naive-ui下 form-item 的label设置为render会报警告的问题 ([45e1bc6](https://github.com/fast-crud/fast-crud/commit/45e1bc6d9cfc408a98dfe628bf3b9bd14af4b2cf))
+
+### Performance Improvements
+
+* 单元格支持tooltip ([44d83ad](https://github.com/fast-crud/fast-crud/commit/44d83ad890589b2b64ff5e9f869fc04863576a3b))
+
+## [1.25.10](https://github.com/fast-crud/fast-crud/compare/v1.25.9...v1.25.10) (2025-04-25)
+
+### Performance Improvements
+
+* 新增editable-select组件 ([8681285](https://github.com/fast-crud/fast-crud/commit/86812851de435cb2406d06898396c368d5eda414))
+* 优化antdv单元格合并示例，使用customCell方法，以及增加操作列合并演示 ([1068f9a](https://github.com/fast-crud/fast-crud/commit/1068f9aaa9b7732acb7082cc2ce3b1fadf1f8521))
+
 ## [1.25.9](https://github.com/fast-crud/fast-crud/compare/v1.25.8...v1.25.9) (2025-04-16)
 
 ### Bug Fixes
