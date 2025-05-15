@@ -133,3 +133,18 @@ const crudOptions = {
 }
 ```
 
+## 7. 动态增减表单项
+
+```js
+const formWrapperRef = crudExpose.getFormWrapperRef();
+const columnsRef = toRef(formWrapperRef.formOptions, "columns");
+
+//动态修改 columnsRef即可,比如：
+// 此时无法使用type精简配置
+// 配置项请参考：http://fast-crud.docmirror.cn/api/crud-options/columns/form.html
+columnsRef.value.newField = { 
+    component:{
+        name: "a-input"
+    }
+}
+```
