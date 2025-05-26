@@ -2,7 +2,7 @@ import { useMerge } from "./use-merge";
 import types from "../types";
 import defaultCrudOptions from "./default-crud-options";
 import { forEach, sortBy, size, pick, remove, includes } from "lodash-es";
-import { isRef, reactive, shallowRef } from "vue";
+import { isRef, reactive, shallowReactive, shallowRef } from "vue";
 import { useI18n } from "../locale";
 import logger from "../utils/util.log";
 import {
@@ -45,11 +45,17 @@ function mergeColumnDict(item: ColumnCompositionProps) {
   // copy dict
   if (item.dict) {
     if (item.column?.component) {
-      const dict = cloneDeep(item.dict);
+      const dict = shallowReactive(cloneDeep(item.dict));
+      if (dict.cloneable) {
+        dict.cloneable = false;
+      }
       item.column.component.dict = merge(dict, item.column.component.dict);
     }
     if (item.form?.component) {
-      const dict = cloneDeep(item.dict);
+      const dict = shallowReactive(cloneDeep(item.dict));
+      if (dict.cloneable) {
+        dict.cloneable = false;
+      }
       item.form.component.dict = merge(dict, item.form.component.dict);
     }
   }

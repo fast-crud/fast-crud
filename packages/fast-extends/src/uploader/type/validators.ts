@@ -27,8 +27,8 @@ export const createUploaderRules = (yourRules?: RuleRecord[], uploadingWarningMe
   yourRules.push({
     //@ts-ignore
     validator: AllUploadSuccessValidator(), //如果要自定义校验规则则需要手动配置这个
-    message: uploadingWarningMessage || "还有文件正在上传，请稍候",
-    trigger: "blur" // <-------注意使用blur事件，否则会闪现
+    message: uploadingWarningMessage || "还有文件正在上传，请稍候"
+    // trigger: "blur" // <-------注意使用blur事件，否则会闪现
   });
   return yourRules;
 };
