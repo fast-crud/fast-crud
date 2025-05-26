@@ -20,12 +20,11 @@
 ### data
 * 说明：字典数据，传入此值则无需从远程获取，如果未传则从远程获取后填入此处
 * 类型：Array
-* 默认：undefined
 
 ### getData
 * 说明： 异步获取数组字典方法，此参数会覆盖全局的`getRemoteDictFunc`
-* 类型：async Function({url,dict,...context}):Array
-* 默认：undefined
+* 类型：`async Function({url,dict,...context}):Array`
+
 
 ### cache
 * 说明：是否开启全局缓存（多个实例之间缓存，以url作为缓存key），开启后，多实例间加载字典只会请求一次。
@@ -173,6 +172,18 @@ data?: T[];
 获取字典map（以value为key的map）
 ### dict.getNodeByValue()
 根据value获取字典项
+
+
+### dict.setData(any[])
+直接设置字典数据
+```js
+const dictRef = dict({})
+
+dictRef.setData([
+    {value:1,label:'选项1'},
+    {value:2,label:'选项2'}
+])
+```
 
 ## dict组件
 dict组件包括：FsDictSelect/FsDictRadio/FsDictCascader/FsDictCheckbox/FsDictSwitch等
