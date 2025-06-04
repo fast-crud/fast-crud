@@ -39,24 +39,18 @@ export default defineComponent({
     useFormatGreater: { type: Number, default: 1000 * 60 * 60 * 24 * 3, required: false },
 
     /**
-     * HumanizeDuration参数
-     * https://github.com/EvanHahn/HumanizeDuration.js
+     * [HumanizeDuration参数](https://github.com/EvanHahn/HumanizeDuration.js)
      */
     options: {
-      type: Object as PropType<HumanizerOptions>,
-      default() {
-        return {};
-      }
+      type: Object as PropType<HumanizerOptions>
     },
 
     /**
      * 前后文本
+     * `{ prev: string; after: string }`
      */
     text: {
-      type: Object as PropType<{ prev: string; after: string }>,
-      default() {
-        return {};
-      }
+      type: Object as PropType<{ prev: string; after: string }>
     }
   },
   setup(props: any) {
@@ -73,9 +67,9 @@ export default defineComponent({
       }
 
       let duration = dayjs().valueOf() - date.valueOf();
-      let suffix = props.text.ago ?? "前";
+      let suffix = props.text?.ago ?? "前";
       if (duration < 0) {
-        suffix = props.text.after ?? "后";
+        suffix = props.text?.after ?? "后";
         duration = -duration;
       }
       if (duration > props.useFormatGreater) {
