@@ -1,5 +1,5 @@
 <template>
-  <span>{{ formatted }}</span>
+  <span :title="fullText">{{ formatted }}</span>
 </template>
 
 <script lang="ts">
@@ -54,6 +54,12 @@ export default defineComponent({
     }
   },
   setup(props: any) {
+    const fullText = computed(() => {
+      if (props.modelValue == null || props.modelValue === "") {
+        return "";
+      }
+      return dayjs(props.modelValue).format("YYYY-MM-DD HH:mm:ss");
+    });
     const formatted = computed(() => {
       if (props.modelValue == null || props.modelValue === "") {
         return "";
@@ -80,7 +86,8 @@ export default defineComponent({
     });
 
     return {
-      formatted
+      formatted,
+      fullText
     };
   }
 });
