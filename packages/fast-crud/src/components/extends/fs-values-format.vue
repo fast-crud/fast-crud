@@ -51,7 +51,7 @@ function getHashCode(str: string) {
     hash = (hash << 5) - hash + chr;
     hash |= 0; // Convert to 32bit integer
   }
-  return hash;
+  return Math.abs(hash);
 }
 
 function buildArrayValue(props: any) {
@@ -179,8 +179,13 @@ export default defineComponent({
         item[typeKey] = color;
         return;
       }
+      console.log("item", item);
+      if (item.value === "github") {
+        debugger;
+      }
       if (props.color === "auto") {
         const hashcode = getHashCode(getValue(item));
+        console.log("hashcode", getValue(item), hashcode);
         const colors = props.autoColors ? props.autoColors : COLOR_LIST;
         item[typeKey] = colors[hashcode % colors.length];
         const effects = props.autoEffects ? props.autoEffects : EFFECT_LIST;
