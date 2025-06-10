@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.25.13](https://github.com/fast-crud/fast-crud/compare/v1.25.12...v1.25.13) (2025-06-10)
+
+### Performance Improvements
+
+* humanize组件支持显示全量时间，优化文档显示 ([8fcf08c](https://github.com/fast-crud/fast-crud/commit/8fcf08c5dad7d323531347593894a7f94aaf74b9))
+
 ## [1.25.12](https://github.com/fast-crud/fast-crud/compare/v1.25.11...v1.25.12) (2025-05-26)
 
 ### Bug Fixes
