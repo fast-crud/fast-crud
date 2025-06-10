@@ -6,7 +6,8 @@
 以下为各ui的官方示例，里面包含丰富的crud特性配置示例
 
 ### 1. antdv
-[antdv4示例地址](http://fast-crud.docmirror.cn/antdv4/)
+[antdv4示例地址](http://fast-crud.docmirror.cn/antdv4/)    
+[综合项目示例 certd](http://fast-crud.docmirror.cn/antdv4/) ： 证书自动化系统，让你的证书用不过期，基于midwayjs，使用fast-crud快速开发功能，数据库自动迁移
 
 ### 2. element-plus
 [element示例地址](http://fast-crud.docmirror.cn/element/)
