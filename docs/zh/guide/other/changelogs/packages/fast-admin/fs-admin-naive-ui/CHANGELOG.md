@@ -3,6 +3,10 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.25.13](https://github.com/jekip/naive-ui-admin/compare/v1.25.12...v1.25.13) (2025-06-10)
+
+**Note:** Version bump only for package naive-ui-admin
+
 ## [1.25.12](https://github.com/jekip/naive-ui-admin/compare/v1.25.11...v1.25.12) (2025-05-26)
 
 **Note:** Version bump only for package naive-ui-admin
