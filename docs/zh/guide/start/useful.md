@@ -148,3 +148,63 @@ columnsRef.value.newField = {
     }
 }
 ```
+
+
+## 8. vModel传值给字段组件
+
+当一个组件需要接受多个vmodle传值时，需要手动配置`vmodel`     
+比如国际化手机号选择组件`phone-input`,有两个`vmodel`参数：分别是：`phone`,`phoneCode`
+
+```vue
+<template>
+  <a-select v-model:value="phoneCode" :options="phoneCodeOptions" @update:value="onUpdatePhoneCode" />
+  <a-input v-model:value="phone" @update:value="onUpdatePhone" />
+</template>
+<script setup lang="ts">
+  defineOptions({
+    name:"PhoneInput"
+  })
+  const props = defineProps<{
+      phone: string;
+      phoneCode: string;
+  }>()
+  
+  const emit = defineEmits(["update:phone","update:phoneCode"])
+  function onUpdatePhoneCode(value:string){
+      emit("update:phoneCode",value)
+  }
+  function onUpdatePhone(value:string){
+      emit("update:phone",value)
+  }
+</script>
+```
+
+```ts
+/**
+ * 以下是crud配置，假设表单数据格式为
+ * form:{phone:string,phoneCode:string}
+ */
+const crudOptions = {
+    columns:{
+        phone:{
+            form:{
+                component:{
+                    name:"PhoneInput",
+                    vModel: "phone", //默认的vModel，此方式简单，并且只能配置一个
+                    //如果有多个，就需要手写形式，以下演示vModel:phoneCode的手动配置方式
+                    phoneCode:compute(({form})=>{
+                        //动态传入form.phoneCode给子组件
+                        return form.phoneCode
+                    }),
+                    on:{
+                        "update:phoneCode"({form,$event}){
+                            //收到子组件的更新事件后，更新表单中的phoneCode字段
+                            form.phoneCode = $event
+                        }
+                    }
+                }
+            }
+        }
+    }
+}
+```
