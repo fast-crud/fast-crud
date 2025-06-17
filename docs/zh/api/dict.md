@@ -197,8 +197,44 @@ dict组件包括：FsDictSelect/FsDictRadio/FsDictCascader/FsDictCheckbox/FsDict
 ### onDictChange({dict, ...context})
 当组件引用的`dict`的`dict.data`改变后被触发，可以实现设置第一个选项为默认值之类的需求。
 
+```js
+const crudOptions = {
+    columns:{
+        key:{
+            type: 'dict-select',
+            dict: dict({})
+            form:{
+                component:{
+                    onDictChange({dict, ...context}){
+                        console.log(dict)
+                    }
+                }
+            }
+        }
+    }
+}
+```
+
 ### labelBuilder
 * 说明：字典项的label属性名构建方法，用于构建复杂的label
 * 类型：`(option)=>string`
 * 默认：undefined
 
+```js
+const crudOptions = {
+    columns:{
+        key:{
+            type: 'dict-select',
+            dict: dict({}),
+            form:{
+                component:{
+                    labelBuilder(item){
+                        console.log(item)
+                        return `${item.label}<${item.value}>`
+                    }
+                }
+            }
+        }
+    }
+}
+```
