@@ -42,12 +42,6 @@
 * 类型：String
 * 默认：label
 
-### labelBuilder
-* 说明：字典项的label属性名构建方法，用于构建复杂的label
-* 类型：`(option)=>string`
-* 默认：undefined
-
-
 ### children
 * 说明：字典项的children属性名
 * 类型：String
@@ -202,4 +196,9 @@ dict组件包括：FsDictSelect/FsDictRadio/FsDictCascader/FsDictCheckbox/FsDict
 ## dict组件的通用参数
 ### onDictChange({dict, ...context})
 当组件引用的`dict`的`dict.data`改变后被触发，可以实现设置第一个选项为默认值之类的需求。
+
+### labelBuilder
+* 说明：字典项的label属性名构建方法，用于构建复杂的label
+* 类型：`(option)=>string`
+* 默认：undefined
 
