@@ -18,6 +18,7 @@ import {
   UseFsContext
 } from "../d";
 import { Constants } from "../utils/util.constants";
+import { useUi } from "@fast-crud/ui-interface";
 
 const { merge, cloneDeep } = useMerge();
 // mergeColumnPlugin 注册
@@ -109,9 +110,37 @@ const viewFormUseCellComponentPlugin = {
   }
 };
 
+const NaiveFormRuleFix = {
+  name: "NaiveFormRuleFix",
+  order: 10,
+  handle: (columnProps: ColumnCompositionProps = {}, crudOptions: CrudOptions = {}) => {
+    const { ui } = useUi();
+    if (ui.type !== "naive") {
+      return;
+    }
+    if (columnProps.addForm?.rules) {
+      columnProps.addForm.rule = columnProps.addForm.rules;
+    }
+    if (columnProps.editForm?.rules) {
+      columnProps.editForm.rule = columnProps.editForm.rules;
+    }
+    if (columnProps.viewForm?.rules) {
+      columnProps.viewForm.rule = columnProps.viewForm.rules;
+    }
+    if (columnProps.form?.rules) {
+      columnProps.form.rule = columnProps.form.rules;
+    }
+    if (columnProps.search?.rules) {
+      columnProps.search.rule = columnProps.search.rules;
+    }
+    return columnProps;
+  }
+};
+
 registerMergeColumnPlugin(mergeColumnPlugin);
 registerMergeColumnPlugin(dictPlugin);
 registerMergeColumnPlugin(viewFormUseCellComponentPlugin);
+registerMergeColumnPlugin(NaiveFormRuleFix);
 
 /**
  * 初始化用户配置的列
