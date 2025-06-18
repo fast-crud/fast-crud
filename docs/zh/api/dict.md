@@ -202,7 +202,7 @@ const crudOptions = {
     columns:{
         key:{
             type: 'dict-select',
-            dict: dict({})
+            dict: dict({}),
             form:{
                 component:{
                     onDictChange({dict, ...context}){
