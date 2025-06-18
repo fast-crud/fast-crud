@@ -214,27 +214,3 @@ const crudOptions = {
     }
 }
 ```
-
-### labelBuilder
-* 说明：字典项的label属性名构建方法，用于构建复杂的label
-* 类型：`(option)=>string`
-* 默认：undefined
-
-```js
-const crudOptions = {
-    columns:{
-        key:{
-            type: 'dict-select',
-            dict: dict({}),
-            form:{
-                component:{
-                    labelBuilder(item){
-                        console.log(item)
-                        return `${item.label}<${item.value}>`
-                    }
-                }
-            }
-        }
-    }
-}
-```
