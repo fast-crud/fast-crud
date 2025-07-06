@@ -188,11 +188,10 @@ QQ群
 
 ## 我的其他项目
 
-| logo                                                                                         |项目| 简介                       |
-|----------------------------------------------------------------------------------------------|---|--------------------------|
-| <img src="https://ai.handsfree.work/logo.png" width='50px'/>                                 | [袖手GPT](https://ai.handsfree.work/)  | ChatGPT，国内可用，无需FQ，每日免费额度 |
-| <img src="http://certd.handsfree.work/images/logo/rect-black.svg" width="100px">             | [certd](https://github.com/certd/certd/)   | 免费通配符域名证书全自动申请部署工具 |
-| <img src="https://github.com/docmirror/dev-sidecar/raw/master/doc/index.png" width="100px"/> | [dev-sidecar](https://github.com/docmirror/dev-sidecar) |直连访问github工具，无需FQ，解决github无法访问的问题 |
+| logo                                                                                         |项目| Stars | 简介                  |
+|----------------------------------------------------------------------------------------------|---|-------|---------------------|
+| <img src="./images/certd.svg" width="100px">                                                 | [certd](https://github.com/certd/certd/)   | 3.3k  | 免费通配符域名证书全自动申请部署工具 |
+| <img src="https://github.com/docmirror/dev-sidecar/raw/master/doc/index.png" width="100px"/> | [dev-sidecar](https://github.com/docmirror/dev-sidecar) | 18k   | 直连访问github工具，无需FQ，解决github无法访问的问题 |
 
 
 > ---------------来都来了点个star再走呗-----------------↗↗↗↗↗↗↗↗  
@@ -200,9 +199,10 @@ QQ群
 > 谜题共三层，前两层是两种不同的编码方式，第三层这里就不剧透了，留一点小乐趣。
 
 
+## 鸣谢
 
-
-## 感谢支持
+* [Tencent EdgeOne](https://edgeone.ai/zh?from=github) ： 本项目 `CDN加速及安全防护`由 `Tencent EdgeOne` 赞助         
+  <img src="./images/edgeone.png" width="300px"/>
 * [vben5](https://www.vben.pro/) ：fs-admin-antdv4示例 采用vben5的布局框架，感谢vben的开源
-* [jetbrains](https://jb.gg/OpenSourceSupport) ：感谢jetbrains提供的免费开源license    
-![](https://resources.jetbrains.com/storage/products/company/brand/logos/jb_beam.svg)
+* [jetbrains](https://jb.gg/OpenSourceSupport) ：感谢jetbrains提供的免费开源license     
+<img src="https://resources.jetbrains.com/storage/products/company/brand/logos/jb_beam.svg" width="100px"/>
