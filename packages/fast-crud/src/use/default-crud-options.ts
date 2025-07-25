@@ -121,16 +121,19 @@ const defaultCrudOptions = {
         }
       },
       addForm: {
+        mode: "add",
         wrapper: {
           title: ct("fs.addForm.title")
         }
       },
       editForm: {
+        mode: "edit",
         wrapper: {
           title: ct("fs.editForm.title")
         }
       },
       viewForm: {
+        mode: "view",
         wrapper: {
           title: ct("fs.viewForm.title"),
           buttons: {
