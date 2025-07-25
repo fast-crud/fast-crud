@@ -231,11 +231,7 @@ export default defineComponent({
       if (ui.type == "element") {
         return {
           beforeClose: (done: any) => {
-            beforeClose().then((ret) => {
-              if (ret) {
-                done();
-              }
-            });
+            doClose();
           }
         };
       }
