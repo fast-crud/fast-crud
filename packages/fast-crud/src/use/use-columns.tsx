@@ -116,7 +116,7 @@ const NaiveFormRuleFix = {
   handle: (columnProps: ColumnCompositionProps = {}, crudOptions: CrudOptions = {}) => {
     const { ui } = useUi();
     if (ui.type !== "naive") {
-      return;
+      return columnProps;
     }
     if (columnProps.addForm?.rules) {
       columnProps.addForm.rule = columnProps.addForm.rules;
