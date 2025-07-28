@@ -241,7 +241,7 @@ function useFixedHeight(props: any, ctx: SetupContext, { tableRef, containerRef 
   }
 
   function watchBodyHeightChange() {
-    const tableDom = tableRef.value.$el;
+    const tableDom = tableRef?.value?.$el;
     if (tableDom == null) {
       return;
     }
