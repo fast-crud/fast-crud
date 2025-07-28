@@ -3,6 +3,34 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [1.26.0](https://github.com/fast-crud/fast-crud/compare/v1.25.13...v1.26.0) (2025-07-28)
+
+### Bug Fixes
+
+*  修复tableRef 不存在时会报错的bug [@zuihou](https://github.com/zuihou) ([4ba786d](https://github.com/fast-crud/fast-crud/commit/4ba786d0632f561f9085cbc946b89a19b820f86b))
+* 独立使用form表单缺失mode的问题 ([9ed791a](https://github.com/fast-crud/fast-crud/commit/9ed791ad4bb9294f4b9380d858df89fbc32ca2a0))
+* 兼容naive， naive支持rules配置 ([921fd41](https://github.com/fast-crud/fast-crud/commit/921fd41ccebba3d1a46f4e7e844bfba481e3565e))
+* 修复查询框多行模式下，input只有50%宽度的bug ([36b82c1](https://github.com/fast-crud/fast-crud/commit/36b82c1dff43be5b6d16a6aaeb7c76b897433b6e))
+* 修复element 保存提示弹出两次的bug ([d8faf1c](https://github.com/fast-crud/fast-crud/commit/d8faf1cd61498efc2fa5f5f8b82b78133c93e331))
+* 修复naive 表单无法完全全屏的bug ([5f0ac57](https://github.com/fast-crud/fast-crud/commit/5f0ac575d6b555d5f903aff39a1242eb6dbd96c1))
+* 修复table-select 示例右上角自定义插槽无法设置的bug ([54a5d90](https://github.com/fast-crud/fast-crud/commit/54a5d90b86338036474657267de3bd7a74caf1eb))
+* card布局情况下，header-top header-bottom同时跟search显隐的bug ([3484232](https://github.com/fast-crud/fast-crud/commit/348423280f06f052fb16214e863ba03735ff9042))
+
+### Features
+
+* 将代码编辑器单独打包到@fast-crud/editor-code，加快不需要code的项目的打包速度，如果您使用了editor-code，请按照文档重新进行editor-code的集成 ([2589b51](https://github.com/fast-crud/fast-crud/commit/2589b519cc2960b61f9706101bcf195d9003b953))
+
+### Performance Improvements
+
+* add title in SearchItemProps ([#478](https://github.com/fast-crud/fast-crud/issues/478)) @ZhoufangErqiangu ([1c0b401](https://github.com/fast-crud/fast-crud/commit/1c0b40174288fdd3b19f8d216573b244ddd32ddb))
+* antdv示例背景设置为白色 ([3d74bf4](https://github.com/fast-crud/fast-crud/commit/3d74bf4e7ca76ecad286ec8f1b8fd2cbcb6428eb))
+* table-select对话框改成使用fs-form-wrapper，支持全屏拖拽等功能 ([f63963d](https://github.com/fast-crud/fast-crud/commit/f63963d9104d6e9fcabf379f04842933ef442674))
+
+### BREAKING CHANGES
+
+* table-select对话框改成使用fs-form-wrapper，
+* 将代码编辑器单独打包到@fast-crud/editor-code，，如果您使用了editor-code，请按照文档重新进行editor-code的集成
+
 ## [1.25.13](https://github.com/fast-crud/fast-crud/compare/v1.25.12...v1.25.13) (2025-06-10)
 
 ### Bug Fixes
