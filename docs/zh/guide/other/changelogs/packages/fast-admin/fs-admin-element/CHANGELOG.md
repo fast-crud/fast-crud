@@ -3,6 +3,16 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [1.26.0](https://github.com/fast-crud/fast-crud/compare/v1.25.13...v1.26.0) (2025-07-28)
+
+### Features
+
+* 将代码编辑器单独打包到@fast-crud/editor-code，加快不需要code的项目的打包速度，如果您使用了editor-code，请按照文档重新进行editor-code的集成 ([2589b51](https://github.com/fast-crud/fast-crud/commit/2589b519cc2960b61f9706101bcf195d9003b953))
+
+### BREAKING CHANGES
+
+* 将代码编辑器单独打包到@fast-crud/editor-code，，如果您使用了editor-code，请按照文档重新进行editor-code的集成
+
 ## [1.25.13](https://github.com/fast-crud/fast-crud/compare/v1.25.12...v1.25.13) (2025-06-10)
 
 **Note:** Version bump only for package @fast-crud/fs-admin-element

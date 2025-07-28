@@ -3,6 +3,13 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [1.26.0](https://github.com/jekip/naive-ui-admin/compare/v1.25.13...v1.26.0) (2025-07-28)
+
+### Bug Fixes
+
+* 兼容naive， naive支持rules配置 ([921fd41](https://github.com/jekip/naive-ui-admin/commit/921fd41ccebba3d1a46f4e7e844bfba481e3565e))
+* 修复table-select 示例右上角自定义插槽无法设置的bug ([54a5d90](https://github.com/jekip/naive-ui-admin/commit/54a5d90b86338036474657267de3bd7a74caf1eb))
+
 ## [1.25.13](https://github.com/jekip/naive-ui-admin/compare/v1.25.12...v1.25.13) (2025-06-10)
 
 **Note:** Version bump only for package naive-ui-admin

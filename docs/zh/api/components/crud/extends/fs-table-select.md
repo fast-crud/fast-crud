@@ -24,6 +24,7 @@
 | viewMode            | 是否查看模式                                                                                                                        | boolean                | -      | false     |
 | emitOnViewModel     | 查看模式下是否触发 change 事件                                                                                                      | boolean                | -      | true      |
 | destroyOnClose      | table 是否跟随窗口关闭而销毁                                                                                                        | boolean                | -      | true      |
+| IsSyncCreate        |                                                                                                                                     | -                      | -      | false     |
 
 ## Events
 
