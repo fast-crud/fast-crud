@@ -42,7 +42,7 @@ const defaultCrudOptions = {
         formItem: {
           wrapperCol: {
             style: {
-              width: "50%"
+              // width: "50%"
             }
           }
         },

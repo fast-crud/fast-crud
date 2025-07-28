@@ -40,7 +40,7 @@
         <slot name="search-buttons"></slot>
         <fs-button
           v-if="collapseButton?.show !== false"
-          :icon="collapse ? ui.icons.caretUp : ui.icons.caretDown"
+          :icon="collapse ? ui.icons.caretDown : ui.icons.caretUp"
           :text="
             collapse
               ? t('fs.search.container.collapseButton.text.expand')
@@ -166,6 +166,10 @@ export default defineComponent({
       display: flex;
       height: auto;
 
+      .ant-form-item-control {
+        width: 50%;
+      }
+
       .fs-search-columns {
         width: 100%;
         display: flex;
@@ -229,7 +233,6 @@ export default defineComponent({
         overflow: hidden;
         height: auto;
         transition: max-height 0.2s ease;
-
         &.fs-search-collapse {
           max-height: 42px !important;
         }
@@ -238,12 +241,17 @@ export default defineComponent({
 
     .ant-form-item {
       display: flex;
+      width: 100%;
       .ant-form-row {
+        width: 100%;
+      }
+      .ant-form-item-row {
         width: 100%;
       }
       .ant-form-item-control {
         flex: 1;
         overflow: hidden;
+        width: auto;
       }
     }
   }
