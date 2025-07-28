@@ -13,28 +13,32 @@
     </template>
     <slot v-bind="scopeRef"></slot>
     <component :is="ui.formItem.skipValidationWrapper">
-      <component :is="ui.dialog.name" v-model:[ui.dialog.visible]="dialogOpen" v-bind="computedDialogBinding">
-        <div v-if="dialogOpen || destroyOnClose === false" :style="{ width: '100%', height: height || '60vh' }">
-          <fs-crud ref="crudRef" v-bind="crudBinding">
-            <template #header-top>
-              <div v-if="showCurrent !== false && !viewMode" class="fs-table-select-current">
-                当前选中：
-                <fs-values-format
-                  ref="valuesFormatRef"
-                  v-model="selectedRowKeys"
-                  :dict="dict"
-                  :closable="true"
-                  v-bind="computedValuesFormat"
-                ></fs-values-format>
-              </div>
-            </template>
-          </fs-crud>
-        </div>
-        <template #[ui.dialog.footerSlotName]>
-          <component :is="ui.button.name" v-if="!viewMode" @click="dialogOpen = false">取消</component>
-          <component :is="ui.button.name" type="primary" @click="onOk">确认</component>
+      <fs-form-wrapper ref="formWrapperRef" v-bind="formWrapperOptions" @closed="onClose" @open="onOpen">
+        <template #form-body-top>
+          <div v-if="dialogOpen || destroyOnClose === false" :style="{ width: '100%', height: height || '70vh' }">
+            <fs-crud ref="crudRef" v-bind="crudBinding">
+              <template #header-top>
+                <div v-if="showCurrent !== false && !viewMode" class="fs-table-select-current">
+                  当前选中：
+                  <fs-values-format
+                    ref="valuesFormatRef"
+                    v-model="selectedRowKeys"
+                    :dict="dict"
+                    :closable="true"
+                    v-bind="computedValuesFormat"
+                  ></fs-values-format>
+                </div>
+              </template>
+            </fs-crud>
+          </div>
         </template>
-      </component>
+      </fs-form-wrapper>
+      <!--      <component :is="ui.dialog.name" v-model:[ui.dialog.visible]="dialogOpen" v-bind="computedDialogBinding">-->
+      <!--        <template #[ui.dialog.footerSlotName]>-->
+      <!--          <component :is="ui.button.name" v-if="!viewMode" @click="dialogOpen = false">取消</component>-->
+      <!--          <component :is="ui.button.name" type="primary" @click="onOk">确认</component>-->
+      <!--        </template>-->
+      <!--      </component>-->
     </component>
   </div>
 </template>
@@ -193,6 +197,13 @@ const dictSelectRef = ref();
 const valuesFormatRef = ref();
 const dialogOpen = ref(false);
 
+function onClose() {
+  dialogOpen.value = false;
+}
+function onOpen() {
+  dialogOpen.value = true;
+}
+
 const { crudRef, crudBinding, crudExpose } = useFsRef();
 
 function initSelectedKeys(modelValue: any) {
@@ -211,6 +222,13 @@ function initSelectedKeys(modelValue: any) {
     }
   }
 }
+
+const formWrapperRef = ref();
+const formWrapperOptions = computed(() => {
+  return {
+    wrapper: {}
+  };
+});
 
 const openTableSelect = async (openOptions: { crudOptions?: DynamicallyCrudOptions; context?: any } = {}) => {
   if (props.disabled || props.readonly || props.select?.disabled || props.select?.readonly) {
@@ -243,7 +261,41 @@ const openTableSelect = async (openOptions: { crudOptions?: DynamicallyCrudOptio
   if (openOptions) {
     ret.appendCrudOptions(openOptions?.crudOptions);
   }
-  dialogOpen.value = true;
+  const wrapperOptions = merge(
+    {
+      wrapper: {
+        title: props.viewMode ? t("fs.extends.tableSelect.view") : t("fs.extends.tableSelect.select"),
+        width: "80%",
+        draggable: true,
+        is: ui.dialog.name,
+        footer: false,
+        buttons: {
+          reset: {
+            show: false
+          },
+          cancel: {
+            text: t("fs.extends.tableSelect.cancel"),
+            async click() {
+              formWrapperRef.value.close();
+            }
+          },
+          ok: {
+            type: "primary",
+            text: t("fs.extends.tableSelect.ok"),
+            async click() {
+              await onOk();
+            }
+          }
+        }
+      }
+    },
+    {
+      wrapper: props.dialog
+    }
+  );
+  formWrapperRef.value.open(wrapperOptions);
+
+  await nextTick();
   await crudExpose.doRefresh();
   return ret;
 };
@@ -279,13 +331,13 @@ const computedSelect = computed(() => {
   };
 });
 
-const computedDialogBinding = computed(() => {
-  const base = ui.dialog.buildProps({
-    title: props.viewMode ? t("fs.extends.tableSelect.view") : t("fs.extends.tableSelect.select"),
-    width: "80%"
-  });
-  return merge(base, props.dialog);
-});
+// const computedDialogBinding = computed(() => {
+//   const base = ui.dialog.buildProps({
+//     title: props.viewMode ? t("fs.extends.tableSelect.view") : t("fs.extends.tableSelect.select"),
+//     width: "80%"
+//   });
+//   return merge(base, props.dialog);
+// });
 
 watch(
   () => {
@@ -400,8 +452,6 @@ async function onOk() {
     emits("change", value);
     emits("selected-change", rows);
   }
-  dialogOpen.value = false;
-
   let scope = {
     value,
     rows,
@@ -409,6 +459,8 @@ async function onOk() {
   };
   emits("dialog-close", scope);
   await nextTick();
+  await formWrapperRef.value.close();
+  console.log("dialogOpen", dialogOpen.value);
   emits("dialog-closed", scope);
 }
 

@@ -78,7 +78,9 @@ export default {
     extends: {
       tableSelect: {
         view: "查看",
-        select: "选择"
+        select: "选择",
+        ok: "确定",
+        cancel: "取消"
       },
       cropper: {
         title: "图片裁剪",

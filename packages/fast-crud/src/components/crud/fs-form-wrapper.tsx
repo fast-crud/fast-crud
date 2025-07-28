@@ -155,6 +155,7 @@ export default defineComponent({
         ...ctx.slots
       };
 
+      ctx.emit("open", buildEvent());
       // 发射打开事件
       emitOnClosed.value = () => {
         if (wrapper.onClosed) {
@@ -259,6 +260,7 @@ export default defineComponent({
     };
 
     const onOpened = () => {
+      ctx.emit("opened");
       if (emitOnOpened.value) {
         emitOnOpened.value();
       }
