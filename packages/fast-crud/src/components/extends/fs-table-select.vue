@@ -39,7 +39,7 @@
   </div>
 </template>
 <script lang="tsx" setup>
-import { Dict, useCompute, useFs, useFsAsync, useFsRef, useMerge, useUi } from "../../use";
+import { Dict, useCompute, useFsAsync, useFsRef, useMerge, useUi } from "../../use";
 import { computed, nextTick, ref, Ref, watch } from "vue";
 import { CreateCrudOptions, DynamicallyCrudOptions } from "../../d";
 import { useI18n } from "../../locale";
@@ -139,12 +139,6 @@ type FsTableSelectProps = {
    * table是否跟随窗口关闭而销毁
    */
   destroyOnClose?: boolean;
-
-  /**
-   * createCrudOptions方法是同步还是异步
-   * createCrudOptions方法有必须在setup中运行的代码时，请设置为true
-   */
-  isSyncCreate?: boolean;
 };
 const props = withDefaults(defineProps<FsTableSelectProps>(), {
   crossPage: true,
@@ -165,7 +159,7 @@ const props = withDefaults(defineProps<FsTableSelectProps>(), {
   /**
    * createCrudOptions方法是同步还是异步
    */
-  isSyncCreate: false
+  IsSyncCreate: false
 });
 
 const slots = defineSlots<{
@@ -218,17 +212,7 @@ function initSelectedKeys(modelValue: any) {
   }
 }
 
-let syncRet = null;
-if (props.isSyncCreate) {
-  syncRet = useFs({
-    crudBinding,
-    crudRef,
-    createCrudOptions: props.createCrudOptions,
-    crudOptionsOverride: buildMergedCrudOptions(),
-    crudExpose
-  });
-}
-const openTableSelect = async (openOptions: { crudOptions: DynamicallyCrudOptions; context: any }) => {
+const openTableSelect = async (openOptions: { crudOptions?: DynamicallyCrudOptions; context?: any } = {}) => {
   if (props.disabled || props.readonly || props.select?.disabled || props.select?.readonly) {
     return;
   }
@@ -236,27 +220,28 @@ const openTableSelect = async (openOptions: { crudOptions: DynamicallyCrudOption
     throw new Error("必须配置dict，且必须配置dict.getNodesByValues");
   }
 
-  let ret = syncRet;
-  if (!props.isSyncCreate) {
-    ret = await useFsAsync({
-      crudBinding,
-      crudRef,
-      createCrudOptions: props.createCrudOptions,
-      crudOptionsOverride: buildMergedCrudOptions(),
-      context: openOptions.context,
-      crudExpose
-    });
-  }
+  const ret = await useFsAsync({
+    crudBinding,
+    crudRef,
+    createCrudOptions: props.createCrudOptions,
+    crudOptionsOverride: buildMergedCrudOptions(),
+    context: {
+      t,
+      ui,
+      ...openOptions?.context
+    },
+    crudExpose
+  });
 
   initSelectedKeys(props.modelValue);
   if (props.beforeOpen) {
     await props.beforeOpen({
-      crudOptions: openOptions.crudOptions,
+      crudOptions: openOptions?.crudOptions,
       ...getScopeContext()
     });
   }
   if (openOptions) {
-    ret.appendCrudOptions(openOptions.crudOptions);
+    ret.appendCrudOptions(openOptions?.crudOptions);
   }
   dialogOpen.value = true;
   await crudExpose.doRefresh();
