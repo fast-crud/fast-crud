@@ -1345,6 +1345,10 @@ export type SearchItemProps<R = any> = {
    */
   show?: boolean;
   /**
+   * 标题
+   */
+  title?: string;
+  /**
    * 组件配置
    */
   component?: ComponentProps;
