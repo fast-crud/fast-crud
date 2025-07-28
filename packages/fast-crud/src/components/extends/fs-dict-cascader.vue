@@ -50,6 +50,7 @@ export default defineComponent({
     "change"
   ],
   setup(props, ctx) {
+    const cascaderRef = ref();
     const dictUseRet = useDict(props, ctx);
     const { ui } = useUi();
     const fieldNamesBinder = ref();
@@ -86,6 +87,7 @@ export default defineComponent({
     }
     return {
       ui,
+      cascaderRef,
       ...dictUseRet,
       fieldNamesBinder,
       computedOptions,

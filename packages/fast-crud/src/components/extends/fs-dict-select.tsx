@@ -1,4 +1,4 @@
-import { computed, defineComponent, resolveDynamicComponent } from "vue";
+import { computed, defineComponent, ref, resolveDynamicComponent } from "vue";
 import { useDict } from "../../use/use-dict";
 import { useI18n } from "../../locale";
 import { useUi } from "../../use";
@@ -56,6 +56,7 @@ export default defineComponent({
     "change"
   ],
   setup(props, ctx) {
+    const selectRef = ref();
     const { t } = useI18n();
     const computedPlaceholder = computed(() => {
       return props.placeholder || t("fs.component.select.placeholder");
@@ -88,6 +89,7 @@ export default defineComponent({
       }
     };
     return {
+      selectRef,
       computedPlaceholder,
       ...usedDict,
       computedOptions,
@@ -103,7 +105,7 @@ export default defineComponent({
       //以options参数作为options
       const options = this.computedOptions || [];
       const binding: any = {
-        [`onUpdate:${vModel}`]: (value:any) => {
+        [`onUpdate:${vModel}`]: (value: any) => {
           //@ts-ignore
           this.$emit(`onUpdate:${vModel}`, value);
           this.onSelectedChange(value);
