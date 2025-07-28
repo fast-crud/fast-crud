@@ -1,10 +1,10 @@
 <template>
   <fs-container class="fs-layout-card">
-    <template v-if="searchShow" #header>
+    <template #header>
       <div class="fs-header-top">
         <slot name="header-top"></slot>
       </div>
-      <component :is="cardComponentName">
+      <component :is="cardComponentName" v-if="searchShow">
         <slot name="search"></slot>
       </component>
       <div class="fs-header-bottom">
