@@ -6,8 +6,8 @@
   "module": "./src/index.ts",
   "types": "./src/index.ts",
   "publishConfig": {
-    "main": "./dist/fast-editor-code.umd.js",
-    "module": "./dist/fast-editor-code.mjs",
+    "main": "./dist/editor-code.umd.js",
+    "module": "./dist/editor-code.mjs",
     "types": "./dist/d/index.d.ts"
   },
   "scripts": {
