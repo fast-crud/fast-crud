@@ -117,6 +117,7 @@ export default defineComponent({
           placeholder={this.computedPlaceholder}
           options={options}
           renderLabel={this.renderLabel}
+          v-slots={this.slots}
           {...binding}
         />
       );
