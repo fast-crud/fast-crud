@@ -478,7 +478,13 @@ export default defineComponent({
 
     const { merge } = useMerge();
     const computedBinding = computed(() => {
-      return merge({}, ctx.attrs, events);
+      let rowKey = props.rowKey;
+      if (ui.type === "naive" && typeof props.rowKey === "string") {
+        rowKey = (data) => {
+          return data[props.rowKey];
+        };
+      }
+      return merge({ rowKey }, ctx.attrs, events);
     });
     const sortedColumns = computed(() => {
       // 已经在useColumns中排序过了
@@ -505,7 +511,6 @@ export default defineComponent({
           <tableComp
             ref={tableRef}
             loading={props.loading}
-            rowKey={props.rowKey}
             {...computedBinding.value}
             {...dataSource.value}
             v-slots={computedTableSlots.value}
@@ -578,7 +583,6 @@ export default defineComponent({
             <tableComp
               ref={tableRef}
               loading={props.loading}
-              rowKey={props.rowKey}
               {...computedBinding.value}
               columns={isFlat ? computedFlatColumns.value : computedColumns.value}
               {...dataSource.value}
