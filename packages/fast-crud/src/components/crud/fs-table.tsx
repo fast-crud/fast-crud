@@ -43,6 +43,7 @@ function buildTableSlots({ props, ui, sortedColumns, renderRowHandle, renderCell
   const tableSlots: WriteableSlots = {};
 
   const buildColumn = (item: ColumnProps): any => {
+    debugger;
     const cellSlots: WriteableSlots = {
       ...item.columnSlots
     };
@@ -102,7 +103,8 @@ function buildTableSlots({ props, ui, sortedColumns, renderRowHandle, renderCell
     // rowHandle
     if (props.rowHandle && props.rowHandle.show !== false) {
       const rowHandleSlots = {
-        default: renderRowHandle
+        default: renderRowHandle,
+        ...props.rowHandle?.columnSlots
       };
       children.push(
         <tableColumnComp
