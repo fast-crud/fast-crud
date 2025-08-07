@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.26.1](https://github.com/fast-crud/fast-crud/compare/v1.26.0...v1.26.1) (2025-08-07)
+
+### Bug Fixes
+
+* 修复editor-code export name错误的bug ([29dee87](https://github.com/fast-crud/fast-crud/commit/29dee87eb221e05ca31cab8c060bded04b064012))
+
 # [1.26.0](https://github.com/fast-crud/fast-crud/compare/v1.25.13...v1.26.0) (2025-07-28)
 
 ### Features

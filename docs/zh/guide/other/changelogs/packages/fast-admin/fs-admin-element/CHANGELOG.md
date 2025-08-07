@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.26.1](https://github.com/fast-crud/fast-crud/compare/v1.26.0...v1.26.1) (2025-08-07)
+
+### Performance Improvements
+
+* element 增加自定义列头示例 ([4aa3f0f](https://github.com/fast-crud/fast-crud/commit/4aa3f0f63bbf6c88c5b4ecc63c0ea476d33df669))
+
 # [1.26.0](https://github.com/fast-crud/fast-crud/compare/v1.25.13...v1.26.0) (2025-07-28)
 
 ### Features

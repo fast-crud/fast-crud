@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.26.1](https://github.com/fast-crud/fast-crud/compare/v1.26.0...v1.26.1) (2025-08-07)
+
+### Performance Improvements
+
+* dict-select组件重构成setup写法，支持slots ([b307061](https://github.com/fast-crud/fast-crud/commit/b3070613f7e8a791f4adec6bd5d318b9365ed923))
+
 # [1.26.0](https://github.com/fast-crud/fast-crud/compare/v1.25.13...v1.26.0) (2025-07-28)
 
 ### Bug Fixes
