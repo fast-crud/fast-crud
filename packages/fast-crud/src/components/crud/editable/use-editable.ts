@@ -149,6 +149,7 @@ export function useEditable(props: any, ctx: any, tableRef: any): { editable: Ed
       showAction,
       isEditable: () => {
         let disabled = col?.editable?.disabled;
+        debugger;
         if (disabled instanceof Function) {
           disabled = disabled({ column: col, editableId, row: tableRow });
         }

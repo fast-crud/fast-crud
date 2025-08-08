@@ -257,8 +257,7 @@ const crudOptions = {
             //是否默认激活
             activeDefault:false, 
             //通过一个方法判断哪些 cell可以激活编辑
-            isEditable: (opts)=>{
-                //(opts: { editableId: any; key: string; row: any }) => boolean;
+            isEditable: (opts: { editableId: any; key: string; row: any })=>{
                 if(opts.key === 'username'){
                     //username不可编辑
                     return false

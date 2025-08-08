@@ -167,9 +167,9 @@ const crudOptions = {
        key:{
             column:{
                 editable:{
-                    disabled: true, //直接配置boolean ，也可以配置方法根据条件判断
-                    disabled: ({column,index,data})=>{
-                        return index % 2 ===0
+                   // disabled: true, //直接配置boolean ，也可以配置方法根据条件判断
+                    disabled: ({column, editableId, row})=>{
+                        return editableId % 2 ===0
                     }
                 }
             }
