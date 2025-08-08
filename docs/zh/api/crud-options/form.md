@@ -196,7 +196,7 @@ const crudOptions = {
 crudOptions.form = {
   // crudOptions.form
   group: {
-    type: "collapse",
+    groupType: "collapse", // 可选值：tabs collapse
     //or tabs
     // 此处支持：el-collapse / a-collapse / el-tabs / a-tabs 参数
     accordion: true,
@@ -215,7 +215,7 @@ crudOptions.form = {
   }
 }
 ```
-## group.type
+## group.groupType
 * 说明: 表单分组组件类型
 * 类型：String
 * 默认：collapse
