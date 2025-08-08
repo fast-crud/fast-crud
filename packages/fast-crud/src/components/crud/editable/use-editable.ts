@@ -150,8 +150,7 @@ export function useEditable(props: any, ctx: any, tableRef: any): { editable: Ed
       isEditable: () => {
         let disabled = col?.editable?.disabled;
         if (disabled instanceof Function) {
-          // @ts-ignore
-          disabled = config.disabled({ column: item, editableId, row: rowData });
+          disabled = disabled({ column: col, editableId, row: tableRow });
         }
         let enabled = null;
         if (disabled != null) {
