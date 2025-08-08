@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.26.2](https://github.com/fast-crud/fast-crud/compare/v1.26.1...v1.26.2) (2025-08-08)
+
+### Bug Fixes
+
+* 修复editable 自定义disabled配置后报错的bug ([2bf01da](https://github.com/fast-crud/fast-crud/commit/2bf01daa18606bba1575976131de79ee065c320d))
+
 ## [1.26.1](https://github.com/fast-crud/fast-crud/compare/v1.26.0...v1.26.1) (2025-08-07)
 
 ### Bug Fixes
