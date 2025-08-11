@@ -179,10 +179,6 @@ export default defineComponent({
         item[typeKey] = color;
         return;
       }
-      console.log("item", item);
-      if (item.value === "github") {
-        debugger;
-      }
       if (props.color === "auto") {
         const hashcode = getHashCode(getValue(item));
         console.log("hashcode", getValue(item), hashcode);
