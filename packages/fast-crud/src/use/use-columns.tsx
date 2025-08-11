@@ -445,6 +445,7 @@ export function useColumns() {
     buildFormOptions,
     buildColumns,
     registerMergeColumnPlugin,
-    forEachColumns
+    forEachColumns,
+    doColumnsSort
   };
 }

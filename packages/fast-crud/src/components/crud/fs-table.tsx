@@ -25,7 +25,7 @@ import {
   WriteableSlots
 } from "../../d";
 import { UiInterface } from "@fast-crud/ui-interface";
-import { useMerge } from "../../use";
+import { useColumns, useMerge } from "../../use";
 import { useComponentRefProvider } from "./use/provider";
 
 type BuildTableColumnsOption = {
@@ -43,7 +43,6 @@ function buildTableSlots({ props, ui, sortedColumns, renderRowHandle, renderCell
   const tableSlots: WriteableSlots = {};
 
   const buildColumn = (item: ColumnProps): any => {
-    debugger;
     const cellSlots: WriteableSlots = {
       ...item.columnSlots
     };
@@ -468,7 +467,7 @@ export default defineComponent({
       ...editableWrap,
       scrollTo
     });
-
+    const { doColumnsSort } = useColumns();
     const renderMode = tableCI.renderMode;
     const dataSource = computed(() => {
       return {
@@ -487,8 +486,7 @@ export default defineComponent({
       return merge({ rowKey }, ctx.attrs, events);
     });
     const sortedColumns = computed(() => {
-      // 已经在useColumns中排序过了
-      return props.columns;
+      return doColumnsSort(props.columns);
     });
     if (renderMode === "slot") {
       //使用slot column ，element-plus
