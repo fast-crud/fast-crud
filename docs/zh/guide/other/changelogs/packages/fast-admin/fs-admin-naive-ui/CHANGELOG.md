@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.26.3](https://github.com/jekip/naive-ui-admin/compare/v1.26.2...v1.26.3) (2025-08-14)
+
+### Performance Improvements
+
+* 添加对话框支持自动保存草稿，saveDraft ([65f7ece](https://github.com/jekip/naive-ui-admin/commit/65f7ecef4012ace86f542338a0ef750dd174d6df))
+
 ## [1.26.2](https://github.com/jekip/naive-ui-admin/compare/v1.26.1...v1.26.2) (2025-08-08)
 
 **Note:** Version bump only for package naive-ui-admin
