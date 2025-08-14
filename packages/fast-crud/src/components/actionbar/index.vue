@@ -73,7 +73,7 @@ export default defineComponent({
 <style lang="less">
 .fs-actionbar {
   .fs-button {
-    margin: 0 2px;
+    margin: 2px; // 换行之后也要有一点间隔
   }
 }
 </style>
