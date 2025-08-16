@@ -111,6 +111,16 @@ type = dict-cascader
 * 相关组件文档：
   * [fs-editor-wang](/api/components/extends/editor/components/fs-editor-wang5/index.md)
 
+### 代码编辑器
+* 类型
+  *  editor-code
+
+<<< @/../../packages/fast-ecology/editor-code/src/editor/type/types.ts
+* 示例：[antdv](http://fast-crud.docmirror.cn/antdv/#/crud/component/code) | [element](http://fast-crud.docmirror.cn/element/#/crud/component/code)
+
+* 相关组件文档：
+  * [fs-editor-code](/api/components/extends/editor/components/fs-editor-code/index.md)
+  
 
 ### json
 * 类型
