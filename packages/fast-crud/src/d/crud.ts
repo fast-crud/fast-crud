@@ -99,6 +99,12 @@ export type UseCrudRet<R = any> = {
    * @param overBinding
    */
   appendCrudBinding: (overBinding: CrudBinding<R>) => void;
+
+  /**
+   * 重新构建crudBinding 但不会赋值给crudBinding.value，你可以手动替换其中某些内容， 这样可以减少整个替换带来的渲染影响
+   * @param options
+   */
+  rebuildCrudBindings(options: DynamicallyCrudOptions): DynamicallyCrudOptions;
 };
 
 export type RowContext<R = any> = {

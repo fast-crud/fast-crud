@@ -535,7 +535,8 @@ export function useCrud<T = any, R = any>(ctx: UseCrudProps<T, R>): UseCrudRet<R
   return {
     appendCrudOptions,
     resetCrudOptions,
-    appendCrudBinding
+    appendCrudBinding,
+    rebuildCrudBindings
   };
 }
 
