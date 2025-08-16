@@ -128,6 +128,66 @@ export default {
 }
 ```
 
+### ret.appendCrudOptions
+* 说明: useFs返回值之一，resetCrudOptions方法的包装
+* 类型： `(opts:CrudOptions)=>void`
+* 示例：
+
+```js
+//index.vue
+// 以下示例演示动态更新表格列
+export default {
+    setup(){
+        const { crudBinding, crudRef, crudExpose, crudOptions, appendCrudOptions } = useFs({ createCrudOptions });
+        onMounted(()=>{
+            appendCrudOptions({
+                columns:{
+                    addField:{
+                        title:"追加字段",
+                        type:'text'
+                    }
+                }
+            })
+        })
+        
+        return {
+            crudBinding,
+            crudRef
+        }
+    }
+}
+```
+
+
+### ret.rebuildCrudBinding
+* 说明: useFs返回值之一，可以重新构建crudBinding，可以拿来替换现有的crudBinding
+* 类型： `(opts:CrudOptions)=>CrudBinding`
+* 示例：
+
+```js
+//index.vue
+// 以下示例演示动态更新表格列
+export default {
+    setup(){
+        const { crudBinding, crudRef, crudExpose, crudOptions, rebuildCrudBinding } = useFs({ createCrudOptions });
+        onMounted(()=>{
+            crudOptions.columns = {
+                ...commonColumns, // 公共的列
+                ...dynamicColumns //动态列
+            }
+            const newCrudBinding = rebuildCrudBinding(crudOptions)
+            crudBinding.value.table.columns = newCrudBinding.table.columns // 这里动态更新表格列
+            crudExpose.doRefresh()
+        })
+        
+        return {
+            crudBinding,
+            crudRef
+        }
+    }
+}
+```
+
 
 
 ## form对话框
