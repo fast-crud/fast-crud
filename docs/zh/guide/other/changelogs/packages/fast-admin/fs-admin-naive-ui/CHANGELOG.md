@@ -3,6 +3,29 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.26.4](https://github.com/jekip/naive-ui-admin/compare/v1.26.3...v1.26.4) (2025-08-14)
+
+### Performance Improvements
+
+* 如果设置了columnSetShow=false ，则不参与用户的手动排序 ([756f1cf](https://github.com/jekip/naive-ui-admin/commit/756f1cfbc02ed31f3ece90248e1477c77ea8a652))
+
+## [1.26.3](https://github.com/jekip/naive-ui-admin/compare/v1.26.2...v1.26.3) (2025-08-14)
+
+### Performance Improvements
+
+* 添加对话框支持自动保存草稿，saveDraft ([65f7ece](https://github.com/jekip/naive-ui-admin/commit/65f7ecef4012ace86f542338a0ef750dd174d6df))
+
+## [1.26.2](https://github.com/jekip/naive-ui-admin/compare/v1.26.1...v1.26.2) (2025-08-08)
+
+**Note:** Version bump only for package naive-ui-admin
+
+## [1.26.1](https://github.com/jekip/naive-ui-admin/compare/v1.26.0...v1.26.1) (2025-08-07)
+
+### Performance Improvements
+
+* dict-select组件重构成setup写法，支持slots ([b307061](https://github.com/jekip/naive-ui-admin/commit/b3070613f7e8a791f4adec6bd5d318b9365ed923))
+* naive 增加自定义列头示例， 修复naive rowKey警告 ([7ddc147](https://github.com/jekip/naive-ui-admin/commit/7ddc1475033113d7a04b21b26fe9faf6ba491c06))
+
 # [1.26.0](https://github.com/jekip/naive-ui-admin/compare/v1.25.13...v1.26.0) (2025-07-28)
 
 ### Bug Fixes

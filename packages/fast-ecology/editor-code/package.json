@@ -1,13 +1,13 @@
 {
   "name": "@fast-crud/editor-code",
-  "version": "1.26.0",
+  "version": "1.26.4",
   "private": false,
   "main": "./src/index.ts",
   "module": "./src/index.ts",
   "types": "./src/index.ts",
   "publishConfig": {
-    "main": "./dist/fast-editor-code.umd.js",
-    "module": "./dist/fast-editor-code.mjs",
+    "main": "./dist/editor-code.umd.js",
+    "module": "./dist/editor-code.mjs",
     "types": "./dist/d/index.d.ts"
   },
   "scripts": {
@@ -31,7 +31,7 @@
     "monaco-yaml": "^5.3.1"
   },
   "devDependencies": {
-    "@fast-crud/fast-crud": "^1.26.0",
+    "@fast-crud/fast-crud": "^1.26.4",
     "@ls-lint/ls-lint": "^2.0.1",
     "@rollup/plugin-commonjs": "^25.0.3",
     "@rollup/plugin-strip": "^3.0.2",

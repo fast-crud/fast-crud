@@ -27,6 +27,8 @@ import {
   WriteableSlots
 } from "../../d";
 import utils from "../../utils";
+import { useRoute } from "vue-router";
+import TableStore from "../../utils/util.store";
 
 /**
  * 表单对话框|抽屉
@@ -217,14 +219,65 @@ export default defineComponent({
       }
     }
 
+    const route = useRoute();
+    let draftStore: TableStore = null;
+    function getDraftStore() {
+      if (!formWrapperOpts.value.saveDraft) {
+        return null;
+      }
+      if (draftStore == null) {
+        draftStore = new TableStore({
+          $router: route,
+          tableName: "addFormDraft",
+          keyType: props.id || "0"
+        });
+      }
+      return draftStore;
+    }
+
+    async function doSaveDraft() {
+      const saveDraft = formWrapperOpts.value.saveDraft;
+      const isDirty = formRef.value?.isDirty();
+      const isAdd = formOptions.value.mode == "add";
+      if (isDirty && saveDraft && isAdd) {
+        const draftStore = getDraftStore();
+        await draftStore.updateTableValue(getFormData());
+        return true;
+      }
+      return false;
+    }
+    async function clearDraft() {
+      const draftStore = getDraftStore();
+      if (draftStore) {
+        await draftStore.clearTableValue();
+      }
+    }
+    async function loadDraft() {
+      const draftStore = getDraftStore();
+      if (draftStore) {
+        const draft = await draftStore.getTableValue();
+        if (draft) {
+          setFormData(draft, { mergeForm: true });
+        }
+      }
+    }
+
     async function beforeClose() {
+      let savedDraft = false;
+      if (formWrapperOpts.value.saveDraft) {
+        savedDraft = await doSaveDraft();
+      }
+
       if (beforeCloseCustom.value) {
         const ret = beforeCloseCustom.value(buildEvent());
         if (ret == false) {
           return false;
         }
       }
-      await doSaveRemind();
+      if (!savedDraft) {
+        await doSaveRemind();
+      }
+
       return true;
     }
 
@@ -260,6 +313,10 @@ export default defineComponent({
     };
 
     const onOpened = () => {
+      if (formWrapperOpts.value.saveDraft) {
+        loadDraft();
+      }
+
       ctx.emit("opened");
       if (emitOnOpened.value) {
         emitOnOpened.value();
@@ -285,6 +342,7 @@ export default defineComponent({
         if (success === false) {
           return;
         }
+        await clearDraft();
         close();
       } finally {
         loading.value = false;

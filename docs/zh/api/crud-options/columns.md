@@ -194,7 +194,6 @@ const crudOptions = {
 * 类型：`{key:RenderFunc}`
 * 场景：可以自定义列头
 
-
 ## [key].column.cellRender
 * 说明：自定义单元格渲染。
 * 类型：`Function(scope:ScopeContext)`

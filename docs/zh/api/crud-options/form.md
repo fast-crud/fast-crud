@@ -196,7 +196,7 @@ const crudOptions = {
 crudOptions.form = {
   // crudOptions.form
   group: {
-    type: "collapse",
+    groupType: "collapse", // 可选值：tabs collapse
     //or tabs
     // 此处支持：el-collapse / a-collapse / el-tabs / a-tabs 参数
     accordion: true,
@@ -215,7 +215,7 @@ crudOptions.form = {
   }
 }
 ```
-## group.type
+## group.groupType
 * 说明: 表单分组组件类型
 * 类型：String
 * 默认：collapse
@@ -333,6 +333,13 @@ const crudOptions = {
 * 说明: 表单有修改时是否提示保存，如果配置为一个方法，那么你可以自定义提示框，返回true表示需要保存，将自动保存后关闭对话框，返回false则表示不需要保存
 * 类型：`boolean` | `()=>Promise<boolean>`
 * 默认：true
-* 
+
+## wrapper.saveDraft
+* 说明: 添加对话框是否开启自动草稿功能，关闭对话框时自动保存草稿，下次打开添加对话框自动加载草稿，免丢失数据
+* 类型：`boolean` 
+* 默认：false
+
+
+
 
 

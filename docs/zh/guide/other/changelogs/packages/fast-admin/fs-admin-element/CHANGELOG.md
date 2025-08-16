@@ -3,6 +3,26 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.26.4](https://github.com/fast-crud/fast-crud/compare/v1.26.3...v1.26.4) (2025-08-14)
+
+### Performance Improvements
+
+* 如果设置了columnSetShow=false ，则不参与用户的手动排序 ([756f1cf](https://github.com/fast-crud/fast-crud/commit/756f1cfbc02ed31f3ece90248e1477c77ea8a652))
+
+## [1.26.3](https://github.com/fast-crud/fast-crud/compare/v1.26.2...v1.26.3) (2025-08-14)
+
+**Note:** Version bump only for package @fast-crud/fs-admin-element
+
+## [1.26.2](https://github.com/fast-crud/fast-crud/compare/v1.26.1...v1.26.2) (2025-08-08)
+
+**Note:** Version bump only for package @fast-crud/fs-admin-element
+
+## [1.26.1](https://github.com/fast-crud/fast-crud/compare/v1.26.0...v1.26.1) (2025-08-07)
+
+### Performance Improvements
+
+* element 增加自定义列头示例 ([4aa3f0f](https://github.com/fast-crud/fast-crud/commit/4aa3f0f63bbf6c88c5b4ecc63c0ea476d33df669))
+
 # [1.26.0](https://github.com/fast-crud/fast-crud/compare/v1.25.13...v1.26.0) (2025-07-28)
 
 ### Features

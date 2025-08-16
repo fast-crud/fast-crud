@@ -25,7 +25,7 @@ import {
   WriteableSlots
 } from "../../d";
 import { UiInterface } from "@fast-crud/ui-interface";
-import { useMerge } from "../../use";
+import { useColumns, useMerge } from "../../use";
 import { useComponentRefProvider } from "./use/provider";
 
 type BuildTableColumnsOption = {
@@ -102,7 +102,8 @@ function buildTableSlots({ props, ui, sortedColumns, renderRowHandle, renderCell
     // rowHandle
     if (props.rowHandle && props.rowHandle.show !== false) {
       const rowHandleSlots = {
-        default: renderRowHandle
+        default: renderRowHandle,
+        ...props.rowHandle?.columnSlots
       };
       children.push(
         <tableColumnComp
@@ -466,7 +467,7 @@ export default defineComponent({
       ...editableWrap,
       scrollTo
     });
-
+    const { doColumnsSort } = useColumns();
     const renderMode = tableCI.renderMode;
     const dataSource = computed(() => {
       return {
@@ -476,11 +477,16 @@ export default defineComponent({
 
     const { merge } = useMerge();
     const computedBinding = computed(() => {
-      return merge({}, ctx.attrs, events);
+      let rowKey = props.rowKey;
+      if (ui.type === "naive" && typeof props.rowKey === "string") {
+        rowKey = (data) => {
+          return data[props.rowKey];
+        };
+      }
+      return merge({ rowKey }, ctx.attrs, events);
     });
     const sortedColumns = computed(() => {
-      // 已经在useColumns中排序过了
-      return props.columns;
+      return doColumnsSort(props.columns);
     });
     if (renderMode === "slot") {
       //使用slot column ，element-plus
@@ -503,7 +509,6 @@ export default defineComponent({
           <tableComp
             ref={tableRef}
             loading={props.loading}
-            rowKey={props.rowKey}
             {...computedBinding.value}
             {...dataSource.value}
             v-slots={computedTableSlots.value}
@@ -576,7 +581,6 @@ export default defineComponent({
             <tableComp
               ref={tableRef}
               loading={props.loading}
-              rowKey={props.rowKey}
               {...computedBinding.value}
               columns={isFlat ? computedFlatColumns.value : computedColumns.value}
               {...dataSource.value}

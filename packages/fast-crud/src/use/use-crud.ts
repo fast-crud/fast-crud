@@ -293,6 +293,11 @@ export function useCrud<T = any, R = any>(ctx: UseCrudProps<T, R>): UseCrudRet<R
             forEach(value, (item) => {
               const oldColumn = old[item.key];
               if (oldColumn) {
+                if (oldColumn.columnSetShow === false) {
+                  //不参与自定义排序
+                  columns[item.key] = oldColumn;
+                  return;
+                }
                 delete oldColumn.order;
                 const newColumn = merge({ ...oldColumn }, item);
                 columns[item.key] = newColumn;
@@ -304,6 +309,7 @@ export function useCrud<T = any, R = any>(ctx: UseCrudProps<T, R>): UseCrudRet<R
             return columns;
           }
 
+          debugger;
           const newColumns = updateColumns(original, value);
           crudBinding.value.table.columns = newColumns;
           crudBinding.value.table.columnsMap = buildTableColumnsFlatMap({}, newColumns);

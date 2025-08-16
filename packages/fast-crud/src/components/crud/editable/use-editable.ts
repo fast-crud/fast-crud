@@ -149,9 +149,9 @@ export function useEditable(props: any, ctx: any, tableRef: any): { editable: Ed
       showAction,
       isEditable: () => {
         let disabled = col?.editable?.disabled;
+        debugger;
         if (disabled instanceof Function) {
-          // @ts-ignore
-          disabled = config.disabled({ column: item, editableId, row: rowData });
+          disabled = disabled({ column: col, editableId, row: tableRow });
         }
         let enabled = null;
         if (disabled != null) {

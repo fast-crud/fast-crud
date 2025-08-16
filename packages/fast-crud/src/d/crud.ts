@@ -732,6 +732,11 @@ export type FormWrapperProps<R = any> = {
   saveRemind?: FormWrapperSaveRemindProps;
 
   /**
+   * 添加对话框在关闭时是否自动保存草稿，下次打开时自动加载上一次的内容
+   */
+  saveDraft?: boolean;
+
+  /**
    * 是否内部打开对话框
    */
   inner?: boolean;
@@ -906,6 +911,14 @@ export type FormProps<R = any> = {
   slots?: {
     [key: string]: () => any;
   };
+
+  /**
+   * 表单字段配置
+   */
+  columns?: {
+    [key: string]: FormItemProps<R>;
+  };
+
   /**
    * 其他表单配置 [x]-form的配置
    */

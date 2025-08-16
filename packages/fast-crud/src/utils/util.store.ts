@@ -10,7 +10,7 @@ export default class TableStore {
     $router: any;
     tableName: string;
     keyType: string | boolean;
-    remoteStorage: FsRemoteStorage;
+    remoteStorage?: FsRemoteStorage;
     id?: string;
   }) {
     this.remoteStorage = opts.remoteStorage;

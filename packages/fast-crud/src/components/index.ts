@@ -41,7 +41,7 @@ import FsTabsFilter from "./search/tabs-filter.vue";
 
 import FsIconSelector from "./extends/fs-icon-selector/index.vue";
 import FsDictRadio from "./extends/fs-dict-radio.vue";
-import FsDictSelect from "./extends/fs-dict-select.js";
+import FsDictSelect from "./extends/fs-dict-select.vue";
 import FsValuesFormat from "./extends/fs-values-format.vue";
 import FsDictCascaderFormat from "./extends/fs-dict-cascader-format.vue";
 import FsDictCascader from "./extends/fs-dict-cascader.vue";

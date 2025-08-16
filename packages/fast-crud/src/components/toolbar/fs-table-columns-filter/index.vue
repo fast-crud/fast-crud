@@ -52,7 +52,7 @@
 /**
  * FsTableColumnsFilter，列设置组件
  */
-import { cloneDeep, omit, forEach, pick } from "lodash-es";
+import { omit, forEach, pick } from "lodash-es";
 import TableStore from "../../../utils/util.store";
 import { useI18n } from "../../../locale";
 import { computed, inject, nextTick, provide, Ref, ref, watch } from "vue";
@@ -97,7 +97,7 @@ const originalColumnsMap: Ref<Record<string, ColumnsFilterItem>> = computed(() =
   });
   return map;
 });
-const { merge } = useMerge();
+const { merge, cloneDeep } = useMerge();
 
 const _text = computed(() => {
   const def = {

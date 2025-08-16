@@ -1,7 +1,7 @@
 import { useMerge } from "./use-merge";
 import types from "../types";
 import defaultCrudOptions from "./default-crud-options";
-import { forEach, sortBy, size, pick, remove, includes } from "lodash-es";
+import { forEach, sortBy, size, pick, remove, includes, set, get } from "lodash-es";
 import { isRef, reactive, shallowReactive, shallowRef } from "vue";
 import { useI18n } from "../locale";
 import logger from "../utils/util.log";
@@ -25,7 +25,7 @@ const { merge, cloneDeep } = useMerge();
 
 export type MergeColumnPlugin = {
   name: string;
-  handle: (columnProps: any, crudOptions: any) => {};
+  handle: (columnProps: any, crudOptions: any, index: number) => {};
   order: number;
 };
 
@@ -84,10 +84,10 @@ function mergeColumnType(item: ColumnCompositionProps) {
   return item;
 }
 
-const mergeColumnPlugin = { name: "type", handle: mergeColumnType, order: -2 };
-const dictPlugin = { name: "dict", handle: mergeColumnDict, order: -1 };
-
-const viewFormUseCellComponentPlugin = {
+const mergePlugins = [];
+mergePlugins.push({ name: "type", handle: mergeColumnType, order: -2 });
+mergePlugins.push({ name: "dict", handle: mergeColumnDict, order: -1 });
+mergePlugins.push({
   name: "viewFormUseCellComponent",
   order: 10,
   handle: (columnProps: ColumnCompositionProps = {}, crudOptions: CrudOptions = {}) => {
@@ -108,9 +108,8 @@ const viewFormUseCellComponentPlugin = {
     merge(columnProps, { viewForm: viewFormColumn });
     return columnProps;
   }
-};
-
-const NaiveFormRuleFix = {
+});
+mergePlugins.push({
   name: "NaiveFormRuleFix",
   order: 10,
   handle: (columnProps: ColumnCompositionProps = {}, crudOptions: CrudOptions = {}) => {
@@ -135,12 +134,25 @@ const NaiveFormRuleFix = {
     }
     return columnProps;
   }
-};
+});
 
-registerMergeColumnPlugin(mergeColumnPlugin);
-registerMergeColumnPlugin(dictPlugin);
-registerMergeColumnPlugin(viewFormUseCellComponentPlugin);
-registerMergeColumnPlugin(NaiveFormRuleFix);
+mergePlugins.push({
+  name: "DefaultOrder",
+  order: 0,
+  handle: (columnProps: ColumnCompositionProps = {}, crudOptions: CrudOptions = {}, index: number) => {
+    if (get(columnProps, "column.order") == null) {
+      set(columnProps, "column.order", index);
+    }
+    if (get(columnProps, "form.order") == null) {
+      set(columnProps, "form.order", index);
+    }
+    return columnProps;
+  }
+});
+
+for (const mergePlugin of mergePlugins) {
+  registerMergeColumnPlugin(mergePlugin);
+}
 
 /**
  * 初始化用户配置的列
@@ -150,6 +162,7 @@ registerMergeColumnPlugin(NaiveFormRuleFix);
  */
 function setupOptionsColumns(columns: { [key: string]: ColumnCompositionProps }, userOptions: CrudOptions) {
   const initedColumns: any = {};
+  let i = 0;
   forEach(columns, (item: any, key: any) => {
     item.key = key;
     if (item.children) {
@@ -157,10 +170,11 @@ function setupOptionsColumns(columns: { [key: string]: ColumnCompositionProps },
     } else {
       //执行mergePlugin，复制type，复制dict
       for (const plugin of mergeColumnPlugins) {
-        item = plugin.handle(item, userOptions);
+        item = plugin.handle(item, userOptions, i);
       }
     }
     initedColumns[key] = item;
+    i++;
   });
   return initedColumns;
 }
@@ -431,6 +445,7 @@ export function useColumns() {
     buildFormOptions,
     buildColumns,
     registerMergeColumnPlugin,
-    forEachColumns
+    forEachColumns,
+    doColumnsSort
   };
 }
