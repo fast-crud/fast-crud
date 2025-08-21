@@ -15,7 +15,9 @@ export default {
         text: "remove",
         confirmTitle: "remove tip",
         confirmMessage: "Are you sure you want to delete this record?",
-        success: "delete success!"
+        success: "delete success!",
+        confirmText: "confirm",
+        cancelText: "cancel"
       },
       copy: {
         text: "copy"

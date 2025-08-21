@@ -657,6 +657,8 @@ export function useExpose<R = any>(props: UseExposeProps<R>): UseExposeRet<R> {
             await ui.messageBox.confirm({
               title: removeBinding.confirmTitle || t("fs.rowHandle.remove.confirmTitle"), // '提示',
               message: removeBinding.confirmMessage || t("fs.rowHandle.remove.confirmMessage"), // '确定要删除此记录吗?',
+              cancelButtonText: removeBinding.cancelButtonText || t("fs.rowHandle.remove.cancelText"), // '取消',
+              confirmButtonText: removeBinding.confirmButtonText || t("fs.rowHandle.remove.confirmText"), // '确定'
               type: "warn",
               ...removeBinding.confirmProps
             });

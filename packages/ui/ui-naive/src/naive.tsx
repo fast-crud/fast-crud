@@ -154,9 +154,9 @@ export class Naive implements UiInterface {
 
         const newContext = {
           content: context.message,
-          title: "请确认",
-          negativeText: "取消",
-          positiveText: "确定",
+          title: context.title || "请确认",
+          negativeText: context.cancelButtonText || "取消",
+          positiveText: context.confirmButtonText || "确定",
           onPositiveClick: onOk,
           onNegativeClick: onCancel,
           ...context
