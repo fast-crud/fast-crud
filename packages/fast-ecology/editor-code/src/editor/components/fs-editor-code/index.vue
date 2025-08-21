@@ -83,7 +83,7 @@ onUnmounted(() => {
   disposeEditor();
 });
 
-const emits = defineEmits(["update:modelValue", "change", "ready"]);
+const emits = defineEmits(["update:modelValue", "change", "ready", "blur"]);
 
 const emitValue = lodashDebounce((value: any) => {
   emits("update:modelValue", value);
@@ -115,6 +115,11 @@ async function createEditor(ctx: EditorCodeCtx) {
 
   instanceRef = instance;
   ctx.instance = instance;
+
+  instance.onDidBlurEditorText(() => {
+    emits("blur", ctx);
+  });
+
   emits("ready", ctx);
   return instance;
 }
