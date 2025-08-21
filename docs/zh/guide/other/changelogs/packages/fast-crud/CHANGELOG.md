@@ -3,6 +3,16 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.26.5](https://github.com/fast-crud/fast-crud/compare/v1.26.4...v1.26.5) (2025-08-21)
+
+### Bug Fixes
+
+* 修复naiveui 删除提示，确定和取消按钮没有翻译成英文的问题 ([dec24f5](https://github.com/fast-crud/fast-crud/commit/dec24f5af234eedbe75d393e823fb4c9c7e222b9))
+
+### Performance Improvements
+
+* useCrudRet 增加 rebuildCrudBindings ([9f1621f](https://github.com/fast-crud/fast-crud/commit/9f1621f46657482c96abc76230ad99fba8406673))
+
 ## [1.26.4](https://github.com/fast-crud/fast-crud/compare/v1.26.3...v1.26.4) (2025-08-14)
 
 ### Performance Improvements

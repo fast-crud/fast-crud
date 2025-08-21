@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.26.5](https://github.com/jekip/naive-ui-admin/compare/v1.26.4...v1.26.5) (2025-08-21)
+
+### Performance Improvements
+
+* editor-code 支持blur事件 ([4de8e5d](https://github.com/jekip/naive-ui-admin/commit/4de8e5dd55e68cf4cbd1c4e284eeae05ec95580c))
+
 ## [1.26.4](https://github.com/jekip/naive-ui-admin/compare/v1.26.3...v1.26.4) (2025-08-14)
 
 ### Performance Improvements
