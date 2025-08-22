@@ -83,7 +83,7 @@ async function build(){
 
 const naive = "http://flow-openapi.aliyun.com/pipeline/webhook/Zm3TJyDtyFZgV4dtJiD1"
 const doc = "http://flow-openapi.aliyun.com/pipeline/webhook/soOYdQ5sF3kLjTPJGmIO"
-const antdv = "http://flow-openapi.aliyun.com/pipeline/webhook/HiL0uVYxfUnBzIMJZVXB"
+// const antdv = "http://flow-openapi.aliyun.com/pipeline/webhook/HiL0uVYxfUnBzIMJZVXB"
 const antdv4 = "http://flow-openapi.aliyun.com/pipeline/webhook/U6zdIwkJ56xWZvctCOkE"
 const element = "http://flow-openapi.aliyun.com/pipeline/webhook/uFTI0XJ9RgqnofX7jpRD"
 
@@ -97,16 +97,21 @@ async function sleep(time){
 
 async function trigger(){
     for (const webhook of webhooks) {
+      try{
         await http({
-            url:webhook,
-            method:'POST',
-            headers:{
-                "Content-Type": "application/json"
-            },
-            data:{}
+          url:webhook,
+          method:'POST',
+          headers:{
+            "Content-Type": "application/json"
+          },
+          data:{}
         })
+      }catch (e) {
+        console.error(e)
+      }
+
         console.log(`webhook success:${webhook}`)
-        await sleep(10000)
+        await sleep(20000)
     }
 
 }
