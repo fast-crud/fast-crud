@@ -41,6 +41,7 @@ pnpm add  @fast-crud/editor-code js-yaml monaco-editor monaco-yaml
 import {FsEditorCode} from "@fast-crud/editor-code";
 //use editor
 app.use(FsEditorCode)
+import "@fast-crud/editor-code/dist/style.css"
 
 ```
 ### 3. 注册workers
