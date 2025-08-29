@@ -87,7 +87,7 @@ const doc = "http://flow-openapi.aliyun.com/pipeline/webhook/soOYdQ5sF3kLjTPJGmI
 const antdv4 = "http://flow-openapi.aliyun.com/pipeline/webhook/U6zdIwkJ56xWZvctCOkE"
 const element = "http://flow-openapi.aliyun.com/pipeline/webhook/uFTI0XJ9RgqnofX7jpRD"
 
-const webhooks = [doc,naive,antdv,antdv4,element]
+const webhooks = [doc,naive,antdv4,element]
 
 async function sleep(time){
     return new Promise(resolve => {
