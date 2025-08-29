@@ -233,7 +233,7 @@ watch(
 
 <style lang="less">
 .fs-editor-code {
-  min-height: 100px;
+  min-height: 500px;
   width: 100%;
   border: 1px solid #eee;
   border-radius: 5px;
