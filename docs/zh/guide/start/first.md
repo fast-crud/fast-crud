@@ -31,7 +31,7 @@ import { addRequest, delRequest, editRequest, pageRequest } from "./api";
 /**
  * 定义一个CrudOptions生成器方法
  */
-export default async function  ({ crudExpose, context }: CreateCrudOptionsProps): Promise<CreateCrudOptionsRet> {
+export default  function  ({ crudExpose, context }: CreateCrudOptionsProps): CreateCrudOptionsRet {
   return {
     crudOptions: {
       // 在这里自定义你的crudOptions配置
@@ -96,7 +96,7 @@ export default async function  ({ crudExpose, context }: CreateCrudOptionsProps)
     await useFs({  crudRef, crudBinding, crudExpose,  context, createCrudOptions});
     // 页面打开后获取列表数据
     onMounted(async () => {
-        // 也可以异步初始化crud， 任选一种方式
+        // 如果 createCrudOptions 是异步方法，请使用 useFsAsync
         // await useFsAsync({  crudRef, crudBinding, crudExpose,  context, createCrudOptions});
         crudExpose.doRefresh();
     });
