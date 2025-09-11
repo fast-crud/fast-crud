@@ -7,7 +7,7 @@
 
 ### 1. antdv
 [antdv4示例地址](http://fast-crud.docmirror.cn/antdv4/)    
-[综合项目示例 certd](http://fast-crud.docmirror.cn/antdv4/) ： 证书自动化系统，让你的证书永不过期，基于midwayjs，使用fast-crud快速开发功能，数据库自动升级
+[综合项目示例 certd](https://certd.docmirror.cn/) ： 证书自动化系统，让你的证书永不过期，基于midwayjs，使用fast-crud快速开发功能，数据库自动升级
 
 ### 2. element-plus
 [element示例地址](http://fast-crud.docmirror.cn/element/)
