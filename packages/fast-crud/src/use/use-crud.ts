@@ -309,7 +309,6 @@ export function useCrud<T = any, R = any>(ctx: UseCrudProps<T, R>): UseCrudRet<R
             return columns;
           }
 
-          debugger;
           const newColumns = updateColumns(original, value);
           crudBinding.value.table.columns = newColumns;
           crudBinding.value.table.columnsMap = buildTableColumnsFlatMap({}, newColumns);

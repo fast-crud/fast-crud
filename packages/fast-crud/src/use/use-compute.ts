@@ -1,5 +1,5 @@
 import { forEach, set } from "lodash-es";
-import { computed, isShallow, ref, Ref, watch } from "vue";
+import { computed, isRef, isShallow, ref, Ref, watch, unref } from "vue";
 import { useMerge } from "./use-merge";
 import { AsyncComputeRef, ComputeFn, ComputeRef, ScopeContext } from "../d";
 import { deepdash } from "../utils/deepdash";
@@ -86,7 +86,14 @@ function doComputed(
 ) {
   const dependValues = computed(() => {
     const target = getTargetFunc();
-    return findComputeValues(target, excludes, false);
+    const computeValues = findComputeValues(target, excludes, false);
+    const values: any = {};
+    for (const key in computeValues) {
+      values[key] = computed(() => {
+        return computeValues[key].computeFn(getContextFn());
+      });
+    }
+    return values;
   });
 
   const dependAsyncValues = computed(() => {
@@ -97,6 +104,7 @@ function doComputed(
   const asyncValuesMap = doAsyncCompute(dependAsyncValues.value, getContextFn);
 
   return computed(() => {
+    console.log("111111.compute");
     let target = getTargetFunc();
     const asyncCount = Object.keys(dependAsyncValues.value).length;
     const syncCount = Object.keys(dependValues.value).length;
@@ -104,9 +112,8 @@ function doComputed(
     if (asyncCount > 0 || syncCount > 0) {
       target = cloneDeep(target);
       if (syncCount > 0) {
-        const context = getContextFn ? getContextFn() : {};
         forEach(dependValues.value, (value, key) => {
-          set(target, key, value.computeFn(context));
+          set(target, key, value);
         });
       }
       if (asyncCount > 0) {
@@ -172,12 +179,36 @@ export function asyncCompute<RV = any, R = any, WV = any>(
 ): AsyncComputeRef<RV, R, WV> {
   return new AsyncComputeValue<RV, R, WV>(options);
 }
+
+export function computeImmediate(target: any, ...excludes) {
+  const map = {};
+  target = cloneDeep(target);
+  deepdash.forEachDeep(target, (value: any, key: any, parent: any, context: any) => {
+    if (value == null) {
+      return false;
+    }
+    if (isRef(value)) {
+      const path: string = context.path;
+      if (excludes && excludes?.includes(path)) {
+        return false;
+      }
+      map[path] = value;
+      return false;
+    }
+  });
+
+  forEach(map, (value, key) => {
+    set(target, key, unref(value));
+  });
+  return target;
+}
 export function useCompute() {
   return {
     ComputeValue,
     compute,
     AsyncComputeValue,
     asyncCompute,
-    doComputed
+    doComputed,
+    computeImmediate
   };
 }

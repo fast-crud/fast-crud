@@ -1,5 +1,5 @@
 import { useCompute } from "../../use/use-compute";
-import { computed, defineComponent, isShallow, PropType, ref, resolveDynamicComponent } from "vue";
+import { computed, defineComponent, isShallow, PropType, ref, resolveDynamicComponent, unref } from "vue";
 import { ConditionalRenderProps } from "../../d";
 import { omit, toString } from "lodash-es";
 import { useUi } from "@fast-crud/ui-interface";
@@ -89,7 +89,7 @@ export default defineComponent({
       } else if (props.item.render) {
         console.warn("column.render 配置已废弃，请使用column.cellRender代替");
       } else if (computedComponent.value?.name) {
-        if (computedComponent.value?.show === false) {
+        if (unref(computedComponent.value?.show) === false) {
           return;
         }
         return (

@@ -102,7 +102,7 @@ import {
   watch
 } from "vue";
 import { each, set, cloneDeep, entries, get, unset, forEach, merge } from "lodash-es";
-import { ComputeValue, useCompute } from "../../use/use-compute";
+import { computeImmediate, ComputeValue, useCompute } from "../../use/use-compute";
 import logger from "../../utils/util.log";
 import { useMerge } from "../../use/use-merge";
 import { Constants } from "../../utils/util.constants";
@@ -442,6 +442,7 @@ export default defineComponent({
     );
 
     const computedDefaultColumns = computed(() => {
+      console.log("computedDefaultColumns-");
       const columns: any = [];
       //default columns排序
       forEach(computedColumns.value, (value: any, key: string) => {

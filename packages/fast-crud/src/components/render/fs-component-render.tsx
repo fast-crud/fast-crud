@@ -195,6 +195,7 @@ export default defineComponent({
       isAsyncComponent: boolean;
       component: any;
     };
+
     const computedInputComp: Ref<InputCompType> = computed(() => {
       const res: InputCompType = {
         isAsyncComponent: false,

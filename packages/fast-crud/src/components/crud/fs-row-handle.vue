@@ -39,11 +39,11 @@
   </div>
 </template>
 <script lang="ts">
-import { computed, defineComponent } from "vue";
-import { forEach, sortBy, omit } from "lodash-es";
+import { computed, defineComponent, unref } from "vue";
+import { forEach, sortBy, omit, cloneDeep } from "lodash-es";
 import { useI18n } from "../../locale";
 import { useUi } from "../../use/use-ui";
-import { useCompute } from "../../use/use-compute";
+import { computeImmediate, useCompute } from "../../use/use-compute";
 import { Constants } from "../../utils/util.constants";
 import { ButtonProps, ScopeContext } from "../../d";
 import { useMerge } from "../../use";
@@ -140,10 +140,10 @@ export default defineComponent({
       }
     );
 
-    //const computeProps = { value: props };
     const computedHandleBtns = computed(() => {
+      const params = computeImmediate(computeProps.value);
       let mergedBtns = null;
-      if (computeProps.value.active == null || computeProps.value.active === "default") {
+      if (params.active == null || params.active === "default") {
         const defBtns = {
           view: {
             key: "view",
@@ -168,15 +168,15 @@ export default defineComponent({
             title: t("fs.rowHandle.remove.text")
           }
         };
-        mergedBtns = merge(defBtns, computeProps.value.buttons);
+        mergedBtns = merge(defBtns, params.buttons);
       } else {
-        mergedBtns = computeProps.value.group[computeProps.value.active];
+        mergedBtns = params.group[params.active];
       }
 
       const btns: ButtonProps[] = [];
       forEach(mergedBtns, (item, key) => {
         item.key = key;
-        if (item.show === false) {
+        if (unref(item.show) === false) {
           return;
         }
         btns.push(item);
@@ -188,15 +188,16 @@ export default defineComponent({
     });
 
     const computedDropdownAtLeast = computed(() => {
+      const dropdown = computeImmediate(computeProps.value.dropdown);
       if (
-        computeProps.value.dropdown == null ||
-        computeProps.value.dropdown.atLeast == null ||
-        computeProps.value.dropdown.atLeast <= 0 ||
-        computedHandleBtns.value.length <= computeProps.value.dropdown.atLeast
+        dropdown == null ||
+        dropdown.atLeast == null ||
+        dropdown.atLeast <= 0 ||
+        computedHandleBtns.value.length <= dropdown.atLeast
       ) {
         return 0;
       }
-      return computeProps.value.dropdown.atLeast || 0;
+      return dropdown.atLeast || 0;
     });
     function isDropdownBtn(item: any, index: number) {
       if (item.dropdown === true) {
@@ -235,7 +236,7 @@ export default defineComponent({
         const btns = computedHandleBtns.value;
         const opts: ButtonProps[] = [];
         forEach(btns, (value, index) => {
-          if (value.show !== false && isDropdownBtn(value, index)) {
+          if (unref(value.show) !== false && isDropdownBtn(value, index)) {
             opts.push({
               [ui.dropdown.value]: value.key,
               [ui.dropdown.label]: value.text,

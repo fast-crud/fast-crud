@@ -118,6 +118,7 @@ export default defineComponent({
         },
         { class: props.className, ...ctx.attrs, ...props.buttonProps }
       );
+
       if (iconProp) {
         // @ts-ignore
         btnProps.icon = iconProp;
