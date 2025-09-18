@@ -18,12 +18,12 @@
 
       <component
         :is="ui.tooltip.name"
-        v-if="item.helper && computedHelperPosition === 'label'"
+        v-if="computedItem.helper && computedHelperPosition === 'label'"
         v-bind="computedHelperTooltip"
       >
         <template #[ui.tooltip.content]>
           <span class="fs-form-helper-tooltip">
-            <fs-form-helper :helper="item.helper" :scope="scopeFunc()" />
+            <fs-form-helper :helper="computedItem.helper" :scope="scopeFunc()" />
           </span>
         </template>
         <template #[ui.tooltip.trigger]>
@@ -34,33 +34,37 @@
       </component>
     </template>
     <div class="fs-form-item-content">
-      <fs-render v-if="item.topRender" :render-func="item.topRender" :scope="scopeFunc()" />
+      <fs-render v-if="computedItem.topRender" :render-func="computedItem.topRender" :scope="scopeFunc()" />
       <div class="fs-form-item-render">
-        <fs-render v-if="item.prefixRender" :render-func="item.prefixRender" :scope="scopeFunc()" />
+        <fs-render v-if="computedItem.prefixRender" :render-func="computedItem.prefixRender" :scope="scopeFunc()" />
         <div class="fs-form-item-component">
           <fs-slot-render v-if="formSlot" :slots="formSlot" :scope="scopeFunc()" />
-          <template v-else-if="item.component?.show !== false">
+          <template v-else-if="computedItem.component?.show !== false">
             <fs-render
-              v-if="item.conditionalRender && item.conditionalRender.match && item.conditionalRender.match(scopeFunc())"
-              :render-func="item.conditionalRender.render"
+              v-if="
+                computedItem.conditionalRender &&
+                computedItem.conditionalRender.match &&
+                computedItem.conditionalRender.match(scopeFunc())
+              "
+              :render-func="computedItem.conditionalRender.render"
               :scope="scopeFunc()"
             />
-            <fs-render v-else-if="item.render" :render-func="item.render" :scope="scopeFunc()" />
+            <fs-render v-else-if="computedItem.render" :render-func="computedItem.render" :scope="scopeFunc()" />
             <fs-component-render
               v-else
               ref="componentRenderRef"
-              v-bind="item.component"
+              v-bind="computedItem.component"
               :model-value="modelValue"
               :scope="scopeFunc()"
               @update:model-value="updateModelValue"
             />
           </template>
         </div>
-        <fs-render v-if="item.suffixRender" :render-func="item.suffixRender" :scope="scopeFunc()" />
+        <fs-render v-if="computedItem.suffixRender" :render-func="computedItem.suffixRender" :scope="scopeFunc()" />
       </div>
-      <fs-render v-if="item.bottomRender" :render-func="item.bottomRender" :scope="scopeFunc()" />
-      <template v-if="item.helper && computedHelperPosition !== 'label'">
-        <fs-form-helper :helper="item.helper" :scope="scopeFunc()" />
+      <fs-render v-if="computedItem.bottomRender" :render-func="computedItem.bottomRender" :scope="scopeFunc()" />
+      <template v-if="computedItem.helper && computedHelperPosition !== 'label'">
+        <fs-form-helper :helper="computedItem.helper" :scope="scopeFunc()" />
       </template>
     </div>
   </component>
@@ -68,8 +72,7 @@
 <script lang="ts">
 import { ref, computed, defineComponent, Ref, PropType } from "vue";
 import FsRender from "../render/fs-render.js";
-import { ScopeContext } from "../../d";
-import { useMerge, useUi } from "../../use";
+import { useMerge, useUi, useCompute } from "../../use";
 import utils from "../../utils";
 /**
  * form-item组件封装
@@ -110,6 +113,8 @@ export default defineComponent({
     const { merge } = useMerge();
     const componentRenderRef = ref();
 
+    const { doComputed } = useCompute();
+
     utils.trace("fs-form-item");
     // const scopeComputed: Ref<ScopeContext> = computed(() => {});
 
@@ -128,9 +133,13 @@ export default defineComponent({
       return componentRenderRef.value?.getTargetRef();
     }
 
+    const citem = doComputed(() => {
+      return props.item;
+    }, scopeFunc);
+
     const computedItem = computed(() => {
       const res = {
-        ...props.item
+        ...citem.value
       };
       delete res.title;
       delete res.label;
@@ -141,20 +150,20 @@ export default defineComponent({
       return props.item?.helper?.position || (props.helper as any)?.position;
     });
     const computedHelperTooltip = computed(() => {
-      return merge({}, props.item.helper?.tooltip, (props.helper as any)?.tooltip);
+      return merge({}, citem.value.helper?.tooltip, (props.helper as any)?.tooltip);
     });
     const computedKey = computed(() => {
       if (props.item == null) {
         return;
       }
-      if (props.item.key.indexOf(".") >= 0) {
-        return props.item.key.split(".");
+      if (citem.value.key.indexOf(".") >= 0) {
+        return citem.value.key.split(".");
       }
-      return props.item.key;
+      return citem.value.key;
     });
 
     const computedLabel = computed(() => {
-      return props.item.label || props.item.title;
+      return citem.value.label || citem.value.title;
     });
     const computedLabelIsRender = computed(() => {
       return computedLabel.value instanceof Function;
