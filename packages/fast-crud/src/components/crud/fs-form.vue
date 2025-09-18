@@ -449,7 +449,7 @@ export default defineComponent({
         const item = cloneDeep(props.formItem || {});
         value = merge(item, value);
         value.key = key;
-        if (value.order == null) {
+        if (unref(value.order) == null) {
           value.order = Constants.orderDefault;
         }
         if (computedGroup.value?.groupedKeys == null || computedGroup.value?.groupedKeys[key] == null) {
