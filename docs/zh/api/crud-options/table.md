@@ -290,6 +290,24 @@ const crudOptions = {
                 // (data: any[], row: any) => void
                 //在最后一行插入数据
                 data.push(roow)
+            },
+            /**
+             * 自定义在开启单元格编辑时，如何切换按钮组
+             * @param enabled
+             * @param mode
+             * @param rowHandle
+             */
+            customRowHandleActive({ enabled, mode, rowHandle }) {
+              if (enabled) { //开启时
+                if (mode === "row") { //行编辑模式时
+                  rowHandle.active = "default"; // 原本是editRow
+                } else { // 自由编辑模式时
+                  rowHandle.active = "default"; // 原本是editable
+                }
+              } else {
+                //关闭可编辑时 恢复默认
+                rowHandle.active = "default";
+              }
             }
         }
     },
