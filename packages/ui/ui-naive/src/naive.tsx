@@ -445,8 +445,15 @@ export class Naive implements UiInterface {
         });
       });
     },
-    transformValidateErrors: (e: Error) => {
-      return {};
+    transformValidateErrors: (e: any) => {
+      const errors: any = {};
+      forEach(e, (item) => {
+        forEach(item, (errObj) => {
+          errors[errObj.field] = errObj.message;
+        });
+      });
+
+      return errors;
     }
   });
 

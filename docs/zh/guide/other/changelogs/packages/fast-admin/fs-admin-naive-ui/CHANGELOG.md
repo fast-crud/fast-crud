@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [1.27.0](https://github.com/jekip/naive-ui-admin/compare/v1.26.6...v1.27.0) (2025-09-19)
+
+### Bug Fixes
+
+* naive 表单分组支持校验报错表头显示校验错误提示 ([17a0518](https://github.com/jekip/naive-ui-admin/commit/17a0518fd378bbaffdb3aee1e6b2fe4423f938da))
+
 ## [1.26.6](https://github.com/jekip/naive-ui-admin/compare/v1.26.5...v1.26.6) (2025-08-29)
 
 **Note:** Version bump only for package naive-ui-admin

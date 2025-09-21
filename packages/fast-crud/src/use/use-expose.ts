@@ -57,8 +57,18 @@ function useEditable<R = any>(props: UseEditableProps<R>) {
       return crudBinding.value?.table?.editable?.enabled;
     },
     (val) => {
+      const customRowHandleActive = crudBinding.value?.table?.editable?.customRowHandleActive;
+      if (customRowHandleActive) {
+        customRowHandleActive({
+          enabled: val,
+          mode: crudBinding.value.table.editable?.mode,
+          rowHandle: crudBinding.value.rowHandle
+        });
+        return;
+      }
+
       if (val) {
-        if (crudBinding.value.table.editable.mode === "row") {
+        if (crudBinding.value.table.editable?.mode === "row") {
           crudBinding.value.rowHandle.active = "editRow";
         } else {
           crudBinding.value.rowHandle.active = "editable";

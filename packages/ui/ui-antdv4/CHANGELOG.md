@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [1.27.0](https://github.com/fast-crud/fast-crud/compare/v1.26.6...v1.27.0) (2025-09-19)
+
+### Features
+
+* 【破坏性变更】缩小compute的范围，修复配置compute后，form变更引起所有字段重新加载的问题 ([0929056](https://github.com/fast-crud/fast-crud/commit/0929056f7b5a22a1963a38b1fb2b4196f26bc333))
+
 ## [1.26.6](https://github.com/fast-crud/fast-crud/compare/v1.26.5...v1.26.6) (2025-08-29)
 
 **Note:** Version bump only for package @fast-crud/ui-antdv4

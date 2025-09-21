@@ -475,7 +475,7 @@ export default defineComponent({
       };
     });
 
-    const { merge } = useMerge();
+    const { merge, cloneDeep } = useMerge();
     const computedBinding = computed(() => {
       let rowKey = props.rowKey;
       if (ui.type === "naive" && typeof props.rowKey === "string") {
@@ -486,7 +486,7 @@ export default defineComponent({
       return merge({ rowKey }, ctx.attrs, events);
     });
     const sortedColumns = computed(() => {
-      return doColumnsSort(props.columns);
+      return doColumnsSort(cloneDeep(props.columns));
     });
     if (renderMode === "slot") {
       //使用slot column ，element-plus

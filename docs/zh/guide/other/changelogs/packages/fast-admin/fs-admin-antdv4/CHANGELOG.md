@@ -3,6 +3,16 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [1.27.0](https://github.com/fast-crud/fast-crud/compare/v1.26.6...v1.27.0) (2025-09-19)
+
+### Bug Fixes
+
+* 修复单元格编辑卡死的bug ([72ea456](https://github.com/fast-crud/fast-crud/commit/72ea456f1b4b8ae1b6821e18effd2b681ace9fa7))
+
+### Performance Improvements
+
+* 新增单元格编辑时自定义如何切换按钮组 ([b803320](https://github.com/fast-crud/fast-crud/commit/b8033203dc281bda3bcc931299b2ac10c34969a2))
+
 ## [1.26.6](https://github.com/fast-crud/fast-crud/compare/v1.26.5...v1.26.6) (2025-08-29)
 
 **Note:** Version bump only for package @fast-crud/fs-admin-antdv4

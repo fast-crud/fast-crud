@@ -301,9 +301,9 @@ export default defineComponent({
       return scope.value;
     }
 
-    const computedColumns = doComputed(() => {
+    const computedColumns = computed(() => {
       return props.columns;
-    }, getContextFn);
+    });
     //form.valueBuilder
 
     function doValueBuilder(form: any) {
@@ -400,46 +400,40 @@ export default defineComponent({
     }
 
     //构建分组数据
-    const computedGroup = doComputed(
-      () => {
-        return props.group;
-      },
-      getContextFn,
-      null,
-      (group) => {
-        if (!group) {
-          return {};
-        }
-        //找出没有添加进分组的字段
-        const groupedKeys: any = {};
-        forEach(group?.groups, (groupItem: any, key: string) => {
-          forEach(groupItem.columns, (item: any) => {
-            if (computedColumns.value[item] == null) {
-              utils.logger.warn("无效的分组字段：" + item);
-              return;
-            }
-            groupedKeys[item] = key;
-          });
-        });
-
-        const type = group.groupType;
-        let wrapper = {
-          parent: ui.collapse.name,
-          child: ui.collapseItem.name
-        };
-        if (type === "tabs") {
-          wrapper.parent = ui.tabs.name;
-          wrapper.child = ui.tabPane.name;
-        }
-        return merge(
-          {
-            wrapper,
-            groupedKeys
-          },
-          group
-        );
+    const computedGroup = computed(() => {
+      const group = props.group;
+      if (!group) {
+        return {};
       }
-    );
+      //找出没有添加进分组的字段
+      const groupedKeys: any = {};
+      forEach(group?.groups, (groupItem: any, key: string) => {
+        forEach(groupItem.columns, (item: any) => {
+          if (computedColumns.value[item] == null) {
+            utils.logger.warn("无效的分组字段：" + item);
+            return;
+          }
+          groupedKeys[item] = key;
+        });
+      });
+
+      const type = group.groupType;
+      let wrapper = {
+        parent: ui.collapse.name,
+        child: ui.collapseItem.name
+      };
+      if (type === "tabs") {
+        wrapper.parent = ui.tabs.name;
+        wrapper.child = ui.tabPane.name;
+      }
+      return merge(
+        {
+          wrapper,
+          groupedKeys
+        },
+        group
+      );
+    });
 
     const computedDefaultColumns = computed(() => {
       const columns: any = [];
