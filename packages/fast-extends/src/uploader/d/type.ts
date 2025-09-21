@@ -68,6 +68,10 @@ export type FsUploaderQiniuOptions = {
   domain?: string; // "http://pzrsldiu3.bkt.clouddn.com",
 } & FsUploaderCommonOptions;
 
+export type FsUploaderCustomOptions = {
+  uploadRequest?: any;
+} & FsUploaderCommonOptions;
+
 export type FsUploaderFormOptions = {
   /**
    * 请求url
@@ -111,6 +115,7 @@ export type FsUploaderS3Options = {
 
 export type FsUploaderImplOptions =
   | FsUploaderCosOptions
+  | FsUploaderCustomOptions
   | FsUploaderAliossOptions
   | FsUploaderQiniuOptions
   | FsUploaderFormOptions
