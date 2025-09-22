@@ -15,24 +15,22 @@
     <component :is="ui.row.name" class="fs-row" v-bind="row">
       <!-- col -->
       <template v-for="item in computedDefaultColumns" :key="item?.key">
-        <component :is="ui.col.name" v-if="formItemShow(item)" class="fs-col" v-bind="item.col">
-          <fs-form-item
-            v-if="item.blank !== true"
-            :ref="
-              (el: any) => {
-                if (el) {
-                  formItemRefs[item.key] = el;
-                }
+        <fs-form-item-col
+          :ref="
+            (el: any) => {
+              if (el) {
+                formItemRefs[item.key] = el;
               }
-            "
-            :item="item"
-            :helper="helper"
-            :model-value="get(form, item.key)"
-            :form-slot="mergedSlots['form_' + item.key]"
-            :get-context-fn="getContextFn"
-            @update:model-value="set(form, item.key, $event)"
-          />
-        </component>
+            }
+          "
+          :col="mergeCol(item.col)"
+          :item="item"
+          :helper="helper"
+          :model-value="get(form, item.key)"
+          :slots="mergedSlots['form_' + item.key]"
+          :get-context-fn="getContextFn"
+          @update:model-value="set(form, item.key, $event)"
+        />
       </template>
     </component>
     <component
@@ -57,28 +55,23 @@
           <component :is="ui.row.name" class="fs-row" v-bind="row">
             <!-- col -->
             <template v-for="key in groupItem.columns" :key="key">
-              <component
-                :is="ui.col.name"
-                v-if="formItemShow(computedColumns[key])"
-                class="fs-col"
-                v-bind="mergeCol(groupItem.col, computedColumns[key]?.col)"
-              >
-                <fs-form-item
-                  v-if="computedColumns[key] && computedColumns[key]?.blank !== true"
-                  :ref="
-                    (el: any) => {
-                      if (el) {
-                        formItemRefs[key] = el;
-                      }
+              <fs-form-item-col
+                v-if="computedColumns[key]"
+                :ref="
+                  (el: any) => {
+                    if (el) {
+                      formItemRefs[key] = el;
                     }
-                  "
-                  :item="computedColumns[key]"
-                  :model-value="get(form, key)"
-                  :form-slot="mergedSlots['form_' + key]"
-                  :get-context-fn="getContextFn"
-                  @update:model-value="set(form, key, $event)"
-                />
-              </component>
+                  }
+                "
+                :col="mergeCol(computedColumns[key].col)"
+                :item="computedColumns[key]"
+                :model-value="get(form, key)"
+                :slots="mergedSlots['form_' + key]"
+                :get-context-fn="getContextFn"
+                :helper="helper"
+                @update:model-value="set(form, key, $event)"
+              />
             </template>
           </component>
         </component>
@@ -379,7 +372,7 @@ export default defineComponent({
     const formItemRefs: Ref = ref({});
 
     function getFormItemRef(key: string) {
-      return formItemRefs.value[key];
+      return formItemRefs.value[key].getFormItemRef();
     }
 
     function getComponentRef(key: string, isAsync = false) {
@@ -400,40 +393,43 @@ export default defineComponent({
     }
 
     //构建分组数据
-    const computedGroup = computed(() => {
-      const group = props.group;
-      if (!group) {
-        return {};
-      }
-      //找出没有添加进分组的字段
-      const groupedKeys: any = {};
-      forEach(group?.groups, (groupItem: any, key: string) => {
-        forEach(groupItem.columns, (item: any) => {
-          if (computedColumns.value[item] == null) {
-            utils.logger.warn("无效的分组字段：" + item);
-            return;
-          }
-          groupedKeys[item] = key;
+    const computedGroup = doComputed(
+      () => {
+        return props.group;
+      },
+      getContextFn,
+      null,
+      (group = {}) => {
+        //找出没有添加进分组的字段
+        const groupedKeys: any = {};
+        forEach(group?.groups, (groupItem: any, key: string) => {
+          forEach(groupItem.columns, (item: any) => {
+            if (computedColumns.value[item] == null) {
+              utils.logger.warn("无效的分组字段：" + item);
+              return;
+            }
+            groupedKeys[item] = key;
+          });
         });
-      });
 
-      const type = group.groupType;
-      let wrapper = {
-        parent: ui.collapse.name,
-        child: ui.collapseItem.name
-      };
-      if (type === "tabs") {
-        wrapper.parent = ui.tabs.name;
-        wrapper.child = ui.tabPane.name;
+        const type = group.groupType;
+        let wrapper = {
+          parent: ui.collapse.name,
+          child: ui.collapseItem.name
+        };
+        if (type === "tabs") {
+          wrapper.parent = ui.tabs.name;
+          wrapper.child = ui.tabPane.name;
+        }
+        return merge(
+          {
+            wrapper,
+            groupedKeys
+          },
+          group
+        );
       }
-      return merge(
-        {
-          wrapper,
-          groupedKeys
-        },
-        group
-      );
-    });
+    );
 
     const computedDefaultColumns = computed(() => {
       const columns: any = [];
@@ -589,7 +585,7 @@ export default defineComponent({
     });
 
     function formItemShow(item: any) {
-      if (item && item.show !== false) {
+      if (item && unref(item.show) !== false) {
         return true;
       }
       return false;
@@ -598,7 +594,7 @@ export default defineComponent({
       if (!groupItem.columns) {
         return false;
       }
-      if (groupItem.show === false) {
+      if (unref(groupItem.show) === false) {
         return false;
       }
 

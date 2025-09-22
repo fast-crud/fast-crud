@@ -133,13 +133,9 @@ export default defineComponent({
       return componentRenderRef.value?.getTargetRef();
     }
 
-    const citem = doComputed(() => {
-      return props.item;
-    }, scopeFunc);
-
     const computedItem = computed(() => {
       const res = {
-        ...citem.value
+        ...props.item
       };
       delete res.title;
       delete res.label;
@@ -150,20 +146,20 @@ export default defineComponent({
       return props.item?.helper?.position || (props.helper as any)?.position;
     });
     const computedHelperTooltip = computed(() => {
-      return merge({}, citem.value.helper?.tooltip, (props.helper as any)?.tooltip);
+      return merge({}, props.item.helper?.tooltip, (props.helper as any)?.tooltip);
     });
     const computedKey = computed(() => {
       if (props.item == null) {
         return;
       }
-      if (citem.value.key.indexOf(".") >= 0) {
-        return citem.value.key.split(".");
+      if (props.item.key.indexOf(".") >= 0) {
+        return props.item.key.split(".");
       }
-      return citem.value.key;
+      return props.item.key;
     });
 
     const computedLabel = computed(() => {
-      return citem.value.label || citem.value.title;
+      return props.item.label || props.item.title;
     });
     const computedLabelIsRender = computed(() => {
       return computedLabel.value instanceof Function;
