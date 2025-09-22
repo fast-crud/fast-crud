@@ -269,6 +269,7 @@ const openTableSelect = async (openOptions: { crudOptions?: DynamicallyCrudOptio
         draggable: true,
         is: ui.dialog.name,
         footer: false,
+        ...ui.formWrapper.buildInitBind(ui.dialog.name),
         buttons: {
           reset: {
             show: false
