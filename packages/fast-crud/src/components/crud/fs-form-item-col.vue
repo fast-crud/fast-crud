@@ -48,13 +48,19 @@ const props = defineProps({
     }
   },
   helper: {
-    type: [String, Object]
+    type: [String, Object],
+    default: undefined
   }
 });
 const { doComputed } = useCompute();
-const computedItem = doComputed(() => {
-  return props.item;
-}, props.getContextFn);
+const computedItem = doComputed(
+  () => {
+    return props.item;
+  },
+  () => {
+    return props.getContextFn();
+  }
+);
 
 const attrs = useAttrs();
 const formItemRef = ref();
