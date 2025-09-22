@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.27.1](https://github.com/fast-crud/fast-crud/compare/v1.27.0...v1.27.1) (2025-09-22)
+
+### Bug Fixes
+
+* 修复naive table-select 显示异常的bug ([f821833](https://github.com/fast-crud/fast-crud/commit/f821833eecb2744e3e0dff54d094db1b3eb4c12c))
+
 # [1.27.0](https://github.com/fast-crud/fast-crud/compare/v1.26.6...v1.27.0) (2025-09-19)
 
 **Note:** Version bump only for package @fast-crud/fs-admin-element
