@@ -3,6 +3,13 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.27.3](https://github.com/fast-crud/fast-crud/compare/v1.27.1...v1.27.3) (2025-09-26)
+
+### Bug Fixes
+
+* 修复editor-wang toolbarRef获取不到的bug ([74ebad2](https://github.com/fast-crud/fast-crud/commit/74ebad20813236052a8afd9090d5ec497c0f7421))
+* 修复getComponentRef为null的bug ([837f54f](https://github.com/fast-crud/fast-crud/commit/837f54ff3eae18366da58480b17b4defba12ac46))
+
 ## [1.27.1](https://github.com/fast-crud/fast-crud/compare/v1.27.0...v1.27.1) (2025-09-22)
 
 ### Bug Fixes
