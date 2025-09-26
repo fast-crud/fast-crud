@@ -1,7 +1,7 @@
 <template>
   <div class="fs-editor-wang5" v-bind="container">
     <Toolbar
-      :ref="toolbarRef"
+      ref="toolbarRef"
       style="border-bottom: 1px solid #ccc"
       :editor="editorRef"
       :default-config="toolbarConfigRef"
