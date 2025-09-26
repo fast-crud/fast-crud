@@ -7,7 +7,7 @@
   >
     <fs-form-item
       v-if="computedItem && computedItem?.blank !== true"
-      :ref="formItemRef"
+      ref="formItemRef"
       :item="computedItem"
       :form-slot="slots"
       :get-context-fn="getContextFn"
