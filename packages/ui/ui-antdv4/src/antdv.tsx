@@ -580,18 +580,33 @@ export class Antdv implements UiInterface {
       };
     },
     scrollTo(req: TableScrollReq) {
-      try {
-        const querySelector = req?.fsTableRef?.vnode?.el?.querySelector;
-        if (querySelector == null || typeof querySelector !== "function") {
-          return;
-        }
-        const body = querySelector(".ant-table-body");
-        if (body) {
-          body.scrollTop = req.top;
-        }
-      } catch (e) {
-        console.error("scroll to top error:", e);
+      if (!req?.fsTableRef) {
+        console.warn("fsTableRef is required");
+        return;
       }
+
+      // 方式1：通过组件实例的$el或暴露的方法
+      const tableEl = req.fsTableRef.$el || req.fsTableRef.vnode?.el;
+      if (!tableEl) {
+        console.warn("Table element not found");
+        return;
+      }
+
+      // 查找表格body
+      const body = tableEl.querySelector(".ant-table-body");
+      if (body) {
+        body.scrollTop = req.top;
+      } else {
+        console.warn("Table body element not found");
+      }
+      // const querySelector = req?.fsTableRef?.vnode?.el?.querySelector;
+      // if (querySelector == null || typeof querySelector !== "function") {
+      //   return;
+      // }
+      // const body = querySelector(".ant-table-body");
+      // if (body) {
+      //   body.scrollTop = req.top;
+      // }
     },
     onChange({ onSortChange, onFilterChange, onPagination, bubbleUp }) {
       return {
