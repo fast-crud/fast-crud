@@ -36,7 +36,7 @@ export default defineComponent({
     scope: {}
   },
   setup(props) {
-    utils.trace("fs-form-item");
+    // utils.trace("fs-form-item");
   }
 });
 </script>

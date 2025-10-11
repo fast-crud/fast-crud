@@ -69,7 +69,7 @@ export default defineComponent({
   },
   emits: ["reset", "submit", "validationError", "value-change", "open", "opened", "mounted", "closed", "inner-change"],
   setup(props: any, ctx: any) {
-    utils.trace("fs-form-wrapper");
+    // utils.trace("fs-form-wrapper");
     const { t } = useI18n();
     const { merge } = useMerge();
     const formWrapperOpen: Ref<boolean> = ref(false);

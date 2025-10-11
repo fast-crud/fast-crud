@@ -291,7 +291,7 @@ export default defineComponent({
   },
   emits: ["row-handle", "value-change", "pagination-change", "filter-change", "sort-change", "data-change"],
   setup(props: any, ctx) {
-    utils.trace("fs-table");
+    // utils.trace("fs-table");
     const tableRef = ref();
     const componentRefs = ref([]);
     useComponentRefProvider(componentRefs);

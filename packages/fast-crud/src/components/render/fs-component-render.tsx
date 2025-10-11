@@ -96,7 +96,7 @@ export default defineComponent({
   },
   emits: ["update:dict", "update:modelValue", "mounted"],
   setup(props: any, ctx) {
-    utils.trace("fs-component-render");
+    // utils.trace("fs-component-render");
     const { ui } = useUi();
     const { merge } = useMerge();
     provide("get:scope", () => {
