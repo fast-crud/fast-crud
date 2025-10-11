@@ -29,7 +29,7 @@ export default defineComponent({
   emits: ["action"],
   setup(props, ctx: any) {
     function onClick(key: any, btn: any, $event: any) {
-      const e = { key, btn, $event };
+      const e = { key, btn, $event, loadingRef: $event?.loadingRef };
       if (btn.click) {
         btn.click(e);
         return;

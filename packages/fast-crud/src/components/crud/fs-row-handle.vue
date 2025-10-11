@@ -4,7 +4,7 @@
     <template v-for="(item, index) in computedHandleBtns" :key="index">
       <template v-if="item.show !== false && !isDropdownBtn(item, index)">
         <fs-render v-if="item.render" :render-func="item.render" :scope="scopeRef" />
-        <fs-button v-else class="row-handle-btn" v-bind="item" @click.stop="doClick(item)" />
+        <fs-button v-else class="row-handle-btn" v-bind="item" @click.stop="doClick(item, $event)" />
       </template>
     </template>
     <slot name="cell-rowHandle-middle" v-bind="scope"></slot>
@@ -111,10 +111,10 @@ export default defineComponent({
         index: props.scope[ui.tableColumn.index]
       };
     });
-    const doClick = (item: any) => {
+    const doClick = (item: any, $event: any) => {
       const index = props.scope[ui.tableColumn.index];
       const row = props.scope[ui.tableColumn.row];
-      const e: ScopeContext = { key: item.key, row, btn: item, index, ...props.scope };
+      const e: ScopeContext = { key: item.key, row, btn: item, index, ...props.scope, loadingRef: $event?.loadingRef };
       if (item.click) {
         return item.click(e);
       }

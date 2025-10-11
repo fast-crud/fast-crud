@@ -1,4 +1,4 @@
-import { resolveDynamicComponent, defineComponent, h, computed } from "vue";
+import { resolveDynamicComponent, defineComponent, h, computed, ref } from "vue";
 import { useMerge, useUi } from "../../use";
 import "./fs-button.less";
 import { omit } from "lodash-es";
@@ -45,11 +45,29 @@ export default defineComponent({
       type: Object,
       default: undefined
     },
-    className: {}
+    /**
+     * 自定义的className
+     */
+    className: {},
+
+    /**
+     * 是否加载中
+     */
+    loading: {
+      type: Boolean,
+      default: undefined,
+      required: false
+    }
   },
+  emits: ["click"],
   setup(props, ctx) {
     const { ui } = useUi();
     const { merge } = useMerge();
+
+    const loadingRef = ref(false);
+    const computedLoading = computed(() => {
+      return props.loading ?? loadingRef.value ?? false;
+    });
     const iconRender = (icon: any, iconClass = "fs-button-icon") => {
       if (icon == null) {
         return;
@@ -107,6 +125,13 @@ export default defineComponent({
 
       const buttonComp: any = resolveDynamicComponent(ui.button.name);
 
+      const onClick = ($event: any) => {
+        ctx.emit("click", {
+          $event: $event,
+          loadingRef: loadingRef
+        });
+      };
+
       const btnProps = merge(
         {
           ...isCircle,
@@ -114,7 +139,9 @@ export default defineComponent({
           class: {
             "fs-button": true,
             "is-thin": !props.text && !ctx.slots.default
-          }
+          },
+          loading: computedLoading.value,
+          onClick
         },
         { class: props.className, ...ctx.attrs, ...props.buttonProps }
       );

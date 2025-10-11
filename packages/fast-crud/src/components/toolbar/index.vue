@@ -28,7 +28,7 @@
             />
           </template>
         </component>
-        <fs-button v-else v-bind="item" @click="item.click()" />
+        <fs-button v-else v-bind="item" @click="item.click($event)" />
       </template>
     </template>
     <component
@@ -149,7 +149,7 @@ export default defineComponent({
       return sortedButtons;
     });
     const popoverVisible = ref(false);
-    const handleSimpleClick = () => {
+    const handleSimpleClick = ($event) => {
       if (ui.type === "element") {
         return;
       }
