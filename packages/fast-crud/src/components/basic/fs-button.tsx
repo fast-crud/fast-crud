@@ -126,10 +126,8 @@ export default defineComponent({
       const buttonComp: any = resolveDynamicComponent(ui.button.name);
 
       const onClick = ($event: any) => {
-        ctx.emit("click", {
-          $event: $event,
-          loadingRef: loadingRef
-        });
+        $event.loadingRef = loadingRef;
+        ctx.emit("click", $event);
       };
 
       const btnProps = merge(
