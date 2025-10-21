@@ -332,14 +332,6 @@ const computedSelect = computed(() => {
   };
 });
 
-// const computedDialogBinding = computed(() => {
-//   const base = ui.dialog.buildProps({
-//     title: props.viewMode ? t("fs.extends.tableSelect.view") : t("fs.extends.tableSelect.select"),
-//     width: "80%"
-//   });
-//   return merge(base, props.dialog);
-// });
-
 watch(
   () => {
     return props.modelValue;
@@ -409,23 +401,6 @@ function buildMergedCrudOptions() {
 
 const { merge } = useMerge();
 
-// watch(
-//   () => {
-//     return props.crudOptionsOverride;
-//   },
-//   async (value, oldValue) => {
-//     if (JSON.stringify(value) === JSON.stringify(oldValue)) {
-//       return;
-//     }
-//     const cur = crudBinding.value?.pagination[ui.pagination.currentPage];
-//     appendCrudOptions(value);
-//     if (crudRef.value) {
-//       crudBinding.value.pagination[ui.pagination.currentPage] = cur;
-//       await crudExpose.doRefresh({ goFirstPage: false });
-//     }
-//   }
-// );
-
 async function onOk() {
   if (props.dict.loading) {
     return;
@@ -461,7 +436,6 @@ async function onOk() {
   emits("dialog-close", scope);
   await nextTick();
   await formWrapperRef.value.close();
-  console.log("dialogOpen", dialogOpen.value);
   emits("dialog-closed", scope);
 }
 

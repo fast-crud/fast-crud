@@ -115,7 +115,7 @@ export default defineComponent({
             if (props.item.tooltip === true) {
               return computedTitle.value ?? props.scope.value;
             } else if (typeof props.item.tooltip === "function") {
-              return props.item.tooltip();
+              return props.item.tooltip({ ...props.scope });
             } else {
               return props.item.tooltip;
             }
