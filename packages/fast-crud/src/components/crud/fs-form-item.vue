@@ -115,7 +115,7 @@ export default defineComponent({
 
     const { doComputed } = useCompute();
 
-    utils.trace("fs-form-item");
+    // utils.trace("fs-form-item");
     // const scopeComputed: Ref<ScopeContext> = computed(() => {});
 
     const scopeFunc = () => {

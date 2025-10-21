@@ -2,7 +2,7 @@
   <div class="fs-search-col fs-search-btns">
     <component :is="ui.formItem.name">
       <template v-for="(item, index) in buttons" :key="index">
-        <fs-button v-if="item.show" v-bind="item" @click="item._click()" />
+        <fs-button v-if="item.show" v-bind="item" @click="item._click($event)" />
       </template>
     </component>
   </div>

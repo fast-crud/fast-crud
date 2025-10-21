@@ -22,7 +22,7 @@ export default defineComponent({
     }
   },
   setup(props) {
-    utils.trace("fs-slot-render");
+    // utils.trace("fs-slot-render");
     return () => {
       return props.slots(props.scope);
     };

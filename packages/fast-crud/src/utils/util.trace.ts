@@ -11,7 +11,7 @@ export function trace(name: string, enable = false) {
   // onRenderTracked((event) => {
   //   console.log("状态跟踪track----------->", name, event.key, event.target, event.type, event);
   // });
-  onRenderTriggered((event) => {
-    console.log("状态触发trigger--------------->", name, event.key, event.target, event.type, event);
-  });
+  // onRenderTriggered((event) => {
+  //   console.log("状态触发trigger--------------->", name, event.key, event.target, event.type, event);
+  // });
 }

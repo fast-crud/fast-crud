@@ -255,7 +255,7 @@ export default defineComponent({
     const form: UnwrapNestedRefs<any> = reactive({});
     const { proxy } = getCurrentInstance();
 
-    utils.trace("fs-form");
+    // utils.trace("fs-form");
 
     // eslint-disable-next-line vue/no-setup-props-destructure
     each(props.columns, (item: any) => {

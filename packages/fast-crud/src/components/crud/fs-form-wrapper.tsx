@@ -69,7 +69,7 @@ export default defineComponent({
   },
   emits: ["reset", "submit", "validationError", "value-change", "open", "opened", "mounted", "closed", "inner-change"],
   setup(props: any, ctx: any) {
-    utils.trace("fs-form-wrapper");
+    // utils.trace("fs-form-wrapper");
     const { t } = useI18n();
     const { merge } = useMerge();
     const formWrapperOpen: Ref<boolean> = ref(false);
@@ -89,7 +89,7 @@ export default defineComponent({
 
     const formWrapperSlots: Ref<WriteableSlots> = ref({});
 
-    function buildEvent(): FormWrapperContext {
+    function buildEvent(merge: {} = {}): FormWrapperContext {
       return {
         formWrapperId,
         formWrapperIdClass,
@@ -120,7 +120,8 @@ export default defineComponent({
         loading,
         toggleFullscreen,
         submit,
-        mode: formOptions.value?.mode
+        mode: formOptions.value?.mode,
+        ...merge
       };
     }
 
@@ -393,8 +394,8 @@ export default defineComponent({
         value.key = key;
         buttonsArr.push(value);
         if (value.onClick == null && value.click != null) {
-          value.onClick = () => {
-            value.click(buildEvent());
+          value.onClick = ($event: any) => {
+            value.click(buildEvent({ loadingRef: $event?.loadingRef }));
           };
         }
       });
