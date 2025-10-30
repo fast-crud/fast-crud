@@ -3,6 +3,16 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.27.4](https://github.com/fast-crud/fast-crud/compare/v1.27.3...v1.27.4) (2025-10-30)
+
+### Performance Improvements
+
+* 对话框支持复制到剪贴板和从剪贴板粘贴表单数据 ([cdcc244](https://github.com/fast-crud/fast-crud/commit/cdcc2440927b2a94f010547e0d5cdd661ef826bc))
+* 移除trace ([a01e2d6](https://github.com/fast-crud/fast-crud/commit/a01e2d605ad0cea86dcba06c2e1579fd498fd585))
+* 支持settings.onUseCrud配置 ([554e07f](https://github.com/fast-crud/fast-crud/commit/554e07f28ef10cdd18e0245207b0981c1c5c3205))
+* fs-button click事件支持暴露loadingRef来控制按钮本身的loading状态 ([4855c5e](https://github.com/fast-crud/fast-crud/commit/4855c5eb559cf61aa7699fd933168659cae62db3))
+* rowhandle 按钮图标居中 ([e69cdf7](https://github.com/fast-crud/fast-crud/commit/e69cdf79be81e32e9021467c11667f949a360f5d))
+
 ## [1.27.3](https://github.com/fast-crud/fast-crud/compare/v1.27.1...v1.27.3) (2025-09-26)
 
 ### Bug Fixes
