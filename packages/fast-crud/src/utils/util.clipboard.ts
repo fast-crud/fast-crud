@@ -112,6 +112,7 @@ export async function readToClipboard(): Promise<string> {
 
     // 请求剪贴板读取权限
     if (navigator.permissions) {
+      //@ts-ignore
       const permission = await navigator.permissions.query({ name: "clipboard-read" });
       if (permission.state === "denied") {
         throw new Error("剪贴板读取权限被拒绝");
