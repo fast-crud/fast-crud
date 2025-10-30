@@ -289,5 +289,11 @@ export default defineComponent({
     align-items: center;
     margin: 2px;
   }
+
+  .row-handle-btn {
+    .fs-icon {
+      margin: auto;
+    }
+  }
 }
 </style>
