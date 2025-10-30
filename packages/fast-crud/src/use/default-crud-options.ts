@@ -1,7 +1,8 @@
 import { uiContext } from "../ui";
 import { DynamicallyCrudOptions, UseCrudProps } from "../d";
 import { computed } from "vue";
-
+import { utils } from "../utils";
+import { merge } from "lodash-es";
 const defaultCrudOptions = {
   commonOptions(ctx?: UseCrudProps<any, any>): any {
     return {};
@@ -95,23 +96,46 @@ const defaultCrudOptions = {
           destroyOnClose: true, // antdv
           ...ui.dialog.footer(), // antdv
           buttons: {
+            copy: {
+              text: ct("fs.form.copy"),
+              order: 1,
+              click: async ({ form }) => {
+                await utils.clipboard.copyToClipboard(JSON.stringify(form));
+                ui.message.success(t("fs.form.copySuccess"));
+              }
+            },
+            paste: {
+              text: ct("fs.form.paste"),
+              order: 2,
+              click: async ({ form }) => {
+                const clipboardData: string = await utils.clipboard.readToClipboard();
+                if (clipboardData) {
+                  try {
+                    const obj = JSON.parse(clipboardData);
+                    merge(form, obj);
+                  } catch (e) {
+                    console.error(e);
+                  }
+                }
+              }
+            },
             cancel: {
               text: ct("fs.form.cancel"),
-              order: 1,
+              order: 4,
               click: ({ doClose }) => {
                 doClose();
               }
             },
             reset: {
               text: ct("fs.form.reset"),
-              order: 1,
+              order: 3,
               click: ({ reset }) => {
                 reset();
               }
             },
             ok: {
               text: ct("fs.form.ok"),
-              order: 1,
+              order: 5,
               type: "primary",
               click: async ({ submit }) => {
                 await submit();

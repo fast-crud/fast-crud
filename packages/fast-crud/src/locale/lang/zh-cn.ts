@@ -38,7 +38,10 @@ export default {
         content: "表单数据有变更，是否保存",
         cancel: "不保存",
         ok: "保存"
-      }
+      },
+      copy: "复制",
+      paste: "粘贴",
+      copySuccess: "表单数据已复制到剪贴板，您可以在添加对话框中粘贴"
     },
     actionbar: { add: "添加" },
     toolbar: {

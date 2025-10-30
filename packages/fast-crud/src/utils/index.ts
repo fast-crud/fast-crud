@@ -6,7 +6,7 @@ import store from "./util.store";
 import { deepdash } from "./deepdash";
 import dash from "./util.dash";
 export * from "./util.log";
-
+import * as clipboard from "./util.clipboard";
 export const utils = {
   logger,
   strings,
@@ -14,7 +14,8 @@ export const utils = {
   vite,
   store,
   deepdash,
-  dash
+  dash,
+  clipboard
 };
 
 export default utils;
