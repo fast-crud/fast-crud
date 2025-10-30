@@ -114,3 +114,4 @@ packages/vben-admin-thin-next
 /**/.DS_Store
 /pnpm-lock.yaml
 /packages/fast-admin/fs-admin-element/package-lock.json
+.history

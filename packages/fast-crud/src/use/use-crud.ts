@@ -511,6 +511,9 @@ export function useCrud<T = any, R = any>(ctx: UseCrudProps<T, R>): UseCrudRet<R
     //初始化columns，将crudOptions.columns里面的配置转化为crudBinding
     const bindings = buildColumns(userOptions);
     afterUseCrud(bindings);
+    if (bindings?.settings?.onUseCrud) {
+      bindings.settings.onUseCrud(bindings);
+    }
     return bindings;
   }
 
