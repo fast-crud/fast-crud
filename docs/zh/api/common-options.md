@@ -4,8 +4,8 @@
 ## component【组件配置】
 
 ### component.name
-* 说明：组件名（局部注册的组件直接传入组件本身)
-* 类型：String | 组件
+* 说明：组件名（局部注册的组件传入一个get方法）
+* 类型：String | `()=>局部组件`
 * 示例： 
 ```js
 import TestComponent from './xxx.vue'
@@ -15,9 +15,9 @@ const curdOptions = {
             form:{
                 component:{
                     //全局注册的组件直接写组件名称即可
-                    name: 'a-select',
-                    //局部注册组件
-                    name: TestComponent
+                    name: 'a-select', 
+                    //局部注册组件，传入一个获取组件的方法，可以避免组件重新setup
+                    name: ()=>TestComponent 
                 }
             }
         }
