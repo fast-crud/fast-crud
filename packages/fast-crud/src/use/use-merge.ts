@@ -1,7 +1,7 @@
 import { isArray, cloneDeepWith, mergeWith } from "lodash-es";
-import { isRef } from "vue";
+import { isRef, isShallow } from "vue";
 function isUnMergeable(srcValue: any) {
-  return srcValue != null && (srcValue instanceof UnMergeable || isRef(srcValue));
+  return srcValue != null && (srcValue instanceof UnMergeable || isRef(srcValue) || isShallow(srcValue));
 }
 function isUnCloneable(value: any) {
   return isUnMergeable(value) && !value.cloneable;

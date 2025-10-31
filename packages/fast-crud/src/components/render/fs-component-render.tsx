@@ -1,19 +1,7 @@
-import {
-  computed,
-  defineComponent,
-  markRaw,
-  mergeProps,
-  onMounted,
-  provide,
-  Ref,
-  ref,
-  resolveComponent,
-  unref
-} from "vue";
+import { computed, defineComponent, mergeProps, onMounted, provide, Ref, ref, resolveComponent, unref } from "vue";
 import { forEach, camelCase } from "lodash-es";
 import { useMerge, useUi } from "../../use";
 import { ComponentEventContext, VModelProps } from "../../d";
-import utils from "../../utils";
 
 function mergeEventHandles(target: any, eventName: string) {
   if (target[eventName] instanceof Array) {
@@ -196,9 +184,14 @@ export default defineComponent({
       component: any;
     };
     const computedInputComp: Ref<InputCompType> = computed(() => {
+      console.log("computedInputComp", props.name);
+      let name = unref(props.name) || ui.input.name;
+      if (typeof name === "function") {
+        name = name();
+      }
       const res: InputCompType = {
         isAsyncComponent: false,
-        component: unref(props.name) || ui.input.name
+        component: name
       };
       let inputComp = res.component;
       if (!htmlTags.includes(inputComp)) {
@@ -267,8 +260,7 @@ export default defineComponent({
       if (props.render) {
         return props.render({ ...props.scope, attrs: merged });
       }
-      const inputComp = markRaw(computedInputComp.value.component);
-      return <inputComp {...merged}>{childrenRendered()}</inputComp>;
+      return <computedInputComp.value.component {...merged}>{childrenRendered()}</computedInputComp.value.component>;
     };
   }
 });

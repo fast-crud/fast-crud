@@ -17,9 +17,9 @@
   </component>
 </template>
 <script lang="ts" setup>
-import { useAttrs, defineProps, PropType, ref } from "vue";
+import { useAttrs, defineProps, PropType, ref, provide } from "vue";
 import { useCompute } from "../../use/use-compute";
-import { merge } from "lodash-es";
+import { useMerge } from "../../use/use-merge";
 import { useUi } from "@fast-crud/ui-interface";
 const { ui } = useUi();
 const props = defineProps({
@@ -53,6 +53,7 @@ const props = defineProps({
   }
 });
 const { doComputed } = useCompute();
+
 const computedItem = doComputed(
   () => {
     return props.item;
@@ -61,6 +62,8 @@ const computedItem = doComputed(
     return props.getContextFn();
   }
 );
+
+const { merge } = useMerge();
 
 const attrs = useAttrs();
 const formItemRef = ref();

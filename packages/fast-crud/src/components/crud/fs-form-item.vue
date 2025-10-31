@@ -72,8 +72,7 @@
 <script lang="ts">
 import { ref, computed, defineComponent, Ref, PropType } from "vue";
 import FsRender from "../render/fs-render.js";
-import { useMerge, useUi, useCompute } from "../../use";
-import utils from "../../utils";
+import { useMerge, useUi } from "../../use";
 /**
  * form-item组件封装
  */
@@ -112,9 +111,6 @@ export default defineComponent({
     const { ui } = useUi();
     const { merge } = useMerge();
     const componentRenderRef = ref();
-
-    const { doComputed } = useCompute();
-
     // utils.trace("fs-form-item");
     // const scopeComputed: Ref<ScopeContext> = computed(() => {});
 
