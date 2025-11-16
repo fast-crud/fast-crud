@@ -100,10 +100,12 @@ mergePlugins.push({
       component: columnComponent
     };
     if (columnProps.type === "text" || (columnProps.type instanceof Array && columnProps.type.includes("text"))) {
-      viewFormColumn.render = (context: ScopeContext) => {
-        const { value } = context;
-        return <span>{value}</span>;
-      };
+      if (!viewFormColumn.render) {
+        viewFormColumn.render = (context: ScopeContext) => {
+          const { value } = context;
+          return <span>{value}</span>;
+        };
+      }
     }
     merge(columnProps, { viewForm: viewFormColumn });
     return columnProps;
