@@ -111,7 +111,7 @@ export default defineComponent({
         index: props.scope[ui.tableColumn.index]
       };
     });
-    const doClick = (item: any, $event: any) => {
+    const doClick = (item: any, $event?: any) => {
       const index = props.scope[ui.tableColumn.index];
       const row = props.scope[ui.tableColumn.row];
       const e: ScopeContext = { key: item.key, row, btn: item, index, ...props.scope, loadingRef: $event?.loadingRef };
@@ -288,6 +288,12 @@ export default defineComponent({
   .n-button {
     align-items: center;
     margin: 2px;
+  }
+
+  .row-handle-btn {
+    .fs-icon {
+      margin: auto;
+    }
   }
 }
 </style>

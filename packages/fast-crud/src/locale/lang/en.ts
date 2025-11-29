@@ -38,7 +38,9 @@ export default {
         content: "The form data has changed, whether to save",
         cancel: "don't save",
         ok: "save"
-      }
+      },
+      copy: "copy",
+      paste: "paste"
     },
     actionbar: { add: "add" },
     toolbar: {
