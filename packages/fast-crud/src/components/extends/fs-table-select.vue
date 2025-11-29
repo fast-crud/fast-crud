@@ -189,7 +189,9 @@ const emits = defineEmits([
   /*对话框即将关闭*/
   "dialog-close",
   /*对话框已关闭*/
-  "dialog-closed"
+  "dialog-closed",
+  /*对话框关闭*/
+  "close"
 ]);
 const { ui } = useUi();
 const { t } = useI18n();
@@ -199,6 +201,7 @@ const dialogOpen = ref(false);
 
 function onClose() {
   dialogOpen.value = false;
+  emits("close", getScopeContext());
 }
 function onOpen() {
   dialogOpen.value = true;
