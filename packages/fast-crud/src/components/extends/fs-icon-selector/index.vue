@@ -100,7 +100,18 @@ const props = defineProps({
   },
   iconSets: {
     type: Array<string>,
-    default: () => ["carbon", "ion", "ant-design", "fa-solid", "fa-brands", "fa-regular", "mdi"]
+    default: () => [
+      "logos",
+      "fa-brands",
+      "fa-solid",
+      "fa-regular",
+      "carbon",
+      "ion",
+      "ant-design",
+      "mdi",
+      "twemoji",
+      "svg-spinners"
+    ]
   },
   apiProvider: {
     type: String,
