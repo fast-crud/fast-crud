@@ -38,7 +38,7 @@ registerCrudOptionsPlugin(
     const crudExpose = ctx.crudExpose;
     const crudBinding = crudExpose.crudBinding;
     function getRowKey() {
-      return crudBinding.value.table.rowKey || "id";
+      return crudBinding.value?.table?.rowKey || "id";
     }
     const { ui } = useUi();
     if (!selection) {

@@ -457,7 +457,13 @@ export class Element implements UiInterface {
       const curSelectedRows = [];
       for (const key of selectedRowKeys.value) {
         for (const row of tableRef.data) {
-          if (row[rowKey] === key) {
+          let lineKey = null;
+          if (isFunction(rowKey)) {
+            lineKey = rowKey(row);
+          } else {
+            lineKey = row[rowKey];
+          }
+          if (lineKey === key) {
             curSelectedRows.push(row);
           }
         }
@@ -496,7 +502,12 @@ export class Element implements UiInterface {
       if (req.multiple) {
         const onSelectionChange = (changedRows: any[] = []) => {
           const rowKey = req.getRowKey();
-          let selectedKeys = changedRows.map((item: any) => item[rowKey]);
+          let selectedKeys = changedRows.map((item: any) => {
+            if (isFunction(rowKey)) {
+              return rowKey(item);
+            }
+            return item[rowKey];
+          });
           if (req.crossPage) {
             selectedKeys = getCrossPageSelected(selectedKeys);
           }
@@ -528,7 +539,7 @@ export class Element implements UiInterface {
             return;
           }
           const rowKey = req.getRowKey();
-          const selectedKeys = [changed[rowKey]];
+          const selectedKeys = [isFunction(rowKey) ? rowKey(changed) : changed[rowKey]];
           req.onSelectedKeysChanged(selectedKeys);
         };
         const selectedRowKeys = req.selectedRowKeys instanceof Function ? req.selectedRowKeys() : req.selectedRowKeys;
@@ -551,7 +562,8 @@ export class Element implements UiInterface {
                   name: "el-radio",
                   label: compute((ctx: any) => {
                     if (ctx.form) {
-                      return ctx.form[req.getRowKey()];
+                      const rowKey = req.getRowKey();
+                      return isFunction(rowKey) ? rowKey(ctx.form) : ctx.form[rowKey];
                     }
                   }),
                   props: {
