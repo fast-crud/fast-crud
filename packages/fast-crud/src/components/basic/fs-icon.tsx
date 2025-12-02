@@ -48,9 +48,18 @@ export default defineComponent({
         }
 
         const IconComp: any = resolveDynamicComponent("FsIconify");
+        const arr = props.icon.split(":");
+        let color = {};
+        let icon = props.icon;
+        if (arr.length >= 3) {
+          color = {
+            color: arr[2]
+          };
+          icon = arr[0] + ":" + arr[1];
+        }
         //如果是iconify图标
         return () => {
-          return <IconComp class={"fs-icon"} icon={props.icon} {...ctx.attrs} />;
+          return <IconComp class={"fs-icon"} icon={icon} style={color} {...ctx.attrs} />;
         };
       }
       //使用ui内置图标
