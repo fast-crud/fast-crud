@@ -15,12 +15,28 @@ export default defineComponent({
       type: String,
       default: undefined,
       require: true
+    },
+    baseUrl: {
+      type: String,
+      default: ""
     }
   },
   setup(props, ctx) {
     const { ui } = useUi();
     const computedRenderFunc = computed(() => {
       if (props.icon && props.icon?.indexOf(":") >= 0) {
+        if (props.icon.startsWith("http:") || props.icon.startsWith("https:")) {
+          let url = null;
+          if (props.icon.startsWith("http://") || props.icon.startsWith("https://")) {
+            url = props.icon;
+          } else {
+            url = props.baseUrl + props.icon.replace("http:", "").replace("https:", "");
+          }
+          return () => {
+            return <img class={"fs-icon-image"} src={url} {...ctx.attrs} />;
+          };
+        }
+
         if (props.icon.startsWith("svg:")) {
           const IconComp: any = resolveDynamicComponent("FsIconSvg");
           //如果是svg图标
