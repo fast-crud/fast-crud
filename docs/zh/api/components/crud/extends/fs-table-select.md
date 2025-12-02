@@ -35,6 +35,7 @@
 | selected-change   |            |
 | dialog-close      |            |
 | dialog-closed     |            |
+| close             |            |
 
 ## Slots
 

@@ -8,5 +8,6 @@
 | Prop name | Description | Type   | Values | Default   |
 | --------- | ----------- | ------ | ------ | --------- |
 | icon      | icon 名称   | string | -      | undefined |
+| baseUrl   |             | string | -      | ""        |
 
 ---

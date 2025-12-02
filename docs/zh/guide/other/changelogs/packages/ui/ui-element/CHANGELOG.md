@@ -3,6 +3,16 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.27.6](https://github.com/fast-crud/fast-crud/compare/v1.27.5...v1.27.6) (2025-12-02)
+
+**Note:** Version bump only for package @fast-crud/ui-element
+
+## [1.27.5](https://github.com/fast-crud/fast-crud/compare/v1.27.4...v1.27.5) (2025-12-02)
+
+### Bug Fixes
+
+* table.rowKey配置为一个方法时 rowSelection无效的bug ([9805dc8](https://github.com/fast-crud/fast-crud/commit/9805dc8ef8dd16033c28c2519ae661fe44cf9d9e))
+
 ## [1.27.4](https://github.com/fast-crud/fast-crud/compare/v1.27.3...v1.27.4) (2025-10-30)
 
 **Note:** Version bump only for package @fast-crud/ui-element

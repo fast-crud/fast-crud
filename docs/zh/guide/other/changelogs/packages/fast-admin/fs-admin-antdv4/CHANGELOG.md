@@ -3,6 +3,16 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.27.6](https://github.com/fast-crud/fast-crud/compare/v1.27.5...v1.27.6) (2025-12-02)
+
+**Note:** Version bump only for package @fast-crud/fs-admin-antdv4
+
+## [1.27.5](https://github.com/fast-crud/fast-crud/compare/v1.27.4...v1.27.5) (2025-12-02)
+
+### Performance Improvements
+
+*  viewFormUseCellComponent开启时， viewFormColumn.render 也支持自定义 ([1526651](https://github.com/fast-crud/fast-crud/commit/152665128bf7cff09b6f8d3a024fffa117d2bc73))
+
 ## [1.27.4](https://github.com/fast-crud/fast-crud/compare/v1.27.3...v1.27.4) (2025-10-30)
 
 **Note:** Version bump only for package @fast-crud/fs-admin-antdv4

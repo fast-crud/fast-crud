@@ -3,6 +3,25 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.27.6](https://github.com/fast-crud/fast-crud/compare/v1.27.5...v1.27.6) (2025-12-02)
+
+**Note:** Version bump only for package fast-crud-root
+
+## [1.27.5](https://github.com/fast-crud/fast-crud/compare/v1.27.4...v1.27.5) (2025-12-02)
+
+### Bug Fixes
+
+* table.rowKey配置为一个方法时 rowSelection无效的bug ([9805dc8](https://github.com/fast-crud/fast-crud/commit/9805dc8ef8dd16033c28c2519ae661fe44cf9d9e))
+
+### Performance Improvements
+
+*  iconify图标支持设置颜色，ion:xxxx:red ([65126d8](https://github.com/fast-crud/fast-crud/commit/65126d8e50ec85ef1df0764918c437cb546d4ba7))
+*  viewFormUseCellComponent开启时， viewFormColumn.render 也支持自定义 ([1526651](https://github.com/fast-crud/fast-crud/commit/152665128bf7cff09b6f8d3a024fffa117d2bc73))
+* 优化局部自定义组件在表单中引发重新setup的问题 ([3cb2e96](https://github.com/fast-crud/fast-crud/commit/3cb2e965718969f62c5d5787900e0fd9f6edd197))
+* fs-icon支持http image ([71ca8e7](https://github.com/fast-crud/fast-crud/commit/71ca8e7f9a83d27d6d544603c7177de45585be6a))
+* icon-select 增加几组图标 ([f0680a4](https://github.com/fast-crud/fast-crud/commit/f0680a4dc65f01c6b801727d4bfc73006c927ffa))
+* table select 支持对话框关闭事件 ([cf48977](https://github.com/fast-crud/fast-crud/commit/cf489776aee15450017dd1c057bb1dcb427609b8))
+
 ## [1.27.4](https://github.com/fast-crud/fast-crud/compare/v1.27.3...v1.27.4) (2025-10-30)
 
 ### Performance Improvements
