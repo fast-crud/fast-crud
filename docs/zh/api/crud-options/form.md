@@ -309,8 +309,13 @@ const crudOptions = {
   form:{
     wrapper: {
       buttons: {
-        ok: {}, // fs-button配置
-        cancel: {}
+        ok: { //保存
+          // fs-button配置
+        }, 
+        cancel: {}, //取消
+        reset: {}, // 重置
+        copy:{show:true} // 复制
+        paste:{show:true} // 粘贴
       }
     }
   }
