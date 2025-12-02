@@ -7,13 +7,9 @@
     </component>
 
     <div v-if="dialogOpened" class="fs-icon-selector-dialog">
-      <component :is="ui.dialog.name" preset="dialog" v-bind="computedDialog" :footer="null">
-        <template #[ui.dialog.titleSlotName]>
-          <fs-icon icon="icon-select" class="mr-2"></fs-icon>
-          选择图标
-        </template>
-        <div class="fs-icon-selector-dialog-content mb-4">
-          <div class="icon-tabs-box mt-10 mb-10">
+      <component :is="ui.dialog.name" preset="dialog" title="选择图标" v-bind="computedDialog" :footer="null">
+        <div class="fs-icon-selector-dialog-content">
+          <div class="icon-tabs-box mt-10">
             <component :is="ui.tabs.name" v-bind="computeTabs" type="card">
               <component :is="ui.tabPane.name" key="all" :[ui.tabPane.key]="'all'" :[ui.tabPane.tab]="'全部'">
               </component>
@@ -30,7 +26,7 @@
             <component
               :is="ui.input.name"
               v-model:[ui.input.modelValue]="searchKey"
-              class="ml-2"
+              class="p-1"
               placeholder="搜索图标, 双击选择"
               @keydown.enter="handleSearch"
             >
@@ -328,6 +324,8 @@ const computeTabs = computed(() => {
       flex-direction: column;
       overflow-y: auto;
       overflow-x: hidden;
+      border: 1px solid #e4e7ed;
+      border-radius: 8px;
       .icon-list {
         width: 100%;
         display: flex;
