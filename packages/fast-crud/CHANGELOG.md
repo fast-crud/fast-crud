@@ -3,6 +3,16 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.27.7](https://github.com/fast-crud/fast-crud/compare/v1.27.6...v1.27.7) (2025-12-06)
+
+### Bug Fixes
+
+* 修复element取消本地排序列表显示空白的bug ([de621f0](https://github.com/fast-crud/fast-crud/commit/de621f0df6a07803ce71ff9307c499e1e2ee673a))
+
+### Performance Improvements
+
+* icon-select 支持设置颜色 ([e3e433e](https://github.com/fast-crud/fast-crud/commit/e3e433e6c61c05f5e5361c083f88c74d37be668d))
+
 ## [1.27.6](https://github.com/fast-crud/fast-crud/compare/v1.27.5...v1.27.6) (2025-12-02)
 
 **Note:** Version bump only for package @fast-crud/fast-crud
