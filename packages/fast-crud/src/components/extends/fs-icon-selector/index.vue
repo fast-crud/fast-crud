@@ -1,6 +1,6 @@
 <template>
   <div class="fs-icon-selector">
-    <component :is="ui.input.name" v-bind="inputBinding" @click="handleClick">
+    <component :is="ui.input.name" v-bind="inputBinding" class="fs-icon-selector-search" @click="handleOpen">
       <template #prefix>
         <fs-icon v-if="modelValue" class="fs-icon-selector-input-prefix" :icon="modelValue"></fs-icon>
       </template>
@@ -23,17 +23,39 @@
               </component>
             </component>
 
-            <component
-              :is="ui.input.name"
-              v-model:[ui.input.modelValue]="searchKey"
-              class="p-1"
-              placeholder="搜索图标, 双击选择"
-              @keydown.enter="handleSearch"
-            >
-              <template #suffix>
-                <fs-button type="primary" size="small" :icon="ui.icons.search" @click="handleSearch"></fs-button>
-              </template>
-            </component>
+            <div class="search-box">
+              <component
+                :is="ui.input.name"
+                v-model:[ui.input.modelValue]="searchKey"
+                class="search-input"
+                placeholder="搜索图标, 双击选择"
+                @keydown.enter="handleSearch"
+              >
+                <template #suffix>
+                  <fs-button type="primary" size="small" :icon="ui.icons.search" @click="handleSearch"></fs-button>
+                </template>
+              </component>
+              <div class="color-select">
+                图标颜色：
+                <div
+                  v-for="colorItem in colors"
+                  :key="colorItem"
+                  class="color-item"
+                  :class="{ active: colorItem === currentColor }"
+                  :style="{ backgroundColor: colorItem }"
+                  @click="handleColorChange(colorItem)"
+                >
+                  {{ colorItem ? "" : "无" }}
+                </div>
+                <component
+                  :is="ui.input.name"
+                  style="width: 100px"
+                  :icon="ui.icons.search"
+                  :[ui.input.modelValue]="currentColor"
+                  @input="handleColorChange($event)"
+                ></component>
+              </div>
+            </div>
 
             <div class="icon-container">
               <div class="icon-list">
@@ -41,12 +63,12 @@
                   v-for="icon in pager.records"
                   :key="icon"
                   class="icon-item"
-                  :class="{ active: icon === current }"
+                  :class="{ active: icon === currentIcon }"
                   :title="icon"
                   @click="handleIconSelect(icon, false)"
                   @dblclick="handleIconSelect(icon, true)"
                 >
-                  <fs-icon :icon="icon" class="text-2xl"></fs-icon>
+                  <fs-icon :icon="currentColor ? `${icon}:${currentColor}` : icon" class="text-2xl"></fs-icon>
                 </div>
               </div>
 
@@ -116,6 +138,22 @@ const props = defineProps({
   apiProvider: {
     type: String,
     default: "https://api.iconify.design"
+  },
+  colors: {
+    type: Array<string>,
+    default: () => [
+      "",
+      "#007AFF",
+      "#34C759",
+      "#FF9500",
+      "#FF3B30",
+      "#FFCC00",
+      "#424242",
+      "#8E8E93",
+      "#AF52DE",
+      "#5AC8FA",
+      "#A2845E"
+    ]
   }
 });
 const { ui } = useUi();
@@ -151,10 +189,19 @@ const emitChange = (val: string) => {
   formItemContext?.onChange();
 };
 
-const handleClick = () => {
+const handleOpen = () => {
   dialogOpened.value = true;
   if (props.iconSets.length > 0 && pager.value.records.length === 0) {
     onTabChange(props.iconSets[0] as string);
+  }
+  //初始化value
+  const arr = props.modelValue?.split(":") || [];
+  if (arr.length >= 2) {
+    currentIcon.value = arr[0] + ":" + arr[1];
+    currentColor.value = arr[2];
+  } else {
+    currentIcon.value = props.modelValue;
+    currentColor.value = "";
   }
 };
 
@@ -272,9 +319,10 @@ async function getPagerFromIconSet(prefix: string) {
   };
 }
 
-const current = ref(props.modelValue);
+const currentIcon = ref("");
+const currentColor = ref("");
 const handleIconSelect = (icon: string, confirm = false) => {
-  current.value = icon;
+  currentIcon.value = icon;
   if (confirm) {
     onConfirm();
   }
@@ -282,7 +330,15 @@ const handleIconSelect = (icon: string, confirm = false) => {
 
 const onConfirm = () => {
   dialogOpened.value = false;
-  emitChange(current.value);
+  let value = currentIcon.value;
+  if (currentColor.value) {
+    value = value + ":" + currentColor.value;
+  }
+  emitChange(value);
+};
+
+const handleColorChange = (color: string) => {
+  currentColor.value = color;
 };
 
 const loadMore = async () => {
@@ -311,6 +367,47 @@ const computeTabs = computed(() => {
     flex-direction: column;
     min-height: 500px;
     max-height: 60vh;
+
+    .search-box {
+      padding: 10px;
+      display: flex;
+      justify-content: flex-start;
+      align-items: center;
+      gap: 5px;
+      width: 100%;
+
+      .search-input {
+        width: 200px;
+        padding: 0 5px;
+      }
+
+      .color-select {
+        flex: 1;
+        display: flex;
+        justify-content: flex-start;
+        align-items: center;
+        gap: 5px;
+        .color-item {
+          width: 30px;
+          height: 30px;
+          border-radius: 5px;
+          cursor: pointer;
+          border: 2px solid transparent;
+          display: flex;
+          justify-content: center;
+          align-items: center;
+          &:hover {
+            border: 2px solid #a2f7ff;
+            box-shadow: 0 0 5px #a2f7ff;
+          }
+
+          &.active {
+            border: 2px solid #409eff;
+            box-shadow: 0 0 5px #409eff;
+          }
+        }
+      }
+    }
 
     .load-more {
       cursor: pointer;
@@ -341,6 +438,7 @@ const computeTabs = computed(() => {
         width: 100%;
         display: flex;
         flex-wrap: wrap;
+        padding: 10px;
         .icon-item {
           width: 50px;
           height: 50px;
@@ -352,6 +450,8 @@ const computeTabs = computed(() => {
           margin: 2px;
           &.active {
             border: 1px solid #409eff;
+            //shadow
+            box-shadow: 0 0 5px #409eff;
           }
           &:hover {
             border: 1px solid #6cb3f8;
