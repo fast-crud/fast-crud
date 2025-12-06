@@ -34,11 +34,21 @@ type BuildTableColumnsOption = {
   sortedColumns: TableColumnsProps;
   renderRowHandle: any;
   renderCellComponent: any;
+  componentDefines: {
+    tableComp: any;
+    tableColumnComp: any;
+    tableColumnGroupComp: any;
+  };
 };
-function buildTableSlots({ props, ui, sortedColumns, renderRowHandle, renderCellComponent }: BuildTableColumnsOption) {
-  const tableComp = resolveDynamicComponent(ui.table.name);
-  const tableColumnComp = resolveDynamicComponent(ui.tableColumn.name);
-  const tableColumnGroupComp = resolveDynamicComponent(ui.tableColumnGroup.name);
+function buildTableSlots({
+  props,
+  ui,
+  sortedColumns,
+  renderRowHandle,
+  renderCellComponent,
+  componentDefines
+}: BuildTableColumnsOption) {
+  const { tableComp, tableColumnComp, tableColumnGroupComp } = componentDefines;
   const tableColumnCI = ui.tableColumn;
   const tableSlots: WriteableSlots = {};
 
@@ -71,6 +81,9 @@ function buildTableSlots({ props, ui, sortedColumns, renderRowHandle, renderCell
     } else {
       // cell render custom component
       cellSlots.default = (scope: any) => {
+        if (scope == null) {
+          return <div>1111</div>;
+        }
         return renderCellComponent(item, scope) as any;
       };
     }
@@ -372,6 +385,9 @@ export default defineComponent({
     });
 
     const renderRowHandle = (scope: any) => {
+      if (scope == null) {
+        scope = {};
+      }
       // @ts-ignore
       scope.index = scope[tableColumnCI.index];
       const rowHandleSlotsName = "cell-rowHandle";
@@ -388,7 +404,11 @@ export default defineComponent({
 
     const renderCellComponent = (item: any, scope: any) => {
       const cellSlotName = "cell_" + item.key;
-      const row = (scope.row = scope[tableColumnCI.row]);
+      if (scope == null) {
+        scope = {};
+        debugger;
+      }
+      const row = (scope.row = scope[tableColumnCI.row]) || {};
       // const getScopeFn = () => {
       //   return getContextFn(item, scope);
       // };
@@ -488,6 +508,15 @@ export default defineComponent({
     const sortedColumns = computed(() => {
       return doColumnsSort(cloneDeep(props.columns));
     });
+
+    const tableColumnComp = resolveDynamicComponent(ui.tableColumn.name);
+    const tableColumnGroupComp = resolveDynamicComponent(ui.tableColumnGroup.name);
+    const componentDefines = {
+      tableComp,
+      tableColumnComp,
+      tableColumnGroupComp
+    };
+
     if (renderMode === "slot") {
       //使用slot column ，element-plus
       const computedTableSlots = computed(() => {
@@ -496,7 +525,8 @@ export default defineComponent({
           ui,
           sortedColumns: sortedColumns.value,
           renderRowHandle,
-          renderCellComponent
+          renderCellComponent,
+          componentDefines
         } as BuildTableColumnsOption);
       });
 
