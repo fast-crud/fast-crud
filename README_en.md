@@ -4,18 +4,14 @@
 FastCrud is an options-oriented crud development framework based on vue3. It can rapidly develop crud functions and can be used as the basic framework of a low code platform.    
 It is easy to get started, has strong scalability, and has rich examples so that you can quickly complete the task of moving bricks.
 
-source :[Github](https://github.com/fast-crud/fast-crud)  /  [Gitee](https://gitee.com/fast-crud/fast-crud)   
+source :
+[Github](https://github.com/fast-crud/fast-crud)   ![](https://img.shields.io/github/stars/fast-crud/fast-crud?logo=github)    
+ [Gitee](https://gitee.com/fast-crud/fast-crud)   ![](https://gitee.com/fast-crud/fast-crud/badge/star.svg?theme=dark)    
+  [AtomGit](https://atomgit.com/fast-crud/fast-crud)       ![](https://atomgit.com/fast-crud/fast-crud/star/badge.svg)   
+
 demo: [demo list](http://fast-crud.docmirror.cn/demo/)   
 document：http://fast-crud.docmirror.cn/
 
-<div style="display:flex;">
-<a href="https://gitee.com/fast-crud/fast-crud" target="_blank"
-  ><img src="https://gitee.com/fast-crud/fast-crud/badge/star.svg?theme=dark" alt="star"
-/></a>  
-<a href="https://github.com/fast-crud/fast-crud" target="_blank"
-  ><img alt="GitHub stars" src="https://img.shields.io/github/stars/fast-crud/fast-crud?logo=github"
-/></a>
-</div>
 
 ## Developing crud is as fast as lightning
 1、Just write the crud options
