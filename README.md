@@ -4,20 +4,12 @@
 FastCrud（简称fs） 是基于Vue3的面向配置的crud开发框架，快速开发crud功能，可作为低代码平台的基础框架。   
 入门简单，可扩展性强，拥有丰富的示例，让你可以快速完成搬砖任务，更多的时间划水吹逼。
 
-<div>
-<a href="https://atomgit.com/fast-crud/fast-crud" target="_blank"
-  ><img src="https://atomgit.com/fast-crud/fast-crud/star/badge.svg" alt="star"
-/></a>  
 
-<a href="https://gitee.com/fast-crud/fast-crud" target="_blank"
-  ><img src="https://gitee.com/fast-crud/fast-crud/badge/star.svg?theme=dark" alt="star"
-/></a>  
-<a href="https://github.com/fast-crud/fast-crud" target="_blank"
-  ><img alt="GitHub stars" src="https://img.shields.io/github/stars/fast-crud/fast-crud?logo=github"
-/></a>
-</div>
 
-源码地址： [Github](https://github.com/fast-crud/fast-crud)  /  [Gitee](https://gitee.com/fast-crud/fast-crud)   /  [AtomGit](https://atomgit.com/fast-crud/fast-crud)   
+源码地址：   
+[Github](https://github.com/fast-crud/fast-crud)   ![](https://img.shields.io/github/stars/fast-crud/fast-crud?logo=github)    
+ [Gitee](https://gitee.com/fast-crud/fast-crud)   ![](https://gitee.com/fast-crud/fast-crud/badge/star.svg?theme=dark)    
+  [AtomGit](https://atomgit.com/fast-crud/fast-crud)       ![](https://atomgit.com/fast-crud/fast-crud/star/badge.svg)   
 
 示例地址： [演示预览](http://fast-crud.docmirror.cn/demo/)  
 
