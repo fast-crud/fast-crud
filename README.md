@@ -8,9 +8,9 @@ FastCrud（简称fs） 是基于Vue3的面向配置的crud开发框架，快速�
 
 官方开源地址： 
   
-[Github](https://github.com/fast-crud/fast-crud)   ![](https://img.shields.io/github/stars/fast-crud/fast-crud?logo=github) https://github.com/fast-crud/fast-crud       
- [Gitee](https://gitee.com/fast-crud/fast-crud)   ![](https://gitee.com/fast-crud/fast-crud/badge/star.svg?theme=dark)  https://gitee.com/fast-crud/fast-crud      
-  [AtomGit](https://atomgit.com/fast-crud/fast-crud)       ![](https://atomgit.com/fast-crud/fast-crud/star/badge.svg) https://atomgit.com/fast-crud/fast-crud       
+[Github](https://github.com/fast-crud/fast-crud)   ![](https://img.shields.io/github/stars/fast-crud/fast-crud?logo=github)    
+ [Gitee](https://gitee.com/fast-crud/fast-crud)   ![](https://gitee.com/fast-crud/fast-crud/badge/star.svg?theme=dark)      
+  [AtomGit](https://atomgit.com/fast-crud/fast-crud)       ![](https://atomgit.com/fast-crud/fast-crud/star/badge.svg)      
 
 示例地址： [演示预览](http://fast-crud.docmirror.cn/demo/)  
 
