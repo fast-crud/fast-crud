@@ -6,10 +6,11 @@ FastCrud（简称fs） 是基于Vue3的面向配置的crud开发框架，快速�
 
 
 
-源码地址：   
-[Github](https://github.com/fast-crud/fast-crud)   ![](https://img.shields.io/github/stars/fast-crud/fast-crud?logo=github)    
- [Gitee](https://gitee.com/fast-crud/fast-crud)   ![](https://gitee.com/fast-crud/fast-crud/badge/star.svg?theme=dark)    
-  [AtomGit](https://atomgit.com/fast-crud/fast-crud)       ![](https://atomgit.com/fast-crud/fast-crud/star/badge.svg)   
+官方开源地址： 
+  
+[Github](https://github.com/fast-crud/fast-crud)   ![](https://img.shields.io/github/stars/fast-crud/fast-crud?logo=github) https://github.com/fast-crud/fast-crud       
+ [Gitee](https://gitee.com/fast-crud/fast-crud)   ![](https://gitee.com/fast-crud/fast-crud/badge/star.svg?theme=dark)  https://gitee.com/fast-crud/fast-crud      
+  [AtomGit](https://atomgit.com/fast-crud/fast-crud)       ![](https://atomgit.com/fast-crud/fast-crud/star/badge.svg) https://atomgit.com/fast-crud/fast-crud       
 
 示例地址： [演示预览](http://fast-crud.docmirror.cn/demo/)  
 
@@ -184,8 +185,8 @@ QQ群
 
 ## 我的其他项目
 
-| logo                                                                                         |项目| Stars | 简介                  |
-|----------------------------------------------------------------------------------------------|---|-------|---------------------|
+| logo          |项目| Stars | 简介                |
+|---------------|---|-------|---------------------|
 | <img src="./images/certd.svg" width="100px">                                                 | [certd](https://github.com/certd/certd/)   | 3.3k  | 免费通配符域名证书全自动申请部署工具 |
 | <img src="https://github.com/docmirror/dev-sidecar/raw/master/doc/index.png" width="100px"/> | [dev-sidecar](https://github.com/docmirror/dev-sidecar) | 18k   | 直连访问github工具，无需FQ，解决github无法访问的问题 |
 
