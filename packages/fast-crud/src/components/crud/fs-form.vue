@@ -306,7 +306,7 @@ export default defineComponent({
       each(props.columns, (item: any, key: any) => {
         let value = get(form, key);
         if (item.valueBuilder) {
-          const res:any = item.valueBuilder({
+          const res: any = item.valueBuilder({
             value,
             key,
             row: initialForm,
@@ -527,12 +527,13 @@ export default defineComponent({
       each(props.columns, (item: any, key: string) => {
         let value = get(formData, key);
         if (item.valueResolve) {
-          const res:any = item.valueResolve({
+          const res: any = item.valueResolve({
             value,
             key,
             ...submitScope
           });
           if (res != null && !(res instanceof Promise)) {
+            debugger;
             set(formData, key, res);
           }
         }
