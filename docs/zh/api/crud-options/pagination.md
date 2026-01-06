@@ -22,3 +22,22 @@
   }
 }
 ```
+
+## _onCurrentChange
+* 说明：当前页码改变时触发
+* 类型：Function
+* 默认：`undefined`
+* 参数：
+  * current: number - 当前页码
+  * pagination: Pagination - 分页配置对象
+
+## _onPageSizeChange
+* 说明：每页条数改变时触发
+* 类型：Function
+* 默认：`undefined`
+* 参数：
+  * pageSize: number - 每页条数
+  * current: number - 当前页码
+  * pagination: Pagination - 分页配置对象
+
+  

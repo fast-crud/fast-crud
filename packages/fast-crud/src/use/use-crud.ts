@@ -63,10 +63,20 @@ export function useCrud<T = any, R = any>(ctx: UseCrudProps<T, R>): UseCrudRet<R
     const events = ui.pagination.onChange({
       setCurrentPage(current: number) {
         crudBinding.value.pagination[ui.pagination.currentPage] = current;
+        if (crudBinding.value.pagination._onCurrentChange) {
+          crudBinding.value.pagination._onCurrentChange({ current: current, pagination: crudBinding.value.pagination });
+        }
       },
       setPageSize(pageSize: number) {
         crudBinding.value.pagination.pageSize = pageSize;
         crudBinding.value.pagination[ui.pagination.currentPage] = 1; //重置页码到1
+        if (crudBinding.value.pagination._onPageSizeChange) {
+          crudBinding.value.pagination._onPageSizeChange({
+            pageSize: pageSize,
+            current: 1,
+            pagination: crudBinding.value.pagination
+          });
+        }
       },
       async doAfterChange() {
         return await doRefresh();
