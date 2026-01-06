@@ -1,6 +1,6 @@
 import { onMounted, Ref, toRaw, unref, watch } from "vue";
 import { CrudExpose, OpenDialogProps, OpenEditContext, SetFormDataOptions } from "../d/expose";
-import { isArray, forEach, cloneDeep } from "lodash-es";
+import { isArray, forEach, cloneDeep, set, get } from "lodash-es";
 import logger from "../utils/util.log";
 import { useMerge } from "../use/use-merge";
 import { useUi } from "../use/use-ui";
@@ -301,14 +301,17 @@ export function useExpose<R = any>(props: UseExposeProps<R>): UseExposeRet<R> {
       }
       forEach(records, (row, index) => {
         forEach(valueBuilderColumns, (col) => {
-          col.valueBuilder({
-            value: row[col.key],
+          const res:any = col.valueBuilder({
+            value: get(row, col.key),
             row,
             form: row,
             index,
             key: col.key,
             column: col
           });
+          if (res != null && !(res instanceof Promise)) {
+            set(row as any, col.key, res);
+          }
         });
 
         //children
@@ -336,13 +339,16 @@ export function useExpose<R = any>(props: UseExposeProps<R>): UseExposeRet<R> {
       logger.debug("doValueResolve ,columns=", columns);
       forEach(valueBuilderColumns, (col) => {
         const key = col.key;
-        col.valueResolve({
-          value: form[key],
+        const res: any = col.valueResolve({
+          value: get(form, key),
           row: form,
           form,
           key,
           column: col
         });
+        if (res != null && !(res instanceof Promise)) {
+          set(form as any, key, res);
+        }
       });
       logger.debug("valueResolve success:", form);
     },

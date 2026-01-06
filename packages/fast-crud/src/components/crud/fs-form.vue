@@ -306,7 +306,7 @@ export default defineComponent({
       each(props.columns, (item: any, key: any) => {
         let value = get(form, key);
         if (item.valueBuilder) {
-          item.valueBuilder({
+          const res:any = item.valueBuilder({
             value,
             key,
             row: initialForm,
@@ -314,6 +314,9 @@ export default defineComponent({
             index: props.index,
             mode: props.mode
           });
+          if (res != null && !(res instanceof Promise)) {
+            set(form, key, res);
+          }
         }
       });
     }
@@ -524,11 +527,14 @@ export default defineComponent({
       each(props.columns, (item: any, key: string) => {
         let value = get(formData, key);
         if (item.valueResolve) {
-          item.valueResolve({
+          const res:any = item.valueResolve({
             value,
             key,
             ...submitScope
           });
+          if (res != null && !(res instanceof Promise)) {
+            set(formData, key, res);
+          }
         }
       });
 
