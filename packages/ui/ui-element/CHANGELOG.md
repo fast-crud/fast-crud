@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.27.9](https://github.com/fast-crud/fast-crud/compare/v1.27.8...v1.27.9) (2026-01-08)
+
+### Performance Improvements
+
+* 【破坏性更新】element大于2.10.5版本 select使用options渲染选项 ([2c23553](https://github.com/fast-crud/fast-crud/commit/2c23553b7749a6a8c828580829b723453319c947))
+
 ## [1.27.8](https://github.com/fast-crud/fast-crud/compare/v1.27.7...v1.27.8) (2026-01-06)
 
 **Note:** Version bump only for package @fast-crud/ui-element

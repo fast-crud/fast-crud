@@ -1,6 +1,6 @@
 {
   "name": "@fast-crud/ui-naive",
-  "version": "1.27.8",
+  "version": "1.27.9",
   "description": "",
   "main": "./src/index.ts",
   "module": "./src/index.ts",
@@ -20,7 +20,7 @@
   "license": "MIT",
   "devDependencies": {
     "@ant-design/icons-vue": "^6.1.0",
-    "@fast-crud/ui-interface": "^1.27.8",
+    "@fast-crud/ui-interface": "^1.27.9",
     "@rollup/plugin-strip": "^3.0.2",
     "@rollup/plugin-typescript": "^11.1.2",
     "@types/lodash-es": "^4.17.8",
