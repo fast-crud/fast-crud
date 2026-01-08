@@ -30,7 +30,7 @@ export function useDict(props: any, ctx: any, vModel = "modelValue") {
         }
       }
 
-      if (ui.type === "naive") {
+      if (ui.type === "naive" || ui.type === "element") {
         const newOptions: any = [];
         for (const option of options) {
           newOptions.push({

@@ -2,7 +2,7 @@
   <render></render>
 </template>
 <script lang="tsx" setup>
-import { computed, defineComponent, ref, resolveDynamicComponent, useAttrs } from "vue";
+import { computed, ref, resolveDynamicComponent, useAttrs } from "vue";
 import { useDict } from "../../use/use-dict";
 import { useI18n } from "../../locale";
 import { useUi } from "../../use";
@@ -92,10 +92,9 @@ defineExpose({
   computedOptions,
   onSelectedChange
 });
-
+const selectComp = resolveDynamicComponent(ui.select.name);
 const render = () => {
   const { ui } = useUi();
-  const selectComp = resolveDynamicComponent(ui.select.name);
   const vModel = ui.select.modelValue;
   if (ui.option.name == null) {
     //naive ui
@@ -125,19 +124,21 @@ const render = () => {
     );
   }
   // options 为子组件
-  const options = [];
   const optionComp = resolveDynamicComponent(ui.option.name);
-  const cos = computedOptions.value || [];
-  for (const item of cos) {
-    const option = (
-      <optionComp {...item} value={usedDict.getValue(item)} label={usedDict.getLabel(item)}>
-        {props.renderLabel ? props.renderLabel(item) : usedDict.getLabel(item)}
-      </optionComp>
-    );
-    options.push(option);
-  }
   const thisSlots = {
-    default: () => options,
+    default: () => {
+      const options = [];
+      const cos = computedOptions.value || [];
+      for (const item of cos) {
+        const option = (
+          <optionComp {...item} value={usedDict.getValue(item)} label={usedDict.getLabel(item)}>
+            {props.renderLabel ? props.renderLabel(item) : usedDict.getLabel(item)}
+          </optionComp>
+        );
+        options.push(option);
+      }
+      return <div>{options}</div>;
+    },
     ...tempSlots,
     ...props.slots
   };

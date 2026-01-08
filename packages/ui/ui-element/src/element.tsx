@@ -1,4 +1,5 @@
 import "vue/jsx";
+import { version } from "element-plus";
 import type {
   TextAreaCI,
   CI,
@@ -68,6 +69,23 @@ export type ElementUiProvider = {
   Message: any;
   MessageBox: any;
 };
+
+const versionGreaterThan = (v1: string, v2: string) => {
+  const v1Parts = v1.split(".");
+  const v2Parts = v2.split(".");
+  for (let i = 0; i < v1Parts.length; i++) {
+    const v1Part = parseInt(v1Parts[i]);
+    const v2Part = parseInt(v2Parts[i]);
+    if (v1Part > v2Part) {
+      return true;
+    } else if (v1Part < v2Part) {
+      return false;
+    }
+  }
+  return false;
+};
+
+const selectOptionsPropsVersion = versionGreaterThan(version, "2.10.5");
 
 const { buildBinding, creator } = useUiRender();
 export class Element implements UiInterface {
@@ -276,7 +294,7 @@ export class Element implements UiInterface {
   });
 
   option: OptionCI = creator<OptionCI>({
-    name: "el-option",
+    name: selectOptionsPropsVersion ? null : "el-option",
     value: "value",
     label: "label"
   });
