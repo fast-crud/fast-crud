@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.27.9](https://github.com/jekip/naive-ui-admin/compare/v1.27.8...v1.27.9) (2026-01-08)
+
+### Performance Improvements
+
+* 优化element select 采用options参数渲染选项 ([9409798](https://github.com/jekip/naive-ui-admin/commit/94097987c70233bd8bed43ead52844f81ffd2a38))
+
 ## [1.27.8](https://github.com/jekip/naive-ui-admin/compare/v1.27.7...v1.27.8) (2026-01-06)
 
 **Note:** Version bump only for package naive-ui-admin
