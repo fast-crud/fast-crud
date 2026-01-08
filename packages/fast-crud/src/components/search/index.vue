@@ -9,8 +9,6 @@
         v-bind="options"
         :rules="computedRules"
         class="fs-search-form"
-        @compositionstart="changeInputEventDisabled(true)"
-        @compositionend="changeInputEventDisabled(false)"
       >
         <component
           :is="container?.is || 'fs-search-layout-default'"
@@ -343,7 +341,7 @@ export default defineComponent({
 
       function onKeyup(item: any, key: any) {
         if (key.code === "Enter") {
-          if (item.autoSearchTrigger === "enter") {
+          if (item.autoSearchTrigger != false) {
             doSearch();
           }
         }
@@ -368,6 +366,12 @@ export default defineComponent({
             scope={buildFieldContext(key)}
             onUpdate:modelValue={_onUpdateModelValue}
             onInput={_onInput}
+            onCompositionstart={() => {
+              changeInputEventDisabled(true);
+            }}
+            onCompositionend={() => {
+              changeInputEventDisabled(false);
+            }}
           />
         );
       }
@@ -559,7 +563,7 @@ export default defineComponent({
     // 输入法监听
     const changeInputEventDisabled = (disabled: boolean) => {
       inputEventDisabled.value = disabled;
-      doAutoSearch();
+      console.log("changeInputEventDisabled:", disabled);
     };
 
     async function onValueChanged(value: any, item: SearchItemProps) {
@@ -596,6 +600,7 @@ export default defineComponent({
       if (props.validateOnChange && (await doValidate(silent, "change"))) {
         onFormValidated();
       }
+      console.log("item.autoSearchTrigger:", item, inputEventDisabled.value);
       if (item.autoSearchTrigger == null || item.autoSearchTrigger === true || item.autoSearchTrigger === "change") {
         doAutoSearch();
       }
