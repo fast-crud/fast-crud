@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.27.10](https://github.com/fast-crud/fast-crud/compare/v1.27.9...v1.27.10) (2026-01-09)
+
+### Bug Fixes
+
+* 修复antdv dict-select报错的bug ([89c9bfe](https://github.com/fast-crud/fast-crud/commit/89c9bfe5b39b63a725f2c9d5d15bbbb07f820299))
+
 ## [1.27.9](https://github.com/fast-crud/fast-crud/compare/v1.27.8...v1.27.9) (2026-01-08)
 
 **Note:** Version bump only for package @fast-crud/fs-admin-element
