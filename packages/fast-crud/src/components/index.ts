@@ -17,7 +17,7 @@ import FsRender from "./render/fs-render.js";
 
 import FsForm from "./crud/fs-form.vue";
 import FsFormItem from "./crud/fs-form-item.vue";
-import FsFormItemCol from './crud/fs-form-item-col.vue'
+import FsFormItemCol from "./crud/fs-form-item-col.vue";
 import FsFormHelper from "./crud/fs-form-helper.vue";
 import FsFormWrapper from "./crud/fs-form-wrapper.jsx";
 import FsFormProvider from "./crud/fs-form-provider.vue";
