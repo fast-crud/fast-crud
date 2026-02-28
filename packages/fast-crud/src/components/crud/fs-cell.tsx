@@ -34,13 +34,17 @@ export default defineComponent({
     const { doComputed } = useCompute();
     const { ui } = useUi();
     const computedPropsComponent = () => {
-      return props.item.component;
+      return {
+        component: props.item.component
+      };
     };
     const getScope = () => {
       return props.scope;
     };
 
-    const computedComponent = doComputed(computedPropsComponent, getScope);
+    const computedComponent = doComputed(computedPropsComponent, getScope, null, (value) => {
+      return value.component;
+    });
 
     const targetRef = ref();
 
