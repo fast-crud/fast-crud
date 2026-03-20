@@ -323,7 +323,7 @@ const crudOptions = {
 ```
 
 ## wrapper.contentProps
-* 说明: 对话框内容组件的props(naive 比如抽屉组件的closeable参数)
+* 说明: 对话框内容组件的props(naive 比如抽屉组件的closable参数)
 * 类型：object
 * 示例：
 ```js
@@ -331,7 +331,7 @@ const crudOptions = {
   form:{
     wrapper: {
       contentProps: {
-        closeable: true,
+        closable: true,
       }
     }
   }
