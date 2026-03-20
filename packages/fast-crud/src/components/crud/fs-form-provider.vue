@@ -24,8 +24,16 @@ function getMaxZIndex(): number {
   return maxZindex;
 }
 
+const formWrapperContext = ref({});
+provide("get:form:wrapper:context", (key) => {
+  return formWrapperContext.value[key];
+});
+
 provide("use:form:wrapper", () => {
   return {
+    setContext(key: string, value: any) {
+      formWrapperContext.value[key] = value;
+    },
     open(opts: OpenDialogProps) {
       const id = opts.id || Math.floor(Math.random() * 1000000) + "";
       return new Promise((resolve, reject) => {
