@@ -558,7 +558,11 @@ export default defineComponent({
           const contentWrapComp = resolveDynamicComponent(contentWrap);
           children = {
             default: () => {
-              return <contentWrapComp>{subChildren}</contentWrapComp>;
+              return (
+                <contentWrapComp closeable={true} {...formWrapperOpts.value.contentProps}>
+                  {subChildren}
+                </contentWrapComp>
+              );
             }
           };
         }
