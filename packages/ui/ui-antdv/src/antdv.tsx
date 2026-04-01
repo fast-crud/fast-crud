@@ -732,7 +732,8 @@ export class Antdv implements UiInterface {
   });
   image: ImageCI = creator<ImageCI>({
     name: "a-image",
-    buildPreviewBind: ({ url, urls, previewUrl, previewUrls }) => {
+    buildPreviewBind: (req: { previewUrl: string }) => {
+      const { previewUrl } = req;
       return {
         preview: {
           src: previewUrl
@@ -812,6 +813,7 @@ export class Antdv implements UiInterface {
   badge: BadgeCI = creator<BadgeCI>({
     name: "a-badge",
     value: "count",
+    dot: "dot",
     builder(opts) {
       return buildBinding(this, opts, {
         props: {
