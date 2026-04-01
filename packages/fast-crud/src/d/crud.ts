@@ -746,6 +746,11 @@ export type FormWrapperProps<R = any> = {
    * 比如fs-admin 为 main.fs-framework-content
    */
   innerContainerSelector?: string;
+
+  /**
+   * naive content props
+   */
+  contentProps?: any;
   /**
    * 对应对话框组件的配置
    */

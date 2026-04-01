@@ -1,0 +1,29 @@
+.fs-form-wrapper-view {
+  .n-input.n-input--disabled,
+  .n-base-selection.n-base-selection--disabled {
+    --n-border-disabled: 0 !important;
+    --n-border: 0 !important;
+    background-color: transparent !important;
+    border-bottom: 1px solid #e5e7eb !important;
+    border-radius: 0 !important;
+
+    .n-input-wrapper {
+      .n-input__suffix {
+        display: none !important;
+      }
+    }
+
+    .n-base-selection__border {
+      border: 0 !important;
+    }
+
+    .n-base-selection-label,
+    .n-base-selection-tags {
+      background-color: transparent !important;
+
+      .n-base-loading {
+        display: none !important;
+      }
+    }
+  }
+}

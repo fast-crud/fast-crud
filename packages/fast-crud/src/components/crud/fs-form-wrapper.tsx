@@ -134,13 +134,6 @@ export default defineComponent({
       title.value = unref(wrapper.title);
       formWrapperIs.value = opts.wrapper.is;
       formWrapperOpts.value = wrapper;
-      const customClassKey = ui.formWrapper.customClass(formWrapperIs.value as string);
-      const customClass = `fs-form-wrapper ${formWrapperIdClass} ${wrapper[customClassKey] || ""} `;
-
-      formWrapperBind.value = {
-        ...omit(wrapper, "title", "onOpen", "onClosed", "onOpened", "is", "inner", "beforeClose"),
-        [customClassKey]: customClass
-      };
 
       //form的配置
       formOptions.value = {
@@ -150,6 +143,14 @@ export default defineComponent({
           ...opts.slots,
           ...ctx.slots
         }
+      };
+
+      const customClassKey = ui.formWrapper.customClass(formWrapperIs.value as string);
+      const customClass = `fs-form-wrapper fs-form-wrapper-${formOptions.value?.mode} ${formWrapperIdClass} ${wrapper[customClassKey] || ""} `;
+
+      formWrapperBind.value = {
+        ...omit(wrapper, "title", "onOpen", "onClosed", "onOpened", "is", "inner", "beforeClose"),
+        [customClassKey]: customClass
       };
 
       formWrapperSlots.value = {
@@ -558,7 +559,11 @@ export default defineComponent({
           const contentWrapComp = resolveDynamicComponent(contentWrap);
           children = {
             default: () => {
-              return <contentWrapComp>{subChildren}</contentWrapComp>;
+              return (
+                <contentWrapComp closable={true} {...formWrapperOpts.value.contentProps}>
+                  {subChildren}
+                </contentWrapComp>
+              );
             }
           };
         }

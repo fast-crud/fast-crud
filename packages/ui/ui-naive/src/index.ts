@@ -6,7 +6,7 @@ import { Naive } from "./naive";
 import FsUiContext from "./ui/fs-ui-context.vue";
 // @ts-ignore
 import uiUtil from "./ui/util.ts";
-
+import "./style.less";
 export * from "./naive";
 export { FsUiContext };
 export type UiSetupOptions = {
