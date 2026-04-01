@@ -185,10 +185,11 @@ QQ群
 
 ## 我的其他项目
 
-| logo          |项目| Stars | 简介                |
-|---------------|---|-------|---------------------|
-| <img src="./images/certd.svg" width="100px">                                                 | [certd](https://github.com/certd/certd/)   | 3.3k  | 免费通配符域名证书全自动申请部署工具 |
-| <img src="https://github.com/docmirror/dev-sidecar/raw/master/doc/index.png" width="100px"/> | [dev-sidecar](https://github.com/docmirror/dev-sidecar) | 18k   | 直连访问github工具，无需FQ，解决github无法访问的问题 |
+| 项目名称 | stars  | 项目描述  | 
+| --------- |--------- |----------- |
+| [certd](https://github.com/certd/certd/) | <img alt="GitHub stars" src="https://img.shields.io/github/stars/certd/certd?logo=github"/> | 全自动证书管理工具，免费证书申请，自动部署，让你的网站永不过期 |
+| [dev-sidecar](https://github.com/docmirror/dev-sidecar/) | <img alt="GitHub stars" src="https://img.shields.io/github/stars/docmirror/dev-sidecar?logo=github"/> | 直连访问github工具，无需FQ，解决github无法访问的问题 |
+| [winsvc-manager](https://github.com/greper/winsvc-manager/) | <img alt="GitHub stars" src="https://img.shields.io/github/stars/greper/winsvc-manager?logo=github"/> | 可视化包装应用成为一个Windows服务，使其后台运行 |
 
 
 > ---------------来都来了点个star再走呗-----------------↗↗↗↗↗↗↗↗  

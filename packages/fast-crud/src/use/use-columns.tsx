@@ -364,11 +364,13 @@ function buildFormOptions(
   const { t } = useI18n();
   const { merge } = useMerge();
   context = context || {};
+  const crudOptionsRef = { value: null } as any;
   const userOptions = merge(
-    defaultCrudOptions.defaultOptions({ t }),
+    defaultCrudOptions.defaultOptions({ t, crudOptionsRef }),
     defaultCrudOptions.commonOptions({ crudOptions, context, crudExpose: null }),
     crudOptions
   );
+  crudOptionsRef.value = userOptions;
   const initedColumns = setupOptionsColumns(cloneDeep(userOptions.columns), userOptions);
   const columnsMap = buildOptionsColumnsFlatMap({}, initedColumns);
   const formType = mode === "form" ? "form" : `${mode}Form`;

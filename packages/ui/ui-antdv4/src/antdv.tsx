@@ -877,6 +877,7 @@ export class Antdv implements UiInterface {
   badge: BadgeCI = creator<BadgeCI>({
     name: "a-badge",
     value: "count",
+    dot: "dot",
     builder(opts) {
       return buildBinding(this, opts, {
         props: {
@@ -893,6 +894,7 @@ export class Antdv implements UiInterface {
   divider = creator<DividerCI>({
     name: "a-divider"
   });
+
   popover = creator<PopoverCI>({
     name: "a-popover",
     contentSlotName: "content",

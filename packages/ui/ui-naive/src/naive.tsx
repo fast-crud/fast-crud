@@ -817,6 +817,7 @@ export class Naive implements UiInterface {
   badge: BadgeCI = creator<BadgeCI>({
     name: "n-badge",
     value: "value",
+    dot: "dot",
     builder(opts) {
       return buildBinding(this, opts, {
         props: {

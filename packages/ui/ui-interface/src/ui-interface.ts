@@ -551,6 +551,8 @@ export interface BadgeCI extends CI<BadgeBuilderOptions> {
    * 计数参数名称
    */
   value: string;
+
+  dot: string;
 }
 
 export interface ColorPickerCI extends CI {
@@ -559,7 +561,6 @@ export interface ColorPickerCI extends CI {
 
 export type ButtonGroupBuilderOptions = {} & BindBuilderOptions;
 export interface ButtonGroupCI extends CI<ButtonGroupBuilderOptions> {}
-
 export interface Icons {
   refresh: string;
   search: string;
@@ -652,4 +653,5 @@ export interface UiInterface {
   collapseItem: CollapseItemCI;
   divider: DividerCI;
   popover: PopoverCI;
+  badge: BadgeCI;
 }

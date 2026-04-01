@@ -120,6 +120,13 @@ const crudOptions = { //crudOptions.form.columns
 * 注意：编辑时会与行数据合并，你还可以在字段中配置`columns.key.form.value=默认值`
 * 类型：Object
 
+## pasteKey
+* 说明: 表单复制粘贴key
+* 注意：用于在复制粘贴时，识别是从哪个表单复制粘贴的数据，相同的key的表单才能互相复制粘贴
+* 类型：String
+* 默认：`__default__`
+
+
 
 ## watch
 * 说明: 表单数据监听,可以做实时计算

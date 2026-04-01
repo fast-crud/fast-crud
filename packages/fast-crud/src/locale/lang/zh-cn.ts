@@ -41,7 +41,7 @@ export default {
       },
       copy: "复制",
       paste: "粘贴",
-      copySuccess: "表单数据已复制到剪贴板，您可以在添加对话框中粘贴"
+      copySuccess: "表单数据已复制，您可以在添加对话框中粘贴"
     },
     actionbar: { add: "添加" },
     toolbar: {

@@ -1,3 +1,5 @@
+import { reactive } from "vue";
+
 /**
  * 使用传统execCommand方法复制文本到剪贴板
  * @param {string} text - 要复制的文本
@@ -126,4 +128,19 @@ export async function readToClipboard(): Promise<string> {
     console.error("读取剪贴板失败: ", err);
     return await readFromClipboardTraditional();
   }
+}
+
+const memoryClipboard = reactive({
+  store: {}
+});
+export function copyToMemory(text, key: string = "__default__") {
+  memoryClipboard.store[key] = text;
+}
+
+export function readToMemory(key: string = "__default__") {
+  return memoryClipboard.store[key];
+}
+
+export function clearMemoryClipboard(key: string = "__default__") {
+  memoryClipboard.store[key] = "";
 }

@@ -1120,6 +1120,7 @@ export class Element implements UiInterface {
   badge: BadgeCI = creator<BadgeCI>({
     name: "el-badge",
     value: "value",
+    dot: "isDot",
     builder(opts) {
       return buildBinding(this, opts, {
         props: {

@@ -7,8 +7,8 @@ const defaultCrudOptions = {
   commonOptions(ctx?: UseCrudProps<any, any>): any {
     return {};
   },
-  defaultOptions(opts: { t: any }): DynamicallyCrudOptions<any> {
-    const { t } = opts;
+  defaultOptions(opts: { t: any; crudOptionsRef: any }): DynamicallyCrudOptions<any> {
+    const { t, crudOptionsRef } = opts;
     const ct = (name: string) => {
       return computed(() => {
         return t(name);
@@ -75,6 +75,7 @@ const defaultCrudOptions = {
         }
       },
       form: {
+        pasteKey: "__default__",
         labelPlacement: "left", // naive
         labelPosition: "right", //element
         labelWidth: "120px", //element
@@ -100,21 +101,33 @@ const defaultCrudOptions = {
               text: ct("fs.form.copy"),
               order: 1,
               click: async ({ form }) => {
-                await utils.clipboard.copyToClipboard(JSON.stringify(form));
+                const key = crudOptionsRef.value?.form?.pasteKey;
+                utils.clipboard.copyToMemory(JSON.stringify(form), key);
                 ui.message.success(t("fs.form.copySuccess"));
               }
             },
             paste: {
               text: ct("fs.form.paste"),
               order: 2,
+              badge: computed(() => {
+                const key = crudOptionsRef.value?.form?.pasteKey;
+                const value = utils.clipboard.readToMemory(key);
+                return {
+                  [ui.badge.value]: value ? 1 : 0,
+                  [ui.badge.dot]: value ? true : false
+                };
+              }),
               click: async ({ form }) => {
-                const clipboardData: string = await utils.clipboard.readToClipboard();
+                const key = crudOptionsRef.value?.form?.pasteKey;
+                const clipboardData: string = utils.clipboard.readToMemory(key);
                 if (clipboardData) {
                   try {
                     const obj = JSON.parse(clipboardData);
                     merge(form, obj);
                   } catch (e) {
                     console.error(e);
+                  } finally {
+                    utils.clipboard.clearMemoryClipboard(key);
                   }
                 }
               }

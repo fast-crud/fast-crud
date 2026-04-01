@@ -38,6 +38,15 @@ export default defineComponent({
       default: undefined
     },
     /**
+     * badge配置，为空不显示badge
+     * `{count:0,dot:"show"}`
+     */
+    badge: {
+      type: Object,
+      default: null as any,
+      required: false
+    },
+    /**
      * x-button的配置，当x-button的配置与fs-button的配置有冲突时可以配置在此处
      * 比如：n-button的text
      */
@@ -81,7 +90,7 @@ export default defineComponent({
       }
     };
 
-    const renderBtn = () => {
+    let renderBtn = () => {
       const icon: string | null | undefined | object = props.icon;
       const iconRight: string | null | undefined | object = props.iconRight;
 
@@ -149,6 +158,14 @@ export default defineComponent({
       }
       return h(buttonComp, btnProps, slots);
     };
+
+    const originRenderBtn = renderBtn;
+    const badgeComp: any = resolveDynamicComponent(ui.badge.name);
+    if (props.badge) {
+      renderBtn = () => {
+        return <badgeComp {...props.badge}>{originRenderBtn()}</badgeComp>;
+      };
+    }
 
     if (!props.tooltip) {
       return renderBtn;
