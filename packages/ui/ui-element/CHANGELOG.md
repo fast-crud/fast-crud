@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [1.28.0](https://github.com/fast-crud/fast-crud/compare/v1.27.10...v1.28.0) (2026-04-01)
+
+### Features
+
+* 添加表单复制粘贴功能及badge支持 ([99795ff](https://github.com/fast-crud/fast-crud/commit/99795ff22ea8a4d83a28db8dc006dbb77159a485))
+
 ## [1.27.10](https://github.com/fast-crud/fast-crud/compare/v1.27.9...v1.27.10) (2026-01-09)
 
 **Note:** Version bump only for package @fast-crud/ui-element
