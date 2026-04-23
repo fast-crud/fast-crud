@@ -159,7 +159,7 @@ export default {
 ```
 
 
-### ret.rebuildCrudBinding
+### ret.rebuildCrudBindings
 * 说明: useFs返回值之一，可以重新构建crudBinding，可以拿来替换现有的crudBinding
 * 类型： `(opts:CrudOptions)=>CrudBinding`
 * 示例：
@@ -175,7 +175,7 @@ export default {
                 ...commonColumns, // 公共的列
                 ...dynamicColumns //动态列
             }
-            const newCrudBinding = rebuildCrudBinding(crudOptions)
+            const newCrudBinding = rebuildCrudBindings(crudOptions)
             crudBinding.value.table.columns = newCrudBinding.table.columns // 这里动态更新表格列
             crudExpose.doRefresh()
         })
