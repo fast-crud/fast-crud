@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.28.1](https://github.com/fast-crud/fast-crud/compare/v1.28.0...v1.28.1) (2026-05-10)
+
+### Performance Improvements
+
+* useFormWrapper支持注入 fsFormWrapperRef ([427b845](https://github.com/fast-crud/fast-crud/commit/427b84512e8b2cbd7a8fd49a44f706d80b47457e))
+
 # [1.28.0](https://github.com/fast-crud/fast-crud/compare/v1.27.10...v1.28.0) (2026-04-01)
 
 ### Bug Fixes
