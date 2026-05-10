@@ -62,13 +62,14 @@ async function createFormWrapper<R = any>(opts: FormProps<R>) {
   });
 }
 
-export function useFormWrapper() {
-  let pd: any = null;
-  try {
-    const wrapperProvider: Function = inject("use:form:wrapper", () => {});
-    pd = wrapperProvider();
-  } catch (e) {
-    logger.warn("cant inject use:form:wrapper，建议在App.vue中使用<fs-form-provider>组件包裹<router-view/>", e);
+export function useFormWrapper(pd: any = null) {
+  if (pd == null) {
+    try {
+      const wrapperProvider: Function = inject("use:form:wrapper", () => {});
+      pd = wrapperProvider();
+    } catch (e) {
+      logger.warn("cant inject use:form:wrapper，建议在App.vue中使用<fs-form-provider>组件包裹<router-view/>", e);
+    }
   }
 
   let openDialog: (opts: OpenDialogProps) => Promise<any> = null;
