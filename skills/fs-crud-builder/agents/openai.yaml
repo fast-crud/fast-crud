@@ -1,0 +1,6 @@
+interface:
+  display_name: "FS CRUD 构建器"
+  short_description: "生成和改造 fast-crud CRUD 页面"
+  default_prompt: "使用 $fs-crud-builder 帮我在 Vue 管理后台项目中开发一个 fast-crud CRUD 页面。"
+policy:
+  allow_implicit_invocation: true
