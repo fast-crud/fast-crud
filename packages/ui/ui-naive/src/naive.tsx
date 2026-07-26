@@ -283,7 +283,8 @@ export class Naive implements UiInterface {
     caretUp: "CaretUpOutlined",
     caretDown: "CaretDownOutlined",
     eye: "EyeOutlined",
-    info: "InfoCircleOutlined"
+    info: "InfoCircleOutlined",
+    copy: "CopyOutlined"
   };
 
   dialog: DialogCI = creator<DialogCI>({

@@ -31,7 +31,8 @@ import {
   CaretUpOutlined,
   CaretDownOutlined,
   EyeOutlined,
-  InfoCircleOutlined
+  InfoCircleOutlined,
+  CopyOutlined
 } from "@ant-design/icons-vue";
 
 const icons: any = {
@@ -67,7 +68,8 @@ const icons: any = {
   CaretUpOutlined,
   CaretDownOutlined,
   EyeOutlined,
-  InfoCircleOutlined
+  InfoCircleOutlined,
+  CopyOutlined
 };
 export default function (app: any) {
   for (const key in icons) {

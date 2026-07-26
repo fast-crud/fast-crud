@@ -217,7 +217,8 @@ export class Element implements UiInterface {
     caretUp: "CaretTop",
     caretDown: "CaretBottom",
     eye: "View",
-    info: "warning"
+    info: "warning",
+    copy: "copy"
   };
 
   dialog: DialogCI = creator<DialogCI>({
