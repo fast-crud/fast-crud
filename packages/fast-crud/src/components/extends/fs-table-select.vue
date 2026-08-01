@@ -191,7 +191,9 @@ const emits = defineEmits([
   /*对话框已关闭*/
   "dialog-closed",
   /*对话框关闭*/
-  "close"
+  "close",
+  /*对话框打开*/
+  "open"
 ]);
 const { ui } = useUi();
 const { t } = useI18n();
@@ -205,6 +207,11 @@ function onClose() {
 }
 function onOpen() {
   dialogOpen.value = true;
+  emits("open", getScopeContext());
+}
+
+function close() {
+  onClose();
 }
 
 const { crudRef, crudBinding, crudExpose } = useFsRef();
@@ -306,7 +313,7 @@ const openTableSelect = async (openOptions: { crudOptions?: DynamicallyCrudOptio
 
 const computedValuesFormat = computed(() => {
   return {
-    maxVisible: 1,
+    maxVisible: 3,
     ...props.valuesFormat
   };
 });
@@ -452,7 +459,8 @@ const getScopeContext = () => {
     valuesFormatRef,
     crudRef,
     crudBinding,
-    crudExpose
+    crudExpose,
+    close
   };
 };
 
