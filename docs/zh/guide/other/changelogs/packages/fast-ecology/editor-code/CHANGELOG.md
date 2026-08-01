@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.28.3](https://github.com/fast-crud/fast-crud/compare/v1.28.2...v1.28.3) (2026-08-01)
+
+### Bug Fixes
+
+* 修复editor-code 编译bug ([5d10748](https://github.com/fast-crud/fast-crud/commit/5d107482282e2e467aeaf76f01556de7a0afd259))
+
 ## [1.28.2](https://github.com/fast-crud/fast-crud/compare/v1.28.1...v1.28.2) (2026-08-01)
 
 **Note:** Version bump only for package @fast-crud/editor-code
