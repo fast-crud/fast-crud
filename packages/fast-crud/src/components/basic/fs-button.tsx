@@ -59,7 +59,7 @@ export default defineComponent({
      */
     className: {
       type: [String, Array, Object],
-      default: "",
+      default: undefined,
       required: false
     },
 
