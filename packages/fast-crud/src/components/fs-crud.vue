@@ -6,16 +6,16 @@
     v-bind="container"
     :class="computedClass"
   >
-    <slot></slot>
+    <fs-slot-render v-if="mergedSlots.default" :slots="mergedSlots.default" />
 
     <template #header-top>
-      <slot name="header-top"></slot>
+      <fs-slot-render v-if="mergedSlots.headerTop" :slots="mergedSlots.headerTop" />
     </template>
     <template #header-bottom>
-      <slot name="header-bottom"></slot>
+      <fs-slot-render v-if="mergedSlots.headerBottom" :slots="mergedSlots.headerBottom" />
     </template>
     <template #header-middle>
-      <slot name="header-middle"></slot>
+      <fs-slot-render v-if="mergedSlots.headerMiddle" :slots="mergedSlots.headerMiddle" />
     </template>
 
     <template #search>
@@ -26,17 +26,17 @@
 
     <template #actionbar>
       <div v-if="actionbar && actionbar.show !== false" class="fs-crud-actionbar">
-        <slot name="actionbar-left"></slot>
+        <fs-slot-render v-if="mergedSlots.actionbarLeft" :slots="mergedSlots.actionbarLeft" />
         <fs-actionbar v-bind="actionbar" />
-        <slot name="actionbar-right"></slot>
+        <fs-slot-render v-if="mergedSlots.actionbarRight" :slots="mergedSlots.actionbarRight" />
       </div>
     </template>
 
     <template #toolbar>
       <div v-if="toolbar && toolbar.show !== false" class="fs-crud-toolbar">
-        <slot name="toolbar-left"></slot>
+        <fs-slot-render v-if="mergedSlots.toolbarLeft" :slots="mergedSlots.toolbarLeft" />
         <fs-toolbar ref="toolbarRef" v-bind="toolbar" :slots="computedToolbarSlots" :columns="table.columns" />
-        <slot name="toolbar-right"></slot>
+        <fs-slot-render v-if="mergedSlots.toolbarRight" :slots="mergedSlots.toolbarRight" />
       </div>
     </template>
     <template #tabs>
@@ -71,29 +71,28 @@
     <template #pagination>
       <div class="fs-crud-pagination">
         <div class="fs-pagination-left">
-          <slot name="pagination-left"></slot>
+          <fs-slot-render v-if="mergedSlots.paginationLeft" :slots="mergedSlots.paginationLeft" />
         </div>
         <div class="fs-pagination">
           <!-- pagination.currentPage 如果为空， element会出警告 -->
           <component :is="ui.pagination.name" v-if="pagination.show !== false" v-bind="pagination" />
         </div>
         <div class="fs-pagination-right">
-          <slot name="pagination-right"></slot>
+          <fs-slot-render v-if="mergedSlots.paginationRight" :slots="mergedSlots.paginationRight" />
         </div>
       </div>
     </template>
 
     <template #footer-top>
-      <slot name="footer-top"></slot>
+      <fs-slot-render v-if="mergedSlots.footerTop" :slots="mergedSlots.footerTop" />
     </template>
     <template #footer-bottom>
-      <slot name="footer-bottom"></slot>
+      <fs-slot-render v-if="mergedSlots.footerBottom" :slots="mergedSlots.footerBottom" />
     </template>
   </component>
 </template>
 <script lang="ts">
 import { computed, defineComponent, nextTick, onMounted, PropType, provide, ref, SetupContext, toRef } from "vue";
-import { forEach } from "lodash-es";
 import { uiContext } from "../ui";
 import { useMerge } from "../use/use-merge";
 import utilLog from "../utils/util.log";
@@ -101,6 +100,7 @@ import logger from "../utils/util.log";
 import { RowSelectionProps, SetSearchFormDataProps } from "../d";
 import { useUi } from "../use";
 import { utils } from "../utils";
+import { filterCrudSlots, mergeCrudSlots, type CrudSlots } from "./fs-crud-slots";
 
 // utils.trace("fs-table");
 const { merge } = useMerge();
@@ -197,19 +197,6 @@ function useTabs(searchRet: any, props: any, ctx: SetupContext) {
   };
 }
 
-function slotFilter(ctxSlots: any, keyPrefix: string) {
-  if (!ctxSlots) {
-    return {};
-  }
-  const slots: any = {};
-  forEach(ctxSlots, (value, key) => {
-    if (key.startsWith(keyPrefix)) {
-      slots[key] = value;
-    }
-  });
-  return slots;
-}
-
 function useFixedHeight(props: any, ctx: SetupContext, { tableRef, containerRef }: any) {
   const ui = uiContext.get();
   let tableCI = ui.table;
@@ -295,19 +282,20 @@ function useTable(props: any, ctx: SetupContext) {
   });
 
   const computedToolbar = toRef(props, "toolbar");
+  const mergedSlots = computed(() => mergeCrudSlots(props.slots, ctx.slots));
 
   const computedCellSlots = computed(() => {
-    return slotFilter(ctx.slots, "cell");
+    return filterCrudSlots(mergedSlots.value, "cell");
   });
 
   const computedFormSlots = computed(() => {
-    return slotFilter(ctx.slots, "form");
+    return filterCrudSlots(mergedSlots.value, "form");
   });
   const computedSearchSlots = computed(() => {
-    return slotFilter(ctx.slots, "search");
+    return filterCrudSlots(mergedSlots.value, "search");
   });
   const computedToolbarSlots = computed(() => {
-    return slotFilter(ctx.slots, "toolbar");
+    return filterCrudSlots(mergedSlots.value, "toolbar");
   });
 
   const formWrapperRef = ref();
@@ -333,6 +321,7 @@ function useTable(props: any, ctx: SetupContext) {
     toolbarRef,
     computedTable,
     computedToolbar,
+    mergedSlots,
     computedCellSlots,
     formWrapperRef,
     isFormInner,
@@ -462,6 +451,15 @@ export default defineComponent({
      */
     container: {
       type: Object,
+      default() {
+        return {};
+      }
+    },
+    /**
+     * 配置式插槽，模板插槽同名时优先
+     */
+    slots: {
+      type: Object as PropType<CrudSlots>,
       default() {
         return {};
       }
