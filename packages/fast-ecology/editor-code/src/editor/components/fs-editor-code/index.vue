@@ -168,7 +168,7 @@ async function initYaml(ctx: EditorCodeCtx) {
   }
   configureMonacoYaml(monaco, {
     schemas,
-    format: true,
+    format: {},
     hover: true,
     completion: true,
     validate: true,
