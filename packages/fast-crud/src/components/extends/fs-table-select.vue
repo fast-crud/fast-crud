@@ -306,6 +306,7 @@ const openTableSelect = async (openOptions: { crudOptions?: DynamicallyCrudOptio
 
 const computedValuesFormat = computed(() => {
   return {
+    maxVisible: 1,
     ...props.valuesFormat
   };
 });
