@@ -3,6 +3,19 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.28.2](https://github.com/fast-crud/fast-crud/compare/v1.28.1...v1.28.2) (2026-08-01)
+
+### Bug Fixes
+
+* 修复querySelector报错的bug ([e3b8d88](https://github.com/fast-crud/fast-crud/commit/e3b8d88e9d77caeb167e1c83766ee9a9d8f9316f))
+
+### Performance Improvements
+
+* 新增editor-markdown组件 ([9285043](https://github.com/fast-crud/fast-crud/commit/928504396663d36c2f3f3c1edd0cb28e219d9633))
+* 支持crudOptions.slots插槽配置 ([1726318](https://github.com/fast-crud/fast-crud/commit/172631883879a33028bad30d9adb35df01b9ca85))
+* **dict-cascader:** fs-dict-cascader 组件 增加 slots 支持 ([0ba4d2e](https://github.com/fast-crud/fast-crud/commit/0ba4d2e84b2972549cf3d4449189a33430f0e802))
+* fast-crud builder skill ([1908d8d](https://github.com/fast-crud/fast-crud/commit/1908d8db28c6f8112663dfbb16930d00245855dd))
+
 ## [1.28.1](https://github.com/fast-crud/fast-crud/compare/v1.28.0...v1.28.1) (2026-05-10)
 
 ### Performance Improvements
