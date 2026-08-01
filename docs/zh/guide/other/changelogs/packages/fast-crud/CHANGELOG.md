@@ -3,6 +3,19 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.28.6](https://github.com/fast-crud/fast-crud/compare/v1.28.5...v1.28.6) (2026-08-01)
+
+### Bug Fixes
+
+* 修复actionbar 按钮错位的bug ([faed109](https://github.com/fast-crud/fast-crud/commit/faed109357a2cecd494fda5d6db9f1e0eabb8e97))
+* **fs-table-select:** 完善fs-table-select弹窗相关事件与配置优化 ([ff740a2](https://github.com/fast-crud/fast-crud/commit/ff740a274e321295355981f31e5a7f014d186840))
+* **row-handle:** 修复render按钮在操作列的dropdown中显示 ([2aaa6f5](https://github.com/fast-crud/fast-crud/commit/2aaa6f54773fb3d2371d77ac67f9b8dd018487c5))
+
+### Performance Improvements
+
+* **editable:** 新增单元格编辑操作按钮独立配置和回车提交功能 ([8b63ead](https://github.com/fast-crud/fast-crud/commit/8b63ead7af1167d5c691fdb15547fba98ab807fc))
+* **fs-values-format:** 添加maxVisible属性用于限制显示的选项数量，超出部分将以+N的形式展示 ([7ed6e36](https://github.com/fast-crud/fast-crud/commit/7ed6e36ac75454876a1c26c68b5d3fd0d7e5051c))
+
 ## [1.28.5](https://github.com/fast-crud/fast-crud/compare/v1.28.3...v1.28.5) (2026-08-01)
 
 ### Performance Improvements

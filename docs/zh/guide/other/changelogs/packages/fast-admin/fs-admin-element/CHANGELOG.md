@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.28.6](https://github.com/fast-crud/fast-crud/compare/v1.28.5...v1.28.6) (2026-08-01)
+
+### Bug Fixes
+
+* 修复actionbar 按钮错位的bug ([faed109](https://github.com/fast-crud/fast-crud/commit/faed109357a2cecd494fda5d6db9f1e0eabb8e97))
+
 ## [1.28.5](https://github.com/fast-crud/fast-crud/compare/v1.28.3...v1.28.5) (2026-08-01)
 
 **Note:** Version bump only for package @fast-crud/fs-admin-element
