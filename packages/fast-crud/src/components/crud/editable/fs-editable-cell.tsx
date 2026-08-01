@@ -1,7 +1,7 @@
 import { computed, ComputedRef, defineComponent, defineExpose, PropType, ref } from "vue";
 import { uiContext } from "../../../ui";
 import { useCompute } from "../../../use/use-compute";
-import { EditableCell, EditableProps, EditableUpdateCellRequest } from "../../../d";
+import { EditableCell, EditableProps, EditableShowActionProps, EditableUpdateCellRequest } from "../../../d";
 /**
  * 可编辑单元格组件
  */
@@ -68,12 +68,12 @@ export default defineComponent({
       props.editableCell.cancel();
     }
 
-    const showAction: ComputedRef<boolean> = computed(() => {
+    const showAction: ComputedRef<EditableShowActionProps> = computed(() => {
       // console.log(props.editableOpts?.mode, props.editableOpts.showAction, props.editableCell.showAction);
-      return (
-        (props.editableOpts?.mode === "cell" || props.editableOpts?.mode === "free") &&
-        props.editableCell.showAction !== false
-      );
+      if (props.editableOpts?.mode !== "cell" && props.editableOpts?.mode !== "free") {
+        return false;
+      }
+      return props.editableCell.showAction;
     });
     const isDirty: ComputedRef<boolean> = computed(() => {
       return props.editableCell.isChanged && props.editableCell.isChanged();
@@ -123,13 +123,14 @@ export default defineComponent({
         return <fs-cell ref={"targetRef"} item={props.item} scope={props.scope} {...ctx.attrs} />;
       }
       const editableCell: EditableCell = props.editableCell;
-      const trigger = showAction.value ? props.editableOpts?.activeTrigger : false;
+      const trigger = props.editableOpts?.activeTrigger;
       return (
         <fs-editable
           ref={"editableRef"}
           class={"fs-editable-cell"}
           editing={editableCell?.isEditing}
           showAction={showAction.value}
+          submitOnEnter={props.editableOpts?.submitOnEnter}
           dirty={isDirty.value}
           v-slots={slots}
           onUpdate:editing={editingUpdate}
