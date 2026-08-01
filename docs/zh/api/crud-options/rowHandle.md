@@ -65,6 +65,7 @@ const crudOptions = {
 * 说明：自定义按钮渲染
 * 类型：Function
 * 参数：`context:{row, column,index,  text}`
+* 配置 `buttons[key].dropdown = true` 后，渲染结果同样会显示在下拉菜单中。
 
 ```js
 //演示删除按钮popcomfirm方式弹出确认框
