@@ -58,7 +58,7 @@ export default defineComponent({
      * 自定义的className
      */
     className: {
-      type: String,
+      type: [String, Array, Object],
       default: "",
       required: false
     },
