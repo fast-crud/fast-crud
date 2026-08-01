@@ -102,6 +102,7 @@ const crudOptions= {
 * 海豹信息，内部使用
 * [IoTSharp](https://github.com/IoTSharp/IoTSharp)： IOT管理平台，采用fast-crud做前端
 * [SuperApi](https://gitee.com/tmm-top/SuperApi) 无代码CRUD开发平台，后台基于NetCore，前端使用soybean集成fast-crud    
+* [vuedj](https://docs.vuedj.com/) vue django docker 企业级后台管理系统框架，基于fast-crud做前端
 
 好评如潮，你还不试试？     
 ![](images/good.png)
