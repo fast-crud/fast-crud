@@ -2,6 +2,7 @@
 # crudOptions.toolbar 
 工具条       
 更多参数见：[FsToolbar](/api/components/crud/toolbar/index.md)
+按钮参数会透传到 UI 框架的 Button 组件，入口见：[Element Plus Button](https://element-plus.org/zh-CN/component/button.html) | [Ant Design Vue Button](https://www.antdv.com/components/button-cn) | [Naive UI Button](https://www.naiveui.com/zh-CN/os-theme/components/button)。
 
 ## show
 * 说明：显示或隐藏工具条

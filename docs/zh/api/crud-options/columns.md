@@ -1,4 +1,6 @@
 # crudOptions.columns
+
+字段配置由 `column`、`form`、`search` 等多个子配置组成。每个子配置除本页列出的 fast-crud 参数外，还可能透传到字段组件和 UI 组件；请同时参考：[API 首页阅读向导](/api/) 和 [官方字段类型列表](/api/types.md)。
 * 说明：字段复合配置
 * 类型：`Object:{[字段key]:Object}`
 * 示例：

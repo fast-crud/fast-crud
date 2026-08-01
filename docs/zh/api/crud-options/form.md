@@ -1,7 +1,7 @@
 # crudOptions.form
 * 说明: 表单基本配置
 * 类型： Object
-* 支持： [el-form],[a-form]的配置
+* 支持： [el-form](https://element-plus.org/zh-CN/component/form.html)、[a-form](https://www.antdv.com/components/form-cn)、[n-form](https://www.naiveui.com/zh-CN/os-theme/components/form) 的配置
 * 位置： 
 ```js
 const crudOptions={
@@ -10,8 +10,8 @@ const crudOptions={
     }
 }
 ```
-* 支持：[FsForm](/api/components/crud/crud/fs-form) 的配置
->调用[FsFormWrapper](/api/components/crud/crud/fs-form-wrapper)组件实例的`open`方法即可打开表单对话框。    
+* 支持：[FsForm](/api/components/crud/crud/fs-form.md) 的配置。
+> 调用 [FsFormWrapper](/api/components/crud/crud/fs-form-wrapper.md) 组件实例的 `open` 方法即可打开表单对话框。    
 >此处的`form`会作为表单基本配置，分别与`addForm`、`editForm`、`viewForm`合并。     
 >然后作为参数传入open对话框，从而打开不同mode的表单对话框
 
@@ -368,7 +368,6 @@ const crudOptions = {
 * 说明: 添加对话框是否开启自动草稿功能，关闭对话框时自动保存草稿，下次打开添加对话框自动加载草稿，免丢失数据
 * 类型：`boolean` 
 * 默认：false
-
 
 
 

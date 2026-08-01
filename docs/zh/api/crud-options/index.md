@@ -37,6 +37,7 @@ const crudOptions ={
     addForm:{},     //添加表单的独立配置
     pagination:{},  //分页配置 ，对应el-pagination / a-pagination
     container:{},   //容器配置 ，对应fs-container
+    slots:{},       //插槽配置，对应fs-crud的插槽
 }
 
 ```

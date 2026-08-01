@@ -1,6 +1,7 @@
 # crudOptions.pagination
 翻页条配置     
-支持 el-pagination / a-pagination 的配置
+支持 [el-pagination](https://element-plus.org/zh-CN/component/pagination.html)、[a-pagination](https://www.antdv.com/components/pagination-cn)、[n-pagination](https://www.naiveui.com/zh-CN/os-theme/components/pagination) 的配置。
+框架自有参数和组件参数的边界见：[API 首页阅读向导](/api/)。
 
 ## show
 * 说明：显示或隐藏查询框
@@ -8,7 +9,7 @@
 * 默认：`true`
 
 ## 对应ui组件pagination的配置
-* 支持：支持el-pagination / a-pagination / n-pagination 的配置
+* 支持：支持 `el-pagination` / `a-pagination` / `n-pagination` 的配置，具体参数见本页顶部的组件链接。
 * 配置： 具体配置请根据你使用的ui库，前往对应ui库的文档查找相应组件的配置
 * 示例：
 
