@@ -226,7 +226,7 @@ function useFixedHeight(props: any, ctx: SetupContext, { tableRef, containerRef 
 
   function computeBodyHeight() {
     const tableDom = tableRef?.value?.$el;
-    if (tableDom == null || tableDom.querySelector == null) {
+    if (tableDom == null || tableDom.querySelector == null || !(tableDom.querySelector instanceof Function)) {
       return;
     }
     const headDom = tableDom.querySelector(tableCI.headerDomSelector);
