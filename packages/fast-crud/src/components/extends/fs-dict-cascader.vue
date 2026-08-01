@@ -5,12 +5,16 @@
     :options="computedOptions"
     v-bind="fieldNamesBinder"
     @change="onSelectChange"
-  />
+  >
+    <template v-for="(value, key) of mergedSlots" :key="key" #[key]="scope">
+      <fs-slot-render :slots="value" :scope="scope" />
+    </template>
+  </component>
 </template>
 <script lang="ts">
 import { useDict } from "../../use/use-dict";
 import { useUi } from "../../use";
-import { defineComponent, ref } from "vue";
+import { computed, defineComponent, PropType, ref, Slot } from "vue";
 /**
  * 字典级联组件
  * 支持el-cascader|a-cascader组件的参数
@@ -32,6 +36,15 @@ export default defineComponent({
     transformDictData: {
       type: Function,
       default: undefined
+    },
+    /**
+     * 级联选择器插槽，模板插槽同名时优先
+     */
+    slots: {
+      type: Object as PropType<Record<string, Slot>>,
+      default() {
+        return {};
+      }
     }
   },
   emits: [
@@ -66,6 +79,7 @@ export default defineComponent({
       });
     }
     const computedOptions = dictUseRet.createComputedOptions();
+    const mergedSlots = computed(() => ({ ...props.slots, ...ctx.slots }));
 
     function onSelectChange(value: any) {
       ctx.emit("change", value);
@@ -91,6 +105,7 @@ export default defineComponent({
       ...dictUseRet,
       fieldNamesBinder,
       computedOptions,
+      mergedSlots,
       onSelectChange
     };
   }
