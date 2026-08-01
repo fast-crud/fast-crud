@@ -591,7 +591,10 @@ export class Antdv implements UiInterface {
         console.warn("Table element not found");
         return;
       }
-
+      if (!(tableEl.querySelector instanceof Function)) {
+        console.warn("Table element does not support querySelector");
+        return;
+      }
       // 查找表格body
       const body = tableEl.querySelector(".ant-table-body");
       if (body) {
@@ -599,14 +602,6 @@ export class Antdv implements UiInterface {
       } else {
         console.warn("Table body element not found");
       }
-      // const querySelector = req?.fsTableRef?.vnode?.el?.querySelector;
-      // if (querySelector == null || typeof querySelector !== "function") {
-      //   return;
-      // }
-      // const body = querySelector(".ant-table-body");
-      // if (body) {
-      //   body.scrollTop = req.top;
-      // }
     },
     onChange({ onSortChange, onFilterChange, onPagination, bubbleUp }) {
       return {
