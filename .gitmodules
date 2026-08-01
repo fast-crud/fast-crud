@@ -10,3 +10,7 @@
 [submodule "packages/fast-admin/fs-admin-antdv4"]
 	path = packages/fast-admin/fs-admin-antdv4
 	url = https://github.com/fast-crud/fs-admin-antdv4
+[submodule "packages/fast-admin/fs-admin-antdv-next"]
+	path = packages/fast-admin/fs-admin-antdv-next
+	url = https://github.com/fast-crud/fs-admin-antdv-next
+
