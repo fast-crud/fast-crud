@@ -1,3 +1,10 @@
+---
+name: bug report
+about: 问题报告模板
+title: '[Bug] '
+labels: bug
+---
+
 > 感谢您支持fast-crud，请按如下规范提交issue    
 > 如果有条件，请尽量在[github上提交](https://github.com/fast-crud/fast-crud/issues)
 
