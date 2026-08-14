@@ -19,6 +19,10 @@ export default defineComponent({
     baseUrl: {
       type: String,
       default: ""
+    },
+    size: {
+      type: String,
+      default: ""
     }
   },
   setup(props, ctx) {
@@ -33,7 +37,16 @@ export default defineComponent({
             url = props.baseUrl + props.icon.replace("http:", "").replace("https:", "");
           }
           return () => {
-            return <img class={"fs-icon-image"} src={url} {...ctx.attrs} />;
+            const style: any = {};
+            if (props.size) {
+              style.width = props.size;
+              style.height = props.size;
+            }
+            return (
+              <span class={"fs-icon-image-container"} style={style}>
+                <img class={"fs-icon-image"} src={url} {...ctx.attrs} />
+              </span>
+            );
           };
         }
 

@@ -3,7 +3,7 @@
 * 类型： Object
 
 更多配置请参考[FsRowHandle](../components/crud/crud/fs-row-handle.md)    
-支持 el-table-column / a-table-column 配置
+支持 el-table-column / a-table-column 配置。组件参数入口：[FsRowHandle](/api/components/crud/crud/fs-row-handle.md)，底层表格列参数请参考 [Element Plus Table](https://element-plus.org/zh-CN/component/table.html) 或 [Ant Design Vue Table](https://www.antdv.com/components/table-cn)。  
 
 
 ## 对应ui组件的table-column的配置
@@ -65,6 +65,7 @@ const crudOptions = {
 * 说明：自定义按钮渲染
 * 类型：Function
 * 参数：`context:{row, column,index,  text}`
+* 配置 `buttons[key].dropdown = true` 后，渲染结果同样会显示在下拉菜单中。
 
 ```js
 //演示删除按钮popcomfirm方式弹出确认框
@@ -146,4 +147,3 @@ const crudOptions = {
 * 说明：当前激活哪个分组，与上面的 `group`配合使用，切换一组按钮
 * 类型：string
 * 默认：'default'，代表当前激活的是`rowHandle.buttons`里面配置的按钮组
-

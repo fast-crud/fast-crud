@@ -65,7 +65,7 @@ const props = withDefaults(defineProps<NestListProps>(), {
 const { originalColumns, currentColumns, originalColumnsMap, text, active } =
   inject<ColumnsFilterContext>(ColumnsFilterProvideKey);
 function buildText(element: any) {
-  return element.label || element.title || element.key || text.value.unnamed;
+  return element.__title || element.label || element.title || element.key || text.value.unnamed;
 }
 
 function onDraggableMove(e: any) {

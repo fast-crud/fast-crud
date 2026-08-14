@@ -3,6 +3,52 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.28.7](https://github.com/fast-crud/fast-crud/compare/v1.28.6...v1.28.7) (2026-08-01)
+
+**Note:** Version bump only for package fast-crud-root
+
+## [1.28.6](https://github.com/fast-crud/fast-crud/compare/v1.28.5...v1.28.6) (2026-08-01)
+
+### Bug Fixes
+
+* 修复actionbar 按钮错位的bug ([faed109](https://github.com/fast-crud/fast-crud/commit/faed109357a2cecd494fda5d6db9f1e0eabb8e97))
+* **fs-table-select:** 完善fs-table-select弹窗相关事件与配置优化 ([ff740a2](https://github.com/fast-crud/fast-crud/commit/ff740a274e321295355981f31e5a7f014d186840))
+* **row-handle:** 修复render按钮在操作列的dropdown中显示 ([2aaa6f5](https://github.com/fast-crud/fast-crud/commit/2aaa6f54773fb3d2371d77ac67f9b8dd018487c5))
+
+### Performance Improvements
+
+* **editable:** 新增单元格编辑操作按钮独立配置和回车提交功能 ([8b63ead](https://github.com/fast-crud/fast-crud/commit/8b63ead7af1167d5c691fdb15547fba98ab807fc))
+* **fs-values-format:** 添加maxVisible属性用于限制显示的选项数量，超出部分将以+N的形式展示 ([7ed6e36](https://github.com/fast-crud/fast-crud/commit/7ed6e36ac75454876a1c26c68b5d3fd0d7e5051c))
+
+## [1.28.5](https://github.com/fast-crud/fast-crud/compare/v1.28.3...v1.28.5) (2026-08-01)
+
+### Bug Fixes
+
+* 修复antdv4 querySelector is not function的bug ([b559f95](https://github.com/fast-crud/fast-crud/commit/b559f95ac2b18306f01b8d6d8decc3a0bd3eedb9))
+
+### Performance Improvements
+
+* fs-icon支持 url image ，支持设置size ([62ff833](https://github.com/fast-crud/fast-crud/commit/62ff8331a2f30281bfb0f768e68071ceed1dce73))
+
+## [1.28.3](https://github.com/fast-crud/fast-crud/compare/v1.28.2...v1.28.3) (2026-08-01)
+
+### Bug Fixes
+
+* 修复editor-code 编译bug ([5d10748](https://github.com/fast-crud/fast-crud/commit/5d107482282e2e467aeaf76f01556de7a0afd259))
+
+## [1.28.2](https://github.com/fast-crud/fast-crud/compare/v1.28.1...v1.28.2) (2026-08-01)
+
+### Bug Fixes
+
+* 修复querySelector报错的bug ([e3b8d88](https://github.com/fast-crud/fast-crud/commit/e3b8d88e9d77caeb167e1c83766ee9a9d8f9316f))
+
+### Performance Improvements
+
+* 新增editor-markdown组件 ([9285043](https://github.com/fast-crud/fast-crud/commit/928504396663d36c2f3f3c1edd0cb28e219d9633))
+* 支持crudOptions.slots插槽配置 ([1726318](https://github.com/fast-crud/fast-crud/commit/172631883879a33028bad30d9adb35df01b9ca85))
+* **dict-cascader:** fs-dict-cascader 组件 增加 slots 支持 ([0ba4d2e](https://github.com/fast-crud/fast-crud/commit/0ba4d2e84b2972549cf3d4449189a33430f0e802))
+* fast-crud builder skill ([1908d8d](https://github.com/fast-crud/fast-crud/commit/1908d8db28c6f8112663dfbb16930d00245855dd))
+
 ## [1.28.1](https://github.com/fast-crud/fast-crud/compare/v1.28.0...v1.28.1) (2026-05-10)
 
 ### Performance Improvements

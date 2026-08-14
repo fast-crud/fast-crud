@@ -135,7 +135,7 @@ export function useEditable(props: any, ctx: any, tableRef: any): { editable: Ed
       return col.editable?.updateCell || options.value.updateCell;
     });
     const showAction: any = computed(() => {
-      return col.editable?.showAction || options.value.showAction;
+      return col.editable?.showAction ?? options.value.showAction;
     });
     const cell: EditableCell = reactive({
       mode: editableId < 0 ? "add" : "edit",

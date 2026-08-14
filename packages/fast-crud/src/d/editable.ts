@@ -1,5 +1,5 @@
 import { Ref, ComputedRef } from "vue";
-import { ColumnProps, EditableProps, EditableUpdateCellRequest, FormItemProps, RowRecord, ScopeContext } from "./crud";
+import { ColumnProps, EditableProps, EditableShowActionProps, EditableUpdateCellRequest, FormItemProps, RowRecord, ScopeContext } from "./crud";
 import Schema from "async-validator";
 import { ValidateFieldsError } from "async-validator/dist-types/interface";
 
@@ -27,7 +27,7 @@ export type EditableTable<R = any> = {
   getActiveRows: () => EditableRow<R>[];
 };
 export type EditableCellActiveProps = {
-  showAction?: boolean;
+  showAction?: EditableShowActionProps;
   exclusive?: boolean;
   exclusiveEffect?: "cancel" | "save";
 };
@@ -49,7 +49,7 @@ export type EditableCell<R = any> = {
   newValue: any;
   column: ColumnProps;
   updateCell: ComputedRef<EditableUpdateCellRequest<R>>;
-  showAction: boolean;
+  showAction: EditableShowActionProps;
   validateErrors?: any[];
 };
 

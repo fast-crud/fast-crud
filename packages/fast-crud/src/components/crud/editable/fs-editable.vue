@@ -9,7 +9,7 @@
         <fs-icon :icon="ui.icons.edit" />
       </div>
     </div>
-    <div v-else class="fs-editable-inner" :class="{ 'fs-validate-error': hasError() }">
+    <div v-else class="fs-editable-inner" :class="{ 'fs-validate-error': hasError() }" @keydown="onKeydown">
       <div class="fs-editable-input">
         <slot name="edit"></slot>
       </div>
@@ -24,11 +24,11 @@
             <fs-icon :class="{ hidden: !hasError(), 'error-icon': true }" size="mini" :icon="ui.icons.info" />
           </template>
         </component>
-        <template v-if="showAction">
+        <template v-if="showSubmitAction">
           <fs-icon v-if="loading" size="mini" :spin="true" :icon="ui.icons.refresh" />
           <fs-icon v-else size="mini" :icon="ui.icons.check" @click="doSubmit" />
-          <fs-icon :class="{ hidden: loading }" size="mini" :icon="ui.icons.close" @click="doCancel" />
         </template>
+        <fs-icon v-if="showCancelAction" :class="{ hidden: loading }" size="mini" :icon="ui.icons.close" @click="doCancel" />
       </div>
     </div>
   </div>
@@ -44,7 +44,8 @@ type FsEditableProps = {
   dirty?: boolean;
   trigger?: "onClick" | "onDbClick" | false;
   loading?: boolean;
-  showAction?: boolean;
+  showAction?: boolean | { submit?: boolean; cancel?: boolean };
+  submitOnEnter?: boolean;
   validateErrors?: any[];
 };
 const props = withDefaults(defineProps<FsEditableProps>(), {
@@ -53,6 +54,7 @@ const props = withDefaults(defineProps<FsEditableProps>(), {
   dirty: false,
   loading: false,
   showAction: true,
+  submitOnEnter: false,
   trigger: "onClick",
   validateErrors: () => {
     return [];
@@ -71,11 +73,34 @@ const activeTrigger = computed(() => {
     }
   };
 });
+const showSubmitAction = computed(() => {
+  return props.showAction !== false && (typeof props.showAction !== "object" || props.showAction.submit !== false);
+});
+const showCancelAction = computed(() => {
+  return props.showAction !== false && (typeof props.showAction !== "object" || props.showAction.cancel !== false);
+});
 function doSubmit() {
   emits("submit");
 }
 function doCancel() {
   emits("cancel");
+}
+function onKeydown(event: KeyboardEvent) {
+  if (
+    !props.submitOnEnter ||
+    props.loading ||
+    event.key !== "Enter" ||
+    event.isComposing ||
+    event.altKey ||
+    event.ctrlKey ||
+    event.metaKey ||
+    event.shiftKey ||
+    event.target instanceof HTMLTextAreaElement
+  ) {
+    return;
+  }
+  event.preventDefault();
+  doSubmit();
 }
 function hasError() {
   return props.validateErrors?.length > 0;

@@ -1,5 +1,5 @@
 <template>
-  <div class="fs-label">
+  <div class="fs-label" :class="{ compact: compact }">
     <div class="label" v-bind="labelAttrs">
       {{ label }}
       <slot name="label"></slot>
@@ -18,6 +18,10 @@ import { defineComponent } from "vue";
 export default defineComponent({
   name: "FsLabel",
   props: {
+    compact: {
+      type: Boolean,
+      default: false
+    },
     label: {
       type: String,
       default: ""
@@ -37,21 +41,30 @@ export default defineComponent({
 .fs-label {
   display: flex;
   align-items: center;
+  &.compact {
+    .label {
+      min-width: auto;
+    }
+    .content {
+      min-width: auto;
+    }
+  }
   .label {
     display: flex;
     text-align: right;
-    margin-right: 10px;
-    min-width: 100px;
+    margin-right: 8px;
+    min-width: 80px;
     justify-content: flex-end;
   }
   .content {
     flex: 1;
     display: flex;
-    min-width: 100px;
+    min-width: 80px;
     flex-direction: row;
     flex-wrap: nowrap;
     justify-content: left;
     align-items: center;
   }
+  margin-right: 15px;
 }
 </style>

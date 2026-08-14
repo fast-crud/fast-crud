@@ -19,6 +19,7 @@
 | defaultLabel   | 当 value 值不在字典中时默认显示的文本                                                                                                                                        | -       | -      |         |
 | labelFormatter | label 自定义 render                                                                                                                                                          | func    | -      |         |
 | itemRender     | 自定义选项 render                                                                                                                                                            | func    | -      |         |
+| maxVisible     | 最多显示的选项数量，超出部分显示为 `+N`                                                                                                                                      | number  | -      |         |
 | closable       |                                                                                                                                                                              | boolean | -      | false   |
 
 ## Events

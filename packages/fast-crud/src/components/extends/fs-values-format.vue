@@ -1,13 +1,15 @@
 <template>
   <span class="fs-values-format">
     <template v-if="itemRender">
-      <fs-render v-for="item in computedValueItems" :key="getValue(item)" :render-func="itemRender" :scope="item" />
+      <fs-render v-for="item in visibleValueItems" :key="getValue(item)" :render-func="itemRender" :scope="item" />
+      <span v-if="hiddenValueCount > 0">+{{ hiddenValueCount }}</span>
     </template>
     <template v-else-if="type === 'text'">
-      <span v-for="item in computedValueItems" :key="getValue(item)" @click="doClick(item)">{{ getLabel(item) }}</span>
+      <span v-for="item in visibleValueItems" :key="getValue(item)" @click="doClick(item)">{{ getLabel(item) }}</span>
+      <span v-if="hiddenValueCount > 0">+{{ hiddenValueCount }}</span>
     </template>
     <template v-else>
-      <template v-for="(item, index) in computedValueItems" :key="getValue(item)">
+      <template v-for="(item, index) in visibleValueItems" :key="getValue(item)">
         <component
           :is="ui.tag.name"
           class="fs-tag"
@@ -25,6 +27,9 @@
           {{ getLabel(item) }}
         </component>
       </template>
+      <component v-if="hiddenValueCount > 0" :is="ui.tag.name" class="fs-tag" size="small" :closable="false">
+        +{{ hiddenValueCount }}
+      </component>
     </template>
   </span>
 </template>
@@ -146,6 +151,13 @@ export default defineComponent({
       type: Function
     },
 
+    /**
+     * 最多显示的选项数量，超出部分显示为 +N
+     */
+    maxVisible: {
+      type: Number
+    },
+
     closable: {
       type: Boolean,
       default: false
@@ -241,6 +253,15 @@ export default defineComponent({
       });
       return colorfulOptions;
     });
+    const visibleValueItems = computed(() => {
+      if (props.maxVisible == null || props.maxVisible < 0) {
+        return computedValueItems.value;
+      }
+      return computedValueItems.value.slice(0, props.maxVisible);
+    });
+    const hiddenValueCount = computed(() => {
+      return computedValueItems.value.length - visibleValueItems.value.length;
+    });
 
     function doClick(item: any) {
       ctx.emit("click", { item: item });
@@ -261,6 +282,8 @@ export default defineComponent({
       ...usedDict,
       doClick,
       computedValueItems,
+      visibleValueItems,
+      hiddenValueCount,
       doClose
     };
   }

@@ -509,6 +509,8 @@ export type RemoveProps<R = any> = {
   [key: string]: any;
 };
 
+export type EditableShowActionProps = boolean | { submit?: boolean; cancel?: boolean };
+
 export type EditableProps<R = any> = {
   /**
    * 是否启用编辑
@@ -532,8 +534,17 @@ export type EditableProps<R = any> = {
    */
   exclusiveEffect?: "cancel" | "save";
 
+  /**
+   * 是否显示编辑确认、取消操作。可分别配置 submit 和 cancel。
+   */
+  showAction?: EditableShowActionProps;
+
   //激活触发方式,onClick,onDbClick,false, free模式生效
   activeTrigger?: "onClick" | "onDbClick" | false;
+  /**
+   * 编辑输入框按 Enter 时提交
+   */
+  submitOnEnter?: boolean;
   activeDefault?: boolean;
   //设置哪个cell可以激活编辑
   isEditable?: (opts: { editableId: any; key: string; row: R }) => boolean;
@@ -573,7 +584,7 @@ export type TableColumnEditableProps<R = any> = {
   disabled?: boolean | TableColumnEditableDisabledFunc;
   updateCell?: EditableUpdateCellRequest<R>;
   updateColumn?: EditableUpdateColumnRequest<R>;
-  showAction?: boolean;
+  showAction?: EditableShowActionProps;
 };
 
 export type ConditionalRenderProps<R = any> = {

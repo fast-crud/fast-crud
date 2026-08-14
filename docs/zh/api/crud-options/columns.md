@@ -1,4 +1,6 @@
 # crudOptions.columns
+
+字段配置由 `column`、`form`、`search` 等多个子配置组成。每个子配置除本页列出的 fast-crud 参数外，还可能透传到字段组件和 UI 组件；请同时参考：[API 首页阅读向导](/api/) 和 [官方字段类型列表](/api/types.md)。
 * 说明：字段复合配置
 * 类型：`Object:{[字段key]:Object}`
 * 示例：
@@ -132,6 +134,9 @@ crudOptions = { //
 * 说明：在列设置中显示该字段的勾选
 * 类型：Boolean
 
+## [key].column.columnSetTitle
+* 说明：在列设置中自定义该字段的标题
+* 类型：String
 
 ## [key].column.show
 * 说明：是否显示该列,列设置中也是通过修改此字段来进行列的显示。

@@ -134,6 +134,7 @@ function eachTree(tree: any, callback: Function) {
   }
 }
 
+const __keys = ["__show", "__disabled", "__parent", "__key", "__title"];
 function buildColumnFilterItem(item: ColumnProps): ColumnsFilterItem {
   return {
     key: item.key,
@@ -141,14 +142,15 @@ function buildColumnFilterItem(item: ColumnProps): ColumnsFilterItem {
     fixed: item.fixed ?? false,
     show: item.show ?? true,
     __show: item.columnSetShow !== false,
-    __disabled: item.columnSetDisabled ?? false
+    __disabled: item.columnSetDisabled ?? false,
+    __title: item.columnSetTitle
   };
 }
 
 function transformToTableColumns(result: ColumnsFilterItem[]) {
   const columns: TableColumnsProps = {};
   forEach(result, (item) => {
-    const column: ColumnProps = omit(item, "children", "__show", "__disabled", "__parent", "__key");
+    const column: ColumnProps = omit(item, "children", ...__keys);
     if (item.children && item.children.length > 0) {
       column.children = transformToTableColumns(item.children);
     }
@@ -193,10 +195,11 @@ async function do_save(noSave = false) {
   //解决naive ui与列设置冲突的问题
   eachTree(result, (item: any) => {
     if (item) {
-      delete item.__disabled;
-      delete item.__show;
-      delete item.__parent;
-      delete item.__key;
+      for (const key of item.keys()) {
+        if (key.startsWith("__")) {
+          delete item[key];
+        }
+      }
     }
   });
 
@@ -345,7 +348,7 @@ defineExpose({
 });
 
 function buildText(element: any) {
-  return element.label || element.title || element.key || _text.value.unnamed;
+  return element.__title || element.label || element.title || element.key || _text.value.unnamed;
 }
 </script>
 <style lang="less">

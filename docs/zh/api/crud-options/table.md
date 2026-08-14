@@ -1,7 +1,7 @@
 # crudOptions.table
 表格配置     
-更多参数见：[FsTable](/api/components/crud/crud/fs-table.md)
-支持 el-table | a-table | n-table的配置
+更多参数见：[FsTable](/api/components/crud/crud/fs-table.md)。`table` 中的未列出参数会透传给当前 UI 适配器的表格组件，请根据项目实际使用的框架查看：[Element Plus Table](https://element-plus.org/zh-CN/component/table.html) | [Ant Design Vue Table](https://www.antdv.com/components/table-cn) | [Naive UI DataTable](https://www.naiveui.com/zh-CN/os-theme/components/data-table)。
+完整的参数来源说明见：[API 首页阅读向导](/api/)。
 
 ## show
 * 说明：显示或隐藏table
@@ -252,8 +252,13 @@ const crudOptions = {
              */
             exclusiveEffect: "save", // "cancel" | "save";
 
+            //编辑操作按钮，可单独控制确认√和取消×
+            showAction: { submit: true, cancel: true },
+
             //单元格进入编辑模式的激活触发方式,onClick,onDbClick,false, 仅free模式生效
             activeTrigger:"onClick", // "onClick" | "onDbClick" | false;
+            //编辑输入框按 Enter 时直接提交，textarea 不受影响
+            submitOnEnter: false,
             //是否默认激活
             activeDefault:false, 
             //通过一个方法判断哪些 cell可以激活编辑

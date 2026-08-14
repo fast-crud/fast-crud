@@ -209,4 +209,5 @@ const crudOptions = {
 ```
 
 ## 更多参数
-* 说明：更多参数见：[FsSearch](/api/components/crud/search/index.md)组件文档
+* 说明：更多参数见：[FsSearch](/api/components/crud/search/index.md) 组件文档；表单原生参数请查看 [Element Plus Form](https://element-plus.org/zh-CN/component/form.html)、[Ant Design Vue Form](https://www.antdv.com/components/form-cn) 或 [Naive UI Form](https://www.naiveui.com/zh-CN/os-theme/components/form)。
+* 完整的参数来源说明见：[API 首页阅读向导](/api/)。

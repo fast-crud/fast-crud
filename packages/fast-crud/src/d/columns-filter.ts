@@ -13,6 +13,7 @@ export type ColumnsFilterItem = {
   __disabled: boolean;
 
   __parent?: ColumnsFilterItem;
+  __title?: string;
 
   children?: ColumnsFilterItem[];
 };

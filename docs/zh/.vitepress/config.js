@@ -163,6 +163,7 @@ module.exports = {
                                 {text: 'rowHandle', link: '/api/crud-options/rowHandle'},
                                 {text: 'pagination', link: '/api/crud-options/pagination'},
                                 {text: 'container', link: '/api/crud-options/container'},
+                                {text: 'slots', link: '/api/crud-options/slots'},
                                 {text: 'settings', link: '/api/crud-options/settings'},
                             ]
                         },
@@ -212,7 +213,6 @@ module.exports = {
                                 {text: 'fs-actionbar', link: "/api/components/crud/actionbar/index"},
                                 {text: 'fs-search', link: "/api/components/crud/search/index"},
                                 {text: 'fs-search-layout-default', link: "/api/components/crud/search/layout-default"},
-                                {text: 'fs-toolbar', link: "/api/components/crud/toolbar/index"},
                                 {
                                     text: 'fs-table-columns-filter',
                                     link: "/api/components/crud/toolbar/fs-table-columns-filter/index"
@@ -356,4 +356,3 @@ module.exports = {
         ],
     },
 }
-

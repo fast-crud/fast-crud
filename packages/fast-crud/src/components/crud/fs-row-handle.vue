@@ -26,7 +26,8 @@
                 v-bind="item.dropdownItem"
                 :disabled="item.disabled"
               >
-                <div class="fs-row-handle-dropdown-item" v-bind="item">
+                <fs-render v-if="item.render" :render-func="item.render" :scope="scopeRef" />
+                <div v-else class="fs-row-handle-dropdown-item" v-bind="item">
                   <fs-icon v-if="item.icon" :icon="item.icon" /> {{ item.text || item.title }}
                 </div>
               </component>
