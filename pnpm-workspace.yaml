@@ -4,3 +4,5 @@ packages:
   # exclude packages that are inside test directories
   - '!**/test/**'
   - "!packages/fast-admin/fs-admin-antdv-next"
+overrides:
+  '@fast-crud/fs-admin-antdv-next': link:packages/fast-admin/fs-admin-antdv-next

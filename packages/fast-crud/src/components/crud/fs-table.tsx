@@ -406,7 +406,6 @@ export default defineComponent({
       const cellSlotName = "cell_" + item.key;
       if (scope == null) {
         scope = {};
-        debugger;
       }
       const row = (scope.row = scope[tableColumnCI.row]) || {};
       // const getScopeFn = () => {

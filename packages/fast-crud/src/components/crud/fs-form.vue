@@ -533,7 +533,6 @@ export default defineComponent({
             ...submitScope
           });
           if (res != null && !(res instanceof Promise)) {
-            debugger;
             set(formData, key, res);
           }
         }
