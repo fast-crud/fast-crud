@@ -1,6 +1,6 @@
 {
   "name": "@fast-crud/ui-antdv-next",
-  "version": "1.28.1",
+  "version": "1.28.7",
   "description": "antdv",
   "main": "./src/index.ts",
   "module": "./src/index.ts",
@@ -18,9 +18,11 @@
   },
   "author": "Greper",
   "license": "MIT",
+  "dependencies": {
+      "@fast-crud/ui-interface": "^1.28.7"
+  },
   "devDependencies": {
     "@antdv-next/icons": "^1.1.1",
-    "@fast-crud/ui-interface": "^1.28.1",
     "@rollup/plugin-strip": "^3.0.2",
     "@rollup/plugin-typescript": "^11.1.2",
     "@types/lodash-es": "^4.17.8",

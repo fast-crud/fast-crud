@@ -58,6 +58,8 @@
     "vue-tsc": "^1.8.27"
   },
   "dependencies": {
+    "@fast-crud/fast-crud": "link:packages/fast-crud",
+    "@fast-crud/fs-admin-antdv-next": "link:packages/fast-admin/fs-admin-antdv-next",
     "@types/flexsearch": "^0.7.6",
     "@types/markdown-it": "^13.0.7",
     "glob-to-regexp": "^0.4.1",
