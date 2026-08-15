@@ -541,6 +541,9 @@ export class Naive implements UiInterface {
     modelValue: "value",
     clearable: "clearable",
     filterable: "filterable",
+    fieldNames(namesMap: { value: string; label: string }) {
+      return { labelField: namesMap.label, valueField: namesMap.value };
+    },
     buildMultiBinding: (multiple) => {
       return { multiple };
     }

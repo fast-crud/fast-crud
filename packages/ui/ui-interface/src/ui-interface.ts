@@ -61,6 +61,7 @@ export interface SelectCI extends CI<SelectBuilderOption> {
   modelValue: string;
   clearable: string;
   filterable: string;
+  fieldNames: (namesMap: { value: string; label: string }) => any;
   buildMultiBinding: (multiple: boolean) => ComponentBinding;
 }
 

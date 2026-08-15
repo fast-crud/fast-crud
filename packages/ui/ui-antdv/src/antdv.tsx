@@ -477,6 +477,9 @@ export class Antdv implements UiInterface {
     modelValue: "value",
     clearable: "allowClear",
     filterable: "showSearch",
+    fieldNames(namesMap: { value: string; label: string }) {
+      return { fieldNames: namesMap };
+    },
     buildMultiBinding(multiple: boolean) {
       return {
         mode: multiple ? "multiple" : ""

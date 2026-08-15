@@ -7,7 +7,8 @@ import {
   resolveDirective,
   resolveDynamicComponent,
   watch,
-  withDirectives
+  withDirectives,
+  withCtx
 } from "vue";
 import { forEach, get, set } from "lodash-es";
 import { useUi } from "../../ui";
@@ -27,6 +28,9 @@ import {
 import { UiInterface } from "@fast-crud/ui-interface";
 import { useColumns, useMerge } from "../../use";
 import { useComponentRefProvider } from "./use/provider";
+import FsCell from "./fs-cell";
+import FsRowHandle from "./fs-row-handle.vue";
+import FsEditableCell from "./editable/fs-editable-cell";
 
 type BuildTableColumnsOption = {
   props: any;
@@ -34,6 +38,7 @@ type BuildTableColumnsOption = {
   sortedColumns: TableColumnsProps;
   renderRowHandle: any;
   renderCellComponent: any;
+  renderContext?: any;
   componentDefines: {
     tableComp: any;
     tableColumnComp: any;
@@ -46,6 +51,7 @@ function buildTableSlots({
   sortedColumns,
   renderRowHandle,
   renderCellComponent,
+  renderContext,
   componentDefines
 }: BuildTableColumnsOption) {
   const { tableComp, tableColumnComp, tableColumnGroupComp } = componentDefines;
@@ -80,12 +86,15 @@ function buildTableSlots({
       }
     } else {
       // cell render custom component
-      cellSlots.default = (scope: any) => {
-        if (scope == null) {
-          return <div>1111</div>;
-        }
-        return renderCellComponent(item, scope) as any;
-      };
+      cellSlots.default = withCtx(
+        (scope: any) => {
+          if (scope == null) {
+            return <div>1111</div>;
+          }
+          return renderCellComponent(item, scope) as any;
+        },
+        renderContext
+      ) as any;
     }
     const newItem = { ...item };
     delete newItem.children;
@@ -115,7 +124,7 @@ function buildTableSlots({
     // rowHandle
     if (props.rowHandle && props.rowHandle.show !== false) {
       const rowHandleSlots = {
-        default: renderRowHandle,
+        default: withCtx(renderRowHandle, renderContext) as any,
         ...props.rowHandle?.columnSlots
       };
       children.push(
@@ -148,7 +157,7 @@ function buildTableSlots({
  * @returns {*[]}
  */
 function buildTableColumns(options: any, parent?: any): any[] {
-  const { props, renderRowHandle, renderCellComponent, sortedColumns } = options;
+  const { props, renderRowHandle, renderCellComponent, renderContext, sortedColumns } = options;
   const { ui } = useUi();
   const originalColumns = sortedColumns ?? {};
   const columns: ColumnProps[] = [];
@@ -182,19 +191,19 @@ function buildTableColumns(options: any, parent?: any): any[] {
       delete newCol[tableCI.renderMethod];
       if (!customRender) {
         //如果没有配置customRender 默认使用render cell component
-        item[tableCI.renderMethod] = (a: any, b: any, c: any) => {
+        item[tableCI.renderMethod] = withCtx((a: any, b: any, c: any) => {
           const scope = tableCI.rebuildRenderScope(a, b, c);
           return renderCellComponent(newCol, scope);
-        };
+        }, renderContext);
       } else {
         //配置了customRender,先走customRender，在内部让用户根据情况调用cellRender
-        item[tableCI.renderMethod] = (a: any, b: any, c: any) => {
+        item[tableCI.renderMethod] = withCtx((a: any, b: any, c: any) => {
           const scope = tableCI.rebuildRenderScope(a, b, c);
-          const cellRender = () => {
+          const cellRender = withCtx(() => {
             return renderCellComponent(newCol, scope);
-          };
+          }, renderContext);
           return customRender(scope, cellRender);
-        };
+        }, renderContext);
       }
     }
   }
@@ -205,10 +214,10 @@ function buildTableColumns(options: any, parent?: any): any[] {
       key: "_rowHandle",
       ...props.rowHandle
     };
-    rowHandle[tableCI.renderMethod] = (a: any, b: any, c: any) => {
+    rowHandle[tableCI.renderMethod] = withCtx((a: any, b: any, c: any) => {
       const scope = tableCI.rebuildRenderScope(a, b, c);
       return renderRowHandle(scope);
-    };
+    }, renderContext);
     columns.push(rowHandle);
   }
 
@@ -399,7 +408,7 @@ export default defineComponent({
           }
         }
       }
-      return <fs-row-handle {...props.rowHandle} scope={scope} onHandle={onRowHandle} v-slots={rowHandleSlots} />;
+      return <FsRowHandle {...props.rowHandle} scope={scope} onHandle={onRowHandle} v-slots={rowHandleSlots} />;
     };
 
     const renderCellComponent = (item: any, scope: any) => {
@@ -414,6 +423,7 @@ export default defineComponent({
       const vModel = {
         modelValue: get(scope[tableColumnCI.row], item.key),
         "onUpdate:modelValue": (value: any) => {
+          debugger;
           set(scope[tableColumnCI.row], item.key, value);
           const newScope = getContextFn(item, scope);
           ctx.emit("value-change", newScope);
@@ -446,7 +456,7 @@ export default defineComponent({
         // if (props.editableCell && props.editableCell?.options?.value?.enabled === true) {
         const editableCell = editableWrap.editable.getEditableCell(editableId, item.key);
         return (
-          <fs-editable-cell
+          <FsEditableCell
             ref={setRef}
             key={item.key}
             columnKey={item.key}
@@ -464,7 +474,7 @@ export default defineComponent({
         );
       } else {
         return (
-          <fs-cell
+          <FsCell
             ref={setRef}
             key={item.key}
             item={item}
@@ -525,6 +535,7 @@ export default defineComponent({
           sortedColumns: sortedColumns.value,
           renderRowHandle,
           renderCellComponent,
+          renderContext: currentRef,
           componentDefines
         } as BuildTableColumnsOption);
       });
@@ -561,6 +572,7 @@ export default defineComponent({
           componentRefs,
           renderRowHandle,
           renderCellComponent,
+          renderContext: currentRef,
           columns: props.columns
         });
       });

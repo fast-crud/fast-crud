@@ -195,7 +195,7 @@ async function do_save(noSave = false) {
   //解决naive ui与列设置冲突的问题
   eachTree(result, (item: any) => {
     if (item) {
-      for (const key of item.keys()) {
+      for (const key of Object.keys(item)) {
         if (key.startsWith("__")) {
           delete item[key];
         }

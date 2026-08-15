@@ -59,6 +59,13 @@ const ctx = {
 };
 const usedDict = useDict(props, ctx, ui.select.modelValue);
 const computedOptions = usedDict.createComputedOptions();
+const fieldNamesBinder = ref();
+if (props.dict) {
+  fieldNamesBinder.value = ui.select.fieldNames({
+    value: props.dict.value,
+    label: props.dict.label
+  });
+}
 
 const onSelectedChange = (value: any) => {
   emit("change", value);
@@ -118,6 +125,7 @@ const render = () => {
         ref={"selectRef"}
         placeholder={computedPlaceholder.value}
         options={options}
+        {...fieldNamesBinder.value}
         renderLabel={props.renderLabel}
         v-slots={thisSlots}
         {...binding}

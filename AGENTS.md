@@ -161,6 +161,7 @@ pnpm run build
 - 使用 `valueBuilder` 处理后端行数据到组件值的转换，使用 `valueResolve` 处理提交前转换。
 - 表格空白时先检查 `<fs-crud>` 父容器高度，再排查请求和数据转换。
 - UI 适配差异要同时关注 Antdv 3、Antdv 4、Element Plus、Naive UI 的组件名、props、事件和插槽差别。
+- 核心组件不得直接传递某个 UI 专属的属性名（如 `fieldNames`、`labelField` 或 `props`）。字典字段映射必须通过 UI 接口方法（如 `ui.select.fieldNames`、`ui.cascader.fieldNames`）生成绑定对象，再使用 `v-bind` 或 JSX 展开传入；新增此类差异时，先在 `ui-interface` 定义契约，再由每个 `ui-*` 适配器自行实现。
 
 ## 测试与验证策略
 
@@ -190,4 +191,3 @@ pnpm run build
 - 不要自行提交或推送，除非任务明确要求。
 - 如果必须新增文件，确认不会覆盖已有文件；如果同名文件已存在，先完整读取再编辑。
 - 最终回复要说明改了哪些文件、运行了哪些验证，以及未验证项。
-

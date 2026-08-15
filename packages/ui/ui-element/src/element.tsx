@@ -305,6 +305,9 @@ export class Element implements UiInterface {
     modelValue: "modelValue",
     clearable: "clearable",
     filterable: "filterable",
+    fieldNames(namesMap: { value: string; label: string }) {
+      return { props: namesMap };
+    },
     buildMultiBinding(multiple) {
       return { multiple };
     }

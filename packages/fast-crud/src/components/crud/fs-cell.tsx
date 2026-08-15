@@ -3,6 +3,7 @@ import { computed, defineComponent, isShallow, PropType, ref, resolveDynamicComp
 import { ConditionalRenderProps } from "../../d";
 import { omit, toString } from "lodash-es";
 import { useUi } from "@fast-crud/ui-interface";
+import FsComponentRender from "../render/fs-component-render";
 /**
  * 单元格显示组件
  */
@@ -97,7 +98,7 @@ export default defineComponent({
           return;
         }
         return (
-          <fs-component-render title={computedTitle.value} ref={targetRef} {...computedComponent.value} scope={scope} />
+          <FsComponentRender title={computedTitle.value} ref={targetRef} {...computedComponent.value} scope={scope} />
         );
       } else {
         return cellContentRender(toString(value));
