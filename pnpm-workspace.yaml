@@ -3,6 +3,16 @@ packages:
   - 'packages/**'
   # exclude packages that are inside test directories
   - '!**/test/**'
-  - "!packages/fast-admin/fs-admin-antdv-next"
 overrides:
+  '@fast-crud/editor-code': link:packages/fast-ecology/editor-code
+  '@fast-crud/editor-markdown': link:packages/fast-ecology/editor-markdown
+  '@fast-crud/fast-crud': link:packages/fast-crud
+  '@fast-crud/fast-extends': link:packages/fast-extends
   '@fast-crud/fs-admin-antdv-next': link:packages/fast-admin/fs-admin-antdv-next
+  '@fast-crud/fs-admin-antdv4': link:packages/fast-admin/fs-admin-antdv4
+  '@fast-crud/ui-antdv': link:packages/ui/ui-antdv
+  '@fast-crud/ui-antdv-next': link:packages/ui/ui-antdv-next
+  '@fast-crud/ui-antdv4': link:packages/ui/ui-antdv4
+  '@fast-crud/ui-element': link:packages/ui/ui-element
+  '@fast-crud/ui-interface': link:packages/ui/ui-interface
+  '@fast-crud/ui-naive': link:packages/ui/ui-naive

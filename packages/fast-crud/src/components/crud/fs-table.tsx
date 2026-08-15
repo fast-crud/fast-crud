@@ -423,7 +423,6 @@ export default defineComponent({
       const vModel = {
         modelValue: get(scope[tableColumnCI.row], item.key),
         "onUpdate:modelValue": (value: any) => {
-          debugger;
           set(scope[tableColumnCI.row], item.key, value);
           const newScope = getContextFn(item, scope);
           ctx.emit("value-change", newScope);

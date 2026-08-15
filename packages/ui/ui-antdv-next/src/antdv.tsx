@@ -65,6 +65,7 @@ import { creator, useUiRender } from "@fast-crud/ui-interface";
 import { forEach } from "lodash-es";
 import { Modal } from "antdv-next";
 import { useFormItemContext } from "antdv-next/dist/form/context";
+import { normalizeNotificationContext } from "./notification";
 
 export type AntdvUiProvider = {
   Notification: any;
@@ -188,14 +189,7 @@ export class Antdv implements UiInterface {
     instance: undefined,
     name: "a-notification",
     open: (type: string, notificationContext) => {
-      let context = undefined;
-      if (typeof notificationContext === "string") {
-        context = {
-          message: notificationContext
-        };
-      } else {
-        context = notificationContext;
-      }
+      const context = normalizeNotificationContext(notificationContext);
       type = type || context.type;
       if (type) {
         return this.notification.instance[type](context);
