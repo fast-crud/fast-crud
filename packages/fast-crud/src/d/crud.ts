@@ -733,6 +733,10 @@ export type FormWrapperProps<R = any> = {
     [key: string]: ButtonProps<FormWrapperContext<R>>;
   };
   /**
+   * 底部是否显示
+   */
+  footerProps?: { show?: boolean };
+  /**
    * 打开对话框时是否全屏
    */
   fullscreen?: boolean;

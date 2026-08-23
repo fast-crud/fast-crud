@@ -541,7 +541,11 @@ export default defineComponent({
 
                   {slotsRender("form-body-bottom", scope)}
                 </div>
-                <div class={"fs-form-footer-btns"}>
+                <div
+                  class={"fs-form-footer-btns"}
+                  v-if={buttons.length > 0 || formWrapperBind.value.footerProps?.show !== false}
+                  v-bind={formWrapperBind.value.footerProps}
+                >
                   {slotsRender("form-footer-left", scope)}
                   {buttons}
                   {slotsRender("form-footer-right", scope)}
