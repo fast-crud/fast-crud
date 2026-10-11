@@ -26,7 +26,7 @@
 
 <script lang="ts">
 import { computed, defineComponent, PropType, ref, Ref } from "vue";
-import { useUi } from "@fast-crud/fast-crud";
+import { useI18n, useUi } from "@fast-crud/fast-crud";
 import { merge } from "lodash-es";
 
 interface CopyButton {
@@ -97,11 +97,12 @@ export default defineComponent({
       return slots.default != null;
     });
     const { ui } = useUi();
+    const { t } = useI18n();
     const tagName: Ref<string> = ref(ui.tag.name);
 
     const copyButton = computed(() => {
       const defaultButton = {
-        text: "复制",
+        text: t("fs.extends.copyable.copy"),
         size: "small",
         [ui.tag.type]: "success",
         show: true,
@@ -112,13 +113,13 @@ export default defineComponent({
     function onSuccess() {
       emit("success");
       if (props.successMessage) {
-        ui.message.success(props.successMessage === true ? "复制成功" : props.successMessage);
+        ui.message.success(props.successMessage === true ? t("fs.extends.copyable.success") : props.successMessage);
       }
     }
     function onError() {
       emit("error");
       if (props.errorMessage) {
-        ui.message.error(props.errorMessage === true ? "复制失败" : props.errorMessage);
+        ui.message.error(props.errorMessage === true ? t("fs.extends.copyable.error") : props.errorMessage);
       }
     }
     return {

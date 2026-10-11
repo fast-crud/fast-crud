@@ -86,6 +86,11 @@ export default {
         ok: "OK",
         cancel: "Cancel"
       },
+      copyable: {
+        copy: "Copy",
+        success: "Copied successfully",
+        error: "Copy failed"
+      },
       cropper: {
         title: "image crop",
         preview: "preview",

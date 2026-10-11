@@ -89,6 +89,11 @@ export default {
         ok: "确定",
         cancel: "取消"
       },
+      copyable: {
+        copy: "复制",
+        success: "复制成功",
+        error: "复制失败"
+      },
       cropper: {
         title: "图片裁剪",
         preview: "预览",
