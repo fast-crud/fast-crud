@@ -72,7 +72,8 @@ export default {
       reset: { text: "重置" },
       error: {
         message: "查询表单校验失败"
-      }
+      },
+      tabs: { all: "全部" }
     },
     pagination: {
       showTotal: "共 {0} 条"
@@ -84,6 +85,7 @@ export default {
       tableSelect: {
         view: "查看",
         select: "选择",
+        current: "当前选中",
         ok: "确定",
         cancel: "取消"
       },

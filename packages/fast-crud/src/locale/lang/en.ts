@@ -71,7 +71,8 @@ export default {
       reset: { text: "reset" },
       error: {
         message: "form valid error"
-      }
+      },
+      tabs: { all: "All" }
     },
     pagination: {
       showTotal: "Total {0} items"
@@ -80,7 +81,10 @@ export default {
     extends: {
       tableSelect: {
         view: "view",
-        select: "select"
+        select: "select",
+        current: "Current selection",
+        ok: "OK",
+        cancel: "Cancel"
       },
       cropper: {
         title: "image crop",

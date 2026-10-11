@@ -19,7 +19,7 @@
             <fs-crud ref="crudRef" v-bind="crudBinding">
               <template #header-top>
                 <div v-if="showCurrent !== false && !viewMode" class="fs-table-select-current">
-                  当前选中：
+                  {{ t("fs.extends.tableSelect.current") }}：
                   <fs-values-format
                     ref="valuesFormatRef"
                     v-model="selectedRowKeys"

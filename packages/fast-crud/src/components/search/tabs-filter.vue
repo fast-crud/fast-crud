@@ -20,6 +20,7 @@
 <script lang="ts" setup>
 import { computed, useAttrs } from "vue";
 import { useMerge, useUi } from "../../use";
+import { useI18n } from "../../locale";
 defineOptions({
   name: "FsTabsFilter",
   inheritAttrs: false
@@ -53,7 +54,7 @@ const defaultOption = computed(() => {
   const def = {
     show: true,
     value: null,
-    label: "全部"
+    label: t("fs.search.tabs.all")
   } as TabsFilterDefaultOption;
   return merge(def, props.defaultOption || {});
 });
@@ -91,6 +92,7 @@ function getLabel(option: TabsFilterOption) {
 }
 
 const { ui } = useUi();
+const { t } = useI18n();
 </script>
 
 <style lang="less">

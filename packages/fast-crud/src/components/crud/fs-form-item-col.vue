@@ -17,7 +17,7 @@
   </component>
 </template>
 <script lang="ts" setup>
-import { useAttrs, defineProps, PropType, ref, provide } from "vue";
+import { useAttrs, PropType, ref } from "vue";
 import { useCompute } from "../../use/use-compute";
 import { useMerge } from "../../use/use-merge";
 import { useUi } from "@fast-crud/ui-interface";
