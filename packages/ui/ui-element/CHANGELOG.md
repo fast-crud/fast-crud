@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [1.29.0](https://github.com/fast-crud/fast-crud/compare/v1.28.7...v1.29.0) (2026-10-13)
+
+### Features
+
+* 初步适配antdv-next ([a5627dc](https://github.com/fast-crud/fast-crud/commit/a5627dce8d4f44c882e27f729b325d29f02b1d90))
+
+### Performance Improvements
+
+* antdv-next helloworld 集成 ([d28597d](https://github.com/fast-crud/fast-crud/commit/d28597d8618039a972895b8d34e40be093b17e3f))
+* **fast-crud:** formWrapper支持footerProps配置，支持隐藏那个表单对话框底部按钮 ([277af45](https://github.com/fast-crud/fast-crud/commit/277af455c1f23c8b71945709ec6356bde200f14c))
+
 ## [1.28.7](https://github.com/fast-crud/fast-crud/compare/v1.28.6...v1.28.7) (2026-08-01)
 
 **Note:** Version bump only for package @fast-crud/ui-element
