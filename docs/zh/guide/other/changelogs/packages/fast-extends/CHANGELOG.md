@@ -3,6 +3,13 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [1.29.0](https://github.com/fast-crud/fast-crud/compare/v1.28.7...v1.29.0) (2026-10-13)
+
+### Performance Improvements
+
+* 为可复制组件添加国际化支持及多语言文本 ([f482a49](https://github.com/fast-crud/fast-crud/commit/f482a493c142287ecf707a78f9bd156be82cfed3))
+* **fast-crud:** formWrapper支持footerProps配置，支持隐藏那个表单对话框底部按钮 ([277af45](https://github.com/fast-crud/fast-crud/commit/277af455c1f23c8b71945709ec6356bde200f14c))
+
 ## [1.28.7](https://github.com/fast-crud/fast-crud/compare/v1.28.6...v1.28.7) (2026-08-01)
 
 **Note:** Version bump only for package @fast-crud/fast-extends
