@@ -1,6 +1,10 @@
 import type { NotificationContext } from "@fast-crud/ui-interface";
 
-type AntdvNotificationContext = NotificationContext & {
+type AntdvNotificationContext = {
+  type?: string;
+  message?: string;
+  text?: string;
+  title?: string;
   description?: string;
 };
 
@@ -9,7 +13,9 @@ export function normalizeNotificationContext(notificationContext: NotificationCo
     return { title: notificationContext };
   }
 
-  const { message, text, title, description, ...rest } = notificationContext as AntdvNotificationContext;
+  const { message, text, title, description, ...rest } = notificationContext as Exclude<NotificationContext, string> & {
+    description?: string;
+  };
 
   return {
     ...rest,
