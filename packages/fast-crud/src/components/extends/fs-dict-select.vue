@@ -111,7 +111,7 @@ const render = () => {
     const binding: any = {
       [`onUpdate:${vModel}`]: (value: any) => {
         //@ts-ignore
-        this.$emit(`onUpdate:${vModel}`, value);
+        emit(`onUpdate:${vModel}`, value);
         onSelectedChange(value);
       },
       ...attrs
