@@ -1,6 +1,6 @@
 {
   "name": "@fast-crud/editor-markdown",
-  "version": "1.29.0",
+  "version": "1.29.1",
   "private": false,
   "main": "./src/index.ts",
   "module": "./src/index.ts",
@@ -23,7 +23,7 @@
     "mavon-editor": "3.0.2"
   },
   "devDependencies": {
-    "@fast-crud/fast-crud": "^1.29.0",
+    "@fast-crud/fast-crud": "^1.29.1",
     "@ls-lint/ls-lint": "^2.0.1",
     "@rollup/plugin-commonjs": "^25.0.3",
     "@rollup/plugin-strip": "^3.0.2",
