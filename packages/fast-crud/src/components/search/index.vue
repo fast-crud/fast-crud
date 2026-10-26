@@ -340,7 +340,7 @@ export default defineComponent({
       }
 
       function onKeyup(item: any, key: any) {
-        if (key.code === "Enter") {
+        if (key.key === "Enter") {
           if (item.autoSearchTrigger != false) {
             doSearch();
           }
