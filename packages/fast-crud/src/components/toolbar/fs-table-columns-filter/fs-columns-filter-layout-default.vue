@@ -111,10 +111,14 @@ function fixedChange(index: number, value: any) {
     currentColumns.value[index].show = true;
   }
   if (value === "left") {
-    currentColumns.value.unshift(currentColumns.value.splice(index, 1)[0]);
+    const column = currentColumns.value.splice(index, 1)[0];
+    const lastLeftIndex = currentColumns.value.map((item: any) => item.fixed).lastIndexOf("left");
+    currentColumns.value.splice(lastLeftIndex + 1, 0, column);
   }
   if (value === "right") {
-    currentColumns.value.push(currentColumns.value.splice(index, 1)[0]);
+    const column = currentColumns.value.splice(index, 1)[0];
+    const firstRightIndex = currentColumns.value.findIndex((item: any) => item.fixed === "right");
+    currentColumns.value.splice(firstRightIndex === -1 ? currentColumns.value.length : firstRightIndex, 0, column);
   }
   allCheckedUpdate();
 }
