@@ -3,6 +3,14 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.29.1](https://github.com/fast-crud/fast-crud/compare/v1.29.0...v1.29.1) (2026-10-26)
+
+### Bug Fixes
+
+* **fs-dict-select:** 修复使用 this.$emit 导致的问题 ([6f1cf4f](https://github.com/fast-crud/fast-crud/commit/6f1cf4fb2e738eef926b7c1378cafbd20123bd03))
+* **search:** 修复回车键触发搜索的判断逻辑 ([02818d8](https://github.com/fast-crud/fast-crud/commit/02818d8436739f0f9a51ac0fabd595d08084cb8d))
+* **table:** 修复固定列位置异常的问题 ([0cc3350](https://github.com/fast-crud/fast-crud/commit/0cc3350883e911b2388ac4055dd5d9d80c9fda65))
+
 # [1.29.0](https://github.com/fast-crud/fast-crud/compare/v1.28.7...v1.29.0) (2026-10-13)
 
 ### Bug Fixes
