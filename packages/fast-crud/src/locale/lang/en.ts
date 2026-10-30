@@ -40,7 +40,8 @@ export default {
         ok: "save"
       },
       copy: "copy",
-      paste: "paste"
+      paste: "paste",
+      copySuccess: "表单数据已复制，您可以在添加对话框中粘贴"
     },
     actionbar: { add: "add" },
     toolbar: {
