@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.29.2](https://github.com/fast-crud/fast-crud/compare/v1.29.1...v1.29.2) (2026-11-03)
+
+### Bug Fixes
+
+* **fs-table:** 修复element无法显示单元格数据的bug ([8a5d39e](https://github.com/fast-crud/fast-crud/commit/8a5d39ec9fa40837f9c719e78bf373e7c6e2584f))
+
 ## [1.29.1](https://github.com/fast-crud/fast-crud/compare/v1.29.0...v1.29.1) (2026-10-26)
 
 ### Bug Fixes
