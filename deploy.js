@@ -118,8 +118,8 @@ async function trigger(){
 
 async function  start(){
     // await build()
-    console.log("等待60秒")
-    await sleep(60*1000)
+    console.log("等待180秒")
+    await sleep(180*1000)
     await sync()
     console.log("同步镜像完成，等待60秒")
     await sleep(160*1000)
