@@ -86,15 +86,14 @@ function buildTableSlots({
       }
     } else {
       // cell render custom component
-      cellSlots.default = withCtx(
-        (scope: any) => {
-          if (scope == null) {
-            return <div>1111</div>;
-          }
-          return renderCellComponent(item, scope) as any;
-        },
-        renderContext
-      ) as any;
+      cellSlots.default = withCtx((scope: any) => {
+        if (scope == null) {
+          return [<div>111</div>];
+        }
+        // Element Plus passes the slot result directly to `cellChildren`,
+        // which expects an array of VNodes (and calls `.some` on it).
+        return [renderCellComponent(item, scope)] as any;
+      }, renderContext) as any;
     }
     const newItem = { ...item };
     delete newItem.children;
@@ -124,7 +123,7 @@ function buildTableSlots({
     // rowHandle
     if (props.rowHandle && props.rowHandle.show !== false) {
       const rowHandleSlots = {
-        default: withCtx(renderRowHandle, renderContext) as any,
+        default: withCtx((scope: any) => [renderRowHandle(scope)], renderContext) as any,
         ...props.rowHandle?.columnSlots
       };
       children.push(
